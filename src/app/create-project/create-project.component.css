@@ -1,0 +1,36 @@
+/*h2{
+	padding: 100px 0 0 580px;
+}
+label{
+	padding: 10px 0  0 550px;
+}
+button{
+	margin: 30px 0  0 590px;
+}
+input{
+	margin: 5px 0  0 550px;
+}
+textarea{
+	margin: 5px 0  0 550px;
+}*/
+
+*[role="form"] {
+     max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 0.3em;
+    background-color: #ffff;
+    border: 1px solid;
+    margin-top: 80px;
+}
+
+
+h2{ 
+    font-size: 30px;
+    color: #000000;    
+}
+button{
+	display: table;
+    margin: 0px auto;
+    border:none;
+}

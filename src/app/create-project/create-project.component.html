@@ -1,0 +1,55 @@
+<!-- <div class="Container">
+	<form class="form-horizontal" [formGroup]='addForm' role="form">
+		<h2>Create Project</h2>
+			<div class="form-group">
+		<label >Project Title:</label><br>
+		<input type="text" class="form-control" name="projecttitle" placeholder="Enter Your projecttitle" formControlName="projecttitle" ><br></div>
+	
+		<label >Project Alias:</label><br>
+		<input type="text" class="form-control" name="projecttalias" placeholder="Enter Your projectalias" formControlName="projectalias" ><br>
+		<br><label>Description:</label><br>
+		<textarea rows="5" class="form-control" name="description" formControlName="description" ></textarea><br>
+		<button type="button" class="btn btn-primary" (click)="view_Project(addForm)">Submit</button>
+	</form>
+	
+</div> -->
+
+<div class="container">
+	<form class="form-horizontal" [formGroup]='addForm' role="form">
+		<h2 class="text-center">Create Project</h2>
+		<div class="form-group">
+			<div class="row">
+				<label for="projecttitle" class="col-sm-3 control-label">Project Title</label>
+				<div class="col-sm-9">
+					<input type="text" id="projecttitle" formControlName="projecttitle" placeholder="Enter Your projecttitle" class="form-control" autofocus>
+				</div>
+
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<label for="projectalias" class="col-sm-3 control-label">Project Alias</label>
+				<div class="col-sm-9">
+					<input type="text" id="projectalias" formControlName="projectalias" placeholder="Enter Your projectalias" class="form-control" autofocus>
+				</div>
+
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<label for="mobileno" class="col-sm-3 control-label">Description</label>
+				<div class="col-sm-9">
+					<textarea rows="5" formControlName="description" class="form-control" autofocus=""></textarea>
+				</div>
+
+			</div>
+		</div>
+		
+		<button type="submit" class="btn btn-primary" (click)="view_Project(addForm)">Create Project</button>
+		
+	</form>
+<!-- 	<p> {{ addForm.status }} </p>
+ --></div>
+
+
+

@@ -1,0 +1,15 @@
+table{
+	margin-top: 50px;
+}
+.btn-danger{
+	margin-left: 15px
+}
+.table-bordered td, .table-bordered th {
+    vertical-align: middle;
+}
+.project_title, .project_description{
+    width: 350px;
+}
+.team, .action{
+	white-space: nowrap;
+}

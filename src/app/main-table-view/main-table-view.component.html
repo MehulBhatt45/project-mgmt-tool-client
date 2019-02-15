@@ -1,0 +1,177 @@
+<div class="container">
+	<div class="row">
+		<form class="form-group">
+			<select class="form-control" style="margin: 50px 0  0 300px;">
+				<option>devlepor 1</option>
+				<option>devlepor 2</option>
+				<option>devlepor 3</option>
+				<option>devlepor 4</option>
+				<option>devlepor 5</option>
+				<option>devlepor 6</option>
+			</select>			
+		</form>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<button type="button" data-toggle="modal" data-target="#myModal"><img src="../assets/2.png" class="rounded-circle" height="25px" width="25px"></button>
+		</div>
+	</div>
+</div>	
+		<!-- <table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>To Do</th>
+					<th>In Progress</th>
+					<th>Testing</th>
+					<th>Finish</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+			
+		</table> -->
+
+		<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+
+			<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
+				<div class="card">
+					<div class="card-header">
+						<span>{{track.title}}</span>
+					</div>
+
+				</div>
+				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks"
+				[cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+
+
+				<mat-card *ngFor="let task of track.tasks" cdkDrag>
+					<!-- Use the mat-card-content to add the proper spacing. -->
+					<mat-card-content>
+						<!-- {{task.title}} -->
+						<div class="card" style="padding-left: 10px;">
+							<div>{{task.description}}</div>
+
+							<div class="row" style="padding-left: 15px;padding-top: 5px;">
+								<p style="background-color: #FFC300;padding-right: 5px;padding-left: 5px;" class="rounded">{{task.projectName}}</p>
+							</div>
+							<div class="row">
+								<div class="col-sm-7">
+									<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
+									<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;">
+									</i>
+									<label class="label_text" >{{task.label}}</label>
+								</div>
+								<div class="col-sm-5">
+									<label>{{task.p_alias}}</label>
+									<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
+								</div>
+
+							</div>
+						</div>
+					</mat-card-content>
+				</mat-card>
+
+			</div>
+		</div>
+
+	
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Issues</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="row">
+					<!-- <div class="modal-body"> -->
+						<div class="col-sm-3">
+							<label>Title</label>
+						</div>							
+						<div class="col-sm-9">
+							<input type="text" name="title" placeholder="Enter issue title"style="width: 100%;" class="form-control">
+						</div>
+						<!-- </div> -->
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<label>Description</label>
+						</div><br>
+						<div class="col-sm-9">
+							<textarea rows="4" style="width: 100%;" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<label>Type</label>
+						</div>
+						<div class="col-sm-9 form-group">
+							<select class="form-control" style="margin-top: 5px;">
+								<option selected>Select Type</option>
+								<option>New Functionality</option>
+								<option>Task</option>
+								<option>Issue</option>
+								<option>Bug</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<label>Priority</label>
+						</div>
+						<div class="col-sm-9 form-group">
+							<select class="form-control" style="margin-top: 5px;">
+								<option selected>Select Priority</option>
+								<option>Highest</option>
+								<option>High</option>
+								<option>Medium</option>
+								<option>Low</option>
+								<option>Future Enhancement</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<label>Assign to</label>
+						</div>
+						<div class="col-sm-9 form-group">
+							<select class="form-control" style="margin-top: 5px;">
+								<option>Developer 1</option>
+								<option>Developer 2</option>
+								<option>Developer 3</option>
+								<option>Developer 4</option>
+							</select>
+						</div>		
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<label>Due date</label>	
+						</div>
+						<!-- <div class="col-sm-9 form-group input-group date"  id="datetimepicker">
+							<input type="date" name="date" class="form-control" ><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+						</div> -->
+
+						<div class="col-sm-9 form-group">
+							<input type="text" id="datepicker" class="form-control pfield-wrapper required-field">
+						</div>
+						
+
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<button type="button" class="btn btn-primary float-right" data-dismiss="modal">Done</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>

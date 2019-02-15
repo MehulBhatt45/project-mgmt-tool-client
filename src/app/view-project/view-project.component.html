@@ -1,0 +1,39 @@
+<div class="container">
+	<table class="table table-bordered">
+		<thead>
+      <tr>
+        <th>Id</th>
+        <th class="project_title">Project Title</th>
+        <th class="project_description">Project Description</th>
+        <th>Project Alias</th>
+        <th class="team">Team</th>
+        <th class="action">Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="project">
+    	<tr *ngFor="let p of project">
+    		<td>{{p.id}} </td>
+            <td class="project_title">{{p.ProjectTitle}}</td>
+            <td class="project_description">{{p.Description}}</td>
+            <td>{{p.ProjectAlias}}</td>
+            <td class="team">
+                <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
+            </td>
+            <td class="action">
+                <button title="Edit Project" type="button" class="btn btn-sm btn-primary" (click)="editProject()">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button title="Delete Project" type="button" class="btn btn-sm btn-danger" (click)="deleteProject()">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+
+        </tr>
+    </tbody>
+				
+	</table>
+	<button type="button" class="btn btn-primary" (click)="createProject()" style="margin: 0px auto;display: table;">Create Project</button>
+	
+
+
+</div>

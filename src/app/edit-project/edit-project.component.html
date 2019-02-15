@@ -1,0 +1,31 @@
+<div class="Container">
+	<form class="form-horizontal" [formGroup]='addForm' role="form">	
+		<h2 class="text-center">Edit Project</h2>
+		<div class="row">
+			<div class="col-sm-3">
+				<label>Project Title</label>	
+			</div>
+			<div class="col-sm-9 form-group">
+				<input type="text" class="form-control" name="projecttitle" placeholder="Enter Your projecttitle">
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<label >Project Alias</label>
+			</div>
+			<div class="col-sm-9 form-group">
+				<input class="form-control" type="text" name="projecttitle" placeholder="Enter Your projectalias">
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<label>Description</label>		
+			</div>
+			<div class="col-sm-9 form-group">
+				<textarea rows="5" class="form-control"></textarea>			
+			</div>		
+		</div>
+		<button type="button" class="btn btn-primary" (click)="view_Project()">Submit</button>
+	</form>
+	
+</div>
