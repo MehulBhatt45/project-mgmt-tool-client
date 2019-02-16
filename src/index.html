@@ -6,38 +6,33 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#9C27B0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  
-
-
-<!-- 
-   <link rel = "stylesheet"
-         href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-      <script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-      <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
- -->
-
-      
-  
-
+  <link rel='stylesheet' type='text/css' href='assets/bower_components/bootstrap/dist/css/bootstrap.min.css' />
+  <link rel='stylesheet' type='text/css' href='assets/bower_components/font-raoit/css/fonts.css' />
+  <link rel='stylesheet' type='text/css' href='assets/bower_components/spacing-raoit/css/spacing-raoit.css' />
+  <link rel='stylesheet' type='text/css' href='assets/bower_components/color-raoit/css/colors.css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/bower_components/css/mdb.css" />
 </head>
-
-
-
-
-<body>
-  
+<body class="deep-purple-skin">
+  <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="assets/bower_components/js/tether.min.js" ,></script>
+  <script type="text/javascript" src="assets/bower_components/js/mdb.min.js"></script>
   <app-root></app-root>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.datepicker').pickadate();
+      $('.button-collapse').sideNav({
+        edge: 'left',
+        closeOnClick: true
+      });
+      var el = document.querySelector('.custom-scrollbar');
+      Ps.initialize(el);
+    })
+
+  </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-a{
+/*a{
 	padding-left: 20px;
 	color: black;
 }
@@ -70,7 +70,7 @@ a{
   outline: none;
 }
 
-/* On mouse-over */
+
 .sidenav a:hover, .dropdown-btn:hover {
   color: #f1f1f1;
 }
@@ -84,3 +84,4 @@ a{
 }
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
+*/

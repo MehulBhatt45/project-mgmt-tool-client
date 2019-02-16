@@ -1,35 +1,8 @@
-<nav class="navbar-nav" id="main">
-	<div class="row justify-content-between" style="background-color: lightblue;">
-		<div>
-			<span style="font-size:30px;cursor:pointer;margin: 5px; vertical-align: middle;" (click)="openNav()">&#9776;</span>
-			<div class="navbar-brand">
-			<img src="../assets/1.png" width="100" style="width: 100px; height: auto; margin: 5px 10px;">
-			</div>
-		</div>
-		<div style="margin: auto 20px; padding: 10px 5px;">
-			<a routerLink="/login">Login</a>
-			<!-- <a routerLink="/main-table-view">Main-View</a> -->
-		</div>
-	</div>
-</nav>
-<div id="mySidenav" class="sidenav">
-	<div style="margin-top: 50px;">
-		<button class="dropdown-btn">Projects 
-			<i class="fa fa-caret-down"></i>
-		</button>
-		<div class="dropdown-container">
-			<ul type="circle">
-				<li><a routerLink="project-detail" style="padding-left: 0px;" (click)="closeNav()">Project-1</a> </li>
-				<li><a routerLink="project-detail" style="padding-left: 0px;" (click)="closeNav()">Project-2</a></li>
-				<li> <a routerLink="project-detail" style="padding-left: 0px;" (click)="closeNav()">Project-3</a></li>
-			</ul>
-			<a routerLink="view-project" (click)="closeNav()" style="margin-top: -26px;">View All Project</a>
-		</div>
-		<a routerLink="create-project" (click)="closeNav()">Create Project</a>
-		<a routerLink="main-table-view" (click)="closeNav()">Issues Details</a>
-		<a routerLink="" class="fixed_to_bottom" (click)="closeNav()">Log Out</a>
-	</div>
-</div>
-<div (click)="closeNav()">
-	<router-outlet></router-outlet>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12">
+    <app-header></app-header>
+  </div>
+  <div class=" col-xs-12 col-sm-12 col-md-12" style="margin-top:100px !important; padding: 0 50px;" >
+    <router-outlet></router-outlet>
+  </div>
 </div>
