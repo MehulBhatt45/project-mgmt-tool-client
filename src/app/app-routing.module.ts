@@ -10,6 +10,11 @@ import {IssueComponent} from "./issue/issue.component";
 import {ProjectDetailComponent} from "./project-detail/project-detail.component";
 const routes: Routes = [
 	{
+		path:'',
+		redirectTo:'login',
+		pathMatch:'full'
+	},
+	{
 		path:'login',
 		component:LoginComponent
 	},
