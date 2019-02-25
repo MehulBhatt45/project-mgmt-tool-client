@@ -21,6 +21,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatCardModule} from '@angular/material/card';
 //import { MatIconModule } from "@angular/material/icon";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 //import { DndModule } from 'ngx-drag-drop';
 
 @NgModule({
@@ -35,7 +37,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
     MainTableViewComponent,
     HeaderComponent,
     IssueComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -49,7 +49,7 @@ img{
   /*background: rgba(0, 0, 0, 0.03);*/
   border-radius: 4px;
   padding: 8px;
-   display: flex;
+  display: flex;
   flex-direction: column;
 }
 
@@ -59,19 +59,19 @@ img{
   margin-right: 0px;
 }
 .card-list h2 {
-    margin-bottom: 5px;
-  }
+  margin-bottom: 5px;
+}
 
 .card-list button {
-    flex-shrink: 0;
-    margin-top: 10px;
-  }
+  flex-shrink: 0;
+  margin-top: 10px;
+}
 
 .card-list-content {
   /*overflow: auto;
   flex-grow: 1;*/
   background-color: #dee2e6;
-    min-height: 100px;
+  min-height: 100px;
 }
 
 .cdk-drag-animating, .cdk-drop-list-dragging .cdk-drag {
@@ -81,53 +81,54 @@ img{
   opacity: 0;
 }
 
-
-
-
-/*:host {
-
-	display: block;
-	box-sizing: border-box;
+.team-members li{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: inline-block;
+  text-align: center;
+  padding: 10px 4px;
+  font-weight: 700;
+  font-size: 14px;
+  background-color: #55b0ab;
+  float: left;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+  box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+  position: relative;
 }
 
-pre {
-
-	text-align: center;
-	padding: 8px;
-	white-space: pre-wrap;
-	word-wrap: break-word;
+.team-members li:hover{
+  z-index: 1;
 }
 
-.mat-list-item {
-
-	margin: 2px;
-	border: 1px solid gray;
+.team-members li.add-member{
+  margin-right: 0;
+  padding: 8px 12px;
 }
 
-.dndList {
-
-	transition: all 300ms ease;
-
+.team-members li a{
+  color: #fff;
+  text-transform: uppercase;
+}
+td {
+  padding: 0px;
+}
+td[colspan="2"] {
+  padding: 5px 0px;
+}
+table {
+  width: 100%;
 }
 
-.dndList .dndDragover {
-
-	padding-top: 12px;
-	padding-bottom: 12px;
+label{
+  margin: 0;
 }
-.dndDragging {
-
-	border: 1px solid green;
+.priority-text{
+  text-transform: capitalize;
 }
-
-.dndDraggingSource {
-
-	display: none;
+.priority-text span{
+  margin-right: 5px;
+  display: inline-flex;
 }
-
-.dndPlaceholder {
-
-	min-height: 72px;
-	border: 1px dashed green;
-	background-color: rgba(0, 0, 0, 0.1);
-}*/

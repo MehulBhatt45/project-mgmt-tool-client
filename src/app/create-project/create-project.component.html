@@ -15,41 +15,25 @@
 </div> -->
 
 <div class="container">
-	<form class="form-horizontal" [formGroup]='addForm' role="form">
-		<h2 class="text-center">Create Project</h2>
-		<div class="form-group">
-			<div class="row">
-				<label for="projecttitle" class="col-sm-3 control-label">Project Title</label>
-				<div class="col-sm-9">
-					<input type="text" id="projecttitle" formControlName="projecttitle" placeholder="Enter Your projecttitle" class="form-control" autofocus>
+	<div class="card">
+		<h5 class="card-header white-text text-center py-4">
+			<strong>Create Project</strong>
+		</h5>
+		<div class="card-body px-lg-5 pt-1">
+			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
+				<div class="md-form form-group">
+					<label for="projecttitle">Project Title</label>
+					<input type="text" id="projecttitle" formControlName="title" class="form-control">
 				</div>
-
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="row">
-				<label for="projectalias" class="col-sm-3 control-label">Project Alias</label>
-				<div class="col-sm-9">
-					<input type="text" id="projectalias" formControlName="projectalias" placeholder="Enter Your projectalias" class="form-control" autofocus>
+				<div class="md-form form-group">
+					<label for="desc">Description</label>
+					<textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
 				</div>
-
-			</div>
+				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+			</form>
 		</div>
-		<div class="form-group">
-			<div class="row">
-				<label for="mobileno" class="col-sm-3 control-label">Description</label>
-				<div class="col-sm-9">
-					<textarea rows="5" formControlName="description" class="form-control" autofocus=""></textarea>
-				</div>
-
-			</div>
-		</div>
-		
-		<button type="submit" class="btn btn-primary" (click)="view_Project(addForm)">Create Project</button>
-		
-	</form>
-<!-- 	<p> {{ addForm.status }} </p>
- --></div>
+	</div>
+</div>
 
 
 

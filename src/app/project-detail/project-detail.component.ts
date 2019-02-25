@@ -1,21 +1,21 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-//import { DndDropEvent, DropEffect } from "ngx-drag-drop";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-
+import { ProjectService } from '../services/project.service';
+import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 export interface Track {
-  title: string;
-  id: string;
-  tasks: Task[];
+	title: string;
+	id: string;
+	tasks: Task[];
 }
 
 export interface Task {
-  //title: string;
-  description: string;
-  projectName: string;
-  label:string;
-  p_alias:string;
+	description: string;
+	projectName: string;
+	label:string;
+	p_alias:string;
 
-  id: string;
+	id: string;
 }
 @Component({
 	selector: 'app-project-detail',
@@ -23,79 +23,69 @@ export interface Task {
 	styleUrls: ['./project-detail.component.css']
 })
 export class ProjectDetailComponent implements OnInit {
-	tracks: Track[] = [
+	tracks = [
 	{
 		"title": "Todo",
-		"id": "todo",
+		"id": "to do",
+		"class":"primary",
 		"tasks": [
-		{
-			"id": "first-task",
-			//"title": "First Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-		}
+		
 		]
 	},
 	{
 		"title": "In Progress",
-		"id": "inprogress",
+		"id": "in progress",
+		"class":"info",
 		"tasks": [
-		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
-		},
-		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
-		}
+		
 		]
 	},
 	{
 		"title": "Testing",
 		"id": "testing",
+		"class":"warning",
 		"tasks": [
-		{
-			"id": "third-task",
-			//"title": "Third Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-
-		}
+		
 		]
 	},
 	{
 		"title": "Done",
-		"id": "done",
+		"id": "complete",
+		"class":"success",
 		"tasks": [
-		{
-			"id": "fourth-task",
-			//"title": "Fourth Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-
-		}
+		
 		]
 	}
 	];
-	constructor() { 
-		//this.setHorizontalLayout( this.horizontalLayoutActive );
+	project;
+	projectId;
+	allStatusList = this._projectService.getAllStatus();
+	allPriorityList = this._projectService.getAllProtity();
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+			this.getProject(this.projectId);
+		});
 	}
 
 	ngOnInit() {
+	}
+
+	getProject(id){
+		this._projectService.getProjectById(id).subscribe((res:any)=>{
+			console.log(res);
+			this.project = res;
+			_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+				_.forEach(this.tracks, (track)=>{
+					if(content.status == track.id){
+						track.tasks.push(content);
+					}
+				})
+			})
+			console.log(this.tracks);
+		},err=>{
+			console.log(err);
+		})
 	}
 
 	get trackIds(): string[] {
@@ -103,9 +93,6 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<Task[]>) {
-		// In case the destination container is different from the previous container, we
-		// need to transfer the given task to the target data array. This happens if
-		// a task has been dropped on a different track.
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -113,110 +100,46 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
+			console.log(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[0]);
 		}
 	}
 
 	onTrackDrop(event: CdkDragDrop<Track[]>) {
+		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
+
+	updateStatus(newStatus, data){
+		if(newStatus=='complete'){
+			console.log("Wait for some time");
+		}else{
+			data.status = newStatus;
+			this._projectService.updateStatus(data).subscribe(res=>{
+				console.log(res);
+			},err=>{
+				console.log(err);
+			})
+		}
+	}
+
+	getTitle(name){
+		var str = name.split(' ');
+		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+	}
+
+	getInitialsOfName(name){
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+	}
+
+	getColorCodeOfPriority(priority) {
+		for (var i = 0; i < this.allPriorityList.length; i++) {
+			if (this.allPriorityList[i].value == priority) {
+				return this.allPriorityList[i].colorCode;
+			}
+		}
+
+	}
 }
-
-// 	draggableListLeft = [
-// 	{
-	// 		content: "Left",
-	// 		effectAllowed: "move",
-	// 		disable: false,
-	// 		handle: false,
-	// 	},
-	// 	{
-		// 		content: "Lefter",
-		// 		effectAllowed: "move",
-		// 		disable: false,
-		// 		handle: false,
-		// 	},
-		// 	{
-			// 		content: "Leftest",
-			// 		effectAllowed: "copyMove",
-			// 		disable: false,
-			// 		handle: false
-			// 	},
-			// 	{
-				// 		content: "Lefty",
-				// 		effectAllowed: "move",
-				// 		disable: false,
-				// 		handle: true,
-				// 	}
-				// 	];
-
-				// 	draggableListRight = [
-				// 	{
-					// 		content: "I was originally right",
-					// 		effectAllowed: "move",
-					// 		disable: false,
-					// 		handle: false,
-					// 	}
-					// 	];
-					// 	layout:any;
-					// 	horizontalLayoutActive:boolean = false;
-					// 	private currentDraggableEvent:DragEvent;
-					// 	private currentDragEffectMsg:string;
-					// 	private readonly verticalLayout = {
-						// 		container: "row",
-						// 		list: "column",
-						// 		dndHorizontal: false
-						// 	};
-						// 	private readonly horizontalLayout = {
-							// 		container: "row",
-							// 		list: "row",
-							// 		dndHorizontal: true
-							// 	};
-
-
-							// 	setHorizontalLayout( horizontalLayoutActive:boolean ) {
-
-								// 		this.layout = (horizontalLayoutActive) ? this.horizontalLayout : this.verticalLayout;
-								// 	}
-
-								// 	onDragStart( event:DragEvent ) {
-
-									// 		this.currentDragEffectMsg = "";
-									// 		this.currentDraggableEvent = event;
-
-
-									// 	}
-
-									// 	onDragged( item:any, list:any[], effect:DropEffect ) {
-
-										// 		this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
-
-										// 		if( effect === "move" ) {
-
-											// 			const index = list.indexOf( item );
-											// 			list.splice( index, 1 );
-											// 		}
-											// 	}
-
-											// 	onDragEnd( event:DragEvent ) {
-
-												// 		this.currentDraggableEvent = event;
-
-												// 	}
-
-												// 	onDrop( event:DndDropEvent, list?:any[] ) {
-
-													// 		if( list
-													// 			&& (event.dropEffect === "copy"
-													// 				|| event.dropEffect === "move") ) {
-
-														// 			let index = event.index;
-
-														// 		if( typeof index === "undefined" ) {
-
-															// 			index = list.length;
-															// 		}
-
-															// 		list.splice( index, 0, event.data );
-															// 	}
-															// }
-
-// }

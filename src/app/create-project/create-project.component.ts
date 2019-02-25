@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
-import { FormGroup , FormControl } from '@angular/forms';
+import { FormGroup , FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-project',
@@ -13,8 +13,7 @@ export class CreateProjectComponent implements OnInit {
   constructor(public router:Router, public _projectservice:ProjectService) { 
 
     this.addForm = new FormGroup({
-      projecttitle: new FormControl(''),
-      projecttalias: new FormControl(''),
+      title: new FormControl('', Validators.required),
       description: new FormControl(''),
     });
 
@@ -23,9 +22,13 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit() {
   }
-  view_Project(){
-
-  	this.router.navigate(['/view-project'])
-
+  addProject(addForm){
+    addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log(addForm.value);
+    this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
+      console.log(res);
+    },err=>{
+      console.log(err);
+    })
   }
 }
