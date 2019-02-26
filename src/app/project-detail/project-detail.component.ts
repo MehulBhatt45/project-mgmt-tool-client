@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { ActivatedRoute } from '@angular/router';
+declare var $ : any;
 import * as _ from 'lodash';
 export interface Track {
 	title: string;
@@ -57,6 +58,7 @@ export class ProjectDetailComponent implements OnInit {
 		]
 	}
 	];
+	task;
 	project;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
@@ -141,5 +143,11 @@ export class ProjectDetailComponent implements OnInit {
 			}
 		}
 
+	}
+
+	openModel(task){
+		console.log(task);
+		this.task = task;
+		$('#fullHeightModalRight').modal('show');
 	}
 }

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -49,11 +49,9 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     HttpClientModule,
     DragDropModule,
-    MatCardModule
-    // DndModule,
-    // MatListModule,
-    // FlexLayoutModule,
-    // MatIconModule
+    MatCardModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
