@@ -32,6 +32,11 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 		children:[
 		{
+			path:'',
+			pathMatch:"full",
+			redirectTo:'view-projects'
+		},
+		{
 			path:'view-projects',
 			component:ViewProjectComponent
 		},
