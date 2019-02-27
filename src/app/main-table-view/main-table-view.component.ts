@@ -1,120 +1,115 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-export interface Track {
-  title: string;
-  id: string;
-  tasks: Task[];
-}
+import { ProjectService } from '../services/project.service';
+import { AlertService } from '../services/alert.service';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export interface Task {
-  //title: string;
-  description: string;
-  projectName: string;
-  label:string;
-  p_alias:string;
-
-  id: string;
-}
-declare var $:any;
+declare var $ : any;
+import * as _ from 'lodash';
 @Component({
-  selector: 'app-main-table-view',
-  templateUrl: './main-table-view.component.html',
-  styleUrls: ['./main-table-view.component.css']
+	selector: 'app-main-table-view',
+	templateUrl: './main-table-view.component.html',
+	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
-	tracks: Track[] = [
+	tracks = [
 	{
 		"title": "Todo",
-		"id": "todo",
+		"id": "to do",
+		"class":"primary",
 		"tasks": [
-		{
-			"id": "first-task",
-			//"title": "First Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-		}
+		
 		]
 	},
 	{
 		"title": "In Progress",
-		"id": "inprogress",
+		"id": "in progress",
+		"class":"info",
 		"tasks": [
-		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
-		},
-		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
-		}
+		
 		]
 	},
 	{
 		"title": "Testing",
 		"id": "testing",
+		"class":"warning",
 		"tasks": [
-		{
-			"id": "third-task",
-			//"title": "Third Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-
-		}
+		
 		]
 	},
 	{
 		"title": "Done",
-		"id": "done",
+		"id": "complete",
+		"class":"success",
 		"tasks": [
-		{
-			"id": "fourth-task",
-			//"title": "Fourth Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-
-		}
+		
 		]
 	}
 	];
+	modalTitle;
+	task;
+	projects;
+	projectId;
+	allStatusList = this._projectService.getAllStatus();
+	allPriorityList = this._projectService.getAllProtity();
+	editTaskForm;
+	developers;
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
+		this.getProject();
+		this.createEditTaskForm();
+	}
 
-  constructor(public router:Router) { }
+	createEditTaskForm(){
+		this.editTaskForm = new FormGroup({
+			title : new FormControl('', Validators.required),
+			desc : new FormControl('', Validators.required),
+			assignTo : new FormControl('', Validators.required),
+			priority : new FormControl('', Validators.required),
+			startDate : new FormControl('', Validators.required),
+			dueDate : new FormControl('', Validators.required),
+			status : new FormControl({value: '', disabled: true}, Validators.required)
+		})
+	}
 
-  ngOnInit() {
-  	$(function () {
-    $('#datepicker').datepicker({ 
-    	minDate: 0 ,
-    	changeYear: true,
-        changeMonth: true,
-         dateFormat: "yy-m-dd",
-      yearRange: "-100:+20",
-    });
-});
+	ngOnInit() {
+		this.getAllDevelopers();
+	}
 
-  }
+	getAllDevelopers(){
+		this._projectService.getAllDevelopers().subscribe(res=>{
+			this.developers = res;
+			console.log(this.developers);
+		},err=>{
+			this._alertService.error(err);
+		})
+	}
+
+	getProject(){
+		this._projectService.getProjects().subscribe((res:any)=>{
+			console.log(res);
+			this.projects = res;
+			_.forEach(this.projects, (project)=>{
+				console.log(project);
+				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					})
+				})
+			})
+			console.log(this.tracks);
+		},err=>{
+			console.log(err);
+		})
+	}
 
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
 
-	onTalkDrop(event: CdkDragDrop<Task[]>) {
-		// In case the destination container is different from the previous container, we
-		// need to transfer the given task to the target data array. This happens if
-		// a task has been dropped on a different track.
+	onTalkDrop(event: CdkDragDrop<any>) {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -122,12 +117,89 @@ export class MainTableViewComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
+			console.log(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[0]);
 		}
 	}
 
-	onTrackDrop(event: CdkDragDrop<Track[]>) {
+	onTrackDrop(event: CdkDragDrop<any>) {
+		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
- 
+	updateStatus(newStatus, data){
+		if(newStatus=='complete'){
+			console.log("Wait for some time");
+		}else{
+			data.status = newStatus;
+			this._projectService.updateStatus(data).subscribe(res=>{
+				console.log(res);
+			},err=>{
+				console.log(err);
+			})
+		}
+	}
+
+	getTitle(name){
+		var str = name.split(' ');
+		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+	}
+
+	getInitialsOfName(name){
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+	}
+
+	getColorCodeOfPriority(priority) {
+		for (var i = 0; i < this.allPriorityList.length; i++) {
+			if (this.allPriorityList[i].value == priority) {
+				return this.allPriorityList[i].colorCode;
+			}
+		}
+
+	}
+
+	openModel(task){
+		console.log(task);
+		this.task = task;
+		$('#fullHeightModalRight').modal('show');
+	}
+
+	updateTask(task){
+		console.log(task);
+		this._projectService.updateData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+		},err=>{
+			console.log(err);
+		})
+	}
+
+	editTask(task){
+		this.task = task;
+		this.modalTitle = 'Edit Item'
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	addItem(option){
+		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	saveTheData(task){
+		task['projectId']= this.projectId; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task.startDate = $("#startDate").val();
+		task.dueDate = $("#dueDate").val();
+		console.log(task);
+		this._projectService.addData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+			this.getProject();
+		},err=>{
+			console.log(err);
+		})
+	}
 }

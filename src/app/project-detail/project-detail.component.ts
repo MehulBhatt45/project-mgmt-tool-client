@@ -14,40 +14,7 @@ import * as _ from 'lodash';
 	styleUrls: ['./project-detail.component.css']
 })
 export class ProjectDetailComponent implements OnInit {
-	tracks = [
-	{
-		"title": "Todo",
-		"id": "to do",
-		"class":"primary",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "In Progress",
-		"id": "in progress",
-		"class":"info",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Testing",
-		"id": "testing",
-		"class":"warning",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Done",
-		"id": "complete",
-		"class":"success",
-		"tasks": [
-		
-		]
-	}
-	];
+	tracks:any;
 	modalTitle;
 	task;
 	project;
@@ -56,12 +23,50 @@ export class ProjectDetailComponent implements OnInit {
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
+			this.getEmptyTracks();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
+	}
+
+	getEmptyTracks(){
+		this.tracks = [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
+		}
+		];
 	}
 
 	createEditTaskForm(){
@@ -130,7 +135,12 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			console.log("Wait for some time");
+			data.status = newStatus;
+			this._projectService.completeItem(data).subscribe(res=>{
+				console.log(res);
+			},err=>{
+				console.log(err);
+			})
 		}else{
 			data.status = newStatus;
 			this._projectService.updateStatus(data).subscribe(res=>{
@@ -193,6 +203,14 @@ export class ProjectDetailComponent implements OnInit {
 	saveTheData(task){
 		task['projectId']= this.projectId; 
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task.startDate = $("#startDate").val();
+		task.dueDate = $("#dueDate").val();
 		console.log(task);
+		this._projectService.addData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+			this.getProject(this.projectId);
+		},err=>{
+			console.log(err);
+		})
 	}
 }

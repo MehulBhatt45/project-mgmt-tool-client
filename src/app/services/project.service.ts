@@ -60,7 +60,7 @@ export class ProjectService {
 	addData(data){
 		console.log(data);
 		var subUrl; 
-		subUrl = _.includes(data.uniqueId, 'TASK')?"task/update/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update/":'';
+		subUrl = _.includes(data.uniqueId, 'TASK')?"task/add-task/":'' || _.includes(data.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		console.log(subUrl);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
@@ -69,7 +69,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
+		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
 
 	updateData(data){
@@ -90,6 +90,20 @@ export class ProjectService {
 	updateStatus(data){
 		var subUrl; 
 		subUrl = _.includes(data.uniqueId, 'TASK')?"task/update/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update/":'';
+		console.log(subUrl);
+		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
+	}
+
+	completeItem(data){
+		var subUrl; 
+		subUrl = _.includes(data.uniqueId, 'TASK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 		console.log(subUrl);
 		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {

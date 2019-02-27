@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {AlertService} from '../services/alert.service';
-
+import { FormGroup , FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-project',
@@ -11,8 +11,13 @@ import {AlertService} from '../services/alert.service';
 })
 export class ViewProjectComponent implements OnInit {
   projects;
-  
-  constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) { }
+  addForm:FormGroup; 
+  constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
+    this.addForm = new FormGroup({
+      title: new FormControl('', Validators.required),
+      description: new FormControl(''),
+    });
+  }
 
   ngOnInit() {
     this._projectservice.getProjects().subscribe(res=>{
@@ -32,6 +37,16 @@ export class ViewProjectComponent implements OnInit {
     var str = name.split(' ')[0][0]+name.split(' ')[1][0];
     return str.toUpperCase();
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
+  }
+
+  addProject(addForm){
+    addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log(addForm.value);
+    this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
+      console.log(res);
+    },err=>{
+      console.log(err);
+    })
   }
 
   

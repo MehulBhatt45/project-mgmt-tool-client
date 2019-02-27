@@ -53,7 +53,7 @@ const routes: Routes = [
 		},
 
 		{
-			path:'main-table-view',
+			path:'all-item-list',
 			component:MainTableViewComponent
 		},
 		{
