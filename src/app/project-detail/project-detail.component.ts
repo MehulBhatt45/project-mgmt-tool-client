@@ -1,23 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
+import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 declare var $ : any;
 import * as _ from 'lodash';
-export interface Track {
-	title: string;
-	id: string;
-	tasks: Task[];
-}
 
-export interface Task {
-	description: string;
-	projectName: string;
-	label:string;
-	p_alias:string;
-
-	id: string;
-}
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -58,19 +48,45 @@ export class ProjectDetailComponent implements OnInit {
 		]
 	}
 	];
+	modalTitle;
 	task;
 	project;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
+	editTaskForm;
+	developers;
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getProject(this.projectId);
 		});
+		this.createEditTaskForm();
+	}
+
+	createEditTaskForm(){
+		this.editTaskForm = new FormGroup({
+			title : new FormControl('', Validators.required),
+			desc : new FormControl('', Validators.required),
+			assignTo : new FormControl('', Validators.required),
+			priority : new FormControl('', Validators.required),
+			startDate : new FormControl('', Validators.required),
+			dueDate : new FormControl('', Validators.required),
+			status : new FormControl({value: '', disabled: true}, Validators.required)
+		})
 	}
 
 	ngOnInit() {
+		this.getAllDevelopers();
+	}
+
+	getAllDevelopers(){
+		this._projectService.getAllDevelopers().subscribe(res=>{
+			this.developers = res;
+			console.log(this.developers);
+		},err=>{
+			this._alertService.error(err);
+		})
 	}
 
 	getProject(id){
@@ -94,7 +110,7 @@ export class ProjectDetailComponent implements OnInit {
 		return this.tracks.map(track => track.id);
 	}
 
-	onTalkDrop(event: CdkDragDrop<Task[]>) {
+	onTalkDrop(event: CdkDragDrop<any>) {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -107,7 +123,7 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
-	onTrackDrop(event: CdkDragDrop<Track[]>) {
+	onTrackDrop(event: CdkDragDrop<any>) {
 		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
@@ -149,5 +165,34 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task);
 		this.task = task;
 		$('#fullHeightModalRight').modal('show');
+	}
+
+	updateTask(task){
+		console.log(task);
+		this._projectService.updateData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+		},err=>{
+			console.log(err);
+		})
+	}
+
+	editTask(task){
+		this.task = task;
+		this.modalTitle = 'Edit Item'
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	addItem(option){
+		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	saveTheData(task){
+		task['projectId']= this.projectId; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		console.log(task);
 	}
 }

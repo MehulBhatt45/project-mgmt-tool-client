@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
+import {AlertService} from '../services/alert.service';
 
 
 @Component({
@@ -11,14 +12,14 @@ import {ProjectService} from '../services/project.service';
 export class ViewProjectComponent implements OnInit {
   projects;
   
-  constructor(public router:Router, public _projectservice:ProjectService) { }
+  constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) { }
 
   ngOnInit() {
     this._projectservice.getProjects().subscribe(res=>{
       console.log(res);
       this.projects = res;
     },err=>{
-      console.log(err);
+      this._alertService.error(err);
     })
   }
 
