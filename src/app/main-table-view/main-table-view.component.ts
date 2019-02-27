@@ -13,51 +13,93 @@ import * as _ from 'lodash';
 	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
-	tracks = [
-	{
-		"title": "Todo",
-		"id": "to do",
-		"class":"primary",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "In Progress",
-		"id": "in progress",
-		"class":"info",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Testing",
-		"id": "testing",
-		"class":"warning",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Done",
-		"id": "complete",
-		"class":"success",
-		"tasks": [
-		
-		]
-	}
-	];
+	tracks:any;
 	modalTitle;
 	task;
+	trackChange;
 	projects;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
+	newTracks:any;
+	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
 		this.getProject();
 		this.createEditTaskForm();
+	}
+	getEmptyNewTracks(){
+		this.newTracks = [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
+		}
+		];	
+	}
+	getEmptyTracks(){
+		this.tracks = [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
+		}
+		];
 	}
 
 	createEditTaskForm(){
@@ -86,6 +128,7 @@ export class MainTableViewComponent implements OnInit {
 	}
 
 	getProject(){
+		this.getEmptyTracks();
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log(res);
 			this.projects = res;
@@ -202,4 +245,32 @@ export class MainTableViewComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	filterByProjectId(projectId){
+		console.log("Developer ID ====>" , projectId);
+		console.log("Project ID ====>" , projectId);
+		var localTrackArray;
+		if(projectId == null){
+			console.log("do it later");
+			this.getProject();
+		}else{
+			this.getEmptyNewTracks();
+			_.forEach(this.tracks , (track , index1)=>{
+				console.log("track ====>" , track , index1);
+				_.forEach(track.tasks , (task, index2)=>{
+					//console.log("task ====>" , task);
+					if(task.projectId._id ==  projectId){
+						console.log(" mactched");
+						//console.log("index of that task =======>" , index2);
+						console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+						this.newTracks[index1].tasks.push(track.tasks[index2]);
+					}
+				})
+			})
+			console.log("***********************************************");
+			console.log("This.newTracj ====>" , this.newTracks);
+			localStorage.setItem("trackChange" , JSON.stringify(true));
+			this.trackChange = true;
+		}
+	}
+
 }

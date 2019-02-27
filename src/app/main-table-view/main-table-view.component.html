@@ -1,12 +1,12 @@
 <div class="row justify-content-end">
 	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects">
-			<option value="null" selected>Select Project</option>
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterByProjectId($event.target.value)">
+			<option value="null" selected>All Projects</option>
 			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers" (change)="filterByProjectId($event.target.value)">
 			<option value="null" selected>Select Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
@@ -20,7 +20,258 @@
 		</div>
 	</div>
 </div>
+<span *ngIf="trackChange">
+<div class="board" cdkDropList [cdkDropListData]="newTracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+	<div class="card-list mat-elevation-z1" *ngFor="let track of newTracks">
+		<div class="card">
+			<div class="card-header">
+				<span>{{track.title}}</span>
+			</div>		
+		</div>
+		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+			<mat-card *ngFor="let task of track.tasks" cdkDrag>
+				<mat-card-content>
+					<div class="card" [ngClass]="newTracks.class">
+						<div class="card-body" style="padding: 0;">
+							<table>
+								<tr>
+									<!-- <td>
+										<a href="javascript:void(0)" (click)="openModel(task)">
+											<i class="fa fa-edit text-Blue"></i>
+										</a>
+									</td> -->
+									<td colspan="2">
+										<label class="float-right">{{task.projectId.uniqueId}} - {{task.uniqueId}}</label>
+									</td>
+								</tr>
+								<tr (click)="openModel(task)" style="cursor: pointer;">
+									<td style="width: 50px;">
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(task.assignTo.name)}}
+												</a>
+											</li>
+											<li *ngIf="!task.assignTo" class="add-member">
+												<a href="javascript:void(0);" title="Add Member">
+													<i class="fa fa-user-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</td>
+									<td>
+										<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
+									</td>
+								</tr>
+								<tr (click)="openModel(task)" style="cursor: pointer;">
+									<td colspan="2">
+										<div class="card-text">{{task.desc}}</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="card-action">
+							<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"></span>{{task.priority}}</label>
+						</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>
+<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4> -->
+				<button type="button">
+					<i class="fa fa-redo"></i>
+				</button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="fa fa-times"></i>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="task">
+				<div class="container-fluid">
+					<div class="row">
+						<table>
+							<tr>
+								<td style="width: 50px;">
+									<ul class="team-members">	
+										<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+											<a href="javascript:void(0);">
+												{{getInitialsOfName(task.assignTo.name)}}
+											</a>
+										</li>
+										<li *ngIf="!task.assignTo" class="add-member">
+											<a href="javascript:void(0);" title="Add Member">
+												<i class="fa fa-user-plus"></i>
+											</a>
+										</li>
+									</ul>
+								</td>
+								<td>
+									<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="card-text">{{task.desc}}</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-12 col-md-6" *ngIf="task.createdBy">
+							<label><strong>Created By: &nbsp;</strong></label>
+							<span>{{task.createdBy.name}}, on {{task.createdAt | date}}</span>
+						</div>
+						<div class="col-12 col-md-6">
+							<label><strong>Assign To: &nbsp;</strong></label>
+							<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+						</div>
+						<div class="col-12 col-md-6" *ngIf="task.createdAt">
+							<label><strong>Due Date: &nbsp;</strong></label>
+							<span>{{task.createdAt | date}}</span>
+						</div>
+						<div class="col-12 col-md-6" *ngIf="task.priority">
+							<label><strong>Prority: &nbsp;</strong></label>
+							<span>{{task.priority}}</span>
+						</div>
+						<div class="col-12 col-md-6" *ngIf="task.status">
+							<label><strong>Status: &nbsp;</strong></label>
+							<span>{{task.status}}</span>
+						</div>								
+					</div>
+					<div class="row bg-light justify-content-between margin-top-20">
+						<div>
+							<button class="btn btn-default">Remove Assignment</button>
+							<button class="btn btn-default">Start Progress</button>
+						</div>
+						<div>
+							<button class="btn btn-default" (click)="editTask(task)">Edit</button>
+							<button class="btn btn-default"><i class="fa fa-ellipsis-h"></i></button>
+						</div>
+					</div>
+					<hr>
+					<h2>Comments</h2>
+					<div *ngIf="task.comment && task.comment.length>0">
+						<p>comments</p>
+					</div>
+					<div *ngIf="task.comment && task.comment.length<=0">
+						<p>No comments on this be the first one to comments on...</p>
+					</div>
+					<div class="row padding-20">
+						<div [froalaEditor]></div>
+						<button class="btn btn-default float-right">Add Comment</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="task">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
+						<div class="form-group col-12">
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class="row no-margin no padding">
+							<div class="form-group col-12 col-lg-6">
+								<label for="assignTo">Assign To</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+							</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+									<option value="low">Low</option>
+									<option value="medium">Medium</option>
+									<option value="high">High</option>
+								</select>
+							</div>
+						</div>
+						<div class="row no-margin no padding">
+							<div class="form-group col-12 col-lg-6">
+								<!-- <div class="form-group"> -->
+									<label for="startDate">Start Date</label>
+									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
+									<!-- </div> -->
+								</div>
+								<div class="form-group col-12 col-lg-6">
+									<!-- <div class="form-group"> -->
+										<label for="dueDate">Due Date</label>
+										<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="form-group col-12">
+									<label for="status">Status</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+</span>			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span *ngIf="!trackChange">
 <div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 	<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
 		<div class="card">
@@ -242,3 +493,4 @@
 				</div>
 			</div>
 		</div>
+</span>
