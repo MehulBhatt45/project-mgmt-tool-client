@@ -21,6 +21,7 @@ export class LoginService {
     }
 
     login(userCredentials) {
+        console.log("heyy");
         return this.http.post<any>(config.baseApiUrl+"user/login", userCredentials)
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response

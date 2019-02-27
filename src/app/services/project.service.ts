@@ -114,4 +114,15 @@ export class ProjectService {
 		};
 		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
 	}
+
+	getlogs(memberId){
+		console.log("memberID =========>" , memberId);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId , httpOptions);
+	}
 }

@@ -11,6 +11,7 @@ import { IssueComponent } from "./issue/issue.component";
 import { ProjectDetailComponent } from "./project-detail/project-detail.component";
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { LogsComponent } from './logs/logs.component';
 const routes: Routes = [
 	// {
 	// 	path:'',
@@ -63,6 +64,21 @@ const routes: Routes = [
 		{
 			path:'project-details/:id',
 			component:ProjectDetailComponent
+		},
+		{
+			path:'logs',
+			pathMatch: "full",
+			component: LogsComponent	
+		},
+		{
+			path:"logs/:projectId",
+			pathMatch: "full",
+			component: LogsComponent
+		},
+		{
+			path:"logs/:projectId/:memberId",
+			pathMatch: "full",
+			component: LogsComponent
 		}]
 	}];
 
