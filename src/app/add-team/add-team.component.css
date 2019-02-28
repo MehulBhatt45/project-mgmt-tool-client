@@ -16,6 +16,5 @@
 button:focus{
 	display: table;
 	margin: 0px auto;
-    outline: none;
-
+   border:none;
 }

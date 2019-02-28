@@ -23,9 +23,9 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit() {
   }
-  view_Project(){
-
-  	this.router.navigate(['/view-project'])
+  view_Project(addForm){
+console.log(addForm);
+  	// this.router.navigate(['/view-project'])
 
   }
 }

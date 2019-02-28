@@ -11,4 +11,8 @@ export class ProjectService {
 	getProject(){
 		return this.http.get("https://my.api.mockaroo.com/project.json?key=63e0d770");
 	}
+
+	addProject(data){
+		return this.http.post("http://132.140.160.68:4000/project/addProject",data);
+	}
 }
