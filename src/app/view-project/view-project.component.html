@@ -2,12 +2,46 @@
     <div class="row">
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
             <div class="card">
-                <div class="card-header" routerLink="/project-details/{{project._id}}">
-                    <span><strong>UniqueId:</strong> {{project.uniqueId}}</span>
+                <div class="card-header bg-info white-text" routerLink="/project-details/{{project._id}}">
+                    <h4 class="project-title-view-project">{{project.title}}</h4>
+                    <!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
                 </div>
-                <div class="card-body padding-top-bottom-20 padding-left-right-10" routerLink="/project-details/{{project._id}}">
-                    <h4 class="card-title">{{project.title}}</h4>
-                    <p class="card-text">{{project.desc}}</p>
+                <div class="card-body" routerLink="/project-details/{{project._id}}" >
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-6">
+                            <ul>
+                                <li>    
+                                    <strong title="task" class="blue-text">
+                                        <img src="../assets/icons/task.png" class="tib-prefix"> 
+                                        Tasks: 
+                                    </strong>
+                                    <span class="tib-view-projects-description">{{(project.taskId.length>0)?project.taskId.length:0}}</span>
+                                </li>
+                                <li>
+                                    <strong title="Issue" >
+                                        <img src="../assets/icons/issues.png" class="tib-prefix">
+                                        Issues: 
+                                        
+                                    </strong>
+                                    <span class="tib-view-projects-description">{{(project.IssueId.length>0)?project.IssueId.length:0}}</span>
+                                </li>
+                                <li>
+                                    <strong title="Bug" class="red-text">
+                                        <img src="../assets/icons/bug-2.png" class="tib-prefix">
+                                        Bugs: 
+                                    </strong>
+                                        <span class="tib-view-projects-description">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <p class="card-text font-monospace">{{project.desc}}</p>
+
+                    </div>
+
+                    </div>
+
                 </div>
                 <hr class="no-margin no-padding">
                 <div class="card-action padding-10">
