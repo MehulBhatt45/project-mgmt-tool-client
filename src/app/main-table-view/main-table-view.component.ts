@@ -13,51 +13,96 @@ import * as _ from 'lodash';
 	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
-	tracks = [
-	{
-		"title": "Todo",
-		"id": "to do",
-		"class":"primary",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "In Progress",
-		"id": "in progress",
-		"class":"info",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Testing",
-		"id": "testing",
-		"class":"warning",
-		"tasks": [
-		
-		]
-	},
-	{
-		"title": "Done",
-		"id": "complete",
-		"class":"success",
-		"tasks": [
-		
-		]
-	}
-	];
+	checkProjectId = "null";
+	checkDeveloperId = "null";
+	tracks:any;
 	modalTitle;
 	task;
+	trackChangeProjectWise;
+	trackChangeDeveloperWise;
 	projects;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
+	newTracks:any;
+	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
 		this.getProject();
 		this.createEditTaskForm();
+	}
+	getEmptyNewTracks(){
+		this.newTracks = [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
+		}
+		];	
+	}
+	getEmptyTracks(){
+		this.tracks = [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
+
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
+		}
+		];
 	}
 
 	createEditTaskForm(){
@@ -79,13 +124,14 @@ export class MainTableViewComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
-			console.log(this.developers);
+			console.log("developers list ================>" , this.developers);
 		},err=>{
 			this._alertService.error(err);
 		})
 	}
 
 	getProject(){
+		this.getEmptyTracks();
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log(res);
 			this.projects = res;
@@ -99,7 +145,11 @@ export class MainTableViewComponent implements OnInit {
 					})
 				})
 			})
-			console.log(this.tracks);
+			console.log("this.tracks of get project ======>" , this.tracks);
+			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
+			this.trackChangeProjectWise = false;
+			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
+			this.trackChangeDeveloperWise = false;
 		},err=>{
 			console.log(err);
 		})
@@ -202,4 +252,98 @@ export class MainTableViewComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	filterByProjectId(projectId){
+		console.log("Developer ID ====>" , projectId);
+		//xconsole.log("Project ID ====>" , projectId);
+		this.checkProjectId = projectId;
+		console.log("this.checkProjectId ========>" , this.checkProjectId);
+		if(this.checkProjectId == "null"){
+			if(this.checkDeveloperId != "null"){
+				console.log("************this.checkProjectId == null && this.checkDeveloperId != null ******");
+				this.filterByDeveloperId(this.checkDeveloperId);
+			}
+			else if(this.checkProjectId == "null" && this.checkDeveloperId == "null"){
+				console.log("do it later");
+				this.getProject();
+			}
+		}else{
+			if(this.checkDeveloperId != "null" && this.checkProjectId != "null"){
+				this.filterByProjectIdAndDevelopmentId();
+			}
+			else{
+				this.getEmptyNewTracks();
+				_.forEach(this.tracks , (track , index1)=>{
+					console.log("track ====>" , track , index1);
+					_.forEach(track.tasks , (task, index2)=>{
+						//console.log("task ====>" , task);
+						if(task.projectId._id ==  projectId){
+							console.log(" mactched");
+							//console.log("index of that task =======>" , index2);
+							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							this.newTracks[index1].tasks.push(track.tasks[index2]);
+						}
+					})
+				})
+				console.log("***********************************************");
+				console.log("This.newTracj ====>" , this.newTracks);
+				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(true));
+				this.trackChangeProjectWise = true;
+				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
+				this.trackChangeDeveloperWise = false;
+			}
+		}
+	}
+	filterByDeveloperId(developerId){
+		console.log("developer ID ========>" , developerId);
+		this.checkDeveloperId = developerId;
+		if(this.checkDeveloperId == "null"){
+			if(this.checkProjectId != "null"){
+				this.filterByProjectId(this.checkProjectId);
+			}
+			else if(this.checkDeveloperId == "null" && this.checkProjectId == "null"){
+				console.log("will do it l ater");
+				this.getProject();
+			}
+		}
+		else{
+			if(this.checkProjectId != "null" && this.checkDeveloperId != "null"){
+				this.filterByProjectIdAndDevelopmentId();
+			}
+			else{
+				this.getEmptyNewTracks();
+				_.forEach(this.tracks , (track ,index1)=>{
+					console.log("tracks of developer =========>" , track , index1);
+					_.forEach( track.tasks , (task , index2)=>{
+						console.log("task ====>" , task.assignTo._id , index2 );
+						if(task.assignTo._id == developerId){
+							console.log("mathched");
+							this.newTracks[index1].tasks.push(track.tasks[index2]);
+						}
+
+					})
+				})
+				console.log("********************************************");
+				console.log("devevloper new tracks ===========>" , this.newTracks);
+				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(true));
+				this.trackChangeDeveloperWise = true;
+				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
+				this.trackChangeProjectWise = false;
+			}
+		}
+	}
+	filterByProjectIdAndDevelopmentId(){
+		console.log("hey you are on right track");
+		this.getEmptyNewTracks();
+		_.forEach(this.tracks , (track , index1)=>{
+			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
+			_.forEach(track.tasks , (task , index2)=>{
+				console.log("task ===>" , task , index2);
+				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
+					console.log("matched");
+					this.newTracks[index1].tasks.push(track.tasks[index2]);
+				}
+			})
+		})
+	}
+
 }
