@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +21,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatCardModule} from '@angular/material/card';
 //import { MatIconModule } from "@angular/material/icon";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { LogsComponent } from './logs/logs.component';
 //import { DndModule } from 'ngx-drag-drop';
 
 @NgModule({
@@ -35,21 +38,22 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
     MainTableViewComponent,
     HeaderComponent,
     IssueComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    HomeComponent,
+    RegisterComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     FormsModule,
     HttpClientModule,
     DragDropModule,
-    MatCardModule
-    // DndModule,
-    // MatListModule,
-    // FlexLayoutModule,
-    // MatIconModule
+    MatCardModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

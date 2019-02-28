@@ -1,39 +1,77 @@
-<div class="container">
-	<table class="table table-bordered">
-		<thead>
-      <tr>
-        <th>Id</th>
-        <th class="project_title">Project Title</th>
-        <th class="project_description">Project Description</th>
-        <th>Project Alias</th>
-        <th class="team">Team</th>
-        <th class="action">Action</th>
-      </tr>
-    </thead>
-    <tbody *ngIf="project">
-    	<tr *ngFor="let p of project">
-    		<td>{{p.id}} </td>
-            <td class="project_title">{{p.ProjectTitle}}</td>
-            <td class="project_description">{{p.Description}}</td>
-            <td>{{p.ProjectAlias}}</td>
-            <td class="team">
-                <button type="button" class="btn btn-primary" (click)="addTeam()">Add Team</button>
-            </td>
-            <td class="action">
-                <button title="Edit Project" type="button" class="btn btn-sm btn-primary" (click)="editProject()">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+<div class="project_bord">
+    <div class="row">
+        <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
+            <div class="card">
+                <div class="card-header" routerLink="/project-details/{{project._id}}">
+                    <span><strong>UniqueId:</strong> {{project.uniqueId}}</span>
+                </div>
+                <div class="card-body padding-top-bottom-20 padding-left-right-10" routerLink="/project-details/{{project._id}}">
+                    <h4 class="card-title">{{project.title}}</h4>
+                    <p class="card-text">{{project.desc}}</p>
+                </div>
+                <hr class="no-margin no-padding">
+                <div class="card-action padding-10">
+                    <div class="card-text float-left"><strong title="task">T:</strong>{{(project.taskId.length>0)?project.taskId.length:0}},<strong title="Issue">I:</strong>{{(project.IssueId.length>0)?project.IssueId.length:0}},<strong title="Bug">B:</strong>{{(project.BugId.length>0)?project.BugId.length:0}}</div>
+                    <div class="float-right">
+                        <ul class="team-members">
+                            <span *ngIf="project.Teams.length>0">
+                                <li *ngFor="let Team of project.Teams" [title]="getTitle(Team.name)">
+                                    <a href="javascript:void(0);">
+                                        {{getInitialsOfName(Team.name)}}
+                                    </a>
+                                </li>
+                            </span>
+                            <li class="add-member">
+                                <a href="javascript:void(0);" title="Add Member">
+                                    <i class="fa fa-user-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 margin-bottom-30">
+            <div class="card">
+                <div class="card-body">
+                    <a href="javascript:void(0);" title="Add Project" data-toggle="modal" data-target="#createProject">
+                        <i class="fa fa-plus fa-5x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card">
+                    <h5 class="card-header white-text text-center py-4">
+                        <strong>Create Project</strong>
+                    </h5>
+                    <div class="card-body px-lg-5 pt-1">
+                        <form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
+                            <div class="md-form form-group">
+                                <label for="projecttitle">Project Title</label>
+                                <input type="text" id="projecttitle" formControlName="title" class="form-control">
+                            </div>
+                            <div class="md-form form-group">
+                                <label for="desc">Description</label>
+                                <textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+                <button type="button" class="btn btn-danger btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">
+                    Cancle
                 </button>
-                <button title="Delete Project" type="button" class="btn btn-sm btn-danger" (click)="deleteProject()">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-            </td>
-
-        </tr>
-    </tbody>
-				
-	</table>
-	<button type="button" class="btn btn-primary" (click)="createProject()" style="margin: 0px auto;display: table;">Create Project</button>
-	
-
-
+            </div>
+        </div>
+    </div>
 </div>

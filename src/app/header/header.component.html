@@ -37,26 +37,22 @@
         <li style="cursor: pointer;" title="User Profile">
             <div class="user-box">
                 <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid" style="border-radius: 50%;">
-                <p class="user text-center black-text">Rao Info Tech</p>
+                <p class="user text-center">Rao Info Tech</p>
             </div>
         </li>
         <li>
             <ul class="collapsible collapsible-accordion">
 
-                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Projects<i class="fa fa-angle-down rotate-icon"></i></a>
+                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects">Projects</span><i class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a routerLink="project-detail" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>Project-1</a></li>
-                            <li><a routerLink="project-detail" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-user-plus"></i>Project-2</a></li>
+                            <li *ngFor="let project of projects"><a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a routerLink="view-project" class="collapsible-header waves-effect" style="width: 100%;">View-Projects</a></li>
-                <li><a routerLink="create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
-
-                <li><a routerLink="main-table-view" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Issues</a></li>
-
-
+                <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
+                <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
+                <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
             </ul>
         </li>
         <div class="sidenav-bg mask-strong"></div>
@@ -74,7 +70,7 @@
                 <i class="fa fa-user"></i> <span class="hidden-sm-down">Profile</span>
             </a>
             <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item">Log Out</a>
+                <a class="dropdown-item" (click)="logout()">Log Out</a>
                 <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
             </div>
         </li>

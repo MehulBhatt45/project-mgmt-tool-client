@@ -1,392 +1,268 @@
-<div class="container">
-	<div class="row">
-		<table class="table table-bordered">
-			<thead>
-				<td>Id</td>
-				<td>Project Title</td>
-				<td>Project Description</td>
-				<td>Status</td>
-			</thead>
-			<tbody>
-				<td>1</td>
-				<td>jfdkg</td>
-				<td>fghgftyjgyjgh</td>
-				<td>running</td>
-			</tbody>
-		</table>
+<div class="row justify-content-end">
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
+		<div class="dropdown-menu dropdown-default">
+			<a class="dropdown-item" (click)="addItem('Task')">Task</a>
+			<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+		</div>
 	</div>
-	<!-- <div class="row">
-		<div class="col-sm-3">
-			<div class="card">
-				<div class="card-header">
-					<span>To Do</span>	
-				</div>	
-				<div>
-					<div class="card" style="cursor: move;">
-						<p >Lorem Ipsum is simply dummy text of the printing and </p>
-						<div class="row" style="padding-left: 25px;">
-							<div>
-								<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-							</div>
-						</div>
-						<div class="row" style="padding-left: 10px;">
-							<div class="col-sm-6">
-								<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-								<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-								<label class="label_text" >5</label>
-							</div>
-							<div class="col-sm-6">
-								<label>TIS-25</label>
-								<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-							</div>
-						</div>
-
-					</div>
-				<div class="card" style="margin-top: 5px;">
-					<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-					<div class="row" style="padding-left: 25px;">
-						<div>
-							<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-						</div>
-					</div>
-					<div class="row" style="padding-left: 10px;">
-						<div class="col-sm-6">
-							<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-							<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-							<label class="label_text" >5</label>
-						</div>
-						<div class="col-sm-6">
-							<label>TIS-25</label>
-							<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-						</div>
-					</div>
-				</div>
-				<div class="card" style="margin-top: 5px;">
-					<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-					<div class="row" style="padding-left: 25px;">
-
-						<div>
-							<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-						</div>
-					</div>
-					<div class="row" style="padding-left: 10px;">
-						<div class="col-sm-6">
-							<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-							<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-							<label class="label_text" >5</label>
-						</div>
-						<div class="col-sm-6">
-							<label>TIS-25</label>
-							<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-						</div>	
-					</div>
-				</div>	
-			</div>
-		</div>	
-	</div> -->
-	<!-- <div class="col-sm-3">
-		<div class="card">
-			<div class="card-header">
-				<span>In Progress</span>	
-			</div>	
-			<div>
-				<div class="card">
-					<p >Lorem Ipsum is simply dummy text of the printing and </p>
-					<div class="row" style="padding-left: 25px;">
-						<div>
-							<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-						</div>
-					</div>
-					<div class="row" style="padding-left: 10px;">
-						<div class="col-sm-6">
-							<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-							<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-							<label class="label_text" >5</label>
-						</div>
-						<div class="col-sm-6">
-							<label>TIS-25</label>
-							<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-						</div>
-					</div>
-				</div>
-			<div class="card" style="margin-top: 5px;">
-				<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-				<div class="row" style="padding-left: 25px;">
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>	
-</div> -->
-<!-- <div class="col-sm-3">
-	<div class="card">
-		<div class="card-header">
-			<span>Testing</span>	
-		</div>	
-		<div>
-			<div class="card">
-				<p >Lorem Ipsum is simply dummy text of the printing and </p>
-				<div class="row" style="padding-left: 25px;">
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>
-				</div>
-			</div>
-			<div class="card" style="margin-top: 5px;">
-				<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-				<div class="row" style="padding-left: 25px;">
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>
-				</div>
-			</div>
-			<div class="card" style="margin-top: 5px;">
-				<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-				<div class="row" style="padding-left: 25px;">
-
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>	
-				</div>
-			</div>	
-		</div>
-	</div>	
 </div>
-<div class="col-sm-3">
-	<div class="card">
-		<div class="card-header">
-			<span>Done</span>	
-		</div>	
-		<div>
-			<div class="card">
-				<p >Lorem Ipsum is simply dummy text of the printing and </p>
-				<div class="row" style="padding-left: 25px;">
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>
-				</div>
-			</div>
-			<div class="card" style="margin-top: 5px;">
-				<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-				<div class="row" style="padding-left: 25px;">
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>
-				</div>
-			</div>
-			<div class="card" style="margin-top: 5px;">
-				<p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-				<div class="row" style="padding-left: 25px;">
-
-					<div>
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">plan sprints</p>
-					</div>
-				</div>
-				<div class="row" style="padding-left: 10px;">
-					<div class="col-sm-6">
-						<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-						<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;"></i>
-						<label class="label_text" >5</label>
-					</div>
-					<div class="col-sm-6">
-						<label>TIS-25</label>
-						<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
-					</div>	
-				</div>
-			</div>	
-		</div>
-	</div>	
-</div>
-</div> -->
-</div>
-
-
 
 <div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
-
 	<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
 		<div class="card">
 			<div class="card-header">
-				<span>{{track.title}}</span>
-			</div>
-			
+				<span class="track_title">{{track.title}}</span>
+			</div>		
 		</div>
+		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+			<mat-card *ngFor="let task of track.tasks" cdkDrag>
+				<mat-card-content>
+					<div class="card" [ngClass]="track.class">
+						<div class="card-body" style="padding: 0px;">
+							<table>
+								<tr>
 
-		<!-- <h2 cdkDragHandle class="mat-h2">{{track.title}}</h2> -->
 
-		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks"
-		[cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-
-
-		<mat-card *ngFor="let task of track.tasks" cdkDrag>
-			<!-- Use the mat-card-content to add the proper spacing. -->
-			<mat-card-content>
-				<!-- {{task.title}} -->
-				<div class="card" style="padding-left: 10px;">
-					<div>{{task.description}}</div>
-
-					<div class="row" style="padding-left: 15px;padding-top: 5px;">
-						<p style="background-color: #FFC300;padding-right: 5px;" class="rounded">{{task.projectName}}</p>
+									<td colspan="2">
+										<div class="card-text">{{task.desc}}</div>
+									</td>
+									
+									<!-- <td>
+										<a href="javascript:void(0)" (click)="openModel(task)">
+											<i class="fa fa-edit text-Blue"></i>
+										</a>
+									</td> -->
+									<!-- <td colspan="2">
+										<label class="float-right">{{task.uniqueId}}</label>
+									</td> -->
+								</tr>
+							</table>
+								<!-- <tr (click)="openModel(task)" style="cursor: pointer;">
+									<td style="width: 50px;">
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(task.assignTo.name)}}
+												</a>
+											</li>
+											<li *ngIf="!task.assignTo" class="add-member">
+												<a href="javascript:void(0);" title="Add Member">
+													<i class="fa fa-user-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</td>
+									<td>
+										<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
+									</td>
+								</tr>
+								<tr (click)="openModel(task)" style="cursor: pointer;">
+									<td colspan="2">
+										<div class="card-text">{{task.desc}}</div>
+									</td>
+								</tr> -->
+								<ul>
+									<li class="icon_check">
+										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
+									</li>
+									<li>
+										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
+									</li>
+									
+									<li>
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(task.assignTo.name)}}
+												</a>
+											</li>
+											<li *ngIf="!task.assignTo" class="add-member">
+												<a href="javascript:void(0);" title="Add Member">
+													<i class="fa fa-user-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</li>
+									
+								</ul>
+								<label class="float-right">{{task.uniqueId}}</label>
+							</div>
+						<!-- <div class="card-action">
+							<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"></span>{{task.priority}}</label>
+						</div> -->
 					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>
+<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4> -->
+				<button type="button">
+					<i class="fa fa-redo"></i>
+				</button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="fa fa-times"></i>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="task">
+				<div class="container-fluid">
 					<div class="row">
-						<div class="col-sm-7">
-							<i class="fa fa-arrow-up fa-1x" aria-hidden="true" style="color: white;background-color: green"></i>
-							<i class="fa fa-ban fa-1x" aria-hidden="true" style="color: red;padding-left: 5px;">
-							</i>
-							<label class="label_text" >{{task.label}}</label>
+						<table>
+							<tr>
+								<td style="width: 50px;">
+									<ul class="team-members">	
+										<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+											<a href="javascript:void(0);">
+												{{getInitialsOfName(task.assignTo.name)}}
+											</a>
+										</li>
+										<li *ngIf="!task.assignTo" class="add-member">
+											<a href="javascript:void(0);" title="Add Member">
+												<i class="fa fa-user-plus"></i>
+											</a>
+										</li>
+									</ul>
+								</td>
+								<td>
+									<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="card-text">{{task.desc}}</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-12 col-md-6" *ngIf="task.createdBy">
+							<label><strong>Created By: &nbsp;</strong></label>
+							<span>{{task.createdBy.name}}, on {{task.createdAt | date}}</span>
 						</div>
-						<div class="col-sm-5">
-							<label>{{task.p_alias}}</label>
-							<img src="../assets/3.png"  height="25px" width="25px" style="margin-left:5px; " >
+						<div class="col-12 col-md-6">
+							<label><strong>Assign To: &nbsp;</strong></label>
+							<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
 						</div>
-
+						<div class="col-12 col-md-6" *ngIf="task.createdAt">
+							<label><strong>Due Date: &nbsp;</strong></label>
+							<span>{{task.createdAt | date}}</span>
+						</div>
+						<div class="col-12 col-md-6" *ngIf="task.priority">
+							<label><strong>Prority: &nbsp;</strong></label>
+							<span>{{task.priority}}</span>
+						</div>
+						<div class="col-12 col-md-6" *ngIf="task.status">
+							<label><strong>Status: &nbsp;</strong></label>
+							<span>{{task.status}}</span>
+						</div>								
+					</div>
+					<div class="row bg-light justify-content-between margin-top-20">
+						<div>
+							<button class="btn btn-default">Remove Assignment</button>
+							<button class="btn btn-default">Start Progress</button>
+						</div>
+						<div>
+							<button class="btn btn-default" (click)="editTask(task)">Edit</button>
+							<button class="btn btn-default"><i class="fa fa-ellipsis-h"></i></button>
+						</div>
+					</div>
+					<hr>
+					<h2>Comments</h2>
+					<div *ngIf="task.comment && task.comment.length>0">
+						<p>comments</p>
+					</div>
+					<div *ngIf="task.comment && task.comment.length<=0">
+						<p>No comments on this be the first one to comments on...</p>
+					</div>
+					<div class="row padding-20">
+						<div [froalaEditor]></div>
+						<button class="btn btn-default float-right">Add Comment</button>
 					</div>
 				</div>
-			</mat-card-content>
-		</mat-card>
-
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
 	</div>
-
 </div>
 
-</div>
- <!-- <div fxLayout="row">
-
-  <div fxFlex [fxLayout]="layout.container" class="layout-padding">
-    <div>
-      <pre>dndEffectAllowed="copyMove"</pre>
-      <mat-list [fxLayout]="layout.list" dndDropzone [dndHorizontal]="layout.dndHorizontal" dndEffectAllowed="copyMove" (dndDrop)="onDrop($event, draggableListLeft)" class="dndList">
-        <mat-list-item dndPlaceholderRef class="dndPlaceholder">
-
-        </mat-list-item>
-        <mat-list-item *ngFor="let item of draggableListLeft" [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable" (dndStart)="onDragStart($event)" (dndCopied)="onDragged(item, draggableListLeft, 'copy')" (dndLinked)="onDragged(item, draggableListLeft, 'link')" (dndMoved)="onDragged(item, draggableListLeft, 'move')" (dndCanceled)="onDragged(item, draggableListLeft, 'none')" (dndEnd)="onDragEnd($event)">
-          <mat-icon *ngIf="item.handle" mat-list-icon dndHandle>drag_handle
-          </mat-icon>
-          <h1 mat-line>{{item.content}}</h1>
-          <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
-        </mat-list-item>
-      </mat-list>
-    </div>
-    <div>
-      <pre>dndEffectAllowed="copyMove"</pre>
-      <mat-list [fxLayout]="layout.list"
-                dndDropzone
-                [dndHorizontal]="layout.dndHorizontal"
-                dndEffectAllowed="copyMove"
-                (dndDrop)="onDrop($event, draggableListRight)"
-                class="dndList">
-
-
-        <mat-list-item dndPlaceholderRef
-                       class="dndPlaceholder">
-        </mat-list-item>
-
-        <mat-list-item *ngFor="let item of draggableListRight"
-                       [dndDraggable]="item"
-                       [dndEffectAllowed]="item.effectAllowed"
-                       [dndDisableIf]="item.disable"
-                       (dndStart)="onDragStart($event)"
-                       (dndCopied)="onDragged(item, draggableListRight, 'copy')"
-                       (dndLinked)="onDragged(item, draggableListRight, 'link')"
-                       (dndMoved)="onDragged(item, draggableListRight, 'move')"
-                       (dndCanceled)="onDragged(item, draggableListRight, 'none')"
-                       (dndEnd)="onDragEnd($event)">
-          <mat-icon *ngIf="item.handle"
-                    mat-list-icon
-                    dndHandle>drag_handle
-          </mat-icon>
-          <h1 mat-line>{{item.content}}</h1>
-          <p mat-line>effectAllowed: {{item.effectAllowed}}</p>
-        </mat-list-item>
-
-      </mat-list>
-
-    </div>
-
-    <div>
-
-      <pre>trash (dndEffectAllowed="move")</pre>
-
-      <mat-list [fxLayout]="layout.list"
-                dndDropzone
-                [dndHorizontal]="layout.dndHorizontal"
-                dndEffectAllowed="move"
-                (dndDrop)="onDrop($event)"
-                class="dndList">
-
-      </mat-list>
-
-    </div>
-
-  </div>
-
-</div> -->
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="task">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
+						<div class="form-group col-12">
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class="row no-margin no padding">
+							<div class="form-group col-12 col-lg-6">
+								<label for="assignTo">Assign To</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+							</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+									<option value="low">Low</option>
+									<option value="medium">Medium</option>
+									<option value="high">High</option>
+								</select>
+							</div>
+						</div>
+						<div class="row no-margin no padding">
+							<div class="form-group col-12 col-lg-6">
+								<!-- <div class="form-group"> -->
+									<label for="startDate">Start Date</label>
+									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
+									<!-- </div> -->
+								</div>
+								<div class="form-group col-12 col-lg-6">
+									<!-- <div class="form-group"> -->
+										<label for="dueDate">Due Date</label>
+										<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="form-group col-12">
+									<label for="status">Status</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <script type="text/javascript">
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+		</script> -->

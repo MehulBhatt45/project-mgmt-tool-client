@@ -13,3 +13,45 @@ table{
 .team, .action{
 	white-space: nowrap;
 }
+.card {
+    height: 100%;
+}
+.card-header, .card-body{
+	cursor: pointer;
+}
+.card-action span strong{
+	cursor: pointer;
+}
+
+.team-members li{
+	height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: inline-block;
+    text-align: center;
+    padding: 9px 4px;
+    font-weight: 700;
+    font-size: 14px;
+    background-color: #55b0ab;
+    float: left;
+    margin-right: -18px;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+    box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
+    position: relative;
+}
+
+.team-members li:hover{
+	z-index: 1;
+}
+
+.team-members li.add-member{
+	margin-right: 0;
+	padding: 8px 12px;
+}
+
+.team-members li a{
+	color: #fff;
+	text-transform: uppercase;
+}

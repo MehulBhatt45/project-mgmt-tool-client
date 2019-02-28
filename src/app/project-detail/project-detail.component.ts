@@ -1,111 +1,124 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-//import { DndDropEvent, DropEffect } from "ngx-drag-drop";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { ProjectService } from '../services/project.service';
+import { AlertService } from '../services/alert.service';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-export interface Track {
-  title: string;
-  id: string;
-  tasks: Task[];
-}
+declare var $ : any;
+import * as _ from 'lodash';
 
-export interface Task {
-  //title: string;
-  description: string;
-  projectName: string;
-  label:string;
-  p_alias:string;
-
-  id: string;
-}
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
 	styleUrls: ['./project-detail.component.css']
 })
 export class ProjectDetailComponent implements OnInit {
-	tracks: Track[] = [
-	{
-		"title": "Todo",
-		"id": "todo",
-		"tasks": [
+	tracks:any;
+	modalTitle;
+	task;
+	project;
+	projectId;
+	allStatusList = this._projectService.getAllStatus();
+	allPriorityList = this._projectService.getAllProtity();
+	editTaskForm;
+	developers;
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+			this.getEmptyTracks();
+			this.getProject(this.projectId);
+		});
+		this.createEditTaskForm();
+	}
+
+	getEmptyTracks(){
+		this.tracks = [
 		{
-			"id": "first-task",
-			//"title": "First Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
-		}
-		]
-	},
-	{
-		"title": "In Progress",
-		"id": "inprogress",
-		"tasks": [
-		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
+
+			]
 		},
 		{
-			"id": "seconf-task",
-			//"title": "Second Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-            "projectName": "plan sprints",
-            "label":"5",
-            "p_alias":"TIS-25"
-		}
-		]
-	},
-	{
-		"title": "Testing",
-		"id": "testing",
-		"tasks": [
-		{
-			"id": "third-task",
-			//"title": "Third Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
 
-		}
-		]
-	},
-	{
-		"title": "Done",
-		"id": "done",
-		"tasks": [
+			]
+		},
 		{
-			"id": "fourth-task",
-			//"title": "Fourth Task",
-			"description": "Lorem Ipsum is simply dummy text of the printing and",
-			"projectName": "plan sprints",
-			"label":"5",
-			"p_alias":"TIS-25"
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
 
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
+
+			]
 		}
-		]
+		];
 	}
-	];
-	constructor() { 
-		//this.setHorizontalLayout( this.horizontalLayoutActive );
+
+	createEditTaskForm(){
+		this.editTaskForm = new FormGroup({
+			title : new FormControl('', Validators.required),
+			desc : new FormControl('', Validators.required),
+			assignTo : new FormControl('', Validators.required),
+			priority : new FormControl('', Validators.required),
+			startDate : new FormControl('', Validators.required),
+			dueDate : new FormControl('', Validators.required),
+			status : new FormControl({value: '', disabled: true}, Validators.required)
+		})
 	}
 
 	ngOnInit() {
+		this.getAllDevelopers();
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+	}
+
+	getAllDevelopers(){
+		this._projectService.getAllDevelopers().subscribe(res=>{
+			this.developers = res;
+			console.log(this.developers);
+		},err=>{
+			this._alertService.error(err);
+		})
+	}
+
+	getProject(id){
+		this._projectService.getProjectById(id).subscribe((res:any)=>{
+			console.log(res);
+			this.project = res;
+			_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+				_.forEach(this.tracks, (track)=>{
+					if(content.status == track.id){
+						track.tasks.push(content);
+					}
+				})
+			})
+			console.log(this.tracks);
+		},err=>{
+			console.log(err);
+		})
 	}
 
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
 
-	onTalkDrop(event: CdkDragDrop<Task[]>) {
-		// In case the destination container is different from the previous container, we
-		// need to transfer the given task to the target data array. This happens if
-		// a task has been dropped on a different track.
+	onTalkDrop(event: CdkDragDrop<any>) {
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -113,110 +126,94 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
+			console.log(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[0]);
 		}
 	}
 
-	onTrackDrop(event: CdkDragDrop<Track[]>) {
+	onTrackDrop(event: CdkDragDrop<any>) {
+		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
+
+	updateStatus(newStatus, data){
+		if(newStatus=='complete'){
+			data.status = newStatus;
+			this._projectService.completeItem(data).subscribe(res=>{
+				console.log(res);
+			},err=>{
+				console.log(err);
+			})
+		}else{
+			data.status = newStatus;
+			this._projectService.updateStatus(data).subscribe(res=>{
+				console.log(res);
+			},err=>{
+				console.log(err);
+			})
+		}
+	}
+
+	getTitle(name){
+		var str = name.split(' ');
+		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+	}
+
+	getInitialsOfName(name){
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+	}
+
+	getColorCodeOfPriority(priority) {
+		for (var i = 0; i < this.allPriorityList.length; i++) {
+			if (this.allPriorityList[i].value == priority) {
+				return this.allPriorityList[i].colorCode;
+			}
+		}
+
+	}
+
+	openModel(task){
+		console.log(task);
+		this.task = task;
+		$('#fullHeightModalRight').modal('show');
+	}
+
+	updateTask(task){
+		console.log(task);
+		this._projectService.updateData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+		},err=>{
+			console.log(err);
+		})
+	}
+
+	editTask(task){
+		this.task = task;
+		this.modalTitle = 'Edit Item'
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	addItem(option){
+		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+	}
+
+	saveTheData(task){
+		task['projectId']= this.projectId; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task.startDate = $("#startDate").val();
+		task.dueDate = $("#dueDate").val();
+		console.log(task);
+		this._projectService.addData(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+			this.getProject(this.projectId);
+		},err=>{
+			console.log(err);
+		})
+	}
 }
-
-// 	draggableListLeft = [
-// 	{
-	// 		content: "Left",
-	// 		effectAllowed: "move",
-	// 		disable: false,
-	// 		handle: false,
-	// 	},
-	// 	{
-		// 		content: "Lefter",
-		// 		effectAllowed: "move",
-		// 		disable: false,
-		// 		handle: false,
-		// 	},
-		// 	{
-			// 		content: "Leftest",
-			// 		effectAllowed: "copyMove",
-			// 		disable: false,
-			// 		handle: false
-			// 	},
-			// 	{
-				// 		content: "Lefty",
-				// 		effectAllowed: "move",
-				// 		disable: false,
-				// 		handle: true,
-				// 	}
-				// 	];
-
-				// 	draggableListRight = [
-				// 	{
-					// 		content: "I was originally right",
-					// 		effectAllowed: "move",
-					// 		disable: false,
-					// 		handle: false,
-					// 	}
-					// 	];
-					// 	layout:any;
-					// 	horizontalLayoutActive:boolean = false;
-					// 	private currentDraggableEvent:DragEvent;
-					// 	private currentDragEffectMsg:string;
-					// 	private readonly verticalLayout = {
-						// 		container: "row",
-						// 		list: "column",
-						// 		dndHorizontal: false
-						// 	};
-						// 	private readonly horizontalLayout = {
-							// 		container: "row",
-							// 		list: "row",
-							// 		dndHorizontal: true
-							// 	};
-
-
-							// 	setHorizontalLayout( horizontalLayoutActive:boolean ) {
-
-								// 		this.layout = (horizontalLayoutActive) ? this.horizontalLayout : this.verticalLayout;
-								// 	}
-
-								// 	onDragStart( event:DragEvent ) {
-
-									// 		this.currentDragEffectMsg = "";
-									// 		this.currentDraggableEvent = event;
-
-
-									// 	}
-
-									// 	onDragged( item:any, list:any[], effect:DropEffect ) {
-
-										// 		this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
-
-										// 		if( effect === "move" ) {
-
-											// 			const index = list.indexOf( item );
-											// 			list.splice( index, 1 );
-											// 		}
-											// 	}
-
-											// 	onDragEnd( event:DragEvent ) {
-
-												// 		this.currentDraggableEvent = event;
-
-												// 	}
-
-												// 	onDrop( event:DndDropEvent, list?:any[] ) {
-
-													// 		if( list
-													// 			&& (event.dropEffect === "copy"
-													// 				|| event.dropEffect === "move") ) {
-
-														// 			let index = event.index;
-
-														// 		if( typeof index === "undefined" ) {
-
-															// 			index = list.length;
-															// 		}
-
-															// 		list.splice( index, 0, event.data );
-															// 	}
-															// }
-
-// }
