@@ -1,13 +1,13 @@
 <div class="row justify-content-end">
 	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterByProjectId($event.target.value)">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterByProjectId($event.target.value , $event.target.value1)">
 			<option value="null" selected>All Projects</option>
 			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 		</select>
 	</div>
 	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers" (change)="filterByProjectId($event.target.value)">
-			<option value="null" selected>Select Developer</option>
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers" (change)="filterByDeveloperId($event.target.value)">
+			<option value="null" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
 	</div>
@@ -20,8 +20,8 @@
 		</div>
 	</div>
 </div>
-<span *ngIf="trackChange">
-<div class="board" cdkDropList [cdkDropListData]="newTracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+<span *ngIf="trackChangeDeveloperWise || trackChangeProjectWise ">
+<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 	<div class="card-list mat-elevation-z1" *ngFor="let track of newTracks">
 		<div class="card">
 			<div class="card-header">
@@ -31,7 +31,7 @@
 		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 			<mat-card *ngFor="let task of track.tasks" cdkDrag>
 				<mat-card-content>
-					<div class="card" [ngClass]="newTracks.class">
+					<div class="card" [ngClass]="track.class">
 						<div class="card-body" style="padding: 0;">
 							<table>
 								<tr>
@@ -200,7 +200,7 @@
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
 								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+									<option *ngFor="let developenewTracks of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
 							</div>
 							<div class="form-group col-12 col-lg-6">
@@ -229,7 +229,7 @@
 								<div class="form-group col-12">
 									<label for="status">Status</label>
 									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+										<option *ngFor="let trak of newTracks" value="{{trak.id}}">{{trak.title}}</option>
 									</select>
 								</div>
 							</form>
@@ -271,7 +271,7 @@
 
 
 
-<span *ngIf="!trackChange">
+<span *ngIf=" !trackChangeDeveloperWise && !trackChangeProjectWise">
 <div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 	<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
 		<div class="card">
