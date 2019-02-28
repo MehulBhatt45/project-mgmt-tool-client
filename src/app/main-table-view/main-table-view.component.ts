@@ -13,8 +13,8 @@ import * as _ from 'lodash';
 	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
-	checkProjectId = null;
-	checkDeveloperId = null;
+	checkProjectId = "null";
+	checkDeveloperId = "null";
 	tracks:any;
 	modalTitle;
 	task;
@@ -253,72 +253,97 @@ export class MainTableViewComponent implements OnInit {
 		})
 	}
 	filterByProjectId(projectId){
-		//console.log("Developer ID ====>" , projectId);
-		console.log("Project ID ====>" , projectId);
-		var localTrackArray;
-		if(projectId == "null"){
-			this.checkProjectId = null;
-			if(this.checkProjectId == "null" && this.checkDeveloperId != "null"){
+		console.log("Developer ID ====>" , projectId);
+		//xconsole.log("Project ID ====>" , projectId);
+		this.checkProjectId = projectId;
+		console.log("this.checkProjectId ========>" , this.checkProjectId);
+		if(this.checkProjectId == "null"){
+			if(this.checkDeveloperId != "null"){
 				console.log("************this.checkProjectId == null && this.checkDeveloperId != null ******");
 				this.filterByDeveloperId(this.checkDeveloperId);
 			}
-			else{
+			else if(this.checkProjectId == "null" && this.checkDeveloperId == "null"){
 				console.log("do it later");
 				this.getProject();
 			}
 		}else{
-			this.getEmptyNewTracks();
-			_.forEach(this.tracks , (track , index1)=>{
-				console.log("track ====>" , track , index1);
-				_.forEach(track.tasks , (task, index2)=>{
-					//console.log("task ====>" , task);
-					if(task.projectId._id ==  projectId){
-						console.log(" mactched");
-						//console.log("index of that task =======>" , index2);
-					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
-						this.newTracks[index1].tasks.push(track.tasks[index2]);
-					}
-				})
-			})
-			console.log("***********************************************");
-			console.log("This.newTracj ====>" , this.newTracks);
-			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(true));
-			this.trackChangeProjectWise = true;
-			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-			this.trackChangeDeveloperWise = false;
+			if(this.checkDeveloperId != "null" && this.checkProjectId != "null"){
+				this.filterByProjectIdAndDevelopmentId();
 			}
+			else{
+				this.getEmptyNewTracks();
+				_.forEach(this.tracks , (track , index1)=>{
+					console.log("track ====>" , track , index1);
+					_.forEach(track.tasks , (task, index2)=>{
+						//console.log("task ====>" , task);
+						if(task.projectId._id ==  projectId){
+							console.log(" mactched");
+							//console.log("index of that task =======>" , index2);
+							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							this.newTracks[index1].tasks.push(track.tasks[index2]);
+						}
+					})
+				})
+				console.log("***********************************************");
+				console.log("This.newTracj ====>" , this.newTracks);
+				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(true));
+				this.trackChangeProjectWise = true;
+				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
+				this.trackChangeDeveloperWise = false;
+			}
+		}
 	}
 	filterByDeveloperId(developerId){
 		console.log("developer ID ========>" , developerId);
-		if(developerId == "null"){
-			this.checkDeveloperId = null;
-			if(this.checkDeveloperId = null && this.checkProjectId != null){
+		this.checkDeveloperId = developerId;
+		if(this.checkDeveloperId == "null"){
+			if(this.checkProjectId != "null"){
 				this.filterByProjectId(this.checkProjectId);
 			}
-			else{
-				console.log("will do it later");
+			else if(this.checkDeveloperId == "null" && this.checkProjectId == "null"){
+				console.log("will do it l ater");
 				this.getProject();
 			}
-		}else{
-			this.getEmptyNewTracks();
-			_.forEach(this.tracks , (track ,index1)=>{
-				console.log("tracks of developer =========>" , track , index1);
-				_.forEach( track.tasks , (task , index2)=>{
-					console.log("task ====>" , task.assignTo._id , index2 );
-					if(task.assignTo._id == developerId){
-						console.log("mathched");
-						this.newTracks[index1].tasks.push(track.tasks[index2]);
-					}
-
-				})
-			})
-			console.log("********************************************");
-			console.log("devevloper new tracks ===========>" , this.newTracks);
-			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(true));
-			this.trackChangeDeveloperWise = true;
-			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-			this.trackChangeProjectWise = false;
 		}
+		else{
+			if(this.checkProjectId != "null" && this.checkDeveloperId != "null"){
+				this.filterByProjectIdAndDevelopmentId();
+			}
+			else{
+				this.getEmptyNewTracks();
+				_.forEach(this.tracks , (track ,index1)=>{
+					console.log("tracks of developer =========>" , track , index1);
+					_.forEach( track.tasks , (task , index2)=>{
+						console.log("task ====>" , task.assignTo._id , index2 );
+						if(task.assignTo._id == developerId){
+							console.log("mathched");
+							this.newTracks[index1].tasks.push(track.tasks[index2]);
+						}
+
+					})
+				})
+				console.log("********************************************");
+				console.log("devevloper new tracks ===========>" , this.newTracks);
+				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(true));
+				this.trackChangeDeveloperWise = true;
+				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
+				this.trackChangeProjectWise = false;
+			}
+		}
+	}
+	filterByProjectIdAndDevelopmentId(){
+		console.log("hey you are on right track");
+		this.getEmptyNewTracks();
+		_.forEach(this.tracks , (track , index1)=>{
+			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
+			_.forEach(track.tasks , (task , index2)=>{
+				console.log("task ===>" , task , index2);
+				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
+					console.log("matched");
+					this.newTracks[index1].tasks.push(track.tasks[index2]);
+				}
+			})
+		})
 	}
 
 }
