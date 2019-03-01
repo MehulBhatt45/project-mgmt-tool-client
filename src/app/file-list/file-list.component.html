@@ -19,8 +19,11 @@
 			<tbody>
 				<tr *ngFor="let file of files; let i = index; ">
 					<td>{{i+1}}</td>
-					<td>{{file.split('/')[8]}}</td>
-					<td>Download, Delete</td>
+					<td>{{file.split('/')[7]}}</td>
+					<td>
+						<a class="btn btn-link padding-5" href="{{file}}" target="_blank"><i class="fas fa-file-download"></i></a>
+						<a class="btn btn-link padding-5" (click)="deleteFile(file.split('/')[7])"><i class="far fa-trash-alt"></i></a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -10,7 +10,8 @@ declare var $: any;
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-	projects
+	projects;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(private router: Router,
 		private _loginService: LoginService,  public _projectservice:ProjectService) {
 	}

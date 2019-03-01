@@ -100,6 +100,7 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this._projectService.getProjectById(id).subscribe((res:any)=>{
 			console.log(res);
+			this.getEmptyTracks()
 			this.project = res;
 			_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
 				_.forEach(this.tracks, (track)=>{
@@ -142,8 +143,9 @@ export class ProjectDetailComponent implements OnInit {
 			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 			console.log(subUrl);
 			data.status = newStatus;
-			this._projectService.completeItem(data, subUrl).subscribe(res=>{
+			this._projectService.completeItem(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})
@@ -153,8 +155,9 @@ export class ProjectDetailComponent implements OnInit {
 			var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
 			console.log(subUrl);
-			this._projectService.updateStatus(data, subUrl).subscribe(res=>{
+			this._projectService.updateStatus(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})

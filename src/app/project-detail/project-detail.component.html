@@ -19,7 +19,7 @@
 		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 			<mat-card *ngFor="let task of track.tasks" cdkDrag>
 				<mat-card-content>
-					<div class="card" [ngClass]="track.class">
+					<div class="card" [ngClass]="track.class" (click)="openModel(task)">
 						<div class="card-body" style="padding: 0px;">
 							<table>
 								<tr>
@@ -166,7 +166,9 @@
 					<div class="row bg-light justify-content-between margin-top-20">
 						<div>
 							<button class="btn btn-default">Remove Assignment</button>
-							<button class="btn btn-default">Start Progress</button>
+							<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+							<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+							<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
 						</div>
 						<div>
 							<button class="btn btn-default" (click)="editTask(task)">Edit</button>
