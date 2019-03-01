@@ -85,3 +85,59 @@
 .sidenav {padding-top: 15px;}
 .sidenav a {font-size: 18px;}
 */
+
+.side_fixed_nav{
+  -webkit-box-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+ left: 0px;
+  position: fixed;
+  top: 62px;
+  z-index: 300;
+  height: 100vh;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  padding-top: 24px;
+  width: 64px;
+  background-color: rgb(189, 194, 193);
+  color: rgb(0, 0, 0);
+  fill: rgb(189, 194, 193);
+  height: 91%;
+}
+.top_icon{
+ 
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  /*-webkit-box-pack: justify;*/
+  /*justify-content: space-between;*/
+  width: 100%;
+  padding-bottom: 16px;
+}
+.bottom_icon{
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  /*-webkit-box-pack: justify;*/
+  /*justify-content: space-between;*/
+  width: 100%;
+  padding-top: 8px;
+}
+
+
+.second_icon{
+  padding-bottom: 12px;
+  display: inline-block;
+}
+.star_link{
+  color:black;
+
+}
+.fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
+  font-size: 23px;
+}

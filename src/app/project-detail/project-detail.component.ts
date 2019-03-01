@@ -23,6 +23,7 @@ export class ProjectDetailComponent implements OnInit {
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
+	loader : boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -98,21 +99,26 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-		this._projectService.getProjectById(id).subscribe((res:any)=>{
-			console.log(res);
-			this.getEmptyTracks()
-			this.project = res;
-			_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-				_.forEach(this.tracks, (track)=>{
-					if(content.status == track.id){
-						track.tasks.push(content);
-					}
+		this.loader = true;
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				console.log(res);
+				this.getEmptyTracks()
+				this.project = res;
+				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					})
 				})
+				console.log(this.tracks);
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
 			})
-			console.log(this.tracks);
-		},err=>{
-			console.log(err);
-		})
+		},1000);
 	}
 
 	get trackIds(): string[] {
@@ -185,9 +191,12 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	openModel(task){
+		
 		console.log(task);
 		this.task = task;
 		$('#fullHeightModalRight').modal('show');
+		
+		
 	}
 
 	updateTask(task){
@@ -199,7 +208,9 @@ export class ProjectDetailComponent implements OnInit {
 			$('#editModel').modal('hide');
 		},err=>{
 			console.log(err);
+			
 		})
+		
 	}
 
 	editTask(task){
@@ -210,10 +221,14 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	addItem(option){
+		this.loader=true;
+		setTimeout(()=>{
 		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#editModel').modal('show');
+		this.loader=false;
+	},1000);
 	}
 
 	saveTheData(task){

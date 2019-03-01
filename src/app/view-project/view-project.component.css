@@ -70,3 +70,6 @@ table{
     text-transform: capitalize;
     font-weight: bold;
 }
+.margin_left{
+    margin-left: 45px;
+}
