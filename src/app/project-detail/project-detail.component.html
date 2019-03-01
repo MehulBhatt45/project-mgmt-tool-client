@@ -61,18 +61,6 @@
 				<input type="text" id="exampleForm2" class="form-control"></li>
 			</ul>
 		</div>
-<<<<<<< HEAD
-=======
-		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-			<mat-card *ngFor="let task of track.tasks" cdkDrag>
-				<mat-card-content>
-					<div class="card" [ngClass]="track.class" (click)="openModel(task)">
-						<div class="card-body" style="padding: 0px;">
-							<table>
-								<tr>
->>>>>>> f3158fa8b74122b097c4dfcd35909206589268d5
-
-
 		<div class="all_card">
 			<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
@@ -88,8 +76,6 @@
 									<div class="card-body" style="padding: 0px;">
 										<table>
 											<tr>
-
-
 												<td colspan="2">
 													<div class="card-text">{{task.desc}}</div>
 												</td>
@@ -330,8 +316,4 @@
 				</div>
 			</div>
 		</div>
-		<!-- <script type="text/javascript">
-			$(function () {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
-		</script> -->
+		
