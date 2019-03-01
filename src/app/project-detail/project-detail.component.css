@@ -1,3 +1,4 @@
+
 p{
 	padding-left: 10px;
 
@@ -53,7 +54,9 @@ img{
   flex-direction: column;
 }
 
-
+.card-body{
+  background-color: white;
+}
 
 .card-list:last-child{
   margin-right: 0px;
@@ -70,7 +73,7 @@ img{
 .card-list-content {
   /*overflow: auto;
   flex-grow: 1;*/
-  background-color: #dee2e6;
+  background-color: #f6f4f6;
   min-height: 100px;
 }
 
@@ -82,15 +85,15 @@ img{
 }
 
 .team-members li{
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
   border: 2px solid white;
   display: inline-block;
   text-align: center;
-  padding: 10px 4px;
+  padding: 3px 2px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 10px;
   background-color: #55b0ab;
   float: left;
   -webkit-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
@@ -119,16 +122,65 @@ td[colspan="2"] {
   padding: 5px 0px;
 }
 table {
-  width: 100%;
+  /*width: 100%;*/
 }
 
-label{
+/*label{
   margin: 0;
-}
+}*/
 .priority-text{
   text-transform: capitalize;
+  margin: 0;
 }
 .priority-text span{
-  margin-right: 5px;
   display: inline-flex;
+}
+
+.card-header{
+  background-color: #f4f5f7 !important;
+  border-radius: 4px 4px 0 0;
+   padding: 1px 3px 0;
+   height: 35px;
+}
+.mat-card{
+  padding: 0;
+  margin-bottom: 5px;
+}
+.track_title{
+  color: #5E6C84;
+    font-size: 0.85714286em;
+    font-weight: 600;
+    line-height: 1.33333333;
+    text-transform: uppercase;
+    font-weight: normal; 
+}
+
+.card .card-body .card-text {
+   color: #172B4D;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+
+}
+.fa{
+  color:#1a73e8;
+  border:none;
+  
+  border-radius: 5px;
+  font-size: 19px;
+  /*height: 15px;*/
+}
+.float-right {
+    float: left!important;
+    width: 100px;
+}
+.icon_check{
+  padding: 0;
+}
+.card-body > ul > li {
+    display: inline-block;
+    /* float: left; */
+    vertical-align: middle;
+    margin-right: 10px;
+    line-height: 16px;
 }

@@ -13,26 +13,33 @@
 	<div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
 		<div class="card">
 			<div class="card-header">
-				<span>{{track.title}}</span>
+				<span class="track_title">{{track.title}}</span>
 			</div>		
 		</div>
 		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 			<mat-card *ngFor="let task of track.tasks" cdkDrag>
 				<mat-card-content>
 					<div class="card" [ngClass]="track.class">
-						<div class="card-body" style="padding: 0;">
+						<div class="card-body" style="padding: 0px;">
 							<table>
 								<tr>
+
+
+									<td colspan="2">
+										<div class="card-text">{{task.desc}}</div>
+									</td>
+									
 									<!-- <td>
 										<a href="javascript:void(0)" (click)="openModel(task)">
 											<i class="fa fa-edit text-Blue"></i>
 										</a>
 									</td> -->
-									<td colspan="2">
+									<!-- <td colspan="2">
 										<label class="float-right">{{task.uniqueId}}</label>
-									</td>
+									</td> -->
 								</tr>
-								<tr (click)="openModel(task)" style="cursor: pointer;">
+							</table>
+								<!-- <tr (click)="openModel(task)" style="cursor: pointer;">
 									<td style="width: 50px;">
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -55,12 +62,36 @@
 									<td colspan="2">
 										<div class="card-text">{{task.desc}}</div>
 									</td>
-								</tr>
-							</table>
-						</div>
-						<div class="card-action">
+								</tr> -->
+								<ul>
+									<li class="icon_check">
+										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
+									</li>
+									<li>
+										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
+									</li>
+									
+									<li>
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(task.assignTo.name)}}
+												</a>
+											</li>
+											<li *ngIf="!task.assignTo" class="add-member">
+												<a href="javascript:void(0);" title="Add Member">
+													<i class="fa fa-user-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</li>
+									
+								</ul>
+								<label class="float-right">{{task.uniqueId}}</label>
+							</div>
+						<!-- <div class="card-action">
 							<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"></span>{{task.priority}}</label>
-						</div>
+						</div> -->
 					</div>
 				</mat-card-content>
 			</mat-card>
@@ -205,28 +236,33 @@
 								<!-- <div class="form-group"> -->
 									<label for="startDate">Start Date</label>
 									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
-								<!-- </div> -->
-							</div>
-							<div class="form-group col-12 col-lg-6">
-								<!-- <div class="form-group"> -->
-									<label for="dueDate">Due Date</label>
-									<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
-								<!-- </div> -->
-							</div>
+									<!-- </div> -->
+								</div>
+								<div class="form-group col-12 col-lg-6">
+									<!-- <div class="form-group"> -->
+										<label for="dueDate">Due Date</label>
+										<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
+										<!-- </div> -->
+									</div>
+								</div>
+								<div class="form-group col-12">
+									<label for="status">Status</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+									</select>
+								</div>
+							</form>
 						</div>
-						<div class="form-group col-12">
-							<label for="status">Status</label>
-							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-							</select>
-						</div>
-					</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-			</div>
 		</div>
-	</div>
-</div>
+		<!-- <script type="text/javascript">
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+		</script> -->

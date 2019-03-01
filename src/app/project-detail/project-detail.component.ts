@@ -83,6 +83,9 @@ export class ProjectDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAllDevelopers();
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
 	}
 
 	getAllDevelopers(){

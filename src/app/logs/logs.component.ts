@@ -69,7 +69,7 @@ export class LogsComponent implements OnInit {
 				for(var i = 0; i < res.data.bug[0].timelog.length ; i++){
 					if(res.data.bug[0].timelog[i].operatedBy == this.memberId){
 						console.log("matched");
-						if(res.data.issue[0].timelog[i] == null){
+						if(res.data.bug[0].timelog[i] == null){
 							var index = 0;
 							this.finalArray.splice(index , 1);	
 						}
