@@ -57,11 +57,8 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/addProject", body, httpOptions);
 	}
 
-	addData(data){
+	addData(data, subUrl){
 		console.log(data);
-		var subUrl; 
-		subUrl = _.includes(data.uniqueId, 'TASK')?"task/add-task/":'' || _.includes(data.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -72,11 +69,8 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
 
-	updateData(data){
+	updateData(data, subUrl){
 		console.log(data);
-		var subUrl; 
-		subUrl = _.includes(data.uniqueId, 'TASK')?"task/update/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -87,10 +81,7 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
 	}
 
-	updateStatus(data){
-		var subUrl; 
-		subUrl = _.includes(data.uniqueId, 'TASK')?"task/update/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
+	updateStatus(data, subUrl){
 		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -101,10 +92,7 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
 	}
 
-	completeItem(data){
-		var subUrl; 
-		subUrl = _.includes(data.uniqueId, 'TASK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
-		console.log(subUrl);
+	completeItem(data, subUrl){
 		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -124,5 +112,19 @@ export class ProjectService {
 			})
 		};
 		return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId , httpOptions);
+	}
+	uploadFiles(formData){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"project/upload-file",formData);
+	}
+
+	getAllFilesInfolder(id){
+		var obj = { projectId: id };
+		return this.http.post(config.baseApiUrl+"project/get-all-files", obj);
 	}
 }

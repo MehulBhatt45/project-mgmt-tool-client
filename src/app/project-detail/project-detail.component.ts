@@ -135,15 +135,22 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
+			var subUrl; 
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
+			console.log(subUrl);
 			data.status = newStatus;
-			this._projectService.completeItem(data).subscribe(res=>{
+			this._projectService.completeItem(data, subUrl).subscribe(res=>{
 				console.log(res);
 			},err=>{
 				console.log(err);
 			})
 		}else{
 			data.status = newStatus;
-			this._projectService.updateStatus(data).subscribe(res=>{
+			console.log("UniqueId", data.uniqueId);
+			var subUrl; 
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
+			console.log(subUrl);
+			this._projectService.updateStatus(data, subUrl).subscribe(res=>{
 				console.log(res);
 			},err=>{
 				console.log(err);
@@ -179,7 +186,10 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateTask(task){
 		console.log(task);
-		this._projectService.updateData(task).subscribe((res:any)=>{
+		var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
+		console.log(subUrl);
+		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
 			console.log(err);
@@ -202,11 +212,14 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		console.log(task);
-		this._projectService.addData(task).subscribe((res:any)=>{
+		var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		console.log(subUrl);
+		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 			this.getProject(this.projectId);
 		},err=>{

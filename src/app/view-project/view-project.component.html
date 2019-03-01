@@ -2,8 +2,12 @@
     <div class="row">
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
             <div class="card">
-                <div class="card-header" routerLink="/project-details/{{project._id}}">
+                <div class="card-header">
                     <span><strong>UniqueId:</strong> {{project.uniqueId}}</span>
+                    <div class="float-right">
+                    <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
+                    <span><i class="fa fa-star"></i></span>
+                    </div>
                 </div>
                 <div class="card-body padding-top-bottom-20 padding-left-right-10" routerLink="/project-details/{{project._id}}">
                     <h4 class="card-title">{{project.title}}</h4>
@@ -22,9 +26,16 @@
                                 </li>
                             </span>
                             <li class="add-member">
-                                <a href="javascript:void(0);" title="Add Member">
+                                <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user-plus"></i>
                                 </a>
+                                <div class="dropdown-menu">
+                                    <p class="dropdown-item">Action</p>
+                                    <p class="dropdown-item">Another action</p>
+                                    <p class="dropdown-item">Something else here</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p class="dropdown-item">Add</p>
+                                </div>
                             </li>
                         </ul>
                     </div>

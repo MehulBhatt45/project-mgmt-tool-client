@@ -1,0 +1,28 @@
+<div class="container">
+	<div class="row justify-content-between">
+		<h2 class="text-center">Uploaded Files</h2>
+		<button class="btn btn-default float-right" (click)="fileUpload.click()">
+			<i class="fa fa-paperclip mr-1"></i> Add Files
+			<input type="file" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden (change)="onfileChange($event.target.files)">
+		</button>
+	</div>
+
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>File</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let file of files; let i = index; ">
+					<td>{{i+1}}</td>
+					<td>{{file.split('/')[8]}}</td>
+					<td>Download, Delete</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
