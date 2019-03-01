@@ -87,25 +87,22 @@
 */
 
 .side_fixed_nav{
-  -webkit-box-align: center;
   align-items: center;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
- left: 0px;
+  left: 0px;
   position: fixed;
-  top: 62px;
-  z-index: 300;
-  height: 100vh;
-  -webkit-box-pack: justify;
+  top: 0;
+  z-index: 11;
   justify-content: space-between;
   padding-bottom: 24px;
-  padding-top: 24px;
+  padding-top: 86px;
   width: 64px;
   background-color: rgb(189, 194, 193);
   color: rgb(0, 0, 0);
   fill: rgb(189, 194, 193);
-  height: 91%;
+  height: 100%;
 }
 .top_icon{
  
