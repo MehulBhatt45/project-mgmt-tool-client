@@ -61,6 +61,16 @@
 				<input type="text" id="exampleForm2" class="form-control"></li>
 			</ul>
 		</div>
+<<<<<<< HEAD
+=======
+		<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+			<mat-card *ngFor="let task of track.tasks" cdkDrag>
+				<mat-card-content>
+					<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+						<div class="card-body" style="padding: 0px;">
+							<table>
+								<tr>
+>>>>>>> f3158fa8b74122b097c4dfcd35909206589268d5
 
 
 		<div class="all_card">
@@ -201,7 +211,7 @@
 					<div class="row">
 						<div class="col-12 col-md-6" *ngIf="task.createdBy">
 							<label><strong>Created By: &nbsp;</strong></label>
-							<span>{{task.createdBy.name}}, on {{task.createdAt | date}}</span>
+							<span>{{task.createdBy.name}}, on {{task.createdAt | date:'medium'}}</span>
 						</div>
 						<div class="col-12 col-md-6">
 							<label><strong>Assign To: &nbsp;</strong></label>
@@ -223,7 +233,9 @@
 					<div class="row bg-light justify-content-between margin-top-20">
 						<div>
 							<button class="btn btn-default">Remove Assignment</button>
-							<button class="btn btn-default">Start Progress</button>
+							<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+							<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+							<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
 						</div>
 						<div>
 							<button class="btn btn-default" (click)="editTask(task)">Edit</button>

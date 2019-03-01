@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {AlertService} from '../services/alert.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
-
+declare var $ : any;
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
@@ -12,6 +12,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -47,6 +48,12 @@ export class ViewProjectComponent implements OnInit {
     },err=>{
       console.log(err);
     })
+  }
+
+  openDropdown(){
+    if (this.currentUser.userRole=='projectManager') {
+      $('.dropdown-toggle').dropdown();
+    }
   }
 
   

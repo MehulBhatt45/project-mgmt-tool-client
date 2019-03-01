@@ -24,6 +24,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
+import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
 
 @NgModule({
@@ -41,7 +42,8 @@ import { LogsComponent } from './logs/logs.component';
     ProjectDetailComponent,
     HomeComponent,
     RegisterComponent,
-    LogsComponent
+    LogsComponent,
+    FileListComponent
   ],
   imports: [
     BrowserModule,
