@@ -72,7 +72,7 @@
 					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 						<mat-card *ngFor="let task of track.tasks" cdkDrag>
 							<mat-card-content>
-								<div class="card" [ngClass]="track.class">
+								<div class="card" [ngClass]="track.class" (click)="openModel(task)">
 									<div class="card-body" style="padding: 0px;">
 										<table>
 											<tr>
@@ -237,8 +237,10 @@
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
 					<div class="row padding-20">
-						<div [froalaEditor]></div>
-						<button class="btn btn-default float-right">Add Comment</button>
+						<!-- <div [froalaEditor]></div> -->
+						<!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" (onChange)="onchangeContent()" [(ngModel)]="htmlContent"></app-ngx-editor> -->
+						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 					</div>
 				</div>
 			</div>
