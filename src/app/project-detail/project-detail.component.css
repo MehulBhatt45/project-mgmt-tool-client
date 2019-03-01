@@ -11,10 +11,10 @@ p{
 
 }
 
-img{
+/*img{
 	
 	border-radius: 50%;
-}
+}*/
 .body_content{
   padding: 64px;
 }
@@ -252,3 +252,4 @@ table {
 .fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
 }
+

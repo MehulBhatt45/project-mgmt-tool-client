@@ -84,3 +84,9 @@ nav.navbar {
 .font-monospace{
 	font-family: monospace !important;
 }
+.loader{
+  margin: 250px auto;
+  display: flex;
+  height: 100px;
+  width: 100px;
+}

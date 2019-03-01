@@ -43,7 +43,8 @@
 	</div>
 </div>
 
-<div class="body_content">
+<div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div>
+<div class="body_content" *ngIf="!loader">
 	<div class="justify-content-end">
 		<div class="dropdown">
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
@@ -261,7 +262,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" *ngIf="task">
+			<div class="modal-body" *ngIf="task && !loader">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
 						<div class="form-group col-12">
