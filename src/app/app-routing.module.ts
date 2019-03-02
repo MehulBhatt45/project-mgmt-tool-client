@@ -12,6 +12,7 @@ import { ProjectDetailComponent } from "./project-detail/project-detail.componen
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
+import { FileListComponent } from './file-list/file-list.component';
 const routes: Routes = [
 	// {
 	// 	path:'',
@@ -66,6 +67,10 @@ const routes: Routes = [
 			component:ProjectDetailComponent
 		},
 		{
+			path:'project/files-list/:id',
+			component:FileListComponent
+		},
+		{
 			path:'logs',
 			pathMatch: "full",
 			component: LogsComponent	
@@ -93,7 +98,7 @@ const routes: Routes = [
 	}];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash : true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

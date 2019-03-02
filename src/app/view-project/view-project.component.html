@@ -1,13 +1,52 @@
-<div class="project_bord">
-    <div class="row">
+<div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div>
+<div class="project_bord" *ngIf="!loader">
+    <div class="row margin_left">
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
             <div class="card">
-                <div class="card-header" routerLink="/project-details/{{project._id}}">
-                    <span><strong>UniqueId:</strong> {{project.uniqueId}}</span>
+                <div class="card-header bg-info white-text" routerLink="/project-details/{{project._id}}">
+                    <h4 class="project-title-view-project">{{project.title}}</h4>
+                    <!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
+                    <div class="float-right">
+                    <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
+                    <span><i class="fa fa-star"></i></span>
+                    </div>
                 </div>
-                <div class="card-body padding-top-bottom-20 padding-left-right-10" routerLink="/project-details/{{project._id}}">
-                    <h4 class="card-title">{{project.title}}</h4>
-                    <p class="card-text">{{project.desc}}</p>
+                <div class="card-body" routerLink="/project-details/{{project._id}}" >
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-6">
+                            <ul>
+                                <li>    
+                                    <strong title="task" class="blue-text">
+                                        <img src="../assets/icons/task.png" class="tib-prefix"> 
+                                        Tasks: 
+                                    </strong>
+                                    <span class="tib-view-projects-description">{{(project.taskId.length>0)?project.taskId.length:0}}</span>
+                                </li>
+                                <li>
+                                    <strong title="Issue" >
+                                        <img src="../assets/icons/issues.png" class="tib-prefix">
+                                        Issues: 
+                                        
+                                    </strong>
+                                    <span class="tib-view-projects-description">{{(project.IssueId.length>0)?project.IssueId.length:0}}</span>
+                                </li>
+                                <li>
+                                    <strong title="Bug" class="red-text">
+                                        <img src="../assets/icons/bug-2.png" class="tib-prefix">
+                                        Bugs: 
+                                    </strong>
+                                        <span class="tib-view-projects-description">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <p class="card-text font-monospace">{{project.desc}}</p>
+
+                    </div>
+
+                    </div>
+
                 </div>
                 <hr class="no-margin no-padding">
                 <div class="card-action padding-10">
@@ -22,16 +61,26 @@
                                 </li>
                             </span>
                             <li class="add-member">
-                                <a href="javascript:void(0);" title="Add Member">
+                                <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">
                                     <i class="fa fa-user-plus"></i>
                                 </a>
+                                <a title="Add Member" *ngIf="currentUser.userRole!='projectManager'">
+                                    <i class="fa fa-user-plus"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <p class="dropdown-item">Action</p>
+                                    <p class="dropdown-item">Another action</p>
+                                    <p class="dropdown-item">Something else here</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p class="dropdown-item">Add</p>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-3 margin-bottom-30">
+        <div class="col-12 col-md-3 margin-bottom-30" *ngIf="currentUser.userRole=='projectManager'">
             <div class="card">
                 <div class="card-body">
                     <a href="javascript:void(0);" title="Add Project" data-toggle="modal" data-target="#createProject">

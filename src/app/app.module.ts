@@ -24,7 +24,10 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
+import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
+import { NgxEditorModule } from 'ngx-editor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { LogsComponent } from './logs/logs.component';
     ProjectDetailComponent,
     HomeComponent,
     RegisterComponent,
-    LogsComponent
+    LogsComponent,
+    FileListComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,9 @@ import { LogsComponent } from './logs/logs.component';
     DragDropModule,
     MatCardModule,
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    NgxEditorModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

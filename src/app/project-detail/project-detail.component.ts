@@ -4,6 +4,8 @@ import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
 declare var $ : any;
 import * as _ from 'lodash';
@@ -16,13 +18,18 @@ import * as _ from 'lodash';
 export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+	public model = {
+        editorData: 'Enter comments here'
+    };
 	task;
 	project;
+	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
+	loader : boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -83,6 +90,9 @@ export class ProjectDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAllDevelopers();
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
 	}
 
 	getAllDevelopers(){
@@ -95,20 +105,26 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-		this._projectService.getProjectById(id).subscribe((res:any)=>{
-			console.log(res);
-			this.project = res;
-			_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-				_.forEach(this.tracks, (track)=>{
-					if(content.status == track.id){
-						track.tasks.push(content);
-					}
+		this.loader = true;
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				console.log(res);
+				this.getEmptyTracks()
+				this.project = res;
+				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					})
 				})
+				console.log(this.tracks);
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
 			})
-			console.log(this.tracks);
-		},err=>{
-			console.log(err);
-		})
+		},1000);
 	}
 
 	get trackIds(): string[] {
@@ -135,16 +151,25 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
+			var subUrl; 
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
+			console.log(subUrl);
 			data.status = newStatus;
-			this._projectService.completeItem(data).subscribe(res=>{
+			this._projectService.completeItem(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})
 		}else{
 			data.status = newStatus;
-			this._projectService.updateStatus(data).subscribe(res=>{
+			console.log("UniqueId", data.uniqueId);
+			var subUrl; 
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
+			console.log(subUrl);
+			this._projectService.updateStatus(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})
@@ -172,18 +197,26 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	openModel(task){
+		
 		console.log(task);
 		this.task = task;
 		$('#fullHeightModalRight').modal('show');
+		
+		
 	}
 
 	updateTask(task){
 		console.log(task);
-		this._projectService.updateData(task).subscribe((res:any)=>{
+		var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
+		console.log(subUrl);
+		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
 			console.log(err);
+			
 		})
+		
 	}
 
 	editTask(task){
@@ -194,23 +227,47 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	addItem(option){
+		this.loader=true;
+		setTimeout(()=>{
 		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#editModel').modal('show');
+		this.loader=false;
+	},1000);
 	}
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		console.log(task);
-		this._projectService.addData(task).subscribe((res:any)=>{
+		var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		console.log(subUrl);
+		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 			this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
 		})
 	}
+	public Editor = DecoupledEditor;
+
+    public onReady( editor ) {
+        editor.ui.getEditableElement().parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.getEditableElement()
+        );
+    }
+
+    public onChange( { editor }: ChangeEvent ) {
+        const data = editor.getData();
+        this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+    }
+
+    sendComment(){
+    	console.log(this.comment);
+    }
 }
