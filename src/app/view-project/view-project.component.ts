@@ -12,6 +12,7 @@ declare var $ : any;
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
+  files:FileList;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
@@ -43,7 +44,7 @@ export class ViewProjectComponent implements OnInit {
   addProject(addForm){
     addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
     console.log(addForm.value);
-    this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
+    this._projectservice.addProject(addForm.value,this.files).subscribe((res:any)=>{
       console.log(res);
     },err=>{
       console.log(err);
