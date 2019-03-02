@@ -1,4 +1,9 @@
-<div *ngIf="loader"><img src="../assets/loader.gif" class="loader"></div>
+<div class="loader" *ngIf="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 <div class="project_bord" *ngIf="!loader">
     <div class="row margin_left">
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">

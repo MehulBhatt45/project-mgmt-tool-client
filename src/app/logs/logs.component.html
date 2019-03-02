@@ -1,6 +1,14 @@
+
+<!-- <div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div> -->
+<div class="loader" *ngIf="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 <div class="container">
 	<div class="row">
-		<table border="1px solid black" *ngIf="!logFunctionSwap && !logFinalStep">
+		<table border="1px solid black" *ngIf="!logFunctionSwap && !logFinalStep && !loader">
 			<tr align="center" >
 				<th>Title</th>
 				<th style="padding: 10px;">Unique-ID</th>

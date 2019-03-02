@@ -13,6 +13,7 @@ export class LogsComponent implements OnInit {
 	projectId;
 	memberId;
 	logFunctionSwap;
+	loader:boolean = false;
 	teams = [];
 	finalArray = [
 	{
@@ -31,6 +32,7 @@ export class LogsComponent implements OnInit {
 		]
 	}
 	];
+	
 	constructor(public _route: ActivatedRoute , public _projectService: ProjectService) {
 		this._route.params.subscribe(params => {
 			this.projectId = params['projectId'];
@@ -44,6 +46,8 @@ export class LogsComponent implements OnInit {
 		this.getAllProjects();
 	}
 	getAllProjects(){
+		this.loader = true;
+		setTimeout(()=>{
 		if(this.projectId && !this.memberId){
 			this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
 				console.log("this.logFunctionSwap == true CORRECT============>" , res);
@@ -57,10 +61,13 @@ export class LogsComponent implements OnInit {
 				localStorage.setItem("logFinalStep" , JSON.stringify(false));
 				this.logFinalStep = false;	
 				
+				this.loader = false;
 				// this.projectId = null;
 			},err=>{
 				console.log("this.logFunctionSwap == true ERROR============>" , err);
+				this.loader= false;
 			})
+
 		}
 		else if(this.memberId){
 			this._projectService.getlogs(this.memberId).subscribe((res:any)=>{
@@ -105,6 +112,7 @@ export class LogsComponent implements OnInit {
 				this.logFunctionSwap = false;
 			},(err:any)=>{
 				console.log("error in logs of member ======>" , err);
+				
 			})
 		}
 		else{
@@ -117,9 +125,15 @@ export class LogsComponent implements OnInit {
 				this.logFunctionSwap = false;
 				localStorage.setItem("logFinalStep" , JSON.stringify(false));
 				this.logFinalStep = false;
+				this.loader = false;
+				
 			},err=>{
 				console.log("error ========>" , err);
+				this.loader = false;
+				
 			})
 		}
+		},1000);
 	}
+
 }

@@ -4,6 +4,8 @@ import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
 declare var $ : any;
 import * as _ from 'lodash';
@@ -16,8 +18,13 @@ import * as _ from 'lodash';
 export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+	public model = {
+        editorData: 'Enter comments here'
+    };
+    
 	task;
 	project;
+	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
@@ -31,6 +38,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
+		
 	}
 
 	getEmptyTracks(){
@@ -247,4 +255,21 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	public Editor = DecoupledEditor;
+
+    public onReady( editor ) {
+        editor.ui.getEditableElement().parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.getEditableElement()
+        );
+    }
+
+    public onChange( { editor }: ChangeEvent ) {
+        const data = editor.getData();
+        this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+    }
+
+    sendComment(){
+    	console.log(this.comment);
+    }
 }

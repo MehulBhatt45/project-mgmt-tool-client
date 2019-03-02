@@ -10,6 +10,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 })
 export class CreateProjectComponent implements OnInit {
    addForm:FormGroup; 
+   // loader:boolean=false;
   constructor(public router:Router, public _projectservice:ProjectService) { 
 
     this.addForm = new FormGroup({
@@ -26,9 +27,10 @@ export class CreateProjectComponent implements OnInit {
     addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
     console.log(addForm.value);
     this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
-      console.log(res);
+      console.log(res);  
     },err=>{
-      console.log(err);
+      console.log(err);    
     })
+   
   }
 }
