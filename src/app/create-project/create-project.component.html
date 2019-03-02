@@ -13,13 +13,18 @@
 	</form>
 	
 </div> -->
-
-<div class="container">
+<!-- <div class="loader" *ngIf="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div> -->
+<div class="container" *ngIf="!loader">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Create Project</strong>
 		</h5>
-		<div class="card-body px-lg-5 pt-1">
+		<div class="card-body px-lg-5 pt-1" >
 			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">
 					<label for="projecttitle">Project Title</label>

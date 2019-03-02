@@ -1,4 +1,11 @@
-<div class="container">
+<div class="loader" *ngIf="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+<div class="container" *ngIf="!loader">
+
 	<div class="row justify-content-between">
 		<h2 class="text-center">Uploaded Files</h2>
 		<button class="btn btn-default float-right" (click)="fileUpload.click()">

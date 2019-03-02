@@ -13,6 +13,7 @@ export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
   files:FileList;
+  loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
@@ -22,12 +23,17 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loader=true;
+    setTimeout(()=>{
     this._projectservice.getProjects().subscribe(res=>{
       console.log(res);
       this.projects = res;
+      this.loader=false;
     },err=>{
       this._alertService.error(err);
+      this.loader=false;
     })
+    },3000);
   }
 
   getTitle(name){

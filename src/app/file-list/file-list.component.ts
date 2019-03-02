@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 export class FileListComponent implements OnInit {
 	projectId;
 	files;
+	loader:boolean=false;
 	constructor(public _projectService: ProjectService, public route: ActivatedRoute) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -21,6 +22,8 @@ export class FileListComponent implements OnInit {
 	}
 
 	getAllFile(id){
+		this.loader=true;
+		setTimeout(()=>{
 		this._projectService.getAllFilesInfolder(id).subscribe(res=>{
 			this.files = res;
 			for(var i=0;i<this.files.length;i++){
@@ -28,9 +31,12 @@ export class FileListComponent implements OnInit {
 				this.files[i] = newfile;
 			}
 			console.log(this.files);
+			this.loader=false;
 		},err=>{
 			console.log(err);
+			this.loader=false
 		})
+		,3000});
 	}
 
 	onfileChange(files : FileList){
