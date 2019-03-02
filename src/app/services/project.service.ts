@@ -125,4 +125,28 @@ export class ProjectService {
 		};
 		return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId , httpOptions);
 	}
+	getAllDevelopersByProjectManager(){
+		var body = {
+			"pmId" : JSON.parse(localStorage.getItem('currentUser'))._id
+		}
+		console.log("projectManagerId ==>" , body);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"user/get-all-developers-by-project-manager" , body ); 
+	}
+	getLogs(developerId){
+		console.log("developer ID in project service ===> " , developerId);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"user/get-logs/"+developerId , httpOptions);
+	}
 }
+

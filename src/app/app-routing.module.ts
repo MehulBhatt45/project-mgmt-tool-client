@@ -69,7 +69,7 @@ const routes: Routes = [
 			path:'logs',
 			pathMatch: "full",
 			component: LogsComponent	
-		},
+		},/*
 		{
 			path:"logs/:projectId",
 			pathMatch: "full",
@@ -77,6 +77,16 @@ const routes: Routes = [
 		},
 		{
 			path:"logs/:projectId/:memberId",
+			pathMatch: "full",
+			component: LogsComponent
+		},*/
+		{
+			path:"logs/:developerId",
+			pathMatch: "full",
+			component: LogsComponent
+		},
+		{
+			path:"logs/:projectId/:developId",
 			pathMatch: "full",
 			component: LogsComponent
 		}]
