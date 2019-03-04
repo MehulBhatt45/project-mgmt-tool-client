@@ -27,7 +27,7 @@ export class MainTableViewComponent implements OnInit {
 	editTaskForm;
 	developers;
 	newTracks:any;
-	
+	loader:boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
 		this.getProject();
 		this.createEditTaskForm();
@@ -131,6 +131,8 @@ export class MainTableViewComponent implements OnInit {
 	}
 
 	getProject(){
+		this.loader = true;
+		setTimeout(()=>{
 		this.getEmptyTracks();
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log(res);
@@ -150,9 +152,12 @@ export class MainTableViewComponent implements OnInit {
 			this.trackChangeProjectWise = false;
 			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
 			this.trackChangeDeveloperWise = false;
+			this.loader = false;
 		},err=>{
 			console.log(err);
+			this.loader = false;
 		})
+		},1000);
 	}
 
 	get trackIds(): string[] {
@@ -247,10 +252,14 @@ export class MainTableViewComponent implements OnInit {
 	}
 
 	addItem(option){
+		this.loader = true;
+		setTimeout(()=>{
 		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#editModel').modal('show');
+		this.loader = false;
+		},1000);
 	}
 
 	saveTheData(task){

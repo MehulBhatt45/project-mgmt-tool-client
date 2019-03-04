@@ -21,6 +21,7 @@ export class ProjectDetailComponent implements OnInit {
 	public model = {
         editorData: 'Enter comments here'
     };
+    
 	task;
 	project;
 	comment;
@@ -37,6 +38,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
+		
 	}
 
 	getEmptyTracks(){
@@ -98,8 +100,9 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
-			console.log(this.developers);
+			console.log("Developers",this.developers);
 		},err=>{
+			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
 	}
@@ -273,4 +276,9 @@ export class ProjectDetailComponent implements OnInit {
     sendComment(){
     	console.log(this.comment);
     }
+
+
+    creationDateComparator(a,b) {
+	  return parseInt(a.price, 10) - parseInt(b.price, 10);
+	}	
 }

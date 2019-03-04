@@ -26,11 +26,25 @@ export class HeaderComponent implements OnInit {
 			this.projects = res;
 		},err=>{
 			console.log(err);
-		})
-	}
+		});
+
+		$('#login_details').click(function (){
+			$(this).children('.dropdown-content').toggleClass('open');
+		});
+	}	
 
 	logout() {
 		this._loginService.logout();
 		this.router.navigate(['/login']);
+	}
+	getTitle(name){
+		var str = name.split(' ');
+		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+	}
+
+	getInitialsOfName(name){
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
 }

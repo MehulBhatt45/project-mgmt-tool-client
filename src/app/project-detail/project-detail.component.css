@@ -111,6 +111,7 @@ p{
   -moz-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
   box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
   position: relative;
+  cursor: pointer;
 }
 
 .team-members li:hover{
@@ -252,4 +253,8 @@ table {
 .fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
 }
+.card_count_lbl{
+  margin-left: 15px;
+}
+
 

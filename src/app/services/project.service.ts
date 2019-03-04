@@ -49,15 +49,23 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id, httpOptions);
 	}
 
-	addProject(body){
-		console.log("Body =====>" , body);
+	addProject(body,files:FileList){
+		let formdata = new FormData();
+		formdata.append('title',body.title);
+		formdata.append('desc',body.description);
+		formdata.append('avatar',body.avatar);
+		formdata.append('pmanagerId',body.pmanagerId);
+		formdata.append("uploadfile",files[0]);
+		console.log("formdata===>>>",formdata);
 		const httpOptions = {
 			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
+				// 'Content-Type':  'application/json',
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.post(config.baseApiUrl+"project/addProject", body, httpOptions);
+		console.log("body===>>>",body);
+		
+		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
 	}
 
 	addData(data){
