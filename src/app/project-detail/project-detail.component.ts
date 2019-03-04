@@ -212,7 +212,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
+		console.log("updatedtask===========>",subUrl);
 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
