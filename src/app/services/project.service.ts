@@ -50,20 +50,20 @@ export class ProjectService {
 	addProject(body,files:FileList){
 		let formdata = new FormData();
 		formdata.append('title',body.title);
-		formdata.append('description',body.description);
+		formdata.append('desc',body.description);
 		formdata.append('avatar',body.avatar);
 		formdata.append('pmanagerId',body.pmanagerId);
 		formdata.append("uploadfile",files[0]);
 		console.log("formdata===>>>",formdata);
 		const httpOptions = {
 			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
+				// 'Content-Type':  'application/json',
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
 		console.log("body===>>>",body);
 		
-		return this.http.post(config.baseApiUrl+"project/addProject",formdata,httpOptions);
+		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
 	}
 
 	addData(data, subUrl){
