@@ -1,14 +1,14 @@
 
 <div class="loader" *ngIf="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
-	<div class="justify-content-end">
+	<div class="justify-content-end"  *ngIf="currentUser.userRole=='projectManager'">
 		<div class="dropdown">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
+			<button  class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 			<div class="dropdown-menu dropdown-default">
 				<a class="dropdown-item" (click)="addItem('Task')">Task</a>
 				<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
@@ -16,36 +16,39 @@
 			</div>
 		</div>
 	</div>
+	<h1>{{project.title}}</h1>
 	<div class="justify-content-start">
 		<ul>
 			<li><!-- Default input -->
-				<label for="exampleForm2">Default input</label>
-				<input type="text" id="exampleForm2" class="form-control"></li>
-			</ul>
-		</div>
-		<div class="all_card">
-			<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
-				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeate="-createdAt">
-					<div class="card">
-						<div class="card-header">
-							<span class="track_title">{{track.title}}</span>
-							<span class="card_count_lbl">{{track.tasks.length}}</span>
+				<label for="exampleForm2">Search Task</label>
+				<input type="text" id="exampleForm2" class="form-control">
+			</li>
+		</ul>
+	</div>
+	<div class="all_card">
+		<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+			<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
+				<div class="card">
+					<div class="card-header">
+						<span class="track_title">{{track.title}}</span>
+						<span class="card_count_lbl">{{track.tasks.length}}</span>
 
-						</div>		
-					</div>
-					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-						<mat-card *ngFor="let task of track.tasks"cdkDrag>
-							<mat-card-content>
-								<div class="card" [ngClass]="track.class" (click)="openModel(task)">
-									<div class="card-body" style="padding: 0px;">
-										<table>
-											<tr>
-												<td colspan="2">
-													<div class="card-text">{{task.desc}}</div>
-													<div>{{task.createdAt}}</div>
-													<!-- <div>{{task.assignTo.name ? task.assignTo.name : "not assigned"}}</div> -->
-
-												</td>
+					</div>		
+				</div>
+				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+					<mat-card *ngFor="let task of track.tasks "cdkDrag>
+						<mat-card-content>
+							<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+								<div class="card-body" style="padding: 0px;">
+									<table>
+										<tr>
+											<td colspan="2">
+												<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+												<div class="card-text">{{task.desc}}</div>
+												<div>{{task.createdAt}}</div>
+												<!-- <div>{{task.assignTo.name ? task.assignTo.name : "not assigned"}}</div> -->
+												<div>{{task.createdAt | date:'short' }}</div>
+											</td>
 
 									<!-- <td>
 										<a href="javascript:void(0)" (click)="openModel(task)">
@@ -239,7 +242,7 @@
 							<label for="desc">Discription</label>
 							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
 						</div>
-						<div class="row no-margin no padding">
+						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
 								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">

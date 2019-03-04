@@ -31,6 +31,7 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers;
 	loader : boolean = false;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -100,8 +101,9 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
-			console.log(this.developers);
+			console.log("Developers",this.developers);
 		},err=>{
+			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
 	}
@@ -111,6 +113,7 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				console.log(res);
+				//this.onlyproject=res;
 				this.getEmptyTracks()
 				this.project = res;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
@@ -272,4 +275,9 @@ export class ProjectDetailComponent implements OnInit {
     sendComment(){
     	console.log(this.comment);
     }
+
+
+    creationDateComparator(a,b) {
+	  return parseInt(a.price, 10) - parseInt(b.price, 10);
+	}	
 }

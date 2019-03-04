@@ -30,21 +30,18 @@ export class CreateProjectComponent implements OnInit {
       console.log("form value=====>>>",addForm.value);
       this._projectservice.addProject(addForm.value, this.files).subscribe((res:any)=>{
         console.log(res);
-        // addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-        // console.log(addForm.value);
-        // this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
-          //   console.log(res);
         },err=>{
           console.log(err);    
         }) 
     }
     else{
-      this._projectservice.addProject(addForm.value, this.files).subscribe((res:any)=>{
+      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+      this._projectservice.addProject2(addForm.value).subscribe((res:any)=>{
         console.log(res);
+        console.log("addproject2 is called");
       },err=>{
         console.log(err);    
       }) 
-
     }
   }
 

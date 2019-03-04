@@ -35,25 +35,14 @@
 					<textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
 				</div>
 
-				<div class="md-form form-group">
-					<div class="file-field">
-						<div class="btn btn-primary btn-sm float-left">
-							<span>Upload a new avatar</span>
-							<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
-						</div>
-						<div class="file-path-wrapper">
-							<input  class="file-path validate" type="text" placeholder="Upload your file">
-						</div>
-					</div>
-				</div>
-				
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
 					Select Project avatar
 				</button>
 				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
 				
 
-				<!-- Modal -->
+				<!-- Modal Start Here -->
+
 				<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -65,6 +54,17 @@
 							</button>
 						</div>
 						<div class="modal-body">
+							<div class="md-form form-group">
+								<div class="file-field">
+									<div class="btn btn-primary btn-sm float-left">
+										<span>Upload a new avatar</span>
+										<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
+									</div>
+									<div class="file-path-wrapper">
+										<input  class="file-path validate" type="text" placeholder="Upload your file">
+									</div>
+								</div>
+							</div>
 							<ul class="project-avatar">
 								<li>
 									<button class="icon-button" (click)="addIcon('assets/avatar/school.png')">
@@ -135,6 +135,8 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Modal End Here -->
 
 		</form>
 	</div>
