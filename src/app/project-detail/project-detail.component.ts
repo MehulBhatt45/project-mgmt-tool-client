@@ -100,7 +100,7 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
-			console.log(this.developers);
+			console.log("developers got:",this.developers);
 		},err=>{
 			this._alertService.error(err);
 		})
