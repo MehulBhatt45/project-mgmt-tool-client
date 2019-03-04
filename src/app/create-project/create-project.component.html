@@ -24,7 +24,7 @@
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Create Project</strong>
 		</h5>
-		<div class="card-body px-lg-5 pt-1" >
+		<div class="card-body px-lg-5 pt-1">
 			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">
 					<label for="projecttitle">Project Title</label>
@@ -46,11 +46,10 @@
 						</div>
 					</div>
 				</div>
-
-
-				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+				
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
 					Select Project avatar
-				</button> -->
+				</button>
 				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
 				
 
@@ -66,73 +65,64 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<div class="file-field">
-								<div class="btn btn-primary btn-sm float-left">
-									<span>Upload a new avatar</span>
-									<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
-								</div>
-								<div class="file-path-wrapper">
-									<input  class="file-path validate" type="text" placeholder="Upload your file">
-								</div>
-							</div>
 							<ul class="project-avatar">
 								<li>
-									<button class="icon-button" (click)="addIcon(144)">
+									<button class="icon-button" (click)="addIcon('assets/avatar/school.png')">
 										<img src="assets/avatar/school.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/mortarboard.png')">
 										<img src="assets/avatar/mortarboard.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/alarm-clock.png')">
 										<img src="assets/avatar/alarm-clock.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button"  (click)="addIcon('assets/avatar/stethoscope.png')">
 										<img src="assets/avatar/stethoscope.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/doctor.png')">
 										<img src="assets/avatar/doctor.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/bookshelf.png')">
 										<img src="assets/avatar/bookshelf.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/flask.png')">
 										<img src="assets/avatar/flask.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/customer-service.png')">
 										<img src="assets/avatar/customer-service.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/payment-method.png')">
 										<img src="assets/avatar/payment-method.png" height="56" width="56">
-									</button>
+									</button>	
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/beach.png')">
 										<img src="assets/avatar/beach.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/coding.png')">
 										<img src="assets/avatar/coding.png" height="56" width="56">
 									</button>
 								</li>
 								<li>
-									<button class="icon-button">
+									<button class="icon-button" (click)="addIcon('assets/avatar/maintenance.png')">
 										<img src="assets/avatar/maintenance.png" height="56" width="56">
 									</button>
 								</li>
@@ -141,7 +131,6 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
 						</div>
 					</div>
 				</div>

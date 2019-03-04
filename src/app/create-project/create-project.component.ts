@@ -25,24 +25,34 @@ export class CreateProjectComponent implements OnInit {
   }
   
   addProject(addForm){
-    this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-    console.log("form value=====>>>",addForm.value);
-    this._projectservice.addProject(addForm.value, this.files).subscribe((res:any)=>{
-      console.log(res);
-    // addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-    // console.log(addForm.value);
-    // this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
-    //   console.log(res);
-    },err=>{
-      console.log(err);    
-    })
-   
+    if(this.files && this.files.length){
+      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+      console.log("form value=====>>>",addForm.value);
+      this._projectservice.addProject(addForm.value, this.files).subscribe((res:any)=>{
+        console.log(res);
+        // addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+        // console.log(addForm.value);
+        // this._projectservice.addProject(addForm.value).subscribe((res:any)=>{
+          //   console.log(res);
+        },err=>{
+          console.log(err);    
+        }) 
+    }
+    else{
+      this._projectservice.addProject(addForm.value, this.files).subscribe((res:any)=>{
+        console.log(res);
+      },err=>{
+        console.log(err);    
+      }) 
+
+    }
   }
 
-  // addIcon(value){
-  //   console.log(value);
+  addIcon(value){
+    this.addForm.value['avatar'] = value;
+    console.log(this.addForm.value['avatar']);
+  }
 
-  // }
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;
