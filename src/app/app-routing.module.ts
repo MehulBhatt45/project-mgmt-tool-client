@@ -50,6 +50,10 @@ const routes: Routes = [
 			component:EditProjectComponent
 		},
 		{
+			path:'edit-project/:pid',
+			component:EditProjectComponent
+		},
+		{
 			path:'add-team',
 			component:AddTeamComponent
 		},

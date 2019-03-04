@@ -48,6 +48,7 @@ export class ProjectService {
 	}
 
 	addProject(body){
+		console.log("Body =====>" , body);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -147,6 +148,17 @@ export class ProjectService {
 
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
+	}
+	updateProject(data){
+		console.log("updated Data in project servie" , data);
+		var projectId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
 	}
 }
 

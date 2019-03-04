@@ -45,7 +45,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     HomeComponent,
     RegisterComponent,
     LogsComponent,
-    FileListComponent
+    FileListComponent,
   ],
   imports: [
     BrowserModule,

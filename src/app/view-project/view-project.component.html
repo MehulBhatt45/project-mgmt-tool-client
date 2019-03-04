@@ -8,7 +8,8 @@
                     <!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
                     <div class="float-right">
                     <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
-                    <span><i class="fa fa-star"></i></span>
+                    <span><i class="fa fa-star mr-1"></i></span>
+                    <span routerLink="/edit-project/{{project._id}}"><i class="fa fa-edit"></i></span>
                     </div>
                 </div>
                 <div class="card-body" routerLink="/project-details/{{project._id}}" >

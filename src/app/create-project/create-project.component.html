@@ -23,11 +23,36 @@
 			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">
 					<label for="projecttitle">Project Title</label>
-					<input type="text" id="projecttitle" formControlName="title" class="form-control">
+					<input type="text" id="projecttitle"  formControlName="title" class="form-control">
 				</div>
 				<div class="md-form form-group">
 					<label for="desc">Description</label>
-					<textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
+					<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+				</div>
+				<div>
+					<h4><strong>Client Details :-</strong></h4>
+				</div>
+				<div class="md-form form-group">
+					<label for="clientemail">Email</label>
+					<input type="email" id="clientemail" formControlName="clientEmail" class="form-control">
+				</div>
+				<div class="md-form form-group">
+					<label for="clientfullname">Full Name</label>
+					<input type="text" id="clientfullname" formControlName="clientFullName" class="form-control">
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label for="clientcontactno">Contact No.</label>
+							<input type="number" id="clientcontactno" formControlName="clientContactNo" class="form-control">
+						</div>	
+					</div>
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label for="clientdesignation">Designation</label>
+							<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
+						</div>
+					</div>
 				</div>
 				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
 			</form>
