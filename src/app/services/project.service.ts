@@ -44,6 +44,8 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id, httpOptions);
 	}
 
@@ -58,7 +60,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/addProject", body, httpOptions);
 	}
 
-	addData(data, subUrl){
+	addData(data){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
@@ -67,7 +69,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
+		return this.http.post(config.baseApiUrl+"tasks/add-task", data, httpOptions);
 	}
 
 	updateData(data, subUrl){
@@ -159,6 +161,17 @@ export class ProjectService {
 			})
 		};
 		return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
+	}
+	getProjectByIdAndUserId(id){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
 	}
 }
 
