@@ -73,8 +73,6 @@ table{
 .margin_left{
     margin-left: 45px;
 }
-
-
 .project-avatar{
     margin: 0;
     padding: 0;
@@ -108,4 +106,7 @@ ul.project-avatar li {
 }
 ul.project-avatar li:hover {
     border-color: #000;
+}
+.medit{
+    margin-left: 5px;
 }

@@ -33,6 +33,7 @@
 						<span class="track_title">{{track.title}}</span>
 						<span class="card_count_lbl">{{track.tasks.length}}</span>
 
+<<<<<<< HEAD
 					</div>		
 				</div>
 				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
@@ -49,6 +50,22 @@
 												<!-- <div>{{task.assignTo.name ? task.assignTo.name : "not assigned"}}</div> -->
 												<div>{{task.createdAt | date:'short' }}</div>
 											</td>
+=======
+						</div>		
+					</div>
+					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+						<mat-card *ngFor="let task of track.tasks "cdkDrag>
+							<mat-card-content>
+								<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+									<div class="card-body" style="padding: 0px;">
+										<table>
+											<tr>
+												<td colspan="2">
+													<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+													<div class="card-text">{{task.desc}}</div>
+													<div>{{task.createdAt | timeAgo }}</div>
+												</td>
+>>>>>>> c6e15dbd6e5a28ce16c37b62ed3b5ea14c931b3d
 
 									<!-- <td>
 										<a href="javascript:void(0)" (click)="openModel(task)">
@@ -158,7 +175,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div class="card-text">{{task.desc}}</div>
+									<div class="card-text" style="display: block;white-space: pre-line;margin: 1em 0px;">{{task.desc}}</div>
 								</td>
 							</tr>
 						</table>
@@ -245,7 +262,10 @@
 						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
 									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
 							</div>
