@@ -263,20 +263,21 @@ export class MainTableViewComponent implements OnInit {
 	}
 
 	saveTheData(task){
+		//console.log("task =====>" , task);
 		task['projectId']= this.projectId; 
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		console.log(task);
-		var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
-		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
-			this.getProject();
-		},err=>{
-			console.log(err);
-		})
+		// var subUrl; 
+		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		// console.log(subUrl);
+		// this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+		// 	$('#editModel').modal('hide');
+		// 	this.getProject();
+		// },err=>{
+		// 	console.log(err);
+		// })
 	}
 	filterByProjectId(projectId){
 		console.log("Developer ID ====>" , projectId);
@@ -305,7 +306,7 @@ export class MainTableViewComponent implements OnInit {
 						if(task.projectId._id ==  projectId){
 							console.log(" mactched");
 							//console.log("index of that task =======>" , index2);
-							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+		3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
 					})
