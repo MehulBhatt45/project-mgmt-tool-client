@@ -26,6 +26,7 @@
 			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
 	</div>
+	<button class="btn btn-default " type="button"   aria-haspopup="true" aria-expanded="false">Add Item</button>
 </div>
 <span *ngIf="trackChangeDeveloperWise || trackChangeProjectWise ">
 <div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
