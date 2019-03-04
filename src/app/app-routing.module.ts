@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 const routes: Routes = [
 	// {
 	// 	path:'',
@@ -61,6 +62,10 @@ const routes: Routes = [
 		{
 			path:'issue',
 			component:IssueComponent
+		},
+		{
+			path:'update-user/:id',
+			component:UpdateUserComponent
 		},
 		{
 			path:'project-details/:id',

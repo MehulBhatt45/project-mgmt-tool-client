@@ -113,7 +113,7 @@
                  </a>
                  <div class="dropdown-content"> 
                     <a class="dropdown-item" (click)="logout()">Log Out</a>
-                    <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
+                    <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
                 </div>
             </li>   
         </ul>

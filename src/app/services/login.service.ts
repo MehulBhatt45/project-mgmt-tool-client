@@ -46,4 +46,8 @@ export class LoginService {
         localStorage.removeItem('token');
         this.currentUserSubject.next(null);
     }
+
+    getUserById(id){
+         return this.http.get(config.baseApiUrl+"user/get-single-user/"+id);   
+    }
 }
