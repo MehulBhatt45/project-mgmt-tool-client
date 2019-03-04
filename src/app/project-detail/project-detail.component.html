@@ -43,7 +43,7 @@
 												<td colspan="2">
 													<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 													<div class="card-text">{{task.desc}}</div>
-													<div>{{task.createdAt | date:'short' }}</div>
+													<div>{{task.createdAt | timeAgo }}</div>
 												</td>
 
 									<!-- <td>
@@ -154,7 +154,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div class="card-text">{{task.desc}}</div>
+									<div class="card-text" style="display: block;white-space: pre-line;margin: 1em 0px;">{{task.desc}}</div>
 								</td>
 							</tr>
 						</table>
