@@ -246,13 +246,13 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		console.log(task);
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
-		this._projectService.addData(task).subscribe((res:any)=>{
+		var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		console.log(subUrl);
+		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 			this.getProject(this.projectId);
 		},err=>{

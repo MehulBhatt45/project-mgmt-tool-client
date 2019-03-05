@@ -68,7 +68,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
 	}
 
-	addData(data){
+	addData(data, subUrl){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
@@ -77,7 +77,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.post(config.baseApiUrl+"tasks/add-task", data, httpOptions);
+		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
 
 	updateData(data, subUrl){

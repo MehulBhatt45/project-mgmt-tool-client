@@ -265,19 +265,19 @@ export class MainTableViewComponent implements OnInit {
 	saveTheData(task){
 		//console.log("task =====>" , task);
 		task['projectId']= this.projectId; 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		console.log(task);
-		// var subUrl; 
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
-		// this._projectService.addData(task, subUrl).subscribe((res:any)=>{
-		// 	$('#editModel').modal('hide');
-		// 	this.getProject();
-		// },err=>{
-		// 	console.log(err);
-		// })
+		var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		console.log(subUrl);
+		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+			this.getProject();
+		},err=>{
+			console.log(err);
+		})
 	}
 	filterByProjectId(projectId){
 		console.log("Developer ID ====>" , projectId);
@@ -341,8 +341,8 @@ export class MainTableViewComponent implements OnInit {
 				_.forEach(this.tracks , (track ,index1)=>{
 					console.log("tracks of developer =========>" , track , index1);
 					_.forEach( track.tasks , (task , index2)=>{
-						console.log("task ====>" , task.assignTo._id , index2 );
-						if(task.assignTo._id == developerId){
+						// console.log("task ====>" , task.assignTo._id , index2 );
+						if(task.assignTo && task.assignTo._id == developerId){
 							console.log("mathched");
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
@@ -365,7 +365,7 @@ export class MainTableViewComponent implements OnInit {
 			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
 			_.forEach(track.tasks , (task , index2)=>{
 				console.log("task ===>" , task , index2);
-				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
+				if(task.assignTo && task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
 					console.log("matched");
 					this.newTracks[index1].tasks.push(track.tasks[index2]);
 				}
