@@ -142,7 +142,7 @@ export class ProjectDetailComponent implements OnInit {
 				// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
 					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id && (content.assignTo && content.assignTo._id == this.currentUser._id)){
+						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
 							track.tasks.push(content);
 						}
 					})
