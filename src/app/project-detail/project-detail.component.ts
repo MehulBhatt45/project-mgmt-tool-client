@@ -134,9 +134,15 @@ export class ProjectDetailComponent implements OnInit {
 				//this.onlyproject=res;
 				this.getEmptyTracks()
 				this.project = res;
+							console.log("res=========>", res);
+				// if (developers==localStorage.setItem('currentUser', JSON.stringify(user.data));){}
+				// if (this.currentUser==this.task.assignTo._id) {
+				// 	// code...
+				// }
+				// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
 					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
+						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
 							track.tasks.push(content);
 						}
 					})
