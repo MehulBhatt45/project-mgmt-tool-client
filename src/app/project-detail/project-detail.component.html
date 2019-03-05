@@ -19,7 +19,7 @@
 	<h1>{{project.title}}</h1>
 	<div class="justify-content-start">
 		<ul>
-			<li><!-- Default input -->
+			<li>
 				<label for="exampleForm2">Search Task</label>
 				<input type="text" id="exampleForm2" class="form-control">
 			</li>
@@ -32,91 +32,54 @@
 					<div class="card-header">
 						<span class="track_title">{{track.title}}</span>
 						<span class="card_count_lbl">{{track.tasks.length}}</span>
-						</div>		
-					</div>
-					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-						<mat-card *ngFor="let task of track.tasks "cdkDrag>
-							<mat-card-content>
-								<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
-									<div class="card-body" style="padding: 0px;">
-										<table>
-											<tr>
-												<td colspan="2">
-													<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
-													<div class="card-text">{{task.desc}}</div>
-													<div>{{task.createdAt | timeAgo }}</div>
-												</td>
+					</div>		
+				</div>
+				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+					<mat-card *ngFor="let task of track.tasks" cdkDrag>
+						<mat-card-content>
+							<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
+								<div class="card-body" style="padding: 0px;">
+									<table>
+										<tr>
+											<td colspan="2">
+												<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+												<div class="card-text">{{task.desc}}</div>
+												<div>{{task.createdAt | timeAgo }}</div>
+											</td>
+										</tr>
+									</table>
+									<ul>
+										<li class="icon_check">
+											<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
+										</li>
+										<li>
+											<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
+										</li>
+										<li>
+											<ul class="team-members">	
+												<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+													<a href="javascript:void(0);">
+														{{getInitialsOfName(task.assignTo.name)}}
+													</a>
+												</li>
+												<li *ngIf="!task.assignTo" class="add-member">
+													<a href="javascript:void(0);" title="Add Member">
+														<i class="fa fa-user-plus"></i>
+													</a>
+												</li>
+											</ul>
+										</li>
 
-									<!-- <td>
-										<a href="javascript:void(0)" (click)="openModel(task)">
-											<i class="fa fa-edit text-Blue"></i>
-										</a>
-									</td> -->
-									<!-- <td colspan="2">
-										<label class="float-right">{{task.uniqueId}}</label>
-									</td> -->
-								</tr>
-							</table>
-								<!-- <tr (click)="openModel(task)" style="cursor: pointer;">
-									<td style="width: 50px;">
-										<ul class="team-members">	
-											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-												<a href="javascript:void(0);">
-													{{getInitialsOfName(task.assignTo.name)}}
-												</a>
-											</li>
-											<li *ngIf="!task.assignTo" class="add-member">
-												<a href="javascript:void(0);" title="Add Member">
-													<i class="fa fa-user-plus"></i>
-												</a>
-											</li>
-										</ul>
-									</td>
-									<td>
-										<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
-									</td>
-								</tr>
-								<tr (click)="openModel(task)" style="cursor: pointer;">
-									<td colspan="2">
-										<div class="card-text">{{task.desc}}</div>
-									</td>
-								</tr> -->
-								<ul>
-									<li class="icon_check">
-										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
-									</li>
-									<li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
-									</li>
-									
-									<li>
-										<ul class="team-members">	
-											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-												<a href="javascript:void(0);">
-													{{getInitialsOfName(task.assignTo.name)}}
-												</a>
-											</li>
-											<li *ngIf="!task.assignTo" class="add-member">
-												<a href="javascript:void(0);" title="Add Member">
-													<i class="fa fa-user-plus"></i>
-												</a>
-											</li>
-										</ul>
-									</li>
-									
-								</ul>
-								<label class="float-right">{{task.uniqueId}}</label>
+									</ul>
+									<label class="float-right">{{task.uniqueId}}</label>
+								</div>
 							</div>
-						<!-- <div class="card-action">
-							<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"></span>{{task.priority}}</label>
-						</div> -->
-					</div>
-				</mat-card-content>
-			</mat-card>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
@@ -261,8 +224,10 @@
 						<div class="row no-margin no padding">
 							<div class="form-group col-12 col-lg-6">
 								<!-- <div class="form-group"> -->
-									<label for="startDate">Start Date</label>
-									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
+									<!-- <label for="startDate">Start Date</label>
+									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker"> -->
+									<label for="input_starttime">Select Time :</label>
+									<input type="text" id="input_starttime" class="form-control timepicker" formControlName="startDate">
 									<!-- </div> -->
 								</div>
 								<div class="form-group col-12 col-lg-6">
