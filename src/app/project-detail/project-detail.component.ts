@@ -215,6 +215,8 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	updateTask(task){
+		if(!task.assingTo)
+			task['assignTo'] = this.editTaskForm.value.assignTo;
 		console.log(task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
@@ -222,8 +224,7 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
-			console.log(err);
-			
+			console.log(err);	
 		})
 		
 	}

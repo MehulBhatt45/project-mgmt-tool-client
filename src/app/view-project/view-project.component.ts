@@ -82,6 +82,7 @@ export class ViewProjectComponent implements OnInit {
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;
+    this.addForm.value['avatar'] = this.files[0].name;
   }
   
 }
