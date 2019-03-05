@@ -50,6 +50,7 @@ export class ProjectService {
 	}
 
 	addProject(body,files:FileList){
+		console.log("addproject is calling");
 		let formdata = new FormData();
 		formdata.append('title',body.title);
 		formdata.append('desc',body.description);
@@ -66,6 +67,18 @@ export class ProjectService {
 		console.log("body===>>>",body);
 		
 		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
+	}
+
+	addProject2(body){
+		console.log("addproject2 is calling");
+		console.log("body====>>",body);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"project/add-project/simple",body,httpOptions);
 	}
 
 	addData(data, subUrl){
