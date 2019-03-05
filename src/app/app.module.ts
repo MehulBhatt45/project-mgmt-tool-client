@@ -28,6 +28,8 @@ import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {TimeAgoPipe} from 'time-ago-pipe';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     HomeComponent,
     RegisterComponent,
     LogsComponent,
-    FileListComponent
+    FileListComponent,
+    TimeAgoPipe,
+    UpdateUserComponent
   ],
   imports: [
     BrowserModule,

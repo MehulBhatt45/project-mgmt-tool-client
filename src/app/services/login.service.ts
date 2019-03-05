@@ -21,7 +21,7 @@ export class LoginService {
     }
 
     login(userCredentials) {
-        console.log("heyy");
+        console.log("heyy" , userCredentials);
         return this.http.post<any>(config.baseApiUrl+"user/login", userCredentials)
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
@@ -45,5 +45,9 @@ export class LoginService {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('token');
         this.currentUserSubject.next(null);
+    }
+
+    getUserById(id){
+         return this.http.get(config.baseApiUrl+"user/get-single-user/"+id);   
     }
 }

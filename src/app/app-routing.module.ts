@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 const routes: Routes = [
 	// {
 	// 	path:'',
@@ -50,6 +51,10 @@ const routes: Routes = [
 			component:EditProjectComponent
 		},
 		{
+			path:'edit-project/:pid',
+			component:EditProjectComponent
+		},
+		{
 			path:'add-team',
 			component:AddTeamComponent
 		},
@@ -63,6 +68,10 @@ const routes: Routes = [
 			component:IssueComponent
 		},
 		{
+			path:'update-user/:id',
+			component:UpdateUserComponent
+		},
+		{
 			path:'project-details/:id',
 			component:ProjectDetailComponent
 		},
@@ -74,7 +83,7 @@ const routes: Routes = [
 			path:'logs',
 			pathMatch: "full",
 			component: LogsComponent	
-		},
+		},/*
 		{
 			path:"logs/:projectId",
 			pathMatch: "full",
@@ -82,6 +91,16 @@ const routes: Routes = [
 		},
 		{
 			path:"logs/:projectId/:memberId",
+			pathMatch: "full",
+			component: LogsComponent
+		},*/
+		{
+			path:"logs/:developerId",
+			pathMatch: "full",
+			component: LogsComponent
+		},
+		{
+			path:"logs/:projectId/:developId",
 			pathMatch: "full",
 			component: LogsComponent
 		}]

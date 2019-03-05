@@ -1,15 +1,22 @@
 import { Component, OnInit , HostListener} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { ProjectService } from '../services/project.service';
+import * as _ from "lodash";
 @Component({
 	selector: 'app-logs',
 	templateUrl: './logs.component.html',
 	styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-	logFinalStep;
+	logs:any;
+	allDevelopers;
+	developerDetails;
+	//logFinalStep;
 	project;
+	developerFunction;
+	projectFunction;
 	projectName;
+	developerId;
 	projectId;
 	memberId;
 	logFunctionSwap;
@@ -35,17 +42,56 @@ export class LogsComponent implements OnInit {
 	
 	constructor(public _route: ActivatedRoute , public _projectService: ProjectService) {
 		this._route.params.subscribe(params => {
-			this.projectId = params['projectId'];
-			this.memberId = params['memberId'];
+			this.developerId = params['developerId'];
+			/*this.projectId = params['projectId'];
+			this.memberId = params['memberId'];*/
 			console.log("ProjectId  ======>" , this.projectId);
 			console.log("MemberId  ======>" , this.memberId);
+			console.log("developerId  ======>" , this.developerId);
+
 		});
 	}
+	getEmptyLog(){
+		this.logs = [{
+			'type': "bug",
+			'projectTitle' : null,
+			'timeLog' : [] , 
+			'projectDesc' : null,
+			'title' : null,
+			'uniqueId' : null,
+			'bugDesc' : null,
 
-	ngOnInit() {
-		this.getAllProjects();
+		},
+		{
+			'type': "issue",
+			'projectTitle' : null,
+			'timeLog' : [] , 
+			'projectDesc' : null,
+			'title' : null,
+			'uniqueId' : null,
+			'bugDesc' : null,
+
+		},
+		{
+			'type': "bug",
+			'projectTitle' : null,
+			'timeLog' : [] , 
+			'projectDesc' : null,
+			'title' : null,
+			'uniqueId' : null,
+			'bugDesc' : null,
+
+		},
+		]
 	}
-	getAllProjects(){
+	ngOnInit() {
+		/*this.getAllProjects();*/
+		if(this.developerId){
+			this.getDeveloperWiseProject();
+		}
+
+	}
+	/*getAllProjects(){
 		this.loader = true;
 		setTimeout(()=>{
 		if(this.projectId && !this.memberId){
@@ -133,7 +179,57 @@ export class LogsComponent implements OnInit {
 				
 			})
 		}
-		},1000);
+	}*/
+	getSelectedOption(option){
+		console.log("option ====>" , option);
+		if(option == "project"){
+			console.log("inside Project");
+		}
+		else if(option == "developer"){
+			if(this.developerId){
+				this._projectService.getProjects().subscribe((res:any)=>{
+					console.log("all projects ====>" , res);
+				},(err:any)=>{
+					console.log("all projects err====>" , err);
+				})
+			}
+			console.log("Inside Developer");
+			
+		}else{
+			console.log("else");
+		}
+	}
+	getDevelopers(){
+		this._projectService.getAllDevelopersByProjectManager().subscribe((res:any)=>{
+			console.log("res of developer ====>" , res);
+			/*localStorage.setItem("logFunctionSwap" , JSON.stringify(true));
+			this.logFunctionSwap = true;*/
+			this.allDevelopers = res;
+			localStorage.setItem("developerFunction" , JSON.stringify(true));
+			this.developerFunction = true;
+			/*localStorage.setItem("projectFunction" , JSON.stringify(true));
+			this.projectFunction = true;*/		
+		},(err:any)=>{
+			console.log("err of developer ====>" , err);
+		})
+	}
+	getDeveloperWiseProject(){
+		this._projectService.getLogs(this.developerId).subscribe((res:any)=>{
+			console.log("res of getDeveloperWiseProject ===>" , res);
+			
+			var bug = res.data.bug;
+			var issue = res.data.issue;
+			var task = res.data.task;
+			console.log("bug ====>" , bug);
+			console.log("issue ====>" , issue);
+			console.log("task ====>" , task);
+			_.forEach( bug , (track , index1)=>{
+				console.log("track =====>" , track);
+				this.logs[0].bugTitle = track.title;
+			} ) 
+		},(err:any)=>{
+			console.log("err of getDeveloperWiseProject ===>" , err);
+		})
 	}
 
 }

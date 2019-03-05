@@ -73,3 +73,40 @@ table{
 .margin_left{
     margin-left: 45px;
 }
+.project-avatar{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.project-avatar-list
+{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+
+}
+.icon-button{
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
+ul.project-avatar{
+    display: inline-block;
+    width: 100%;
+}
+ul.project-avatar li {
+    display: inline-block;
+    margin: 5px;
+    float: left;
+    padding: 4px;
+    border: 2px solid transparent;
+}
+ul.project-avatar li:hover {
+    border-color: #000;
+}
+.medit{
+    margin-left: 5px;
+}
