@@ -256,5 +256,12 @@ table {
 .card_count_lbl{
   margin-left: 15px;
 }
+.search_btn{
+float: right;
+margin-top: -54px;
+border: none;
+margin-right: 26px;
+background-color: white;
+}
 
 
