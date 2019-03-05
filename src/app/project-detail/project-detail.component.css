@@ -75,7 +75,7 @@
   /*overflow: auto;
   flex-grow: 1;*/
   background-color: #f6f4f6;
-  min-height: 100px;
+  height: 100%;
 }
 
 .cdk-drag-animating, .cdk-drop-list-dragging .cdk-drag {

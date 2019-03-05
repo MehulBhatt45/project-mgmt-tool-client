@@ -19,9 +19,9 @@ export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	public model = {
-        editorData: 'Enter comments here'
-    };
-    
+		editorData: 'Enter comments here'
+	};
+	
 	task;
 	project;
 	comment;
@@ -78,7 +78,25 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
+	getPriorityClass(priority){
+		switch (priority) {
+			case "low":
+			return "primary"
+			break;
+			
+			case "medium":
+			return "warning"
+			break;
 
+			case "high":
+			return "danger"
+			break;
+
+			default:
+			return ""
+			break;
+		}
+	}
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -116,9 +134,15 @@ export class ProjectDetailComponent implements OnInit {
 				//this.onlyproject=res;
 				this.getEmptyTracks()
 				this.project = res;
+							console.log("res=========>", res);
+				// if (developers==localStorage.setItem('currentUser', JSON.stringify(user.data));){}
+				// if (this.currentUser==this.task.assignTo._id) {
+				// 	// code...
+				// }
+				// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
 					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
+						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
 							track.tasks.push(content);
 						}
 					})
@@ -148,8 +172,8 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
+			console.log(event.container.id, event.container.data);
+			this.updateStatus(event.container.id, event.container.data[event.container.data.length-1]);
 		}
 	}
 
@@ -186,8 +210,12 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getTitle(name){
-		var str = name.split(' ');
-		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+		if(name){
+			var str = name.split(' ');
+			return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+		}else{
+			return '';
+		}
 	}
 
 	getInitialsOfName(name){
@@ -215,6 +243,8 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	updateTask(task){
+		if(!task.assingTo)
+			task['assignTo'] = this.editTaskForm.value.assignTo;
 		console.log(task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
@@ -222,8 +252,7 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
-			console.log(err);
-			
+			console.log(err);	
 		})
 		
 	}
@@ -232,18 +261,20 @@ export class ProjectDetailComponent implements OnInit {
 		this.task = task;
 		this.modalTitle = 'Edit Item'
 		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
 		$('#editModel').modal('show');
 	}
 
 	addItem(option){
 		this.loader=true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader=false;
-	},1000);
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#input_starttime').pickatime({});
+			$('#editModel').modal('show');
+			this.loader=false;
+		},1000);
 	}
 
 	saveTheData(task){
@@ -263,24 +294,24 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	public Editor = DecoupledEditor;
 
-    public onReady( editor ) {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
-    }
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
-    public onChange( { editor }: ChangeEvent ) {
-        const data = editor.getData();
-        this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-    }
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+	}
 
-    sendComment(){
-    	console.log(this.comment);
-    }
+	sendComment(){
+		console.log(this.comment);
+	}
 
 
-    creationDateComparator(a,b) {
-	  return parseInt(a.price, 10) - parseInt(b.price, 10);
+	creationDateComparator(a,b) {
+		return parseInt(a.price, 10) - parseInt(b.price, 10);
 	}	
 }
