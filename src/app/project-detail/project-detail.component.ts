@@ -78,7 +78,25 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
+	getPriorityClass(priority){
+		switch (priority) {
+			case "low":
+				return "primary"
+				break;
+			
+			case "medium":
+				return "warning"
+				break;
 
+			case "high":
+				return "danger"
+				break;
+
+			default:
+				return ""
+				break;
+		}
+	}
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
