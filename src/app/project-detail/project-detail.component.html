@@ -1,13 +1,24 @@
 
 <div class="loader" *ngIf="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
 	<div class="justify-content-end">
 		<div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+			<div class="dropdown-menu dropdown-default">
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+				
+			</div>
+		</div>
+		
+
+		<div class="dropdown">
+
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 			<div class="dropdown-menu dropdown-default">
 				<a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -25,7 +36,8 @@
 		</div>
 		<div class="all_card">
 			<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
-				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeate="-createdAt">
+				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks"
+				ng-repeat="-createdAt" >
 					<div class="card">
 						<div class="card-header">
 							<span class="track_title">{{track.title}}</span>
