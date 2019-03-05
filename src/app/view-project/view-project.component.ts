@@ -18,8 +18,8 @@ export class ViewProjectComponent implements OnInit {
   constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      description: new FormControl(''),
-      avatar:new FormControl('')
+      desc: new FormControl(''),
+      avatar: new FormControl('')
     });
   }
 
