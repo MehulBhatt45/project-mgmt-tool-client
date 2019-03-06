@@ -36,7 +36,7 @@
 				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 					<mat-card *ngFor="let task of track.tasks" cdkDrag>
 						<mat-card-content>
-							<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
+							<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}">
 								<div class="card-body" style="padding: 0px;">
 									<table>
 										<tr>
@@ -51,9 +51,9 @@
 										<li class="icon_check">
 											<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 										</li>
-										<li>
-											<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
-										</li>
+<!-- 										<li>
+											<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span></label>
+										</li> -->
 										<li>
 											<ul class="team-members">	
 												<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">

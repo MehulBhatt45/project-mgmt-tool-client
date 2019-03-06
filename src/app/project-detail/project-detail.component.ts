@@ -244,14 +244,14 @@ export class ProjectDetailComponent implements OnInit {
 		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
 
-	getColorCodeOfPriority(priority) {
-		for (var i = 0; i < this.allPriorityList.length; i++) {
-			if (this.allPriorityList[i].value == priority) {
-				return this.allPriorityList[i].colorCode;
-			}
-		}
+	// getColorCodeOfPriority(priority) {
+	// 	for (var i = 0; i < this.allPriorityList.length; i++) {
+	// 		if (this.allPriorityList[i].value == priority) {
+	// 			return this.allPriorityList[i].colorCode;
+	// 		}
+	// 	}
 
-	}
+	// }
 
 	openModel(task){
 		
