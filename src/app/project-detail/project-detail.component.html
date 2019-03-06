@@ -33,8 +33,8 @@
 		<ul>
 			<li>
 				<label for="exampleForm2">Search Task</label>
-				<input type="text" id="exampleForm2" class="form-control ">
-				<button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button>
+				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
+				<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
 			</li>
 		</ul>
 	</div>
@@ -203,7 +203,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>	
 			<div class="modal-body" *ngIf="task && !loader">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">

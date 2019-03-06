@@ -31,7 +31,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
-import {Pipe,PipeTransform,Injectable} from '@angular/core';
+import { SearchTaskPipe } from './search-task.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import {Pipe,PipeTransform,Injectable} from '@angular/core';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UpdateUserComponent
+    UpdateUserComponent,
+    SearchTaskPipe
   ],
   imports: [
     BrowserModule,

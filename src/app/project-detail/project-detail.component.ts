@@ -6,162 +6,169 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import {SearchTaskPipe} from '../search-task.pipe';
 declare var $ : any;
 import * as _ from 'lodash';
-import {Pipe,PipeTransform,Injectable} from '@angular/core';
 
-@Component({
-	selector: 'app-project-detail',
-	templateUrl: './project-detail.component.html',
-	styleUrls: ['./project-detail.component.css']
-})
-export class ProjectDetailComponent implements OnInit {
-	tracks:any;
-	modalTitle;
-	public model = {
-		editorData: 'Enter comments here'
-	};
-	task;
-	project;
-	comment;
-	projectId;
-	allStatusList = this._projectService.getAllStatus();
-	allPriorityList = this._projectService.getAllProtity();
-	editTaskForm;
-	developers;
-	loader : boolean = false;
-	currentDate = new Date();
-	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
-		this.route.params.subscribe(param=>{
-			this.projectId = param.id;
-			this.getEmptyTracks();
-			this.getProject(this.projectId);
-		});
-		this.createEditTaskForm();
-		
-	}
 
-	getEmptyTracks(){
-		this.tracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
+// @Pipe({
+	//   name: 'filter',
+	//   pure: false
+	// })
 
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
+	@Component({
+		selector: 'app-project-detail',
+		templateUrl: './project-detail.component.html',
+		styleUrls: ['./project-detail.component.css']
+	})
+	export class ProjectDetailComponent implements OnInit {
+		tracks:any;
+		modalTitle;
+		public model = {
+			editorData: 'Enter comments here'
+		};
+		task;
+		project;
+		comment;
+		projectId;
+		allStatusList = this._projectService.getAllStatus();
+		allPriorityList = this._projectService.getAllProtity();
+		editTaskForm;
+		developers;
+		loader : boolean = false;
+		currentDate = new Date();
+		currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+			public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+			this.route.params.subscribe(param=>{
+				this.projectId = param.id;
+				this.getEmptyTracks();
+				this.getProject(this.projectId);
+			});
+			this.createEditTaskForm();
 
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
-
-			]
 		}
-		];
-	}
-	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
-			break;
-			
-			case "medium":
-			return "warning"
-			break;
 
-			case "high":
-			return "danger"
-			break;
+		getEmptyTracks(){
+			this.tracks = [
+			{
+				"title": "Todo",
+				"id": "to do",
+				"class":"primary",
+				"tasks": [
 
-			default:
-			return ""
-			break;
+				]
+			},
+			{
+				"title": "In Progress",
+				"id": "in progress",
+				"class":"info",
+				"tasks": [
+
+				]
+			},
+			{
+				"title": "Testing",
+				"id": "testing",
+				"class":"warning",
+				"tasks": [
+
+				]
+			},
+			{
+				"title": "Done",
+				"id": "complete",
+				"class":"success",
+				"tasks": [
+
+				]
+			}
+			];
 		}
-	}
-	createEditTaskForm(){
-		this.editTaskForm = new FormGroup({
-			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
-			assignTo : new FormControl('', Validators.required),
-			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
-		})
-	}
+		getPriorityClass(priority){
+			switch (priority) {
+				case "low":
+				return "primary"
+				break;
 
-	ngOnInit() {
-		this.getAllDevelopers();
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
-	}
+				case "medium":
+				return "warning"
+				break;
 
-	getAllDevelopers(){
-		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
-			console.log("Developers",this.developers);
-		},err=>{
-			console.log("Couldn't get all developers ",err);
-			this._alertService.error(err);
-		})
-	}
+				case "high":
+				return "danger"
+				break;
 
-	getProject(id){
-		this.loader = true;
-		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				console.log("projects ==>" ,res);
-				this.getEmptyTracks()
-				this.project = res;
-				console.log("project ====>",this.project);
-				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
+				default:
+				return ""
+				break;
+			}
+		}
+		createEditTaskForm(){
+			this.editTaskForm = new FormGroup({
+				title : new FormControl('', Validators.required),
+				desc : new FormControl('', Validators.required),
+				assignTo : new FormControl('', Validators.required),
+				priority : new FormControl('', Validators.required),
+				startDate : new FormControl('', Validators.required),
+				dueDate : new FormControl('', Validators.required),
+				status : new FormControl({value: '', disabled: true}, Validators.required)
+			})
+		}
+
+		ngOnInit() {
+			this.getAllDevelopers();
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
+		}
+
+		getAllDevelopers(){
+			this._projectService.getAllDevelopers().subscribe(res=>{
+				this.developers = res;
+				console.log("Developers",this.developers);
+			},err=>{
+				console.log("Couldn't get all developers ",err);
+				this._alertService.error(err);
+			})
+		}
+
+		getProject(id){
+			this.loader = true;
+			setTimeout(()=>{
+				this._projectService.getProjectById(id).subscribe((res:any)=>{
+					console.log("projects ==>" ,res);
+					this.getEmptyTracks()
+					this.project = res;
+					console.log("project ====>",this.project);
+					_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+						_.forEach(this.tracks, (track)=>{
+							if(content.status == track.id){
+								track.tasks.push(content);
+							}
+						})
 					})
-				})
-				// _.forEach(this.tracks,function(track){
-					// 	var tasks = _.orderBy(
-					// 		track.tasks, ['createdAt'],['asc'])  
-					// 	{propertyName:"age", order:"asc"});
-					// 	console.log("desending======>", tasks);
-					// this.tracks[0].tasks.reverse();
-					// this.tracks[1].tasks.reverse();
+					// _.forEach(this.tracks,function(track){
+						// 	var tasks = _.orderBy(
+						// 		track.tasks, ['createdAt'],['asc'])  
+						// 	{propertyName:"age", order:"asc"});
+						// 	console.log("desending======>", tasks);
+						// this.tracks[0].tasks.reverse();
+						// this.tracks[1].tasks.reverse();
 
-					// })
-					// console.log("desarr====>",this.tasks);
-					// this.descendingITB();
-					// this.ascendingITB();
+						// })
+						// console.log("desarr====>",this.tasks);
+						// this.descendingITB();
+						// this.ascendingITB();
 
 
-					this.loader = false;
-				},err=>{
-					console.log(err);
-					this.loader = false;
-				})
-		},1000);
-	}
+						this.loader = false;
+					},err=>{
+						console.log(err);
+						this.loader = false;
+					})
+			},1000);
+		}
 	/*getProject(id){
 		this._projectService.getProjectByIdAndUserId(id).subscribe((res:any)=>{
 			console.log("res of project ===>" , res)
@@ -197,7 +204,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.status = newStatus;
 			this._projectService.completeItem(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})
@@ -209,7 +216,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(subUrl);
 			this._projectService.updateStatus(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 			})
@@ -247,7 +254,7 @@ export class ProjectDetailComponent implements OnInit {
 				// 	b.priority = "low";
 				// 	return a;
 				// }
-				    return a.priority - b.priority;
+				return a.priority - b.priority;
 				// var x = a[this.priority]; var y = b[this.priority];
 				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
@@ -363,5 +370,19 @@ export class ProjectDetailComponent implements OnInit {
 
 			searchTask(){
 				console.log("btn tapped");
+			}
+			onKey(event: any){
+				console.log(event);
+				var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+				var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+				console.log("In Component",task);
+				this.getEmptyTracks();
+				_.forEach(task, (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					})
+				})
 			}
 		}
