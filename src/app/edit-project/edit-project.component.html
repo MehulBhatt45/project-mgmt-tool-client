@@ -1,130 +1,31 @@
-<div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div>
-<div class="project_bord" *ngIf=" !editAvail">
-	<div class="row margin_left">
-		<div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
-			<div class="card">
-				<div class="card-header bg-info white-text" (click)="editProject(project._id)">
-					<h4 class="project-title-view-project">{{project.title}}</h4>
-					<!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
-					<div class="float-right">
-						<span routerLink="{{project._id}}"><i class="fa fa-file mr-1"></i></span>
-						<span><i class="fa fa-star"></i></span>
-					</div>
-				</div>
-				<div class="card-body"  (click)="editProject(project._id)">
-					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<ul>
-								<li>    
-									<strong title="task" class="blue-text">
-										<img src="../assets/icons/task.png" class="tib-prefix"> 
-										Tasks: 
-									</strong>
-									<span class="tib-view-projects-description">{{(project.taskId.length>0)?project.taskId.length:0}}</span>
-								</li>
-								<li>
-									<strong title="Issue" >
-										<img src="../assets/icons/issues.png" class="tib-prefix">
-										Issues: 
-
-									</strong>
-									<span class="tib-view-projects-description">{{(project.IssueId.length>0)?project.IssueId.length:0}}</span>
-								</li>
-								<li>
-									<strong title="Bug" class="red-text">
-										<img src="../assets/icons/bug-2.png" class="tib-prefix">
-										Bugs: 
-									</strong>
-									<span class="tib-view-projects-description">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
-								</li>
-							</ul>
-						</div>
-						<div class="col-xs-12 col-sm-6">
-							<p class="card-text font-monospace">{{project.desc}}</p>
-
-						</div>
-					</div>
-				</div>
-				<hr class="no-margin no-padding">
-				<div class="card-action padding-10">
-					<div class="card-text float-left"><strong title="task">T:</strong>{{(project.taskId.length>0)?project.taskId.length:0}},<strong title="Issue">I:</strong>{{(project.IssueId.length>0)?project.IssueId.length:0}},<strong title="Bug">B:</strong>{{(project.BugId.length>0)?project.BugId.length:0}}</div>
-				</div>
+<div class="Container">
+	<form class="form-horizontal" role="form">	
+		<h2 class="text-center">Edit Project</h2>
+		<div class="row">
+			<div class="col-sm-3">
+				<label>Project Title</label>	
 			</div>
+			<div class="col-sm-9 form-group">
+				<input type="text" class="form-control" name="projecttitle" placeholder="Enter Your projecttitle">
+			</div>	
 		</div>
-	</div>
-</div>
-
-<div class="container" *ngIf="editAvail">
-	<div class="card">
-		<h5 class="card-header white-text text-center py-4">
-			<strong>Create Project</strong>
-		</h5>
-		<div class="card-body px-lg-5 pt-1">
-			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
-				<div class="md-form form-group">
-					<label class="active" for="projecttitle">Project Title</label>
-					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
-				</div>
-				<div class="md-form form-group">
-					<label class="active" for="desc">Description</label>
-					<textarea tabindex="-1" id="desc" rows="5" formControlName="desc" [(ngModel)]="availData.desc" class="form-control rounded-0 md-textarea" autofocus="autofocus" ></textarea>
-				</div>
-				<div>
-					<h4><strong>Client Details :-</strong></h4>
-				</div>
-				<div class="md-form form-group">
-					<label class="active"  for="clientemail">Email</label>
-					<input  type="email" id="clientemail" formControlName="clientEmail" [(ngModel)]="availData.clientEmail" class="form-control">
-				</div>
-				<div class="md-form form-group">
-					<label class="active"  for="clientfullname">Full Name</label>
-					<input autofocus type="text" id="clientfullname" formControlName="clientFullName" [(ngModel)]="availData.clientFullName" class="form-control">
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="md-form form-group">
-							<label class="active" for="clientcontactno">Contact No.</label>
-							<input autofocus type="number" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
-						</div>	
-					</div>
-					<div class="col-md-6">
-						<div class="md-form form-group">
-							<label class="active" for="clientdesignation">Designation</label>
-							<input autofocus type="text" id="clientdesignation"  formControlName="clientDesignation" class="form-control">
-						</div>
-					</div>
-				</div>
-				<div >
-					<button class="btn btn-primary btn-rounded z-depth-1" (click)="showTeams()">Add/Edit Teams</button>
-					<div *ngIf="teamShow">
-						<div class="row" *ngFor="let j of availData.Teams">
-							<div class="col-md-3">
-								<div class="md-form form-group">
-									<label class="active" for="name">name</label>
-									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.name}}" class="form-control">
-								</div>		
-							</div>
-							<div class="col-md-3">
-								<div class="md-form form-group">
-									<label class="active" for="name">Role</label>
-									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.userRole}}" class="form-control">
-								</div>
-							</div>
-							<div class="col-md-3">
-								<a *ngIf="!developerShow" (click)="addRemoveDeveloper(j._id)">remove</a>
-							</div>
-						</div>
-						<button class="btn btn-primary btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
-						<div *ngIf="developerShow"> 
-							<div class="row" *ngFor="let i of availDevelopers">
-								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
-								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
-			</form>
+		<div class="row">
+			<div class="col-sm-3">
+				<label >Project Alias</label>
+			</div>
+			<div class="col-sm-9 form-group">
+				<input class="form-control" type="text" name="projecttitle" placeholder="Enter Your projectalias">
+			</div>	
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<label>Description</label>		
+			</div>
+			<div class="col-sm-9 form-group">
+				<textarea rows="5" class="form-control"></textarea>			
+			</div>		
+		</div>
+		<button type="button" class="btn btn-primary" (click)="view_Project()">Submit</button>
+	</form>
+	
 </div>

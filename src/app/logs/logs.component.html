@@ -1,34 +1,5 @@
-<div class="container" *ngIf="!developerFunction && !projectFunction">
-	<div class="row">
-		<button (click)="getProjects()">Project</button>
-		<button (click)="getDevelopers()">Developer</button>
-	</div>
-</div>
-<div class="container" *ngIf="developerFunction">
-	<div class="row">
-		<table>
-			<tr>
-				<td>Developer's Name</td>
-				<td>Developer's Role</td>
-				<td>Get Projects</td>
-			</tr>
-			<tr *ngFor="let i of allDevelopers">
-				<td>{{i.name}}</td>
-				<td>{{i.userRole}}</td>
-				<td><a routerLink="{{i._id}}">click</a></td>
-			</tr>
-		</table>
-	</div>
-</div>
 
-
-
-
-
-
-<!-- <div class="container">
-
- <div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div> 
+<!-- <div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div> -->
 <div class="loader" *ngIf="loader">
   <span></span>
   <span></span>
@@ -90,8 +61,3 @@
 		</table>
 	</div>
 </div>
--->
-
-
-
-

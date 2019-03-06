@@ -29,7 +29,7 @@ import { FileListComponent } from './file-list/file-list.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
-import { UpdateUserComponent } from './update-user/update-user.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UpdateUserComponent
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
