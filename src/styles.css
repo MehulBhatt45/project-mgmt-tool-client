@@ -266,7 +266,7 @@ nav.navbar {
 	height: 15px;
 	width: 15px;
 	background-color: #fff !important;
-	border: 3px solid #FF0000;
+	border: 3px solid #f33838;
 	/*box-shadow: 0px 0px 20px 0px red;*/
 	border-radius: 50%;
 	display: inline-block;
@@ -284,17 +284,17 @@ nav.navbar {
 .primary{
 	padding: 10px;
 	/*border-radius: 8px;*/
-	border-left: 3px solid #0087ff;
+	border-left: 3px solid #aa66cc;
 	/*box-shadow: 0 0 0 3px #aa66cc80;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
 }
-.danger{
+.info{
 	padding: 10px;
 	/*border-radius: 8px;*/
 	/*border: 3px solid #007bff;*/
 	/*box-shadow: 0 0 0 3px #007bff80;*/
-	border-left: 3px solid #FF0000;
+	border-left: 3px solid #007bff;
 	/*background-color: #b66d38;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
@@ -303,7 +303,7 @@ nav.navbar {
 .warning{
 	padding: 10px;
 	/*border-radius: 8px;*/
-	border-left: 3px solid #ffc202;
+	border-left: 3px solid #f16e88;
 	/*box-shadow: 0 0 0 3px #f16e8880;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;

@@ -11,10 +11,6 @@ declare var $ : any;
 import * as _ from 'lodash';
 
 
-// @Pipe({
-	//   name: 'filter',
-	//   pure: false
-	// })
 
 	@Component({
 		selector: 'app-project-detail',
@@ -48,7 +44,6 @@ import * as _ from 'lodash';
 			this.createEditTaskForm();
 
 		}
-
 		getEmptyTracks(){
 			this.tracks = [
 			{
@@ -186,8 +181,8 @@ import * as _ from 'lodash';
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data);
-			this.updateStatus(event.container.id, event.container.data[event.container.data.length-1]);
+			console.log(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[0]);
 		}
 	}
 

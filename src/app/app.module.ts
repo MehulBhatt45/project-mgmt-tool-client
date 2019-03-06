@@ -32,6 +32,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { SearchTaskPipe } from './search-task.pipe';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { SearchTaskPipe } from './search-task.pipe';
     FileListComponent,
     TimeAgoPipe,
     UpdateUserComponent,
-    SearchTaskPipe
+    SearchTaskPipe,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
