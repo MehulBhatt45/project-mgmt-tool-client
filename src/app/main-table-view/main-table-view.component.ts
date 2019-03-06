@@ -29,8 +29,11 @@ export class MainTableViewComponent implements OnInit {
 	newTracks:any;
 	loader:boolean = false;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+	url;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
+		this.route.url.subscribe(url=>{
+			this.url = url[0].path;
+		})
 		this.getProject();
 		this.createEditTaskForm();
 	}
@@ -125,7 +128,15 @@ export class MainTableViewComponent implements OnInit {
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
+			this.developers = res;	
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("developers list ================>" , this.developers);
 		},err=>{
 			this._alertService.error(err);
@@ -139,31 +150,31 @@ export class MainTableViewComponent implements OnInit {
 			this._projectService.getProjects().subscribe((res:any)=>{
 				console.log("working ===>" ,res);
 				this.projects = res;
-					if(this.currentUser.userRole!='projectManager'){
-						_.forEach(this.projects, (project)=>{
-							console.log(project);
-							_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-								_.forEach(this.tracks, (track)=>{
-									if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-										track.tasks.push(content);
-									}
-								})
+				if(this.currentUser.userRole!='projectManager'){
+					_.forEach(this.projects, (project)=>{
+						console.log(project);
+						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+									track.tasks.push(content);
+								}
 							})
 						})
-					}else{
-						this.projects = res;
-						console.log("hello");
-						_.forEach(this.projects, (project)=>{
-							console.log(project);
-							_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-								_.forEach(this.tracks, (track)=>{
-									if(content.status == track.id ){
-										track.tasks.push(content);
-									}
-								})
+					})
+				}else{
+					this.projects = res;
+					console.log("hello");
+					_.forEach(this.projects, (project)=>{
+						console.log(project);
+						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id ){
+									track.tasks.push(content);
+								}
 							})
 						})
-					}
+					})
+				}
 				console.log("this.tracks of get project ======>" , this.tracks);
 				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
 				this.trackChangeProjectWise = false;
@@ -271,16 +282,15 @@ export class MainTableViewComponent implements OnInit {
 	addItem(option){
 		this.loader = true;
 		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#editModel').modal('show');
-			this.loader = false;
+		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+		this.loader = false;
 		},1000);
 	}
 
 	saveTheData(task){
-		//console.log("task =====>" , task);
 		task['projectId']= this.projectId; 
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
@@ -323,7 +333,7 @@ export class MainTableViewComponent implements OnInit {
 						if(task.projectId._id ==  projectId){
 							console.log(" mactched");
 							//console.log("index of that task =======>" , index2);
-							3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
 					})
@@ -358,8 +368,8 @@ export class MainTableViewComponent implements OnInit {
 				_.forEach(this.tracks , (track ,index1)=>{
 					console.log("tracks of developer =========>" , track , index1);
 					_.forEach( track.tasks , (task , index2)=>{
-						// console.log("task ====>" , task.assignTo._id , index2 );
-						if(task.assignTo && task.assignTo._id == developerId){
+						console.log("task ====>" , task.assignTo._id , index2 );
+						if(task.assignTo._id == developerId){
 							console.log("mathched");
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
@@ -382,7 +392,7 @@ export class MainTableViewComponent implements OnInit {
 			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
 			_.forEach(track.tasks , (task , index2)=>{
 				console.log("task ===>" , task , index2);
-				if(task.assignTo && task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
+				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
 					console.log("matched");
 					this.newTracks[index1].tasks.push(track.tasks[index2]);
 				}

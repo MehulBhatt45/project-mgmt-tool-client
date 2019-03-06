@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -30,7 +31,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
-import { DeveloperTableViewComponent } from './developer-table-view/developer-table-view.component';
+import { SearchTaskPipe } from './search-task.pipe';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { DeveloperTableViewComponent } from './developer-table-view/developer-ta
     FileListComponent,
     TimeAgoPipe,
     UpdateUserComponent,
-    DeveloperTableViewComponent
+    SearchTaskPipe,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
