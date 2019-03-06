@@ -161,7 +161,7 @@ table {
    font-size: 14px;
    font-weight: 400;
    font-style: normal;
-
+  word-break: break-word;
  }
  .fa-check-square{
   color:#1a73e8;
