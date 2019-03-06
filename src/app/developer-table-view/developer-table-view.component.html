@@ -1,0 +1,13 @@
+<div class="loader" *ngIf="loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+<div class="row justify-content-end">
+	<div class="form-group">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects && currentUser.userRole !=='user'" (change)="filterByProjectId($event.target.value , $event.target.value1)">
+			<option value="null" selected>All Projects</option>
+			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
+		</select>
+	</div>

@@ -50,10 +50,12 @@
                         </ul>
                     </div>
                 </li>
-                <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
+                <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
                 
-                <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
-                <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
+                <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
+
+               <!--  <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li> -->
+                <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
             </ul>
         </li>
         <div class="sidenav-bg mask-strong"></div>
@@ -109,10 +111,10 @@
             <ul class="team-members">
                 <li id="login_details">
                     <a href="javascript:void(0);">
-                     {{getInitialsOfName(currentUser.name)}}
-                     <!-- TB -->
-                 </a>
-                 <div class="dropdown-content"> 
+                       {{getInitialsOfName(currentUser.name)}}
+                       <!-- TB -->
+                   </a>
+                   <div class="dropdown-content"> 
                     <a class="dropdown-item" (click)="logout()">Log Out</a>
                     <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
                 </div>

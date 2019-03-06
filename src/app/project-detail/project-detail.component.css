@@ -1,29 +1,19 @@
 :host ::ng-deep .ck-editor__editable {
-    min-height: 200px;
+  min-height: 200px;
 }
 
 .ckeditor{
   width: 100%;
 }
-
-p{
-	padding-left: 10px;
-
-}
-
-/*img{
-	
-	border-radius: 50%;
-}*/
 .body_content{
-  padding: 64px;
+ padding-left: 72px;
 }
 .label_text{
-	background-color: lightgray;
-	border-radius:50%;
-	padding-left: 10px;
-	margin-left: 5px;
-	padding-right: 9px;
+  background-color: lightgray;
+  border-radius:50%;
+  padding-left: 10px;
+  margin-left: 5px;
+  padding-right: 9px;
 
 }
 .justify-content-end{
@@ -31,11 +21,11 @@ p{
 }
 
 .col-sm-3>.card{
-	padding: 5px 10px 0;
+  padding: 5px 10px 0;
 }
 
 .col-sm-3 .card .card-header{
-	padding: 5px 0;
+  padding: 5px 0;
 }
 
 .board {
@@ -85,7 +75,7 @@ p{
   /*overflow: auto;
   flex-grow: 1;*/
   background-color: #f6f4f6;
-  min-height: 100px;
+  height: 100%;
 }
 
 .cdk-drag-animating, .cdk-drop-list-dragging .cdk-drag {
@@ -120,7 +110,7 @@ p{
 
 .team-members li.add-member{
   margin-right: 0;
-  padding: 8px 12px;
+  /*  padding: 8px 12px;*/
 }
 
 .team-members li a{
@@ -149,9 +139,9 @@ table {
   }
 
   .card-header{
-    background-color: #f4f5f7 !important;
-    border-radius: 4px 4px 0 0;
-    padding: 1px 3px 0;
+    background-color:#f4f5f7!important;
+    border-radius: 7px 7px 0 0;
+    padding: 8px 0px 0px 18px;
     height: 40px;
   }
   .mat-card{
@@ -163,8 +153,7 @@ table {
     font-size: 0.85714286em;
     font-weight: 600;
     line-height: 1.33333333;
-    text-transform: uppercase;
-    font-weight: normal; 
+    text-transform: uppercase; 
   }
 
   .card .card-body .card-text {
@@ -204,7 +193,7 @@ table {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
- left: 0px;
+  left: 0px;
   position: fixed;
   top: 62px;
   z-index: 300;
@@ -220,7 +209,7 @@ table {
   height: 91%;
 }
 .top_icon{
- 
+
   -webkit-box-align: center;
   align-items: center;
   display: flex;
@@ -256,5 +245,16 @@ table {
 .card_count_lbl{
   margin-left: 15px;
 }
-
-
+.details{
+  border: 1px solid lightgray;
+  padding: 10px 25px;
+  border-radius: 3px;
+  margin: 10px 0px;
+}
+.details strong{
+  font-weight: 400;
+  font-size: 16px;
+}
+.padding-20 {
+  padding: 0px 14px!important;
+}
