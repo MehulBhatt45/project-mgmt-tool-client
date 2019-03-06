@@ -10,13 +10,10 @@
             <div class="card">
                 <div class="card-header bg-info white-text" routerLink="/project-details/{{project._id}}">
                     <h4 class="project-title-view-project">{{project.title}}</h4>
-                    <!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
                     <div class="float-right">
-                        
                         <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
                         <span><i class="fa fa-star"></i></span>
                         <span routerLink="/edit-project/{{project._id}}"><i class="fa fa-edit"></i></span>
-                       
                     </div>
                 </div>
                 <div class="card-body" routerLink="/project-details/{{project._id}}" >
@@ -102,7 +99,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
