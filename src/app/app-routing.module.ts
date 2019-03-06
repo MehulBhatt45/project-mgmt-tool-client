@@ -15,6 +15,8 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
+
 const routes: Routes = [
 	// {
 	// 	path:'',
@@ -33,6 +35,11 @@ const routes: Routes = [
 		path:'reset-password',
 		component:ResetPasswordComponent
 	},
+	{
+		path:'userprofile',
+		component:UserprofileComponent
+	},
+
 	{
 		path:"",
 		component:HomeComponent,

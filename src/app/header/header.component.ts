@@ -19,15 +19,18 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	allStatusList = this._projectService.getAllStatus();
+	allPriorityList = this._projectService.getAllProtity();
 	developers;
 	editTaskForm;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(private router: Router,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
+		
 		this.createEditTaskForm();
 	}
 
-getEmptyTracks(){
+	getEmptyTracks(){
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -88,7 +91,6 @@ getEmptyTracks(){
 		},err=>{
 			console.log(err);
 		});
-
 		$('#login_details').click(function (){
 			$(this).children('.dropdown-content').toggleClass('open');
 		});
@@ -96,6 +98,9 @@ getEmptyTracks(){
 		$('#plus_details').click(function (){
 			$(this).children('.dropdown-content').toggleClass('open');
 		});
+		
+		this.getAllDevelopers();
+		this.getEmptyTracks();
 	}	
 
 	logout() {
@@ -132,7 +137,7 @@ getEmptyTracks(){
 		})
 		
 	}
-getAllDevelopers(){
+	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			console.log("Developers",this.developers);
@@ -145,14 +150,14 @@ getAllDevelopers(){
 	addItem(option){
 		// this.loader=true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		// this.loader=false;
-	},1000);
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			// this.loader=false;
+		},1000);
 	}
-		getProject(id){
+	getProject(id){
 		// this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
@@ -185,7 +190,7 @@ getAllDevelopers(){
 		console.log(subUrl);
 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			this.getProject(this.projectId);
+			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
 		})

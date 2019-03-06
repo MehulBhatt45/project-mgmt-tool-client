@@ -19,9 +19,9 @@ export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	public model = {
-        editorData: 'Enter comments here'
-    };
-    
+		editorData: 'Enter comments here'
+	};
+	url;
 	task;
 	project;
 	comment;
@@ -31,7 +31,11 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers;
 	loader : boolean = false;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
+		this.route.url.subscribe(url=>{
+			this.url = url[0].path;
+		})
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
@@ -100,6 +104,14 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
@@ -114,19 +126,45 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				this.getEmptyTracks()
 				this.project = res;
-				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
-					})
-				})
-				console.log(this.tracks);
-				this.loader = false;
-			},err=>{
-				console.log(err);
-				this.loader = false;
-			})
+				console.log("res=========>", res);
+				// if (developers==localStorage.setItem('currentUser', JSON.stringify(user.data));){}
+				// if (this.currentUser==this.task.assignTo._id) {
+					// 	// code...
+					// }
+					// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
+					if(this.currentUser.userRole=='projectManager'){
+						this.project = res;
+						console.log("hiiiiiiiii",res);
+						// _.forEach(this.project, (project)=>{
+							// 	console.log(project);
+							_.forEach([...this.project.taskId,...this.project.IssueId,...this.project.BugId], (content)=>{
+								_.forEach(this.tracks, (track)=>{
+									if(content.status == track.id ){
+										track.tasks.push(content);
+									}
+								})
+							})
+							// })
+						}else{
+							this.project = res;
+							console.log("hello");
+							// _.forEach(this.project, (project)=>{
+								// console.log(project);
+								_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+									_.forEach(this.tracks, (track)=>{
+										if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+											track.tasks.push(content);
+										}
+									})
+								})
+								// })
+							}
+							console.log(this.tracks);
+							this.loader = false;
+						},err=>{
+							console.log(err);
+							this.loader = false;
+						})
 		},1000);
 	}
 
@@ -276,8 +314,7 @@ export class ProjectDetailComponent implements OnInit {
     	console.log(this.comment);
     }
 
-
-    creationDateComparator(a,b) {
-	  return parseInt(a.price, 10) - parseInt(b.price, 10);
-	}	
+	creationDateComparator(a,b) {
+		return parseInt(a.price, 10) - parseInt(b.price, 10);
+	}
 }

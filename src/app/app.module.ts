@@ -30,6 +30,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    UserprofileComponent
   ],
   imports: [
     BrowserModule,
