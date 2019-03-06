@@ -134,25 +134,45 @@ export class ProjectDetailComponent implements OnInit {
 				//this.onlyproject=res;
 				this.getEmptyTracks()
 				this.project = res;
-							console.log("res=========>", res);
+				console.log("res=========>", res);
 				// if (developers==localStorage.setItem('currentUser', JSON.stringify(user.data));){}
 				// if (this.currentUser==this.task.assignTo._id) {
-				// 	// code...
-				// }
-				// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
-				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-							track.tasks.push(content);
-						}
-					})
+					// 	// code...
+					// }
+					// currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
+					if(this.currentUser.userRole=='projectManager'){
+						this.project = res;
+						console.log("hiiiiiiiii",res);
+						// _.forEach(this.project, (project)=>{
+						// 	console.log(project);
+							_.forEach([...this.project.taskId,...this.project.IssueId,...this.project.BugId], (content)=>{
+								_.forEach(this.tracks, (track)=>{
+									if(content.status == track.id ){
+										track.tasks.push(content);
+									}
+								})
+							})
+						// })
+					}else{
+						this.project = res;
+						console.log("hello");
+						// _.forEach(this.project, (project)=>{
+							// console.log(project);
+							_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
+								_.forEach(this.tracks, (track)=>{
+									if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+										track.tasks.push(content);
+									}
+								})
+							})
+						// })
+					}
+					console.log(this.tracks);
+					this.loader = false;
+				},err=>{
+					console.log(err);
+					this.loader = false;
 				})
-				console.log(this.tracks);
-				this.loader = false;
-			},err=>{
-				console.log(err);
-				this.loader = false;
-			})
 		},1000);
 	}
 	/*getProject(id){

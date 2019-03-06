@@ -28,6 +28,8 @@ export class MainTableViewComponent implements OnInit {
 	developers;
 	newTracks:any;
 	loader:boolean = false;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
 		this.getProject();
 		this.createEditTaskForm();
@@ -133,30 +135,45 @@ export class MainTableViewComponent implements OnInit {
 	getProject(){
 		this.loader = true;
 		setTimeout(()=>{
-		this.getEmptyTracks();
-		this._projectService.getProjects().subscribe((res:any)=>{
-			console.log(res);
-			this.projects = res;
-			_.forEach(this.projects, (project)=>{
-				console.log(project);
-				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
-					})
-				})
+			this.getEmptyTracks();
+			this._projectService.getProjects().subscribe((res:any)=>{
+				console.log("working ===>" ,res);
+				this.projects = res;
+					if(this.currentUser.userRole!='projectManager'){
+						_.forEach(this.projects, (project)=>{
+							console.log(project);
+							_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+								_.forEach(this.tracks, (track)=>{
+									if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+										track.tasks.push(content);
+									}
+								})
+							})
+						})
+					}else{
+						this.projects = res;
+						console.log("hello");
+						_.forEach(this.projects, (project)=>{
+							console.log(project);
+							_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+								_.forEach(this.tracks, (track)=>{
+									if(content.status == track.id ){
+										track.tasks.push(content);
+									}
+								})
+							})
+						})
+					}
+				console.log("this.tracks of get project ======>" , this.tracks);
+				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
+				this.trackChangeProjectWise = false;
+				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
+				this.trackChangeDeveloperWise = false;
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
 			})
-			console.log("this.tracks of get project ======>" , this.tracks);
-			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-			this.trackChangeProjectWise = false;
-			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-			this.trackChangeDeveloperWise = false;
-			this.loader = false;
-		},err=>{
-			console.log(err);
-			this.loader = false;
-		})
 		},1000);
 	}
 
@@ -254,11 +271,11 @@ export class MainTableViewComponent implements OnInit {
 	addItem(option){
 		this.loader = true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader = false;
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			this.loader = false;
 		},1000);
 	}
 
@@ -306,7 +323,7 @@ export class MainTableViewComponent implements OnInit {
 						if(task.projectId._id ==  projectId){
 							console.log(" mactched");
 							//console.log("index of that task =======>" , index2);
-		3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
 					})
