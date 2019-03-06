@@ -6,6 +6,20 @@
 	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
+	<div class="justify-content-end"  *ngIf="currentUser.userRole=='projectManager'">
+		<div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+			<div class="dropdown-menu dropdown-default">
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
+
+			</div>
+		</div>
+		
+
+		<div class="dropdown">
+
 	<!-- <div class="justify-content-end">
 		<div class="dropdown"*ngIf="currentUser.userRole=='projectManager'">
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
@@ -44,7 +58,8 @@
 		<ul>
 			<li>
 				<label for="exampleForm2">Search Task</label>
-				<input type="text" id="exampleForm2" class="form-control">
+				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
+				<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
 			</li>
 		</ul>
 	</div>
@@ -69,6 +84,7 @@
 												<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 												<div class="card-text">{{task.desc}}</div>
 												<div>{{task.createdAt | timeAgo }}</div>
+												<div>{{task.createdAt}}</div>
 											</td>
 										</tr>
 									</table>
@@ -93,7 +109,6 @@
 												</li>
 											</ul>
 										</li>
-
 									</ul>
 									<label class="float-right">{{task.uniqueId}}</label>
 								</div>
@@ -216,7 +231,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>	
 			<div class="modal-body" *ngIf="task && !loader">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
@@ -260,4 +275,3 @@
 		</div>
 	</div>
 </div>
-
