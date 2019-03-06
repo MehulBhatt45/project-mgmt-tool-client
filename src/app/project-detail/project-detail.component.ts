@@ -256,6 +256,8 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(err);
 		})
 	}
+
+	
 	public Editor = DecoupledEditor;
 
     public onReady( editor ) {
