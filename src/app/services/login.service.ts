@@ -43,6 +43,10 @@ export class LoginService {
         return this.http.post(config.baseApiUrl+"user/reset-password", user);
     }
 
+    getUserById(id){
+         return this.http.get(config.baseApiUrl+"user/reset-password"+id);   
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
