@@ -282,16 +282,15 @@ export class MainTableViewComponent implements OnInit {
 	addItem(option){
 		this.loader = true;
 		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#editModel').modal('show');
-			this.loader = false;
+		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+		this.loader = false;
 		},1000);
 	}
 
 	saveTheData(task){
-		//console.log("task =====>" , task);
 		task['projectId']= this.projectId; 
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
@@ -334,7 +333,7 @@ export class MainTableViewComponent implements OnInit {
 						if(task.projectId._id ==  projectId){
 							console.log(" mactched");
 							//console.log("index of that task =======>" , index2);
-							3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
 					})
@@ -369,8 +368,8 @@ export class MainTableViewComponent implements OnInit {
 				_.forEach(this.tracks , (track ,index1)=>{
 					console.log("tracks of developer =========>" , track , index1);
 					_.forEach( track.tasks , (task , index2)=>{
-						// console.log("task ====>" , task.assignTo._id , index2 );
-						if(task.assignTo && task.assignTo._id == developerId){
+						console.log("task ====>" , task.assignTo._id , index2 );
+						if(task.assignTo._id == developerId){
 							console.log("mathched");
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
@@ -393,7 +392,7 @@ export class MainTableViewComponent implements OnInit {
 			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
 			_.forEach(track.tasks , (task , index2)=>{
 				console.log("task ===>" , task , index2);
-				if(task.assignTo && task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
+				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
 					console.log("matched");
 					this.newTracks[index1].tasks.push(track.tasks[index2]);
 				}
