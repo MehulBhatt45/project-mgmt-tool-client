@@ -31,6 +31,10 @@ export class HeaderComponent implements OnInit {
 		$('#login_details').click(function (){
 			$(this).children('.dropdown-content').toggleClass('open');
 		});
+
+		$('#plus_details').click(function (){
+			$(this).children('.dropdown-content').toggleClass('open');
+		});
 	}	
 
 	logout() {

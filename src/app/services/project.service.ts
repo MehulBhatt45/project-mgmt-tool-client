@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 	providedIn: 'root'
 })
 export class ProjectService {
-	
+
 	constructor(private http:HttpClient) { }
 
 	getAllStatus() {
@@ -44,13 +44,10 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id, httpOptions);
 	}
 
 	addProject(body,files:FileList){
-		console.log("addproject is calling");
 		let formdata = new FormData();
 		formdata.append('title',body.title);
 		formdata.append('desc',body.description);
@@ -67,18 +64,6 @@ export class ProjectService {
 		console.log("body===>>>",body);
 		
 		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
-	}
-
-	addProject2(body){
-		console.log("addproject2 is calling");
-		console.log("body====>>",body);
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.post(config.baseApiUrl+"project/add-project/simple",body,httpOptions);
 	}
 
 	addData(data, subUrl){
@@ -137,14 +122,6 @@ export class ProjectService {
 		};
 		return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId , httpOptions);
 	}
-
-	getAllDevelopersByProjectManager(){
-		var body = {
-			"pmId" : JSON.parse(localStorage.getItem('currentUser'))._id
-		}
-		console.log("projectManagerId ==>" , body);
-		return this.http.post(config.baseApiUrl+"user/get-all-developers-by-project-manager" , body ); 
-	}
 	uploadFiles(formData){
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -154,16 +131,7 @@ export class ProjectService {
 		};
 		return this.http.post(config.baseApiUrl+"project/upload-file",formData);
 	}
-	getLogs(developerId){
-		console.log("developer ID in project service ===> " , developerId);
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.get(config.baseApiUrl+"user/get-logs/"+developerId , httpOptions);
-	}
+
 	getAllFilesInfolder(id){
 		var obj = { projectId: id };
 		return this.http.post(config.baseApiUrl+"project/get-all-files", obj);
@@ -171,38 +139,5 @@ export class ProjectService {
 
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
-	}
-	updateProject(data){
-		console.log("updated Data in project servie" , data);
-		var projectId = data._id;
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
-	}
-	getProjectByIdAndUserId(id){
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("user ID ====>" , userId);
-		return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
-	}
-
-	deleteProjectById(data){
-		var projectId = data._id;
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
 	}
 }

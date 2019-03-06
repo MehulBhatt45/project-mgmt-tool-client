@@ -29,8 +29,7 @@ import { FileListComponent } from './file-list/file-list.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
-import { UpdateUserComponent } from './update-user/update-user.component';
-import { DeveloperTableViewComponent } from './developer-table-view/developer-table-view.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +49,7 @@ import { DeveloperTableViewComponent } from './developer-table-view/developer-ta
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UpdateUserComponent,
-    DeveloperTableViewComponent
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
