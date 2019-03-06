@@ -12,11 +12,8 @@
                     <h4 class="project-title-view-project">{{project.title}}</h4>
                     <!-- <span><strong>UniqueId:</strong> {{project.uniqueId}}</span> -->
                     <div class="float-right">
-                        <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
-                        <span><i class="fa fa-star"></i></span>
                     <span routerLink="/project/files-list/{{project._id}}"><i class="fa fa-file mr-1"></i></span>
-                    <span><i class="fa fa-star mr-1"></i></span>
-                    <span routerLink="/edit-project/{{project._id}}"><i class="fa fa-edit"></i></span>
+                    <span><i class="fa fa-star"></i></span>
                     </div>
                 </div>
                 <div class="card-body" routerLink="/project-details/{{project._id}}" >
@@ -44,14 +41,14 @@
                                         <img src="../assets/icons/bug-2.png" class="tib-prefix">
                                         Bugs: 
                                     </strong>
-                                    <span class="tib-view-projects-description">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
+                                        <span class="tib-view-projects-description">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-xs-12 col-sm-6">
-                            <p class="card-text font-monospace">{{project.desc}}</p>
+                    <div class="col-xs-12 col-sm-6">
+                        <p class="card-text font-monospace">{{project.desc}}</p>
 
-                        </div>
+                    </div>
 
                     </div>
 
@@ -110,18 +107,15 @@
                         <strong>Create Project</strong>
                     </h5>
                     <div class="card-body px-lg-5 pt-1">
-                        <form class="md-form" [formGroup]="addForm" style="color: #757575;">
+                        <form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
                             <div class="md-form form-group">
                                 <label for="projecttitle">Project Title</label>
                                 <input type="text" id="projecttitle" formControlName="title" class="form-control">
                             </div>
                             <div class="md-form form-group">
                                 <label for="desc">Description</label>
-                                <textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+                                <textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-                                Select Project avatar
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -135,104 +129,3 @@
         </div>
     </div>
 </div>
-
-
-
-<!-- Modal Start Here -->
-
-<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="md-form form-group">
-                <div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                        <span>Upload a new avatar</span>
-                        <input type="file" name="fileUpload" (change)="changeFile($event)">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input  class="file-path validate" type="text" placeholder="Upload your file">
-                    </div>
-                </div>
-            </div>
-            <ul class="project-avatar">
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/school.png')">
-                        <img src="assets/avatar/school.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/mortarboard.png')">
-                        <img src="assets/avatar/mortarboard.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/alarm-clock.png')">
-                        <img src="assets/avatar/alarm-clock.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button"  (click)="addIcon('assets/avatar/stethoscope.png')">
-                        <img src="assets/avatar/stethoscope.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/doctor.png')">
-                        <img src="assets/avatar/doctor.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/bookshelf.png')">
-                        <img src="assets/avatar/bookshelf.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/flask.png')">
-                        <img src="assets/avatar/flask.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/customer-service.png')">
-                        <img src="assets/avatar/customer-service.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/payment-method.png')">
-                        <img src="assets/avatar/payment-method.png" height="56" width="56">
-                    </button>   
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/beach.png')">
-                        <img src="assets/avatar/beach.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/coding.png')">
-                        <img src="assets/avatar/coding.png" height="56" width="56">
-                    </button>
-                </li>
-                <li>
-                    <button class="icon-button" (click)="addIcon('assets/avatar/maintenance.png')">
-                        <img src="assets/avatar/maintenance.png" height="56" width="56">
-                    </button>
-                </li>
-                
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- Modal End Here -->
-
-

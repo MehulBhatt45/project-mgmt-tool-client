@@ -21,7 +21,7 @@ export class LoginService {
     }
 
     login(userCredentials) {
-        console.log("heyy" , userCredentials);
+        console.log("heyy");
         return this.http.post<any>(config.baseApiUrl+"user/login", userCredentials)
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
@@ -39,15 +39,18 @@ export class LoginService {
     register(user) {
         return this.http.post(config.baseApiUrl+"user/signup", user);
     }
+    resetPassword(user){
+        return this.http.post(config.baseApiUrl+"user/reset-password", user);
+    }
+
+    getUserById(id){
+         return this.http.get(config.baseApiUrl+"user/reset-password"+id);   
+    }
 
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         localStorage.removeItem('token');
         this.currentUserSubject.next(null);
-    }
-
-    getUserById(id){
-         return this.http.get(config.baseApiUrl+"user/get-single-user/"+id);   
     }
 }
