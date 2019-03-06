@@ -120,27 +120,23 @@
 					<!-- <hr> -->
 					<div class="details">
 						<div class="row">
-							<div class="col-12 col-md-6" *ngIf="task.createdBy">
-								<label><strong>Created By: &nbsp;</strong></label>
-								<span>{{task.createdBy.name}}, on {{task.createdAt | date:'medium'}}</span>
+							<div class="col-12 col-md-4" *ngIf="task.createdBy">
+								<p><label><strong>Created By: &nbsp;</strong></label>
+								<span>{{task.createdBy.name}}</span></p>
+								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
+								<span>{{task.createdAt | date:'short'}}</span></p>
+								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
+								<span>{{task.status}}</span></p>
 							</div>
-							<div class="col-12 col-md-6">
-								<label><strong>Assign To: &nbsp;</strong></label>
-								<span>
-								{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+							<div class="col-12 col-md-4">
+								<p><label><strong>Assign To: &nbsp;</strong></label>
+								<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span></p>
+								<p *ngIf="task.priority"><label><strong>Prority: &nbsp;</strong></label>
+								<span>{{task.priority}}</span></p>
 							</div>
-							<div class="col-12 col-md-6" *ngIf="task.createdAt">
-								<label><strong>Due Date: &nbsp;</strong></label>
-								<span>{{task.createdAt | date}}</span>
+							<div class="col-12 col-md-4">
+								<p>start time end time</p>
 							</div>
-							<div class="col-12 col-md-6" *ngIf="task.priority">
-								<label><strong>Prority: &nbsp;</strong></label>
-								<span>{{task.priority}}</span>
-							</div>
-							<div class="col-12 col-md-6" *ngIf="task.status">
-								<label><strong>Status: &nbsp;</strong></label>
-								<span>{{task.status}}</span>
-							</div>	
 						</div>							
 						<!-- </div> -->
 						<div class="row justify-content-between">
@@ -216,7 +212,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="row no-margin no padding">
+						<!-- <div class="row no-margin no padding"> -->
 							<!-- <div class="form-group col-12 col-lg-6"> -->
 								<!-- <div class="form-group"> -->
 									<!-- <label for="startDate">Start Date</label>
