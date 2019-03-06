@@ -22,6 +22,7 @@ export class ProjectDetailComponent implements OnInit {
 		editorData: 'Enter comments here'
 	};
 	url;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	task;
 	project;
 	comment;

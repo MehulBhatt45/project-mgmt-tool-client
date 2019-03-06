@@ -49,8 +49,8 @@
 <div class="side_fixed_nav">
     <div class="top_icon">
         <div class="second_icon">
-        <a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a>
-    </div>
+            <a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a>
+        </div>
         <div class="second_icon">
             <a href="" class="star_link " data-toggle="tooltip"  title="Starred and recent(\)" data-placement="right"><i class="fa fa-star-o" aria-hidden="true" ></i></a>
         </div>
@@ -70,40 +70,40 @@
                 <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
             </div>
         </div>  
-
-        
     </div>
-    <div class="bottom_icon">
-        <div class="second_icon">
-            <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
-        </div>  
-        <div class="second_icon">
-            <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i></a>
-        </div>
-        <div class="second_icon">
-            <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
-        </div>
-        <div class="second_icon dropdown">
-            <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
-            <ul class="team-members">
-                <li id="login_details">
-                    <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
-                    <div class="dropdown-content"> 
-                        <a class="dropdown-item" (click)="logout()">Log Out</a>
-                        <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
-                    </div>
-                </li>   
-            </ul>
-                    <a href="javascript:void(0);">
-                     {{getInitialsOfName(currentUser.name)}}
-                     <!-- TB -->
-                 </a>
-                 <div class="dropdown-content"> 
+</div>
+<div class="bottom_icon">
+    <div class="second_icon">
+        <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
+    </div>  
+    <div class="second_icon">
+        <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i></a>
+    </div>
+    <div class="second_icon">
+        <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
+    </div>
+    <div class="second_icon dropdown">
+        <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+        <ul class="team-members">
+            <li id="login_details">
+                <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
+                <div class="dropdown-content"> 
                     <a class="dropdown-item" (click)="logout()">Log Out</a>
-                    <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
+                    <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
                 </div>
             </li>   
         </ul>
+        <a href="javascript:void(0);">
+         {{getInitialsOfName(currentUser.name)}}
+         <!-- TB -->
+     </a>
+     <div class="dropdown-content"> 
+        <a class="dropdown-item" (click)="logout()">Log Out</a>
+        <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
+    </div>
+</div>
+</div>
+
             <!--  <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right">
                 <ul class="team-members">
                     <li >
@@ -115,7 +115,6 @@
             </a> -->
 
 
-        </div>
 
             <!-- <ul class="team-members">  
                 <li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -124,8 +123,5 @@
                     </a>
                 </li>
             </ul> -->
-        </div>
-    </div>
-</div>
 
 
