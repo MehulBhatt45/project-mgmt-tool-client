@@ -57,9 +57,14 @@
 <div class="container" *ngIf="editAvail">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
-			<strong>Create Project</strong>
+			<strong>Update Project</strong>
 		</h5>
 		<div class="card-body px-lg-5 pt-1">
+
+			<div *ngIf="availData.avatar">
+					<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
+			</div>
+
 			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">
 					<label class="active" for="projecttitle">Project Title</label>
@@ -90,7 +95,7 @@
 					<div class="col-md-6">
 						<div class="md-form form-group">
 							<label class="active" for="clientdesignation">Designation</label>
-							<input autofocus type="text" id="clientdesignation"  formControlName="clientDesignation" class="form-control">
+							<input autofocus type="text" id="clientdesignation"  formControlName="clientDesignation" class="form-control" [(ngModel)]="availData.clientDesignation">
 						</div>
 					</div>
 				</div>

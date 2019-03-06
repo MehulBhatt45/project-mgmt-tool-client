@@ -30,6 +30,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { AddNoticeComponent } from './add-notice/add-notice.component';
+import { NoticeboardComponent } from './noticeboard/noticeboard.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UpdateUserComponent
+    UpdateUserComponent,
+    AddNoticeComponent,
+    NoticeboardComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     NgxEditorModule,
-    CKEditorModule
+    CKEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -32,20 +32,20 @@
 					<div class="card-header">
 						<span class="track_title">{{track.title}}</span>
 						<span class="card_count_lbl">{{track.tasks.length}}</span>
-						</div>		
-					</div>
-					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-						<mat-card *ngFor="let task of track.tasks "cdkDrag>
-							<mat-card-content>
-								<div class="card" [ngClass]="track.class" (click)="openModel(task)">
-									<div class="card-body" style="padding: 0px;">
-										<table>
-											<tr>
-												<td colspan="2">
-													<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
-													<div class="card-text">{{task.desc}}</div>
-													<div>{{task.createdAt | timeAgo }}</div>
-												</td>
+					</div>		
+				</div>
+				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+					<mat-card *ngFor="let task of track.tasks "cdkDrag>
+						<mat-card-content>
+							<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+								<div class="card-body" style="padding: 0px;">
+									<table>
+										<tr>
+											<td colspan="2">
+												<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+												<div class="card-text">{{task.desc}}</div>
+												<div>{{task.createdAt | timeAgo }}</div>
+											</td>
 
 									<!-- <td>
 										<a href="javascript:void(0)" (click)="openModel(task)">
@@ -238,6 +238,12 @@
 						<div class="form-group col-12">
 							<label for="desc">Discription</label>
 							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class=" row form-group col-12">
+							<button class="btn btn-default" (click)="fileUpload.click()">
+								<i class="fa fa-paperclip mr-1"></i> Add Files
+								<input type="file" formControlName="files" [(ngModel)]="task.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+							</button>
 						</div>
 						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">

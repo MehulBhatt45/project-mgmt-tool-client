@@ -19,9 +19,9 @@ export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	public model = {
-        editorData: 'Enter comments here'
-    };
-    
+		editorData: 'Enter comments here'
+	};
+
 	task;
 	project;
 	comment;
@@ -32,6 +32,7 @@ export class ProjectDetailComponent implements OnInit {
 	developers;
 	loader : boolean = false;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	files:FileList;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -87,7 +88,8 @@ export class ProjectDetailComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			startDate : new FormControl('', Validators.required),
 			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
+			status : new FormControl({value: '', disabled: true}, Validators.required),
+			files: new FormControl(),
 		})
 	}
 
@@ -238,49 +240,74 @@ export class ProjectDetailComponent implements OnInit {
 	addItem(option){
 		this.loader=true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader=false;
-	},1000);
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			this.loader=false;
+		},1000);
 	}
 
 	saveTheData(task){
-		task['projectId']= this.projectId; 
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
-		console.log(task);
-		var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
-		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
-			this.getProject(this.projectId);
-		},err=>{
-			console.log(err);
-		})
+		if(this.files && this.files.length){
+			task['projectId']= this.projectId; 
+			task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+			task.startDate = $("#startDate").val();
+			task.dueDate = $("#dueDate").val();
+			console.log(task);
+			var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+			console.log(subUrl);
+			this._projectService.addData2(this.files,task, subUrl).subscribe((res:any)=>{
+				$('#editModel').modal('hide');
+				this.getProject(this.projectId);
+			},err=>{
+				console.log(err);
+			})
+		}
+		else{
+
+			task['projectId']= this.projectId; 
+			task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+			task.startDate = $("#startDate").val();
+			task.dueDate = $("#dueDate").val();
+			console.log(task);
+			var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+			console.log(subUrl);
+			this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+				$('#editModel').modal('hide');
+				this.getProject(this.projectId);
+			},err=>{
+				console.log(err);
+			})
+
+		}		
 	}
+
 	public Editor = DecoupledEditor;
 
-    public onReady( editor ) {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
-    }
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
-    public onChange( { editor }: ChangeEvent ) {
-        const data = editor.getData();
-        this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-    }
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+	}
 
-    sendComment(){
-    	console.log(this.comment);
-    }
+	sendComment(){
+		console.log(this.comment);
+	}
 
 
-    creationDateComparator(a,b) {
-	  return parseInt(a.price, 10) - parseInt(b.price, 10);
+	creationDateComparator(a,b) {
+		return parseInt(a.price, 10) - parseInt(b.price, 10);
 	}	
+
+	changeFile(e){
+    console.log(e.target.files);
+    this.files = e.target.files;
+  }
 }

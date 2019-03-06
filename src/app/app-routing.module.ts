@@ -14,8 +14,11 @@ import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import {AddNoticeComponent} from './add-notice/add-notice.component';
+import {NoticeboardComponent} from './noticeboard/noticeboard.component';
+
 const routes: Routes = [
-	// {
+// {
 	// 	path:'',
 	// 	redirectTo:'login',
 	// 	pathMatch:'full'
@@ -37,6 +40,14 @@ const routes: Routes = [
 			path:'',
 			pathMatch:"full",
 			redirectTo:'view-projects'
+		},
+		{
+			path:'noticeboard',
+			component:NoticeboardComponent
+		},
+		{
+			path:'add-notice',
+			component:AddNoticeComponent
 		},
 		{
 			path:'view-projects',
@@ -106,8 +117,8 @@ const routes: Routes = [
 		}]
 	}];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash : true })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+	@NgModule({
+		imports: [RouterModule.forRoot(routes, { useHash : true })],
+		exports: [RouterModule]
+	})
+	export class AppRoutingModule { }

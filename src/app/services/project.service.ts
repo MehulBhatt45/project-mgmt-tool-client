@@ -49,27 +49,24 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id, httpOptions);
 	}
 
-	addProject(body,files:FileList){
+	addProject_With_image(body,files:FileList){
 		console.log("addproject is calling");
 		let formdata = new FormData();
 		formdata.append('title',body.title);
-		formdata.append('desc',body.description);
+		formdata.append('desc',body.desc);
 		formdata.append('avatar',body.avatar);
 		formdata.append('pmanagerId',body.pmanagerId);
+		formdata.append("clientEmail",body.clientEmail);
+		formdata.append("clientFullName",body.clientFullName);
+		formdata.append("clientContactNo",body.clientContactNo);
+		formdata.append("clientDesignation",body.clientDesignation);
 		formdata.append("uploadfile",files[0]);
-		console.log("formdata===>>>",formdata);
-		const httpOptions = {
-			headers: new HttpHeaders({
-				// 'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
 		console.log("body===>>>",body);
 		
-		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
+		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
 	}
 
-	addProject2(body){
+	addProject_Without_image(body){
 		console.log("addproject2 is calling");
 		console.log("body====>>",body);
 		const httpOptions = {
@@ -78,8 +75,27 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.post(config.baseApiUrl+"project/add-project/simple",body,httpOptions);
+		return this.http.post(config.baseApiUrl+"project/add-project",body,httpOptions);
 	}
+
+	addData2(file: FileList,data, subUrl){
+		console.log(data);
+		let formdata = new FormData();
+		formdata.append('assignTo',data.assignTo);
+		formdata.append('desc',data.desc);
+		formdata.append('dueDate',data.dueDate);
+		formdata.append('priority',data.priority);
+		formdata.append('projectId',data.projectId);
+		formdata.append('startDate',data.startDate);
+		formdata.append('title',data.title);
+		formdata.append('uniqueId',data.uniqueId);
+		formdata.append('files',data.files)
+		for(var i =0; i < file.length; i++){
+			formdata.append("uploadFile",file[i]);
+		}
+		return this.http.post(config.baseApiUrl+subUrl+"fileupload", formdata);
+	}
+
 
 	addData(data, subUrl){
 		console.log(data);
@@ -92,6 +108,9 @@ export class ProjectService {
 		};
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
+
+
+
 
 	updateData(data, subUrl){
 		console.log(data);
@@ -193,6 +212,31 @@ export class ProjectService {
 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
+	}
+
+	addNotice_without_image(data){
+		console.log(data);
+		return this.http.post(config.baseApiUrl+"notice/add-notice", data);
+	}
+
+	addNotice_with_image(data,file: FileList){
+		let formdata = new FormData();
+		formdata.append('title',data.title);
+		formdata.append('desc',data.desc);
+		formdata.append('published',data.published);
+		formdata.append('expireon',data.expireon);
+		formdata.append('images',data.images);
+		
+		for(var i =0; i < file.length; i++){
+			formdata.append("uploadFile",file[i]);
+		}
+
+
+		return this.http.post(config.baseApiUrl+"notice/add-notice/file",formdata);
+	}
+
+	getNotice(){
+		return this.http.get(config.baseApiUrl+"notice/allnotice");
 	}
 }
 

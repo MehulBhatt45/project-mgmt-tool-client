@@ -1,5 +1,5 @@
 
-const baseUrl = "http://206.189.231.135:4000/";
+//const baseUrl = "http://206.189.231.135:4000/";
 
 
 //const baseUrl = "http://132.140.160.60:4000/";
@@ -7,7 +7,7 @@ const baseUrl = "http://206.189.231.135:4000/";
 
 //const baseUrl = "http://localhost:4000/";
 
-// const baseUrl = "http://localhost:4000/";
+ const baseUrl = "http://localhost:4000/";
 
 export const config = {
 	baseApiUrl: baseUrl,
