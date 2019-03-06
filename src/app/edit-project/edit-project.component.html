@@ -58,7 +58,9 @@
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Create Project</strong>
+			<button class="btn btn-primary btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)">Delete Project</button>
 		</h5>
+
 		<div class="card-body px-lg-5 pt-1">
 			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">

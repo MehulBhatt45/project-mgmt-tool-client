@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 	providedIn: 'root'
 })
 export class ProjectService {
-
+	
 	constructor(private http:HttpClient) { }
 
 	getAllStatus() {
@@ -194,5 +194,15 @@ export class ProjectService {
 		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
 	}
-}
 
+	deleteProjectById(data){
+		var projectId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
+	}
+}

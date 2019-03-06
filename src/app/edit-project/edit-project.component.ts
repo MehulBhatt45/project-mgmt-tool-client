@@ -10,7 +10,7 @@ import * as _ from "lodash";
 })
 export class EditProjectComponent implements OnInit {
 	teams;
-		
+
 	updateForm:FormGroup;
 	developerShow = false;
 	projectId;
@@ -49,12 +49,12 @@ export class EditProjectComponent implements OnInit {
 		this.getProjects();
 	}
 	getProjects(){
-			localStorage.setItem('teamShow' , JSON.stringify(false));
-			this.teamShow = false;
-			localStorage.setItem('developerShow' , JSON.stringify(false));
-			this.developerShow = false;
-			localStorage.setItem('editAvail' , JSON.stringify(false));
-			this.editAvail = false;	
+		localStorage.setItem('teamShow' , JSON.stringify(false));
+		this.teamShow = false;
+		localStorage.setItem('developerShow' , JSON.stringify(false));
+		this.developerShow = false;
+		localStorage.setItem('editAvail' , JSON.stringify(false));
+		this.editAvail = false;	
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log("res of all projects in edit project component ====>" , res);
 			this.projects = res;
@@ -68,10 +68,10 @@ export class EditProjectComponent implements OnInit {
 		console.log("heyy");
 		console.log("on right path");
 		localStorage.setItem('teamShow' , JSON.stringify(false));
-			this.teamShow = false;
-			localStorage.setItem('developerShow' , JSON.stringify(false));
-			this.developerShow = false;
-			
+		this.teamShow = false;
+		localStorage.setItem('developerShow' , JSON.stringify(false));
+		this.developerShow = false;
+
 		this._projectService.getProjectById(projectId).subscribe((res:any)=>{
 			console.log("res of requested project in edit project component ====>" , res);
 			this.availData = res;
@@ -155,7 +155,6 @@ export class EditProjectComponent implements OnInit {
 			localStorage.setItem('teams' , JSON.stringify(this.availData));
 			console.log("after Splice else ====>" , this.availData.Teams);
 			/*this.editProject();*/
-			
 		}
 	}
 	updateProject(updateForm){
@@ -166,5 +165,17 @@ export class EditProjectComponent implements OnInit {
 			console.log("error of update form  ====>" , err);
 		})
 	}
-
+	deleteProject(projectId){
+		console.log(projectId);
+		if(projectId.BugId.length>0 || projectId.IssueId.length>0 || projectId.taskId.length>0 || projectId.Teams.length>0){
+			console.log("You can't delete this");
+		}else{
+			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
+				console.log("Delete project======>" , res);
+				this.projects = res;
+			},(err:any)=>{
+				console.log("error in delete project =====>" , err);
+			});
+		}
+	}
 }

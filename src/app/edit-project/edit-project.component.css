@@ -73,3 +73,7 @@ table{
 .margin_left{
     margin-left: 45px;
 }
+.deletebtn{
+    float: right;
+    margin-top: 0px;    
+}
