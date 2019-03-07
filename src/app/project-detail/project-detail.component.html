@@ -1,31 +1,19 @@
-
 <div class="loader" *ngIf="loader">
 	<span></span>
 	<span></span>
 	<span></span>
 	<span></span>
 </div>
-<div class="body_content" *ngIf="!loader">
-	<div class="row justify-content-end">
-		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
-			<div class="dropdown-menu dropdown-default">
-				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
-				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
-				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
-
-			</div>
-		</div>
-		<div class="form-group" *ngIf="url=='all-item-list'">
-			<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" (change)="filterByProjectId($event.target.value , $event.target.value1)">
-				<option value="null" selected>All Projects</option>
-				<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
-			</select>
-		</div>
-		<div class="form-group" *ngIf="url=='all-item-list'">
-			<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" (change)="filterByDeveloperId
-			($event.target.value)" *ngIf="currentUser.userRole=='projectManager'">
-			<option value="null" selected>All Developer</option>
+<div class="row justify-content-end">
+	<div class="form-group" *ngIf="url=='all-item-list'">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
+			<option value="all" selected>All Projects</option>
+			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
+		</select>
+	</div>
+	<div class="form-group" *ngIf="url=='all-item-list'">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+			<option value="all" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
 	</div>
@@ -37,7 +25,15 @@
 			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
 	</div>
-	<button class="btn btn-default " type="button"   aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">Add Item</button >
+		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+			<div class="dropdown-menu dropdown-default">
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
+
+			</div>
+		</div>
 </div>
 <div class="row">
 	<div class="form-group w-100">
@@ -45,6 +41,7 @@
 		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
 		<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
 	</div>
+
 </div>
 <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
@@ -53,13 +50,12 @@
 				<div class="card-header">
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
-
 				</div>		
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
 							<div class="card-body" style="padding: 0px;">
 								<table>
 									<tr>
@@ -74,9 +70,9 @@
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
-									<li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
-									</li>
+									<!-- <li>
+										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span></label>
+									</li> -->
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -141,6 +137,13 @@
 					</table>
 					<div class="details">
 						<div class="row">
+							<div class="col-12 col-md-4">
+								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
+								<span>{{task.createdBy.name}}</span></p>
+								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
+								<span>{{task.createdAt | date:'short'}}</span></p>
+								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
+								<span>{{task.status}}</span></p>
 							<div class="col-12 col-md-4" *ngIf="task.createdBy">
 								<p>
 									<label><strong>Created By: &nbsp;</strong></label>
@@ -197,8 +200,8 @@
 				</div>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -250,8 +253,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
 			</div>
 		</div>
 	</div>

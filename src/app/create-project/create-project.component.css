@@ -42,4 +42,6 @@ ul.project-avatar li {
 ul.project-avatar li:hover {
 	border-color: #000;
 }
-
+.card-header {
+    background-color: #372e5f;
+}

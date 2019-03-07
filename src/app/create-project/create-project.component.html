@@ -37,7 +37,7 @@
 
 				<div class="md-form form-group">
 					<div class="file-field">
-						<div class="btn btn-primary btn-sm float-left">
+						<div class="btn btn-default btn-sm float-left">
 							<span>Upload a new avatar</span>
 							<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
 						</div>
@@ -51,7 +51,7 @@
 				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
 					Select Project avatar
 				</button> -->
-				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
 				
 
 				<!-- Modal -->
@@ -67,7 +67,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="file-field">
-								<div class="btn btn-primary btn-sm float-left">
+								<div class="btn btn-default btn-sm float-left">
 									<span>Upload a new avatar</span>
 									<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
 								</div>
@@ -140,8 +140,8 @@
 							</ul>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save changes</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default">Save changes</button>
 						</div>
 					</div>
 				</div>

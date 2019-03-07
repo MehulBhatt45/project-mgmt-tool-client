@@ -33,9 +33,10 @@ import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
-  declarations: [
+    declarations: [
     AppComponent,
     LoginComponent,
     ViewProjectComponent,
@@ -52,11 +53,13 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
+    UserprofileComponent,
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent
-  ],
-  imports: [
+
+    ],
+    imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -69,8 +72,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
