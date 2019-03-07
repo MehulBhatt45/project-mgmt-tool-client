@@ -56,7 +56,7 @@
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
 							<div class="card-body" style="padding: 0px;">
 								<table>
 									<tr>
@@ -71,9 +71,9 @@
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
-									<li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
-									</li>
+									<!-- <li>
+										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span></label>
+									</li> -->
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -138,6 +138,13 @@
 					</table>
 					<div class="details">
 						<div class="row">
+							<div class="col-12 col-md-4">
+								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
+								<span>{{task.createdBy.name}}</span></p>
+								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
+								<span>{{task.createdAt | date:'short'}}</span></p>
+								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
+								<span>{{task.status}}</span></p>
 							<div class="col-12 col-md-4" *ngIf="task.createdBy">
 								<p>
 									<label><strong>Created By: &nbsp;</strong></label>
