@@ -5,13 +5,13 @@
 	<span></span>
 </div>
 <div class="row justify-content-end">
-	<div class="form-group" *ngIf="url=='all-item-list'">
+	<div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
 			<option value="all" selected>All Projects</option>
 			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 		</select>
 	</div>
-	<div class="form-group" *ngIf="url=='all-item-list'">
+	<div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
 			<option value="all" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
@@ -71,9 +71,6 @@
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
-									<!-- <li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span></label>
-									</li> -->
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -139,14 +136,7 @@
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-4">
-								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
-								<span>{{task.createdBy.name}}</span></p>
-								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
-								<span>{{task.createdAt | date:'short'}}</span></p>
-								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
-								<span>{{task.status}}</span></p>
-							<div class="col-12 col-md-4" *ngIf="task.createdBy">
-								<p>
+								<p  *ngIf="task.createdBy">
 									<label><strong>Created By: &nbsp;</strong></label>
 									<span>{{task.createdBy.name}}</span>
 								</p>
@@ -194,15 +184,15 @@
 					<div *ngIf="task.comment && task.comment.length<=0">
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
-					<div class="row padding-20">
+					<div class="padding-20">
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -237,7 +227,10 @@
 						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
 									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
 							</div>
@@ -260,8 +253,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
 			</div>
 		</div>
 	</div>

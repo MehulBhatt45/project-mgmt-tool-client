@@ -33,7 +33,7 @@ table{
     padding: 9px 4px;
     font-weight: 700;
     font-size: 14px;
-    background-color: #33b5e5;
+    background-color: #372e5f;
     float: left;
     margin-right: -18px;
     -webkit-box-shadow: 0px 0px 20px 0px rgba(171,171,171,0.8);
@@ -78,5 +78,8 @@ table{
     right: 24px;
 }
 .btn-floating{
-    background-color: #17a2b8;
+    background-color: #372e5f;
+}
+.card-header {
+    background-color: #372e5f !important;
 }
