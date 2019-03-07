@@ -1,32 +1,20 @@
-
 <div class="loader" *ngIf="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
 </div>
-<div class="body_content" *ngIf="!loader">
-	<!-- <div class="justify-content-end">
-		<div class="dropdown"*ngIf="currentUser.userRole=='projectManager'">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
-			<div class="dropdown-menu dropdown-default">
-				<a class="dropdown-item" (click)="addItem('Task')">Task</a>
-				<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-				<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-			</div>
-		</div>
-	</div> -->
-	<div class="row justify-content-end">
-	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" (change)="filterByProjectId($event.target.value , $event.target.value1)">
-			<option value="null" selected>All Projects</option>
+
+<div class="row justify-content-end">
+	<div class="form-group" *ngIf="url=='all-item-list'">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
+			<option value="all" selected>All Projects</option>
 			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 		</select>
 	</div>
-	<div class="form-group">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" (change)="filterByDeveloperId
-		($event.target.value)" *ngIf="currentUser.userRole =='projectManager'">
-			<option value="null" selected>All Developer</option>
+	<div class="form-group" *ngIf="url=='all-item-list'">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+			<option value="all" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
 	</div>
@@ -38,72 +26,42 @@
 			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
 	</div>
-	<button class="btn btn-default " type="button"   aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">Add Item</button >
 </div>
-	<div class="justify-content-start">
-		<ul>
-			<li><!-- Default input -->
-				<label for="exampleForm2">Search Task</label>
-				<input type="text" id="exampleForm2" class="form-control"></li>
-			</ul>
-		</div>
-		<div class="all_card">
-			<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
-				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
-					<div class="card">
-						<div class="card-header">
-							<span class="track_title">{{track.title}}</span>
-							<span class="card_count_lbl">{{track.tasks.length}}</span>
+<div class="row">
+	<div class="form-group w-100">
+		<label for="exampleForm2">Search Task</label>
+		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
+		<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
+	</div>
 
-						</div>		
-					</div>
-					<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-						<mat-card *ngFor="let task of track.tasks "cdkDrag>
-							<mat-card-content>
-								<div class="card" [ngClass]="track.class" (click)="openModel(task)">
-									<div class="card-body" style="padding: 0px;">
-										<table>
-											<tr>
-												<td colspan="2">
-													<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
-													<div class="card-text">{{task.desc}}</div>
-													<div>{{task.createdAt | timeAgo }}</div>
-												</td>
+</div>
 
-									<!-- <td>
-										<a href="javascript:void(0)" (click)="openModel(task)">
-											<i class="fa fa-edit text-Blue"></i>
-										</a>
-									</td> -->
-									<!-- <td colspan="2">
-										<label class="float-right">{{task.uniqueId}}</label>
-									</td> -->
-								</tr>
-							</table>
-								<!-- <tr (click)="openModel(task)" style="cursor: pointer;">
-									<td style="width: 50px;">
-										<ul class="team-members">	
-											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-												<a href="javascript:void(0);">
-													{{getInitialsOfName(task.assignTo.name)}}
-												</a>
-											</li>
-											<li *ngIf="!task.assignTo" class="add-member">
-												<a href="javascript:void(0);" title="Add Member">
-													<i class="fa fa-user-plus"></i>
-												</a>
-											</li>
-										</ul>
-									</td>
-									<td>
-										<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
-									</td>
-								</tr>
-								<tr (click)="openModel(task)" style="cursor: pointer;">
-									<td colspan="2">
-										<div class="card-text">{{task.desc}}</div>
-									</td>
-								</tr> -->
+
+
+<div class="all_card">
+	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
+			<div class="card">
+				<div class="card-header">
+					<span class="track_title">{{track.title}}</span>
+					<span class="card_count_lbl">{{track.tasks.length}}</span>
+
+				</div>		
+			</div>
+			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+				<mat-card *ngFor="let task of track.tasks "cdkDrag>
+					<mat-card-content>
+						<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+							<div class="card-body" style="padding: 0px;">
+								<table>
+									<tr>
+										<td colspan="2">
+											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+											<div class="card-text">{{task.desc}}</div>
+											<div>{{task.createdAt | timeAgo }}</div>
+										</td>
+									</tr>
+								</table>
 								<ul>
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
@@ -111,7 +69,6 @@
 									<li>
 										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
 									</li>
-									
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -126,29 +83,22 @@
 											</li>
 										</ul>
 									</li>
-									
+
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
 							</div>
-						<!-- <div class="card-action">
-							<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"></span>{{task.priority}}</label>
-						</div> -->
-					</div>
-				</mat-card-content>
-			</mat-card>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<!-- <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4> -->
-				<button type="button">
-					<i class="fa fa-redo"></i>
-				</button>
+				<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<i class="fa fa-times"></i>
 				</button>
@@ -182,28 +132,36 @@
 							</td>
 						</tr>
 					</table>
-					<!-- <hr> -->
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-4" *ngIf="task.createdBy">
-								<p><label><strong>Created By: &nbsp;</strong></label>
-								<span>{{task.createdBy.name}}</span></p>
-								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
-								<span>{{task.createdAt | date:'short'}}</span></p>
-								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
-								<span>{{task.status}}</span></p>
+								<p>
+									<label><strong>Created By: &nbsp;</strong></label>
+									<span>{{task.createdBy.name}}</span>
+								</p>
+								<p *ngIf="task.createdAt">
+									<label><strong>Created Date: &nbsp;</strong></label>
+									<span>{{task.createdAt | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.status">
+									<label><strong>Status: &nbsp;</strong></label>
+									<span>{{task.status}}</span>
+								</p>
 							</div>
 							<div class="col-12 col-md-4">
-								<p><label><strong>Assign To: &nbsp;</strong></label>
-								<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span></p>
-								<p *ngIf="task.priority"><label><strong>Prority: &nbsp;</strong></label>
-								<span>{{task.priority}}</span></p>
+								<p>
+									<label><strong>Assign To: &nbsp;</strong></label>
+									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+								</p>
+								<p *ngIf="task.priority">
+									<label><strong>Prority: &nbsp;</strong></label>
+									<span>{{task.priority}}</span>
+								</p>
 							</div>
 							<div class="col-12 col-md-4">
 								<p>start time end time</p>
 							</div>
-						</div>							
-						<!-- </div> -->
+						</div>
 						<div class="row justify-content-between">
 							<div>
 								<button class="btn btn-default">Remove Assignment</button>
@@ -226,8 +184,6 @@
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
 					<div class="row padding-20">
-						<!-- <div [froalaEditor]></div> -->
-						<!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" (onChange)="onchangeContent()" [(ngModel)]="htmlContent"></app-ngx-editor> -->
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 					</div>
@@ -277,36 +233,20 @@
 								</select>
 							</div>
 						</div>
-						<!-- <div class="row no-margin no padding"> -->
-							<!-- <div class="form-group col-12 col-lg-6"> -->
-								<!-- <div class="form-group"> -->
-									<!-- <label for="startDate">Start Date</label>
-									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker"> -->
-									<!-- <label for="input_starttime">Select Time :</label>
-									<input type="text" id="input_starttime" class="form-control timepicker" formControlName="startDate"> -->
-									<!-- </div> -->
-								<!-- </div> -->
-								<!-- <div class="form-group col-12 col-lg-6"> -->
-									<!-- <div class="form-group"> -->
-										<!-- <label for="dueDate">Due Date</label>
-										<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker"> -->
-										<!-- </div> -->
-									<!-- </div> -->
-								<!-- </div> -->
-								<div class="form-group col-12">
-									<label for="status">Status</label>
-									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-									</select>
-								</div>
-							</form>
+						<div class="form-group col-12">
+							<label for="status">Status</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+							</select>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-					</div>
+					</form>
 				</div>
 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+			</div>
 		</div>
-		
+	</div>
+</div>
+

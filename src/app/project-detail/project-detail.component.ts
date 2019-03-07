@@ -22,7 +22,7 @@ export class ProjectDetailComponent implements OnInit {
 		editorData: 'Enter comments here'
 	};
 	url;
-	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	task;
 	project;
 	comment;
@@ -32,6 +32,7 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers;
 	loader : boolean = false;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) {
 		this.route.url.subscribe(url=>{
 			this.url = url[0].path;
