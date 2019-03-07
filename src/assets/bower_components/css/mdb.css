@@ -29,7 +29,6 @@
 **********************/
 
 .modal .modal-full-height {
-<<<<<<< HEAD
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
@@ -41,12 +40,14 @@
   height: auto;
   min-height: 100%;
   top: 0;
-  right: 0; }
+  right: 0;
+}
   .modal .modal-full-height.modal-top, .modal .modal-full-height.modal-bottom {
     display: block;
     width: 100%;
     max-width: 100%;
-    height: auto; }
+    height: auto;
+  }
     .modal .modal-full-height.modal-top {
       bottom: auto; }
       .modal .modal-full-height.modal-bottom {

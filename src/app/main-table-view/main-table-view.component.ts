@@ -75,6 +75,25 @@ export class MainTableViewComponent implements OnInit {
 		];
 	}
 
+	getPriorityClass(priority){
+		switch (priority) {
+			case "low":
+			return "primary"
+			break;
+
+			case "medium":
+			return "warning"
+			break;
+
+			case "high":
+			return "danger"
+			break;
+
+			default:
+			return ""
+			break;
+		}
+	}
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -203,15 +222,6 @@ export class MainTableViewComponent implements OnInit {
 		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
 		return str.toUpperCase();
 		// return name.split(' ')[0][0]+name.split(' ')[1][0];
-	}
-
-	getColorCodeOfPriority(priority) {
-		for (var i = 0; i < this.allPriorityList.length; i++) {
-			if (this.allPriorityList[i].value == priority) {
-				return this.allPriorityList[i].colorCode;
-			}
-		}
-
 	}
 
 	openModel(task){
