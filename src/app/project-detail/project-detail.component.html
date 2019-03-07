@@ -4,7 +4,6 @@
 	<span></span>
 	<span></span>
 </div>
-
 <div class="row justify-content-end">
 	<div class="form-group" *ngIf="url=='all-item-list'">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
@@ -26,6 +25,15 @@
 			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
 	</div>
+		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+			<div class="dropdown-menu dropdown-default">
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
+
+			</div>
+		</div>
 </div>
 <div class="row">
 	<div class="form-group w-100">
@@ -35,9 +43,6 @@
 	</div>
 
 </div>
-
-
-
 <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -45,7 +50,6 @@
 				<div class="card-header">
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
-
 				</div>		
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
@@ -83,7 +87,6 @@
 											</li>
 										</ul>
 									</li>
-
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
 							</div>
@@ -205,7 +208,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>	
 			<div class="modal-body" *ngIf="task && !loader">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
@@ -249,4 +252,3 @@
 		</div>
 	</div>
 </div>
-
