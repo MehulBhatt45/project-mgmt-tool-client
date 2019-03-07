@@ -195,4 +195,12 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	reloadProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			console.log(res);
+			this.projects = res;
+		},err=>{
+			console.log(err);
+		});
+	}
 }

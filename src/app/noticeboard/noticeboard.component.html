@@ -1,0 +1,16 @@
+<div class="container">
+	<h1 class="text-center">Notice Board</h1>
+	<div class="card" *ngFor="let notice of notice">
+		<div *ngIf="notice.published">
+			<div *ngIf="notice.images">
+				<div *ngFor="let image of notice.images">
+					<img src="http://localhost/project_mgmt_tool/server{{image}}" height="300" width="300">
+				</div>
+				<div class="card-body">
+					<h4 class="card-title">{{notice.title}}</h4>
+					<h5>{{notice.desc}}</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

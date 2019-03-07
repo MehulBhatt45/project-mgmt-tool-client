@@ -33,6 +33,8 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { AddNoticeComponent } from './add-notice/add-notice.component';
+import { NoticeboardComponent } from './noticeboard/noticeboard.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
@@ -56,13 +58,16 @@ import { ChildComponent } from './child/child.component';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UserprofileComponent,
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent,
-    ChildComponent
-
+    ChildComponent,
+    AddNoticeComponent,
+    NoticeboardComponent,
+    UserprofileComponent,
+    ResetPasswordComponent
     ],
+
     imports: [
     BrowserModule,
     AppRoutingModule,
@@ -75,7 +80,7 @@ import { ChildComponent } from './child/child.component';
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     NgxEditorModule,
-    CKEditorModule
+    CKEditorModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -47,7 +47,7 @@ import { LoginService } from '../services/login.service';
 		}
 
 		this.loading = true;
-		var data = {name: this.registerForm.value.firstName+ ' ' +this.registerForm.value.firstName,
+		var data = {name: this.registerForm.value.firstName+ ' ' +this.registerForm.value.lastName,
 					email: this.registerForm.value.username, userRole: 'user', password: this.registerForm.value.password};
 		this._loginService.register(data)
 		.pipe(first())

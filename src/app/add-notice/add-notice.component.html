@@ -1,0 +1,53 @@
+
+<div class="container">
+	<div class="card">
+		<h5 class="card-header white-text text-center py-4">
+			<strong>Create Notice</strong>
+		</h5>
+		<div class="card-body px-lg-5 pt-1">
+			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
+				<div class="md-form form-group">
+					<label for="projecttitle">Notice Title</label>
+					<input type="text" id="projecttitle"  formControlName="title" class="form-control">
+				</div>
+				<div class="md-form form-group">
+					<label for="desc">Notice Content</label>
+					<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+				</div>
+				<div class="md-form form-group">
+					<input placeholder="Selected date" type="date" formControlName="expireon">
+					
+				</div>
+				<div class=" row form-group col-12">
+					<button class="btn btn-default" (click)="fileUpload.click()">
+						<i class="fa fa-paperclip mr-1"></i> Add Files
+						<input type="file" formControlName="images" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+					</button>
+				</div>
+				<!-- Material switch -->
+				<div class="row">
+					<div class="col-2">
+						<h3>Publish</h3>
+					</div>
+					<div class="form-group col-6">
+						<div class="switch">
+							<label>
+								False
+								<input type="checkbox" formControlName="published">
+								<span class="lever"></span>True
+							</label>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="addNotice(addForm)">Create Notice</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.datepicker').pickadate();
+</script>
+
+
+

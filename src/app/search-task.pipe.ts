@@ -11,14 +11,14 @@ import * as _ from 'lodash';
 export class SearchTaskPipe implements PipeTransform {
 
 	transform(items: any[], searchText: string): any[] {
-		// console.log("items==>",items);
-		// console.log("searchtext===>",searchText);
+		console.log("items==>",items);
+		console.log("searchtext===>",searchText);
 		// return null;
 		var task:any = [];
 		if(!items) return [];
-		if(!searchText) return items;
+		if(!searchText) return items[0];
 		searchText = searchText.toLowerCase();
-			task = items.filter( it => {
+			task = items[0].filter( it => {
 				if(it.title.toLowerCase().includes(searchText) || it.uniqueId.toLowerCase().includes(searchText)){
 					return it;
 				}
