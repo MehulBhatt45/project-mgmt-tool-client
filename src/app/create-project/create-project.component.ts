@@ -44,10 +44,10 @@ export class CreateProjectComponent implements OnInit {
    
   }
 
-  // addIcon(value){
-  //   console.log(value);
+  addIcon(value){
+    console.log(value);
 
-  // }
+  }
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;

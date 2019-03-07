@@ -5,13 +5,13 @@
 	<span></span>
 </div>
 <div class="row justify-content-end">
-	<div class="form-group" *ngIf="url=='all-item-list'">
+	<div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
 			<option value="all" selected>All Projects</option>
 			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 		</select>
 	</div>
-	<div class="form-group" *ngIf="url=='all-item-list'">
+	<div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
 			<option value="all" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
@@ -135,14 +135,7 @@
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-4">
-								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
-								<span>{{task.createdBy.name}}</span></p>
-								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
-								<span>{{task.createdAt | date:'short'}}</span></p>
-								<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
-								<span>{{task.status}}</span></p>
-							<div class="col-12 col-md-4" *ngIf="task.createdBy">
-								<p>
+								<p  *ngIf="task.createdBy">
 									<label><strong>Created By: &nbsp;</strong></label>
 									<span>{{task.createdBy.name}}</span>
 								</p>

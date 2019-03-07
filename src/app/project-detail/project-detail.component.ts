@@ -21,8 +21,10 @@ export class ProjectDetailComponent implements OnInit {
 	public model = {
 		editorData: 'Enter comments here'
 	};
+	searchText;
 	task;
 	project;
+	projects;
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
@@ -375,6 +377,15 @@ export class ProjectDetailComponent implements OnInit {
 					track.tasks.push(content);
 				}
 			})
+		})
+	}
+
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
 		})
 	}
 }
