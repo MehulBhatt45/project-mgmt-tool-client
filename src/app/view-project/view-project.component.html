@@ -64,7 +64,8 @@
                     <ul class="team-members">
                         <span *ngIf="project.Teams.length>0">
                             <li *ngFor="let Team of project.Teams" [title]="getTitle(Team.name)">
-                                <a href="javascript:void(0);">
+                                <!-- <a href="javascript:void(0);" > -->
+                                    <a [routerLink]="['/userprofile/', currentUser._id]">
                                     {{getInitialsOfName(Team.name)}}
                                 </a>
                             </li>

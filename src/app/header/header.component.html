@@ -44,7 +44,7 @@
                 <a class="dropdown-item" (click)="addItem('Task')">Task</a>
                 <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
                 <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-                 <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
+                <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
             </div>
         </div>  
 
@@ -71,7 +71,8 @@
                     <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
                     <div class="dropdown-content"> 
                         <a class="dropdown-item" (click)="logout()">Log Out</a>
-                        <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
+                        <!-- <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a> -->
+                        <a class="dropdown-item" [routerLink]="['/userprofile']"> My profile </a>
                     </div>
                 </li>   
             </ul>

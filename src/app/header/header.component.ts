@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		
 		this.createEditTaskForm();
+		
 	}
 
 	getEmptyTracks(){
@@ -195,4 +196,8 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		})
 	}
+// resetPassword(){
+// 	this.router.navigate(['/reset-password']);
+// }
+
 }
