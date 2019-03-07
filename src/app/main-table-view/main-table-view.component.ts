@@ -7,10 +7,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 declare var $ : any;
 import * as _ from 'lodash';
+
+
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+
+
 @Component({
 	selector: 'app-main-table-view',
-	templateUrl: '../project-detail/project-detail.component.html',
-	styleUrls: ['../project-detail/project-detail.component.css']
+	templateUrl: '../main-table-view/main-table-view.component.html',
+	styleUrls: ['../main-table-view/main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
 	checkProjectId = "null";
@@ -74,6 +80,25 @@ export class MainTableViewComponent implements OnInit {
 		}
 		];
 	}
+	// getPriorityClass(priority){
+	// 	switch (priority) {
+	// 		case "low":
+	// 		return "primary"
+	// 		break;
+
+	// 		case "medium":
+	// 		return "warning"
+	// 		break;
+
+	// 		case "high":
+	// 		return "danger"
+	// 		break;
+
+	// 		default:
+	// 		return ""
+	// 		break;
+	// 	}
+	// }
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
@@ -331,5 +356,24 @@ export class MainTableViewComponent implements OnInit {
 			})
 		}
 	}
+
+	comment;
+	public model = {
+		editorData: 'Enter comments here'
+	};
+	public Editor = DecoupledEditor;
+
+		public onReady( editor ) {
+			editor.ui.getEditableElement().parentElement.insertBefore(
+				editor.ui.view.toolbar.element,
+				editor.ui.getEditableElement()
+				);
+		}
+
+		public onChange( { editor }: ChangeEvent ) {
+			const data = editor.getData();
+			this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+		}
+
 
 }

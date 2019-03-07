@@ -13,7 +13,7 @@
 		</select>
 	</div>
 	<div class="form-group" *ngIf="url=='all-item-list'">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers || currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
 			<option value="all" selected>All Developer</option>
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
@@ -31,7 +31,7 @@
 
 
 
-<div class="all_card">
+<!-- <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
 			<div class="card">
@@ -44,7 +44,7 @@
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="track.class" (click)="openModel(task)">
+						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
 							<div class="card-body" style="padding: 0px;">
 								<table>
 									<tr>
@@ -60,7 +60,7 @@
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
 									<li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span><!-- {{task.priority}} --></label>
+										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span>{{task.priority}}</label>
 									</li>
 									<li>
 										<ul class="team-members">	
@@ -76,7 +76,6 @@
 											</li>
 										</ul>
 									</li>
-
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
 							</div>
@@ -86,6 +85,10 @@
 			</div>
 		</div>
 	</div>
+</div> -->
+
+<div *ngIf="developers && projects">
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
 </div>
 
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -100,6 +103,7 @@
 					<i class="fa fa-times"></i>
 				</button>
 			</div>
+			
 			<div class="modal-body" *ngIf="task">
 				<div class="container-fluid">
 					<div class="row">
@@ -172,7 +176,8 @@
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
 					<div class="row padding-20">
-						<div [froalaEditor]></div>
+						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<!-- <div [froalaEditor]></div> -->
 						<button class="btn btn-default float-right">Add Comment</button>
 					</div>
 				</div>

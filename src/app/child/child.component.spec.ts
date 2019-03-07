@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeveloperTableViewComponent } from './developer-table-view.component';
+import { ChildComponent } from './child.component';
 
-describe('DeveloperTableViewComponent', () => {
-  let component: DeveloperTableViewComponent;
-  let fixture: ComponentFixture<DeveloperTableViewComponent>;
+describe('ChildComponent', () => {
+  let component: ChildComponent;
+  let fixture: ComponentFixture<ChildComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeveloperTableViewComponent ]
+      declarations: [ ChildComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeveloperTableViewComponent);
+    fixture = TestBed.createComponent(ChildComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
