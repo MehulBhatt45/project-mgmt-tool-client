@@ -161,8 +161,8 @@
 					<!-- <hr> -->
 					<div class="details">
 						<div class="row">
-							<div class="col-12 col-md-4" *ngIf="task.createdBy">
-								<p><label><strong>Created By: &nbsp;</strong></label>
+							<div class="col-12 col-md-4">
+								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
 								<span>{{task.createdBy.name}}</span></p>
 								<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
 								<span>{{task.createdAt | date:'short'}}</span></p>

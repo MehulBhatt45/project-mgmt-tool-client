@@ -9,7 +9,7 @@
   z-index: 11;
   justify-content: space-between;
   padding-bottom: 24px;
-  padding-top: 24px;
+  padding-top: 96px;
   width: 64px;
   background-color: rgb(189, 194, 193);
   color: rgb(0, 0, 0);
@@ -104,4 +104,14 @@
   min-width: 100%;
   max-width: 100%;
   object-fit: cover;
+}
+
+
+
+ol.breadcrumb.hidden-lg-down li a {
+    top: 0px;
+    left: 0px;
+    margin-left: 0;
+        display: inline-block;
+    vertical-align: sub;
 }
