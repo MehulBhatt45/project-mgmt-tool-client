@@ -10,10 +10,14 @@
         </li>
         <li>
             <ul class="collapsible collapsible-accordion">
-                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects">Projects</span><i class="fa fa-angle-down rotate-icon"></i></a>
+                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">
+                    <span routerLink="/view-projects">Projects</span>
+                    <i class="fa fa-angle-down rotate-icon"></i>
+                    <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li *ngFor="let project of projects"><a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
+                            <li *ngFor="let project of projects">
+                                <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
                         </ul>
                     </div>
                 </li>
