@@ -369,8 +369,8 @@ export class MainTableViewComponent implements OnInit {
 		console.log("btn tapped");
 	}
 	onKey(event: any){
-		console.log(event);
-		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		console.log(event, this.tasks);
+		var dataToBeFiltered = [this.tasks];
 		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
 		console.log("In Component",task);
 		this.getEmptyTracks();
