@@ -73,3 +73,10 @@ table{
 .margin_left{
     margin-left: 45px;
 }
+.fixed-action-btn{
+    bottom: 45px;
+    right: 24px;
+}
+.btn-floating{
+    background-color: #17a2b8;
+}

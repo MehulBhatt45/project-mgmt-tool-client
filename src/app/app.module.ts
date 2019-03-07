@@ -34,9 +34,10 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
-  declarations: [
+    declarations: [
     AppComponent,
     LoginComponent,
     ViewProjectComponent,
@@ -53,12 +54,14 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
+    UserprofileComponent,
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent,
     AddEmployeeComponent
   ],
-  imports: [
+
+    imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -71,8 +74,8 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

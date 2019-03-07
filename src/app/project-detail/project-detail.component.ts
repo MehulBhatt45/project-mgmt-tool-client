@@ -20,10 +20,14 @@ import * as _ from 'lodash';
 export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+
 	comments:any;
 	public model = {
 		editorData: 'Enter comments here'
 	};
+
+	
+	url;
 	task;
 	project;
 	comment;
@@ -40,12 +44,15 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
+
 			this.getEmptyComments();
+
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
 	}
+
 	getEmptyComments(){
 		this.comments = [{
 			"profilePhoto": "../assets/3.png",
@@ -129,6 +136,8 @@ export class ProjectDetailComponent implements OnInit {
 			startDate : new FormControl('', Validators.required),
 			dueDate : new FormControl('', Validators.required),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
+
+	
 		})
 	}
 
@@ -368,3 +377,112 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	
 }
+
+			// getColorCodeOfPriority(priority) {
+				// 	for (var i = 0; i < this.allPriorityList.length; i++) {
+					// 		if (this.allPriorityList[i].value == priority) {
+						// 			return this.allPriorityList[i].colorCode;
+						// 		}
+						// 	}
+
+						// }
+
+					// 	openModel(task){
+					// 		console.log(task);
+					// 		this.task = task;
+					// 		$('#fullHeightModalRight').modal('show');
+					// 	}
+
+					// 	updateTask(task){
+					// 		if(!task.assingTo)
+					// 			task['assignTo'] = this.editTaskForm.value.assignTo;
+					// 		console.log(task);
+					// 		var subUrl; 
+					// 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
+					// 		console.log("updatedtask===========>",subUrl);
+					// 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
+					// 			$('#editModel').modal('hide');
+					// 		},err=>{
+					// 			console.log(err);	
+					// 		})
+
+					// 	}
+
+					// 	editTask(task){
+					// 		this.task = task;
+					// 		this.modalTitle = 'Edit Item'
+					// 		$('.datepicker').pickadate();
+					// 		$('#input_starttime').pickatime({});
+					// 		$('#editModel').modal('show');
+					// 	}
+
+					// 	addItem(option){
+					// 		this.loader=true;
+					// 		setTimeout(()=>{
+					// 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+					// 			this.modalTitle = 'Add '+option;
+					// 			$('.datepicker').pickadate();
+					// 			$('#input_starttime').pickatime({});
+					// 			$('#editModel').modal('show');
+					// 			this.loader=false;
+					// 		},1000);
+					// 	}
+
+					// 	saveTheData(task){
+					// 		task['projectId']= this.projectId; 
+					// 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+					// 		task.startDate = $("#startDate").val();
+					// 		task.dueDate = $("#dueDate").val();
+					// 		console.log(task);
+					// 		var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+					// 		console.log(subUrl);
+					// 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+					// 			$('#editModel').modal('hide');
+					// 			this.getProject(this.projectId);
+					// 		},err=>{
+					// 			console.log(err);
+					// 		})
+					// 	}
+					// 	public Editor = DecoupledEditor;
+
+					// 	public onReady( editor ) {
+					// 		editor.ui.getEditableElement().parentElement.insertBefore(
+					// 			editor.ui.view.toolbar.element,
+					// 			editor.ui.getEditableElement()
+					// 			);
+					// 	}
+
+					// 	public onChange( { editor }: ChangeEvent ) {
+					// 		const data = editor.getData();
+					// 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+					// 	}
+
+					// 	sendComment(){
+					// 		console.log(this.comment);
+					// 	}
+
+
+					// 	creationDateComparator(a,b) {
+					// 		return parseInt(a.price, 10) - parseInt(b.price, 10);
+					// 	}	
+
+					// 	searchTask(){
+					// 		console.log("btn tapped");
+					// 	}
+					// 	onKey(event: any){
+					// 		console.log(event);
+					// 		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+					// 		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+					// 		console.log("In Component",task);
+					// 		this.getEmptyTracks();
+					// 		_.forEach(task, (content)=>{
+					// 			_.forEach(this.tracks, (track)=>{
+					// 				if(content.status == track.id){
+					// 					track.tasks.push(content);
+					// 				}
+					// 			})
+					// 		})
+					// 	}
+					// }
+
+
