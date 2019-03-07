@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -32,9 +33,12 @@ import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
 import { NoticeboardComponent } from './noticeboard/noticeboard.component';
+import { SearchTaskPipe } from './search-task.pipe';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
-  declarations: [
+    declarations: [
     AppComponent,
     LoginComponent,
     ViewProjectComponent,
@@ -54,8 +58,13 @@ import { NoticeboardComponent } from './noticeboard/noticeboard.component';
     UpdateUserComponent,
     AddNoticeComponent,
     NoticeboardComponent
-  ],
-  imports: [
+    ],
+   
+    imports: [
+    UserprofileComponent,
+    UpdateUserComponent,
+    SearchTaskPipe,
+    ResetPasswordComponent,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -68,8 +77,8 @@ import { NoticeboardComponent } from './noticeboard/noticeboard.component';
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

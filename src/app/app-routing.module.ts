@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 import { ViewProjectComponent } from './view-project/view-project.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
@@ -16,6 +18,7 @@ import { FileListComponent } from './file-list/file-list.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 const routes: Routes = [
 // {
@@ -31,6 +34,15 @@ const routes: Routes = [
 		path:'register',
 		component:RegisterComponent
 	},
+	{
+		path:'reset-password',
+		component:ResetPasswordComponent
+	},
+	{
+		path:'userprofile',
+		component:UserprofileComponent
+	},
+
 	{
 		path:"",
 		component:HomeComponent,
@@ -62,10 +74,6 @@ const routes: Routes = [
 			component:EditProjectComponent
 		},
 		{
-			path:'edit-project/:pid',
-			component:EditProjectComponent
-		},
-		{
 			path:'add-team',
 			component:AddTeamComponent
 		},
@@ -79,10 +87,6 @@ const routes: Routes = [
 			component:IssueComponent
 		},
 		{
-			path:'update-user/:id',
-			component:UpdateUserComponent
-		},
-		{
 			path:'project-details/:id',
 			component:ProjectDetailComponent
 		},
@@ -94,7 +98,7 @@ const routes: Routes = [
 			path:'logs',
 			pathMatch: "full",
 			component: LogsComponent	
-		},/*
+		},
 		{
 			path:"logs/:projectId",
 			pathMatch: "full",
@@ -102,16 +106,6 @@ const routes: Routes = [
 		},
 		{
 			path:"logs/:projectId/:memberId",
-			pathMatch: "full",
-			component: LogsComponent
-		},*/
-		{
-			path:"logs/:developerId",
-			pathMatch: "full",
-			component: LogsComponent
-		},
-		{
-			path:"logs/:projectId/:developId",
 			pathMatch: "full",
 			component: LogsComponent
 		}]

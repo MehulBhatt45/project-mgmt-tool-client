@@ -16,11 +16,7 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      desc: new FormControl(''),
-      clientEmail: new FormControl('' , Validators.required),
-      clientFullName: new FormControl('', Validators.required),
-      clientContactNo: new FormControl('',Validators.required),
-      clientDesignation: new FormControl(''),
+      description: new FormControl(''),
       avatar:new FormControl('')
     });
 
@@ -55,7 +51,6 @@ export class CreateProjectComponent implements OnInit {
     console.log(this.addForm.value['avatar']);
     $('#basicExampleModal').modal('hide');
   }
-
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;

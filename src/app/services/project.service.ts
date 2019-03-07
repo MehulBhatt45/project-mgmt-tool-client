@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 	providedIn: 'root'
 })
 export class ProjectService {
-
+	
 	constructor(private http:HttpClient) { }
 
 	getAllStatus() {
@@ -238,5 +238,17 @@ export class ProjectService {
 	getNotice(){
 		return this.http.get(config.baseApiUrl+"notice/allnotice");
 	}
+	
+	deleteProjectById(data){
+		var projectId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
+	}
 }
+
 

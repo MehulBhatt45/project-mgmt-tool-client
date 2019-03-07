@@ -30,14 +30,14 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() {
     this.loader=true;
     setTimeout(()=>{
-      this._projectservice.getProjects().subscribe(res=>{
-        console.log(res);
-        this.projects = res;
-        this.loader=false;
-      },err=>{
-        this._alertService.error(err);
-        this.loader=false;
-      })
+    this._projectservice.getProjects().subscribe(res=>{
+      console.log(res);
+      this.projects = res;
+      this.loader=false;
+    },err=>{
+      this._alertService.error(err);
+      this.loader=false;
+    })
     },3000);
   }
 
@@ -49,6 +49,7 @@ export class ViewProjectComponent implements OnInit {
   getInitialsOfName(name){
     var str = name.split(' ')[0][0]+name.split(' ')[1][0];
     return str.toUpperCase();
+    // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
   addProject(addForm){
@@ -89,7 +90,6 @@ export class ViewProjectComponent implements OnInit {
     this.files = e.target.files;
     $('#basicExampleModal').modal('hide');
   }
-  
 }
 
 
