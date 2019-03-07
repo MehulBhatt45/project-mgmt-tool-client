@@ -299,3 +299,21 @@ background-color: white;
   margin-left: 15px;
   vertical-align: center;
 }
+/*//comment*/
+.developerName{
+  font-size: 20px;
+ font-weight: bold;
+}
+.profilePhoto{
+  height: 80px; 
+  width: 100px;
+  padding:10px;
+}
+.comment_section{
+  height: 100px;
+}
+.comment_area{
+  height: 200px;
+  /*overflow-x: hidden;*/
+  overflow-y: auto;
+}

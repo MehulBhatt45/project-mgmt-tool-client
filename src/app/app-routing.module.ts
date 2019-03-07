@@ -15,8 +15,9 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+import {AddEmployeeComponent} from './add-employee/add-employee.component';
 const routes: Routes = [
-	// {
+// {
 	// 	path:'',
 	// 	redirectTo:'login',
 	// 	pathMatch:'full'
@@ -73,6 +74,10 @@ const routes: Routes = [
 			component:ProjectDetailComponent
 		},
 		{
+			path:'project-detail',
+			component:ProjectDetailComponent
+		},
+		{
 			path:'project/files-list/:id',
 			component:FileListComponent
 		},
@@ -87,14 +92,19 @@ const routes: Routes = [
 			component: LogsComponent
 		},
 		{
+			path:'add-employee',
+			component:AddEmployeeComponent
+			
+		},
+		{
 			path:"logs/:projectId/:memberId",
 			pathMatch: "full",
 			component: LogsComponent
 		}]
 	}];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash : true })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+	@NgModule({
+		imports: [RouterModule.forRoot(routes, { useHash : true })],
+		exports: [RouterModule]
+	})
+	export class AppRoutingModule { }

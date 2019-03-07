@@ -33,6 +33,7 @@ import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     TimeAgoPipe,
     UpdateUserComponent,
     SearchTaskPipe,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddEmployeeComponent
   ],
   imports: [
     BrowserModule,

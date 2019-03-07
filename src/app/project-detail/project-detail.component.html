@@ -16,12 +16,36 @@
 
 			</div>
 		</div>
-		
+	</div>
 
-		<div class="dropdown">
 
-	<!-- <div class="justify-content-end">
-		<div class="dropdown"*ngIf="currentUser.userRole=='projectManager'">
+	<div class="dropdown">
+
+		<div class="justify-content-end">
+			<div class="dropdown"*ngIf="currentUser.userRole=='projectManager'">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
+				<div class="dropdown-menu dropdown-default">
+					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
+					<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-end">
+			<div class="form-group" *ngIf="url=='all-item-list'">
+				<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" (change)="filterByProjectId($event.target.value , $event.target.value1)">
+					<option value="null" selected>All Projects</option>
+					<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
+				</select>
+			</div>
+			<div class="form-group" *ngIf="url=='all-item-list'">
+				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" (change)="filterByDeveloperId
+				($event.target.value)" *ngIf="currentUser.userRole=='projectManager'">
+				<option value="null" selected>All Developer</option>
+				<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+			</select>
+		</div>
+		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 			<div class="dropdown-menu dropdown-default">
 				<a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -29,31 +53,8 @@
 				<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 			</div>
 		</div>
-	</div> -->
-	<div class="row justify-content-end">
-	<div class="form-group" *ngIf="url=='all-item-list'">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" (change)="filterByProjectId($event.target.value , $event.target.value1)">
-			<option value="null" selected>All Projects</option>
-			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
-		</select>
+		<button class="btn btn-default " type="button"   aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">Add Item</button >
 	</div>
-	<div class="form-group" *ngIf="url=='all-item-list'">
-		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" (change)="filterByDeveloperId
-		($event.target.value)" *ngIf="currentUser.userRole=='projectManager'">
-			<option value="null" selected>All Developer</option>
-			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-		</select>
-	</div>
-	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
-		<div class="dropdown-menu dropdown-default">
-			<a class="dropdown-item" (click)="addItem('Task')">Task</a>
-			<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-		</div>
-	</div>
-	<button class="btn btn-default " type="button"   aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">Add Item</button >
-</div>
 	<div class="justify-content-start">
 		<ul>
 			<li>
@@ -205,73 +206,110 @@
 					<h2>Comments</h2>
 					<div *ngIf="task.comment && task.comment.length>0">
 						<p>comments</p>
+
 					</div>
 					<div *ngIf="task.comment && task.comment.length<=0">
-						<p>No comments on this be the first one to comments on...</p>
-					</div>
-					<div class="row padding-20">
-						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
-</div>
+						<!-- <p>No comments on this be the first one to comments on...</p> -->
+						
 
-<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>	
-			<div class="modal-body" *ngIf="task && !loader">
-				<div class="row">
-					<form style="width: 100%;" [formGroup]="editTaskForm">
-						<div class="form-group col-12">
-							<label for="title">Title</label>
-							<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-						</div>
-						<div class="form-group col-12">
-							<label for="desc">Discription</label>
-							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-						</div>
-						<div class="row no-margin no padding" >
-							<div class="form-group col-12 col-lg-6">
-								<label for="assignTo">Assign To</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-								</select>
+							<div class="comment_area">
+								
+								<div class="comment_section" *ngFor = "let i of comments">
+
+									<div class="card">
+										<div class="card-body" >
+											<div class="row">
+												<div class="col-12 col-md-2">
+													<!-- <img src="../assets/3.png" class="profilePhoto"> -->
+
+													<img src="{{i.profilePhoto}}" class="profilePhoto">
+												</div>
+												<div class="col-12 col-md-10">
+													<div>
+														<span class="developerName">
+															<!-- Komal Sakhiya -->
+															{{i.developerName}}
+														</span>
+														<div>
+															<div>
+																<span>
+																	<!-- jfkughkjuhtiyruirkjnkvvcnbmvnmvnkbgnmgbnkgbkbmknkbmghkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkc -->
+																	{{i.comment}}
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="form-group col-12 col-lg-6">
-								<label for="priority">Priority</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-									<option value="low">Low</option>
-									<option value="medium">Medium</option>
-									<option value="high">High</option>
-								</select>
+							<!-- </div> -->
+
+							<div class="row padding-20">
+								<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+								<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 							</div>
 						</div>
-						<div class="form-group col-12">
-							<label for="status">Status</label>
-							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-							</select>
+						<!-- </div> -->
+						<div class="modal-footer justify-content-center">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save changes</button>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+
+			<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>	
+						<div class="modal-body" *ngIf="task && !loader">
+							<div class="row">
+								<form style="width: 100%;" [formGroup]="editTaskForm">
+									<div class="form-group col-12">
+										<label for="title">Title</label>
+										<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+									</div>
+									<div class="form-group col-12">
+										<label for="desc">Discription</label>
+										<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+									</div>
+									<div class="row no-margin no padding" >
+										<div class="form-group col-12 col-lg-6">
+											<label for="assignTo">Assign To</label>
+											<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+												<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+											</select>
+										</div>
+										<div class="form-group col-12 col-lg-6">
+											<label for="priority">Priority</label>
+											<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+												<option value="low">Low</option>
+												<option value="medium">Medium</option>
+												<option value="high">High</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group col-12">
+										<label for="status">Status</label>
+										<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+											<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+										</select>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-</div>
