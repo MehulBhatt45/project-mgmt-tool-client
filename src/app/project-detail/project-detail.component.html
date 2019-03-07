@@ -70,9 +70,6 @@
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
-									<!-- <li>
-										<label class="priority-text"><span [ngClass]="getColorCodeOfPriority(task.priority)"  data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}"></span></label>
-									</li> -->
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -193,7 +190,7 @@
 					<div *ngIf="task.comment && task.comment.length<=0">
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
-					<div class="row padding-20">
+					<div class="padding-20">
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 					</div>
@@ -230,7 +227,10 @@
 						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
 									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
 							</div>
