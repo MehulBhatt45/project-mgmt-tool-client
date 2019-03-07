@@ -9,8 +9,8 @@ declare var $ : any;
 import * as _ from 'lodash';
 @Component({
 	selector: 'app-main-table-view',
-	templateUrl: './main-table-view.component.html',
-	styleUrls: ['./main-table-view.component.css']
+	templateUrl: '../project-detail/project-detail.component.html',
+	styleUrls: ['../project-detail/project-detail.component.css']
 })
 export class MainTableViewComponent implements OnInit {
 	checkProjectId = "null";
@@ -28,46 +28,16 @@ export class MainTableViewComponent implements OnInit {
 	developers;
 	newTracks:any;
 	loader:boolean = false;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	url;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
+		this.route.url.subscribe(url=>{
+			this.url = url[0].path;
+		})
 		this.getProject();
 		this.createEditTaskForm();
 	}
-	getEmptyNewTracks(){
-		this.newTracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
-
-			]
-		}
-		];	
-	}
+	
 	getEmptyTracks(){
 		this.tracks = [
 		{
@@ -123,7 +93,15 @@ export class MainTableViewComponent implements OnInit {
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
+			this.developers = res;	
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("developers list ================>" , this.developers);
 		},err=>{
 			this._alertService.error(err);
@@ -133,30 +111,40 @@ export class MainTableViewComponent implements OnInit {
 	getProject(){
 		this.loader = true;
 		setTimeout(()=>{
-		this.getEmptyTracks();
-		this._projectService.getProjects().subscribe((res:any)=>{
-			console.log(res);
-			this.projects = res;
-			_.forEach(this.projects, (project)=>{
-				console.log(project);
-				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
+			this.getEmptyTracks();
+			this._projectService.getProjects().subscribe((res:any)=>{
+				console.log("working ===>" ,res);
+				this.projects = res;
+				if(this.currentUser.userRole =='projectManager'){
+					_.forEach(this.projects, (project)=>{
+						console.log(project);
+						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							})
+						})
 					})
-				})
+				}else{
+					this.projects = res;
+					console.log("hello");
+					_.forEach(this.projects, (project)=>{
+						console.log(project);
+						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+									track.tasks.push(content);
+								}
+							})
+						})
+					})
+				}
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
 			})
-			console.log("this.tracks of get project ======>" , this.tracks);
-			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-			this.trackChangeProjectWise = false;
-			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-			this.trackChangeDeveloperWise = false;
-			this.loader = false;
-		},err=>{
-			console.log(err);
-			this.loader = false;
-		})
 		},1000);
 	}
 
@@ -254,11 +242,11 @@ export class MainTableViewComponent implements OnInit {
 	addItem(option){
 		this.loader = true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader = false;
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			this.loader = false;
 		},1000);
 	}
 
@@ -278,98 +266,70 @@ export class MainTableViewComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	filterByProjectId(projectId){
-		console.log("Developer ID ====>" , projectId);
-		//xconsole.log("Project ID ====>" , projectId);
-		this.checkProjectId = projectId;
-		console.log("this.checkProjectId ========>" , this.checkProjectId);
-		if(this.checkProjectId == "null"){
-			if(this.checkDeveloperId != "null"){
-				console.log("************this.checkProjectId == null && this.checkDeveloperId != null ******");
-				this.filterByDeveloperId(this.checkDeveloperId);
-			}
-			else if(this.checkProjectId == "null" && this.checkDeveloperId == "null"){
-				console.log("do it later");
-				this.getProject();
-			}
-		}else{
-			if(this.checkDeveloperId != "null" && this.checkProjectId != "null"){
-				this.filterByProjectIdAndDevelopmentId();
-			}
-			else{
-				this.getEmptyNewTracks();
-				_.forEach(this.tracks , (track , index1)=>{
-					console.log("track ====>" , track , index1);
-					_.forEach(track.tasks , (task, index2)=>{
-						//console.log("task ====>" , task);
-						if(task.projectId._id ==  projectId){
-							console.log(" mactched");
-							//console.log("index of that task =======>" , index2);
-							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
-							this.newTracks[index1].tasks.push(track.tasks[index2]);
-						}
+	
+	filterTracks(projectId, developerId){
+		console.log(projectId, developerId);
+		this.getEmptyTracks();
+		if(projectId!='all' && developerId == 'all'){
+			_.forEach(this.projects, (project)=>{
+				if(project._id == projectId){
+					_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+						_.forEach(this.tracks, (track)=>{
+							if(this.currentUser.userRole!='projectManager'){
+								if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+									track.tasks.push(content);
+								}
+							}else{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							}
+						})
 					})
-				})
-				console.log("***********************************************");
-				console.log("This.newTracj ====>" , this.newTracks);
-				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(true));
-				this.trackChangeProjectWise = true;
-				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-				this.trackChangeDeveloperWise = false;
-			}
-		}
-	}
-	filterByDeveloperId(developerId){
-		console.log("developer ID ========>" , developerId);
-		this.checkDeveloperId = developerId;
-		if(this.checkDeveloperId == "null"){
-			if(this.checkProjectId != "null"){
-				this.filterByProjectId(this.checkProjectId);
-			}
-			else if(this.checkDeveloperId == "null" && this.checkProjectId == "null"){
-				console.log("will do it l ater");
-				this.getProject();
-			}
-		}
-		else{
-			if(this.checkProjectId != "null" && this.checkDeveloperId != "null"){
-				this.filterByProjectIdAndDevelopmentId();
-			}
-			else{
-				this.getEmptyNewTracks();
-				_.forEach(this.tracks , (track ,index1)=>{
-					console.log("tracks of developer =========>" , track , index1);
-					_.forEach( track.tasks , (task , index2)=>{
-						console.log("task ====>" , task.assignTo._id , index2 );
-						if(task.assignTo._id == developerId){
-							console.log("mathched");
-							this.newTracks[index1].tasks.push(track.tasks[index2]);
-						}
-
-					})
-				})
-				console.log("********************************************");
-				console.log("devevloper new tracks ===========>" , this.newTracks);
-				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(true));
-				this.trackChangeDeveloperWise = true;
-				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-				this.trackChangeProjectWise = false;
-			}
-		}
-	}
-	filterByProjectIdAndDevelopmentId(){
-		console.log("hey you are on right track");
-		this.getEmptyNewTracks();
-		_.forEach(this.tracks , (track , index1)=>{
-			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
-			_.forEach(track.tasks , (task , index2)=>{
-				console.log("task ===>" , task , index2);
-				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
-					console.log("matched");
-					this.newTracks[index1].tasks.push(track.tasks[index2]);
 				}
 			})
-		})
+		}else if(projectId=='all' && developerId != 'all'){
+			_.forEach(this.projects, (project)=>{
+				console.log(project);
+				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id && content.assignTo && content.assignTo._id == developerId){
+							track.tasks.push(content);
+						}
+					})
+				})
+			})
+		}else if(projectId!='all' && developerId != 'all'){
+			_.forEach(this.projects, (project)=>{
+				console.log(project);
+				if(project._id == projectId){
+					_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+						_.forEach(this.tracks, (track)=>{
+							if(content.status == track.id && content.assignTo && content.assignTo._id == developerId){
+								track.tasks.push(content);
+							}
+						})
+					})
+				}
+			})
+		}else{
+			_.forEach(this.projects, (project)=>{
+				console.log(project);
+				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(this.currentUser.userRole!='projectManager'){
+							if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+								track.tasks.push(content);
+							}
+						}else{
+							if(content.status == track.id){
+								track.tasks.push(content);
+							}
+						}
+					})
+				})
+			})
+		}
 	}
 
 }

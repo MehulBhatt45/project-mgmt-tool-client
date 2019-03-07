@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -29,10 +30,13 @@ import { FileListComponent } from './file-list/file-list.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UserprofileComponent } from './userprofile/userprofile.component';
 
 @NgModule({
-  declarations: [
+    declarations: [
     AppComponent,
     LoginComponent,
     ViewProjectComponent,
@@ -49,9 +53,13 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
+    UserprofileComponent,
+    UpdateUserComponent,
+    SearchTaskPipe,
     ResetPasswordComponent
-  ],
-  imports: [
+
+    ],
+    imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -64,8 +72,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

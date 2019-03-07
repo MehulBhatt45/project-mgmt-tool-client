@@ -242,6 +242,13 @@ table {
 }
 
 
+.details {
+    border: 1px solid lightgray;
+    padding: 10px 25px;
+    border-radius: 3px;
+    margin: 10px 0px;
+}
+
 .second_icon{
   padding-bottom: 12px;
   display: inline-block;
@@ -255,6 +262,13 @@ table {
 }
 .card_count_lbl{
   margin-left: 15px;
+}
+.search_btn{
+float: right;
+margin-top: -54px;
+border: none;
+margin-right: 26px;
+background-color: white;
 }
 
 .team-members li > a{
