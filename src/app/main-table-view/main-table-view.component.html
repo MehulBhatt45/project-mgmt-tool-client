@@ -1,9 +1,18 @@
+
 <div class="loader" *ngIf="loader">
 	<span></span>
 	<span></span>
 	<span></span>
 	<span></span>
 </div>
+<div class="body_content" *ngIf="!loader">
+	<div class="row justify-content-end">
+		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+			<div class="dropdown-menu dropdown-default">
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
 
 <div class="row justify-content-end">
 	<div class="form-group" *ngIf="url=='all-item-list'">
@@ -27,10 +36,13 @@
 		</div>
 	</div>
 </div>
-
-
-
-
+<div class="row">
+	<div class="form-group w-100">
+		<label for="exampleForm2">Search Task</label>
+		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
+		<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
+	</div>
+</div>
 <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -59,7 +71,7 @@
 									<li class="icon_check">
 										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									</li>
-							
+
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -74,7 +86,6 @@
 											</li>
 										</ul>
 									</li>
-
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
 							</div>
@@ -90,75 +101,81 @@
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<!-- <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4> -->
-				<button type="button">
-					<i class="fa fa-redo"></i>
-				</button>
+				<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<i class="fa fa-times"></i>
 				</button>
 			</div>
 			<div class="modal-body" *ngIf="task">
 				<div class="container-fluid">
-					<div class="row">
-						<table>
-							<tr>
-								<td style="width: 50px;">
-									<ul class="team-members">	
-										<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-											<a href="javascript:void(0);">
-												{{getInitialsOfName(task.assignTo.name)}}
-											</a>
-										</li>
-										<li *ngIf="!task.assignTo" class="add-member">
-											<a href="javascript:void(0);" title="Add Member">
-												<i class="fa fa-user-plus"></i>
-											</a>
-										</li>
-									</ul>
-								</td>
-								<td>
-									<p class="card-title" style="background-color: #FFC300;padding: 5px 10px;margin: 0;border-radius: 5px;">{{task.title}}</p>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<div class="card-text">{{task.desc}}</div>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<hr>
-					<div class="row">
-						<div class="col-12 col-md-6" *ngIf="task.createdBy">
-							<label><strong>Created By: &nbsp;</strong></label>
-							<span>{{task.createdBy.name}}, on {{task.createdAt | date}}</span>
+					<table style="width: 100%;">
+						<tr>
+							<td style="width: 20px;">
+								<ul class="team-members">	
+									<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+										<a href="javascript:void(0);">
+											{{getInitialsOfName(task.assignTo.name)}}
+										</a>
+									</li>
+									<li *ngIf="!task.assignTo" class="add-member">
+										<a href="javascript:void(0);" title="Add Member">
+											<i class="fa fa-user-plus"></i>
+										</a>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<p class="card-title" style="color: #222;padding: 16px 10px;margin: 0;font-size: 16px;
+								font-weight: bold;;">{{task.title}}</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
+							</td>
+						</tr>
+					</table>
+					<div class="details">
+						<div class="row">
+							<div class="col-12 col-md-4" *ngIf="task.createdBy">
+								<p>
+									<label><strong>Created By: &nbsp;</strong></label>
+									<span>{{task.createdBy.name}}</span>
+								</p>
+								<p *ngIf="task.createdAt">
+									<label><strong>Created Date: &nbsp;</strong></label>
+									<span>{{task.createdAt | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.status">
+									<label><strong>Status: &nbsp;</strong></label>
+									<span>{{task.status}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>
+									<label><strong>Assign To: &nbsp;</strong></label>
+									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+								</p>
+								<p *ngIf="task.priority">
+									<label><strong>Prority: &nbsp;</strong></label>
+									<span>{{task.priority}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>start time end time</p>
+							</div>
 						</div>
-						<div class="col-12 col-md-6">
-							<label><strong>Assign To: &nbsp;</strong></label>
-							<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-						</div>
-						<div class="col-12 col-md-6" *ngIf="task.createdAt">
-							<label><strong>Due Date: &nbsp;</strong></label>
-							<span>{{task.createdAt | date}}</span>
-						</div>
-						<div class="col-12 col-md-6" *ngIf="task.priority">
-							<label><strong>Prority: &nbsp;</strong></label>
-							<span>{{task.priority}}</span>
-						</div>
-						<div class="col-12 col-md-6" *ngIf="task.status">
-							<label><strong>Status: &nbsp;</strong></label>
-							<span>{{task.status}}</span>
-						</div>								
-					</div>
-					<div class="row bg-light justify-content-between margin-top-20">
-						<div>
-							<button class="btn btn-default">Remove Assignment</button>
-							<button class="btn btn-default">Start Progress</button>
-						</div>
-						<div>
-							<button class="btn btn-default" (click)="editTask(task)">Edit</button>
-							<button class="btn btn-default"><i class="fa fa-ellipsis-h"></i></button>
+						<div class="row justify-content-between">
+							<div>
+								<button class="btn btn-default">Remove Assignment</button>
+								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+							</div>
+							<div>
+								<button class="btn btn-default" (click)="editTask(task)">Edit</button>
+								<!-- <button class="btn btn-default"><i class="fa fa-ellipsis-h"></i></button> -->
+							</div>
 						</div>
 					</div>
 					<hr>
@@ -169,15 +186,15 @@
 					<div *ngIf="task.comment && task.comment.length<=0">
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
-					<div class="row padding-20">
-						<div [froalaEditor]></div>
-						<button class="btn btn-default float-right">Add Comment</button>
+					<div class="padding-20">
+						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default">Save changes</button>
 			</div>
 		</div>
 	</div>
@@ -191,7 +208,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>	
 			<div class="modal-body" *ngIf="task && !loader">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
@@ -203,10 +220,13 @@
 							<label for="desc">Discription</label>
 							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
 						</div>
-						<div class="row no-margin no padding">
+						<div class="row no-margin no padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
 									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
 							</div>
@@ -219,33 +239,19 @@
 								</select>
 							</div>
 						</div>
-						<div class="row no-margin no padding">
-							<div class="form-group col-12 col-lg-6">
-								<!-- <div class="form-group"> -->
-									<label for="startDate">Start Date</label>
-									<input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
-									<!-- </div> -->
-								</div>
-								<div class="form-group col-12 col-lg-6">
-									<!-- <div class="form-group"> -->
-										<label for="dueDate">Due Date</label>
-										<input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
-										<!-- </div> -->
-									</div>
-								</div>
-								<div class="form-group col-12">
-									<label for="status">Status</label>
-									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-										<option *ngFor="let trak of newTracks" value="{{trak.id}}">{{trak.title}}</option>
-									</select>
-								</div>
-							</form>
+						<div class="form-group col-12">
+							<label for="status">Status</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+							</select>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-					</div>
+					</form>
 				</div>
 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+			</div>
 		</div>
+	</div>
+</div>
