@@ -57,14 +57,12 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     TimeAgoPipe,
     UpdateUserComponent,
     AddNoticeComponent,
-    NoticeboardComponent
-    ],
-   
-    imports: [
+    NoticeboardComponent,
     UserprofileComponent,
-    UpdateUserComponent,
-    SearchTaskPipe,
-    ResetPasswordComponent,
+    ResetPasswordComponent
+    ],
+
+    imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

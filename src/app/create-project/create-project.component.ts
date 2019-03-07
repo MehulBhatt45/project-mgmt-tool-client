@@ -50,7 +50,13 @@ export class CreateProjectComponent implements OnInit {
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
     $('#basicExampleModal').modal('hide');
+   
   }
+
+  // addIcon(value){
+
+
+  // }
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;

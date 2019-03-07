@@ -17,7 +17,7 @@
                         </ul>
                     </div>
                 </li>
-<<<<<<< HEAD
+
                 <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
 
                 <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Add Notice</a></li>
@@ -26,11 +26,10 @@
                 
                 <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
                 <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
-=======
+
                 <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
                 <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
                 <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
->>>>>>> 9eae66bb7b1f114357521eb9d8407d712efffeee
             </ul>
         </li>
         <div class="sidenav-bg mask-strong"></div>
@@ -75,17 +74,6 @@
             <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
             <ul class="team-members">
                 <li id="login_details">
-<<<<<<< HEAD
-                    <a href="javascript:void(0);">
-                       {{getInitialsOfName(currentUser.name)}}
-                       <!-- TB -->
-                   </a>
-                   <div class="dropdown-content"> 
-                    <a class="dropdown-item" (click)="logout()">Log Out</a>
-                    <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
-                </div>
-            </li>   
-        </ul>
             <!--  <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right">
                 <ul class="team-members">
                     <li >
@@ -95,9 +83,6 @@
                     </li>   
                 </ul>
             </a> -->
-
-
-=======
                     <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
                     <div class="dropdown-content"> 
                         <a class="dropdown-item" (click)="logout()">Log Out</a>
@@ -105,7 +90,6 @@
                     </div>
                 </li>   
             </ul>
->>>>>>> 9eae66bb7b1f114357521eb9d8407d712efffeee
         </div>
     </div>
 </div>
