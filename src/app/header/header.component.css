@@ -33,8 +33,6 @@
   width: 100%;
   padding-top: 8px;
 }
-
-
 .second_icon{
   padding-bottom: 12px;
   display: inline-block;
@@ -46,8 +44,10 @@
 .fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
 }
-
-
+.fa-refresh{
+  float: right;
+  margin: 13px 35px !important;
+}
 .team-members li {
   height: 35px;
   width: 35px;
