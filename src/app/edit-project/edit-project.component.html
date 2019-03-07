@@ -6,7 +6,7 @@
 		<div class="card-body px-lg-5 pt-1">
 
 			<div *ngIf="availData.avatar">
-					<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
+				<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
 			</div>
 
 			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
@@ -73,26 +73,7 @@
 					</div>
 				</div>
 				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
-		
-<!-- =======
-		<div class="row">
-			<div class="col-sm-3">
-				<label >Project Alias</label>
-			</div>
-			<div class="col-sm-9 form-group">
-				<input class="form-control" type="text" name="projecttitle" placeholder="Enter Your projectalias">
-			</div>	
+			</form>
 		</div>
-		<div class="row">
-			<div class="col-sm-3">
-				<label>Description</label>		
-			</div>
-			<div class="col-sm-9 form-group">
-				<textarea rows="5" class="form-control"></textarea>			
-			</div>		
->>>>>>> 9eae66bb7b1f114357521eb9d8407d712efffeee -->
-
-		<button type="button" class="btn btn-primary" (click)="view_Project()">Submit</button>
-	</form>
-	
+	</div>
 </div>

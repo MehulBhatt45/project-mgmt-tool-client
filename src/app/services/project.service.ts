@@ -78,23 +78,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/add-project",body,httpOptions);
 	}
 
-	addData2(file: FileList,data, subUrl){
-		console.log(data);
-		let formdata = new FormData();
-		formdata.append('assignTo',data.assignTo);
-		formdata.append('desc',data.desc);
-		formdata.append('dueDate',data.dueDate);
-		formdata.append('priority',data.priority);
-		formdata.append('projectId',data.projectId);
-		formdata.append('startDate',data.startDate);
-		formdata.append('title',data.title);
-		formdata.append('uniqueId',data.uniqueId);
-		formdata.append('files',data.files)
-		for(var i =0; i < file.length; i++){
-			formdata.append("uploadFile",file[i]);
-		}
-		return this.http.post(config.baseApiUrl+subUrl+"fileupload", formdata);
-	}
+	
 
 
 	addData(data, subUrl){

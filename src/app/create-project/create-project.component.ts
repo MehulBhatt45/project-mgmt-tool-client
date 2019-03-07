@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
+import { config } from '../config';
 declare var $:any;
 
 @Component({
@@ -12,11 +13,16 @@ declare var $:any;
 export class CreateProjectComponent implements OnInit {
   files:FileList;
   addForm:FormGroup;
+  url = '';
   constructor(public router:Router, public _projectservice:ProjectService) { 
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      description: new FormControl(''),
+      desc: new FormControl(''),
+      clientEmail: new FormControl('' , Validators.required),
+      clientFullName: new FormControl('', Validators.required),
+      clientContactNo: new FormControl('',Validators.required),
+      clientDesignation: new FormControl(''),
       avatar:new FormControl('')
     });
 
@@ -31,9 +37,9 @@ export class CreateProjectComponent implements OnInit {
       console.log("form value=====>>>",addForm.value);
       this._projectservice.addProject_With_image(addForm.value,this.files).subscribe((res:any)=>{
         console.log(res);
-        },err=>{
-          console.log(err);    
-        }) 
+      },err=>{
+        console.log(err);    
+      }) 
     }
     else{
       this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -49,18 +55,25 @@ export class CreateProjectComponent implements OnInit {
   addIcon(value){
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
+     this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
-   
   }
-
-  // addIcon(value){
-
-
-  // }
-  changeFile(e){
-    console.log("response from changefile",e.target.files);
-    this.files = e.target.files;
+  
+  onSelectFile(event) {
+    console.log("response from changefile",event.target.files);
+    this.files = event.target.files;
     $('#basicExampleModal').modal('hide');
+    if (event.target.files && event.target.files[0]) {
+
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+
+      }
+    }
   }
 
 }
