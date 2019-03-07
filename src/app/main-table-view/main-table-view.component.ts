@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
+	tasks;
 	checkProjectId = "null";
 	checkDeveloperId = "null";
 	tracks:any;
@@ -29,8 +30,9 @@ export class MainTableViewComponent implements OnInit {
 	newTracks:any;
 	loader:boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
-		this.getProject();
+//		this.getTasks;
 		this.createEditTaskForm();
+		this.getTasks();
 	}
 	getEmptyNewTracks(){
 		this.newTracks = [
@@ -129,8 +131,45 @@ export class MainTableViewComponent implements OnInit {
 			this._alertService.error(err);
 		})
 	}
-
-	getProject(){
+	getTasks(){
+		this.loader = true;
+		setTimeout(()=>{
+		this.getEmptyTracks();
+		this._projectService.getAllTasks().subscribe((res:any)=>{
+			console.log("res ====>" ,res);
+			this.projects = res;
+			_.forEach(this.projects , (task)=>{
+				console.log("task ======>" , task);
+				_.forEach(this.tracks , (track)=>{
+					if(task.status == track.id){
+						track.tasks.push(task);
+					}
+				})
+			})
+			console.log("wanted Result =======>" , this.tracks);
+			/*_.forEach(this.projects, (project)=>{
+				console.log(project);
+				_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					})
+				})
+			})*/
+			console.log("this.tracks of get project ======>" , this.tracks);
+			localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
+			this.trackChangeProjectWise = false;
+			localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
+			this.trackChangeDeveloperWise = false;
+			this.loader = false;
+		},err=>{
+			console.log(err);
+			this.loader = false;
+		})
+		},1000);
+	}
+	/*getTasks{
 		this.loader = true;
 		setTimeout(()=>{
 		this.getEmptyTracks();
@@ -158,7 +197,7 @@ export class MainTableViewComponent implements OnInit {
 			this.loader = false;
 		})
 		},1000);
-	}
+	}*/
 
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
@@ -184,7 +223,7 @@ export class MainTableViewComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			var subUrl; 
+			/*var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TASK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 			console.log(subUrl);
 			data.status = newStatus;
@@ -192,15 +231,34 @@ export class MainTableViewComponent implements OnInit {
 				console.log(res);
 			},err=>{
 				console.log(err);
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.completeItem(data).subscribe((res:any)=>{
+				console.log(res);
+				//this.getProject(res.projectId);
+				this.getTasks();
+			},err=>{
+				console.log(err);
+			
 			})
 		}else{
-			data.status = newStatus;
+			/*data.status = newStatus;
 			var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TASK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
 			console.log(subUrl);
 			this._projectService.updateStatus(data, subUrl).subscribe(res=>{
 				console.log(res);
 			},err=>{
+				console.log(err);
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.updateStatus(data).subscribe((res:any)=>{
+				console.log(res);
+			//	this.getProject(res.projectId);
+				this.getTasks();
+			},(err:any)=>{
 				console.log(err);
 			})
 		}
@@ -274,7 +332,7 @@ export class MainTableViewComponent implements OnInit {
 		// console.log(subUrl);
 		// this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 		// 	$('#editModel').modal('hide');
-		// 	this.getProject();
+		// 	this.getTasks;
 		// },err=>{
 		// 	console.log(err);
 		// })
@@ -291,7 +349,7 @@ export class MainTableViewComponent implements OnInit {
 			}
 			else if(this.checkProjectId == "null" && this.checkDeveloperId == "null"){
 				console.log("do it later");
-				this.getProject();
+			this.getTasks();
 			}
 		}else{
 			if(this.checkDeveloperId != "null" && this.checkProjectId != "null"){
@@ -306,7 +364,7 @@ export class MainTableViewComponent implements OnInit {
 						if(task.projectId._id ==  projectId){
 							console.log(" mactched");
 							//console.log("index of that task =======>" , index2);
-		3					//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
+							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
 							this.newTracks[index1].tasks.push(track.tasks[index2]);
 						}
 					})
@@ -329,7 +387,7 @@ export class MainTableViewComponent implements OnInit {
 			}
 			else if(this.checkDeveloperId == "null" && this.checkProjectId == "null"){
 				console.log("will do it l ater");
-				this.getProject();
+				this.getTasks();
 			}
 		}
 		else{

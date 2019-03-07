@@ -19,9 +19,9 @@ export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	public model = {
-        editorData: 'Enter comments here'
-    };
-    
+		editorData: 'Enter comments here'
+	};
+
 	task;
 	project;
 	comment;
@@ -110,8 +110,28 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTaskById(id).subscribe((res:any)=>{
+				console.log("all response ======>" , res);
+				this.getEmptyTracks();
+				this.project = res;
+				_.forEach(this.project , (task)=>{
+					console.log("task ======>" , task);
+					_.forEach(this.tracks , (track)=>{
+						if(task.status == track.id){
+							track.tasks.push(task);
+						}
+					})
+				})
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
+			})
+		},1000);
+		/*this.loader = true;
+		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				console.log(res);
+				console.log("all response ======>" , res);
 				this.getEmptyTracks()
 				this.project = res;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
@@ -127,7 +147,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(err);
 				this.loader = false;
 			})
-		},1000);
+		},1000);*/
 	}
 	/*getProject(id){
 		this._projectService.getProjectByIdAndUserId(id).subscribe((res:any)=>{
@@ -158,7 +178,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			var subUrl; 
+			/*var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 			console.log(subUrl);
 			data.status = newStatus;
@@ -167,9 +187,19 @@ export class ProjectDetailComponent implements OnInit {
 				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
+			
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.completeItem(data).subscribe((res:any)=>{
+				console.log(res);
+				this.getProject(res.projectId);
+			},err=>{
+				console.log(err);
+			
 			})
 		}else{
-			data.status = newStatus;
+			/*data.status = newStatus;
 			console.log("UniqueId", data.uniqueId);
 			var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
@@ -179,19 +209,35 @@ export class ProjectDetailComponent implements OnInit {
 				this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.updateStatus(data).subscribe((res:any)=>{
+				console.log(res);
+				this.getProject(res.projectId);
+			},(err:any)=>{
+				console.log(err);
 			})
 		}
 	}
 
 	getTitle(name){
+		if(name){
 		var str = name.split(' ');
 		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+		}else{
+			return '';
+		}
 	}
 
 	getInitialsOfName(name){
+		if(name){
 		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
 		return str.toUpperCase();
 		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+		}else{
+			return '';
+		}
 	}
 
 	getColorCodeOfPriority(priority) {
@@ -209,12 +255,18 @@ export class ProjectDetailComponent implements OnInit {
 		this.task = task;
 		$('#fullHeightModalRight').modal('show');
 		
-		
 	}
 
 	updateTask(task){
-		console.log(task);
-		var subUrl; 
+		task.assignTo = this.editTaskForm.value.assignTo;
+		console.log("update =====>",task);
+		this._projectService.updateTask(task).subscribe((res:any)=>{
+			console.log("res ===>" , res);
+			this.getProject(res.projectId);
+		},(err:any)=>{
+			console.log("err ===>" , err);
+		})
+		/*var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
 		console.log(subUrl);
 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
@@ -222,7 +274,7 @@ export class ProjectDetailComponent implements OnInit {
 		},err=>{
 			console.log(err);
 			
-		})
+		})*/
 		
 	}
 
@@ -236,20 +288,22 @@ export class ProjectDetailComponent implements OnInit {
 	addItem(option){
 		this.loader=true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader=false;
-	},1000);
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			this.loader=false;
+		},1000);
 	}
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
+
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addData(task).subscribe((res:any)=>{
@@ -261,24 +315,24 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	public Editor = DecoupledEditor;
 
-    public onReady( editor ) {
-        editor.ui.getEditableElement().parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement()
-        );
-    }
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
-    public onChange( { editor }: ChangeEvent ) {
-        const data = editor.getData();
-        this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-    }
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+	}
 
-    sendComment(){
-    	console.log(this.comment);
-    }
+	sendComment(){
+		console.log(this.comment);
+	}
 
 
-    creationDateComparator(a,b) {
-	  return parseInt(a.price, 10) - parseInt(b.price, 10);
+	creationDateComparator(a,b) {
+		return parseInt(a.price, 10) - parseInt(b.price, 10);
 	}	
 }
