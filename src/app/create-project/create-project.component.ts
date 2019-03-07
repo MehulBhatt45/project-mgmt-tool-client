@@ -15,8 +15,13 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      description: new FormControl(''),
-      avatar:new FormControl('')
+      avatar:new FormControl(''),
+      desc: new FormControl(''),
+      uniqueId: new FormControl('' , Validators.required),
+      clientEmail: new FormControl('' , Validators.required),
+      clientFullName: new FormControl('', Validators.required),
+      clientContactNo: new FormControl('',Validators.required),
+      clientDesignation: new FormControl(''),
     });
 
   }
@@ -39,10 +44,10 @@ export class CreateProjectComponent implements OnInit {
    
   }
 
-  // addIcon(value){
-  //   console.log(value);
+  addIcon(value){
+    console.log(value);
 
-  // }
+  }
   changeFile(e){
     console.log("response from changefile",e.target.files);
     this.files = e.target.files;
