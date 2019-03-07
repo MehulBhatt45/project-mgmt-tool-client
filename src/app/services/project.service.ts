@@ -48,13 +48,13 @@ export class ProjectService {
 	}
 
 	addProject(body,files:FileList){
-		let formdata = new FormData();
-		formdata.append('title',body.title);
-		formdata.append('desc',body.description);
-		formdata.append('avatar',body.avatar);
-		formdata.append('pmanagerId',body.pmanagerId);
-		formdata.append("uploadfile",files[0]);
-		console.log("formdata===>>>",formdata);
+		// let formdata = new FormData();
+		// formdata.append('title',body.title);
+		// formdata.append('desc',body.description);
+		// formdata.append('avatar',body.avatar);
+		// formdata.append('pmanagerId',body.pmanagerId);
+		// formdata.append("uploadfile",files[0]);
+		// console.log("formdata===>>>",formdata);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				// 'Content-Type':  'application/json',
@@ -63,7 +63,7 @@ export class ProjectService {
 		};
 		console.log("body===>>>",body);
 		
-		return this.http.post(config.baseApiUrl+"project/add-project",formdata,httpOptions);
+		return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
 	}
 
 	addData(data, subUrl){
@@ -78,8 +78,20 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
 
-	updateData(data, subUrl){
+	addTask(data){
 		console.log(data);
+		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"tasks/add-task", data, httpOptions);
+	}
+
+	updateData(data, subUrl){
+		console.log("data ====>" , data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -90,7 +102,7 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
 	}
 
-	updateStatus(data, subUrl){
+	updateStatus(data){
 		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -98,10 +110,10 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
+		return this.http.put(config.baseApiUrl+"tasks/update-task-status-by-id", data, httpOptions);
 	}
 
-	completeItem(data, subUrl){
+	completeItem(data){
 		data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -109,7 +121,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
+		return this.http.put(config.baseApiUrl+"tasks/update-task-status-complete", data, httpOptions);
 	}
 
 	getlogs(memberId){
@@ -139,5 +151,39 @@ export class ProjectService {
 
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
+	}
+	updateProject(data){
+		console.log("updated Data in project servie" , data);
+		var projectId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
+	}
+	getProjectByIdAndUserId(id){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
+	}
+	getAllTasks(){
+		return this.http.get(config.baseApiUrl+"tasks/all-task");		
+	}
+	getTaskById(id){
+		var id = id;
+		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+	}
+	updateTask(task){
+		console.log("task =========>",task);
+		var id = task._id;
+		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 }

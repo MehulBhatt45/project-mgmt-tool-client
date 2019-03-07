@@ -4,74 +4,43 @@ import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 declare var $ : any;
+import {SearchTaskPipe} from '../search-task.pipe';
 import * as _ from 'lodash';
 @Component({
 	selector: 'app-main-table-view',
 	templateUrl: './main-table-view.component.html',
-	styleUrls: ['./main-table-view.component.css']
+	styleUrls: ['../project-detail/project-detail.component.css']
 })
 export class MainTableViewComponent implements OnInit {
-	checkProjectId = "null";
-	checkDeveloperId = "null";
 	tracks:any;
 	modalTitle;
+	public model = {
+		editorData: 'Enter comments here'
+	};
 	task;
-	trackChangeProjectWise;
-	trackChangeDeveloperWise;
-	projects;
+	project;
+	tasks;
+	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
 	developers;
-	newTracks:any;
-	loader:boolean = false;
+	loader : boolean = false;
+	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	url;
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute, public _alertService: AlertService) { 
-		this.route.url.subscribe(url=>{
-			this.url = url[0].path;
-		})
-		this.getProject();
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+		});
+		this.getEmptyTracks();
+		this.getTasks();
 		this.createEditTaskForm();
-	}
-	getEmptyNewTracks(){
-		this.newTracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
 
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
-
-			]
-		}
-		];	
 	}
 	getEmptyTracks(){
 		this.tracks = [
@@ -109,7 +78,25 @@ export class MainTableViewComponent implements OnInit {
 		}
 		];
 	}
+	getPriorityClass(priority){
+		switch (priority) {
+			case "low":
+			return "primary"
+			break;
 
+			case "medium":
+			return "warning"
+			break;
+
+			case "high":
+			return "danger"
+			break;
+
+			default:
+			return ""
+			break;
+		}
+	}
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -124,62 +111,40 @@ export class MainTableViewComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAllDevelopers();
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
 	}
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;	
-			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
-			})
-			console.log("developers list ================>" , this.developers);
+			this.developers = res;
+			console.log("Developers",this.developers);
 		},err=>{
+			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
 	}
 
-	getProject(){
+	getTasks(){
 		this.loader = true;
 		setTimeout(()=>{
-			this.getEmptyTracks();
-			this._projectService.getProjects().subscribe((res:any)=>{
-				console.log("working ===>" ,res);
-				this.projects = res;
-				if(this.currentUser.userRole!='projectManager'){
-					_.forEach(this.projects, (project)=>{
-						console.log(project);
-						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-							_.forEach(this.tracks, (track)=>{
-								if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-									track.tasks.push(content);
-								}
-							})
+			this._projectService.getAllTasks().subscribe((res:any)=>{
+				console.log("all response ======>" , res);
+				this.getEmptyTracks();
+				this.tasks = res;
+				console.log("PROJECT=================>", this.tasks);
+				_.forEach(this.tasks , (task)=>{
+					// _.forEach(task.tasks, (tsk)=>{
+						// console.log("===================>th",tsk);
+						_.forEach(this.tracks , (track)=>{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
 						})
-					})
-				}else{
-					this.projects = res;
-					console.log("hello");
-					_.forEach(this.projects, (project)=>{
-						console.log(project);
-						_.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
-							_.forEach(this.tracks, (track)=>{
-								if(content.status == track.id ){
-									track.tasks.push(content);
-								}
-							})
-						})
-					})
-				}
-				console.log("this.tracks of get project ======>" , this.tracks);
-				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-				this.trackChangeProjectWise = false;
-				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-				this.trackChangeDeveloperWise = false;
+					// })
+				});
+				console.log("PROJECT=================>", this.tracks);
 				this.loader = false;
 			},err=>{
 				console.log(err);
@@ -187,7 +152,7 @@ export class MainTableViewComponent implements OnInit {
 			})
 		},1000);
 	}
-
+	
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -212,192 +177,210 @@ export class MainTableViewComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TASK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
+			/*var subUrl; 
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 			console.log(subUrl);
 			data.status = newStatus;
-			this._projectService.completeItem(data, subUrl).subscribe(res=>{
+			this._projectService.completeItem(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				// this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
+			
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.completeItem(data).subscribe((res:any)=>{
+				console.log(res);
+				// this.getProject(res.projectId);
+			},err=>{
+				console.log(err);
+
 			})
 		}else{
-			data.status = newStatus;
+			/*data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
 			var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TASK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
+			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
 			console.log(subUrl);
-			this._projectService.updateStatus(data, subUrl).subscribe(res=>{
+			this._projectService.updateStatus(data, subUrl).subscribe((res:any)=>{
 				console.log(res);
+				// this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
+			})*/
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.updateStatus(data).subscribe((res:any)=>{
+				console.log(res);
+				// this.getProject(res.projectId);
+			},(err:any)=>{
+				console.log(err);
 			})
+		}
+	}
+	sortTasksByCreatedAt(type){
+		console.log("Sorting tasks by = ",type)
+		
+		// Loop through all 4 tracks
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			// var task = _.orderBy(track.tasks, ['createdAt'],[type]);
+			track.tasks.sort(custom_sort);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
+			console.log("sorted output = ",track.tasks);
+		});
+
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
 
 	getTitle(name){
-		var str = name.split(' ');
-		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+		// console.log("In getTitle",name);
+		if(name){
+			var str = name.split(' ');
+			return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+		}else{
+			return '';
+		}
 	}
 
 	getInitialsOfName(name){
-		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-		return str.toUpperCase();
-		// return name.split(' ')[0][0]+name.split(' ')[1][0];
-	}
-
-	getColorCodeOfPriority(priority) {
-		for (var i = 0; i < this.allPriorityList.length; i++) {
-			if (this.allPriorityList[i].value == priority) {
-				return this.allPriorityList[i].colorCode;
-			}
+		// console.log("In getInitialsOfName",name);
+		if(name){
+			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+			return str.toUpperCase();
+			// return name.split(' ')[0][0]+name.split(' ')[1][0];
+		}else{
+			return '';
 		}
-
 	}
+	
+	sortTasksByPriority(data){
+		console.log("hdgfhd=>>>>..");
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			track.tasks.sort(custom_sort1);
+			console.log("sorted output = ",track.tasks);
+		});
+		function custom_sort1(a, b) {
+			// if(){
+				// 	a.priority = "high";
+				// 	b.priority = "low";
+				// 	return a;
+				// }
+				return a.priority - b.priority;
+				// var x = a[this.priority]; var y = b[this.priority];
+				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
+			}
+			// function getPriority(){
 
-	openModel(task){
-		console.log(task);
-		this.task = task;
-		$('#fullHeightModalRight').modal('show');
-	}
+				// }
+			}
 
-	updateTask(task){
-		console.log(task);
-		var subUrl; 
+
+			
+			getColorCodeOfPriority(priority) {
+				for (var i = 0; i < this.allPriorityList.length; i++) {
+					if (this.allPriorityList[i].value == priority) {
+						return this.allPriorityList[i].colorCode;
+					}
+				}
+			}
+			openModel(task){
+
+				console.log(task);
+				this.task = task;
+				$('#fullHeightModalRight').modal('show');
+
+			}
+
+			updateTask(task){
+				task.assignTo = this.editTaskForm.value.assignTo;
+				console.log("update =====>",task);
+				this._projectService.updateTask(task).subscribe((res:any)=>{
+					console.log("res ===>" , res);
+					// this.getProject(res.projectId);
+				},(err:any)=>{
+					console.log("err ===>" , err);
+				})
+		/*var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
 		console.log(subUrl);
 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
 			console.log(err);
-		})
-	}
-
-	editTask(task){
-		this.task = task;
-		this.modalTitle = 'Edit Item'
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
+			
+		})*/
+		
 	}
 
 	addItem(option){
-		this.loader = true;
+		this.loader=true;
 		setTimeout(()=>{
-		this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader = false;
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#editModel').modal('show');
+			this.loader=false;
 		},1000);
 	}
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
-		var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
-		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+
+		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		// console.log(subUrl);
+		this._projectService.addTask(task).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			this.getProject();
+			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
 		})
 	}
-	filterByProjectId(projectId){
-		console.log("Developer ID ====>" , projectId);
-		//xconsole.log("Project ID ====>" , projectId);
-		this.checkProjectId = projectId;
-		console.log("this.checkProjectId ========>" , this.checkProjectId);
-		if(this.checkProjectId == "null"){
-			if(this.checkDeveloperId != "null"){
-				console.log("************this.checkProjectId == null && this.checkDeveloperId != null ******");
-				this.filterByDeveloperId(this.checkDeveloperId);
-			}
-			else if(this.checkProjectId == "null" && this.checkDeveloperId == "null"){
-				console.log("do it later");
-				this.getProject();
-			}
-		}else{
-			if(this.checkDeveloperId != "null" && this.checkProjectId != "null"){
-				this.filterByProjectIdAndDevelopmentId();
-			}
-			else{
-				this.getEmptyNewTracks();
-				_.forEach(this.tracks , (track , index1)=>{
-					console.log("track ====>" , track , index1);
-					_.forEach(track.tasks , (task, index2)=>{
-						//console.log("task ====>" , task);
-						if(task.projectId._id ==  projectId){
-							console.log(" mactched");
-							//console.log("index of that task =======>" , index2);
-							//	console.log("particular track.task =======>" , track.tasks[index2] , "of index =====> " , index2);
-							this.newTracks[index1].tasks.push(track.tasks[index2]);
-						}
-					})
-				})
-				console.log("***********************************************");
-				console.log("This.newTracj ====>" , this.newTracks);
-				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(true));
-				this.trackChangeProjectWise = true;
-				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(false));
-				this.trackChangeDeveloperWise = false;
-			}
-		}
-	}
-	filterByDeveloperId(developerId){
-		console.log("developer ID ========>" , developerId);
-		this.checkDeveloperId = developerId;
-		if(this.checkDeveloperId == "null"){
-			if(this.checkProjectId != "null"){
-				this.filterByProjectId(this.checkProjectId);
-			}
-			else if(this.checkDeveloperId == "null" && this.checkProjectId == "null"){
-				console.log("will do it l ater");
-				this.getProject();
-			}
-		}
-		else{
-			if(this.checkProjectId != "null" && this.checkDeveloperId != "null"){
-				this.filterByProjectIdAndDevelopmentId();
-			}
-			else{
-				this.getEmptyNewTracks();
-				_.forEach(this.tracks , (track ,index1)=>{
-					console.log("tracks of developer =========>" , track , index1);
-					_.forEach( track.tasks , (task , index2)=>{
-						console.log("task ====>" , task.assignTo._id , index2 );
-						if(task.assignTo._id == developerId){
-							console.log("mathched");
-							this.newTracks[index1].tasks.push(track.tasks[index2]);
-						}
+	public Editor = DecoupledEditor;
 
-					})
-				})
-				console.log("********************************************");
-				console.log("devevloper new tracks ===========>" , this.newTracks);
-				localStorage.setItem("trackChangeDeveloperWise" , JSON.stringify(true));
-				this.trackChangeDeveloperWise = true;
-				localStorage.setItem("trackChangeProjectWise" , JSON.stringify(false));
-				this.trackChangeProjectWise = false;
-			}
-		}
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
 	}
-	filterByProjectIdAndDevelopmentId(){
-		console.log("hey you are on right track");
-		this.getEmptyNewTracks();
-		_.forEach(this.tracks , (track , index1)=>{
-			console.log("filterByProjectIdAndDevelopmentId ===> track ===>" , track , index1);
-			_.forEach(track.tasks , (task , index2)=>{
-				console.log("task ===>" , task , index2);
-				if(task.assignTo._id == this.checkDeveloperId &&  task.projectId._id == this.checkProjectId){
-					console.log("matched");
-					this.newTracks[index1].tasks.push(track.tasks[index2]);
+
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+	}
+
+	sendComment(){
+		console.log(this.comment);
+	}
+	searchTask(){
+		console.log("btn tapped");
+	}
+	onKey(event: any){
+		console.log(event);
+		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		console.log("In Component",task);
+		this.getEmptyTracks();
+		_.forEach(task, (content)=>{
+			_.forEach(this.tracks, (track)=>{
+				if(content.status == track.id){
+					track.tasks.push(content);
 				}
 			})
 		})
 	}
-
 }
+
