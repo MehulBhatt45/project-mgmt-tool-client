@@ -1,22 +1,15 @@
-<<<<<<< HEAD
 <div class="container" *ngIf="editAvail">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Update Project</strong>
+			<button class="btn btn-primary btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)">Delete Project</button>
+
 		</h5>
 		<div class="card-body px-lg-5 pt-1">
 
 			<div *ngIf="availData.avatar">
 				<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
-=======
 
-<div class="Container">
-	<form class="form-horizontal" role="form">	
-		<h2 class="text-center">Edit Project</h2>
-		<div class="row">
-			<div class="col-sm-3">
-				<label>Project Title</label>	
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
 			</div>
 
 			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
@@ -85,9 +78,7 @@
 				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
 			</form>
 		</div>
-<<<<<<< HEAD
-	</div>
-=======
+
 		<div class="row">
 			<div class="col-sm-3">
 				<label >Project Alias</label>
@@ -105,7 +96,5 @@
 			</div>		
 		</div>
 		<button type="button" class="btn btn-default" (click)="view_Project()">Submit</button>
-	</form>
-	
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
+	</div>
 </div>

@@ -63,11 +63,7 @@ export class ProjectService {
 		formdata.append("uploadfile",files[0]);
 		console.log("body===>>>",body);
 		
-<<<<<<< HEAD
 		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
-=======
-		return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
 	}
 
 	addProject_Without_image(body){
@@ -82,9 +78,6 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/add-project",body,httpOptions);
 	}
 
-	
-
-
 	addData(data, subUrl){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -97,14 +90,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
 
-<<<<<<< HEAD
-
-
-
-	updateData(data, subUrl){
-=======
 	addTask(data){
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
@@ -253,11 +239,7 @@ export class ProjectService {
 		};
 		return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
 	}
-<<<<<<< HEAD
-}
 
-
-=======
 	getAllTasks(){
 		return this.http.get(config.baseApiUrl+"tasks/all-task");		
 	}
@@ -271,4 +253,3 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 }
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53

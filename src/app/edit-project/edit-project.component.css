@@ -32,3 +32,7 @@ button{
 	display: table;
 	margin: 0px auto;
 	}
+.deletebtn{
+    float: right;
+    margin-top: 0px;    
+} 
