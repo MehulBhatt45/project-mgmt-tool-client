@@ -158,7 +158,7 @@
                 <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
                 <div class="dropdown-content"> 
                   <a class="dropdown-item" (click)="logout()">Log Out</a>
-                  <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
+                  <a  class="dropdown-item" [routerLink]="['/userprofile']">My Profile</a>
                 </div>
               </li>   
             </ul>
