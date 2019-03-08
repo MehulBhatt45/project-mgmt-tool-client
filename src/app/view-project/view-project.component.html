@@ -60,29 +60,29 @@
                             <li *ngFor="let Team of project.Teams" [title]="getTitle(Team.name)">
                                 <!-- <a href="javascript:void(0);" > -->
                                     <a [routerLink]="['/userprofile/', currentUser._id]">
-                                    {{getInitialsOfName(Team.name)}}
+                                        {{getInitialsOfName(Team.name)}}
+                                    </a>
+                                </li>
+                            </span>
+                            <li class="add-member">
+                                <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">
+                                    <i class="fa fa-user-plus"></i>
                                 </a>
+                                <a title="Add Member" *ngIf="currentUser.userRole!='projectManager'">
+                                    <i class="fa fa-user-plus"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <p class="dropdown-item">Action</p>
+                                    <p class="dropdown-item">Another action</p>
+                                    <p class="dropdown-item">Something else here</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p class="dropdown-item">Add</p>
+                                </div>
                             </li>
-                        </span>
-                        <li class="add-member">
-                            <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">
-                                <i class="fa fa-user-plus"></i>
-                            </a>
-                            <a title="Add Member" *ngIf="currentUser.userRole!='projectManager'">
-                                <i class="fa fa-user-plus"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <p class="dropdown-item">Action</p>
-                                <p class="dropdown-item">Another action</p>
-                                <p class="dropdown-item">Something else here</p>
-                                <div class="dropdown-divider"></div>
-                                <p class="dropdown-item">Add</p>
-                            </div>
-                        </li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
     <!-- <div class="col-12 col-md-3 margin-bottom-30" *ngIf="currentUser.userRole=='projectManager'">
         <div class="card">
             <div class="card-body">
@@ -118,6 +118,10 @@
                                 <input type="text" id="projecttitle" formControlName="title" class="form-control">
                             </div>
                             <div class="md-form form-group">
+                                <label for="projectalias">Project Alias</label>
+                                <input type="text" id="projectalias"  formControlName="uniqueId" class="form-control">
+                            </div>
+                            <div class="md-form form-group">
                                 <label for="desc">Description</label>
                                 <textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
                             </div>
@@ -146,7 +150,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+                            <div class="col-md-4">
+                                <img [src]="url" height="150" width="150">
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
                                 Select Project avatar
                             </button>
                         </form>
@@ -167,97 +174,97 @@
 
 <!-- Modal Start Here -->
 
-                    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="md-form form-group">
-                                    <div class="file-field">
-                                        <div class="btn btn-primary btn-sm float-left">
-                                            <span>Upload a new avatar</span>
-                                            <input type="file" name="fileUpload" (change)="onSelectFile($event)">
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input  class="file-path validate" type="text" placeholder="Upload your file">
-                                        </div>
-                                    </div>
-                                    <ul class="project-avatar">
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
-                                                <img src="assets/avatar/school.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
-                                                <img src="assets/avatar/mortarboard.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/alarm-clock.png')">
-                                                <img src="assets/avatar/alarm-clock.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button"  (click)="addIcon('/uploads/avatar/stethoscope.png')">
-                                                <img src="assets/avatar/stethoscope.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/doctor.png')">
-                                                <img src="assets/avatar/doctor.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/bookshelf.png')">
-                                                <img src="assets/avatar/bookshelf.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/flask.png')">
-                                                <img src="assets/avatar/flask.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/customer-service.png')">
-                                                <img src="assets/avatar/customer-service.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/payment-method.png')">
-                                                <img src="assets/avatar/payment-method.png" height="56" width="56">
-                                            </button>   
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/beach.png')">
-                                                <img src="assets/avatar/beach.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/coding.png')">
-                                                <img src="assets/avatar/coding.png" height="56" width="56">
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
-                                                <img src="assets/avatar/maintenance.png" height="56" width="56">
-                                            </button>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="md-form form-group">
+                <div class="file-field">
+                    <div class="btn btn-primary btn-sm float-left">
+                        <span>Upload a new avatar</span>
+                        <input type="file" name="fileUpload" formControlName="avatar" (change)="onSelectFile($event)">
                     </div>
+                    <div class="file-path-wrapper">
+                        <input  class="file-path validate" type="text" placeholder="Upload your file">
+                    </div>
+                </div>
+                <ul class="project-avatar">
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
+                            <img src="assets/avatar/school.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
+                            <img src="assets/avatar/mortarboard.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/alarm-clock.png')">
+                            <img src="assets/avatar/alarm-clock.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button"  (click)="addIcon('/uploads/avatar/stethoscope.png')">
+                            <img src="assets/avatar/stethoscope.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/doctor.png')">
+                            <img src="assets/avatar/doctor.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/bookshelf.png')">
+                            <img src="assets/avatar/bookshelf.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/flask.png')">
+                            <img src="assets/avatar/flask.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/customer-service.png')">
+                            <img src="assets/avatar/customer-service.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/payment-method.png')">
+                            <img src="assets/avatar/payment-method.png" height="56" width="56">
+                        </button>   
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/beach.png')">
+                            <img src="assets/avatar/beach.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/coding.png')">
+                            <img src="assets/avatar/coding.png" height="56" width="56">
+                        </button>
+                    </li>
+                    <li>
+                        <button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
+                            <img src="assets/avatar/maintenance.png" height="56" width="56">
+                        </button>
+                    </li>
 
-                    <!-- Modal End Here -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal End Here -->
 
