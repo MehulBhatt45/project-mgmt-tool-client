@@ -62,17 +62,13 @@ import { ChildComponent } from './child/child.component';
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent,
-<<<<<<< HEAD
-    AddEmployeeComponent
-  ],
-=======
+    AddEmployeeComponent,
     ChildComponent,
     AddNoticeComponent,
     NoticeboardComponent,
     UserprofileComponent,
-    ResetPasswordComponent
     ],
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
 
     imports: [
     BrowserModule,
