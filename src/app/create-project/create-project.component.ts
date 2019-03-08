@@ -18,13 +18,13 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
+avatar:new FormControl(''),
       desc: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      avatar:new FormControl('')
     });
 
   }

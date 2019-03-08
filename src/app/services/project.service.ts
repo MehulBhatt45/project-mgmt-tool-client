@@ -63,6 +63,7 @@ export class ProjectService {
 		formdata.append("uploadfile",files[0]);
 		console.log("body===>>>",body);
 
+
 		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
 		// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
 
@@ -238,6 +239,7 @@ export class ProjectService {
 		var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
+
 	addTask(data){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
