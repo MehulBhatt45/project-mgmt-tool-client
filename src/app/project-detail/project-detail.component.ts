@@ -29,12 +29,12 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
+
 	task;
 	projects: any;
 	project;
 	comment;
 	projectId;
-	availData;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
@@ -289,6 +289,7 @@ export class ProjectDetailComponent implements OnInit {
 				return this.allPriorityList[i].colorCode;
 			}
 		}
+
 	}
 	openModel(task){
 		console.log(task);
@@ -360,6 +361,11 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
+
+
+
+
+
 	sendComment(){
 		console.log(this.comment);
 	}
