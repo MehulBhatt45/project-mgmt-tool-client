@@ -1,34 +1,14 @@
-<!-- <div class="Container">
-	<form class="form-horizontal" [formGroup]='addForm' role="form">
-		<h2>Create Project</h2>
-			<div class="form-group">
-		<label >Project Title:</label><br>
-		<input type="text" class="form-control" name="projecttitle" placeholder="Enter Your projecttitle" formControlName="projecttitle" ><br></div>
-	
-		<label >Project Alias:</label><br>
-		<input type="text" class="form-control" name="projecttalias" placeholder="Enter Your projectalias" formControlName="projectalias" ><br>
-		<br><label>Description:</label><br>
-		<textarea rows="5" class="form-control" name="description" formControlName="description" ></textarea><br>
-		<button type="button" class="btn btn-primary" (click)="view_Project(addForm)">Submit</button>
-	</form>
-	
-</div> -->
-<!-- <div class="loader" *ngIf="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-</div> -->
-<div class="container" *ngIf="!loader">
+
+<div class="container">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Create Project</strong>
 		</h5>
-		<div class="card-body px-lg-5 pt-1" >
+		<div class="card-body px-lg-5 pt-1">
 			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 				<div class="md-form form-group">
 					<label for="projecttitle">Project Title</label>
-					<input type="text" id="projecttitle" formControlName="title" class="form-control">
+					<input type="text" id="projecttitle"  formControlName="title" class="form-control">
 				</div>
 				<div class="md-form form-group">
 					<label for="projectalias">Project Alias</label>
@@ -36,125 +16,145 @@
 				</div>
 				<div class="md-form form-group">
 					<label for="desc">Description</label>
-					<textarea id="desc" rows="5" formControlName="description" class="form-control rounded-0 md-textarea"></textarea>
+					<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
 				</div>
-
+				<div>
+					<h4><strong>Client Details :-</strong></h4>
+				</div>
 				<div class="md-form form-group">
-					<div class="file-field">
-						<div class="btn btn-default btn-sm float-left">
-							<span>Upload a new avatar</span>
-							<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
-						</div>
-						<div class="file-path-wrapper">
-							<input  class="file-path validate" type="text" placeholder="Upload your file">
+					<label for="clientemail">Email</label>
+					<input type="email" id="clientemail" formControlName="clientEmail" class="form-control">
+				</div>
+				<div class="md-form form-group">
+					<label for="clientfullname">Full Name</label>
+					<input type="text" id="clientfullname" formControlName="clientFullName" class="form-control">
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label for="clientcontactno">Contact No.</label>
+							<input type="number" id="clientcontactno" formControlName="clientContactNo" class="form-control">
+						</div>	
+					</div>
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label for="clientdesignation">Designation</label>
+							<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
 						</div>
 					</div>
 				</div>
 
 
-				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+				<!-- demo code -->
+				<img [src]="url" height="150" width="150"> <br/>
+				<!-- demo code -->
+
+
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
 					Select Project avatar
-				</button> -->
+				</button>
 				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
-				
-
-				<!-- Modal -->
-				<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="file-field">
-								<div class="btn btn-default btn-sm float-left">
-									<span>Upload a new avatar</span>
-									<input type="file" name="fileUpload" formControlName="avatar" (change)="changeFile($event)">
-								</div>
-								<div class="file-path-wrapper">
-									<input  class="file-path validate" type="text" placeholder="Upload your file">
-								</div>
-							</div>
-							<ul class="project-avatar">
-								<li>
-									<button class="icon-button" (click)="addIcon(144)">
-										<img src="assets/avatar/school.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/mortarboard.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/alarm-clock.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/stethoscope.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/doctor.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/bookshelf.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/flask.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/customer-service.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/payment-method.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/beach.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/coding.png" height="56" width="56">
-									</button>
-								</li>
-								<li>
-									<button class="icon-button">
-										<img src="assets/avatar/maintenance.png" height="56" width="56">
-									</button>
-								</li>
-								
-							</ul>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-default">Save changes</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</form>
+			</form>
+		</div>
 	</div>
 </div>
+
+
+
+<!-- Modal Start Here -->
+
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="md-form form-group">
+				<div class="file-field">
+					<div class="btn btn-primary btn-sm float-left">
+						<span>Upload a new avatar</span>
+						<input type="file" name="fileUpload" formControlName="avatar" (change)="onSelectFile($event)">
+					</div>
+					<div class="file-path-wrapper">
+						<input  class="file-path validate" type="text" placeholder="Upload your file">
+					</div>
+				</div>
+				<ul class="project-avatar">
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
+							<img src="assets/avatar/school.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
+							<img src="assets/avatar/mortarboard.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/alarm-clock.png')">
+							<img src="assets/avatar/alarm-clock.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button"  (click)="addIcon('/uploads/avatar/stethoscope.png')">
+							<img src="assets/avatar/stethoscope.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/doctor.png')">
+							<img src="assets/avatar/doctor.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/bookshelf.png')">
+							<img src="assets/avatar/bookshelf.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/flask.png')">
+							<img src="assets/avatar/flask.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/customer-service.png')">
+							<img src="assets/avatar/customer-service.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/payment-method.png')">
+							<img src="assets/avatar/payment-method.png" height="56" width="56">
+						</button>	
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/beach.png')">
+							<img src="assets/avatar/beach.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/coding.png')">
+							<img src="assets/avatar/coding.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
+							<img src="assets/avatar/maintenance.png" height="56" width="56">
+						</button>
+					</li>
+
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
+<!-- Modal End Here -->
 
 

@@ -18,6 +18,8 @@ import { HeaderComponent } from './header/header.component';
 import { IssueComponent } from './issue/issue.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+// import {ChildComponent}  from './child/child.component';
+
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatCardModule} from '@angular/material/card';
 //import { MatIconModule } from "@angular/material/icon";
@@ -31,10 +33,13 @@ import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { AddNoticeComponent } from './add-notice/add-notice.component';
+import { NoticeboardComponent } from './noticeboard/noticeboard.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import { ChildComponent } from './child/child.component';
 
 @NgModule({
     declarations: [
@@ -54,12 +59,20 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     LogsComponent,
     FileListComponent,
     TimeAgoPipe,
-    UserprofileComponent,
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent,
+<<<<<<< HEAD
     AddEmployeeComponent
   ],
+=======
+    ChildComponent,
+    AddNoticeComponent,
+    NoticeboardComponent,
+    UserprofileComponent,
+    ResetPasswordComponent
+    ],
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 
     imports: [
     BrowserModule,
@@ -73,7 +86,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     NgxEditorModule,
-    CKEditorModule
+    CKEditorModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

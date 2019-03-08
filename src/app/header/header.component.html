@@ -10,17 +10,30 @@
         </li>
         <li>
             <ul class="collapsible collapsible-accordion">
-                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects">Projects</span><i class="fa fa-angle-down rotate-icon"></i></a>
+                <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">
+                    <span routerLink="/view-projects">Projects</span>
+                    <i class="fa fa-angle-down rotate-icon"></i>
+                    <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li *ngFor="let project of projects"><a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
+                            <li *ngFor="let project of projects">
+                                <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
                         </ul>
                     </div>
                 </li>
+
+                
                 <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
                 <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
                 <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
+<<<<<<< HEAD
                 <li><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Add Employee</a></li>
+=======
+                <li><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Add Notice</a></li>
+                <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Notice Board</a></li>
+                <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
+
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
             </ul>
         </li>
         <div class="sidenav-bg mask-strong"></div>
@@ -82,6 +95,15 @@
             <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
             <ul class="team-members">
                 <li id="login_details">
+            <!--  <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right">
+                <ul class="team-members">
+                    <li >
+                        <a href="javascript:void(0);" (click)="openMenu()" >
+                            {{getInitialsOfName(task.assignTo.name)}}
+                        </a>
+                    </li>   
+                </ul>
+            </a> -->
                     <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
                     <div class="dropdown-content"> 
                         <a class="dropdown-item" (click)="logout()">Log Out</a>
@@ -102,7 +124,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" *ngIf="task && !loader">
+            <div class="modal-body" *ngIf="task">
                 <div class="row">
                     <form style="width: 100%;" [formGroup]="editTaskForm">
                         <div class="form-group col-12">

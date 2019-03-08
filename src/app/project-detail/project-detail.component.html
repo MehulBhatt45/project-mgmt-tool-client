@@ -4,6 +4,7 @@
 	<span></span>
 	<span></span>
 </div>
+<<<<<<< HEAD
 <div class="body_content" *ngIf="!loader">
 	<div class="justify-content-end"  *ngIf="currentUser.userRole=='projectManager'">
 		<div class="dropdown">
@@ -12,9 +13,38 @@
 				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
 				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
 				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
-
-			</div>
+=======
+<div class="row justify-content-end">
+<!-- <div class="form-group">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
+			<option value="all" selected>All Projects</option>
+			<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+			<option value="all" selected>All Developer</option>
+			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+		</select>
+	</div> -->
+	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
+		<div class="dropdown-menu dropdown-default">
+			<a class="dropdown-item" (click)="addItem('Task')">Task</a>
+			<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
+	</div>
+	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
+		<div class="dropdown-menu dropdown-default">
+			<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
+			<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
+			<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
+		</div>
+<<<<<<< HEAD
 	</div>
 
 
@@ -28,6 +58,29 @@
 					<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
 					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 				</div>
+=======
+	</div>
+</div>
+<div class="row">
+	<div class="form-group w-100">
+		<label for="exampleForm2">Search Task</label>
+		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
+	</div>
+
+
+</div>
+<div *ngIf="developers && projects">
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
+</div>
+<!-- <div class="all_card">
+	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
+		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
+			<div class="card">
+				<div class="card-header">
+					<span class="track_title">{{track.title}}</span>
+					<span class="card_count_lbl">{{track.tasks.length}}</span>
+				</div>		
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 			</div>
 
 		</div>
@@ -127,7 +180,8 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
+
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 		<div class="modal-content">
@@ -169,6 +223,7 @@
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-4">
+<<<<<<< HEAD
 								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
 									<span>{{task.createdBy.name}}</span></p>
 									<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
@@ -272,6 +327,44 @@
 										<button type="button" class="btn btn-primary">Save changes</button>
 									</div>
 								</div>
+=======
+								<p  *ngIf="task.createdBy">
+									<label><strong>Created By: &nbsp;</strong></label>
+									<span>{{task.createdBy.name}}</span>
+								</p>
+								<p *ngIf="task.createdAt">
+									<label><strong>Created Date: &nbsp;</strong></label>
+									<span>{{task.createdAt | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.status">
+									<label><strong>Status: &nbsp;</strong></label>
+									<span>{{task.status}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>
+									<label><strong>Assign To: &nbsp;</strong></label>
+									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+								</p>
+								<p *ngIf="task.priority">
+									<label><strong>Prority: &nbsp;</strong></label>
+									<span>{{task.priority}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>start time end time</p>
+							</div>
+						</div>
+						<div class="row justify-content-between">
+							<div>
+								<button class="btn btn-default">Remove Assignment</button>
+								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+							</div>
+							<div>
+								<button class="btn btn-default" (click)="editTask(task)">Edit</button>
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 							</div>
 						</div>
 						
@@ -327,6 +420,52 @@
 									</div>
 								</div>
 
+<<<<<<< HEAD
+=======
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>	
+			<div class="modal-body" *ngIf="task && !loader">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
+						<div class="form-group col-12">
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class=" row form-group col-12">
+							<button class="btn btn-default" (click)="fileUpload.click()">
+								<i class="fa fa-paperclip mr-1"></i> Add Files
+								<input type="file" formControlName="files" [(ngModel)]="task.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+							</button>
+						</div>
+						<div class="row no-margin no padding" >
+							<div class="form-group col-12 col-lg-6">
+								<label for="assignTo">Assign To</label>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+								</select>
+							</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+									<option value="low">Low</option>
+									<option value="medium">Medium</option>
+									<option value="high">High</option>
+								</select>
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 							</div>
 						</div>
 

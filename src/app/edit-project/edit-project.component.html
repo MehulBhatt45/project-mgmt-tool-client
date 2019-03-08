@@ -1,32 +1,79 @@
+<div class="container" *ngIf="editAvail">
+	<div class="card">
+		<h5 class="card-header white-text text-center py-4">
+			<strong>Update Project</strong>
+		</h5>
+		<div class="card-body px-lg-5 pt-1">
 
-<div class="Container">
-	<form class="form-horizontal" role="form">	
-		<h2 class="text-center">Edit Project</h2>
-		<div class="row">
-			<div class="col-sm-3">
-				<label>Project Title</label>	
+			<div *ngIf="availData.avatar">
+				<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
 			</div>
-			<div class="col-sm-9 form-group">
-				<input type="text" class="form-control" name="projecttitle" placeholder="Enter Your projecttitle">
-			</div>	
+
+			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
+				<div class="md-form form-group">
+					<label class="active" for="projecttitle">Project Title</label>
+					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
+				</div>
+				<div class="md-form form-group">
+					<label class="active" for="desc">Description</label>
+					<textarea tabindex="-1" id="desc" rows="5" formControlName="desc" [(ngModel)]="availData.desc" class="form-control rounded-0 md-textarea" autofocus="autofocus" ></textarea>
+				</div>
+				<div>
+					<h4><strong>Client Details :-</strong></h4>
+				</div>
+				<div class="md-form form-group">
+					<label class="active"  for="clientemail">Email</label>
+					<input  type="email" id="clientemail" formControlName="clientEmail" [(ngModel)]="availData.clientEmail" class="form-control">
+				</div>
+				<div class="md-form form-group">
+					<label class="active"  for="clientfullname">Full Name</label>
+					<input autofocus type="text" id="clientfullname" formControlName="clientFullName" [(ngModel)]="availData.clientFullName" class="form-control">
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label class="active" for="clientcontactno">Contact No.</label>
+							<input autofocus type="number" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
+						</div>	
+					</div>
+					<div class="col-md-6">
+						<div class="md-form form-group">
+							<label class="active" for="clientdesignation">Designation</label>
+							<input autofocus type="text" id="clientdesignation"  formControlName="clientDesignation" class="form-control" [(ngModel)]="availData.clientDesignation">
+						</div>
+					</div>
+				</div>
+				<div >
+					<button class="btn btn-primary btn-rounded z-depth-1" (click)="showTeams()">Add/Edit Teams</button>
+					<div *ngIf="teamShow">
+						<div class="row" *ngFor="let j of availData.Teams">
+							<div class="col-md-3">
+								<div class="md-form form-group">
+									<label class="active" for="name">name</label>
+									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.name}}" class="form-control">
+								</div>		
+							</div>
+							<div class="col-md-3">
+								<div class="md-form form-group">
+									<label class="active" for="name">Role</label>
+									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.userRole}}" class="form-control">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<a *ngIf="!developerShow" (click)="addRemoveDeveloper(j._id)">remove</a>
+							</div>
+						</div>
+						<button class="btn btn-primary btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
+						<div *ngIf="developerShow"> 
+							<div class="row" *ngFor="let i of availDevelopers">
+								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
+								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
+			</form>
 		</div>
-		<div class="row">
-			<div class="col-sm-3">
-				<label >Project Alias</label>
-			</div>
-			<div class="col-sm-9 form-group">
-				<input class="form-control" type="text" name="projecttitle" placeholder="Enter Your projectalias">
-			</div>	
-		</div>
-		<div class="row">
-			<div class="col-sm-3">
-				<label>Description</label>		
-			</div>
-			<div class="col-sm-9 form-group">
-				<textarea rows="5" class="form-control"></textarea>			
-			</div>		
-		</div>
-		<button type="button" class="btn btn-default" (click)="view_Project()">Submit</button>
-	</form>
-	
+	</div>
 </div>

@@ -4,11 +4,15 @@ import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 declare var $ : any;
 import {SearchTaskPipe} from '../search-task.pipe';
 import * as _ from 'lodash';
+
+
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+
+
 @Component({
 	selector: 'app-main-table-view',
 	templateUrl: './main-table-view.component.html',
@@ -78,6 +82,7 @@ export class MainTableViewComponent implements OnInit {
 		}
 		];
 	}
+
 	getPriorityClass(priority){
 		switch (priority) {
 			case "low":

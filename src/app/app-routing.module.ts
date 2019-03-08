@@ -15,7 +15,13 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+<<<<<<< HEAD
 import {AddEmployeeComponent} from './add-employee/add-employee.component';
+=======
+import { UpdateUserComponent } from './update-user/update-user.component';
+import {AddNoticeComponent} from './add-notice/add-notice.component';
+import {NoticeboardComponent} from './noticeboard/noticeboard.component';
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 import { UserprofileComponent } from './userprofile/userprofile.component';
 
 
@@ -51,6 +57,14 @@ const routes: Routes = [
 			path:'',
 			pathMatch:"full",
 			redirectTo:'view-projects'
+		},
+		{
+			path:'noticeboard',
+			component:NoticeboardComponent
+		},
+		{
+			path:'add-notice',
+			component:AddNoticeComponent
 		},
 		{
 			path:'view-projects',

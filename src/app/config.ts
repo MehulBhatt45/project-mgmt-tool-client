@@ -1,6 +1,10 @@
 
-// const baseUrl = "http://206.189.231.135:4000/";
+const baseUrl = "http://206.189.231.135:4000/";
 
+// const baseUrl = "http://132.140.160.60:4000/";
+
+
+<<<<<<< HEAD
 // const baseUrl = "http://132.140.160.60:4000/";
 
 
@@ -9,7 +13,10 @@
 // const baseUrl = "http://132.140.160.60:4000/";
 
 const baseUrl = "http://132.140.160.60:4000/";
+=======
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 // const baseUrl = "http://localhost:4000/";
+
 
 
 export const config = {

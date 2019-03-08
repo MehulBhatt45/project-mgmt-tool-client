@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
+import { ChildComponent } from '../child/child.component';
+
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -28,19 +30,27 @@ export class ProjectDetailComponent implements OnInit {
 	url;
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+
+	searchText;
+
 	task;
+	projects: any;
 	project;
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
-	developers;
+	developers: any
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+	files:FileList;
+	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
@@ -106,6 +116,7 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 
+
 	getPriorityClass(priority){
 		switch (priority) {
 			case "low":
@@ -125,6 +136,8 @@ export class ProjectDetailComponent implements OnInit {
 			break;
 		}
 	}
+
+	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -133,7 +146,9 @@ export class ProjectDetailComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			startDate : new FormControl('', Validators.required),
 			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
+
+			status : new FormControl({value: '', disabled: true}, Validators.required),
+			files: new FormControl(),
 
 		})
 	}
@@ -148,6 +163,14 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
@@ -206,6 +229,10 @@ export class ProjectDetailComponent implements OnInit {
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
+<<<<<<< HEAD
+=======
+				// this.getProject(res.projectId);
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 			},err=>{
 				console.log(err);
 			})
@@ -217,7 +244,12 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(subUrl);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
+<<<<<<< HEAD
 			},err=>{
+=======
+				// this.getProject(res.projectId);
+			},(err:any)=>{
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 				console.log(err);
 			})
 		}
@@ -374,6 +406,7 @@ export class ProjectDetailComponent implements OnInit {
 // 		})
 // 	}
 	
+<<<<<<< HEAD
 // }
 
 			// getColorCodeOfPriority(priority) {
@@ -390,6 +423,40 @@ export class ProjectDetailComponent implements OnInit {
 							this.task = task;
 							$('#fullHeightModalRight').modal('show');
 						}
+=======
+	sortTasksByPriority(data){
+		console.log("hdgfhd=>>>>..");
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			track.tasks.sort(custom_sort1);
+			console.log("sorted output = ",track.tasks);
+		});
+		function custom_sort1(a, b) {
+			// if(){
+				// 	a.priority = "high";
+				// 	b.priority = "low";
+				// 	return a;
+				// }
+				return a.priority - b.priority;
+				// var x = a[this.priority]; var y = b[this.priority];
+				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
+			}
+			
+		}
+		
+
+		getColorCodeOfPriority(priority) {
+			for (var i = 0; i < this.allPriorityList.length; i++) {
+				if (this.allPriorityList[i].value == priority) {
+					return this.allPriorityList[i].colorCode;
+				}
+			}
+
+		}
+
+			openModel(task){
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 
 						updateTask(task){
 							if(!task.assingTo)
@@ -406,6 +473,7 @@ export class ProjectDetailComponent implements OnInit {
 
 						}
 
+<<<<<<< HEAD
 						editTask(task){
 							this.task = task;
 							this.modalTitle = 'Edit Item'
@@ -413,6 +481,28 @@ export class ProjectDetailComponent implements OnInit {
 							$('#input_starttime').pickatime({});
 							$('#editModel').modal('show');
 						}
+=======
+			updateTask(task){
+				task.assignTo = this.editTaskForm.value.assignTo;
+				console.log("update =====>",task);
+				this._projectService.updateTask(task).subscribe((res:any)=>{
+					console.log("res ===>" , res);
+					// this.getProject(res.projectId);
+				},(err:any)=>{
+					console.log("err ===>" , err);
+				})
+		/*var subUrl; 
+		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
+		console.log(subUrl);
+		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+		},err=>{
+			console.log(err);
+			
+		})*/
+		
+	}
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 
 						addItem(option){
 							this.loader=true;
@@ -426,6 +516,7 @@ export class ProjectDetailComponent implements OnInit {
 							},1000);
 						}
 
+<<<<<<< HEAD
 						saveTheData(task){
 							task['projectId']= this.projectId; 
 							task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -442,6 +533,26 @@ export class ProjectDetailComponent implements OnInit {
 							})
 						}
 						public Editor = DecoupledEditor;
+=======
+	saveTheData(task){
+		task['projectId']= this.projectId; 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task.startDate = $("#startDate").val();
+		task.dueDate = $("#dueDate").val();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log(task);
+
+		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		// console.log(subUrl);
+		this._projectService.addTask(task).subscribe((res:any)=>{
+			$('#editModel').modal('hide');
+			// this.getProject(this.projectId);
+		},err=>{
+			console.log(err);
+		})
+	}
+	public Editor = DecoupledEditor;
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 
 						public onReady( editor ) {
 							editor.ui.getEditableElement().parentElement.insertBefore(
@@ -484,3 +595,36 @@ export class ProjectDetailComponent implements OnInit {
 					}
 
 
+<<<<<<< HEAD
+=======
+	sendComment(){
+		console.log(this.comment);
+	}
+	searchTask(){
+		console.log("btn tapped");
+	}
+	onKey(event: any){
+		console.log(event);
+		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		console.log("In Component",task);
+		this.getEmptyTracks();
+		_.forEach(task, (content)=>{
+			_.forEach(this.tracks, (track)=>{
+				if(content.status == track.id){
+					track.tasks.push(content);
+				}
+			})
+		})
+	}
+
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+	}
+}
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
