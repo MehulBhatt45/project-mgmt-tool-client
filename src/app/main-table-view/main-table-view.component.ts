@@ -82,6 +82,7 @@ export class MainTableViewComponent implements OnInit {
 		}
 		];
 	}
+
 	// getPriorityClass(priority){
 		// 	switch (priority) {
 			// 		case "low":
@@ -132,6 +133,7 @@ export class MainTableViewComponent implements OnInit {
 					status : new FormControl({value: '', disabled: true}, Validators.required)
 				})
 			}
+
 
 			ngOnInit() {
 				this.getAllDevelopers();
@@ -318,6 +320,7 @@ export class MainTableViewComponent implements OnInit {
 			}
 			// function getPriority(){
 
+
 				// }
 			}
 
@@ -336,6 +339,16 @@ export class MainTableViewComponent implements OnInit {
 				this.task = task;
 				$('#fullHeightModalRight').modal('show');
 
+			}
+			editTask(task){
+				// this.loader=true;
+				this.task = task;
+					this.modalTitle = 'Edit Item';
+					$('.datepicker').pickadate();
+					$('#editModel').modal('show');
+					this.loader=false;
+				// setTimeout(()=>{
+				// },1000);
 			}
 
 			updateTask(task){

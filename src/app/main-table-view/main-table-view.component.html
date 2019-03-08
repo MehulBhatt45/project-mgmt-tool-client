@@ -51,6 +51,45 @@
 						<span class="track_title">{{track.title}}</span>
 						<span class="card_count_lbl">{{track.tasks.length}}</span>
 
+<<<<<<< HEAD
+				</div>		
+			</div>
+			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+				<mat-card *ngFor="let task of track.tasks "cdkDrag>
+					<mat-card-content>
+						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
+							<div class="card-body" style="padding: 0px;">
+								<table>
+									<tr>
+										<td colspan="2">
+											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+											<div class="card-text">{{task.desc}}</div>
+											<div>{{task.createdAt | timeAgo }}</div>
+										</td>
+									</tr>
+								</table>
+								<ul>
+									<li class="icon_check">
+										<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
+									</li>
+
+									<li>
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(task.assignTo.name)}}
+												</a>
+											</li>
+											<li *ngIf="!task.assignTo" class="add-member">
+												<a href="javascript:void(0);" title="Add Member">
+													<i class="fa fa-user-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<label class="float-right">{{task.uniqueId}}</label>
+=======
 					</div>		
 				</div>
 				<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
@@ -88,6 +127,7 @@
 									</ul>
 									<label class="float-right">{{task.uniqueId}}</label>
 								</div>
+>>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 							</div>
 						</mat-card-content>
 					</mat-card>
@@ -213,7 +253,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>	
-				<div class="modal-body" *ngIf="task && !loader">
+				<div class="modal-body" *ngIf="task">
 					<div class="row">
 						<form style="width: 100%;" [formGroup]="editTaskForm">
 							<div class="form-group col-12">
