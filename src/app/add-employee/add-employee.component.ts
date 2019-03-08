@@ -15,8 +15,12 @@ export class AddEmployeeComponent implements OnInit {
 			password:new FormControl('',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
-			userrole:new FormControl('',[Validators.required])
-		}); }
+			userrole:new FormControl('',[Validators.required]),
+			experience:new FormControl('',[Validators.required]),
+			profilePhoto:new FormControl('',[Validators.required]),
+			CV:new FormControl('',[Validators.required])
+		}); 
+	}
 
 		ngOnInit() {
 
