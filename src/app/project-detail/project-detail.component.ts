@@ -184,8 +184,14 @@ export class ProjectDetailComponent implements OnInit {
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(task.status == track.id){
-							track.tasks.push(task);
+						if(this.currentUser.userRole!='projectManager'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
 						}
 					})
 				})
