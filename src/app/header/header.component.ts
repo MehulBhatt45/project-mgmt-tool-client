@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		
 		this.createEditTaskForm();
+		
 	}
 
 	getEmptyTracks(){
@@ -195,6 +196,7 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		})
 	}
+
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			console.log(res);
@@ -203,4 +205,5 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		});
 	}
+
 }

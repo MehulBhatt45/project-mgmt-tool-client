@@ -1,4 +1,5 @@
-<div class="container" *ngIf="editAvail">
+
+<div class="container" *ngIf="availData">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
 			<strong>Update Project</strong>
@@ -7,9 +8,10 @@
 
 			<div *ngIf="availData.avatar">
 				<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
+
 			</div>
 
-			<form class="md-form" [formGroup]='updateForm' role="form" style="color: #757575;">
+			<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
 				<div class="md-form form-group">
 					<label class="active" for="projecttitle">Project Title</label>
 					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
@@ -21,6 +23,7 @@
 				<div>
 					<h4><strong>Client Details :-</strong></h4>
 				</div>
+				<hr>
 				<div class="md-form form-group">
 					<label class="active"  for="clientemail">Email</label>
 					<input  type="email" id="clientemail" formControlName="clientEmail" [(ngModel)]="availData.clientEmail" class="form-control">
