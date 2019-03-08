@@ -16,7 +16,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 @Component({
 	selector: 'app-main-table-view',
 	templateUrl: './main-table-view.component.html',
-	styleUrls: ['../project-detail/project-detail.component.css']
+	styleUrls: ['./main-table-view.component.css']
 })
 export class MainTableViewComponent implements OnInit {
 	tracks:any;
@@ -83,105 +83,141 @@ export class MainTableViewComponent implements OnInit {
 		];
 	}
 
-	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
-			break;
+	// getPriorityClass(priority){
+		// 	switch (priority) {
+			// 		case "low":
+			// 		return "primary"
+			// 		break;
 
-			case "medium":
-			return "warning"
-			break;
+			// 		case "medium":
+			// 		return "warning"
+			// 		break;
 
-			case "high":
-			return "danger"
-			break;
+			// 		case "high":
+			// 		return "danger"
+			// 		break;
 
-			default:
-			return ""
-			break;
-		}
-	}
-	createEditTaskForm(){
-		this.editTaskForm = new FormGroup({
-			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
-			assignTo : new FormControl('', Validators.required),
-			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
-		})
-	}
+			// 		default:
+			// 		return ""
+			// 		break;
+			// 	}
+			// }
 
-	ngOnInit() {
-		this.getAllDevelopers();
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
-	}
+			getPriorityClass(priority){
+				switch (priority) {
+					case "low":
+					return "primary"
+					break;
 
-	getAllDevelopers(){
-		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
-			console.log("Developers",this.developers);
-		},err=>{
-			console.log("Couldn't get all developers ",err);
-			this._alertService.error(err);
-		})
-	}
+					case "medium":
+					return "warning"
+					break;
 
-	getTasks(){
-		this.loader = true;
-		setTimeout(()=>{
-			this._projectService.getAllTasks().subscribe((res:any)=>{
-				console.log("all response ======>" , res);
-				this.getEmptyTracks();
-				this.tasks = res;
-				console.log("PROJECT=================>", this.tasks);
-				_.forEach(this.tasks , (task)=>{
-					// _.forEach(task.tasks, (tsk)=>{
-						// console.log("===================>th",tsk);
-						_.forEach(this.tracks , (track)=>{
-							if(task.status == track.id){
-								track.tasks.push(task);
-							}
-						})
-					// })
-				});
-				console.log("PROJECT=================>", this.tracks);
-				this.loader = false;
-			},err=>{
-				console.log(err);
-				this.loader = false;
-			})
-		},1000);
-	}
-	
-	get trackIds(): string[] {
-		return this.tracks.map(track => track.id);
-	}
+					case "high":
+					return "danger"
+					break;
 
-	onTalkDrop(event: CdkDragDrop<any>) {
-		if (event.previousContainer === event.container) {
-			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-		} else {
-			transferArrayItem(event.previousContainer.data,
-				event.container.data,
-				event.previousIndex,
-				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
-		}
-	}
+					default:
+					return ""
+					break;
+				}
+			}
+			createEditTaskForm(){
+				this.editTaskForm = new FormGroup({
+					title : new FormControl('', Validators.required),
+					desc : new FormControl('', Validators.required),
+					assignTo : new FormControl('', Validators.required),
+					priority : new FormControl('', Validators.required),
+					startDate : new FormControl('', Validators.required),
+					dueDate : new FormControl('', Validators.required),
+					status : new FormControl({value: '', disabled: true}, Validators.required)
+				})
+			}
 
-	onTrackDrop(event: CdkDragDrop<any>) {
-		// console.log(event);
-		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-	}
 
-	updateStatus(newStatus, data){
-		if(newStatus=='complete'){
+			ngOnInit() {
+				this.getAllDevelopers();
+				this.getAllProjects();
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip()
+				})
+			}
+
+			getAllDevelopers(){
+				this._projectService.getAllDevelopers().subscribe(res=>{
+					this.developers = res;
+					this.developers.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+					})
+					console.log("Developers",this.developers);
+				},err=>{
+					console.log("Couldn't get all developers ",err);
+					this._alertService.error(err);
+				})
+			}
+
+			getTasks(){
+				this.loader = true;
+				setTimeout(()=>{
+					this._projectService.getAllTasks().subscribe((res:any)=>{
+						console.log("all response ======>" , res);
+						this.getEmptyTracks();
+						this.tasks = res;
+						console.log("PROJECT=================>", this.tasks);
+						_.forEach(this.tasks , (task)=>{
+							// _.forEach(task.tasks, (tsk)=>{
+								// console.log("===================>th",tsk);
+								_.forEach(this.tracks , (track)=>{
+									if(this.currentUser.userRole!='projectManager'){
+										if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+											track.tasks.push(task);
+										}
+									}else{
+										if(task.status == track.id){
+											track.tasks.push(task);
+										}
+									}
+								})
+								// })
+							});
+						console.log("PROJECT=================>", this.tracks);
+						this.loader = false;
+					},err=>{
+						console.log(err);
+						this.loader = false;
+					})
+				},1000);
+			}
+
+			get trackIds(): string[] {
+				return this.tracks.map(track => track.id);
+			}
+
+			onTalkDrop(event: CdkDragDrop<any>) {
+				if (event.previousContainer === event.container) {
+					moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+				} else {
+					transferArrayItem(event.previousContainer.data,
+						event.container.data,
+						event.previousIndex,
+						event.currentIndex);
+					console.log(event.container.id, event.container.data[0]);
+					this.updateStatus(event.container.id, event.container.data[0]);
+				}
+			}
+
+			onTrackDrop(event: CdkDragDrop<any>) {
+				// console.log(event);
+				moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+			}
+
+			updateStatus(newStatus, data){
+				if(newStatus=='complete'){
 			/*var subUrl; 
 			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
 			console.log(subUrl);
@@ -360,7 +396,7 @@ export class MainTableViewComponent implements OnInit {
 		this.getEmptyTracks();
 		if(projectId!='all' && developerId == 'all'){
 			_.forEach(this.tasks, (project)=>{
-				if(project._id == projectId){
+				if(project.projectId._id == projectId){
 					// _.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
 						_.forEach(this.tracks, (track)=>{
 							if(this.currentUser.userRole!='projectManager'){
@@ -373,9 +409,9 @@ export class MainTableViewComponent implements OnInit {
 								}
 							}
 						})
-					// })
-				}
-			})
+						// })
+					}
+				})
 		}else if(projectId=='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
@@ -385,21 +421,21 @@ export class MainTableViewComponent implements OnInit {
 							track.tasks.push(project);
 						}
 					})
-				// })
-			})
+					// })
+				})
 		}else if(projectId!='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
-				if(project._id == projectId){
+				if(project.projectId._id == projectId){
 					// _.forEach([...project.taskId, ...project.IssueId, ...project.BugId], (content)=>{
 						_.forEach(this.tracks, (track)=>{
 							if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
 								track.tasks.push(project);
 							}
 						})
-					// })
-				}
-			})
+						// })
+					}
+				})
 		}else{
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
@@ -415,8 +451,8 @@ export class MainTableViewComponent implements OnInit {
 							}
 						}
 					})
-				// })
-			})
+					// })
+				})
 		}
 	}
 	public Editor = DecoupledEditor;
@@ -451,6 +487,15 @@ export class MainTableViewComponent implements OnInit {
 					track.tasks.push(content);
 				}
 			})
+		})
+	}
+	projects;
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
 		})
 	}
 }

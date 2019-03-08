@@ -75,7 +75,7 @@ const routes: Routes = [
 			component:CreateProjectComponent
 		},
 		{
-			path:'edit-project',
+			path:'edit-project/:id',
 			component:EditProjectComponent
 		},
 		{

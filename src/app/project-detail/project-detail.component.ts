@@ -185,11 +185,20 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("projects ==>" ,res);
 				this.getEmptyTracks()
 				this.project = res;
-				console.log("project ====>",this.project);
-				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
-					_.forEach(this.tracks, (track)=>{
-						if(content.status == track.id){
-							track.tasks.push(content);
+
+				console.log("PROJECT=================>", this.project);
+				_.forEach(this.project , (task)=>{
+					// console.log("task ======>" , task);
+					_.forEach(this.tracks , (track)=>{
+						if(this.currentUser.userRole!='projectManager'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
+
 						}
 					})
 				})
@@ -229,10 +238,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
-<<<<<<< HEAD
-=======
-				// this.getProject(res.projectId);
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
 			},err=>{
 				console.log(err);
 			})
@@ -244,12 +250,9 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(subUrl);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-<<<<<<< HEAD
-			},err=>{
-=======
 				// this.getProject(res.projectId);
 			},(err:any)=>{
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
 				console.log(err);
 			})
 		}
@@ -308,189 +311,140 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-// 	openModel(task){
+	// 	openModel(task){
 
-// 		console.log(task);
-// 		this.task = task;
-// 		$('#fullHeightModalRight').modal('show');
-// 	}
+		// 		console.log(task);
+		// 		this.task = task;
+		// 		$('#fullHeightModalRight').modal('show');
+		// 	}
 
-// 	updateTask(task){
-// 		if(!task.assingTo)
-// 			task['assignTo'] = this.editTaskForm.value.assignTo;
-// 		console.log(task);
-// 		var subUrl; 
-// 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-// 		console.log("updatedtask===========>",subUrl);
-// 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
-// 			$('#editModel').modal('hide');
-// 		},err=>{
-// 			console.log(err);	
-// 		})
+		// 	updateTask(task){
+			// 		if(!task.assingTo)
+			// 			task['assignTo'] = this.editTaskForm.value.assignTo;
+			// 		console.log(task);
+			// 		var subUrl; 
+			// 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
+			// 		console.log("updatedtask===========>",subUrl);
+			// 		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
+				// 			$('#editModel').modal('hide');
+				// 		},err=>{
+					// 			console.log(err);	
+					// 		})
 
-// 	}
+					// 	}
 
-// 	editTask(task){
-// 		this.task = task;
-// 		this.modalTitle = 'Edit Item'
-// 		$('.datepicker').pickadate();
-// 		$('#input_starttime').pickatime({});
-// 		$('#editModel').modal('show');
-// 	}
-
-// 	addItem(option){
-// 		this.loader=true;
-// 		setTimeout(()=>{
-// 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-// 			this.modalTitle = 'Add '+option;
-// 			$('.datepicker').pickadate();
-// 			$('#input_starttime').pickatime({});
-// 			$('#editModel').modal('show');
-// 			this.loader=false;
-// 		},1000);
-// 	}
-
-// 	saveTheData(task){
-// 		task['projectId']= this.projectId; 
-// 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-// 		task.startDate = $("#startDate").val();
-// 		task.dueDate = $("#dueDate").val();
-// 		console.log(task);
-// 		var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-// 		console.log(subUrl);
-// 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
-// 			$('#editModel').modal('hide');
-// 			this.getProject(this.projectId);
-// 		},err=>{
-// 			console.log(err);
-// 		})
-// 	}
-// 	public Editor = DecoupledEditor;
-
-// 	public onReady( editor ) {
-// 		editor.ui.getEditableElement().parentElement.insertBefore(
-// 			editor.ui.view.toolbar.element,
-// 			editor.ui.getEditableElement()
-// 			);
-// 	}
-
-// 	public onChange( { editor }: ChangeEvent ) {
-// 		const data = editor.getData();
-// 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-// 	}
-
-// 	sendComment(){
-// 		console.log(this.comment);
-// 	}
-
-
-// 	creationDateComparator(a,b) {
-// 		return parseInt(a.price, 10) - parseInt(b.price, 10);
-// 	}	
-
-// 	searchTask(){
-// 		console.log("btn tapped");
-// 	}
-// 	onKey(event: any){
-// 		console.log(event);
-// 		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-// 		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-// 		console.log("In Component",task);
-// 		this.getEmptyTracks();
-// 		_.forEach(task, (content)=>{
-// 			_.forEach(this.tracks, (track)=>{
-// 				if(content.status == track.id){
-// 					track.tasks.push(content);
-// 				}
-// 			})
-// 		})
-// 	}
-	
-<<<<<<< HEAD
-// }
-
-			// getColorCodeOfPriority(priority) {
-				// 	for (var i = 0; i < this.allPriorityList.length; i++) {
-					// 		if (this.allPriorityList[i].value == priority) {
-						// 			return this.allPriorityList[i].colorCode;
-						// 		}
+					// 	editTask(task){
+						// 		this.task = task;
+						// 		this.modalTitle = 'Edit Item'
+						// 		$('.datepicker').pickadate();
+						// 		$('#input_starttime').pickatime({});
+						// 		$('#editModel').modal('show');
 						// 	}
 
-						// }
+						// 	addItem(option){
+							// 		this.loader=true;
+							// 		setTimeout(()=>{
+								// 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+								// 			this.modalTitle = 'Add '+option;
+								// 			$('.datepicker').pickadate();
+								// 			$('#input_starttime').pickatime({});
+								// 			$('#editModel').modal('show');
+								// 			this.loader=false;
+								// 		},1000);
+								// 	}
 
-						openModel(task){
-							console.log(task);
-							this.task = task;
-							$('#fullHeightModalRight').modal('show');
-						}
-=======
-	sortTasksByPriority(data){
-		console.log("hdgfhd=>>>>..");
-		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
-			track.tasks.sort(custom_sort1);
-			console.log("sorted output = ",track.tasks);
-		});
-		function custom_sort1(a, b) {
-			// if(){
-				// 	a.priority = "high";
-				// 	b.priority = "low";
-				// 	return a;
-				// }
-				return a.priority - b.priority;
-				// var x = a[this.priority]; var y = b[this.priority];
-				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
-			}
-			
-		}
-		
+								// 	saveTheData(task){
+									// 		task['projectId']= this.projectId; 
+									// 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+									// 		task.startDate = $("#startDate").val();
+									// 		task.dueDate = $("#dueDate").val();
+									// 		console.log(task);
+									// 		var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+									// 		console.log(subUrl);
+									// 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+										// 			$('#editModel').modal('hide');
+										// 			this.getProject(this.projectId);
+										// 		},err=>{
+											// 			console.log(err);
+											// 		})
+											// 	}
+											// 	public Editor = DecoupledEditor;
 
-		getColorCodeOfPriority(priority) {
-			for (var i = 0; i < this.allPriorityList.length; i++) {
-				if (this.allPriorityList[i].value == priority) {
-					return this.allPriorityList[i].colorCode;
-				}
-			}
+											// 	public onReady( editor ) {
+												// 		editor.ui.getEditableElement().parentElement.insertBefore(
+												// 			editor.ui.view.toolbar.element,
+												// 			editor.ui.getEditableElement()
+												// 			);
+												// 	}
 
-		}
+												// 	public onChange( { editor }: ChangeEvent ) {
+													// 		const data = editor.getData();
+													// 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+													// 	}
 
-			openModel(task){
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+													// 	sendComment(){
+														// 		console.log(this.comment);
+														// 	}
 
-						updateTask(task){
-							if(!task.assingTo)
-								task['assignTo'] = this.editTaskForm.value.assignTo;
-							console.log(task);
-							var subUrl; 
-							subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-							console.log("updatedtask===========>",subUrl);
-							this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
-								$('#editModel').modal('hide');
-							},err=>{
-								console.log(err);	
-							})
 
-						}
+														// 	creationDateComparator(a,b) {
+															// 		return parseInt(a.price, 10) - parseInt(b.price, 10);
+															// 	}	
 
-<<<<<<< HEAD
-						editTask(task){
-							this.task = task;
-							this.modalTitle = 'Edit Item'
-							$('.datepicker').pickadate();
-							$('#input_starttime').pickatime({});
-							$('#editModel').modal('show');
-						}
-=======
-			updateTask(task){
-				task.assignTo = this.editTaskForm.value.assignTo;
-				console.log("update =====>",task);
-				this._projectService.updateTask(task).subscribe((res:any)=>{
-					console.log("res ===>" , res);
-					// this.getProject(res.projectId);
-				},(err:any)=>{
-					console.log("err ===>" , err);
-				})
+															// 	searchTask(){
+																// 		console.log("btn tapped");
+																// 	}
+																// 	onKey(event: any){
+																	// 		console.log(event);
+																	// 		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+																	// 		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+																	// 		console.log("In Component",task);
+																	// 		this.getEmptyTracks();
+																	// 		_.forEach(task, (content)=>{
+																		// 			_.forEach(this.tracks, (track)=>{
+																			// 				if(content.status == track.id){
+																				// 					track.tasks.push(content);
+																				// 				}
+																				// 			})
+																				// 		})
+																				// 	}
+																				
+
+																				// getColorCodeOfPriority(priority) {
+																					// 	for (var i = 0; i < this.allPriorityList.length; i++) {
+																						// 		if (this.allPriorityList[i].value == priority) {
+																							// 			return this.allPriorityList[i].colorCode;
+																							// 		}
+																							// 	}
+
+																							// }
+
+																							openModel(task){
+																								console.log(task);
+																								this.task = task;
+																								$('#fullHeightModalRight').modal('show');
+																							}
+
+																							
+
+
+																							editTask(task){
+																								this.task = task;
+																								this.modalTitle = 'Edit Item'
+																								$('.datepicker').pickadate();
+																								$('#input_starttime').pickatime({});
+																								$('#editModel').modal('show');
+																							}
+
+																							updateTask(task){
+																								task.assignTo = this.editTaskForm.value.assignTo;
+																								console.log("update =====>",task);
+																								this._projectService.updateTask(task).subscribe((res:any)=>{
+																									console.log("res ===>" , res);
+																									// this.getProject(res.projectId);
+																								},(err:any)=>{
+																									console.log("err ===>" , err);
+																								})
 		/*var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
 		console.log(subUrl);
@@ -502,38 +456,20 @@ export class ProjectDetailComponent implements OnInit {
 		})*/
 		
 	}
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
 
-						addItem(option){
-							this.loader=true;
-							setTimeout(()=>{
-								this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-								this.modalTitle = 'Add '+option;
-								$('.datepicker').pickadate();
-								$('#input_starttime').pickatime({});
-								$('#editModel').modal('show');
-								this.loader=false;
-							},1000);
-						}
+	addItem(option){
+		this.loader=true;
+		setTimeout(()=>{
+			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+			this.modalTitle = 'Add '+option;
+			$('.datepicker').pickadate();
+			$('#input_starttime').pickatime({});
+			$('#editModel').modal('show');
+			this.loader=false;
+		},1000);
+	}
 
-<<<<<<< HEAD
-						saveTheData(task){
-							task['projectId']= this.projectId; 
-							task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-							task.startDate = $("#startDate").val();
-							task.dueDate = $("#dueDate").val();
-							console.log(task);
-							var subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-							console.log(subUrl);
-							this._projectService.addData(task, subUrl).subscribe((res:any)=>{
-								$('#editModel').modal('hide');
-								this.getProject(this.projectId);
-							},err=>{
-								console.log(err);
-							})
-						}
-						public Editor = DecoupledEditor;
-=======
+
 	saveTheData(task){
 		task['projectId']= this.projectId; 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -552,51 +488,24 @@ export class ProjectDetailComponent implements OnInit {
 		})
 	}
 	public Editor = DecoupledEditor;
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
-
-						public onReady( editor ) {
-							editor.ui.getEditableElement().parentElement.insertBefore(
-								editor.ui.view.toolbar.element,
-								editor.ui.getEditableElement()
-								);
-						}
-
-						public onChange( { editor }: ChangeEvent ) {
-							const data = editor.getData();
-							this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-						}
-
-						sendComment(){
-							console.log(this.comment);
-						}
 
 
-						creationDateComparator(a,b) {
-							return parseInt(a.price, 10) - parseInt(b.price, 10);
-						}	
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
-						searchTask(){
-							console.log("btn tapped");
-						}
-						onKey(event: any){
-							console.log(event);
-							var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-							var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-							console.log("In Component",task);
-							this.getEmptyTracks();
-							_.forEach(task, (content)=>{
-								_.forEach(this.tracks, (track)=>{
-									if(content.status == track.id){
-										track.tasks.push(content);
-									}
-								})
-							})
-						}
-					}
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+	}
 
 
-<<<<<<< HEAD
-=======
+
+
+
 	sendComment(){
 		console.log(this.comment);
 	}
@@ -627,4 +536,3 @@ export class ProjectDetailComponent implements OnInit {
 		})
 	}
 }
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e

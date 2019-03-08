@@ -69,7 +69,7 @@
 
 
 </div>
-<div *ngIf="developers && projects">
+<div *ngIf="developers">
 	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
 </div>
 <!-- <div class="all_card">
