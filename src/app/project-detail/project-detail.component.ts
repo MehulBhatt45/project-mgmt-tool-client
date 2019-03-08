@@ -43,7 +43,7 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	files:FileList;
+	files:Array<File> = [];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -302,6 +302,7 @@ export class ProjectDetailComponent implements OnInit {
 	openModel(task){
 		console.log(task);
 		this.task = task;
+		this.getAllCommentOfTask(task._id);
 		$('#fullHeightModalRight').modal('show');
 	}
 
@@ -376,7 +377,19 @@ export class ProjectDetailComponent implements OnInit {
 
 	sendComment(taskId){
 		console.log(this.comment);
-		var data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		var data : any;
+		if(this.files.length>0){
+			data = new FormData();
+			data.append("content",this.comment?this.comment:"");
+			data.append("userId",this.currentUser._id);
+			data.append("projectId",this.projectId);
+			data.append("taskId",taskId);
+			for(var i = 0; i < this.files.length; i++)
+				data.append("fileUpload",this.files[i]);
+		}else{
+			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		}
+		console.log(data);
 		this._commentService.addComment(data).subscribe(res=>{
 			console.log(res);
 			this.comment = "";
@@ -424,5 +437,17 @@ export class ProjectDetailComponent implements OnInit {
 			this._alertService.error(err);
 			console.log(err);
 		})
+	}
+
+	getAllCommentOfTask(taskId){
+		this._commentService.getAllComments(taskId).subscribe(res=>{
+			this.comments = res;
+		}, err=>{
+			console.error(err);
+		})
+	}
+
+	onSelectFile(event){
+			this.files = event.target.files;
 	}
 }

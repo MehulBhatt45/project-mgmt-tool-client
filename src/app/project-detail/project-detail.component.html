@@ -166,14 +166,40 @@
 					<hr>
 					<h2>Comments</h2>
 					<div *ngIf="task.comment && task.comment.length>0">
-						<p>comments</p>
+						<div class="comment_area">
+							<div class="comment_section" *ngFor = "let i of comments">
+								<div class="card">
+									<div class="card-body">
+										<ul class="team-members">	
+											<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(i.userId.name)}}
+												</a>
+											</li>
+										</ul>
+										<div>
+											<p class="developerName" *ngIf="i.userId">
+												{{i.userId.name}}
+											</p>
+											<p>
+												{{i.content}}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div *ngIf="task.comment && task.comment.length<=0">
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
 					<div class="padding-20">
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment">Add Comment</button>
+						<div class="btn btn-primary" (click)="fileUpload.click()">
+							<span>Upload image with comment</span>
+							<input type="file" #fileUpload name="fileUpload" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						</div>
+						<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 					</div>
 				</div>
 			</div>
