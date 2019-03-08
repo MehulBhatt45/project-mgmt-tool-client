@@ -107,7 +107,12 @@ export class ChildComponent  {
     this.task.emit(task);
   }
 
+  get trackIds(): string[] {
+    return this.tracks.map(track => track.id);
+  }
+
   onTrackDrop(event){
+    console.log("kai chale che", event);
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
