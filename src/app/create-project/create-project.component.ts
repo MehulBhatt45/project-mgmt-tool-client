@@ -18,21 +18,13 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-<<<<<<< HEAD
-      desc: new FormControl(''),
-=======
       avatar:new FormControl(''),
       desc: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-<<<<<<< HEAD
-      avatar:new FormControl('')
-=======
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
     });
 
   }
@@ -62,10 +54,9 @@ export class CreateProjectComponent implements OnInit {
   }
 
   addIcon(value){
-<<<<<<< HEAD
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
-     this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
+    this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
   }
   
@@ -80,19 +71,11 @@ export class CreateProjectComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
+        //this.url = event.target.result;
 
       }
     }
-=======
-    console.log(value);
 
   }
-  changeFile(e){
-    console.log("response from changefile",e.target.files);
-    this.files = e.target.files;
->>>>>>> ab3400f25d594ae5a1217d85717b34ff86158a53
-  }
-
 }
 
