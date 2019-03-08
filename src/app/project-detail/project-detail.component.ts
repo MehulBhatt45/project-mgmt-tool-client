@@ -90,6 +90,7 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 	// getPriorityClass(priority){
+
 		// 	switch (priority) {
 			// 		case "low":
 			// 		return "primary"
@@ -138,13 +139,16 @@ export class ProjectDetailComponent implements OnInit {
 						if (nameA > nameB)
 							return 1
 						return 0 //default return value (no sorting)
+
 					})
 					console.log("Developers",this.developers);
 				},err=>{
 					console.log("Couldn't get all developers ",err);
 					this._alertService.error(err);
 				})
+
 			}
+
 
 			getProject(id){
 				this.loader = true;
@@ -295,16 +299,21 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		
 
-		getColorCodeOfPriority(priority) {
-			for (var i = 0; i < this.allPriorityList.length; i++) {
-				if (this.allPriorityList[i].value == priority) {
-					return this.allPriorityList[i].colorCode;
-				}
-			}
+		// getColorCodeOfPriority(priority) {
+		// 	for (var i = 0; i < this.allPriorityList.length; i++) {
+		// 		if (this.allPriorityList[i].value == priority) {
+		// 			return this.allPriorityList[i].colorCode;
+		// 		}
+		// 	}
 
-		}
+		// }
 
-		openModel(task){
+			openModel(task){
+
+				console.log(task);
+				this.task = task;
+				$('#fullHeightModalRight').modal('show');
+
 
 			console.log(task);
 			this.task = task;
@@ -321,6 +330,7 @@ export class ProjectDetailComponent implements OnInit {
 			},(err:any)=>{
 				console.log("err ===>" , err);
 			})
+7
 		/*var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
 		console.log(subUrl);

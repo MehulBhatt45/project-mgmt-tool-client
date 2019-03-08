@@ -62,9 +62,9 @@ export class ProjectService {
 		formdata.append("clientDesignation",body.clientDesignation);
 		formdata.append("uploadfile",files[0]);
 		console.log("body===>>>",body);
-		
 
 		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
+		// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
 
 	}
 

@@ -18,13 +18,15 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
-      avatar:new FormControl(''),
+
       desc: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
-      clientDesignation: new FormControl('')
+
+      clientDesignation: new FormControl(''),
+      avatar:new FormControl('')
 
     });
 
@@ -71,13 +73,20 @@ export class CreateProjectComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
-      reader.onload = (event) => { // called once readAsDataURL is completed
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
 
       }
     }
 
+    // console.log(value);
+
   }
+  changeFile(e){
+    console.log("response from changefile",e.target.files);
+    this.files = e.target.files;
+  }
+
 
 }
 
