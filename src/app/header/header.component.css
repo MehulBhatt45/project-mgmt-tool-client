@@ -15,6 +15,10 @@
   color: rgb(0, 0, 0);
   fill: rgb(189, 194, 193);
   height: 100%;
+  overflow-y:auto;
+}
+ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
+  background-color: rgba(22, 5, 34, 0.8);
 }
 .top_icon{
 
@@ -135,9 +139,19 @@ ol.breadcrumb.hidden-lg-down li a {
   background-color: #372e5f !important;
 }
 .dropdown-item:hover{
-    background-color: #372e5f !important;
+  background-color: #372e5f !important;
 }
-.icon{
 
-  margin-top: 45px;
+.side-nav .search-form input[type=text] {
+  border-bottom: 1px solid #fff;
+  font-weight: 300;
+  padding-left: 37px;
+  margin-top: -36px;
+}
+.rgba-blue-strong {
+  background-color: rgba(22, 5, 34, 0.8) !important;
+}
+.side-nav .collapsible {
+  margin: 0;
+  margin-top: 10px;
 }
