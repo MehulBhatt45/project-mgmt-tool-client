@@ -1,6 +1,59 @@
-<div class="card">
-	<img class="card-img-top" src="../assets/3.png" alt="Card image cap">
+<div class="container">
+	<a class="reset_password btn btn-link" [routerLink]="['/reset-password']">Reset Password</a>
+	
+	<div class="row">
+		<div class="col-12 col-md-3">
+			<div class="card img_card">
+				<!-- <a href="javascript:void(0);" class="img-fluid" >{{getInitialsOfName(currentUser.name)}}</a> -->
+				<img class="img-fluid" src="../assets/1.png">
+			</div>
+		</div>
+		<div class="col-12 col-md-9">
+			<div class="user_detail">
+				<p> {{currentUser.name}}</p>
+				<p> {{ currentUser.email}} </p>
+				<p> other Details of user..........</p>
+				
+			</div>
+			
+		</div>
+	</div>
+	<div class="user_activity">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+				aria-selected="true">User Activity</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+				aria-selected="false">Profile</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+				aria-selected="false">Contact</a>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+				<p> All Projects </p>
+					
+					
+
+
+				<!-- <div class="form-group" *ngIf="currentUser.userRole=='user'">
+					<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers" (change)="filterByDeveloperId($event.target.value)">
+						<option value="null" selected>All Projects</option>
+						<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
+					</select>
+				</div> -->
+
+
+			</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">rtgyhtjuy.</div>
+			<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">fdgrefgtryhht.</div>
+		</div>
+	</div>
+
 </div>
-<p>hello</p>
 
 

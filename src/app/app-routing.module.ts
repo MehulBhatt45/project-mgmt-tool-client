@@ -34,14 +34,6 @@ const routes: Routes = [
 		path:'register',
 		component:RegisterComponent
 	},
-	{
-		path:'reset-password',
-		component:ResetPasswordComponent
-	},
-	{
-		path:'userprofile',
-		component:UserprofileComponent
-	},
 
 	{
 		path:"",
@@ -108,6 +100,15 @@ const routes: Routes = [
 			path:"logs/:projectId/:memberId",
 			pathMatch: "full",
 			component: LogsComponent
+		},
+		{
+			path:'reset-password',
+			//pathMatch: "full",
+			component:ResetPasswordComponent
+		},
+		{
+			path:'userprofile',
+			component:UserprofileComponent
 		}]
 	}];
 
