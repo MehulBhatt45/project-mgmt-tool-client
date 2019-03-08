@@ -298,7 +298,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	editTask(task){
 		this.task = task;
-		this.modalTitle = 'Edit Item'
+		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
 		$('#editModel').modal('show');
