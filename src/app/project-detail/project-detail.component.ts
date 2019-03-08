@@ -28,9 +28,6 @@ export class ProjectDetailComponent implements OnInit {
 		editorData: 'Enter comments here'
 	};
 	url;
-	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-
 	searchText;
 
 	task;
@@ -46,7 +43,6 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
 	files:FileList;
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
@@ -189,8 +185,14 @@ export class ProjectDetailComponent implements OnInit {
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(task.status == track.id){
-							track.tasks.push(task);
+						if(this.currentUser.userRole!='projectManager'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
 						}
 					})
 				})
@@ -302,12 +304,9 @@ export class ProjectDetailComponent implements OnInit {
 		$('#fullHeightModalRight').modal('show');
 	}
 
-
-
-
 	editTask(task){
 		this.task = task;
-		this.modalTitle = 'Edit Item'
+		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
 		$('#editModel').modal('show');
@@ -316,12 +315,6 @@ export class ProjectDetailComponent implements OnInit {
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
-		this._projectService.updateTask(task).subscribe((res:any)=>{
-			console.log("res ===>" , res);
-			// this.getProject(res.projectId);
-		},(err:any)=>{
-			console.log("err ===>" , err);
-		})
 		this._projectService.updateTask(task).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
