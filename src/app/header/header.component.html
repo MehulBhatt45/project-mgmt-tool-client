@@ -1,5 +1,102 @@
 <header>
-    <ul id="slide-out" class="side-nav">
+  <!-- SideNav slide-out button -->
+  <a href="#" data-activates="slide-out" class="btn btn-primary p-3 button-collapse"><i class="fas fa-bars"></i></a>
+
+  <!-- Sidebar navigation -->
+  <div id="slide-out" class="side-nav fixed">
+    <ul class="custom-scrollbar">
+      <!-- Logo -->
+      <li>
+        <div class="logo-wrapper waves-light">
+          <a href="#"><img src="assets/1.png" class="img-fluid flex-center"></a>
+        </div>
+      </li>
+      <!--/. Logo -->
+      <!--Social-->
+      <li>
+        <ul class="social">
+          <li><a href="#" class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
+          <li><a href="#" class="icons-sm pin-ic"><i class="fab fa-pinterest"> </i></a></li>
+          <li><a href="#" class="icons-sm gplus-ic"><i class="fab fa-google-plus-g"> </i></a></li>
+          <li><a href="#" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
+        </ul>
+      </li>
+      <!--/Social-->
+      <!--Search Form-->
+      <li>
+        <form class="search-form" role="search">
+          <div class="form-group md-form mt-0 pt-1 waves-light">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+        </form>
+      </li>
+      <!--/.Search Form-->
+      <!-- Side navigation links -->
+      <li>
+        <ul class="collapsible collapsible-accordion">
+          <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-chevron-right"></i> Submit blog<i
+            class="fas fa-angle-down rotate-icon"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#" class="waves-effect">Submit listing</a>
+                </li>
+                <li><a href="#" class="waves-effect">Registration form</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-hand-pointer"></i>
+            Instruction<i class="fas fa-angle-down rotate-icon"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#" class="waves-effect">For bloggers</a>
+                </li>
+                <li><a href="#" class="waves-effect">For authors</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-eye"></i> About<i class="fas fa-angle-down rotate-icon"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#" class="waves-effect">Introduction</a>
+                </li>
+                <li><a href="#" class="waves-effect">Monthly meetings</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li><a class="collapsible-header waves-effect arrow-r"><i class="far fa-envelope"></i> Contact me<i
+            class="fas fa-angle-down rotate-icon"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#" class="waves-effect">FAQ</a>
+                </li>
+                <li><a href="#" class="waves-effect">Write a message</a>
+                </li>
+                <li><a href="#" class="waves-effect">FAQ</a>
+                </li>
+                <li><a href="#" class="waves-effect">Write a message</a>
+                </li>
+                <li><a href="#" class="waves-effect">FAQ</a>
+                </li>
+                <li><a href="#" class="waves-effect">Write a message</a>
+                </li>
+                <li><a href="#" class="waves-effect">FAQ</a>
+                </li>
+                <li><a href="#" class="waves-effect">Write a message</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <!--/. Side navigation links -->
+    </ul>
+    <div class="sidenav-bg rgba-blue-strong"></div>
+  </div>
+  <!--/. Sidebar navigation -->
+    <!-- <ul id="slide-out" class="side-nav">
         <li style="cursor: pointer;" title="User Profile">
             <div class="user-box">
                 <div class="image_box">
@@ -33,13 +130,13 @@
             </ul>
         </li>
         <div class="sidenav-bg mask-strong"></div>
-    </ul>
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
+      </ul> -->
+      <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
         <div class="float-left">
-            <ol class="breadcrumb hidden-lg-down">
-                <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
-                <li class="breadcrumb-item active"><a>Dashboard</a></li>
-            </ol>
+          <ol class="breadcrumb hidden-lg-down">
+            <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
+            <li class="breadcrumb-item active"><a>Dashboard</a></li>
+          </ol>
         </div>
        <!--  <ul class="nav navbar-nav nav-flex-icons ml-auto">
          <li class="nav-item dropdown">
@@ -51,46 +148,46 @@
                 <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
             </div>
         </li>
-    </ul> -->                
-</nav>
-</header>
+      </ul> -->                
+    </nav>
+  </header>
 
-<div class="side_fixed_nav">
+  <div class="side_fixed_nav">
     <div class="top_icon">
         <!-- <div class="second_icon">
             <a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a>
-        </div> -->
-        <div class="second_icon">
+          </div> -->
+          <div class="second_icon">
             <a href="" class="star_link " data-toggle="tooltip"  title="Starred and recent(\)" data-placement="right"><i class="fa fa-star-o" aria-hidden="true" ></i></a>
-        </div>
-        <div class="second_icon">
+          </div>
+          <div class="second_icon">
             <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
-        </div> 
-        <div class="second_icon dropdown">
+          </div> 
+          <div class="second_icon dropdown">
             <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="plus_details"><i class="fa fa-plus" aria-hidden="true" ></i></a>
             <div class="dropdown-menu">
-                <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
-                <a class="dropdown-item" (click)="addItem('Task')">Task</a>
-                <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-                <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-                <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
+              <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
+              <a class="dropdown-item" (click)="addItem('Task')">Task</a>
+              <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+              <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+              <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="bottom_icon">
-        <div class="second_icon">
+        <div class="bottom_icon">
+          <div class="second_icon">
             <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
-        </div>  
-        <div class="second_icon">
+          </div>  
+          <div class="second_icon">
             <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i> </a>
-        </div>
-        <div class="second_icon">
+          </div>
+          <div class="second_icon">
             <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
-        </div>
-        <div class="second_icon dropdown">
+          </div>
+          <div class="second_icon dropdown">
             <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
             <ul class="team-members">
-                <li id="login_details">
+              <li id="login_details">
             <!--  <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right">
                 <ul class="team-members">
                     <li >
@@ -99,77 +196,77 @@
                         </a>
                     </li>   
                 </ul>
-            </a> -->
-                    <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
-                    <div class="dropdown-content"> 
-                        <a class="dropdown-item" (click)="logout()">Log Out</a>
-                        <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
-                    </div>
-                </li>   
-            </ul>
+              </a> -->
+              <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
+              <div class="dropdown-content"> 
+                <a class="dropdown-item" (click)="logout()">Log Out</a>
+                <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a>
+              </div>
+            </li>   
+          </ul>
         </div> 
+      </div>
     </div>
-</div>
 
-<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" *ngIf="task">
-                <div class="row">
-                    <form style="width: 100%;" [formGroup]="editTaskForm">
-                        <div class="form-group col-12">
-                            <label for="title">Title</label>
-                            <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="desc">Discription</label>
-                            <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-                        </div>
-                        <div class="row no-margin no padding" >
-                            <div class="form-group col-12 col-lg-6">
-                                <label for="assignTo">Assign To</label>
-                                <select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-                                    <option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-12 col-lg-6">
-                                <label for="priority">Priority</label>
-                                <select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row no-margin no padding">
-                            <div class="form-group col-12 col-lg-6">
-                                <label for="startDate">Start Date</label>
-                                <input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
-                            </div>
-                            <div class="form-group col-12 col-lg-6">
-                                <label for="dueDate">Due Date</label>
-                                <input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
-                            </div>
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="status">Status</label>
-                            <select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-                                <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-                            </select>
-                        </div>
-                    </form>
+          <div class="modal-header">
+            <h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" *ngIf="task">
+            <div class="row">
+              <form style="width: 100%;" [formGroup]="editTaskForm">
+                <div class="form-group col-12">
+                  <label for="title">Title</label>
+                  <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
                 </div>
+                <div class="form-group col-12">
+                  <label for="desc">Discription</label>
+                  <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+                </div>
+                <div class="row no-margin no padding" >
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="assignTo">Assign To</label>
+                    <select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+                      <option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="priority">Priority</label>
+                    <select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row no-margin no padding">
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="startDate">Start Date</label>
+                    <input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
+                  </div>
+                  <div class="form-group col-12 col-lg-6">
+                    <label for="dueDate">Due Date</label>
+                    <input placeholder="Selected date" type="text" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control datepicker">
+                  </div>
+                </div>
+                <div class="form-group col-12">
+                  <label for="status">Status</label>
+                  <select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+                    <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+                  </select>
+                </div>
+              </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+          </div>
         </div>
+      </div>
     </div>
-</div>
