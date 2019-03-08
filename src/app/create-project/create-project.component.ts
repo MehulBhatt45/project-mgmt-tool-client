@@ -56,7 +56,7 @@ export class CreateProjectComponent implements OnInit {
   addIcon(value){
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
-     this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
+    this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
   }
   
@@ -65,23 +65,13 @@ export class CreateProjectComponent implements OnInit {
     this.files = event.target.files;
     $('#basicExampleModal').modal('hide');
     if (event.target.files && event.target.files[0]) {
-
       var reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        //this.url = event.target.result;
 
       }
     }
-    // console.log(value);
-
   }
-  changeFile(e){
-    console.log("response from changefile",e.target.files);
-    this.files = e.target.files;
-  }
-
 }
 

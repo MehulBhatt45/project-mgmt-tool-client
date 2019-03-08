@@ -115,8 +115,6 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
-
-
 	getPriorityClass(priority){
 		switch (priority) {
 			case "low":
@@ -176,29 +174,22 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+
 	}
 
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				console.log("projects ==>" ,res);
-				this.getEmptyTracks()
+			this._projectService.getTaskById(id).subscribe((res:any)=>{
+				console.log("all response ======>" , res);
+				this.getEmptyTracks();
 				this.project = res;
-
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(this.currentUser.userRole!='projectManager'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-								track.tasks.push(task);
-							}
-						}else{
-							if(task.status == track.id){
-								track.tasks.push(task);
-							}
-
+						if(task.status == track.id){
+							track.tasks.push(task);
 						}
 					})
 				})
@@ -227,14 +218,12 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
+		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
-			console.log(subUrl);
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
@@ -245,9 +234,6 @@ export class ProjectDetailComponent implements OnInit {
 		}else{
 			data.status = newStatus;
 			console.log("UniqueId", data.uniqueId);
-			var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
-			console.log(subUrl);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
 				// this.getProject(res.projectId);
@@ -308,7 +294,6 @@ export class ProjectDetailComponent implements OnInit {
 			}
 		}
 
-
 	}
 	openModel(task){
 		console.log(task);
@@ -336,15 +321,12 @@ export class ProjectDetailComponent implements OnInit {
 		},(err:any)=>{
 			console.log("err ===>" , err);
 		})
-		/*var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
-		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
+		this._projectService.updateTask(task).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
 		},err=>{
 			console.log(err);
 			
-		})*/
+		})
 		
 	}
 
