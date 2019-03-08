@@ -62,8 +62,11 @@ export class ProjectService {
 		formdata.append("clientDesignation",body.clientDesignation);
 		formdata.append("uploadfile",files[0]);
 		console.log("body===>>>",body);
+
+
 		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
 		// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
+
 	}
 
 	addProject_Without_image(body){
@@ -78,9 +81,6 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/add-project",body,httpOptions);
 	}
 
-	
-
-
 	addData(data, subUrl){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -91,18 +91,6 @@ export class ProjectService {
 			})
 		};
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
-	}
-
-	addTask(data){
-		console.log(data);
-		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.post(config.baseApiUrl+"tasks/add-task", data, httpOptions);
 	}
 
 	updateData(data, subUrl){
@@ -242,16 +230,30 @@ export class ProjectService {
 		};
 		return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
 	}
+
 	getAllTasks(){
 		return this.http.get(config.baseApiUrl+"tasks/all-task");		
-	}
-	getTaskById(id){
-		var id = id;
-		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
 	updateTask(task){
 		console.log("task =========>",task);
 		var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
+
+	addTask(data){
+		console.log(data);
+		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"tasks/add-task", data, httpOptions);
+	}
+	getTaskById(id){
+		var id = id;
+		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+	}
 }
+

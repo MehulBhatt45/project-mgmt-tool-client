@@ -1,4 +1,3 @@
-
 <div class="container">
 	<div class="card">
 		<h5 class="card-header white-text text-center py-4">
@@ -44,22 +43,26 @@
 					</div>
 				</div>
 
-
 				<!-- demo code -->
-				<img [src]="url" height="150" width="150"> <br/>
-				<!-- demo code -->
+				<div class="row">
+					<div class="col-md-4">
+						<img [src]="url" height="150" width="150">
+					</div>
+					<!-- demo code -->
 
-
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-					Select Project avatar
-				</button>
-				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+					<div class="col-md-5">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+							Select Project avatar
+						</button>
+					</div>
+					<div class="col-md-3">
+						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
-
-
 
 <!-- Modal Start Here -->
 
@@ -76,7 +79,7 @@ aria-hidden="true">
 		<div class="modal-body">
 			<div class="md-form form-group">
 				<div class="file-field">
-					<div class="btn btn-primary btn-sm float-left">
+					<div class="btn btn-default btn-sm float-left">
 						<span>Upload a new avatar</span>
 						<input type="file" name="fileUpload" formControlName="avatar" (change)="onSelectFile($event)">
 					</div>
@@ -149,12 +152,12 @@ aria-hidden="true">
 				</ul>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
 </div>
-
+</div>
 <!-- Modal End Here -->
 
 

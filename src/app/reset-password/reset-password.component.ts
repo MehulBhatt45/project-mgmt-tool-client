@@ -11,6 +11,16 @@ import { LoginService } from '../services/login.service';
 	styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
+ngOnInit() {
+
+		console.log("Component Re-Initialized.");
+
+		// get return url from route parameters or default to '/'
+		// this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+	}
+
+
 	resetPasswordForm: FormGroup;
 	submitted = false;
 	returnUrl: string;
@@ -24,7 +34,8 @@ export class ResetPasswordComponent implements OnInit {
 		private _loginService: LoginService,
 		private _alertService: AlertService) { 
 		if (this._loginService.currentUserValue) { 
-			this.router.navigate(['/']);
+			console.log("REDIRECTION UNCONTROLLED")
+			// this.router.navigate(['/']);
 		}
 		this.resetPasswordForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
@@ -34,14 +45,7 @@ export class ResetPasswordComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {
-
-
-
-		// get return url from route parameters or default to '/'
-		this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
-	}
+	
 	get f() { return this.resetPasswordForm.controls; }
 
 	resetPassword() {

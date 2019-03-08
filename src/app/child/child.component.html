@@ -1,4 +1,3 @@
-
 <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -11,7 +10,7 @@
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)">
+						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}">
 							<div class="card-body" style="padding: 0px;">
 								<table>
 									<tr>
