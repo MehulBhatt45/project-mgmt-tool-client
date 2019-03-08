@@ -23,11 +23,8 @@ export class ProjectDetailComponent implements OnInit {
 	public model = {
 		editorData: 'Enter comments here'
 	};
-<<<<<<< HEAD
-=======
 	url;
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
->>>>>>> be5bc3ca0e2acca05eb306f25e366337f27111b7
 
 	searchText;
 	task;
@@ -310,15 +307,9 @@ export class ProjectDetailComponent implements OnInit {
 					return this.allPriorityList[i].colorCode;
 				}
 			}
-<<<<<<< HEAD
-			openModel(task){
-=======
-
 		}
 
 			openModel(task){
-
->>>>>>> be5bc3ca0e2acca05eb306f25e366337f27111b7
 				console.log(task);
 				this.task = task;
 				$('#fullHeightModalRight').modal('show');
