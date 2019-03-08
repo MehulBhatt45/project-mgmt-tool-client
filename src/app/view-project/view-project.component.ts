@@ -90,6 +90,15 @@ export class ViewProjectComponent implements OnInit {
     this.files = e.target.files;
     $('#basicExampleModal').modal('hide');
   }
+
+
+
+
+
+
+  onSelectFile($event){
+    
+  }
 }
 
 
