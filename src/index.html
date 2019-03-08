@@ -44,19 +44,18 @@
     })
 
     $(".button-collapse").sideNav();
-// SideNav Scrollbar Initialization
-var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-Ps.initialize(sideNavScrollbar);
+    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+    Ps.initialize(sideNavScrollbar);
 
-$('.button-collapse').sideNav({
-  edge: 'right', // Choose the horizontal origin
-  closeOnClick: true, // Closes side-nav on &lt;a&gt; clicks, useful for Angular/Meteor
-  breakpoint: 1200 // Breakpoint for button collapse
-});
+    $('.button-collapse').sideNav({
+      edge: 'right',
+      closeOnClick: true,
+      breakpoint: 1200
+    });
 
-$('.button-collapse').sideNav('show');
-// Hide sideNav
-$('.button-collapse').sideNav('hide');
-</script>
+    $('.button-collapse').sideNav('show');
+    $('.button-collapse').sideNav('hide');
+    
+  </script>
 </body>
 </html>
