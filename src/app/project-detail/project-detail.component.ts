@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
+import { ChildComponent } from '../child/child.component';
+
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -21,17 +23,22 @@ export class ProjectDetailComponent implements OnInit {
 	public model = {
 		editorData: 'Enter comments here'
 	};
+<<<<<<< HEAD
+=======
+	url;
+	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
+>>>>>>> be5bc3ca0e2acca05eb306f25e366337f27111b7
 
 	searchText;
 	task;
+	projects: any;
 	project;
-	projects;
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
-	developers;
+	developers: any
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -85,25 +92,25 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
-	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
-			break;
+	// getPriorityClass(priority){
+	// 	switch (priority) {
+	// 		case "low":
+	// 		return "primary"
+	// 		break;
 
-			case "medium":
-			return "warning"
-			break;
+	// 		case "medium":
+	// 		return "warning"
+	// 		break;
 
-			case "high":
-			return "danger"
-			break;
+	// 		case "high":
+	// 		return "danger"
+	// 		break;
 
-			default:
-			return ""
-			break;
-		}
-	}
+	// 		default:
+	// 		return ""
+	// 		break;
+	// 	}
+	// }
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -127,6 +134,14 @@ export class ProjectDetailComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
@@ -145,8 +160,14 @@ export class ProjectDetailComponent implements OnInit {
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(task.status == track.id){
-							track.tasks.push(task);
+						if(this.currentUser.userRole!='projectManager'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
 						}
 					})
 				})
@@ -157,7 +178,6 @@ export class ProjectDetailComponent implements OnInit {
 			})
 		},1000);
 	}
-	
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -197,7 +217,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},err=>{
 				console.log(err);
 
@@ -218,7 +238,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 				console.log(err);
 			})
@@ -280,21 +300,25 @@ export class ProjectDetailComponent implements OnInit {
 				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
 			}
-			// function getPriority(){
-
-				// }
-			}
-
-
 			
-			getColorCodeOfPriority(priority) {
-				for (var i = 0; i < this.allPriorityList.length; i++) {
-					if (this.allPriorityList[i].value == priority) {
-						return this.allPriorityList[i].colorCode;
-					}
+		}
+		
+
+		getColorCodeOfPriority(priority) {
+			for (var i = 0; i < this.allPriorityList.length; i++) {
+				if (this.allPriorityList[i].value == priority) {
+					return this.allPriorityList[i].colorCode;
 				}
 			}
+<<<<<<< HEAD
 			openModel(task){
+=======
+
+		}
+
+			openModel(task){
+
+>>>>>>> be5bc3ca0e2acca05eb306f25e366337f27111b7
 				console.log(task);
 				this.task = task;
 				$('#fullHeightModalRight').modal('show');
@@ -306,7 +330,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("update =====>",task);
 				this._projectService.updateTask(task).subscribe((res:any)=>{
 					console.log("res ===>" , res);
-					this.getProject(res.projectId);
+					// this.getProject(res.projectId);
 				},(err:any)=>{
 					console.log("err ===>" , err);
 				})
@@ -345,7 +369,7 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(task).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			this.getProject(this.projectId);
+			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
 		})

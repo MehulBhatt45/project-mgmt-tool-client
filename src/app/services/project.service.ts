@@ -63,7 +63,6 @@ export class ProjectService {
 		formdata.append("uploadfile",files[0]);
 		console.log("body===>>>",body);
 		return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
-
 	}
 
 	addProject_Without_image(body){
@@ -89,7 +88,6 @@ export class ProjectService {
 		};
 		return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
 	}
-
 	updateData(data, subUrl){
 		console.log("data ====>" , data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;

@@ -18,6 +18,8 @@ import { HeaderComponent } from './header/header.component';
 import { IssueComponent } from './issue/issue.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+// import {ChildComponent}  from './child/child.component';
+
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatCardModule} from '@angular/material/card';
 //import { MatIconModule } from "@angular/material/icon";
@@ -36,6 +38,7 @@ import { NoticeboardComponent } from './noticeboard/noticeboard.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import { ChildComponent } from './child/child.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +59,9 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
     FileListComponent,
     TimeAgoPipe,
     UpdateUserComponent,
+    SearchTaskPipe,
+    ResetPasswordComponent,
+    ChildComponent,
     AddNoticeComponent,
     NoticeboardComponent,
     UserprofileComponent,
