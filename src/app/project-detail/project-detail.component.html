@@ -30,7 +30,7 @@
 	</div>
 </div>
 <div *ngIf="developers">
-	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 </div>
 <!-- <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">

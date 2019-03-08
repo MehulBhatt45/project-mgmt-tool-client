@@ -24,7 +24,7 @@ export class AddEmployeeComponent implements OnInit {
 			// 	$('.mdb-select').materialSelect();
 			// });
 		 }
-		 addEmployee(){
+		 addEmployee(addEmployeeForm){
 		 	console.log("btn tapped");
 		 }
 

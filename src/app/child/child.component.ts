@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Component, OnInit, Output, Input, EventEmitter, HostListener } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
 declare var $ : any;
@@ -13,6 +13,8 @@ export class ChildComponent  {
   @Input()developers;
   @Input() tracks;
   @Output() task : EventEmitter<any> = new EventEmitter();
+  @Output() trackDrop : EventEmitter<any> = new EventEmitter();
+  @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   // trackChangeProjectWise;
   // trackChangeDeveloperWise;
@@ -27,42 +29,42 @@ export class ChildComponent  {
   ngOnInit(){
     console.log(this.tracks, this.developers);
   }
-  // getEmptyTracks(){
-  //   this.tracks = [
-  //   {
-  //     "title": "Todo",
-  //     "id": "to do",
-  //     "class":"primary",
-  //     "tasks": [
+  getEmptyTracks(){
+    this.tracks = [
+    {
+      "title": "Todo",
+      "id": "to do",
+      "class":"primary",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "In Progress",
-  //     "id": "in progress",
-  //     "class":"info",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "In Progress",
+      "id": "in progress",
+      "class":"info",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "Testing",
-  //     "id": "testing",
-  //     "class":"warning",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "Testing",
+      "id": "testing",
+      "class":"warning",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "Done",
-  //     "id": "complete",
-  //     "class":"success",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "Done",
+      "id": "complete",
+      "class":"success",
+      "tasks": [
 
-  //     ]
-  //   }
-  //   ];
-  // }
+      ]
+    }
+    ];
+  }
 
   getPriorityClass(priority){
     switch (priority) {
@@ -103,6 +105,13 @@ export class ChildComponent  {
   openModel(task){
     console.log(task);
     this.task.emit(task);
+  }
+
+  onTrackDrop(event){
+    this.trackDrop.emit(event);
+  }
+  onTalkDrop(event){
+    this.talkDrop.emit(event);
   }
   
 }
