@@ -97,7 +97,7 @@
 	</div> -->
 
 	<div>
-		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
+		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 	</div>
 
 	<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

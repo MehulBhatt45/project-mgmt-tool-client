@@ -31,6 +31,7 @@ export class ProjectDetailComponent implements OnInit {
 	searchText;
 
 	task;
+	tasks;
 	projects: any;
 	project;
 	comment;
@@ -184,8 +185,14 @@ export class ProjectDetailComponent implements OnInit {
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(task.status == track.id){
-							track.tasks.push(task);
+						if(this.currentUser.userRole!='projectManager'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
 						}
 					})
 				})
@@ -372,10 +379,24 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-	onKey(event: any){
-		console.log(event);
-		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+	// onKey(event: any){
+	// 	console.log(event);
+	// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+	// 	console.log("In Component",task);
+	// 	this.getEmptyTracks();
+	// 	_.forEach(task, (content)=>{
+	// 		_.forEach(this.tracks, (track)=>{
+	// 			if(content.status == track.id){
+	// 				track.tasks.push(content);
+	// 			}
+	// 		})
+	// 	})
+	// }
+	onKey(searchText,$event){
+		console.log(event, this.project);
+		var dataToBeFiltered = [this.project];
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
 		this.getEmptyTracks();
 		_.forEach(task, (content)=>{

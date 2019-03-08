@@ -18,6 +18,7 @@ export class SearchTaskPipe implements PipeTransform {
 		if(!items) return [];
 		if(!searchText) return items[0];
 		searchText = searchText.toLowerCase();
+			console.log("Search pipe items = ",items);
 			task = items[0].filter( it => {
 				if(it.title.toLowerCase().includes(searchText) || it.uniqueId.toLowerCase().includes(searchText)){
 					return it;
