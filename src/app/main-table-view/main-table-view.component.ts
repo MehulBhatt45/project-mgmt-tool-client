@@ -82,6 +82,7 @@ export class MainTableViewComponent implements OnInit {
 		}
 		];
 	}
+
 	// getPriorityClass(priority){
 		// 	switch (priority) {
 			// 		case "low":
@@ -132,6 +133,7 @@ export class MainTableViewComponent implements OnInit {
 					status : new FormControl({value: '', disabled: true}, Validators.required)
 				})
 			}
+
 
 			ngOnInit() {
 				this.getAllDevelopers();
@@ -317,6 +319,7 @@ export class MainTableViewComponent implements OnInit {
 				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
 			}
 			// function getPriority(){
+
 
 				// }
 			}

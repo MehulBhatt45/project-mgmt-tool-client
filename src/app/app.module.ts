@@ -37,6 +37,7 @@ import { AddNoticeComponent } from './add-notice/add-notice.component';
 import { NoticeboardComponent } from './noticeboard/noticeboard.component';
 import { SearchTaskPipe } from './search-task.pipe';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ChildComponent } from './child/child.component';
 
@@ -61,12 +62,13 @@ import { ChildComponent } from './child/child.component';
     UpdateUserComponent,
     SearchTaskPipe,
     ResetPasswordComponent,
+    AddEmployeeComponent,
     ChildComponent,
     AddNoticeComponent,
     NoticeboardComponent,
     UserprofileComponent,
-    ResetPasswordComponent
     ],
+
 
     imports: [
     BrowserModule,

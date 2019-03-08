@@ -12,6 +12,8 @@ import { ChildComponent } from '../child/child.component';
 declare var $ : any;
 import * as _ from 'lodash';
 
+
+
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -20,11 +22,14 @@ import * as _ from 'lodash';
 export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+	comments:any;
+
 	public model = {
 		editorData: 'Enter comments here'
 	};
 	url;
 	searchText;
+
 	task;
 	projects: any;
 	project;
@@ -45,10 +50,30 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
+			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
+	}
+
+	getEmptyComments(){
+		this.comments = [{
+			"profilePhoto": "../assets/3.png",
+			"developerName": "Komal Sakhiya",
+			"comment": "this is my first comment in this task.........."
+		},
+		{
+			"profilePhoto": "../assets/5.jpg",
+			"developerName": "Mehul Bhatt",
+			"comment": "this is my second comment in this task.........."
+		},
+		{
+			"profilePhoto": "../assets/6.jpg",
+			"developerName": "Foram Trada",
+			"comment": "this is my third comment in this task.........."
+		}
+		];
 	}
 	getEmptyTracks(){
 		this.tracks = [
@@ -86,6 +111,27 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
+	getPriorityClass(priority){
+		switch (priority) {
+			case "low":
+			return "primary"
+			break;
+
+			case "medium":
+			return "warning"
+			break;
+
+			case "high":
+			return "danger"
+			break;
+
+			default:
+			return ""
+			break;
+		}
+	}
+
+	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -94,8 +140,10 @@ export class ProjectDetailComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			startDate : new FormControl('', Validators.required),
 			dueDate : new FormControl('', Validators.required),
+
 			status : new FormControl({value: '', disabled: true}, Validators.required),
 			files: new FormControl(),
+
 		})
 	}
 
@@ -116,7 +164,6 @@ export class ProjectDetailComponent implements OnInit {
 				if (nameA > nameB)
 					return 1
 				return 0 //default return value (no sorting)
-
 			})
 			console.log("Developers",this.developers);
 		},err=>{
@@ -125,7 +172,6 @@ export class ProjectDetailComponent implements OnInit {
 		})
 
 	}
-
 
 	getProject(id){
 		this.loader = true;
@@ -174,15 +220,12 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			
 			data.status = newStatus;
-			console.log("UniqueId", data.uniqueId);
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+
 			},err=>{
 				console.log(err);
-
 			})
 		}else{
 			data.status = newStatus;
@@ -191,6 +234,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				// this.getProject(res.projectId);
 			},(err:any)=>{
+
 				console.log(err);
 			})
 		}
@@ -211,7 +255,18 @@ export class ProjectDetailComponent implements OnInit {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
+	sortTasksByPriority(data){
+		console.log("hdgfhd=>>>>..");
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			track.tasks.sort(custom_sort1);
+			console.log("sorted output = ",track.tasks);
+		});
 
+		function custom_sort1(a, b) {
+			return a.priority - b.priority;
+		}
+	}
 	getTitle(name){
 		if(name){
 			var str = name.split(' ');
@@ -221,40 +276,35 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
+
 	getInitialsOfName(name){
-		if(name){
-			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-			return str.toUpperCase();
-		}else{
-			return '';
-		}
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
-	
-	sortTasksByPriority(data){
-		console.log("hdgfhd=>>>>..");
-		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
-			track.tasks.sort(custom_sort1);
-			console.log("sorted output = ",track.tasks);
-		});
-		function custom_sort1(a, b) {
-			return a.priority - b.priority;
+
+	getColorCodeOfPriority(priority) {
+		for (var i = 0; i < this.allPriorityList.length; i++) {
+			if (this.allPriorityList[i].value == priority) {
+				return this.allPriorityList[i].colorCode;
+			}
 		}
 
 	}
-
-
 	openModel(task){
 		console.log(task);
 		this.task = task;
 		$('#fullHeightModalRight').modal('show');
 	}
 
+
+
+
 	editTask(task){
-		// this.task = task;
-		// console.log(this.task);
-		this.modalTitle = 'Edit Item';
-		// $('.datepicker').pickadate();
+		this.task = task;
+		this.modalTitle = 'Edit Item'
+		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
 		$('#editModel').modal('show');
 	}
 
@@ -262,10 +312,10 @@ export class ProjectDetailComponent implements OnInit {
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
 		this._projectService.updateTask(task).subscribe((res:any)=>{
-			console.log("res ===>" , res);
-			// this.getProject(res.projectId);
-		},(err:any)=>{
-			console.log("err ===>" , err);
+			$('#editModel').modal('hide');
+		},err=>{
+			console.log(err);
+			
 		})
 		
 	}
@@ -276,10 +326,12 @@ export class ProjectDetailComponent implements OnInit {
 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 			this.modalTitle = 'Add '+option;
 			$('.datepicker').pickadate();
+			$('#input_starttime').pickatime({});
 			$('#editModel').modal('show');
 			this.loader=false;
 		},1000);
 	}
+
 
 	saveTheData(task){
 		task['projectId']= this.projectId; 
@@ -300,6 +352,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	public Editor = DecoupledEditor;
 
+
 	public onReady( editor ) {
 		editor.ui.getEditableElement().parentElement.insertBefore(
 			editor.ui.view.toolbar.element,
@@ -311,6 +364,10 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
+
+
+
+
 
 	sendComment(){
 		console.log(this.comment);
