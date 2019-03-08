@@ -65,7 +65,7 @@
         <div class="second_icon">
             <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
         </div> 
-        <div class="second_icon dropdown">
+        <div class="second_icon dropdown" *ngIf="currentUser.userRole=='projectManager'">
             <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="plus_details"><i class="fa fa-plus" aria-hidden="true" ></i></a>
             <div class="dropdown-menu">
                 <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
