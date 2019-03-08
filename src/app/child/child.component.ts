@@ -9,7 +9,7 @@ declare var $ : any;
   styleUrls: ['../project-detail/project-detail.component.css']
 })
 export class ChildComponent  {
-  name;	
+  name;  
   @Input()developers;
   @Input() tracks;
   @Output() task : EventEmitter<any> = new EventEmitter();

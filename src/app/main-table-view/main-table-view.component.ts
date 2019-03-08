@@ -328,13 +328,13 @@ export class MainTableViewComponent implements OnInit {
 
 
 			
-			getColorCodeOfPriority(priority) {
-				for (var i = 0; i < this.allPriorityList.length; i++) {
-					if (this.allPriorityList[i].value == priority) {
-						return this.allPriorityList[i].colorCode;
-					}
-				}
-			}
+			// getColorCodeOfPriority(priority) {
+			// 	for (var i = 0; i < this.allPriorityList.length; i++) {
+			// 		if (this.allPriorityList[i].value == priority) {
+			// 			return this.allPriorityList[i].colorCode;
+			// 		}
+			// 	}
+			// }
 			openModel(task){
 
 				console.log(task);

@@ -9,6 +9,9 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 	styleUrls: ['./edit-project.component.css']
 })
 export class EditProjectComponent implements OnInit {
+
+	projects;
+	projectId;
 	updateForm:FormGroup;
 	availData;
 	teamShow:boolean = false;
@@ -44,6 +47,19 @@ export class EditProjectComponent implements OnInit {
 		},err=>{
 			console.log(err);
 		})
-	}
 
+	}
+	deleteProject(projectId){
+		console.log(projectId);
+		if(projectId.BugId.length>0 || projectId.IssueId.length>0 || projectId.taskId.length>0 || projectId.Teams.length>0){
+			console.log("You can't delete this");
+		}else{
+			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
+				console.log("Delete project======>" , res);
+				this.projects = res;
+			},(err:any)=>{
+				console.log("error in delete project =====>" , err);
+			});
+		}
+	}
 }
