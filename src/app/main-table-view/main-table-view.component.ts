@@ -337,6 +337,16 @@ export class MainTableViewComponent implements OnInit {
 				$('#fullHeightModalRight').modal('show');
 
 			}
+			editTask(task){
+				// this.loader=true;
+				this.task = task;
+					this.modalTitle = 'Edit Item';
+					$('.datepicker').pickadate();
+					$('#editModel').modal('show');
+					this.loader=false;
+				// setTimeout(()=>{
+				// },1000);
+			}
 
 			updateTask(task){
 				task.assignTo = this.editTaskForm.value.assignTo;
