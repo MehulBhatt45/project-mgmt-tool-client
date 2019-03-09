@@ -26,14 +26,14 @@
 				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
 			</div>
 		</div>
-		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+	<!-- 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 			<div class="dropdown-menu dropdown-default">
 				<a class="dropdown-item" (click)="addItem('Task')">Task</a>
 				<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
 				<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 <div class="row">
@@ -233,10 +233,10 @@
 								<div class="form-group col-12 col-lg-6">
 									<label for="assignTo">Assign To</label>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-										<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
 									</select>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-										<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
 									</select>
 								</div>
 								<div class="form-group col-12 col-lg-6">

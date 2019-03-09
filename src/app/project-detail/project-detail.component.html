@@ -22,18 +22,18 @@
 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 		<div class="dropdown-menu dropdown-default">
-			<a class="dropdown-item" (click)="addItem('Task')">Task</a>
-			<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+			<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Task'; newTask = getEmptyTask()">Task</a>
+			<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Bug'; newTask = getEmptyTask()">Bug</a>
+			<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Issue'; newTask = getEmptyTask()">Issue</a>
 		</div>
 	</div>
 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
 		<div class="dropdown-menu dropdown-default">
-			<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
-			<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
-			<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
-
+			<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Due Date <i class="fas fa-arrow-up"></i></a>
+			<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Due Date <i class="fas fa-arrow-down"></i></a>
+			<a class="dropdown-item" (click)="sortTasksByPriority('asc')">Priority <i class="fas fa-arrow-up"></i></a>
+			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
 
@@ -197,222 +197,158 @@
 						<div class="row">
 							<div class="col-12 col-md-4">
 
-								<p *ngIf="task.createdBy"><label><strong>Created By: &nbsp;</strong></label>
-									<span>{{task.createdBy.name}}</span></p>
-									<p *ngIf="task.createdAt"><label><strong>Created Date: &nbsp;</strong></label>
-										<span>{{task.createdAt | date:'short'}}</span></p>
-										<p *ngIf="task.status"><label><strong>Status: &nbsp;</strong></label>
-											<span>{{task.status}}</span></p>
-											<div class="col-12 col-md-4" *ngIf="task.createdBy">
-												<p>
-													<label><strong>Created By: &nbsp;</strong></label>
-													<span>{{task.createdBy.name}}</span>
-												</p>
-												<p *ngIf="task.createdAt">
-													<label><strong>Created Date: &nbsp;</strong></label>
-													<span>{{task.createdAt | date:'short'}}</span>
-												</p>
-												<p *ngIf="task.status">
-													<label><strong>Status: &nbsp;</strong></label>
-													<span>{{task.status}}</span>
-												</p>
-											</div>
-											<div class="col-12 col-md-4">
-												<p>
-													<label><strong>Assign To: &nbsp;</strong></label>
-													<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-												</p>
-												<p *ngIf="task.priority">
-													<label><strong>Prority: &nbsp;</strong></label>
-													<span>{{task.priority}}</span>
-												</p>
-											</div>
-											<div class="col-12 col-md-4">
-												<p>start time end time</p>
-											</div>
-										</div>
-										<div class="row justify-content-between">
-											<div>
-												<button class="btn btn-default">Remove Assignment</button>
-												<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
-												<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
-												<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-											</div>
-											<div>
-												<button class="btn btn-default" (click)="editTask(task)">Edit</button>
-												<!-- <button class="btn btn-default"><i class="fa fa-ellipsis-h"></i></button> -->
-											</div>
-										</div>
-									</div>
-									<hr>
-									<h2>Comments</h2>
-									<div *ngIf="task.comment && task.comment.length>0">
-										<p>comments</p>
-
-									</div>
-									<div *ngIf="task.comment && task.comment.length<=0">
-										<!-- <p>No comments on this be the first one to comments on...</p> -->
-
-
-										<div class="comment_area">
-
-											<div class="comment_section" *ngFor = "let i of comments">
-
-												<div class="card">
-													<div class="card-body" >
-														<div class="row">
-															<div class="col-12 col-md-2">
-																<!-- <img src="../assets/3.png" class="profilePhoto"> -->
-
-																<img src="{{i.profilePhoto}}" class="profilePhoto">
-															</div>
-															<div class="col-12 col-md-10">
-																<div>
-																	<span class="developerName">
-																		<!-- Komal Sakhiya -->
-																		{{i.developerName}}
-																	</span>
-																	<div>
-																		<div>
-																			<span>
-																				
-																			</span>
-																				{{i.comment}}
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- </div> -->
-
-										<div class="row padding-20">
-											<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-											<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
-										</div>
-									</div>
-									<!-- </div> -->
-									<div class="modal-footer justify-content-center">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-primary">Save changes</button>
-									</div>
-								</div>
-
-								
+								<p  *ngIf="task.createdBy">
+									<label><strong>Created By: &nbsp;</strong></label>
+									<span>{{task.createdBy.name}}</span>
+								</p>
+								<p *ngIf="task.createdAt">
+									<label><strong>Created Date: &nbsp;</strong></label>
+									<span>{{task.createdAt | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.status">
+									<label><strong>Status: &nbsp;</strong></label>
+									<span>{{task.status}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>
+									<label><strong>Assign To: &nbsp;</strong></label>
+									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+								</p>
+								<p *ngIf="task.priority">
+									<label><strong>Prority: &nbsp;</strong></label>
+									<span>{{getPriorityClass(task.priority).title}}</span>
+								</p>
+								<p *ngIf="task.dueDate">
+									<label><strong>DueDay: &nbsp;</strong></label>
+									<span>{{task.dueDate}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-4">
+								<p>start time end time</p>
 							</div>
 						</div>
-						
-
-						<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-lg" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>	
-									<div class="modal-body" *ngIf="task && !loader">
-										<div class="row">
-											<form style="width: 100%;" [formGroup]="editTaskForm">
-												<div class="form-group col-12">
-													<label for="title">Title</label>
-													<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-												</div>
-												<div class="form-group col-12">
-													<label for="desc">Discription</label>
-													<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-												</div>
-												<div class="row no-margin no padding" >
-													<div class="form-group col-12 col-lg-6">
-														<label for="assignTo">Assign To</label>
-														<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-															<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-														</select>
-													</div>
-													<div class="form-group col-12 col-lg-6">
-														<label for="priority">Priority</label>
-														<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-															<option value="low">Low</option>
-															<option value="medium">Medium</option>
-															<option value="high">High</option>
-														</select>
-													</div>
-												</div>
-												<div class="form-group col-12">
-													<label for="status">Status</label>
-													<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-														<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-													</select>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-primary btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-									</div>
-								</div>
-
-
-								<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-									<div class="modal-dialog modal-lg" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>	
-											<div class="modal-body" *ngIf="task && !loader">
-												<div class="row">
-													<form style="width: 100%;" [formGroup]="editTaskForm">
-														<div class="form-group col-12">
-															<label for="title">Title</label>
-															<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-														</div>
-														<div class="form-group col-12">
-															<label for="desc">Discription</label>
-															<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-														</div>
-														<div class=" row form-group col-12">
-															<button class="btn btn-default" (click)="fileUpload.click()">
-																<i class="fa fa-paperclip mr-1"></i> Add Files
-																<input type="file" formControlName="files" [(ngModel)]="task.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
-															</button>
-														</div>
-														<div class="row no-margin no padding" >
-															<div class="form-group col-12 col-lg-6">
-																<label for="assignTo">Assign To</label>
-																<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-																	<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-																</select>
-																<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-																	<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-																</select>
-															</div>
-															<div class="form-group col-12 col-lg-6">
-																<label for="priority">Priority</label>
-																<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-																	<option value="low">Low</option>
-																	<option value="medium">Medium</option>
-																	<option value="high">High</option>
-																</select>
-
-															</div>
-														</div>
-
-													</form>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-											</div>
+						<div class="row justify-content-between">
+							<div>
+								<button class="btn btn-default">Remove Assignment</button>
+								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+							</div>
+							<div>
+								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<h2>Comments</h2>
+					<div *ngIf="comments && comments.length>0">
+						<div class="comment_area">
+							<div class="comment_section" *ngFor = "let i of comments">
+								<div class="card">
+									<div class="card-body">
+										<ul class="team-members">	
+											<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+												<a href="javascript:void(0);">
+													{{getInitialsOfName(i.userId.name)}}
+												</a>
+											</li>
+										</ul>
+										<div>
+											<p class="developerName" *ngIf="i.userId">
+												{{i.userId.name}}
+											</p>
+											<p>
+												{{i.content}}
+											</p>
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="task.comment && task.comment.length<=0">
+						<p>No comments on this be the first one to comments on...</p>
+					</div>
+					<div class="padding-20">
+						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<div class="btn btn-primary" (click)="commentImg.click()">
+							<span>Upload image with comment</span>
+							<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						</div>
+						<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default">Save changes</button>
+			</div> -->
+		</div>
+	</div>
+</div>
 
+<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="newTask">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
+						<div class="form-group col-12">
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class=" row form-group col-12">
+							<button class="btn btn-default" (click)="fileUpload.click()">
+								<i class="fa fa-paperclip mr-1"></i> Add Files
+								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+							</button>
+						</div>
+						<div class="row no-margin no padding" >
+							<div class="form-group col-12 col-lg-6">
+								<label for="assignTo">Assign To</label>
+
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+
+								</select>
+							</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+									<option value="4">Low</option>
+									<option value="3">Medium</option>
+									<option value="2">High</option>
+									<option value="1">Highest</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-12">
+							<label for="status">Status</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
+								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>

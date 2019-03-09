@@ -186,6 +186,9 @@ table {
   float: left!important;
   width: 100px;
 }
+.float-left{
+  float: right !important;
+}
 .icon_check{
   padding: 0;
 }
@@ -317,3 +320,6 @@ background-color: white;
   /*overflow-x: hidden;*/
   overflow-y: auto;
 }
+/*.modal-full-height{
+  max-height: 100%;
+}*/

@@ -11,7 +11,7 @@ import { ChildComponent } from '../child/child.component';
 
 declare var $ : any;
 import * as _ from 'lodash';
-
+import { CommentService } from '../services/comment.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-
+	newTask;
 	task;
 	tasks;
 	projects: any;
@@ -43,10 +43,16 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	files:FileList;
+
+	projectTeam;
+	// files:FileList;
+
+	files:Array<File> = [];
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
-		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
+		public _commentService: CommentService) {
 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -113,17 +119,22 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
+		switch (Number(priority)) {
+			case 4:
+			return {class:"primary", title:"Low"}
 			break;
 
-			case "medium":
-			return "warning"
+			case 3:
+			return {class:"warning", title:"Medium"}
 			break;
 
-			case "high":
-			return "danger"
+			case 2:
+			return {class:"success", title:"High"}
+			break;
+
+
+			case 1:
+			return {class:"danger", title:"Highest"}
 			break;
 
 			default:
@@ -139,12 +150,7 @@ export class ProjectDetailComponent implements OnInit {
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-
-			status : new FormControl({value: '', disabled: true}, Validators.required),
-			files: new FormControl(),
-
+			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
@@ -177,6 +183,13 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				
+				this.projectTeam = res;
+				console.log("response of team============>"  ,res);
+			},(err:any)=>{
+				console.log("err of team============>"  ,err);
+			});
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
@@ -208,6 +221,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -215,8 +229,7 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
 
@@ -239,7 +252,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -261,18 +274,24 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
-	sortTasksByPriority(data){
+	sortTasksByPriority(type){
+
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
 			console.log("sorted output = ",track.tasks);
 		});
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
+		console.log("nthi avtu=======>",custom_sort1);
 	}
 	getTitle(name){
 		if(name){
@@ -301,22 +320,23 @@ export class ProjectDetailComponent implements OnInit {
 	openModel(task){
 		console.log(task);
 		this.task = task;
+		this.getAllCommentOfTask(task._id);
 		$('#fullHeightModalRight').modal('show');
 	}
 
 	editTask(task){
-		this.task = task;
+		this.newTask = task;
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
-		$('#editModel').modal('show');
+		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
 		this._projectService.updateTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
 			console.log(err);
 			
@@ -324,31 +344,40 @@ export class ProjectDetailComponent implements OnInit {
 		
 	}
 
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+	}
+
 	addItem(option){
-		this.loader=true;
-		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#input_starttime').pickatime({});
-			$('#editModel').modal('show');
-			this.loader=false;
-		},1000);
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
+		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 
 	saveTheData(task){
-		task['projectId']= this.projectId; 
+		task['projectId']= this.projectId;
+		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
-
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
-		this._projectService.addTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
@@ -373,47 +402,81 @@ export class ProjectDetailComponent implements OnInit {
 
 
 
-	sendComment(){
+	sendComment(taskId){
 		console.log(this.comment);
+		var data : any;
+		if(this.files.length>0){
+			data = new FormData();
+			data.append("content",this.comment?this.comment:"");
+			data.append("userId",this.currentUser._id);
+			data.append("projectId",this.projectId);
+			data.append("taskId",taskId);
+			for(var i = 0; i < this.files.length; i++)
+				data.append("fileUpload",this.files[i]);
+		}else{
+			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		}
+		console.log(data);
+		this._commentService.addComment(data).subscribe((res:any)=>{
+			console.log(res);
+			this.comment = "";
+			this.model.editorData = 'Enter comments here';
+			this.files = [];
+			this.getAllCommentOfTask(res.taskId);
+		},err=>{
+			console.error(err);
+		})
 	}
 	searchTask(){
 		console.log("btn tapped");
 	}
 	// onKey(event: any){
-	// 	console.log(event);
-	// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
-	onKey(searchText,$event){
-		console.log(event, this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
-				}
-			})
-		})
-	}
+		// 	console.log(event);
+		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		// 	console.log("In Component",task);
+		// 	this.getEmptyTracks();
+		// 	_.forEach(task, (content)=>{
+			// 		_.forEach(this.tracks, (track)=>{
+				// 			if(content.status == track.id){
+					// 				track.tasks.push(content);
+					// 			}
+					// 		})
+					// 	})
+					// }
+					onKey(searchText){
+						console.log(this.project);
+						var dataToBeFiltered = [this.project];
+						var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+						console.log("In Component",task);
+						this.getEmptyTracks();
+						_.forEach(task, (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							})
+						})
+					}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-}
+					getAllProjects(){
+						this._projectService.getProjects().subscribe(res=>{
+							this.projects = res;
+						},err=>{
+							this._alertService.error(err);
+							console.log(err);
+						})
+					}
+
+					getAllCommentOfTask(taskId){
+						this._commentService.getAllComments(taskId).subscribe(res=>{
+							this.comments = res;
+						}, err=>{
+							console.error(err);
+						})
+					}
+
+					onSelectFile(event){
+						this.files = event.target.files;
+					}
+				}
