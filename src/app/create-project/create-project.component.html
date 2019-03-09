@@ -42,23 +42,32 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<img [src]="url" height="150" width="150">
-					</div>
-					<div class="col-md-5">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-							Select Project avatar
-						</button>
-					</div>
-					<div class="col-md-3">
-						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
-					</div>
+
+
+
+				<div class="form-group">
+					<select formControlName="team"  class="browser-default custom-select custom-select-lg mb-3" multiple>
+						<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
+					</select>
 				</div>
-			</form>
-		</div>
+			
+			<!-- demo code -->
+			<img [src]="url" height="150" width="150"> <br/>
+			<!-- demo code -->
+
+
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+				Select Project avatar
+			</button>
+			<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+		</form>
 	</div>
 </div>
+</div>
+
+
+
+
 <!-- Modal Start Here -->
 
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -141,6 +150,26 @@ aria-hidden="true">
 					<li>
 						<button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
 							<img src="assets/avatar/maintenance.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/birthday-cake.png')">
+							<img src="assets/avatar/birthday-cake.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/conversation.png')">
+							<img src="assets/avatar/conversation.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/food.png')">
+							<img src="assets/avatar/food.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/shopping-basket.png')">
+							<img src="assets/avatar/shopping-basket.png" height="56" width="56">
 						</button>
 					</li>
 

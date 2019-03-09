@@ -4,7 +4,6 @@ const baseUrl = "http://206.189.231.135:4000/";
 // const baseUrl = "http://localhost:4000/";
 
 
-
 export const config = {
     baseApiUrl: baseUrl,
     "priorityList": [

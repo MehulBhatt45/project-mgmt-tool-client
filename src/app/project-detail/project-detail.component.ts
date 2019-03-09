@@ -43,7 +43,12 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+	projectTeam;
+	// files:FileList;
+
 	files:Array<File> = [];
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -145,6 +150,7 @@ export class ProjectDetailComponent implements OnInit {
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
+			dueDate : new FormControl('',Validators.required),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
@@ -178,6 +184,13 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				
+				this.projectTeam = res;
+				console.log("response of team============>"  ,res);
+			},(err:any)=>{
+				console.log("err of team============>"  ,err);
+			});
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
@@ -262,13 +275,17 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
-	sortTasksByPriority(data){
+	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
 			console.log("sorted output = ",track.tasks);
 		});
 
@@ -346,7 +363,9 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
+		console.log(task.dueDate);
+		console.log(task.title);
+		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
 		let data = new FormData();

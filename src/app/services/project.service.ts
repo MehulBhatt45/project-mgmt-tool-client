@@ -240,6 +240,12 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 
+	getTeamByProjectId(id){
+		var projectId = id;
+		return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
+		}	
+
+
 	addTask(data){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -254,6 +260,40 @@ export class ProjectService {
 	getTaskById(id){
 		var id = id;
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+	}
+	addUser_with_file(body,files:any){
+		console.log("fhvg=>",files);
+		let formdata = new FormData();
+		formdata.append('fname',body.fname);
+		formdata.append('lname',body.lname);
+		formdata.append('email',body.email);
+		formdata.append('userRole',body.userRole);
+		formdata.append('password',body.password);
+		formdata.append('joiningDate',body.date);
+		formdata.append('phone',body.mobile);
+		formdata.append('experience',body.experience);
+	    formdata.append('profilePhoto',files[0]);
+		formdata.append("profilePhoto",files[1]);
+		// for(var i =0; i < files.length; i++){
+		// 	formdata.append("uploadFile",files[i]);
+		// }
+		console.log("body===>>>",body);
+
+
+		return this.http.post(config.baseApiUrl+"user/signup",formdata);
+
+	}
+	addProject_Without_file(body){
+		console.log("addproject2 is calling");
+		console.log("body====>>",body);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"user/signup_without_file",body,httpOptions);
+
 	}
 }
 
