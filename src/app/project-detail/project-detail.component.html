@@ -5,14 +5,14 @@
 	<span></span>
 </div>
 <div class="row justify-content-end">
-	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+	<!-- <div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 		<div class="dropdown-menu dropdown-default">
 			<a class="dropdown-item" (click)="addItem('Task')">Task</a>
 			<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
 			<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 		</div>
-	</div>
+	</div> -->
 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
 		<div class="dropdown-menu dropdown-default">
@@ -228,6 +228,7 @@
 									<option value="low">Low</option>
 									<option value="medium">Medium</option>
 									<option value="high">High</option>
+									<option value="highest">Highest</option>
 								</select>
 							</div>
 						</div>

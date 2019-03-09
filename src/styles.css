@@ -279,6 +279,8 @@ nav.navbar {
 	display: inline-block;
 }
 */
+
+/*Low Priority*/
 .primary{
 	padding: 10px;
 	/*border-radius: 8px;*/
@@ -287,6 +289,8 @@ nav.navbar {
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
 }
+
+/*Higest Priority*/
 .danger{
 	padding: 10px;
 	/*border-radius: 8px;*/
@@ -298,6 +302,8 @@ nav.navbar {
 	border-top-left-radius: 2px;
 	
 }
+
+/*Medium Priority*/
 .warning{
 	padding: 10px;
 	/*border-radius: 8px;*/
@@ -306,10 +312,12 @@ nav.navbar {
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
 }
+
+/*High Priority*/
 .success{
 	padding: 10px;
 	/*border-radius: 8px;*/
-	border-left: 3px solid #28a745;
+	border-left: 3px solid #fe7125;
 	/*box-shadow: 0 0 0 3px #28a74580;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;

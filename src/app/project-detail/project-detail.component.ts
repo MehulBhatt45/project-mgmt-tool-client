@@ -239,7 +239,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				 this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);

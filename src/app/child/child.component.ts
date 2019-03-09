@@ -77,6 +77,11 @@ export class ChildComponent  {
       break;
 
       case "high":
+      return "success"
+      break;
+
+
+      case "highest":
       return "danger"
       break;
 

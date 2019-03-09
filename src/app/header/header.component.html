@@ -18,28 +18,28 @@
                         <ul>
                             <li *ngFor="let project of projects">
                                 <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
-                        </ul>
-                    </div>
-                </li>
+                            </ul>
+                        </div>
+                    </li>
 
-                
-                <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
-                <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
-                <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
-                <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Add Notice</a></li>
-                <li><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Add Employee</a></li>
-                <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Notice Board</a></li>
-            </ul>
-        </li>
-        <div class="sidenav-bg mask-strong"></div>
-    </ul>
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
-        <div class="float-left">
-            <ol class="breadcrumb hidden-lg-down">
-                <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
-                <li class="breadcrumb-item active"><a>Dashboard</a></li>
-            </ol>
-        </div>
+                    
+                    <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
+                    <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
+                    <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
+                    <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Add Notice</a></li>
+                    <li><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Add Employee</a></li>
+                    <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Notice Board</a></li>
+                </ul>
+            </li>
+            <div class="sidenav-bg mask-strong"></div>
+        </ul>
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
+            <div class="float-left">
+                <ol class="breadcrumb hidden-lg-down">
+                    <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
+                    <li class="breadcrumb-item active"><a>Dashboard</a></li>
+                </ol>
+            </div>
        <!--  <ul class="nav navbar-nav nav-flex-icons ml-auto">
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,16 +99,16 @@
                     </li>   
                 </ul>
             </a> -->
-                    <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
-                    <div class="dropdown-content"> 
-                        <a class="dropdown-item" (click)="logout()">Log Out</a>
-                        <!-- <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a> -->
-                        <a class="dropdown-item" [routerLink]="['/userprofile']"> My profile </a>
-                    </div>
-                </li>   
-            </ul>
-        </div> 
-    </div>
+            <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
+            <div class="dropdown-content"> 
+                <a class="dropdown-item" (click)="logout()">Log Out</a>
+                <!-- <a id="account" class="dropdown-item" [routerLink]="['/update-user/', currentUser._id]">My account</a> -->
+                <a class="dropdown-item" [routerLink]="['/userprofile']"> My profile </a>
+            </div>
+        </li>   
+    </ul>
+</div> 
+</div>
 </div>
 
 <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -144,6 +144,8 @@
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
                                     <option value="high">High</option>
+                                    <option value="highest">Highest</option>
+
                                 </select>
                             </div>
                         </div>
