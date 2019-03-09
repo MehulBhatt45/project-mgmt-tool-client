@@ -43,8 +43,11 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
 	projectTeam;
-	files:FileList;
+	// files:FileList;
+
+	files:Array<File> = [];
 
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
