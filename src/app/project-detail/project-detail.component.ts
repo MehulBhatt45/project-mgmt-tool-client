@@ -12,6 +12,7 @@ import { ChildComponent } from '../child/child.component';
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
+import * as moment from 'moment';
 
 
 @Component({
