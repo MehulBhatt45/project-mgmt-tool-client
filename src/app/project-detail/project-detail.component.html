@@ -262,6 +262,12 @@
 								</select>
 							</div>
 						</div>
+						<div class="row no-margin no padding" >
+							<div class="form-group col-12">
+								<label for="dueDate">Due Days</label>
+								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+							</div>
+						</div>
 						<div class="form-group col-12">
 							<label for="status">Status</label>
 							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
