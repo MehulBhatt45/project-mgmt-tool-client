@@ -11,6 +11,8 @@ import { ChildComponent } from '../child/child.component';
 
 declare var $ : any;
 import * as _ from 'lodash';
+import { CommentService } from '../services/comment.service';
+
 
 @Component({
 	selector: 'app-project-detail',
@@ -20,14 +22,16 @@ import * as _ from 'lodash';
 export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+	comments:any;
+
 	public model = {
 		editorData: 'Enter comments here'
 	};
 	url;
-	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
 	searchText;
+	newTask;
 	task;
+	tasks;
 	projects: any;
 	project;
 	comment;
@@ -41,17 +45,39 @@ export class ProjectDetailComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	projectTeam;
 	files:FileList;
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
-		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
+		public _commentService: CommentService) {
 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
+			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
+	}
+
+	getEmptyComments(){
+		this.comments = [{
+			"profilePhoto": "../assets/3.png",
+			"developerName": "Komal Sakhiya",
+			"comment": "this is my first comment in this task.........."
+		},
+		{
+			"profilePhoto": "../assets/5.jpg",
+			"developerName": "Mehul Bhatt",
+			"comment": "this is my second comment in this task.........."
+		},
+		{
+			"profilePhoto": "../assets/6.jpg",
+			"developerName": "Foram Trada",
+			"comment": "this is my third comment in this task.........."
+		}
+		];
 	}
 	getEmptyTracks(){
 		this.tracks = [
@@ -89,35 +115,39 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		];
 	}
-	// getPriorityClass(priority){
-	// 	switch (priority) {
-	// 		case "low":
-	// 		return "primary"
-	// 		break;
+	getPriorityClass(priority){
+		switch (Number(priority)) {
+			case 4:
+			return {class:"primary", title:"Low"}
+			break;
 
-	// 		case "medium":
-	// 		return "warning"
-	// 		break;
+			case 3:
+			return {class:"warning", title:"Medium"}
+			break;
 
-	// 		case "high":
-	// 		return "danger"
-	// 		break;
+			case 2:
+			return {class:"success", title:"High"}
+			break;
 
-	// 		default:
-	// 		return ""
-	// 		break;
-	// 	}
-	// }
+
+			case 1:
+			return {class:"danger", title:"Highest"}
+			break;
+
+			default:
+			return ""
+			break;
+		}
+	}
+
+	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required),
-			files: new FormControl(),
+			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
@@ -144,6 +174,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+
 	}
 
 	getProject(id){
@@ -187,6 +218,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -194,8 +226,7 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
 
@@ -206,44 +237,21 @@ export class ProjectDetailComponent implements OnInit {
 
 	updateStatus(newStatus, data){
 		if(newStatus=='complete'){
-			/*var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TSK')?"task/complete/":'' || _.includes(data.uniqueId, 'BUG')?"bug/complete/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/complete/":'';
-			console.log(subUrl);
 			data.status = newStatus;
-			this._projectService.completeItem(data, subUrl).subscribe((res:any)=>{
-				console.log(res);
-				// this.getProject(res.projectId);
-			},err=>{
-				console.log(err);
-			
-			})*/
-			data.status = newStatus;
-			console.log("UniqueId", data.uniqueId);
 			this._projectService.completeItem(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+
 			},err=>{
 				console.log(err);
-
 			})
 		}else{
-			/*data.status = newStatus;
-			console.log("UniqueId", data.uniqueId);
-			var subUrl; 
-			subUrl = _.includes(data.uniqueId, 'TSK')?"task/update-status/":'' || _.includes(data.uniqueId, 'BUG')?"bug/update-status/":'' || _.includes(data.uniqueId, 'ISSUE')?"issue/update-status/":'';
-			console.log(subUrl);
-			this._projectService.updateStatus(data, subUrl).subscribe((res:any)=>{
-				console.log(res);
-				// this.getProject(res.projectId);
-			},err=>{
-				console.log(err);
-			})*/
 			data.status = newStatus;
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
+
 				console.log(err);
 			})
 		}
@@ -251,10 +259,8 @@ export class ProjectDetailComponent implements OnInit {
 	sortTasksByCreatedAt(type){
 		console.log("Sorting tasks by = ",type)
 		
-		// Loop through all 4 tracks
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
-			// var task = _.orderBy(track.tasks, ['createdAt'],[type]);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
@@ -265,8 +271,25 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
+	sortTasksByPriority(type){
 
+		console.log("hdgfhd=>>>>..");
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
+			console.log("sorted output = ",track.tasks);
+		});
+
+		function custom_sort1(a, b) {
+			return a.priority - b.priority;
+		}
+		console.log("nthi avtu=======>",custom_sort1);
+	}
 	getTitle(name){
 		if(name){
 			var str = name.split(' ');
@@ -276,105 +299,89 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
+
 	getInitialsOfName(name){
-		if(name){
-			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-			return str.toUpperCase();
-			// return name.split(' ')[0][0]+name.split(' ')[1][0];
-		}else{
-			return '';
-		}
+		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+		return str.toUpperCase();
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
-	
-	sortTasksByPriority(data){
-		console.log("hdgfhd=>>>>..");
-		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
-			track.tasks.sort(custom_sort1);
-			console.log("sorted output = ",track.tasks);
-		});
-		function custom_sort1(a, b) {
-			// if(){
-				// 	a.priority = "high";
-				// 	b.priority = "low";
-				// 	return a;
-				// }
-				return a.priority - b.priority;
-				// var x = a[this.priority]; var y = b[this.priority];
-				// return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-				// return new data.tracks.tasks[a.priority]- new data.tracks.tasks[b.priority];
-			}
-			
-		}
-		
 
-		getColorCodeOfPriority(priority) {
-			for (var i = 0; i < this.allPriorityList.length; i++) {
-				if (this.allPriorityList[i].value == priority) {
-					return this.allPriorityList[i].colorCode;
-				}
+	getColorCodeOfPriority(priority) {
+		for (var i = 0; i < this.allPriorityList.length; i++) {
+			if (this.allPriorityList[i].value == priority) {
+				return this.allPriorityList[i].colorCode;
 			}
-
 		}
 
-			openModel(task){
+	}
+	openModel(task){
+		console.log(task);
+		this.task = task;
+		this.getAllCommentOfTask(task._id);
+		$('#fullHeightModalRight').modal('show');
+	}
 
-				console.log(task);
-				this.task = task;
-				$('#fullHeightModalRight').modal('show');
+	editTask(task){
+		this.newTask = task;
+		this.modalTitle = 'Edit Item';
+		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
+		$('#exampleModalPreviewLabel').modal('show');
+	}
 
-			}
-
-			updateTask(task){
-				task.assignTo = this.editTaskForm.value.assignTo;
-				console.log("update =====>",task);
-				this._projectService.updateTask(task).subscribe((res:any)=>{
-					console.log("res ===>" , res);
-					// this.getProject(res.projectId);
-				},(err:any)=>{
-					console.log("err ===>" , err);
-				})
-		/*var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
-		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+	updateTask(task){
+		task.assignTo = this.editTaskForm.value.assignTo;
+		console.log("update =====>",task);
+		this._projectService.updateTask(task).subscribe((res:any)=>{
+			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
 			console.log(err);
 			
-		})*/
+		})
 		
 	}
 
-	addItem(option){
-		this.loader=true;
-		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#editModel').modal('show');
-			this.loader=false;
-		},1000);
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	}
 
+	addItem(option){
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
+		$('#exampleModalPreviewLabel').modal('show');
+	}
+
+
 	saveTheData(task){
-		task['projectId']= this.projectId; 
+		task['projectId']= this.projectId;
+		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
-
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
-		this._projectService.addTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
 		})
 	}
 	public Editor = DecoupledEditor;
+
 
 	public onReady( editor ) {
 		editor.ui.getEditableElement().parentElement.insertBefore(
@@ -388,33 +395,85 @@ export class ProjectDetailComponent implements OnInit {
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
 
-	sendComment(){
+
+
+
+
+	sendComment(taskId){
 		console.log(this.comment);
+		var data : any;
+		if(this.files.length>0){
+			data = new FormData();
+			data.append("content",this.comment?this.comment:"");
+			data.append("userId",this.currentUser._id);
+			data.append("projectId",this.projectId);
+			data.append("taskId",taskId);
+			for(var i = 0; i < this.files.length; i++)
+				data.append("fileUpload",this.files[i]);
+		}else{
+			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		}
+		console.log(data);
+		this._commentService.addComment(data).subscribe((res:any)=>{
+			console.log(res);
+			this.comment = "";
+			this.model.editorData = 'Enter comments here';
+			this.files = [];
+			this.getAllCommentOfTask(res.taskId);
+		},err=>{
+			console.error(err);
+		})
 	}
 	searchTask(){
 		console.log("btn tapped");
 	}
-	onKey(event: any){
-		console.log(event);
-		var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
-				}
-			})
-		})
-	}
+	// onKey(event: any){
+		// 	console.log(event);
+		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		// 	console.log("In Component",task);
+		// 	this.getEmptyTracks();
+		// 	_.forEach(task, (content)=>{
+			// 		_.forEach(this.tracks, (track)=>{
+				// 			if(content.status == track.id){
+					// 				track.tasks.push(content);
+					// 			}
+					// 		})
+					// 	})
+					// }
+					onKey(searchText){
+						console.log(this.project);
+						var dataToBeFiltered = [this.project];
+						var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+						console.log("In Component",task);
+						this.getEmptyTracks();
+						_.forEach(task, (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							})
+						})
+					}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-}
+					getAllProjects(){
+						this._projectService.getProjects().subscribe(res=>{
+							this.projects = res;
+						},err=>{
+							this._alertService.error(err);
+							console.log(err);
+						})
+					}
+
+					getAllCommentOfTask(taskId){
+						this._commentService.getAllComments(taskId).subscribe(res=>{
+							this.comments = res;
+						}, err=>{
+							console.error(err);
+						})
+					}
+
+					onSelectFile(event){
+						this.files = event.target.files;
+					}
+				}

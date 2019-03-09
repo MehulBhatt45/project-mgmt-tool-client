@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		
 		this.createEditTaskForm();
+		
 	}
 
 	getEmptyTracks(){
@@ -140,6 +141,14 @@ export class HeaderComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
@@ -181,20 +190,23 @@ export class HeaderComponent implements OnInit {
 	}
 	saveTheData(task){
 		task['projectId']= this.projectId; 
+		console.log("ave che ke nai===>",this.projectId);
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();
-		console.log(task);
+		console.log("mde che ke nai=============>",task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
+		console.log("ama pn jovanu che ho ========>",subUrl);
 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			// this.getProject(this.projectId);
+			this.getProject(this.projectId);
+			console.log("kai vandho pde che===>",this.projectId);
 		},err=>{
 			console.log(err);
 		})
 	}
+
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			console.log(res);
@@ -203,4 +215,5 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		});
 	}
+
 }

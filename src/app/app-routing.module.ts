@@ -15,10 +15,12 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
+import {AddEmployeeComponent} from './add-employee/add-employee.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+
 
 const routes: Routes = [
 // {
@@ -33,14 +35,6 @@ const routes: Routes = [
 	{
 		path:'register',
 		component:RegisterComponent
-	},
-	{
-		path:'reset-password',
-		component:ResetPasswordComponent
-	},
-	{
-		path:'userprofile',
-		component:UserprofileComponent
 	},
 
 	{
@@ -91,6 +85,10 @@ const routes: Routes = [
 			component:ProjectDetailComponent
 		},
 		{
+			path:'project-detail',
+			component:ProjectDetailComponent
+		},
+		{
 			path:'project/files-list/:id',
 			component:FileListComponent
 		},
@@ -105,9 +103,23 @@ const routes: Routes = [
 			component: LogsComponent
 		},
 		{
+			path:'add-employee',
+			component:AddEmployeeComponent
+			
+		},
+		{
 			path:"logs/:projectId/:memberId",
 			pathMatch: "full",
 			component: LogsComponent
+		},
+		{
+			path:'reset-password',
+			//pathMatch: "full",
+			component:ResetPasswordComponent
+		},
+		{
+			path:'userprofile',
+			component:UserprofileComponent
 		}]
 	}];
 

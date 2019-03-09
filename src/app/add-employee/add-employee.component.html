@@ -1,0 +1,67 @@
+<div class="container mt-5">
+	<div class="card">
+		<h5 class="card-header white-text text-center py-4">
+			<strong>Add Employee Details</strong>
+		</h5>
+		<div class="card-body px-lg-5 pt-1">
+			<form [formGroup]="addEmployeeForm">
+				<div class="form-group">
+					<label for="firstName">First Name</label>
+					<input type="text" formControlName="fname" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<label for="lastName">Last Name</label>
+					<input type="text" formControlName="lname" class="form-control">
+				</div>
+
+				<div class="form-group">
+					<label for="password">Email</label>
+					<input type="email" formControlName="email" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" formControlName="password" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="mobile">Phone No.</label>
+					<input type="text" formControlName="mobile" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="date">Joining Date</label>
+					<input type="date" formControlName="date" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="userrole">UserRole</label>
+					<select class="custom-select custom-select-lg mb-3" formControlName="userrole">
+						<option value="" disabled selected>Choose user Role</option>
+						<option value="admin">Admin</option>
+						<option value="projectmanager">Project Manager</option>
+						<option value="developer">Developer</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="experience">Experience (Before Joining)</label>
+					<input type="text" formControlName="experience" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="profile">Profile photo</label>
+					<input type="file" formControlName="profile" class="form-control">
+				</div>
+				<div class="form-group">
+					<label for="cv">CV</label>
+					<input type="file" formControlName="cv" class="form-control">
+				</div>
+
+
+
+				
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" (click)="addEmployee(addEmployeeForm)">Add Employee</button>
+					<!-- <a routerLink="/view" class="btn btn-link">Cancel</a> -->
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>

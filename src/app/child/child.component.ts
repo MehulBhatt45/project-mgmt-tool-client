@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Component, OnInit, Output, Input, EventEmitter, HostListener } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
 declare var $ : any;
@@ -9,11 +9,14 @@ declare var $ : any;
   styleUrls: ['../project-detail/project-detail.component.css']
 })
 export class ChildComponent  {
-  name;	
+  name;  
   @Input()developers;
   @Input() tracks;
   @Output() task : EventEmitter<any> = new EventEmitter();
+  @Output() trackDrop : EventEmitter<any> = new EventEmitter();
+  @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  taskId;
   // trackChangeProjectWise;
   // trackChangeDeveloperWise;
   // projects;
@@ -27,55 +30,60 @@ export class ChildComponent  {
   ngOnInit(){
     console.log(this.tracks, this.developers);
   }
-  // getEmptyTracks(){
-  //   this.tracks = [
-  //   {
-  //     "title": "Todo",
-  //     "id": "to do",
-  //     "class":"primary",
-  //     "tasks": [
+  getEmptyTracks(){
+    this.tracks = [
+    {
+      "title": "Todo",
+      "id": "to do",
+      "class":"primary",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "In Progress",
-  //     "id": "in progress",
-  //     "class":"info",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "In Progress",
+      "id": "in progress",
+      "class":"info",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "Testing",
-  //     "id": "testing",
-  //     "class":"warning",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "Testing",
+      "id": "testing",
+      "class":"warning",
+      "tasks": [
 
-  //     ]
-  //   },
-  //   {
-  //     "title": "Done",
-  //     "id": "complete",
-  //     "class":"success",
-  //     "tasks": [
+      ]
+    },
+    {
+      "title": "Done",
+      "id": "complete",
+      "class":"success",
+      "tasks": [
 
-  //     ]
-  //   }
-  //   ];
-  // }
+      ]
+    }
+    ];
+  }
 
   getPriorityClass(priority){
-    switch (priority) {
-      case "low":
-      return "primary"
+    switch (Number(priority)) {
+      case 4:
+      return {class:"primary", title:"Low"}
       break;
 
-      case "medium":
-      return "warning"
+      case 3:
+      return {class:"warning", title:"Medium"}
       break;
 
-      case "high":
-      return "danger"
+      case 2:
+      return {class:"success", title:"High"}
+      break;
+
+
+      case 1:
+      return {class:"danger", title:"Highest"}
       break;
 
       default:
@@ -103,6 +111,23 @@ export class ChildComponent  {
   openModel(task){
     console.log(task);
     this.task.emit(task);
+  }
+
+  get trackIds(): string[] {
+    return this.tracks.map(track => track.id);
+  }
+
+  onTrackDrop(event){
+    console.log("kai chale che", event, this.taskId);
+    this.trackDrop.emit(event);
+  }
+  onTalkDrop(event){
+    console.log("kai chale che", event, this.taskId);
+    this.talkDrop.emit(event);
+  }
+
+  ondrag(task){
+    console.log(task);
   }
   
 }

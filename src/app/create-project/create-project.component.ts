@@ -5,6 +5,7 @@ import { AlertService } from '../services/alert.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 import { config } from '../config';
 declare var $:any;
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-create-project',
@@ -21,15 +22,17 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
+      avatar:new FormControl(''),
       desc: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      avatar:new FormControl(''),
+      // avatar:new FormControl(''),
       allDeveloper:new FormControl(''),
       team: new FormControl([])
+
     });
 
   }
@@ -61,25 +64,24 @@ export class CreateProjectComponent implements OnInit {
   }
   
   addProject(addForm){
-    console.log("form value ====>" , this.addForm.value);
-    /*f(this.files && this.files.length){
-      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-      console.log("form value=====>>>",addForm.value);
-      this._projectservice.addProject_With_image(addForm.value,this.files).subscribe((res:any)=>{
-        console.log(res);
-      },err=>{
-        console.log(err);    
-      }) 
+
+    var data = new FormData();
+    _.forOwn(addForm, function(value, key) {
+      data.append(key, value)
+    });
+    console.log(addForm, this.files);
+    if(this.files && this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('uploadfile', this.files[i]);
+      }
     }
-    else{
-      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-      this._projectservice.addProject_Without_image(addForm.value).subscribe((res:any)=>{
-        console.log(res);
-        console.log("addproject2 is called");
-      },err=>{
-        console.log(err);    
-      }) 
-    }*/
+    data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
+    this._projectservice.addProject(data).subscribe((res:any)=>{
+      console.log(res);
+      console.log("addproject2 is called");
+    },err=>{
+      console.log(err);    
+    }) 
   }
 
   addIcon(value){
@@ -94,22 +96,13 @@ export class CreateProjectComponent implements OnInit {
     this.files = event.target.files;
     $('#basicExampleModal').modal('hide');
     if (event.target.files && event.target.files[0]) {
-
       var reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event: any) => { // called once readAsDataURL is completed
+      reader.onload = (event:any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
 
       }
     }
-    // console.log(value);
-
-  }
-  changeFile(e){
-    console.log("response from changefile",e.target.files);
-    this.files = e.target.files;
   }
 
   getAllDevelopers(){
@@ -133,4 +126,6 @@ export class CreateProjectComponent implements OnInit {
 
 
 }
+
+
 
