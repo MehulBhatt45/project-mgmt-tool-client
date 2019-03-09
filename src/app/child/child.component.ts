@@ -68,22 +68,22 @@ export class ChildComponent  {
   }
 
   getPriorityClass(priority){
-    switch (priority) {
-      case "low":
-      return "primary"
+    switch (Number(priority)) {
+      case 4:
+      return {class:"primary", title:"Low"}
       break;
 
-      case "medium":
-      return "warning"
+      case 3:
+      return {class:"warning", title:"Medium"}
       break;
 
-      case "high":
-      return "success"
+      case 2:
+      return {class:"success", title:"High"}
       break;
 
 
-      case "highest":
-      return "danger"
+      case 1:
+      return {class:"danger", title:"Highest"}
       break;
 
       default:

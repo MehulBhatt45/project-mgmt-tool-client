@@ -144,7 +144,7 @@
 								</p>
 								<p *ngIf="task.priority">
 									<label><strong>Prority: &nbsp;</strong></label>
-									<span>{{task.priority}}</span>
+									<span>{{getPriorityClass(task.priority).title}}</span>
 								</p>
 							</div>
 							<div class="col-12 col-md-4">
@@ -250,10 +250,10 @@
 							<div class="form-group col-12 col-lg-6">
 								<label for="priority">Priority</label>
 								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
-									<option value="low">Low</option>
-									<option value="medium">Medium</option>
-									<option value="high">High</option>
-									<option value="highest">Highest</option>
+									<option value="4">Low</option>
+									<option value="3">Medium</option>
+									<option value="2">High</option>
+									<option value="1">Highest</option>
 								</select>
 							</div>
 						</div>
