@@ -4,6 +4,8 @@ import {ProjectService} from '../services/project.service';
 import {AlertService} from '../services/alert.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 declare var $ : any;
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
@@ -55,24 +57,23 @@ export class ViewProjectComponent implements OnInit {
   }
 
   addProject(addForm){
-    if(this.files && this.files.length){
-      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-      console.log("form value=====>>>",addForm.value);
-      this._projectservice.addProject_With_image(addForm.value, this.files).subscribe((res:any)=>{
-        console.log(res);
-      },err=>{
-        console.log(err);    
-      }) 
+    var data = new FormData();
+    _.forOwn(addForm, function(value, key) {
+      data.append(key, value)
+    });
+    console.log(addForm, this.files);
+    if(this.files && this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('uploadfile', this.files[i]);
+      }
     }
-    else{
-      this.addForm.value['pmanagerId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-      this._projectservice.addProject_Without_image(addForm.value).subscribe((res:any)=>{
-        console.log(res);
-        console.log("addproject2 is called");
-      },err=>{
-        console.log(err);    
-      }) 
-    }
+    data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
+    this._projectservice.addProject(data).subscribe((res:any)=>{
+      console.log(res);
+      console.log("addproject2 is called");
+    },err=>{
+      console.log(err);    
+    }) 
   }
 
   openDropdown(){
