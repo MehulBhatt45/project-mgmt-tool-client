@@ -38,11 +38,10 @@
 					<div class="col-md-6">
 						<div class="md-form form-group">
 							<label for="clientdesignation">Designation</label>
-							<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
+							<input type="text" id="clientdesignation" formControlName="Designation" class="form-control">
 						</div>
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-md-4">
 						<img [src]="url" height="150" width="150">
@@ -53,7 +52,7 @@
 						</button>
 					</div>
 					<div class="col-md-3">
-						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
 					</div>
 				</div>
 			</form>
@@ -77,7 +76,7 @@ aria-hidden="true">
 				<div class="file-field">
 					<div class="btn btn-default btn-sm float-left">
 						<span>Upload a new avatar</span>
-						<input type="file" name="fileUpload" formControlName="avatar" (change)="onSelectFile($event)">
+						<input type="file" name="fileUpload" (change)="onSelectFile($event)">
 					</div>
 					<div class="file-path-wrapper">
 						<input  class="file-path validate" type="text" placeholder="Upload your file">
