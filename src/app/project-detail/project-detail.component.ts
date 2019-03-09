@@ -11,7 +11,7 @@ import { ChildComponent } from '../child/child.component';
 
 declare var $ : any;
 import * as _ from 'lodash';
-
+import { CommentService } from '../services/comment.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-
+	newTask;
 	task;
 	tasks;
 	projects: any;
@@ -43,10 +43,11 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	files:FileList;
+	files:Array<File> = [];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
-		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
+		public _commentService: CommentService) {
 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -301,22 +302,23 @@ export class ProjectDetailComponent implements OnInit {
 	openModel(task){
 		console.log(task);
 		this.task = task;
+		this.getAllCommentOfTask(task._id);
 		$('#fullHeightModalRight').modal('show');
 	}
 
 	editTask(task){
-		this.task = task;
+		this.newTask = task;
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
-		$('#editModel').modal('show');
+		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
 		this._projectService.updateTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
 			console.log(err);
 			
@@ -324,16 +326,16 @@ export class ProjectDetailComponent implements OnInit {
 		
 	}
 
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+	}
+
 	addItem(option){
-		this.loader=true;
-		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#input_starttime').pickatime({});
-			$('#editModel').modal('show');
-			this.loader=false;
-		},1000);
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#input_starttime').pickatime({});
+		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 
@@ -348,7 +350,7 @@ export class ProjectDetailComponent implements OnInit {
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
+			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
 			console.log(err);
@@ -373,8 +375,28 @@ export class ProjectDetailComponent implements OnInit {
 
 
 
-	sendComment(){
+	sendComment(taskId){
 		console.log(this.comment);
+		var data : any;
+		if(this.files.length>0){
+			data = new FormData();
+			data.append("content",this.comment?this.comment:"");
+			data.append("userId",this.currentUser._id);
+			data.append("projectId",this.projectId);
+			data.append("taskId",taskId);
+			for(var i = 0; i < this.files.length; i++)
+				data.append("fileUpload",this.files[i]);
+		}else{
+			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		}
+		console.log(data);
+		this._commentService.addComment(data).subscribe(res=>{
+			console.log(res);
+			this.comment = "";
+			this.model.editorData = 'Enter comments here';
+		},err=>{
+			console.error(err);
+		})
 	}
 	searchTask(){
 		console.log("btn tapped");
@@ -415,5 +437,17 @@ export class ProjectDetailComponent implements OnInit {
 			this._alertService.error(err);
 			console.log(err);
 		})
+	}
+
+	getAllCommentOfTask(taskId){
+		this._commentService.getAllComments(taskId).subscribe(res=>{
+			this.comments = res;
+		}, err=>{
+			console.error(err);
+		})
+	}
+
+	onSelectFile(event){
+			this.files = event.target.files;
 	}
 }
