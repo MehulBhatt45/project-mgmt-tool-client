@@ -16,6 +16,7 @@ export class ChildComponent  {
   @Output() trackDrop : EventEmitter<any> = new EventEmitter();
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  taskId;
   // trackChangeProjectWise;
   // trackChangeDeveloperWise;
   // projects;
@@ -112,11 +113,16 @@ export class ChildComponent  {
   }
 
   onTrackDrop(event){
-    console.log("kai chale che", event);
+    console.log("kai chale che", event, this.taskId);
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
+    console.log("kai chale che", event, this.taskId);
     this.talkDrop.emit(event);
+  }
+
+  ondrag(task){
+    console.log(task);
   }
   
 }

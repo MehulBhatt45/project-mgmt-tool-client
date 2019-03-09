@@ -140,12 +140,7 @@ export class ProjectDetailComponent implements OnInit {
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-
-			status : new FormControl({value: '', disabled: true}, Validators.required),
-			files: new FormControl(),
-
+			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
@@ -209,6 +204,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		console.log(event.container.id, event.container.data[0]);
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -216,8 +212,7 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
+			// this.updateStatus(event.container.id, event.container.data[0]);
 		}
 	}
 
@@ -240,7 +235,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -346,10 +341,18 @@ export class ProjectDetailComponent implements OnInit {
 		task.dueDate = $("#dueDate").val();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
-
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
-		this._projectService.addTask(task).subscribe((res:any)=>{
+		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
@@ -390,10 +393,12 @@ export class ProjectDetailComponent implements OnInit {
 			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
 		}
 		console.log(data);
-		this._commentService.addComment(data).subscribe(res=>{
+		this._commentService.addComment(data).subscribe((res:any)=>{
 			console.log(res);
 			this.comment = "";
 			this.model.editorData = 'Enter comments here';
+			this.files = [];
+			this.getAllCommentOfTask(res.taskId);
 		},err=>{
 			console.error(err);
 		})
@@ -415,8 +420,8 @@ export class ProjectDetailComponent implements OnInit {
 	// 		})
 	// 	})
 	// }
-	onKey(searchText,$event){
-		console.log(event, this.project);
+	onKey(searchText){
+		console.log(this.project);
 		var dataToBeFiltered = [this.project];
 		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
