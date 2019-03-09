@@ -8,11 +8,13 @@
       <!-- Logo -->
       <li>
         <div class="logo-wrapper waves-light">
-          <a href="#"> <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid" style="border-radius: 50%;margin-left: 19px;"></a>
+          <a href="#"> <!-- <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid"> -->
+            <img src="{{currentUser.fileName}}" onerror="this.src='assets/4.jpeg'" class="img-fluid">
+          </a>
         </div>
       </li>
-      <li><h2 style="margin-top: 45px;
-      text-align: center;">Rao Infotech</h2></li>
+      <li><h2 style="margin-top: 96px;
+      text-align: center;">{{currentUser.name}}</h2></li>
       <!--/. Logo -->
       <!--Social-->
       <li class="icon">

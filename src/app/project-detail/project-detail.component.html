@@ -158,6 +158,9 @@
 								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
 							</div>
+							<div *ngIf="currentUser.userRole=='projectManager'">
+								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
+							</div>
 							<div>
 								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
 							</div>
@@ -195,7 +198,7 @@
 					</div>
 					<div class="padding-20">
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<div class="btn btn-primary" (click)="fileUpload.click()">
+						<div class="btn btn-default" (click)="fileUpload.click()">
 							<span>Upload image with comment</span>
 							<input type="file" #fileUpload name="fileUpload" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 						</div>

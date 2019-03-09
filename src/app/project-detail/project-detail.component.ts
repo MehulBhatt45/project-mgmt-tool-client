@@ -450,4 +450,13 @@ export class ProjectDetailComponent implements OnInit {
 	onSelectFile(event){
 			this.files = event.target.files;
 	}
+	deleteTask(taskId){
+		console.log(taskId);
+		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			console.log("Delete Task======>" , res);
+			this.task = res;
+		},(err:any)=>{
+			console.log("error in delete Task=====>" , err);
+		});
+	}
 }

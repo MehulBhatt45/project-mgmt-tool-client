@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
+
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -19,16 +20,23 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	addUserProfile;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	developers;
 	editTaskForm;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	constructor(private router: Router,
+	files : FileList;
+	constructor(private router: Router, private formBuilder: FormBuilder,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
-		
+		this.addUserProfile = this.formBuilder.group({
+			name:new FormControl( '', [Validators.required]),
+			password:new FormControl('',[Validators.required]),
+			email: new FormControl('', [Validators.required, Validators.email]),
+			userrole:new FormControl('',[Validators.required]),
+			fileName:new FormControl('',[Validators.required]),
+		}); 
 		this.createEditTaskForm();
-		
 	}
 
 	getEmptyTracks(){
@@ -214,4 +222,16 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
+	changeFile(e){
+		console.log(e.target.files);
+		var userId = JSON.parse(localStorage.getItem('login'))._id;
+		console.log("userId===>",this.addUserProfile['userId']);
+		this.files = e.target.files;
+		this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
+			console.log("resss=======>",res);
+			this.addUserProfile = res;
+		},error=>{
+			console.log("errrorrrrrr====>",error);
+		});  
+	}
 }

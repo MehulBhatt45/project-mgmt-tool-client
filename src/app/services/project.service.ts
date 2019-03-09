@@ -255,5 +255,22 @@ export class ProjectService {
 		var id = id;
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
+	deleteTaskById(data){
+		var taskId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId,httpOptions);
+	}
+	uploadFilesToFolder(data, file: FileList){
+		console.log(data);
+		let formData = new FormData();
+		formData.append("userId",data);
+		formData.append("uploadFile",file[0]);
+		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
+	}
 }
 
