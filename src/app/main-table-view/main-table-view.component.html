@@ -229,10 +229,10 @@
 								<div class="form-group col-12 col-lg-6">
 									<label for="assignTo">Assign To</label>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-										<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
 									</select>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-										<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
 									</select>
 								</div>
 								<div class="form-group col-12 col-lg-6">

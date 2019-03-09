@@ -39,7 +39,7 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+	projectTeam;
 	files:FileList;
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
@@ -149,6 +149,13 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				
+				this.projectTeam = res;
+				console.log("response of team============>"  ,res);
+			},(err:any)=>{
+				console.log("err of team============>"  ,err);
+			});
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();

@@ -254,4 +254,8 @@ export class ProjectService {
 		var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
+	getTeamByProjectId(id){
+		var projectId = id;
+		return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);		
+	}
 }
