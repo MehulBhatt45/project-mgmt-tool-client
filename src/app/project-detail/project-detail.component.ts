@@ -8,6 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import * as moment from 'moment';
+
 
 declare var $ : any;
 import * as _ from 'lodash';
@@ -114,17 +116,22 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
+		switch (Number(priority)) {
+			case 4:
+			return {class:"primary", title:"Low"}
 			break;
 
-			case "medium":
-			return "warning"
+			case 3:
+			return {class:"warning", title:"Medium"}
 			break;
 
-			case "high":
-			return "danger"
+			case 2:
+			return {class:"success", title:"High"}
+			break;
+
+
+			case 1:
+			return {class:"danger", title:"Highest"}
 			break;
 
 			default:
@@ -204,7 +211,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
-		console.log(event.container.id, event.container.data[0]);
+		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -212,7 +219,7 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			// this.updateStatus(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
 
@@ -235,7 +242,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				 this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -257,18 +264,24 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
-	sortTasksByPriority(data){
+	sortTasksByPriority(type){
+
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
 			console.log("sorted output = ",track.tasks);
 		});
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
+		console.log("nthi avtu=======>",custom_sort1);
 	}
 	getTitle(name){
 		if(name){
@@ -296,6 +309,11 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	openModel(task){
 		console.log(task);
+		var currentDate = moment();
+		var date2 = task.dueDate;
+		var date3 = moment(date2);
+		var no_Of_Days = date3.diff(currentDate,'days');
+		task.dueDate = no_Of_Days;
 		this.task = task;
 		this.getAllCommentOfTask(task._id);
 		$('#fullHeightModalRight').modal('show');
@@ -335,7 +353,8 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-		task['projectId']= this.projectId; 
+		task['projectId']= this.projectId;
+		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
 		task.dueDate = $("#dueDate").val();

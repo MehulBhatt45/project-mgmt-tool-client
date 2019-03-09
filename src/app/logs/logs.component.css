@@ -6,7 +6,7 @@
 }
 .card-header{
 	border-radius: 3px;
-	margin: 0px 10px;
+	margin: 0px 15px;
 	box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(156,39,176,.4);
 }
 .card .card-header{
@@ -18,4 +18,10 @@
 }
 th, td{
 	text-align: left;
+}
+.card-header {
+    background-color: #372e5f;
+}
+.text-primary{
+	color: #372e5f !important;
 }
