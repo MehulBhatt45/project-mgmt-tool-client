@@ -165,7 +165,7 @@
 					</div>
 					<hr>
 					<h2>Comments</h2>
-					<div *ngIf="task.comment && task.comment.length>0">
+					<div *ngIf="comments && comments.length>0">
 						<div class="comment_area">
 							<div class="comment_section" *ngFor = "let i of comments">
 								<div class="card">
@@ -195,18 +195,18 @@
 					</div>
 					<div class="padding-20">
 						<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<div class="btn btn-primary" (click)="fileUpload.click()">
+						<div class="btn btn-primary" (click)="commentImg.click()">
 							<span>Upload image with comment</span>
-							<input type="file" #fileUpload name="fileUpload" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+							<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 						</div>
 						<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer justify-content-center">
+			<!-- <div class="modal-footer justify-content-center">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-default">Save changes</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
@@ -234,7 +234,7 @@
 						<div class=" row form-group col-12">
 							<button class="btn btn-default" (click)="fileUpload.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" formControlName="files" [(ngModel)]="newTask.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
 						</div>
 						<div class="row no-margin no padding" >
