@@ -146,6 +146,10 @@
 									<label><strong>Prority: &nbsp;</strong></label>
 									<span>{{task.priority}}</span>
 								</p>
+								<p *ngIf="task.dueDate">
+									<label><strong>DueDay: &nbsp;</strong></label>
+									<span>{{task.dueDate}}</span>
+								</p>
 							</div>
 							<div class="col-12 col-md-4">
 								<p>start time end time</p>

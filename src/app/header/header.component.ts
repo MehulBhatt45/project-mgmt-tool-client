@@ -4,6 +4,7 @@ import { LoginService } from '../services/login.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
+import * as moment from 'moment';
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -189,11 +190,12 @@ export class HeaderComponent implements OnInit {
 		},1000);
 	}
 	saveTheData(task){
+
 		task['projectId']= this.projectId; 
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
-		console.log(task);
+		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
+		console.log("task here==>>>",task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		console.log(subUrl);
