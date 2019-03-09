@@ -19,9 +19,9 @@ export class UserprofileComponent implements OnInit {
 	finalarr = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-	constructor(private route: ActivatedRoute,
-		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 
-	}
+	constructor(private route: ActivatedRoute,public _alertService: AlertService,
+		private router: Router, public _projectService: ProjectService,) { }
+
 	
 	ngOnInit() {
 		this.getAllProjects();
@@ -41,9 +41,9 @@ export class UserprofileComponent implements OnInit {
 						this.projectArr.push(task);
 					}
 				})
-				
+
 			})
-//			this.projectArr = this.projectArr[0];
+			//			this.projectArr = this.projectArr[0];
 			this.finalarr.push(this.projectArr[0]);
 
 			console.log("response======>",this.finalarr);
@@ -52,10 +52,8 @@ export class UserprofileComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	
+
 
 }
-
-
 
 
