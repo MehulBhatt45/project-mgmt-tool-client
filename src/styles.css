@@ -296,7 +296,7 @@ nav.navbar {
 	/*border-radius: 8px;*/
 	/*border: 3px solid #007bff;*/
 	/*box-shadow: 0 0 0 3px #007bff80;*/
-	border-left: 3px solid #f33838;
+	border-left: 3px solid #ff0000;
 	/*background-color: #b66d38;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
@@ -307,7 +307,7 @@ nav.navbar {
 .warning{
 	padding: 10px;
 	/*border-radius: 8px;*/
-	border-left: 3px solid #ffc202;
+	border-left: 3px solid #ffee21;
 	/*box-shadow: 0 0 0 3px #f16e8880;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
@@ -317,7 +317,7 @@ nav.navbar {
 .success{
 	padding: 10px;
 	/*border-radius: 8px;*/
-	border-left: 3px solid #fe7125;
+	border-left: 3px solid #ff8100;
 	/*box-shadow: 0 0 0 3px #28a74580;*/
 	border-bottom-left-radius: 2px;
 	border-top-left-radius: 2px;
