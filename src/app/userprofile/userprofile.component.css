@@ -1,10 +1,22 @@
 .reset_password{
 	float: right;
-	margin-top: -35px;
-}
+	margin-top: 5px;
+    }
 .img_card{
+	margin-top: 20px;
 	height: 160px;
 	width: 180px;
+}
+.profile_icon{
+	margin-top: 50px;
+	margin-left: 85px;
+}
+.nav-tabs .nav-link.active {
+    background-color: #42396D;
+}
+.user_detail{
+	margin-top: 20px;
+	margin-left: 20px;
 }
 
 .nav-link{

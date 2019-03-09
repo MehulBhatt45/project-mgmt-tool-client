@@ -186,6 +186,9 @@ table {
   float: left!important;
   width: 100px;
 }
+.float-left{
+  float: right !important;
+}
 .icon_check{
   padding: 0;
 }
