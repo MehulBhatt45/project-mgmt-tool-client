@@ -8,12 +8,11 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
-import * as moment from 'moment';
-
 
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -45,7 +44,12 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+	projectTeam;
+	// files:FileList;
+
 	files:Array<File> = [];
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -147,6 +151,7 @@ export class ProjectDetailComponent implements OnInit {
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
+			dueDate : new FormControl('',Validators.required),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
@@ -180,6 +185,13 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				
+				this.projectTeam = res;
+				console.log("response of team============>"  ,res);
+			},(err:any)=>{
+				console.log("err of team============>"  ,err);
+			});
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
@@ -309,11 +321,6 @@ export class ProjectDetailComponent implements OnInit {
 	}
 	openModel(task){
 		console.log(task);
-		var currentDate = moment();
-		var date2 = task.dueDate;
-		var date3 = moment(date2);
-		var no_Of_Days = date3.diff(currentDate,'days');
-		task.dueDate = no_Of_Days;
 		this.task = task;
 		this.getAllCommentOfTask(task._id);
 		$('#fullHeightModalRight').modal('show');
@@ -357,7 +364,9 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
+		console.log(task.dueDate);
+		console.log(task.title);
+		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
 		let data = new FormData();

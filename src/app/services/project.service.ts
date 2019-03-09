@@ -207,7 +207,7 @@ export class ProjectService {
 		formdata.append('published',data.published);
 		formdata.append('expireon',data.expireon);
 		formdata.append('images',data.images);
-		
+
 		for(var i =0; i < file.length; i++){
 			formdata.append("uploadFile",file[i]);
 		}
@@ -219,7 +219,7 @@ export class ProjectService {
 	getNotice(){
 		return this.http.get(config.baseApiUrl+"notice/allnotice");
 	}
-	
+
 	deleteProjectById(data){
 		var projectId = data._id;
 		const httpOptions = {
@@ -240,6 +240,12 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 
+	getTeamByProjectId(id){
+		var projectId = id;
+		return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
+	}	
+
+
 	addTask(data){
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -255,22 +261,43 @@ export class ProjectService {
 		var id = id;
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
-	deleteTaskById(data){
-		var taskId = data._id;
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId,httpOptions);
-	}
-	uploadFilesToFolder(data, file: FileList){
-		console.log(data);
-		let formData = new FormData();
-		formData.append("userId",data);
-		formData.append("uploadFile",file[0]);
-		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
-	}
-}
 
+	addUser_with_file(body,files:any){
+		console.log("fhvg=>",files);
+		let formdata = new FormData();
+		formdata.append('fname',body.fname);
+		formdata.append('lname',body.lname);
+		formdata.append('email',body.email);
+		formdata.append('userRole',body.userRole);
+		formdata.append('password',body.password);
+		formdata.append('joiningDate',body.date);
+		formdata.append('phone',body.mobile);
+		formdata.append('experience',body.experience);
+		formdata.append('profilePhoto',files[0]);
+		formdata.append("profilePhoto",files[1]);
+		// for(var i =0; i < files.length; i++){
+			// 	formdata.append("uploadFile",files[i]);
+			// }
+			console.log("body===>>>",body);
+			return this.http.post(config.baseApiUrl+"user/signup",formdata);
+		}
+	
+		deleteTaskById(data){
+			var taskId = data._id;
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type':  'application/json',
+					'x-access-token':  JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId,httpOptions);
+		}
+		uploadFilesToFolder(data, file: FileList){
+			console.log(data);
+			let formData = new FormData();
+			formData.append("userId",data);
+			formData.append("uploadFile",file[0]);
+			return this.http.post(config.baseApiUrl+"project/upload-file", formData);
+		}
+
+	}
