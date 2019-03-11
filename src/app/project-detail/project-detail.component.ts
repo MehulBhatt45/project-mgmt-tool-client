@@ -44,6 +44,7 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers: any
 	loader : boolean = false;
+
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
@@ -165,10 +166,17 @@ export class ProjectDetailComponent implements OnInit {
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
+		// var refresh;
 		$('#my_button').on('click', function(){
-			alert('Button clicked. Disabling...');
+			// alert('Button clicked. Disabling...');
 			$('#my_button').attr("disabled", true);
+			$('#myDIV').css('display','block');
+
 		});
+		// function myFunction() {
+		// 	 document.getElementById("myDIV").append (`<i  class="fa fa-refresh refresh"></i>`);
+		// 	// element.classList.toggle("mystyle");
+		// }
 	}
 
 	getAllDevelopers(){
@@ -198,13 +206,13 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("response of team============>"  ,res);
 				this.projectTeam = res.Teams;
 				this.projectTeam.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
-			})
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+				})
 				console.log("response for team============>"  ,this.projectTeam);
 
 				
@@ -401,6 +409,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
+		
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -426,6 +435,8 @@ export class ProjectDetailComponent implements OnInit {
 			// this.getProject(this.projectId);
 		},err=>{
 			// $('.alert').alert()
+			var err;
+
 			console.log(err);
 		})
 	}
