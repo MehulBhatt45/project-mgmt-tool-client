@@ -8,6 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import {LeaveComponent} from '../leave/leave.component';
+
 
 declare var $ : any;
 import * as _ from 'lodash';
@@ -44,8 +46,10 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	pro;
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -160,7 +164,11 @@ export class ProjectDetailComponent implements OnInit {
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
-		})
+		});
+		$('#my_button').on('click', function(){
+			alert('Button clicked. Disabling...');
+			$('#my_button').attr("disabled", true);
+		});
 	}
 
 	getAllDevelopers(){
@@ -186,16 +194,44 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-				
-				this.projectTeam = res;
+
 				console.log("response of team============>"  ,res);
+				this.projectTeam = res.Teams;
+				this.projectTeam.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
+				console.log("response for team============>"  ,this.projectTeam);
+
+				
+
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
+
+
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				
+				this.pro = res;
+				console.log("project detail===>>>>",res);
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+
+
+
+
+
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
+				console.log("project title======>>>>",res.title);
 				this.project.sort(custom_sort);
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
@@ -389,6 +425,7 @@ export class ProjectDetailComponent implements OnInit {
 			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
+			// $('.alert').alert()
 			console.log(err);
 		})
 	}

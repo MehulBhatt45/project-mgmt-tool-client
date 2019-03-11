@@ -243,6 +243,7 @@ export class MainTableViewComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
 
 	getTitle(name){
@@ -263,7 +264,7 @@ export class MainTableViewComponent implements OnInit {
 		}
 	}
 	
-	
+
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");

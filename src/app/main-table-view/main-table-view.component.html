@@ -34,6 +34,7 @@
 				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
 				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
 				<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
+>>>>>>> 1a9af4daa7e9e3c9af6c872f4fe893408826aeba
 			</div>
 		</div> -->
 	<!-- 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
@@ -244,10 +245,10 @@
 								<div class="form-group col-12 col-lg-6">
 									<label for="assignTo">Assign To</label>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
 									</select>
 									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
 									</select>
 								</div>
 								<div class="form-group col-12 col-lg-6">
@@ -270,7 +271,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+					<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid ||!empty">Save changes</button>
 				</div>
 			</div>
 		</div>

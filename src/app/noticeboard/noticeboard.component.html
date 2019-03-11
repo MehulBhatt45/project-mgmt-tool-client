@@ -4,7 +4,7 @@
 		<div *ngIf="notice.published">
 			<div *ngIf="notice.images">
 				<div *ngFor="let image of notice.images">
-					<img src="http://localhost/project_mgmt_tool/server{{image}}" height="300" width="300">
+					<img src="{{path}}{{image}}" height="300" width="300">
 				</div>
 				<div class="card-body">
 					<h4 class="card-title">{{notice.title}}</h4>

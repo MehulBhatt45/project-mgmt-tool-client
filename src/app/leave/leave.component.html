@@ -1,0 +1,65 @@
+<div class="container mt-6">
+	<div class="card panels-card">
+		<h5 class="top-nav-collapse white-text text-center py-4">
+			<strong>Leave Application</strong>
+		</h5>
+		<div class="card-body box pt-1">
+			<p>Please fill in all the details. Wait for the approval from the management</p>
+			<form [formGroup]='addForm'>
+				<div class="form-group">
+					<label for="email">Email address</label>
+					<input class="form-control" type="text" formControlName="email" placeholder="Your email"/>
+				</div>
+				<div class="form-group">
+					<label for="email">Name</label>
+					<input class="form-control" type="text" formControlName="name" placeholder="Your answer"/>
+				</div>
+				<div class="form-group">
+					<label>Leave date(s)</label>
+					<div class="md-form">
+						<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Duration :</label>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="firsthalf-day">
+						<label class="form-check-label" for="leaveDuration1">First Half</label>	
+					</div>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="leaveDuration2" formControlName="leaveDuration" value="secondhalf-day">
+						<label class="form-check-label" for="leaveDuration2">Second Half</label>
+					</div>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="full-day">
+						<label class="form-check-label" for="leaveDuration3">Full Day</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Type of leave :</label>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="TypeOfLeave1" formControlName="typeOfLeave" value="sickleave">
+						<label class="form-check-label" for="TypeOfLeave1">Sick leave (Illness or Injury)</label>
+					</div>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="TypeOfLeave2" formControlName="typeOfLeave" value="emergencyleave">
+						<label class="form-check-label" for="TypeOfLeave2">Emergency leave</label>
+					</div>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="TypeOfLeave3" formControlName="typeOfLeave" value="leavewithoutpay">
+						<label class="form-check-label" for="TypeOfLeave3">Leave without pay</label>
+					</div>
+					<div class="form-check">
+						<input type="radio" class="form-check-input" id="TypeOfLeave4" formControlName="typeOfLeave" value="personalleave">
+						<label class="form-check-label" for="TypeOfLeave4">Personal Leave</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="email">Reason for leave</label>
+					<input class="form-control" type="text" formControlName="email" placeholder="Your answer"/>
+				</div>
+				<button type="button" class="btn btn-default" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
+			</form>
+		</div>
+	</div>	
+</div>
