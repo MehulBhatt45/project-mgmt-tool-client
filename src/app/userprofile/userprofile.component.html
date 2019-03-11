@@ -24,7 +24,8 @@
 				<p> Details </p>
 			</div>
 		</div>
-		<div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || 'admin'">
+		<!-- <div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || 'admin'"> -->
+			<div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || admin">
 			<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
 		</div>
 	</div>
