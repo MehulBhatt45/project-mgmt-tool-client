@@ -185,7 +185,7 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				
-				this.projectTeam = res;
+				this.projectTeam = res.team;
 				console.log("response of team============>"  ,res);
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
