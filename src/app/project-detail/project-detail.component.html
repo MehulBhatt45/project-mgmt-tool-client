@@ -157,6 +157,7 @@
 											<p>
 												{{i.content}}
 											</p>
+											<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 										</div>
 									</div>
 								</div>
@@ -215,11 +216,11 @@
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
 
-								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
-								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{projectTeam.name}}</option>
+								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 
 								</select>
 							</div>

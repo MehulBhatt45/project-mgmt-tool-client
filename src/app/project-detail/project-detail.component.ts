@@ -8,7 +8,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
-
+import { config } from '../config'
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
@@ -58,31 +58,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
 	}
 
-	getEmptyComments(){
-		this.comments = [{
-			"profilePhoto": "../assets/3.png",
-			"developerName": "Komal Sakhiya",
-			"comment": "this is my first comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/5.jpg",
-			"developerName": "Mehul Bhatt",
-			"comment": "this is my second comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/6.jpg",
-			"developerName": "Foram Trada",
-			"comment": "this is my third comment in this task.........."
-		}
-		];
-	}
+	
 	getEmptyTracks(){
 		this.tracks = [
 		{
@@ -187,7 +169,7 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				
-				this.projectTeam = res;
+				this.projectTeam = res.Teams;
 				console.log("response of team============>"  ,res);
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
@@ -475,6 +457,7 @@ export class ProjectDetailComponent implements OnInit {
 	getAllCommentOfTask(taskId){
 		this._commentService.getAllComments(taskId).subscribe(res=>{
 			this.comments = res;
+			console.log(this.comments);
 		}, err=>{
 			console.error(err);
 		})
