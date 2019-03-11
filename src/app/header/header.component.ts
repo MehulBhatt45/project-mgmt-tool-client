@@ -123,7 +123,9 @@ export class HeaderComponent implements OnInit {
 	}
 
 	getInitialsOfName(name){
+
 		// console.log(name);
+
 		if(name != 'admin'){
 		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
 		return str.toUpperCase();

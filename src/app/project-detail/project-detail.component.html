@@ -7,6 +7,7 @@
 <!-- <div class="body_content" *ngIf="!loader"> -->
 
 	<div class="row justify-content-end">
+
 <!-- <div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
 			<option value="all" selected>All Projects</option>
@@ -19,6 +20,7 @@
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
 	</div> -->
+	
 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 		<div class="dropdown-menu dropdown-default">
@@ -36,20 +38,18 @@
 			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
-
 </div>
-<!-- </div> -->
+
 <div class="row">
 	<div class="form-group w-100">
 		<label for="exampleForm2">Search Task</label>
-		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText,$event)">
+		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
 	</div>
-
-
 </div>
 <div *ngIf="developers">
-	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 </div>
+
 <!-- <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -58,7 +58,7 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
 			</div>
 
 		</div>
@@ -100,7 +100,7 @@
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
 				<!-- <button type="button" class="search_btn" (click)="searchTask()"><i class="fa fa-search"></i></button> -->
 
-			
+
 		<!-- <div class="all_card">
 			<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 				<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -154,7 +154,7 @@
 		</div>
 	</div>
 </div> 
- -->
+-->
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 		<div class="modal-content">
