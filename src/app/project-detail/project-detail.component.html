@@ -6,7 +6,12 @@
 </div>
 <!-- <div class="body_content" *ngIf="!loader"> -->
 
+	<div class="row">
+		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
+	</div>
+
 	<div class="row justify-content-end">
+
 <!-- <div class="form-group">
 		<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
 			<option value="all" selected>All Projects</option>
@@ -19,6 +24,7 @@
 			<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 		</select>
 	</div> -->
+	
 	<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 		<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 		<div class="dropdown-menu dropdown-default">
@@ -36,9 +42,8 @@
 			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
-
 </div>
-<!-- </div> -->
+
 <div class="row">
 	<div class="form-group w-100">
 		<label for="exampleForm2">Search Task</label>
@@ -48,6 +53,7 @@
 <div *ngIf="developers">
 	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 </div>
+
 <!-- <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -56,7 +62,6 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
-			</div>
 
 		</div>
 
@@ -323,38 +328,39 @@
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-
+								
 								</select>
 							</div>
-							<div class="form-group col-12 col-lg-6">
-								<label for="priority">Priority</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
-									<option value="4">Low</option>
-									<option value="3">Medium</option>
-									<option value="2">High</option>
-									<option value="1">Highest</option>
-								</select>
-							</div>
-						</div>
-						<div class="row no-margin no padding" >
-							<div class="form-group col-12">
-								<label for="dueDate">Due Days</label>
-								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
-							</div>
-						</div>
-						<div class="form-group col-12">
-							<label for="status">Status</label>
-							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
-								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-							</select>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)">Save changes</button>
-			</div>
-		</div>
+<!-- 						</div>
+-->							<div class="form-group col-12 col-lg-6">
+	<label for="priority">Priority</label>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+		<option value="4">Low</option>
+		<option value="3">Medium</option>
+		<option value="2">High</option>
+		<option value="1">Highest</option>
+	</select>
+</div>
+</div>
+<div class="row no-margin no padding" >
+	<div class="form-group col-12">
+		<label for="dueDate">Due Days</label>
+		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 	</div>
+</div>
+<div class="form-group col-12">
+	<label for="status">Status</label>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
+		<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+	</select>
+</div>
+</form>
+</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+	<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid">Save changes</button>
+</div>
+</div>
+</div>
 </div>

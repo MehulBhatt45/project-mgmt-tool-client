@@ -127,6 +127,7 @@ export class ProjectService {
 			return this.http.put(config.baseApiUrl+"tasks/update-task-status-complete", data, httpOptions);
 		}
 
+
 		getlogs(memberId){
 			console.log("memberID =========>" , memberId);
 			const httpOptions = {
@@ -168,7 +169,6 @@ export class ProjectService {
 			var obj = { projectId: id };
 			return this.http.post(config.baseApiUrl+"project/get-all-files", obj);
 		}
-
 
 		deleteSelectedFile(data){
 			return this.http.post(config.baseApiUrl+"project/delete-file", data);	

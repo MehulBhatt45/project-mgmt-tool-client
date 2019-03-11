@@ -49,7 +49,6 @@ export class VisitUserProfileComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	
 
 }
 

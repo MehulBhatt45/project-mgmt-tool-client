@@ -44,6 +44,7 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	pro;
 
 	projectTeam;
 	// files:FileList;
@@ -187,6 +188,7 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				
+
 				console.log("response of team============>"  ,res);
 				this.projectTeam = res.Teams;
 				console.log("projectTeam____++++",this.projectTeam);
@@ -194,15 +196,33 @@ export class ProjectDetailComponent implements OnInit {
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
+
+
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				
+				this.pro = res;
+				console.log("project detail===>>>>",res);
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+
+
+
+
+
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
+				console.log("project title======>>>>",res.title);
+				this.project.sort(custom_sort);
+				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(this.currentUser.userRole!='projectManager'){
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
 							}
@@ -219,6 +239,9 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);

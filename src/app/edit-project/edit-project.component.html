@@ -64,11 +64,11 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<a *ngIf="!developerShow" (click)="addRemoveDeveloper(j._id)">remove</a>
+								<a *ngIf="!showDeveloper" (click)="addRemoveDeveloper(j._id)">remove</a>
 							</div>
 						</div>
 						<button class="btn btn-default btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
-						<div *ngIf="developerShow"> 
+						<div *ngIf="showDeveloper"> 
 							<div class="row" *ngFor="let i of availDevelopers">
 								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
 								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
