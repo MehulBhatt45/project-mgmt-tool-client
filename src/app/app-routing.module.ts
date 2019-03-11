@@ -132,6 +132,7 @@ const routes: Routes = [
 			component:ResetPasswordComponent
 		},
 		{
+
 			path:'add-employee',
 			component:AddEmployeeComponent
 			
@@ -142,7 +143,9 @@ const routes: Routes = [
 		},
 		{
 
+
 			path:'visit-user-profile',
+
 			//pathMatch: "full",
 			component:VisitUserProfileComponent
 		},

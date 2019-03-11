@@ -65,8 +65,6 @@
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
 
-			</div>
-
 		</div>
 
 		<div class="row justify-content-end">
@@ -270,6 +268,7 @@
 											<p>
 												{{i.content}}
 											</p>
+											<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 										</div>
 									</div>
 								</div>
@@ -298,6 +297,8 @@
 	</div>
 </div>
 
+
+<!-- Modal Start Here -->
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -324,49 +325,52 @@
 								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
 						</div>
-						<div class="row no-margin no padding" >
+						<div class="row no-margin no-padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
 
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
-
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 
 								</select>
 							</div>
-<!-- 						</div>
--->							<div class="form-group col-12 col-lg-6">
-	<label for="priority">Priority</label>
-	<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
-		<option value="4">Low</option>
-		<option value="3">Medium</option>
-		<option value="2">High</option>
-		<option value="1">Highest</option>
-	</select>
-</div>
-</div>
-<div class="row no-margin no padding" >
-	<div class="form-group col-12">
-		<label for="dueDate">Due Days</label>
-		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
-	</div>
-</div>
-<div class="form-group col-12">
-	<label for="status">Status</label>
-	<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
-		<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-	</select>
-</div>
-</form>
-</div>
-</div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-	<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid">Save changes</button>
-</div>
-</div>
-</div>
-</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+									<option value="4">Low</option>
+									<option value="3">Medium</option>
+									<option value="2">High</option>
+									<option value="1">Highest</option>
+								</select>
+							</div>
+						</div>
+						<div class="row no-margin no padding" >
+							<div class="form-group col-12">
+								<label for="dueDate">Due Days</label>
+								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+							</div>
+						</div>
+						<div class="form-group col-12">
+							<label for="status">Status</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
+								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)">Save changes</button><i _ngcontent-c2="" aria-hidden="true" class="fa fa-refresh refresh"></i>
+				<div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+					<strong>Holy guacamole!</strong> You should check in on some of those fields below.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- Modal End Here -->

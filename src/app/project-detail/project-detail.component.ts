@@ -8,9 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import { config } from '../config'
 import {LeaveComponent} from '../leave/leave.component';
-
-
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
@@ -62,31 +61,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
 	}
 
-	getEmptyComments(){
-		this.comments = [{
-			"profilePhoto": "../assets/3.png",
-			"developerName": "Komal Sakhiya",
-			"comment": "this is my first comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/5.jpg",
-			"developerName": "Mehul Bhatt",
-			"comment": "this is my second comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/6.jpg",
-			"developerName": "Foram Trada",
-			"comment": "this is my third comment in this task.........."
-		}
-		];
-	}
+	
 	getEmptyTracks(){
 		this.tracks = [
 		{
@@ -164,7 +145,11 @@ export class ProjectDetailComponent implements OnInit {
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
-		})
+		});
+		$('#my_button').on('click', function(){
+			alert('Button clicked. Disabling...');
+			$('#my_button').attr("disabled", true);
+		});
 	}
 
 	getAllDevelopers(){
@@ -189,7 +174,9 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+
 			
+
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res.pmanagerId;
 				console.log("project detail===>>>>",this.pro);
@@ -220,7 +207,6 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
-				console.log("project title======>>>>",res.title);
 				this.project.sort(custom_sort);
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
@@ -413,8 +399,10 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
-			// this.getProject(this.projectId);
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
 		},err=>{
+			// $('.alert').alert()
 			console.log(err);
 		})
 	}
@@ -524,3 +512,4 @@ export class ProjectDetailComponent implements OnInit {
 						});
 					}
 				}
+
