@@ -21,11 +21,13 @@
 				<p> {{currentUser.name}}</p>
 				<p> {{ currentUser.email}} </p>
 				<p> {{ currentUser.userRole}} </p>
-				<p> Details </p>	
-			</div>	
+				<p> Details </p>
+			</div>
+		</div>
+		<div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || 'admin'">
+			<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
 		</div>
 	</div>
-
 	<div class="user_activity">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item">
@@ -43,14 +45,11 @@
 		</ul>
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-				<h1> All Projects </h1>
-				<ul>
-					<li *ngFor="let project of projects">
-						{{project.title}}
-					</li>
-				</ul>
-				<div>
-					<button class="btn btn-default">Notify</button>	
+				<div class="form-group">
+					<ul  *ngIf="currentUser.userRole =='user'">
+						<li> My Projects  {{finalarr.length}}</li> <br>
+						<li *ngFor = "let project of finalarr">{{project.title}}</li>
+					</ul>
 				</div>
 			</div>
 			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">rtgyhtjuy.</div>
@@ -58,5 +57,47 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade center" id="editEmailModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">title</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editTEmail">
+						<div class="form-group col-12">
+							<div class="form-group">
+								<label for="subject">Subject</label>
+								<textarea id="subject" formControlName="subject" class="form-control md-textarea"></textarea>
+							</div>
+						</div>
+						<div class="form-group col-12">
+
+							<label for="content">Content</label>
+							<textarea id="content" formControlName="content" class="form-control md-textarea"></textarea>
+						</div>
+
+						<div class="form-group col-12 ">
+
+							<label for="sendTo">Send To</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="sendTo" formControlName="sendTo" >
+								<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" (click)="sendMail(editTEmail.value)">Send</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 

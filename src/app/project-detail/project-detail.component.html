@@ -43,14 +43,13 @@
 <div class="row">
 	<div class="form-group w-100">
 		<label for="exampleForm2">Search Task</label>
-		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText,$event)">
+		<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
 	</div>
-
-
 </div>
 <div *ngIf="developers">
-	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)"></app-child>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 </div>
+
 <!-- <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
@@ -59,7 +58,7 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
->>>>>>> ce62b64b8a323ae6a1557cde06e02cafb7975f3e
+
 			</div>
 
 		</div>
