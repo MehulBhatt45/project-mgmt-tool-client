@@ -187,8 +187,10 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				
-				this.projectTeam = res;
 				console.log("response of team============>"  ,res);
+				this.projectTeam = res.Teams;
+				console.log("projectTeam____++++",this.projectTeam);
+
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
@@ -493,4 +495,5 @@ export class ProjectDetailComponent implements OnInit {
 							console.log("error in delete Task=====>" , err);
 						});
 					}
+
 				}
