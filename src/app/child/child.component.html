@@ -1,6 +1,6 @@
 <div class="all_card">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
-		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
+		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="track of tracks | orderBy: '-createdAt'">
 			<div class="card">
 				<div class="card-header">
 					<span class="track_title">{{track.title}}</span>
@@ -47,7 +47,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label class="float-left">{{(task.assignTo)?task.assignTo.name:'null'}}</label>
+								<label class="float-left"> <a [routerLink]="['/userprofile']">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>

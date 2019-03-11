@@ -149,7 +149,11 @@ export class MainTableViewComponent implements OnInit {
 			this._projectService.getAllTasks().subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
+				// this.tracks.tasks.reverse();
 				this.tasks = res;
+				this.tasks.sort(custom_sort);
+				this.tasks.reverse();
+				// this.tracks.tasks.reverse();
 				console.log("PROJECT=================>", this.tasks);
 				_.forEach(this.tasks , (task)=>{
 					// _.forEach(task.tasks, (tsk)=>{
@@ -174,6 +178,10 @@ export class MainTableViewComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 
 	get trackIds(): string[] {
@@ -256,6 +264,10 @@ export class MainTableViewComponent implements OnInit {
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1a9af4daa7e9e3c9af6c872f4fe893408826aeba
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");

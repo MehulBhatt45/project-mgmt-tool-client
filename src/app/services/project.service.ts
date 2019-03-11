@@ -201,6 +201,7 @@ export class ProjectService {
 	}
 
 	addNotice_with_image(data,file: FileList){
+		console.log("data",data);
 		let formdata = new FormData();
 		formdata.append('title',data.title);
 		formdata.append('desc',data.desc);
@@ -211,8 +212,6 @@ export class ProjectService {
 		for(var i =0; i < file.length; i++){
 			formdata.append("uploadFile",file[i]);
 		}
-
-
 		return this.http.post(config.baseApiUrl+"notice/add-notice/file",formdata);
 	}
 

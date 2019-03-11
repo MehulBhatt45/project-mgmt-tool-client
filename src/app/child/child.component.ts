@@ -119,11 +119,11 @@ export class ChildComponent  {
   }
 
   onTrackDrop(event){
-    console.log("kai chale che", event, this.taskId);
+    // console.log("kai chale che", event, this.taskId);
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
-    console.log("kai chale che", event, this.taskId);
+    // console.log("kai chale che", event, this.taskId);
     this.talkDrop.emit(event);
   }
 
