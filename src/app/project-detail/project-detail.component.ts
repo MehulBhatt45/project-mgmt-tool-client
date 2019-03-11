@@ -196,6 +196,8 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
+				this.project.sort(custom_sort);
+				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
@@ -217,6 +219,9 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
