@@ -6,7 +6,7 @@
 </div>
 <!-- <div class="body_content" *ngIf="!loader"> -->
 
-	<div class="row">
+	<div class="row" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 
@@ -387,7 +387,7 @@
 
 	</div>
 </div>
-<div class="form-group col-12">
+<!-- <div class="form-group col-12">
 	<label for="status">Status</label>
 	<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
 		<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
@@ -402,4 +402,4 @@
 </div>
 </div>
 </div>
-</div>
+</div> -->

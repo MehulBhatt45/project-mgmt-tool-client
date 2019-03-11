@@ -292,17 +292,6 @@ background-color: white;
 #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
 }
-<<<<<<< HEAD
 .modal-header {
     padding: 2rem;
-=======
-.refresh{
-  margin: 0;
-  padding: 5px;
-  font-size: 20px;
-}
-.fa-refresh[_ngcontent-c2] {
-    float: right;
-     margin: 0 !important; 
->>>>>>> 4d6c144081c5929c175873ab1535c93e60b90ca5
 }

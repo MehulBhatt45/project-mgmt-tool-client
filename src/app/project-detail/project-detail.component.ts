@@ -9,8 +9,6 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
 import {LeaveComponent} from '../leave/leave.component';
-
-
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
@@ -213,10 +211,6 @@ export class ProjectDetailComponent implements OnInit {
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
-
-
-
-
 
 
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
