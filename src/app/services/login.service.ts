@@ -45,7 +45,8 @@ export class LoginService {
     }
 
     getUserById(id){
-         return this.http.get(config.baseApiUrl+"user/reset-password"+id);   
+        var id = id;
+         return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
     }
 
     logout() {
