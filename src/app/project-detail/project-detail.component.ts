@@ -382,6 +382,7 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
+			console.log("response task***++",res);
 			this.getProject(res.projectId);
 		},err=>{
 			console.log(err);
