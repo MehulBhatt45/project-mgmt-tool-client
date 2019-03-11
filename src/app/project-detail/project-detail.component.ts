@@ -440,61 +440,61 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("btn tapped");
 	}
 	// onKey(event: any){
-	// 	console.log(event);
-	// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
-	onKey(searchText){
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
+		// 	console.log(event);
+		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		// 	console.log("In Component",task);
+		// 	this.getEmptyTracks();
+		// 	_.forEach(task, (content)=>{
+			// 		_.forEach(this.tracks, (track)=>{
+				// 			if(content.status == track.id){
+					// 				track.tasks.push(content);
+					// 			}
+					// 		})
+					// 	})
+					// }
+					onKey(searchText){
+						console.log(this.project);
+						var dataToBeFiltered = [this.project];
+						var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+						console.log("In Component",task);
+						this.getEmptyTracks();
+						_.forEach(task, (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							})
+						})
+					}
+
+					getAllProjects(){
+						this._projectService.getProjects().subscribe(res=>{
+							this.projects = res;
+						},err=>{
+							this._alertService.error(err);
+							console.log(err);
+						})
+					}
+
+					getAllCommentOfTask(taskId){
+						this._commentService.getAllComments(taskId).subscribe(res=>{
+							this.comments = res;
+						}, err=>{
+							console.error(err);
+						})
+					}
+
+					onSelectFile(event){
+						this.files = event.target.files;
+					}
+					deleteTask(taskId){
+						console.log(taskId);
+						this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+							console.log("Delete Task======>" , res);
+							this.task = res;
+						},(err:any)=>{
+							console.log("error in delete Task=====>" , err);
+						});
+					}
 				}
-			})
-		})
-	}
-
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		})
-	}
-
-	onSelectFile(event){
-			this.files = event.target.files;
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			console.log("error in delete Task=====>" , err);
-		});
-	}
-}
