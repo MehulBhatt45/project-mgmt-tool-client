@@ -15,6 +15,7 @@ export class EditProjectComponent implements OnInit {
 	updateForm:FormGroup;
 	availData;
 	teamShow:boolean = false;
+	showDeveloper:boolean = false;
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
@@ -61,5 +62,27 @@ export class EditProjectComponent implements OnInit {
 				console.log("error in delete project =====>" , err);
 			});
 		}
+	}
+	showTeams(){
+		if(this.teamShow == false){
+			localStorage.setItem("teamShow" , JSON.stringify(true));
+			this.teamShow = true;
+		}
+		else{
+			localStorage.setItem("teamShow" , JSON.stringify(false));
+			this.teamShow = false;	
+		}
+	}
+	getDevelopers(){
+		console.log("show developer" , this.showDeveloper);
+		if(this.showDeveloper == false){
+			localStorage.setItem("showDeveloper" , JSON.stringify(true));
+			this.showDeveloper = true;
+		}
+		else{
+			localStorage.setItem("showDeveloper" , JSON.stringify(false));
+			this.showDeveloper = false;	
+		}
+			
 	}
 }
