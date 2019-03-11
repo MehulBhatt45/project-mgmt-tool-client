@@ -40,6 +40,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { ChildComponent } from './child/child.component';
+import { LeaveComponent } from './leave/leave.component';
 import { AllDeveloperComponent } from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
 
@@ -70,9 +71,14 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
     AddNoticeComponent,
     NoticeboardComponent,
     UserprofileComponent,
+<<<<<<< HEAD
+    LeaveComponent,
+    ],
+=======
     AllDeveloperComponent,
     VisitUserProfileComponent,
        ],
+>>>>>>> 1a9af4daa7e9e3c9af6c872f4fe893408826aeba
 
 
     imports: [
