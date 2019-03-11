@@ -283,3 +283,12 @@ background-color: white;
 /*.modal-full-height{
   max-height: 100%;
 }*/
+#fullHeightModalRight {
+    overflow: hidden !important;
+}
+#fullHeightModalRight .modal-dialog.modal-lg{
+    height: 100%!important;
+}
+#fullHeightModalRight .modal-body{
+    overflow-y: auto!important;
+}

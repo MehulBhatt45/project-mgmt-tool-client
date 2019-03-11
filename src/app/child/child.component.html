@@ -7,6 +7,12 @@
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
 			</div>
+		<!-- 	<div class="card"*ngIf="currentUser.userRole=='projectManager'">
+				<div class="card-header">
+					<span class="track_title">{{track.title}}</span>
+					<span class="card_count_lbl">{{track.tasks.length}}</span>
+				</div>		
+			</div> -->
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)" style="margin: 3px; padding: 3px;">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
