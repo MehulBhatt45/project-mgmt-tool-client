@@ -6,7 +6,7 @@
 </div>
 <!-- <div class="body_content" *ngIf="!loader"> -->
 
-	<div class="row">
+	<div class="row" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 
@@ -64,9 +64,7 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
-
 		</div>
-
 		<div class="row justify-content-end">
 			<div class="form-group" *ngIf="url=='all-item-list'">
 				<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
@@ -94,7 +92,6 @@
 					<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
 					<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
 					<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
-
 				</div>
 			</div>
 		</div>
@@ -132,8 +129,6 @@
 											<li class="icon_check">
 												<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									
-
-
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -369,6 +364,9 @@
 				</div>
 			</div>
 		</div>
+
+	</div>
+</div>
 <!-- 						</div>
 -->							<!-- <div class="form-group col-12 col-lg-6">
 	<label for="priority">Priority</label>
@@ -385,9 +383,7 @@
 		<label for="dueDate">Due Days</label>
 		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control"> -->
 
-	</div>
-</div>
-<div class="form-group col-12">
+<!-- <div class="form-group col-12">
 	<label for="status">Status</label>
 	<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
 		<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
@@ -403,3 +399,4 @@
 </div>
 </div>
 </div>
+ -->

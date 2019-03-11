@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+var $:any;
 
 
 
@@ -10,7 +11,7 @@ import {Router} from '@angular/router';
 	styleUrls: ['./leave.component.css']
 })
 export class LeaveComponent implements OnInit {
-	  addForm:FormGroup; 
+	addForm:FormGroup; 
 
 
 	constructor() {
@@ -20,7 +21,7 @@ export class LeaveComponent implements OnInit {
 			leaveDuration : new FormControl ('',Validators.required),
 			typeOfLeave : new FormControl ('',Validators.required),
 		})
-	 }
+	}
 
 	ngOnInit() {
 		$('.datepicker')
