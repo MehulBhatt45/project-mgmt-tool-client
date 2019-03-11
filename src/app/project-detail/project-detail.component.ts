@@ -49,6 +49,7 @@ export class ProjectDetailComponent implements OnInit {
 	pro;
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -193,6 +194,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+
 				console.log("response of team============>"  ,res);
 				this.projectTeam = res.Teams;
 				this.projectTeam.sort(function(a, b){
@@ -203,9 +205,10 @@ export class ProjectDetailComponent implements OnInit {
 					return 1
 				return 0 //default return value (no sorting)
 			})
-				console.log("response forrr team============>"  ,this.projectTeam);
+				console.log("response for team============>"  ,this.projectTeam);
 
 				
+
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
