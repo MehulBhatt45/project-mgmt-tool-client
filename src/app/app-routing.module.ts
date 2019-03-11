@@ -20,6 +20,14 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import { AllDeveloperComponent} from './all-developer/all-developer.component';
+import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
+
+
+
+
+
+
 
 
 const routes: Routes = [
@@ -93,6 +101,10 @@ const routes: Routes = [
 			component:FileListComponent
 		},
 		{
+			path:'all-developer',
+			component:AllDeveloperComponent
+		},
+		{
 			path:'logs',
 			pathMatch: "full",
 			component: LogsComponent	
@@ -117,6 +129,12 @@ const routes: Routes = [
 			//pathMatch: "full",
 			component:ResetPasswordComponent
 		},
+		{
+			path:'visit-user-profile',
+			//pathMatch: "full",
+			component:VisitUserProfileComponent
+		},
+		
 		{
 			path:'userprofile',
 			component:UserprofileComponent
