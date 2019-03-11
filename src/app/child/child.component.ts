@@ -16,6 +16,7 @@ export class ChildComponent  {
   @Output() trackDrop : EventEmitter<any> = new EventEmitter();
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  taskId;
   // trackChangeProjectWise;
   // trackChangeDeveloperWise;
   // projects;
@@ -67,17 +68,22 @@ export class ChildComponent  {
   }
 
   getPriorityClass(priority){
-    switch (priority) {
-      case "low":
-      return "primary"
+    switch (Number(priority)) {
+      case 4:
+      return {class:"primary", title:"Low"}
       break;
 
-      case "medium":
-      return "warning"
+      case 3:
+      return {class:"warning", title:"Medium"}
       break;
 
-      case "high":
-      return "danger"
+      case 2:
+      return {class:"success", title:"High"}
+      break;
+
+
+      case 1:
+      return {class:"danger", title:"Highest"}
       break;
 
       default:
@@ -112,11 +118,16 @@ export class ChildComponent  {
   }
 
   onTrackDrop(event){
-    console.log("kai chale che", event);
+    // console.log("kai chale che", event, this.taskId);
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
+    // console.log("kai chale che", event, this.taskId);
     this.talkDrop.emit(event);
+  }
+
+  ondrag(task){
+    console.log(task);
   }
   
 }

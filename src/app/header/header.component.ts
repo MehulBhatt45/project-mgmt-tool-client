@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
+import * as moment from 'moment';
+
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -19,16 +21,23 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	addUserProfile;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	developers;
 	editTaskForm;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	constructor(private router: Router,
+	files : FileList;
+	constructor(private router: Router, private formBuilder: FormBuilder,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
-		
+		this.addUserProfile = this.formBuilder.group({
+			name:new FormControl( '', [Validators.required]),
+			password:new FormControl('',[Validators.required]),
+			email: new FormControl('', [Validators.required, Validators.email]),
+			userrole:new FormControl('',[Validators.required]),
+			fileName:new FormControl('',[Validators.required]),
+		}); 
 		this.createEditTaskForm();
-		
 	}
 
 	getEmptyTracks(){
@@ -195,17 +204,20 @@ export class HeaderComponent implements OnInit {
 		},1000);
 	}
 	saveTheData(task){
+
 		task['projectId']= this.projectId; 
+		console.log("ave che ke nai===>",this.projectId);
 		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
-		console.log(task);
+		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
+		console.log("task here==>>>",task);
 		var subUrl; 
 		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log(subUrl);
+		console.log("ama pn jovanu che ho ========>",subUrl);
 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			// this.getProject(this.projectId);
+			this.getProject(this.projectId);
+			console.log("kai vandho pde che===>",this.projectId);
 		},err=>{
 			console.log(err);
 		})
@@ -220,4 +232,16 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
+	changeFile(e){
+		console.log(e.target.files);
+		var userId = JSON.parse(localStorage.getItem('login'))._id;
+		console.log("userId===>",this.addUserProfile['userId']);
+		this.files = e.target.files;
+		this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
+			console.log("resss=======>",res);
+			this.addUserProfile = res;
+		},error=>{
+			console.log("errrorrrrrr====>",error);
+		});  
+	}
 }

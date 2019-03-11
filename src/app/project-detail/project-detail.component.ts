@@ -12,6 +12,7 @@ import { ChildComponent } from '../child/child.component';
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -43,7 +44,12 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+	projectTeam;
+	// files:FileList;
+
 	files:Array<File> = [];
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -114,17 +120,22 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 	getPriorityClass(priority){
-		switch (priority) {
-			case "low":
-			return "primary"
+		switch (Number(priority)) {
+			case 4:
+			return {class:"primary", title:"Low"}
 			break;
 
-			case "medium":
-			return "warning"
+			case 3:
+			return {class:"warning", title:"Medium"}
 			break;
 
-			case "high":
-			return "danger"
+			case 2:
+			return {class:"success", title:"High"}
+			break;
+
+
+			case 1:
+			return {class:"danger", title:"Highest"}
 			break;
 
 			default:
@@ -140,12 +151,8 @@ export class ProjectDetailComponent implements OnInit {
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-
-			status : new FormControl({value: '', disabled: true}, Validators.required),
-			files: new FormControl(),
-
+			dueDate : new FormControl('',Validators.required),
+			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
@@ -178,6 +185,13 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				
+				this.projectTeam = res;
+				console.log("response of team============>"  ,res);
+			},(err:any)=>{
+				console.log("err of team============>"  ,err);
+			});
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
@@ -209,6 +223,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		if (event.previousContainer === event.container) {
 			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 		} else {
@@ -216,8 +231,7 @@ export class ProjectDetailComponent implements OnInit {
 				event.container.data,
 				event.previousIndex,
 				event.currentIndex);
-			console.log(event.container.id, event.container.data[0]);
-			this.updateStatus(event.container.id, event.container.data[0]);
+			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
 
@@ -240,7 +254,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -262,18 +276,24 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
-	sortTasksByPriority(data){
+	sortTasksByPriority(type){
+
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
 			console.log("sorted output = ",track.tasks);
 		});
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
+		console.log("nthi avtu=======>",custom_sort1);
 	}
 	getTitle(name){
 		if(name){
@@ -340,16 +360,27 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-		task['projectId']= this.projectId; 
+		task['projectId']= this.projectId;
+		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
+		console.log(task.dueDate);
+		console.log(task.title);
+		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
-
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
-		this._projectService.addTask(task).subscribe((res:any)=>{
+		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
 			// this.getProject(this.projectId);
 		},err=>{
@@ -390,10 +421,12 @@ export class ProjectDetailComponent implements OnInit {
 			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
 		}
 		console.log(data);
-		this._commentService.addComment(data).subscribe(res=>{
+		this._commentService.addComment(data).subscribe((res:any)=>{
 			console.log(res);
 			this.comment = "";
 			this.model.editorData = 'Enter comments here';
+			this.files = [];
+			this.getAllCommentOfTask(res.taskId);
 		},err=>{
 			console.error(err);
 		})
@@ -415,8 +448,8 @@ export class ProjectDetailComponent implements OnInit {
 	// 		})
 	// 	})
 	// }
-	onKey(searchText,$event){
-		console.log(event, this.project);
+	onKey(searchText){
+		console.log(this.project);
 		var dataToBeFiltered = [this.project];
 		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
@@ -449,5 +482,14 @@ export class ProjectDetailComponent implements OnInit {
 
 	onSelectFile(event){
 			this.files = event.target.files;
+	}
+	deleteTask(taskId){
+		console.log(taskId);
+		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			console.log("Delete Task======>" , res);
+			this.task = res;
+		},(err:any)=>{
+			console.log("error in delete Task=====>" , err);
+		});
 	}
 }

@@ -122,7 +122,7 @@ ul.project-avatar li {
     display: inline-block;
     margin: 5px;
     float: left;
-    padding: 4px;
+    padding: 3px;
     border: 2px solid transparent;
 }
 ul.project-avatar li:hover {

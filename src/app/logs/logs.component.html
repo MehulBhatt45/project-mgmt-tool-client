@@ -1,63 +1,80 @@
 
 <!-- <div *ngIf="loader"><img src="../assets/loading.gif" class="loader"></div> -->
 <div class="loader" *ngIf="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
 </div>
-<div class="container">
+
+<div class="container-fluid">
 	<div class="row">
-		<table border="1px solid black" *ngIf="!logFunctionSwap && !logFinalStep && !loader">
-			<tr align="center" >
-				<th>Title</th>
-				<th style="padding: 10px;">Unique-ID</th>
-				<th>desc</th>
-				<th>action</th>
-			</tr>
-			<tr *ngFor="let i of projectName">
-				<td>{{i.title}}</td>
-				<td style="padding: 10px;">{{i.uniqueId}}</td>
-				<td>{{i.desc}}</td>
-				<td ><a routerLink="{{i._id}}">click</a></td>
-			</tr>
-		</table>
-		<table border="1px solid black" *ngIf="logFunctionSwap">
-			<tr align="center" >
-				<th style="padding: 10px;">name</th>
-				<th>UserRole</th>
-				<th>action</th>
-			</tr>
-			<tr *ngFor="let i of teams">
-				<td style="padding: 10px;">{{i.name}}</td>
-				<td>{{i.userRole}}</td>
-				<td ><a routerLink="{{i._id}}">click</a></td>
-			</tr>
-		</table>
-		<table border="1px solid black" *ngIf="logFinalStep">
-			<tr align="center" >
-				<th style="padding: 10px;">Type</th>
-				<th>OPreation</th>
-				<th>Date-Time</th>
-			</tr>
-			<tr *ngFor="let i of finalArray">
-				<td style="padding: 10px;">{{i.type}}</td>
-				<td>
-					<span >
-						<tr *ngFor="let j of i.timeLog">
-							<td>{{j.operation}}</td>
-							
-						</tr>
-					</span>
-				</td>
-				<td>
-					<span >
-						<tr *ngFor="let j of i.timeLog">
-							<td>{{j.dateTime}}</td>
-						</tr>
-					</span>
-				</td>
-			</tr>	
-		</table>
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header white-text text-center py-4">
+					<h4 class="card-title">Logs</h4>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" *ngIf="!logFunctionSwap && !logFinalStep && !loader">
+							<thead class="text-primary">
+								<tr>
+									<th>Title</th>
+									<th>Unique-ID</th>
+									<th>desc</th>
+									<th>action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let i of projectName">
+									<td>{{i.title}}</td>
+									<td>{{i.uniqueId}}</td>
+									<td>{{i.desc}}</td>
+									<td ><a routerLink="{{i._id}}">click</a></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table *ngIf="logFunctionSwap">
+							<tr>
+								<th>name</th>
+								<th>UserRole</th>
+								<th>action</th>
+							</tr>
+							<tr *ngFor="let i of teams">
+								<td>{{i.name}}</td>
+								<td>{{i.userRole}}</td>
+								<td ><a routerLink="{{i._id}}">click</a></td>
+							</tr>
+						</table>
+						<table *ngIf="logFinalStep">
+							<tr>
+								<th>Type</th>
+								<th>OPreation</th>
+								<th>Date-Time</th>
+							</tr>
+							<tr *ngFor="let i of finalArray">
+								<td>{{i.type}}</td>
+								<td>
+									<span >
+										<tr *ngFor="let j of i.timeLog">
+											<td>{{j.operation}}</td>
+
+										</tr>
+									</span>
+								</td>
+								<td>
+									<span >
+										<tr *ngFor="let j of i.timeLog">
+											<td>{{j.dateTime}}</td>
+										</tr>
+									</span>
+								</td>
+							</tr>	
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

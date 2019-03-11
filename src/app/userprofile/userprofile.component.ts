@@ -7,8 +7,6 @@ import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
 declare var $ : any;
 
-
-
 @Component({
 	selector: 'app-userprofile',
 	templateUrl: './userprofile.component.html',
@@ -23,12 +21,9 @@ export class UserprofileComponent implements OnInit {
 	finalarr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-	constructor(private route: ActivatedRoute,
-		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 
+	constructor(private route: ActivatedRoute,public _alertService: AlertService,
+		private router: Router, public _projectService: ProjectService,) { 
 	}
-
-
 
 	createEditEmail(){
 		this.editTEmail = new FormGroup({
@@ -37,7 +32,7 @@ export class UserprofileComponent implements OnInit {
 			sendTo : new FormControl('', Validators.required),
 		})
 	}
-	
+
 	ngOnInit() {
 		this.getAllProjects();
 		this.route.params.subscribe(param=>{
@@ -69,7 +64,6 @@ export class UserprofileComponent implements OnInit {
 		})
 	}
 
-	
 	getUserById(id){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -95,7 +89,6 @@ export class UserprofileComponent implements OnInit {
 		}
 
 	}
-
 
 
 

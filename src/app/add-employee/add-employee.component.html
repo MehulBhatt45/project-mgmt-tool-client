@@ -33,7 +33,7 @@
 				</div>
 				<div class="form-group">
 					<label for="userrole">UserRole</label>
-					<select class="custom-select custom-select-lg mb-3" formControlName="userrole">
+					<select class="custom-select custom-select-lg mb-3" formControlName="userRole">
 						<option value="" disabled selected>Choose user Role</option>
 						<option value="admin">Admin</option>
 						<option value="projectmanager">Project Manager</option>
@@ -46,18 +46,18 @@
 				</div>
 				<div class="form-group">
 					<label for="profile">Profile photo</label>
-					<input type="file" formControlName="profile" class="form-control">
+					<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
 				</div>
 				<div class="form-group">
 					<label for="cv">CV</label>
-					<input type="file" formControlName="cv" class="form-control">
+					<input type="file" formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf">
 				</div>
 
 
 
 				
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary" (click)="addEmployee(addEmployeeForm)">Add Employee</button>
+					<button type="submit" class="btn btn-default" (click)="addEmployee(addEmployeeForm)">Add Employee</button>
 					<!-- <a routerLink="/view" class="btn btn-link">Cancel</a> -->
 				</div>
 

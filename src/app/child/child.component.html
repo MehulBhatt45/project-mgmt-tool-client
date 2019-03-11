@@ -7,10 +7,16 @@
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
 			</div>
-			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)"  style="margin: 3px; padding: 3px;">
+		<!-- 	<div class="card"*ngIf="currentUser.userRole=='projectManager'">
+				<div class="card-header">
+					<span class="track_title">{{track.title}}</span>
+					<span class="card_count_lbl">{{track.tasks.length}}</span>
+				</div>		
+			</div> -->
+			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)" style="margin: 3px; padding: 3px;">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="getPriorityClass(task.priority)" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" title="{{task.priority}}">
+						<div class="card" [ngClass]="getPriorityClass(task.priority).class" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
 								<table>
 									<tr>
@@ -41,6 +47,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
+								<label class="float-left">{{(task.assignTo)?task.assignTo.name:'null'}}</label>
 							</div>
 						</div>
 					</mat-card-content>

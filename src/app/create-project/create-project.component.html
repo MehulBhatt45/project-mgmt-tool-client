@@ -38,28 +38,32 @@
 					<div class="col-md-6">
 						<div class="md-form form-group">
 							<label for="clientdesignation">Designation</label>
-							<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
+							<input type="text" id="clientdesignation" formControlName="Designation" class="form-control">
 						</div>
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-4">
-						<img [src]="url" height="150" width="150">
-					</div>
-					<div class="col-md-5">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-							Select Project avatar
-						</button>
-					</div>
-					<div class="col-md-3">
-						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
-					</div>
+				<div class="form-group">
+					<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
+						<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
+					</select>
 				</div>
+
+				<!-- demo code -->
+				<img [src]="url" height="150" width="150"> <br/>
+				<!-- demo code -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+					Select Project avatar
+				</button>
+				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
 			</form>
 		</div>
 	</div>
 </div>
+
+
+
+
 <!-- Modal Start Here -->
 
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -75,9 +79,9 @@ aria-hidden="true">
 		<div class="modal-body">
 			<div class="md-form form-group">
 				<div class="file-field">
-					<div class="btn btn-primary btn-sm float-left">
+					<div class="btn btn-default btn-sm float-left">
 						<span>Upload a new avatar</span>
-						<input type="file" name="fileUpload" formControlName="avatar" (change)="onSelectFile($event)">
+						<input type="file" name="fileUpload" (change)="onSelectFile($event)">
 					</div>
 					<div class="file-path-wrapper">
 						<input  class="file-path validate" type="text" placeholder="Upload your file">
@@ -144,11 +148,31 @@ aria-hidden="true">
 							<img src="assets/avatar/maintenance.png" height="56" width="56">
 						</button>
 					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/birthday-cake.png')">
+							<img src="assets/avatar/birthday-cake.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/conversation.png')">
+							<img src="assets/avatar/conversation.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/food.png')">
+							<img src="assets/avatar/food.png" height="56" width="56">
+						</button>
+					</li>
+					<li>
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/shopping-basket.png')">
+							<img src="assets/avatar/shopping-basket.png" height="56" width="56">
+						</button>
+					</li>
 
 				</ul>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
