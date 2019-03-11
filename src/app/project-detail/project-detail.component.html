@@ -42,7 +42,7 @@
 			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
- <a routerLink = '/leave'>Leave Form</a>
+	<a routerLink = '/leave'>Leave Form</a>
 
 </div>
 
@@ -64,8 +64,6 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
-
-			</div>
 
 		</div>
 
@@ -324,16 +322,14 @@
 								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
 						</div>
-						<div class="row no-margin no padding" >
+						<div class="row no-margin no-padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
+									<option *ngFor="let team of projectTeam , let i=index" value="{{team._id}}">{{team.name}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
-
-									<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 
 								</select>
 							</div>
