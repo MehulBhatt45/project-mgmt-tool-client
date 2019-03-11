@@ -315,3 +315,6 @@ background-color: white;
     -webkit-transform: rotate(360deg);
   }
 }
+.modal-header {
+    padding: 2rem;
+}

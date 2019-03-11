@@ -142,7 +142,10 @@ const routes: Routes = [
 			component:LeaveComponent
 		},
 		{
-path:'visit-user-profile',
+
+
+			path:'visit-user-profile',
+
 			//pathMatch: "full",
 			component:VisitUserProfileComponent
 		},
