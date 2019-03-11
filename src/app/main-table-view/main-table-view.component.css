@@ -132,3 +132,12 @@ label{
   margin-right: 5px;
   display: inline-flex;
 }
+#fullHeightModalRight {
+  overflow: hidden !important;
+}
+#fullHeightModalRight .modal-dialog.modal-lg{
+  height: 100%!important;
+}
+#fullHeightModalRight .modal-body{
+  overflow-y: auto!important;
+}

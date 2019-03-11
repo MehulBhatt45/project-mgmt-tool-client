@@ -42,6 +42,8 @@
 			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
+	<a routerLink = '/leave'>Leave Form</a>
+
 </div>
 
 <div class="row">
@@ -328,11 +330,46 @@
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-								
 								</select>
 							</div>
+							<div class="form-group col-12 col-lg-6">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+									<option value="4">Low</option>
+									<option value="3">Medium</option>
+									<option value="2">High</option>
+									<option value="1">Highest</option>
+								</select>
+							</div>
+						</div>
+						<div class="row no-margin no padding" >
+							<div class="form-group col-12">
+								<label for="dueDate">Due Days</label>
+								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+							</div>
+						</div>
+						<div class="form-group col-12">
+							<label for="status">Status</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
+								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)">Save changes</button><i _ngcontent-c2="" aria-hidden="true" class="fa fa-refresh refresh"></i>
+				<div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+					<strong>Holy guacamole!</strong> You should check in on some of those fields below.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
 <!-- 						</div>
--->							<div class="form-group col-12 col-lg-6">
+-->							<!-- <div class="form-group col-12 col-lg-6">
 	<label for="priority">Priority</label>
 	<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
 		<option value="4">Low</option>
@@ -345,7 +382,8 @@
 <div class="row no-margin no padding" >
 	<div class="form-group col-12">
 		<label for="dueDate">Due Days</label>
-		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control"> -->
+
 	</div>
 </div>
 <div class="form-group col-12">

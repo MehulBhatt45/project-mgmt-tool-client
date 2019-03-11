@@ -8,6 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import {LeaveComponent} from '../leave/leave.component';
+
 
 declare var $ : any;
 import * as _ from 'lodash';
@@ -47,6 +49,7 @@ export class ProjectDetailComponent implements OnInit {
 	pro;
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -161,7 +164,11 @@ export class ProjectDetailComponent implements OnInit {
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
-		})
+		});
+		$('#my_button').on('click', function(){
+			alert('Button clicked. Disabling...');
+			$('#my_button').attr("disabled", true);
+		});
 	}
 
 	getAllDevelopers(){
@@ -187,6 +194,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+
 				
 
 				console.log("response of team============>"  ,res);
@@ -410,6 +418,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
 		},err=>{
+			// $('.alert').alert()
 			console.log(err);
 		})
 	}

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import {ProjectService} from '../services/project.service';
+declare var $ : any;
+
 @Component({
 	selector: 'app-add-employee',
 	templateUrl: './add-employee.component.html',
@@ -25,6 +27,7 @@ export class AddEmployeeComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		$('.datepicker').pickadate();
 
 		// $(document).ready(function() {
 			// 	$('.mdb-select').materialSelect();

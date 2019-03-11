@@ -30,6 +30,7 @@ export class ChildComponent  {
   ngOnInit(){
     console.log(this.tracks, this.developers);
   }
+  
   getEmptyTracks(){
     this.tracks = [
     {
