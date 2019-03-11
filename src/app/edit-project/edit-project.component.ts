@@ -19,7 +19,7 @@ export class EditProjectComponent implements OnInit {
 	allDevelopers;
 	availDevelopers;
 	teamShow:boolean = false;
-
+	showDeveloper:boolean = false;
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
@@ -83,41 +83,7 @@ export class EditProjectComponent implements OnInit {
 		this.router.navigate(['./view-project']);
 
 	}
-	showTeams(){
-		if(this.teamShow == false){
-			localStorage.setItem('teamShow' , JSON.stringify(true));
-			this.teamShow = true;
-		}
-		else if(this.teamShow == true){
-			localStorage.setItem('teamShow' , JSON.stringify(false));
-			this.teamShow = false;	
-		}
-		localStorage.setItem('developerShow' , JSON.stringify(false));
-	}
-	getDevelopers(){
-		if(this.developerShow == false){
-			localStorage.setItem('developerShow' , JSON.stringify(true));
-			this.developerShow = true;
-		}
-		else if(this.developerShow == true){
-			localStorage.setItem('developerShow' , JSON.stringify(false));
-			this.developerShow = false;	
-		}		
-		this._projectService.getAllDevelopers().subscribe((res:any)=>{
-			console.log("All Developers ====>" , res);
-			this.allDevelopers = res;
-			for(var i = 0; i< this.availData.Teams.length ; i++){
-				for(var j = 0; j< this.allDevelopers.length; j++){
-					if(this.availData.Teams[i]._id == this.allDevelopers[j]._id ){
-						console.log("found USers =====>" , this.allDevelopers._id , j)
-						this.allDevelopers.splice(j,1);
-					}
-				}
-			}
-			console.log("after Slice response ====>" , res);
-			this.availDevelopers = this.allDevelopers; 
-		})
-	}
+	
 	addRemoveDeveloper(developerId){
 		var arr = [];
 		console.log("heyyyyyyyy");
@@ -185,5 +151,27 @@ export class EditProjectComponent implements OnInit {
 				console.log("error in delete project =====>" , err);
 			});
 		}
+	}
+	showTeams(){
+		if(this.teamShow == false){
+			localStorage.setItem("teamShow" , JSON.stringify(true));
+			this.teamShow = true;
+		}
+		else{
+			localStorage.setItem("teamShow" , JSON.stringify(false));
+			this.teamShow = false;	
+		}
+	}
+	getDevelopers(){
+		console.log("show developer" , this.showDeveloper);
+		if(this.showDeveloper == false){
+			localStorage.setItem("showDeveloper" , JSON.stringify(true));
+			this.showDeveloper = true;
+		}
+		else{
+			localStorage.setItem("showDeveloper" , JSON.stringify(false));
+			this.showDeveloper = false;	
+		}
+			
 	}
 }
