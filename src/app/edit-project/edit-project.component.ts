@@ -25,6 +25,7 @@ export class EditProjectComponent implements OnInit {
 			title: new FormControl('', Validators.required),
 			desc: new FormControl(''),
 			uniqueId: new FormControl('' , Validators.required),
+			deadline: new FormControl('' , Validators.required),
 			clientEmail: new FormControl('' , Validators.required),
 			clientFullName: new FormControl('', Validators.required),
 			clientContactNo: new FormControl('',Validators.required),
