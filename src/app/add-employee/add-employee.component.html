@@ -27,9 +27,13 @@
 					<label for="mobile">Phone No.</label>
 					<input type="text" formControlName="mobile" class="form-control">
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="date">Joining Date</label>
 					<input type="date" formControlName="date" class="form-control">
+				</div> -->
+				<div class="md-form form-group">
+					<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+					<label for="date-picker-example">Try me...</label>
 				</div>
 				<div class="form-group">
 					<label for="userrole">UserRole</label>
@@ -52,10 +56,6 @@
 					<label for="cv">CV</label>
 					<input type="file" formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf">
 				</div>
-
-
-
-				
 				<div class="form-group">
 					<button type="submit" class="btn btn-default" (click)="addEmployee(addEmployeeForm)">Add Employee</button>
 					<!-- <a routerLink="/view" class="btn btn-link">Cancel</a> -->

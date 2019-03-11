@@ -13,7 +13,7 @@
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
 			</div> -->
-			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)" style="margin: 3px; padding: 3px;">
+			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
@@ -47,7 +47,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label class="float-left">{{(task.assignTo)?task.assignTo.name:'null'}}</label>
+								<label class="float-left"> <a style="color: black;" [routerLink]="['/userprofile']">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>

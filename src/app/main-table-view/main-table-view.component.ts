@@ -149,7 +149,11 @@ export class MainTableViewComponent implements OnInit {
 			this._projectService.getAllTasks().subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
+				// this.tracks.tasks.reverse();
 				this.tasks = res;
+				this.tasks.sort(custom_sort);
+				this.tasks.reverse();
+				// this.tracks.tasks.reverse();
 				console.log("PROJECT=================>", this.tasks);
 				_.forEach(this.tasks , (task)=>{
 					// _.forEach(task.tasks, (tsk)=>{
@@ -174,6 +178,10 @@ export class MainTableViewComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 
 	get trackIds(): string[] {
@@ -235,6 +243,7 @@ export class MainTableViewComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		console.log("sorting======>",custom_sort);
 	}
 
 	getTitle(name){
@@ -255,16 +264,23 @@ export class MainTableViewComponent implements OnInit {
 		}
 	}
 	
-	sortTasksByPriority(data){
+
+	sortTasksByPriority(type){
+
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
 			console.log("sorted output = ",track.tasks);
 		});
+
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
+		console.log("nthi avtu=======>",custom_sort1);
 	}
 
 

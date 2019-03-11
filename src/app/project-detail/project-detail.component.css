@@ -292,3 +292,6 @@ background-color: white;
 #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
 }
+.modal-header {
+    padding: 2rem;
+}

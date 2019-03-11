@@ -9,6 +9,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
 import { config } from '../config'
+import {LeaveComponent} from '../leave/leave.component';
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
@@ -44,8 +45,10 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	pro;
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -142,7 +145,11 @@ export class ProjectDetailComponent implements OnInit {
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
-		})
+		});
+		$('#my_button').on('click', function(){
+			alert('Button clicked. Disabling...');
+			$('#my_button').attr("disabled", true);
+		});
 	}
 
 	getAllDevelopers(){
@@ -168,21 +175,36 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-				
 				this.projectTeam = res.Teams;
 				console.log("response of team============>"  ,res);
+				this.projectTeam = res.Teams;
+				console.log("projectTeam____++++",this.projectTeam);
+
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
+
+
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				
+				this.pro = res;
+				console.log("project detail===>>>>",res);
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
+				this.project.sort(custom_sort);
+				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						if(this.currentUser.userRole!='projectManager'){
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
 							}
@@ -199,6 +221,9 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
@@ -364,8 +389,10 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
-			// this.getProject(this.projectId);
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
 		},err=>{
+			// $('.alert').alert()
 			console.log(err);
 		})
 	}
@@ -416,20 +443,6 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-	// onKey(event: any){
-	// 	console.log(event);
-	// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
 	onKey(searchText){
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
@@ -457,14 +470,13 @@ export class ProjectDetailComponent implements OnInit {
 	getAllCommentOfTask(taskId){
 		this._commentService.getAllComments(taskId).subscribe(res=>{
 			this.comments = res;
-			console.log(this.comments);
 		}, err=>{
 			console.error(err);
 		})
 	}
 
 	onSelectFile(event){
-			this.files = event.target.files;
+		this.files = event.target.files;
 	}
 	deleteTask(taskId){
 		console.log(taskId);
@@ -475,4 +487,5 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("error in delete Task=====>" , err);
 		});
 	}
+
 }
