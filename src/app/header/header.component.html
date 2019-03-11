@@ -8,7 +8,10 @@
       <li>
         <div class="logo-wrapper waves-light">
           <a href="#"> <!-- <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid"> -->
-            <img src="{{currentUser.fileName}}" onerror="this.src='assets/4.jpeg'" class="img-fluid">
+
+            <!-- get user profile photo in sidenav -->
+            <img src="http://http://206.189.231.135:4000/project-mgmt-tool-server/uploads{{currentUser.profile}}" onerror="this.src='assets/4.jpeg'" class="img-fluid">
+<!--             <img src="http://localhost/projectMgmtServer{{currentUser.profile}}" onerror="this.src='assets/4.jpeg'" class="img-fluid"> -->
           </a>
         </div>
       </li>
