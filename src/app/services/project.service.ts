@@ -207,7 +207,7 @@ export class ProjectService {
 		formdata.append('published',data.published);
 		formdata.append('expireon',data.expireon);
 		formdata.append('images',data.images);
-		
+
 		for(var i =0; i < file.length; i++){
 			formdata.append("uploadFile",file[i]);
 		}
@@ -219,7 +219,7 @@ export class ProjectService {
 	getNotice(){
 		return this.http.get(config.baseApiUrl+"notice/allnotice");
 	}
-	
+
 	deleteProjectById(data){
 		var projectId = data._id;
 		const httpOptions = {
@@ -243,7 +243,7 @@ export class ProjectService {
 	getTeamByProjectId(id){
 		var projectId = id;
 		return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
-		}	
+	}	
 
 
 	addTask(data){
@@ -261,6 +261,7 @@ export class ProjectService {
 		var id = id;
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
+
 	addUser_with_file(body,files:any){
 		console.log("fhvg=>",files);
 		let formdata = new FormData();
@@ -272,28 +273,31 @@ export class ProjectService {
 		formdata.append('joiningDate',body.date);
 		formdata.append('phone',body.mobile);
 		formdata.append('experience',body.experience);
-	    formdata.append('profilePhoto',files[0]);
+		formdata.append('profilePhoto',files[0]);
 		formdata.append("profilePhoto",files[1]);
 		// for(var i =0; i < files.length; i++){
-		// 	formdata.append("uploadFile",files[i]);
-		// }
-		console.log("body===>>>",body);
-
-
-		return this.http.post(config.baseApiUrl+"user/signup",formdata);
+			// 	formdata.append("uploadFile",files[i]);
+			// }
+			console.log("body===>>>",body);
+			return this.http.post(config.baseApiUrl+"user/signup",formdata);
+		}
+	
+		deleteTaskById(data){
+			var taskId = data._id;
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type':  'application/json',
+					'x-access-token':  JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId,httpOptions);
+		}
+		uploadFilesToFolder(data, file: FileList){
+			console.log(data);
+			let formData = new FormData();
+			formData.append("userId",data);
+			formData.append("uploadFile",file[0]);
+			return this.http.post(config.baseApiUrl+"project/upload-file", formData);
+		}
 
 	}
-	addProject_Without_file(body){
-		console.log("addproject2 is calling");
-		console.log("body====>>",body);
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type':  'application/json',
-				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.post(config.baseApiUrl+"user/signup_without_file",body,httpOptions);
-
-	}
-}
-

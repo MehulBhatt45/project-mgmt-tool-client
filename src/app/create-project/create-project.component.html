@@ -43,26 +43,22 @@
 					</div>
 				</div>
 
-
-
 				<div class="form-group">
 					<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
 						<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
 					</select>
 				</div>
-			
-			<!-- demo code -->
-			<img [src]="url" height="150" width="150"> <br/>
-			<!-- demo code -->
 
-
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-				Select Project avatar
-			</button>
-			<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
-		</form>
+				<!-- demo code -->
+				<img [src]="url" height="150" width="150"> <br/>
+				<!-- demo code -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+					Select Project avatar
+				</button>
+				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+			</form>
+		</div>
 	</div>
-</div>
 </div>
 
 
@@ -83,7 +79,7 @@ aria-hidden="true">
 		<div class="modal-body">
 			<div class="md-form form-group">
 				<div class="file-field">
-					<div class="btn btn-primary btn-sm float-left">
+					<div class="btn btn-default btn-sm float-left">
 						<span>Upload a new avatar</span>
 						<input type="file" name="fileUpload" (change)="onSelectFile($event)">
 					</div>
@@ -176,7 +172,7 @@ aria-hidden="true">
 				</ul>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

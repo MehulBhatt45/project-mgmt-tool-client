@@ -1,30 +1,31 @@
 <header>
-            <!-- SideNav slide-out button -->
-            <a href="#" data-activates="slide-out" class="btn btn-primary p-3 button-collapse"><i class="fas fa-bars"></i></a>
-
-            <!-- Sidebar navigation -->
-            <div id="slide-out" class="side-nav">
-                <ul class="custom-scrollbar">
-                  <!-- Logo -->
-                  <li>
-                    <div class="logo-wrapper waves-light">
-                      <a href="#"> <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid" style="border-radius: 50%;margin-left: 19px;"></a>
-                  </div>
-              </li>
-              <li><h2 style="margin-top: 45px;
-              text-align: center;">Rao Infotech</h2></li>
-              <!--/. Logo -->
-              <!--Social-->
-              <li class="icon">
-                <ul class="social">
-                  <li><a href="https://www.facebook.com/raoinformationtechnology/" class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
-                  <li><a href="https://www.instagram.com/raoinformationtechnology.insta/" class="icons-sm insta-ic"><i class="fab fa-instagram"></i></a></li>
-                  <li><a href="https://www.linkedin.com/company/raoinformationtechnology/" class="icons-sm il-ic"><i class="fab fa-linkedin"></i></a></li>
-                  <li><a href="https://twitter.com/RaoInfotech" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
-              </ul>
-          </li>
-          <!--/Social-->
-          <!--Search Form-->
+  <!-- SideNav slide-out button -->
+  <a href="#" data-activates="slide-out" class="btn btn-primary p-3 button-collapse"><i class="fas fa-bars"></i></a>
+  <!-- Sidebar navigation -->
+  <div id="slide-out" class="side-nav">
+    <ul class="custom-scrollbar">
+      <!-- Logo -->
+      <li>
+        <div class="logo-wrapper waves-light">
+          <a href="#"> <!-- <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid"> -->
+            <img src="{{currentUser.fileName}}" onerror="this.src='assets/4.jpeg'" class="img-fluid">
+          </a>
+        </div>
+      </li>
+      <li><h2 style="margin-top: 96px;
+      text-align: center;">{{currentUser.name}}</h2></li>
+      <!--/. Logo -->
+      <!--Social-->
+      <li class="icon">
+        <ul class="social">
+          <li><a href="https://www.facebook.com/raoinformationtechnology/" class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
+          <li><a href="https://www.instagram.com/raoinformationtechnology.insta/" class="icons-sm insta-ic"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="https://www.linkedin.com/company/raoinformationtechnology/" class="icons-sm il-ic"><i class="fab fa-linkedin"></i></a></li>
+          <li><a href="https://twitter.com/RaoInfotech" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
+        </ul>
+      </li>
+      <!--/Social-->
+      <!--Search Form-->
      <!--  <li>
         <form class="search-form" role="search">
           <div class="form-group md-form mt-0 pt-1 waves-light">
@@ -33,10 +34,10 @@
             <input type="text" class="form-control" placeholder="Search">
           </div>
         </form>
-    </li> -->
-    <!--/.Search Form-->
-    <!-- Side navigation links -->
-    <li>
+      </li> -->
+      <!--/.Search Form-->
+      <!-- Side navigation links -->
+      <li>
         <ul class="collapsible collapsible-accordion">
           <li><a class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects"><i class="fas fa-tasks"></i>  Projects</span>
             <i class="fa fa-angle-down rotate-icon"></i>
@@ -45,10 +46,10 @@
               <ul>
                 <li *ngFor="let project of projects">
                   <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
-              </ul>
-          </div>
-      </li>
-      <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-edit"></i>     Create Project</a>
+                </ul>
+              </div>
+            </li>
+            <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-edit"></i>     Create Project</a>
 
       </li>
       <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-sitemap"></i>    Item List</a></li>
@@ -96,14 +97,14 @@
           </ul>
           </li>
         <div class="sidenav-bg mask-strong"></div>
-    </ul> -->
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
+      </ul> -->
+      <nav class="navbar fixed-top navbar-toggleable-md navbar-dark scrolling-navbar double-nav">
         <div class="float-left">
           <ol class="breadcrumb hidden-lg-down">
             <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
             <li class="breadcrumb-item active"><a>Dashboard</a></li>
-        </ol>
-    </div>
+          </ol>
+        </div>
        <!--  <ul class="nav navbar-nav nav-flex-icons ml-auto">
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -114,23 +115,23 @@
                 <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
             </div>
         </li>
-    </ul> -->                
-</nav>
-</header>
+      </ul> -->                
+    </nav>
+  </header>
 
-<div class="side_fixed_nav">
+  <div class="side_fixed_nav">
     <div class="top_icon">
 
         <!-- <div class="second_icon">
             <a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a>
-        </div> -->
-        <div class="second_icon">
+          </div> -->
+          <div class="second_icon">
             <a href="" class="star_link " data-toggle="tooltip"  title="Starred and recent(\)" data-placement="right"><i class="far fa-star" aria-hidden="true"></i></a>
-        </div>
-        <div class="second_icon">
+          </div>
+          <div class="second_icon">
             <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
-        </div> 
-        <div class="second_icon dropdown" *ngIf="currentUser.userRole=='projectManager'">
+          </div> 
+          <div class="second_icon dropdown" *ngIf="currentUser.userRole=='projectManager'">
             <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="plus_details"><i class="fa fa-plus" aria-hidden="true" ></i></a>
             <div class="dropdown-menu">
               <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
@@ -138,98 +139,100 @@
               <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
               <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
               <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
+            </div>
           </div>
+        </div>
+
+        <div class="bottom_icon">
+          <div class="second_icon">
+            <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
+          </div>  
+          <div class="second_icon">
+            <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i> </a>
+          </div>
+          <div class="second_icon">
+            <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
+          </div>
+          <div class="second_icon dropdown">
+            <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+            <ul class="team-members">
+              <li id="login_details">
+                <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
+                <div class="dropdown-content"> 
+                  <a class="dropdown-item" (click)="logout()">Log Out</a>
+                  <a  class="dropdown-item" [routerLink]="['/userprofile']">My Profile</a>
+                </div>
+              </li>   
+            </ul>
+          </div> 
+        </div>
       </div>
-  </div>
-
-  <div class="bottom_icon">
-      <div class="second_icon">
-        <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
-    </div>  
-    <div class="second_icon">
-        <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i> </a>
-    </div>
-    <div class="second_icon">
-        <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
-    </div>
-    <div class="second_icon dropdown">
-        <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
-        <ul class="team-members">
-          <li id="login_details">
-            <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
-            <div class="dropdown-content"> 
-              <a class="dropdown-item" (click)="logout()">Log Out</a>
-              <a  class="dropdown-item" [routerLink]="['/userprofile']">My Profile</a>
-          </div>
-      </li>   
-  </ul>
-</div> 
-</div>
-</div>
 
 
 
-<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body" *ngIf="task">
-        <div class="row">
-            <form style="width: 100%;" [formGroup]="editTaskForm">
-                <div class="form-group col-12">
+      <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="task">
+              <div class="row">
+                <form style="width: 100%;" [formGroup]="editTaskForm">
+                  <div class="form-group col-12">
                     <label for="title">Title</label>
                     <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-                </div>
-                <div class="form-group col-12">
+                  </div>
+                  <div class="form-group col-12">
                     <label for="desc">Discription</label>
                     <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-                </div>
-                <div class="row no-margin no padding" >
+                  </div>
+                  <div class="row no-margin no padding" >
                     <div class="form-group col-12 col-lg-6">
-                        <label for="assignTo">Assign To</label>
-                        <select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-                            <option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-                        </select>
+                      <label for="assignTo">Assign To</label>
+                      <select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
+                        <option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+                      </select>
                     </div>
                     <div class="form-group col-12 col-lg-6">
-                        <label for="priority">Priority</label>
-                        <select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="highest">Highest</option>
+                      <label for="priority">Priority</label>
+                      <select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="highest">Highest</option>
 
-                        </select>
+                      </select>
                     </div>
-                </div>
-                <div class="row no-margin no padding">
+                  </div>
+                  <div class="row no-margin no padding">
                     <div class="form-group col-12 col-lg-6">
-                        <label for="startDate">Start Date</label>
-                        <input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
+                      <label for="startDate">Start Date</label>
+                      <input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
                     </div>
                     <div class="form-group col-12 col-lg-6">
+
                       <label for="dueDate">Due Days</label>
                       <input placeholder="Selected days" type="number" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
+
                     </div>
-                </div>
-                <div class="form-group col-12">
+                  </div>
+                  <div class="form-group col-12">
                     <label for="status">Status</label>
                     <select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-                        <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+                      <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
                     </select>
-                </div>
-            </form>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
-  </div>
-</div>
-</div>
-</div>
+      </div>
