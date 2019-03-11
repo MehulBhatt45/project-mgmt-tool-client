@@ -231,7 +231,6 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
-				console.log("project title======>>>>",res.title);
 				this.project.sort(custom_sort);
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
