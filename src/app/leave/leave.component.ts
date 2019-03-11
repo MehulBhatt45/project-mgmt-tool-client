@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+<<<<<<< HEAD
 var $:any;
 
+=======
+>>>>>>> cc0a7e26682f50f0fcf849693c27aef112f5f610
 declare var $ : any;
-
 
 
 @Component({

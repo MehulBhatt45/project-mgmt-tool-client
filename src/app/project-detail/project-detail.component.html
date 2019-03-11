@@ -263,6 +263,7 @@
 											<p>
 												{{i.content}}
 											</p>
+											<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 										</div>
 									</div>
 								</div>
@@ -291,6 +292,8 @@
 	</div>
 </div>
 
+
+<!-- Modal Start Here -->
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -320,8 +323,9 @@
 						<div class="row no-margin no-padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
+
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-									<option *ngFor="let team of projectTeam , let i=index" value="{{team._id}}">{{team.name}}</option>
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
@@ -399,4 +403,5 @@
 </div>
 </div>
 </div>
- -->
+-->
+
