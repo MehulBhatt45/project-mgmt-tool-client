@@ -46,7 +46,7 @@
 
 
 				<div class="form-group">
-					<select formControlName="team"  class="browser-default custom-select custom-select-lg mb-3" multiple>
+					<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
 						<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
 					</select>
 				</div>
@@ -59,7 +59,7 @@
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
 				Select Project avatar
 			</button>
-			<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+			<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
 		</form>
 	</div>
 </div>
