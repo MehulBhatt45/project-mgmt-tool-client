@@ -52,7 +52,7 @@ export class ViewProjectComponent implements OnInit {
 
   getInitialsOfName(name){
     var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-    return str.toUpperCase();
+    return str.toUpperCase();  
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 

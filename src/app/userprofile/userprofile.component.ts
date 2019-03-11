@@ -5,8 +5,6 @@ import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
 
-
-
 @Component({
 	selector: 'app-userprofile',
 	templateUrl: './userprofile.component.html',
@@ -18,11 +16,9 @@ export class UserprofileComponent implements OnInit {
 	projectArr = [];
 	finalarr = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService,) { }
 
-	
 	ngOnInit() {
 		this.getAllProjects();
 
