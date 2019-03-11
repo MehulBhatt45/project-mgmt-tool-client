@@ -98,6 +98,7 @@ export class HeaderComponent implements OnInit {
 		this._projectService.getProjects().subscribe(res=>{
 			console.log(res);
 			this.projects = res;
+			// console.log(this.projects.pmanagerId);
 		},err=>{
 			console.log(err);
 		});

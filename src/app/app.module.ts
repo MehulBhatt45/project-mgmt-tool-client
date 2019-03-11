@@ -78,7 +78,6 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
     AllLeaveAppComponent,
    ],
 
-
     imports: [
     BrowserModule,
     AppRoutingModule,

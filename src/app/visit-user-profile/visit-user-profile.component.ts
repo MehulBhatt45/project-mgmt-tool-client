@@ -14,42 +14,56 @@ declare var $ : any;
 	styleUrls: ['./visit-user-profile.component.css']
 })
 export class VisitUserProfileComponent implements OnInit {
-	projects;
-	// developers;
+	// projects;
 	userId;
-	projectArr = [];
-	finalarr = [];
+	// projectArr = [];
+	// finalarr = [];
 	
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 
 	}
 
 	ngOnInit() {
+		this.route.params.subscribe(param=>{
+			this.userId = param.id;
+			this.getDeveloperById(this.userId);
+		});
 
-		this.getAllProjects();
+		// this.getAllProjects();
 		
 	}
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			console.log("all projects =====>" , res);
-			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("current user ====>" , userId);
-			this.projects = res;
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (singleTask)=>{
-					if(singleTask._id == userId){
-						this.projectArr.push(task);
-					}
-				})
-			})			
-			this.finalarr.push(this.projectArr[0]);
-			console.log("response======>",this.finalarr);
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
+	// getAllProjects(){
+	// 	this._projectService.getProjects().subscribe(res=>{
+	// 		console.log("all projects =====>" , res);
+	// 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+	// 		console.log("current user ====>" , userId);
+	// 		this.projects = res;
+	// 		_.forEach(this.projects , (task)=>{
+	// 			_.forEach(task.Teams , (singleTask)=>{
+	// 				if(singleTask._id == userId){
+	// 					this.projectArr.push(task);
+	// 				}
+	// 			})
+	// 		})			
+	// 		this.finalarr.push(this.projectArr[0]);
+	// 		console.log("response======>",this.finalarr);
+	// 	},err=>{
+	// 		this._alertService.error(err);
+	// 		console.log(err);
+	// 	})
+	// }
+
+	getDeveloperById(id){
+		this._loginService.getUserById(id).subscribe((res:any)=>{
+			this.userId = res;
+			console.log("response =============>",res);
+		},(err:any)=>{
+			console.log("eroooooor=========>",err);
 		})
 	}
 
 }
 
 // this Component is created for guest-user who can visit all team members profile....
+
+

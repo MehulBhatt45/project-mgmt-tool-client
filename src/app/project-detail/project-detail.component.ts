@@ -8,9 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import { config } from '../config'
 import {LeaveComponent} from '../leave/leave.component';
-
-
 declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
@@ -44,11 +43,13 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers: any
 	loader : boolean = false;
+
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -61,31 +62,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
 	}
 
-	getEmptyComments(){
-		this.comments = [{
-			"profilePhoto": "../assets/3.png",
-			"developerName": "Komal Sakhiya",
-			"comment": "this is my first comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/5.jpg",
-			"developerName": "Mehul Bhatt",
-			"comment": "this is my second comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/6.jpg",
-			"developerName": "Foram Trada",
-			"comment": "this is my third comment in this task.........."
-		}
-		];
-	}
+	
 	getEmptyTracks(){
     console.log("user=====================>",this.currentUser.userRole);
     if(this.currentUser.userRole == "projectManager"){
@@ -196,7 +179,18 @@ export class ProjectDetailComponent implements OnInit {
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
-		})
+		});
+		// var refresh;
+		$('#my_button').on('click', function(){
+			// alert('Button clicked. Disabling...');
+			$('#my_button').attr("disabled", true);
+			$('#myDIV').css('display','block');
+
+		});
+		// function myFunction() {
+		// 	 document.getElementById("myDIV").append (`<i  class="fa fa-refresh refresh"></i>`);
+		// 	// element.classList.toggle("mystyle");
+		// }
 	}
 
 	getAllDevelopers(){
@@ -221,33 +215,39 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-				
-				this.projectTeam = res.team;
-				console.log("response of team============>"  ,res);
-			},(err:any)=>{
-				console.log("err of team============>"  ,err);
-			});
 
+			
 
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				
-				this.pro = res;
-				console.log("project detail===>>>>",res);
+				this.pro = res.pmanagerId;
+				console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					//this.projectTeam = res.team;
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					this.projectTeam.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+						this.projectTeam.push
+						console.log("response of team============>"  ,this.projectTeam);
+					})
+
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
-
-
-
-
-
 
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
-				console.log("project title======>>>>",res.title);
 				this.project.sort(custom_sort);
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
@@ -270,6 +270,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(err);
 				this.loader = false;
 			})
+			
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -417,6 +418,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
+		
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -439,8 +441,12 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
-			// this.getProject(this.projectId);
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
 		},err=>{
+			// $('.alert').alert()
+			var err;
+
 			console.log(err);
 		})
 	}
@@ -492,61 +498,62 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("btn tapped");
 	}
 	// onKey(event: any){
-	// 	console.log(event);
-	// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
-	onKey(searchText){
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
+		// 	console.log(event);
+		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
+		// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		// 	console.log("In Component",task);
+		// 	this.getEmptyTracks();
+		// 	_.forEach(task, (content)=>{
+			// 		_.forEach(this.tracks, (track)=>{
+				// 			if(content.status == track.id){
+					// 				track.tasks.push(content);
+					// 			}
+					// 		})
+					// 	})
+					// }
+					onKey(searchText){
+						console.log(this.project);
+						var dataToBeFiltered = [this.project];
+						var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+						console.log("In Component",task);
+						this.getEmptyTracks();
+						_.forEach(task, (content)=>{
+							_.forEach(this.tracks, (track)=>{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							})
+						})
+					}
+
+					getAllProjects(){
+						this._projectService.getProjects().subscribe(res=>{
+							this.projects = res;
+						},err=>{
+							this._alertService.error(err);
+							console.log(err);
+						})
+					}
+
+					getAllCommentOfTask(taskId){
+						this._commentService.getAllComments(taskId).subscribe(res=>{
+							this.comments = res;
+						}, err=>{
+							console.error(err);
+						})
+					}
+
+					onSelectFile(event){
+						this.files = event.target.files;
+					}
+					deleteTask(taskId){
+						console.log(taskId);
+						this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+							console.log("Delete Task======>" , res);
+							this.task = res;
+						},(err:any)=>{
+							console.log("error in delete Task=====>" , err);
+						});
+					}
 				}
-			})
-		})
-	}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		})
-	}
-
-	onSelectFile(event){
-			this.files = event.target.files;
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			console.log("error in delete Task=====>" , err);
-		});
-	}
-}

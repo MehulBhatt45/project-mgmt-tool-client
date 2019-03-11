@@ -292,3 +292,29 @@ background-color: white;
 #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
 }
+.refresh{
+  margin: 0;
+  padding: 5px;
+  font-size: 20px;
+  -webkit-animation: rotation 2s infinite linear;
+  /*display: none;*/
+}
+.fa-refresh[_ngcontent-c2] {
+    float: right;
+     margin: 0 !important; 
+}
+#myDIV{
+  display: none;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+.modal-header {
+    padding: 2rem;
+}
