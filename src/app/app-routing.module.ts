@@ -20,6 +20,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
+import {LeaveComponent} from './leave/leave.component';
 
 
 const routes: Routes = [
@@ -118,8 +119,13 @@ const routes: Routes = [
 			component:ResetPasswordComponent
 		},
 		{
-			path:'userprofile',
-			component:UserprofileComponent
+			path:'add-employee',
+			component:AddEmployeeComponent
+			
+		},
+		{
+			path:'leave',
+			component:LeaveComponent
 		}]
 	}];
 

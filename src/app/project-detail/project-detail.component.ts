@@ -8,6 +8,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import {LeaveComponent} from '../leave/leave.component';
+
 
 declare var $ : any;
 import * as _ from 'lodash';
