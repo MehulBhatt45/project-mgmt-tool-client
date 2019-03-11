@@ -47,7 +47,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label class="float-left">{{(task.assignTo)?task.assignTo.name:'null'}}</label>
+								<label class="float-left"> <a [routerLink]="['/userprofile']">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>
