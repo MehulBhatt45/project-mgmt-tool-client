@@ -3,6 +3,8 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 var $:any;
 
+declare var $ : any;
+
 
 
 @Component({

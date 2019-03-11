@@ -195,19 +195,11 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 
+				
+
 				console.log("response of team============>"  ,res);
 				this.projectTeam = res.Teams;
-				this.projectTeam.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
-			})
-				console.log("response for team============>"  ,this.projectTeam);
-
-				
+				console.log("projectTeam____++++",this.projectTeam);
 
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
@@ -422,7 +414,8 @@ export class ProjectDetailComponent implements OnInit {
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
-			// this.getProject(this.projectId);
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
 		},err=>{
 			// $('.alert').alert()
 			console.log(err);
@@ -533,4 +526,5 @@ export class ProjectDetailComponent implements OnInit {
 							console.log("error in delete Task=====>" , err);
 						});
 					}
+
 				}
