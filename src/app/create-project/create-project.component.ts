@@ -31,7 +31,7 @@ export class CreateProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       // avatar:new FormControl(''),
       allDeveloper:new FormControl(''),
-      team: new FormControl([])
+      Teams: new FormControl([])
 
     });
 
@@ -64,7 +64,7 @@ export class CreateProjectComponent implements OnInit {
   }
   
   addProject(addForm){
-
+    console.log(addForm);
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
       data.append(key, value)
