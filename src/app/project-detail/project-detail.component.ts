@@ -46,6 +46,7 @@ export class ProjectDetailComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	projectTeam;
+	Teams;
 	// files:FileList;
 
 	files:Array<File> = [];
@@ -187,8 +188,9 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				
-				this.projectTeam = res;
 				console.log("response of team============>"  ,res);
+				this.projectTeam = res.Teams;
+				console.log("response of team============>"  ,this.projectTeam);
 			},(err:any)=>{
 				console.log("err of team============>"  ,err);
 			});
