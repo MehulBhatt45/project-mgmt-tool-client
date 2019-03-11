@@ -21,9 +21,9 @@ import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import {LeaveComponent} from './leave/leave.component';
-
 import { AllDeveloperComponent} from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
+import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component'
 
 
 
@@ -132,7 +132,6 @@ const routes: Routes = [
 			component:ResetPasswordComponent
 		},
 		{
-<<<<<<< HEAD
 			path:'add-employee',
 			component:AddEmployeeComponent
 			
@@ -140,16 +139,21 @@ const routes: Routes = [
 		{
 			path:'leave',
 			component:LeaveComponent
-=======
+		},
+		{
 			path:'visit-user-profile',
 			//pathMatch: "full",
 			component:VisitUserProfileComponent
+		},
+		{
+			path:'all-leave-app',
+			//pathMatch: "full",
+			component:AllLeaveAppComponent
 		},
 		
 		{
 			path:'userprofile',
 			component:UserprofileComponent
->>>>>>> 1a9af4daa7e9e3c9af6c872f4fe893408826aeba
 		}]
 	}];
 

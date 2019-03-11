@@ -87,41 +87,74 @@ export class ProjectDetailComponent implements OnInit {
 		];
 	}
 	getEmptyTracks(){
-		this.tracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager"){
 
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-			]
-		}
-		];
-	}
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+    }
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+
+    }
+  }
 	getPriorityClass(priority){
 		switch (Number(priority)) {
 			case 4:

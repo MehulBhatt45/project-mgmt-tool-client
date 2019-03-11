@@ -69,6 +69,20 @@ export class ProjectService {
 
 	// }
 
+
+
+
+	addLeave(form){
+		console.log("formmmmmmmmmmmmmmmmmm",form);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"leave/leaveApplication",form);
+	}
+
 	addProject(body){
 		console.log("addproject2 is calling");
 		console.log("body====>>",body);
