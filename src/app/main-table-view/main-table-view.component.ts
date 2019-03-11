@@ -264,10 +264,7 @@ export class MainTableViewComponent implements OnInit {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> 1a9af4daa7e9e3c9af6c872f4fe893408826aeba
+
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");
