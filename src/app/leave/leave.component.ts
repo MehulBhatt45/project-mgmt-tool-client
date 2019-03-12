@@ -5,7 +5,7 @@ import {ProjectService} from '../services/project.service';
 
 
 declare var $ : any;
-
+	
 declare var $ : any;
 
 @Component({
@@ -32,10 +32,10 @@ export class LeaveComponent implements OnInit {
 	}
 	addLeave(form){
 		console.log(this.addForm.value);
-		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
-			console.log("ressssssssssssss",res);
-		},err=>{
-			console.log(err);
-		})
+		// this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
+		// 	console.log("ressssssssssssss",res);
+		// },err=>{
+		// 	console.log(err);
+		// })
 	}
 }

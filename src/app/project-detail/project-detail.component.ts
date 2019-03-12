@@ -494,10 +494,10 @@ export class ProjectDetailComponent implements OnInit {
 			console.error(err);
 		})
 	}
-	searchTask(){
-		console.log("btn tapped");
-	}
-	// onKey(event: any){
+	// searchTask(){
+	// 	console.log("btn tapped");
+	// }
+	// // onKey(event: any){
 		// 	console.log(event);
 		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
 		// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
