@@ -43,6 +43,7 @@ import { ChildComponent } from './child/child.component';
 import { LeaveComponent } from './leave/leave.component';
 import { AllDeveloperComponent } from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
+import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 
 
 @NgModule({
@@ -72,11 +73,10 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
     NoticeboardComponent,
     UserprofileComponent,
     LeaveComponent,
-
     AllDeveloperComponent,
     VisitUserProfileComponent,
-       ],
-
+    AllLeaveAppComponent,
+   ],
 
     imports: [
     BrowserModule,

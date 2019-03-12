@@ -21,9 +21,9 @@ import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import {LeaveComponent} from './leave/leave.component';
-
 import { AllDeveloperComponent} from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
+import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component'
 
 
 
@@ -142,12 +142,15 @@ const routes: Routes = [
 			component:LeaveComponent
 		},
 		{
-
-
 			path:'visit-user-profile',
 
 			//pathMatch: "full",
 			component:VisitUserProfileComponent
+		},
+		{
+			path:'all-leave-app',
+			//pathMatch: "full",
+			component:AllLeaveAppComponent
 		},
 		
 		{
