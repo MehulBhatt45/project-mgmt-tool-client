@@ -44,6 +44,7 @@ import { LeaveComponent } from './leave/leave.component';
 import { AllDeveloperComponent } from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
 import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
+import { SummaryComponent } from './summary/summary.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
     AllDeveloperComponent,
     VisitUserProfileComponent,
     AllLeaveAppComponent,
+    SummaryComponent,
    ],
 
     imports: [

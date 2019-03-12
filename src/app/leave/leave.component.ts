@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
-<<<<<<< HEAD
 
-=======
 import {ProjectService} from '../services/project.service';
->>>>>>> cdd4e910a41bbbae77a7cd484657b8aa0d0746ad
 
 
-declare var $ : any;
 
 declare var $ : any;
+
+
 
 @Component({
 	selector: 'app-leave',

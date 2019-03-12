@@ -23,7 +23,9 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import {LeaveComponent} from './leave/leave.component';
 import { AllDeveloperComponent} from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
-import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component'
+import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
+import {SummaryComponent} from './summary/summary.component';
+
 
 
 
@@ -156,7 +158,13 @@ const routes: Routes = [
 		{
 			path:'userprofile',
 			component:UserprofileComponent
-		}]
+		},
+
+		{
+			path:'summary/:id',
+			component:SummaryComponent
+		}
+		]
 	}];
 
 	@NgModule({

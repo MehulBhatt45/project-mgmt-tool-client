@@ -213,12 +213,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
+
+		console.log("id_+_+_+===>>>",id);
 		this.loader = true;
 		setTimeout(()=>{
 
 			
 
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				console.log("id++++>____>>>",id);
 				this.pro = res.pmanagerId;
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
@@ -226,6 +229,7 @@ export class ProjectDetailComponent implements OnInit {
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
+					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
 					this.projectTeam.sort(function(a, b){
 						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 						if (nameA < nameB) //sort string ascending
@@ -234,7 +238,7 @@ export class ProjectDetailComponent implements OnInit {
 							return 1
 						return 0 //default return value (no sorting)
 						this.projectTeam.push
-						console.log("response of team============>"  ,this.projectTeam);
+						console.log("response of team============()()()",this.projectTeam);
 					})
 
 				},(err:any)=>{
