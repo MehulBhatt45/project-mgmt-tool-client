@@ -5,6 +5,7 @@ import {AlertService} from '../services/alert.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 declare var $ : any;
 import * as _ from 'lodash';
+import { config } from '../config';
 
 @Component({
   selector: 'app-view-project',
@@ -16,6 +17,7 @@ export class ViewProjectComponent implements OnInit {
   addForm:FormGroup; 
   files:FileList;
   url = '';
+  path = config.baseMediaUrl;
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
