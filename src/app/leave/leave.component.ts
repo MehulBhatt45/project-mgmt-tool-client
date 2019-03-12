@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+<<<<<<< HEAD
 
+=======
+import {ProjectService} from '../services/project.service';
+>>>>>>> cdd4e910a41bbbae77a7cd484657b8aa0d0746ad
 
 
 declare var $ : any;
 
+declare var $ : any;
 
 @Component({
 	selector: 'app-leave',
@@ -16,12 +21,13 @@ export class LeaveComponent implements OnInit {
 	addForm:FormGroup; 
 
 
-	constructor() {
+	constructor(public router:Router, public _projectservice:ProjectService) {
 		this.addForm = new FormGroup({
 			email: new FormControl ('',Validators.required),
 			name: new FormControl ('',Validators.required),
 			leaveDuration : new FormControl ('',Validators.required),
 			typeOfLeave : new FormControl ('',Validators.required),
+			reasonForLeave : new FormControl ('', Validators.required),
 		})
 	}
 
@@ -30,5 +36,10 @@ export class LeaveComponent implements OnInit {
 	}
 	addLeave(form){
 		console.log(this.addForm.value);
+		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
+			console.log("ressssssssssssss",res);
+		},err=>{
+			console.log(err);
+		})
 	}
 }

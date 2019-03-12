@@ -263,8 +263,6 @@ export class MainTableViewComponent implements OnInit {
 			return '';
 		}
 	}
-	
-
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");
