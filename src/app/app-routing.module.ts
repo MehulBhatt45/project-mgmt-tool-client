@@ -21,9 +21,11 @@ import {AddNoticeComponent} from './add-notice/add-notice.component';
 import {NoticeboardComponent} from './noticeboard/noticeboard.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import {LeaveComponent} from './leave/leave.component';
-
 import { AllDeveloperComponent} from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
+import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
+import {SummaryComponent} from './summary/summary.component';
+
 
 
 
@@ -146,12 +148,23 @@ const routes: Routes = [
 			pathMatch: "full",
 			component:VisitUserProfileComponent
 		},
+		{
+			path:'all-leave-app',
+			//pathMatch: "full",
+			component:AllLeaveAppComponent
+		},
 		
 		{
 			path:'userprofile/:id',
 			pathMatch: "full",
 			component:UserprofileComponent
-		}]
+		},
+
+		{
+			path:'summary/:id',
+			component:SummaryComponent
+		}
+		]
 	}];
 
 	@NgModule({

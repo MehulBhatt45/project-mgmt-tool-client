@@ -1,5 +1,13 @@
-.developer_table{
-	width: 50% ;
-	margin-right: auto;
-	margin-left: auto;
+.card-header.bg-default {
+    text-align: center;
+    color: white;
+    background-color: #372e5f;
+}
+.card{
+	margin: 0 auto;
+	width: 500px;
+    max-width: 100%;
+}
+table {
+    width: 100%;
 }

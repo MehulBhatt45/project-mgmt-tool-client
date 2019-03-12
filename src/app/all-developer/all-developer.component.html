@@ -1,20 +1,25 @@
 <div class="container">
 	<div class="row">
-		<table class="table developer_table">
-			<thead>
-			<tr>
-				<th>Name</th>
-				<th>action</th>
-			</tr>
-		</thead>
-		 <tbody>
-			<tr *ngFor="let developer of developers">
-				<td>{{developer.name}}</td>
-				<td><a routerLink="/visit-user-profile/{{developer._id}}">See Profile</a></td>
-			</tr>
-		</tbody>
-		</table>
-		
+		<div class="card">
+			<div class="card-header bg-default">
+				<span>Team Members</span>
+			</div>
+			<div class="table border">
+				<table>
+					
+					<tr align="center" >
+						<th>Name</th>
+						<th>action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let developer of developers">
+						<td>{{developer.name}}</td>
+						<td><a routerLink="/visit-user-profile/{{developer._id}}">See Profile</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>		
 	</div>
 </div>
 
