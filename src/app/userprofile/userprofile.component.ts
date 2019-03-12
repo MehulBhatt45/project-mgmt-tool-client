@@ -22,7 +22,7 @@ export class UserprofileComponent implements OnInit {
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
-		private router: Router, public _projectService: ProjectService,) { 
+		private router: Router, public _projectService: ProjectService) { 
 	}
 
 	createEditEmail(){

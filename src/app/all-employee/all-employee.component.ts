@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoginService } from '../services/login.service';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 
 @Component({
-	selector: 'app-all-developer',
-	templateUrl: './all-developer.component.html',
-	styleUrls: ['./all-developer.component.css']
+	selector: 'app-all-employee',
+	templateUrl: './all-employee.component.html',
+	styleUrls: ['./all-employee.component.css']
 })
-export class AllDeveloperComponent implements OnInit {
+export class AllEmployeeComponent implements OnInit {
 	developers;
 	userId;
-	constructor(private route: ActivatedRoute,
-		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { }
+	constructor(private route: ActivatedRoute,public _alertService: AlertService,
+		private router: Router, public _projectService: ProjectService) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(param=>{
@@ -21,7 +20,6 @@ export class AllDeveloperComponent implements OnInit {
 			this.getUserById(this.userId);
 		})
 	}
-
 	getUserById(id){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -39,5 +37,4 @@ export class AllDeveloperComponent implements OnInit {
 			this._alertService.error(err);
 		})
 	}
-
 }
