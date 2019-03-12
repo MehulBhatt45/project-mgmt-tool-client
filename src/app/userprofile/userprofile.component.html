@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		<!-- <div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || 'admin'"> -->
-			<div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || admin">
+			<div class="notify_btn" *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'">
 			<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
 		</div>
 	</div>
@@ -94,7 +94,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default btn-lg" (click)="sendMail(editTEmail.value)">Send</button>
+				<button type="button" class="btn btn-default btn-lg">Send</button>
 			</div>
 		</div>
 	</div>

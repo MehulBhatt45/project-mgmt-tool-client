@@ -8,6 +8,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
+import { config } from '../config'
 import {LeaveComponent} from '../leave/leave.component';
 declare var $ : any;
 import * as _ from 'lodash';
@@ -42,6 +43,7 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers: any
 	loader : boolean = false;
+
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
@@ -60,67 +62,82 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getEmptyComments();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
 	}
 
-	getEmptyComments(){
-		this.comments = [{
-			"profilePhoto": "../assets/3.png",
-			"developerName": "Komal Sakhiya",
-			"comment": "this is my first comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/5.jpg",
-			"developerName": "Mehul Bhatt",
-			"comment": "this is my second comment in this task.........."
-		},
-		{
-			"profilePhoto": "../assets/6.jpg",
-			"developerName": "Foram Trada",
-			"comment": "this is my third comment in this task.........."
-		}
-		];
-	}
+	
 	getEmptyTracks(){
-		this.tracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager"){
 
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-			]
-		}
-		];
-	}
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+    }
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+
+    }
+  }
 	getPriorityClass(priority){
 		switch (Number(priority)) {
 			case 4:
@@ -163,10 +180,17 @@ export class ProjectDetailComponent implements OnInit {
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
+		// var refresh;
 		$('#my_button').on('click', function(){
-			alert('Button clicked. Disabling...');
+			// alert('Button clicked. Disabling...');
 			$('#my_button').attr("disabled", true);
+			$('#myDIV').css('display','block');
+
 		});
+		// function myFunction() {
+		// 	 document.getElementById("myDIV").append (`<i  class="fa fa-refresh refresh"></i>`);
+		// 	// element.classList.toggle("mystyle");
+		// }
 	}
 
 	getAllDevelopers(){
@@ -191,27 +215,34 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 
-				
-
-				console.log("response of team============>"  ,res);
-				this.projectTeam = res.Teams;
-				console.log("projectTeam____++++",this.projectTeam);
-
-			},(err:any)=>{
-				console.log("err of team============>"  ,err);
-			});
-
+			
 
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				
-				this.pro = res;
-				console.log("project detail===>>>>",res);
+				this.pro = res.pmanagerId;
+				console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					//this.projectTeam = res.team;
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					this.projectTeam.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+						this.projectTeam.push
+						console.log("response of team============>"  ,this.projectTeam);
+					})
+
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
-
 
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
@@ -239,6 +270,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(err);
 				this.loader = false;
 			})
+			
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -386,6 +418,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
+		
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -412,6 +445,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(res.projectId);
 		},err=>{
 			// $('.alert').alert()
+			var err;
+
 			console.log(err);
 		})
 	}
@@ -520,5 +555,5 @@ export class ProjectDetailComponent implements OnInit {
 							console.log("error in delete Task=====>" , err);
 						});
 					}
-
 				}
+
