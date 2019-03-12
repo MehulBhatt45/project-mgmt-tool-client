@@ -20,7 +20,7 @@ export class SearchTaskPipe implements PipeTransform {
 		searchText = searchText.toLowerCase();
 			console.log("Search pipe items = ",items);
 			task = items[0].filter( it => {
-				if(it.title.toLowerCase().includes(searchText) || it.uniqueId.toLowerCase().includes(searchText)){
+				if(it.title.toLowerCase().includes(searchText) || it.uniqueId.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)){
 					return it;
 				}
 

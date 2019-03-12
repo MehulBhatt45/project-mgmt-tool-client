@@ -84,6 +84,19 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"leave/leaveApplication",form);
 	}
 
+
+		pendingLeaves(){
+			// console.log("apppppppppssssssssssss",apps);
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					'x-access-token' : JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			return this.http.get(config.baseApiUrl+"leave/pendingLeaves");
+		}
+
+
 		// 	console.log("addproject is calling");
 		// 	let formdata = new FormData();
 		// 	formdata.append('title',body.title);
