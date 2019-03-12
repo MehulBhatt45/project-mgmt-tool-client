@@ -1,0 +1,16 @@
+.btn-primary{
+	background-color: green !important
+}
+.table{
+	margin: 5px;
+	padding: 5px;
+	text-align: center;
+	/*display: inline-block;*/
+}
+.table th{
+	font-size: 20px;
+	vertical-align: middle;
+}
+.table td{
+	vertical-align: middle;
+}

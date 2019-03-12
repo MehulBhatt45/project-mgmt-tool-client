@@ -1,4 +1,4 @@
-<div class="container mt-6">
+<!--  <div class="container mt-6">
 	<div class="card panels-card">
 		<h5 class="top-nav-collapse white-text text-center py-4">
 			<strong>Leave Application</strong>
@@ -17,7 +17,7 @@
 				<div class="form-group">
 					<label>Leave date(s)</label>
 					<div class="md-form">
-						<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+						<input placeholder="Selected date" type="text" formControlName="date" id="date-picker-example" class="form-control datepicker">
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,4 +62,90 @@
 			</form>
 		</div>
 	</div>	
+</div>
+-->
+
+
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card card-cascade narrower" >
+				<!-- Card image -->
+				<div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
+					<!-- Title -->
+					<h2 class="card-header-title" align="center" style="margin: 0; padding: 10px 0; color: white">Apply Leave</h2>
+				</div>
+				<!-- Card content -->
+				<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
+					<!-- Text -->
+					<div class="container">
+						<form [formGroup]='addForm' autocomplete="off">
+							<div class="md-form" >
+								<input type="email" id="email" formControlName="email" class="form-control" style="margin-bottom: 30px;">
+								<label for="email">Enter E-mail</label>
+							</div>
+							<div class="md-form" >
+								<input type="text" id="name" formControlName="name" class="form-control" style="margin-bottom: 30px;">
+								<label for="name">Enter Your Name</label>
+							</div>
+							<div class="md-form">
+								<input placeholder="Select date" formControlName="date" type="text" id="date-picker-example" class="form-control datepicker" style="margin-bottom: 30px;">
+								<label for="date-picker-example"></label>
+							</div>
+							<p style="text-align: left; margin-bottom: 10px;"><b>Duration:-</b></p>
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="defaultGroupExample1" formControlName="leaveDuration" value="firsthalf-day">
+								<label class="custom-control-label" for="defaultGroupExample1">Before Lunch</label>
+							</div>
+
+							<!-- Group of default radios - option 2 -->
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="defaultGroupExample2" formControlName="leaveDuration" value="secondhalf-day" checked>
+								<label class="custom-control-label" for="defaultGroupExample2">After Lunch</label>
+							</div>
+
+							<!-- Group of default radios - option 3 -->
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="defaultGroupExample3" formControlName="leaveDuration" value="full-day">
+								<label class="custom-control-label" for="defaultGroupExample3"  style="margin-bottom: 30px;">Full Day</label>
+							</div>
+							<p style="text-align: left; margin-bottom: 10px;"><b>Reason:-</b></p>
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="SickLeave" formControlName="typeOfLeave" value="sickleave">
+								<label class="custom-control-label" for="SickLeave">Sick Leave</label>
+							</div>
+
+							<!-- Group of default radios - option 2 -->
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="Emergencyleave" formControlName="typeOfLeave" value="emergencyleave" checked>
+								<label class="custom-control-label" for="Emergencyleave">Emergency leave</label>
+							</div>
+
+							<!-- Group of default radios - option 3 -->
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="withoutpay" formControlName="typeOfLeave" value="leavewithoutpay">
+								<label class="custom-control-label" for="withoutpay">without pay</label>
+							</div>
+							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+								<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="personalleave">
+								<label class="custom-control-label" for="PersonalLeave" style="margin-bottom: 30px;"	>Personal Leave</label>
+							</div>
+							<!-- <div class="md-form mb-4 pink-textarea active-pink-textarea-2">
+								<textarea id="form17" class="md-textarea form-control" rows="3"></textarea>
+								<label for="form17">Material textarea always colorful</label>
+							</div> -->
+							<div class="form-group purple-border" style="text-align: left; padding: 0;">
+								<label for="exampleFormControlTextarea4">Reason For Leave:-</label>
+								<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
+							</div>
+							<div>
+								<button type="button" class="btn btn-deep-purple waves-effect" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
