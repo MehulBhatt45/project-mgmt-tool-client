@@ -256,10 +256,22 @@ export class ProjectService {
 		getAllTasks(){
 			return this.http.get(config.baseApiUrl+"tasks/all-task");		
 		}
+
 		updateTask(task){
 			console.log("task =========>",task);
 			var id = task._id;
 			return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
+		}
+
+		updateNotice(notice){
+			console.log("notice data in service==>>",notice);
+			var id = notice._id;
+			return this.http.put(config.baseApiUrl+"notice/update-notice-by-id/"+id, notice);	
+		}
+
+		deleteNotice(id){
+			console.log("notice data in service==>>",id);
+			return this.http.delete(config.baseApiUrl+"notice/delete-notice-by-id/"+id);	
 		}
 
 		addTask(data){

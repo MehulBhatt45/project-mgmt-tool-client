@@ -11,7 +11,7 @@
 					<h5>{{notice.desc}}</h5>
 					<div *ngIf="currentUser.userRole=='projectManager'">
 						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="deleteNotice(notice._id)">Delete Notice</button>
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="newNotice = notice">Edit</button>
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 
 
 <!-- Modal Start Here -->
-<!-- div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -30,35 +30,38 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" >
+			<div class="modal-body" *ngIf="newNotice">
 				<div class="row">
-					<form style="width: 100%;" [formGroup]="editNotice">
+					<form style="width: 100%;" [formGroup]="editNoticeForm">
 						<div class="form-group col-12">
 							<label for="title">Title</label>
-							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
+							<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newNotice.title">
 						</div>
 						<div class="form-group col-12">
 							<label for="desc">Discription</label>
-							<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
+							<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
+						</div>
+						<div class="form-group col-12">
+							<label for="published">published</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
+								<option value="true">True</option>
+								<option value="false">False</option>
+							</select>
+						</div>
+						<div class="form-group col-12">
+							<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
 						</div>
 					</form>
 				</div>
 			</div>
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="submit" id="my_button" class="btn btn-default btn-lg"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); myFunction() ">Save changes</button>
-				<div id="myDIV"> 
-					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
-				</div>
-				<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="err" id="alert">
-					<strong>Holy guacamole!</strong> You should check in on some of those fields below.
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice)">Save changes</button>
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>
+
 <!-- Modal End Here -->
 
