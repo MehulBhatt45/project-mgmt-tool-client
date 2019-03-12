@@ -214,30 +214,28 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-	getProject(id){
-		this.loader = true;
-		setTimeout(()=>{
+getProject(id){
+	this.loader = true;
+	setTimeout(()=>{
+		this._projectService.getProjectById(id).subscribe((res:any)=>{
+			this.pro = res.pmanagerId;
+			console.log("project detail===>>>>",this.pro);
+			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				//this.projectTeam = res.team;
 
-
-
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				this.pro = res.pmanagerId;
-				console.log("project detail===>>>>",this.pro);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					//this.projectTeam = res.team;
-					res.Teams.push(this.pro); 
-					console.log("response of team============>"  ,res.Teams);
-					this.projectTeam = res.Teams;
-					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-						this.projectTeam.push
-						console.log("response of team============>"  ,this.projectTeam);
-					})
+				res.Teams.push(this.pro); 
+				console.log("response of team============>"  ,res.Teams);
+				this.projectTeam = res.Teams;
+				this.projectTeam.sort(function(a, b){
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+					this.projectTeam.push
+					console.log("response of team============>"  ,this.projectTeam);
+				})
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);

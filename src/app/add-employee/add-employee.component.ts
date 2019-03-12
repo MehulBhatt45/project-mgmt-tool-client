@@ -37,6 +37,7 @@ export class AddEmployeeComponent implements OnInit {
 			console.log("btn tapped");
 			
 			this.addEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+			this.addEmployeeForm.value.date = $('.datepicker').val();
 			console.log("form value=====>>>",addEmployeeForm.value);
 			this._projectservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
 				console.log("res",res);

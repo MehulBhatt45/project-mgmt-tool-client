@@ -139,9 +139,8 @@ const routes: Routes = [
 			component:LeaveComponent
 		},
 		{
-			path:'visit-user-profile',
-
-			//pathMatch: "full",
+			path:'visit-user-profile/:id',
+			pathMatch: "full",
 			component:VisitUserProfileComponent
 		},
 		{
@@ -151,7 +150,8 @@ const routes: Routes = [
 		},
 		
 		{
-			path:'userprofile',
+			path:'userprofile/:id',
+			pathMatch: "full",
 			component:UserprofileComponent
 		},
 		{

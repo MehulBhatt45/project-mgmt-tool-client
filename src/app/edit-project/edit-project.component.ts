@@ -4,7 +4,10 @@ import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 import * as _ from "lodash";
 declare var $ : any;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 0edd09e4942eb1656abb24f5e070fcdc8a508760
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',
@@ -40,13 +43,11 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
+		if(this.projectId){
+			this.editProject(this.projectId);		
+		}
+		this.getProjects();
 		$('.datepicker').pickadate();
-		// if(this.projectId){
-		// 	this.editProject(this.projectId);		
-		// }
-		// this.getProjects();
-		
 	}
 	getProjects(){
 		localStorage.setItem('teamShow' , JSON.stringify(false));

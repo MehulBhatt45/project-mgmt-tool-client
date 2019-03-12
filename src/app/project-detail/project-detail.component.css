@@ -291,7 +291,10 @@ table {
   }
   #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
+  }
 
+  .modal-header {
+    padding: 2rem;
   }
   .refresh{
     margin: 0;
@@ -319,7 +322,7 @@ table {
   .modal-header {
     padding: 2rem;
   }
-.break{
+  .break{
 
-  word-break: break-all;
-}
+    word-break: break-all;
+  }
