@@ -308,7 +308,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" *ngIf="newTask">
+			<div class="modal-body">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
 						<div class="form-group col-12">
@@ -347,11 +347,21 @@
 								</select>
 							</div>
 						</div>
+
+						
 						<div class="row no-margin no padding" >
-							<div class="form-group col-12">
+							<div class="form-group col-6">
 								<label for="dueDate">Due Days</label>
 								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 							</div>
+							
+							<div class="form-group col-6">
+								<label for="estimatedTime">Estimated Time</label>
+								<div class="md-form form-group">
+									<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+								</div>
+							</div>
+
 						</div>
 						<div class="form-group col-12">
 							<label for="status">Status</label>
