@@ -44,6 +44,7 @@ export class ProjectDetailComponent implements OnInit {
 	developers: any
 	loader : boolean = false;
 
+
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
@@ -190,6 +191,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
+
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -407,14 +409,17 @@ export class ProjectDetailComponent implements OnInit {
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#exampleModalPreviewLabel').modal('hide');
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
+			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
-			// $('.alert').alert()
-			var err;
+			$('#alert').css('display','block');
 
-			console.log(err);
+			// alert('Error...');
+			// $('.alert').alert()
+			// var error;
+			// $('#alert').css('display','block');
+			console.log("error========>",err);
 		})
 	}
 	public Editor = DecoupledEditor;

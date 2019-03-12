@@ -318,3 +318,7 @@ background-color: white;
 .modal-header {
     padding: 2rem;
 }
+.error-alert{
+  margin-right: auto;
+  display: none;
+}
