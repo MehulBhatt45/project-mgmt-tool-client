@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
-
+import { config } from '../config';
 declare var $ : any;
 import * as _ from 'lodash';
 
@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
 	tracks:any;
 	task;
 	project;
+	baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
