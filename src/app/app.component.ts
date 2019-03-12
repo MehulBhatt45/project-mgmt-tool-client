@@ -17,5 +17,9 @@ export class AppComponent implements OnInit {
 		if(!this.currentUser){
 			this.router.navigate(['/login'])
 		}
+		$("#dropdown").click(function(e){
+  e.stopPropagation();
+});
+
 	}
 }

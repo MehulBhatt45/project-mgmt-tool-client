@@ -61,6 +61,9 @@
             <li><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
             <li><a routerLink="/all-developer" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members</a></li>
              <li><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
+
+             <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
+             <!-- <a routerLink = '/leave'>Leave Form</a> -->
           </ul>
         </li>
         <!--/. Side navigation links -->
@@ -135,8 +138,9 @@
           <div class="second_icon">
             <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
           </div> 
-          <div class="second_icon dropdown" *ngIf="currentUser.userRole=='projectManager'">
-            <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="plus_details"><i class="fa fa-plus" aria-hidden="true" ></i></a>
+          <!-- *ngIf="currentUser.userRole=='projectManager'" -->
+          <div class="second_icondropdown" id="plus_details">
+            <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true" ></i></a>
             <div class="dropdown-menu">
               <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
               <a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -161,8 +165,8 @@
             <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
             <ul class="team-members">
               <li id="login_details">
-                <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
-                <div class="dropdown-content"> 
+                <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{getInitialsOfName(currentUser.name)}}</a>
+                <div class="dropdown-menu"> 
                   <a class="dropdown-item" (click)="logout()">Log Out</a>
                   <a  class="dropdown-item" [routerLink]="['/userprofile']">My Profile</a>
                 </div>
