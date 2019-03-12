@@ -44,6 +44,7 @@ export class ProjectDetailComponent implements OnInit {
 	developers: any
 	loader : boolean = false;
 
+
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
@@ -181,14 +182,14 @@ export class ProjectDetailComponent implements OnInit {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 		// var refresh;
-		$('#my_button').on('click', function(){
+		$('#save_changes').on('click', function(){
 			// alert('Button clicked. Disabling...');
-			$('#my_button').attr("disabled", true);
-			$('#myDIV').css('display','block');
+			$('#save_changes').attr("disabled", true);
+			$('#refresh_icon').css('display','block');
 
 		});
 		// function myFunction() {
-		// 	 document.getElementById("myDIV").append (`<i  class="fa fa-refresh refresh"></i>`);
+		// 	 document.getElementById("refresh_icon").append (`<i  class="fa fa-refresh refresh"></i>`);
 		// 	// element.classList.toggle("mystyle");
 		// }
 	}
@@ -216,13 +217,12 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 
-			
-
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res.pmanagerId;
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
+
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -440,14 +440,14 @@ export class ProjectDetailComponent implements OnInit {
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#exampleModalPreviewLabel').modal('hide');
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('.modal').modal('hide');
 		},err=>{
-			// $('.alert').alert()
-			var err;
-
-			console.log(err);
+			$('#alert').css('display','block');
+			console.log("error========>",err);
 		})
 	}
 	public Editor = DecoupledEditor;
