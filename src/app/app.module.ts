@@ -45,6 +45,7 @@ import { AllDeveloperComponent } from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
 import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
+import { SummaryComponent } from './summary/summary.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { AllEmployeeComponent } from './all-employee/all-employee.component';
     VisitUserProfileComponent,
     AllLeaveAppComponent,
     AllEmployeeComponent,
+    SummaryComponent,
    ],
 
     imports: [

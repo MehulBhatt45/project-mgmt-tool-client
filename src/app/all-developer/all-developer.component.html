@@ -1,6 +1,12 @@
 <div class="container">
 	<div class="row">
-		<table border="1px solid black">
+		<div class="card">
+			<div class="card-header bg-default">
+				<span>Team Members</span>
+			</div>
+			<div class="table border">
+				<table>
+					
 			<tr align="center" >
 				<th>Name</th>
 				<th>action</th>
@@ -9,7 +15,10 @@
 				<td>{{developer.name}}</td>
 				<td><a [routerLink]="['/visit-user-profile']">See Profile</a></td>
 			</tr>
-		</table>
+				</table>
+		</div>
+		</div>
+		
 		
 	</div>
 </div>

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
+import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
 	selector: 'app-all-developer',

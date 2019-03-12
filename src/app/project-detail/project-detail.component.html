@@ -42,7 +42,6 @@
 			<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 		</div>
 	</div>
-	<a routerLink = '/leave'>Leave Form</a>
 
 </div>
 
@@ -64,9 +63,7 @@
 					<span class="track_title">{{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
 				</div>		
-
 		</div>
-
 		<div class="row justify-content-end">
 			<div class="form-group" *ngIf="url=='all-item-list'">
 				<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
@@ -94,7 +91,6 @@
 					<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Ascending</a>
 					<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Descending</a>
 					<a class="dropdown-item" (click)="sortTasksByPriority(data)">Priority</a>
-
 				</div>
 			</div>
 		</div>
@@ -132,8 +128,6 @@
 											<li class="icon_check">
 												<i class="fa fa-check-square" aria-hidden="true"  title="Task"></i>
 									
-
-
 									<li>
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -199,7 +193,7 @@
 					</table>
 					<div class="details">
 						<div class="row">
-							<div class="col-12 col-md-4">
+							<div class="col-12 col-md-6">
 
 								<p  *ngIf="task.createdBy">
 									<label><strong>Created By: &nbsp;</strong></label>
@@ -214,7 +208,7 @@
 									<span>{{task.status}}</span>
 								</p>
 							</div>
-							<div class="col-12 col-md-4">
+							<div class="col-12 col-md-6">
 								<p>
 									<label><strong>Assign To: &nbsp;</strong></label>
 									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
@@ -228,23 +222,27 @@
 									<span>{{task.dueDate}}</span>
 								</p>
 							</div>
-							<div class="col-12 col-md-4">
-								<p>start time end time</p>
+							<div class="col-6">
+								<label><strong>start time: &nbsp;</strong></label>
+								
 							</div>
-						</div>
+							<div class="col-6">
+								<label><strong> end time: &nbsp;</strong></label>
+							</div>
 						<div class="row justify-content-between">
-							<div>
+							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							</div>
-							<div *ngIf="currentUser.userRole=='projectManager'">
+							</div> -->
+							<!-- <div *ngIf="currentUser.userRole=='projectManager'">
 								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
-							</div>
+							</div> -->
 							<div>
 								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
 							</div>
+						</div>
 						</div>
 					</div>
 					<hr>
@@ -265,7 +263,7 @@
 											<p class="developerName" *ngIf="i.userId">
 												{{i.userId.name}}
 											</p>
-											<p>
+											<p class="break">
 												{{i.content}}
 											</p>
 											<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
@@ -308,7 +306,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body" *ngIf="newTask">
+			<div class="modal-body">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
 						<div class="form-group col-12">
@@ -347,11 +345,21 @@
 								</select>
 							</div>
 						</div>
+
+						
 						<div class="row no-margin no padding" >
-							<div class="form-group col-12">
+							<div class="form-group col-6">
 								<label for="dueDate">Due Days</label>
 								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 							</div>
+							
+							<div class="form-group col-6">
+								<label for="estimatedTime">Estimated Time</label>
+								<div class="md-form form-group">
+									<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+								</div>
+							</div>
+
 						</div>
 						<div class="form-group col-12">
 							<label for="status">Status</label>
@@ -363,17 +371,54 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="submit" id="my_button" class="btn btn-default btn-lg"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); myFunction() ">Save changes</button>
-				<div id="myDIV"> 
-					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
-				</div>
-				<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="err" id="alert">
-					<strong>Holy guacamole!</strong> You should check in on some of those fields below.
+				<div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
+					<strong>ERROR!</strong>  Task couldn't be added.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<div id="refresh_icon"> 
+					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
+				</div>
+				<div *ngIf="currentUser.userRole=='projectManager'">
+					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
+				</div>
+				<button type="submit" id="save_changes" class="btn btn-default"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
 			</div>
 		</div>
+	</div>
+</div>
+<!-- 						</div>
+-->							<!-- <div class="form-group col-12 col-lg-6">
+	<label for="priority">Priority</label>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+		<option value="4">Low</option>
+		<option value="3">Medium</option>
+		<option value="2">High</option>
+		<option value="1">Highest</option>
+	</select>
+</div>
+</div>
+<div class="row no-margin no padding" >
+	<div class="form-group col-12">
+		<label for="dueDate">Due Days</label>
+		<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control"> -->
 
+<!-- <div class="form-group col-12">
+	<label for="status">Status</label>
+	<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
+		<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+	</select>
+</div>
+</form>
+</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+	<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid">Save changes</button>
+</div>
+</div>
+</div>
+</div>
+-->
