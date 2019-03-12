@@ -16,6 +16,7 @@ export class NoticeboardComponent implements OnInit {
   constructor(public router:Router, public _projectservice:ProjectService) { }
   notice:any;
   path:any;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   ngOnInit() {
   	this.getAllNotice();
@@ -32,5 +33,9 @@ export class NoticeboardComponent implements OnInit {
 			console.log(err);    
 		})
 	}
+
+  deleteNotice(id){
+    console.log("deleted id",id);
+  }
 
 }
