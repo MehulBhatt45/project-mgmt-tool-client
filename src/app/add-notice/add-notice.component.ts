@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
+declare var $:any;
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-add-notice',
@@ -29,26 +31,28 @@ export class AddNoticeComponent implements OnInit {
 		this.getAllNotice();
 	}
 
+
+
 	addNotice(addForm){
-		console.log("add form calling",addForm.value);
-		if(this.files && this.files.length){
-			this.addForm.value['createdby'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("form value=====>>>",addForm.value);
-			this._projectservice.addNotice_with_image(addForm.value, this.files).subscribe((res:any)=>{
-				console.log(res);
-			},err=>{
-				console.log(err);    
-			}) 
-		}
-		else{
-			this.addForm.value['createdby'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-			this._projectservice.addNotice_without_image(addForm.value).subscribe((res:any)=>{
-				console.log(res);
-			},err=>{
-				console.log(err);    
-			}) 
-		}
-	}
+          console.log(addForm);
+          var data = new FormData();
+          _.forOwn(addForm, function(value, key) {
+            data.append(key, value)
+          });
+          console.log(addForm, this.files);
+          if(this.files && this.files.length>0){
+            for(var i=0;i<this.files.length;i++){
+              data.append('uploadfile', this.files[i]);
+            }
+          }
+          data.append('createdby', JSON.parse(localStorage.getItem('currentUser'))._id);
+          this._projectservice.addNotice(data).subscribe((res:any)=>{
+            console.log(res);
+            console.log("addproject2 is called");
+          },err=>{
+            console.log(err);    
+          }) 
+        }
 
 	getAllNotice(){
 
