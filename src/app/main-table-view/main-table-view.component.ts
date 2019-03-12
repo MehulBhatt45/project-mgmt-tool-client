@@ -407,13 +407,27 @@ export class MainTableViewComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-	onKey(event: any){
-		console.log(event, this.tasks);
+	// onKey(event: any){
+	// 	console.log(event, this.tasks);
+	// 	var dataToBeFiltered = [this.tasks];
+	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+	// 	console.log("In Component",task);
+	// 	this.getEmptyTracks();
+	// 	_.forEach(task, (content)=>{
+	// 		_.forEach(this.tracks, (track)=>{
+	// 			if(content.status == track.id){
+	// 				track.tasks.push(content);
+	// 			}
+	// 		})
+	// 	})
+	// }
+	onKey(searchText){
+		console.log(this.tasks);
 		var dataToBeFiltered = [this.tasks];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
 		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
+		_.forEach(task, (content)=>{	
 			_.forEach(this.tracks, (track)=>{
 				if(content.status == track.id){
 					track.tasks.push(content);

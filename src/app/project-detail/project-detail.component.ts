@@ -522,7 +522,7 @@ searchTask(){
 						_.forEach(this.tracks, (track)=>{
 							if(content.status == track.id){
 								track.tasks.push(content);
-							}
+
 						})
 					})
 				}
