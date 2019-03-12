@@ -1,0 +1,15 @@
+.fas, .far{
+  margin-right: 10px !important;
+}
+
+.img_section{
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+.card{
+  padding: 10px;
+}
+.btn_section{
+	width: 20px;
+}

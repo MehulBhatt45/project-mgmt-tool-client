@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+
 import {ProjectService} from '../services/project.service';
 
 
-declare var $ : any;
 
 declare var $ : any;
+	
+
+
 
 @Component({
 	selector: 'app-leave',
@@ -14,7 +17,7 @@ declare var $ : any;
 	styleUrls: ['./leave.component.css']
 })
 export class LeaveComponent implements OnInit {
-	  addForm:FormGroup; 
+	addForm:FormGroup; 
 
 
 	constructor(public router:Router, public _projectservice:ProjectService) {
@@ -25,17 +28,17 @@ export class LeaveComponent implements OnInit {
 			typeOfLeave : new FormControl ('',Validators.required),
 			reasonForLeave : new FormControl ('', Validators.required),
 		})
-	 }
+	}
 
 	ngOnInit() {
 		$('.datepicker')
 	}
 	addLeave(form){
 		console.log(this.addForm.value);
-		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
-			console.log("ressssssssssssss",res);
-		},err=>{
-			console.log(err);
-		})
+		// this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
+		// 	console.log("ressssssssssssss",res);
+		// },err=>{
+		// 	console.log(err);
+		// })
 	}
 }

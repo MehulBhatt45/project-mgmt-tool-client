@@ -17,4 +17,3 @@ export const config = {
     { id: "4", value: 'complete', colorCode: 'success' }
     ],
 }
-

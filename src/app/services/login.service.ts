@@ -47,7 +47,9 @@ export class LoginService {
     getUserById(id){
         var id = id;
          return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
+         console.log("user id is==========>",id);
     }
+   
 
     logout() {
         // remove user from local storage to log user out
