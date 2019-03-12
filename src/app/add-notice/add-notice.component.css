@@ -1,3 +1,7 @@
 .card-header{
-	 background-color: #372e5f;
+	background-color: #372e5f;
+}
+.md-form label {
+	position: relative;
+	padding-bottom: 10px;
 }
