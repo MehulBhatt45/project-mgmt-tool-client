@@ -182,14 +182,14 @@ export class ProjectDetailComponent implements OnInit {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 		// var refresh;
-		$('#my_button').on('click', function(){
+		$('#save_changes').on('click', function(){
 			// alert('Button clicked. Disabling...');
-			$('#my_button').attr("disabled", true);
-			$('#myDIV').css('display','block');
+			$('#save_changes').attr("disabled", true);
+			$('#refresh_icon').css('display','block');
 
 		});
 		// function myFunction() {
-		// 	 document.getElementById("myDIV").append (`<i  class="fa fa-refresh refresh"></i>`);
+		// 	 document.getElementById("refresh_icon").append (`<i  class="fa fa-refresh refresh"></i>`);
 		// 	// element.classList.toggle("mystyle");
 		// }
 	}
@@ -216,8 +216,6 @@ export class ProjectDetailComponent implements OnInit {
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
-
-			
 
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res.pmanagerId;
@@ -444,14 +442,11 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
-			$('#exampleModalPreviewLabel').modal('hide');
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('.modal').modal('hide');
 		},err=>{
 			$('#alert').css('display','block');
-
-			// alert('Error...');
-			// $('.alert').alert()
-			// var error;
-			// $('#alert').css('display','block');
 			console.log("error========>",err);
 		})
 	}
