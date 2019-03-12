@@ -220,9 +220,9 @@ table {
   color:black;
 
 }
-.fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
+/*.fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
-}
+}*/
 .card_count_lbl{
   margin-left: 15px;
 }
@@ -318,3 +318,13 @@ background-color: white;
 .modal-header {
     padding: 2rem;
 }
+.dropdown{
+  display: inline-block;
+}
+.prefix{
+  margin-top:20px;
+  font-size: 24px;
+}
+/*.deep-purple-skin input [type="text"]:focus:not([readonly]){
+  border-color: red;
+}*/
