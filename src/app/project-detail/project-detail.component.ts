@@ -419,7 +419,7 @@ getProject(id){
 
 
 	saveTheData(task){
-
+		this.loader = true;
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -442,9 +442,11 @@ getProject(id){
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
+			this.loader = false;
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
 		},err=>{
+			this.loader = false;
 			// $('.alert').alert()
 			var err;
 
