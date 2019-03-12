@@ -318,12 +318,8 @@ table {
   }
   .modal-header {
     padding: 2rem;
-<<<<<<< HEAD
   }
-=======
+.break{
+
+  word-break: break-all;
 }
-.error-alert{
-  margin-right: auto;
-  display: none;
-}
->>>>>>> 489dca8c91b6bfb5f5a69272da456e1362f603be

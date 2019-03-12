@@ -194,7 +194,7 @@
 					</table>
 					<div class="details">
 						<div class="row">
-							<div class="col-12 col-md-4">
+							<div class="col-12 col-md-6">
 
 								<p  *ngIf="task.createdBy">
 									<label><strong>Created By: &nbsp;</strong></label>
@@ -209,7 +209,7 @@
 									<span>{{task.status}}</span>
 								</p>
 							</div>
-							<div class="col-12 col-md-4">
+							<div class="col-12 col-md-6">
 								<p>
 									<label><strong>Assign To: &nbsp;</strong></label>
 									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
@@ -223,23 +223,27 @@
 									<span>{{task.dueDate}}</span>
 								</p>
 							</div>
-							<div class="col-12 col-md-4">
-								<p>start time end time</p>
+							<div class="col-6">
+								<label><strong>start time: &nbsp;</strong></label>
+								
 							</div>
-						</div>
+							<div class="col-6">
+								<label><strong> end time: &nbsp;</strong></label>
+							</div>
 						<div class="row justify-content-between">
-							<div>
+							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							</div>
-							<div *ngIf="currentUser.userRole=='projectManager'">
+							</div> -->
+							<!-- <div *ngIf="currentUser.userRole=='projectManager'">
 								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
-							</div>
+							</div> -->
 							<div>
 								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
 							</div>
+						</div>
 						</div>
 					</div>
 					<hr>
@@ -260,7 +264,7 @@
 											<p class="developerName" *ngIf="i.userId">
 												{{i.userId.name}}
 											</p>
-											<p>
+											<p class="break">
 												{{i.content}}
 											</p>
 											<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
@@ -364,11 +368,14 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<div id="refresh_icon"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<button type="submit" id="save_changes" class="btn btn-default btn-lg"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
+				<div *ngIf="currentUser.userRole=='projectManager'">
+					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
+				</div>
+				<button type="submit" id="save_changes" class="btn btn-default"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
 			</div>
 		</div>
 	</div>
