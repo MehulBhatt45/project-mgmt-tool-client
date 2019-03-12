@@ -364,16 +364,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="submit" id="my_button" class="btn btn-default btn-lg"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); myFunction() ">Save changes</button>
-				<div id="myDIV"> 
-					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
-				</div>
-				<div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="err" id="alert">
-					<strong>Holy guacamole!</strong> You should check in on some of those fields below.
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" [disabled]="editTaskForm.invalid || loader" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)">Save changes</button>
 			</div>
 		</div>
 	</div>
