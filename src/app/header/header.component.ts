@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
@@ -17,6 +17,7 @@ import * as _ from 'lodash';
 export class HeaderComponent implements OnInit {
 	tracks:any;
 	task;
+	userId
 	project;
 	projectId;
 	modalTitle;
@@ -28,7 +29,7 @@ export class HeaderComponent implements OnInit {
 	editTaskForm;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	files : FileList;
-	constructor(private router: Router, private formBuilder: FormBuilder,
+	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -112,6 +113,12 @@ export class HeaderComponent implements OnInit {
 		
 		this.getAllDevelopers();
 		this.getEmptyTracks();
+
+		this.route.params.subscribe(param=>{
+			this.userId = param.id;
+			this.getDeveloperById(this.userId);
+		});
+
 	}	
 
 	logout() {
@@ -128,8 +135,8 @@ export class HeaderComponent implements OnInit {
 		// console.log(name);
 
 		if(name != 'admin'){
-		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-		return str.toUpperCase();
+			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+			return str.toUpperCase();
 		}else if(name == 'admin'){
 			return "A";
 		}else{
@@ -137,6 +144,18 @@ export class HeaderComponent implements OnInit {
 		}
 		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
+	getDeveloperById(id){
+		console.log("id=>>>",id);
+		this._loginService.getUserById(id).subscribe((res:any)=>{
+			this.currentUser = res;
+			console.log("all users =============>",res);
+			var userId = JSON.parse(localStorage.getItem('user'))._id;
+			console.log(" currentUser profile ====>" , userId);
+		},(err:any)=>{
+			console.log("eroooooor=========>",err);
+		})
+	}
+
 	editTask(task){
 		this.task = task;
 		this.modalTitle = 'Edit Item'

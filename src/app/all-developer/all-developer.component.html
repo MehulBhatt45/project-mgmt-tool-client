@@ -1,16 +1,22 @@
 <div class="container">
 	<div class="row">
-		<table border="1px solid black">
-			<tr align="center" >
+		<table class="table developer_table">
+			<thead>
+			<tr>
 				<th>Name</th>
 				<th>action</th>
 			</tr>
+		</thead>
+		 <tbody>
 			<tr *ngFor="let developer of developers">
 				<td>{{developer.name}}</td>
-				<td><a [routerLink]="['/visit-user-profile']">See Profile</a></td>
+				<td><a routerLink="/visit-user-profile/{{developer._id}}">See Profile</a></td>
 			</tr>
+		</tbody>
 		</table>
 		
 	</div>
 </div>
+
+
 

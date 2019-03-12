@@ -25,6 +25,7 @@ export class CreateProjectComponent implements OnInit {
       avatar:new FormControl(''),
       desc: new FormControl(''),
       deadline: new FormControl('', Validators.required),
+      Designation: new FormControl('', Validators.required),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
@@ -40,6 +41,7 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit() {
     this.getAllDevelopers();
+    $('.datepicker').pickadate();
     // var options = [];
 
     // $( '.dropdown-menu' ).on( 'click', function( event ) {

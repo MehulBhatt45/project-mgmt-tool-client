@@ -58,31 +58,30 @@
                     <ul class="team-members">
                         <span *ngIf="project.Teams.length>0">
                             <li *ngFor="let Team of project.Teams" [title]="getTitle(Team.name)">
-                                <!-- <a href="javascript:void(0);" > -->
-                                    <a [routerLink]="['/userprofile/']">
-                                        {{getInitialsOfName(Team.name)}}
-                                    </a>
-                                </li>
-                            </span>
-                            <li class="add-member">
-                                <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">
-                                    <i class="fa fa-user-plus"></i>
-                                </a>
-                                <a title="Add Member" *ngIf="currentUser.userRole!='projectManager'">
-                                    <i class="fa fa-user-plus"></i>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <p class="dropdown-item">Action</p>
-                                    <p class="dropdown-item">Another action</p>
-                                    <p class="dropdown-item">Something else here</p>
-                                    <div class="dropdown-divider"></div>
-                                    <p class="dropdown-item">Add</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                             <a [routerLink]="['/userprofile/']">
+                                {{getInitialsOfName(Team.name)}}
+                            </a>
+                        </li>
+                    </span>
+                    <li class="add-member">
+                        <a title="Add Member" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="currentUser.userRole=='projectManager'">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                        <a title="Add Member" *ngIf="currentUser.userRole!='projectManager'">
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <p class="dropdown-item">Action</p>
+                            <p class="dropdown-item">Another action</p>
+                            <p class="dropdown-item">Something else here</p>
+                            <div class="dropdown-divider"></div>
+                            <p class="dropdown-item">Add</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
+        </div>
+    </div>
     <!-- <div class="col-12 col-md-3 margin-bottom-30" *ngIf="currentUser.userRole=='projectManager'">
         <div class="card">
             <div class="card-body">
@@ -94,7 +93,7 @@
     </div> -->
 </div>
 <div *ngIf="currentUser.userRole=='projectManager'">
-   <div class="fixed-action-btn">
+ <div class="fixed-action-btn">
     <a href="javascript:void(0);" title="Add Project" data-toggle="modal" data-target="#createProject" class="btn-floating btn-large" ripple-radius (click)="fixed.toggle()">
         <i class="fa fa-plus"></i>
     </a>

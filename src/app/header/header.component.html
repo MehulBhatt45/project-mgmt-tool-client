@@ -11,7 +11,7 @@
 
             <!-- get user profile photo in sidenav -->
             <img src="http://http://206.189.231.135:4000/project-mgmt-tool-server/uploads{{currentUser.profile}}" onerror="this.src='assets/4.jpeg'" class="img-fluid">
-<!--             <img src="http://localhost/projectMgmtServer{{currentUser.profile}}" onerror="this.src='assets/4.jpeg'" class="img-fluid"> -->
+            <!--             <img src="http://localhost/projectMgmtServer{{currentUser.profile}}" onerror="this.src='assets/4.jpeg'" class="img-fluid"> -->
           </a>
         </div>
       </li>
@@ -163,7 +163,7 @@
                 <a href="javascript:void(0);">{{getInitialsOfName(currentUser.name)}}</a>
                 <div class="dropdown-content"> 
                   <a class="dropdown-item" (click)="logout()">Log Out</a>
-                  <a  class="dropdown-item" [routerLink]="['/userprofile']">My Profile</a>
+                  <a  class="dropdown-item" routerLink="/userprofile/{{currentUser._id}}">My Profile</a>
                 </div>
               </li>   
             </ul>
