@@ -265,8 +265,6 @@ export class MainTableViewComponent implements OnInit {
 			return '';
 		}
 	}
-	
-
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");
@@ -413,13 +411,33 @@ export class MainTableViewComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-	developerId;
-	onKey(event: any){
-		console.log(event, this.tasks);
+
+// 	developerId;
+// 	onKey(event: any){
+// 		console.log(event, this.tasks);
+
+	// onKey(event: any){
+	// 	console.log(event, this.tasks);
+	// 	var dataToBeFiltered = [this.tasks];
+	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+	// 	console.log("In Component",task);
+	// 	this.getEmptyTracks();
+	// 	_.forEach(task, (content)=>{
+	// 		_.forEach(this.tracks, (track)=>{
+	// 			if(content.status == track.id){
+	// 				track.tasks.push(content);
+	// 			}
+	// 		})
+	// 	})
+	// }
+	onKey(searchText){
+		console.log(this.tasks);
+
 		var dataToBeFiltered = [this.tasks];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
 		this.getEmptyTracks();
+
 		if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
 			_.forEach(task, (project)=>{
 				if(project.projectId._id == this.selectedProjectId){
@@ -454,6 +472,12 @@ export class MainTableViewComponent implements OnInit {
 							track.tasks.push(project);
 						}
 					})
+
+		// _.forEach(task, (content)=>{	
+		// 	_.forEach(this.tracks, (track)=>{
+		// 		if(content.status == track.id){
+		// 			track.tasks.push(content);
+
 				}
 			})
 		}else{
