@@ -88,44 +88,7 @@ export class CreateProjectComponent implements OnInit {
           }) 
         }
 
-        addIcon(value){
-          this.addForm.value['avatar'] = value;
-          console.log(this.addForm.value['avatar']);
-          this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
-          $('#basicExampleModal').modal('hide');
-        }
         
-        onSelectFile(event) {
-          console.log("response from changefile",event.target.files);
-          this.files = event.target.files;
-          $('#basicExampleModal').modal('hide');
-          if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]); // read file as data url
-            reader.onload = (event:any) => { // called once readAsDataURL is completed
-              this.url = event.target.result;
-
-            }
-          }
-        }
-
-        getAllDevelopers(){
-          this._projectService.getAllDevelopers().subscribe(res=>{
-            this.developers = res;
-            this.developers.sort(function(a, b){
-              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-              if (nameA < nameB) //sort string ascending
-                return -1 
-              if (nameA > nameB)
-                return 1
-              return 0 //default return value (no sorting)
-            })
-            console.log("Developers",this.developers);
-          },err=>{
-            console.log("Couldn't get all developers ",err);
-            this._alertService.error(err);
-          })
-        }
 
   addIcon(value){
     this.addForm.value['avatar'] = value;
