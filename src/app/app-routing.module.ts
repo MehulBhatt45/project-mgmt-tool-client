@@ -26,6 +26,7 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
 import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import {SummaryComponent} from './summary/summary.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 
 
@@ -161,6 +162,10 @@ const routes: Routes = [
 		{
 			path:'summary/:id',
 			component:SummaryComponent
+		},
+		{
+			path:'editprofile',
+			component:EditprofileComponent
 		}
 		]
 
