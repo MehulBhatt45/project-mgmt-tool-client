@@ -51,6 +51,7 @@ export class SummaryComponent implements OnInit {
 
 	projectTeam;
 	Teams;
+	myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 

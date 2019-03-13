@@ -26,7 +26,7 @@
 				</div> -->
 				<div class="md-form">
 					<i class="fa fa-lock prefix"></i>
-					<input mdbInput type="text" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+					<input mdbInput type="password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
 					<label for="form2">Password</label>
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 						<div *ngIf="f.password.errors.required">Password is required</div>
