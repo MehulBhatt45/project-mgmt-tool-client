@@ -32,7 +32,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low',  dueDate: "" };
 	task;
 	tasks;
 	projects: any;
@@ -173,13 +173,14 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
-			date: new FormControl('',[Validators.required]),
+			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
+		$('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
@@ -215,15 +216,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 getProject(id){
-	this.loader = true;
+	// this.loader = true;
 	setTimeout(()=>{
 		this._projectService.getProjectById(id).subscribe((res:any)=>{
-			this.pro = res.pmanagerId;
+			this.pro = res;
 			console.log("project detail===>>>>",this.pro);
 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 				//this.projectTeam = res.team;
 
-				res.Teams.push(this.pro); 
+				res.Teams.push(this.pro.pmanagerId); 
 				console.log("response of team============>"  ,res.Teams);
 				this.projectTeam = res.Teams;
 				this.projectTeam.sort(function(a, b){
@@ -406,11 +407,11 @@ getProject(id){
 	}
 
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate: "" };
 	}
 
 	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate: "" };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
@@ -423,7 +424,7 @@ getProject(id){
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
+		task.estimatedTime = $("#estimatedTime").val();
 		console.log(task.dueDate);
 		console.log(task.title);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -441,7 +442,9 @@ getProject(id){
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#exampleModalPreviewLabel').modal('hide');
+			$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
 			this.loader = false;
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
