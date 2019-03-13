@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
@@ -42,7 +42,7 @@ export class SummaryComponent implements OnInit {
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
-	developers: any
+	developers: any;
 	loader : boolean = false;
 
 	currentDate = new Date();
@@ -51,7 +51,8 @@ export class SummaryComponent implements OnInit {
 
 	projectTeam;
 	Teams;
-	myproject=this.project[0];
+	myresponse:any;
+	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 
@@ -108,6 +109,9 @@ export class SummaryComponent implements OnInit {
 				]
 			}
 			];
+			console.log("tracks====-=-_+_++",this.tracks);
+			this.myresponse=this.tracks.tasks;
+			console.log("tracks response_+()()()",this.tracks.tasks);
 		}
 		else{
 			this.tracks = [
@@ -201,7 +205,7 @@ export class SummaryComponent implements OnInit {
 							return 1
 						return 0 //default return value (no sorting)
 						this.projectTeam.push
-						console.log("response of team============()()()",this.projectTeam);
+						console.log(" team============()()()",this.projectTeam);
 					})
 
 				},(err:any)=>{
