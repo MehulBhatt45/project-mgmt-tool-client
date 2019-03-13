@@ -23,7 +23,7 @@ export class LeaveComponent implements OnInit {
 	 }
 
 	ngOnInit() {
-		$('.datepicker')
+//		$('.datepicker')
 	}
 	addLeave(form){
 		console.log(this.addForm.value);
