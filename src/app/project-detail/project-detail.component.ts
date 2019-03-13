@@ -1,3 +1,4 @@
+
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
@@ -14,6 +15,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
 
@@ -57,7 +59,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 
 	
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
 		$('.datepicker').pickadate();
@@ -192,8 +194,36 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 
 		});
+		this._pushNotificationService.requestPermission();
+		this.myFunction();
+
 
 		
+	}
+
+	myFunction() {
+		const title = 'Hello';
+		const options = new PushNotificationOptions();
+		options.body = 'New Task Asssign to You';
+
+		this._pushNotificationService.create(title, options).subscribe((notif) => {
+			if (notif.event.type === 'show') {
+				console.log('onshow');
+				setTimeout(() => {
+					notif.notification.close();
+				}, 25000);
+			}
+			if (notif.event.type === 'click') {
+				console.log('click');
+				notif.notification.close();
+			}
+			if (notif.event.type === 'close') {
+				console.log('close');
+			}
+		},
+		(err) => {
+			console.log(err);
+		});
 	}
 
 	getAllDevelopers(){
@@ -212,72 +242,71 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
-
 	}
 
-getProject(id){
-	// this.loader = true;
-	setTimeout(()=>{
-		this._projectService.getProjectById(id).subscribe((res:any)=>{
-			this.pro = res;
-			console.log("project detail===>>>>",this.pro);
-			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-				//this.projectTeam = res.team;
+	getProject(id){
+		// this.loader = true;
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				this.pro = res;
+				console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					//this.projectTeam = res.team;
 
-				res.Teams.push(this.pro.pmanagerId); 
-				console.log("response of team============>"  ,res.Teams);
-				this.projectTeam = res.Teams;
-				this.projectTeam.sort(function(a, b){
-					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-					if (nameA < nameB) //sort string ascending
-						return -1 
-					if (nameA > nameB)
-						return 1
-					return 0 //default return value (no sorting)
-					this.projectTeam.push
-					console.log("response of team============>"  ,this.projectTeam);
-				})
+					res.Teams.push(this.pro.pmanagerId); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					this.projectTeam.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+						this.projectTeam.push
+						console.log("response of team============>"  ,this.projectTeam);
+					})
 
 				},(err:any)=>{
-					console.log("err of team============>"  ,err);
+					console.log("err of project============>"  ,err);
 				});
-			},(err:any)=>{
-				console.log("err of project============>"  ,err);
-			});
 
-			this._projectService.getTaskById(id).subscribe((res:any)=>{
-				console.log("all response ======>" , res);
-				this.getEmptyTracks();
-				this.project = res;
-				this.project.sort(custom_sort);
-				this.project.reverse();
-				console.log("PROJECT=================>", this.project);
-				_.forEach(this.project , (task)=>{
-					// console.log("task ======>" , task);
-					_.forEach(this.tracks , (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-								track.tasks.push(task);
+				this._projectService.getTaskById(id).subscribe((res:any)=>{
+					console.log("all response ======>" , res);
+					this.getEmptyTracks();
+					this.project = res;
+					this.project.sort(custom_sort);
+					this.project.reverse();
+					console.log("PROJECT=================>", this.project);
+					_.forEach(this.project , (task)=>{
+						// console.log("task ======>" , task);
+						_.forEach(this.tracks , (track)=>{
+							if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+								if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+									track.tasks.push(task);
+								}
+							}else{
+								if(task.status == track.id){
+									track.tasks.push(task);
+								}
 							}
-						}else{
-							if(task.status == track.id){
-								track.tasks.push(task);
-							}
-						}
+						})
 					})
+					this.loader = false;
+				},err=>{
+					console.log(err);
+					this.loader = false;
 				})
-				this.loader = false;
 			},err=>{
 				console.log(err);
-				this.loader = false;
 			})
+
 
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
-
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -294,6 +323,7 @@ getProject(id){
 			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
+
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		// console.log(event);
@@ -319,6 +349,7 @@ getProject(id){
 
 				console.log(err);
 			})
+
 		}
 	}
 	sortTasksByCreatedAt(type){
@@ -402,6 +433,7 @@ getProject(id){
 		},err=>{
 			console.log(err);
 
+
 		})
 
 	}
@@ -424,7 +456,7 @@ getProject(id){
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estimatedTime").val();
+		task.startDate = $("#startDate").val();
 		console.log(task.dueDate);
 		console.log(task.title);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -437,14 +469,28 @@ getProject(id){
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
+
 			}
+			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+			// console.log(subUrl);
+			this._projectService.addTask(data).subscribe((res:any)=>{
+				console.log("response task***++",res);
+				this.getProject(res.projectId);
+				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+				$('#save_changes').attr("disabled", false);
+				$('#refresh_icon').css('display','none');
+				this.loader = false;
+			},err=>{
+				$('#alert').css('display','block');
+				console.log("error========>",err);
+			})
 		}
+
+
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-			$('#save_changes').attr("disabled", false);
-			$('#refresh_icon').css('display','none');
+			$('#modal').modal('hide');
 			this.loader = false;
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
@@ -471,6 +517,10 @@ getProject(id){
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
 
+
+
+
+
 	sendComment(taskId){
 		console.log(this.comment);
 		var data : any;
@@ -496,9 +546,7 @@ getProject(id){
 			console.error(err);
 		})
 	}
-	searchTask(){
-		console.log("btn tapped");
-	}
+	
 	onKey(searchText){
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
@@ -507,10 +555,19 @@ getProject(id){
 		this.getEmptyTracks();
 		_.forEach(task, (content)=>{
 			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
-				}
-			})
+				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+						// if(content.status == track.id){
+							track.tasks.push(content);
+						}
+
+					}
+					else{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					}
+				})
 		})
 	}
 
@@ -531,6 +588,7 @@ getProject(id){
 		})
 	}
 
+
 	onSelectFile(event){
 		this.files = event.target.files;
 	}
@@ -544,4 +602,3 @@ getProject(id){
 		});
 	}
 }
-

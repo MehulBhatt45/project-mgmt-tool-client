@@ -2,19 +2,19 @@
 	<div class="container mt-6">
 		<div class="card panels-card">
 			<div class="container">
-			<h5 class="top-nav-collapse white-text text-center py-4" style="margin-top: -22px;">
-				<strong>Login</strong>
-			</h5>
-			<div class="card-body box pt-1">
-				<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-					<div class="md-form">
-						<i class="fas fa-envelope prefix"></i>
-						<input mdbInput type="text" id="form2" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-						<label for="form2">Username</label>
-						<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-							<div *ngIf="f.email.errors.required">Username is required</div>
+				<h5 class="top-nav-collapse white-text text-center py-4" style="margin-top: -22px;">
+					<strong><i class="fas fa-user prefix"></i>  Login</strong>
+				</h5>
+				<div class="card-body box pt-1">
+					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+						<div class="md-form">
+							<i class="fas fa-envelope prefix"></i>
+							<input mdbInput type="text" id="form2" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+							<label for="form2">Username</label>
+							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+								<div *ngIf="f.email.errors.required">Username is required</div>
+							</div>
 						</div>
-					</div>
 
 
 
@@ -26,7 +26,7 @@
 				</div> -->
 				<div class="md-form">
 					<i class="fa fa-lock prefix"></i>
-					<input mdbInput type="text" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+					<input mdbInput type="password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
 					<label for="form2">Password</label>
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 						<div *ngIf="f.password.errors.required">Password is required</div>
@@ -40,7 +40,7 @@
 				</div> -->
 				<div class="md-form">
 					<a [routerLink]="['/register']" class="btn btn-link">Register</a>
-					<button [disabled]="loading" class="btn btn-default" mdbBtn color="primary" mdbWavesEffect>Login</button>
+					<button [disabled]="loading" class="btn btn-default" mdbBtn color="primary" mdbWavesEffect>LOG IN</button>
 					<!-- <button [disabled]="loading" class="btn btn-default">Login</button> -->
 					
 					<img class="loading_img" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -51,6 +51,6 @@
 			</form>
 		</div>
 	</div>
-	</div>	
+</div>	
 </div>
 </div>

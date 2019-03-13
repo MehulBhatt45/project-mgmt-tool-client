@@ -47,6 +47,8 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
 
+import { PushNotificationService } from 'ngx-push-notifications';
+
 
 @NgModule({
     declarations: [
@@ -96,7 +98,7 @@ import { SummaryComponent } from './summary/summary.component';
     NgxEditorModule,
     CKEditorModule,
     ],
-    providers: [],
+    providers: [PushNotificationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

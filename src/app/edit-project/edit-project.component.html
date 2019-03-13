@@ -35,19 +35,22 @@
 				</div> -->
 
 				<div class="md-form">
-					<input  type="text" id="deadline" class="form-control datepicker" formControlName="deadline" tabindex="-1" [(ngModel)]="availData.deadline" >
-					<label for="deadline">Selected date</label>
+					<label for="date-picker-example">Select Date</label>
+					<div class="md-form form-group">
+						<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+					</div>
 				</div>
-			<div>
-				<h4><strong>Client Details :-</strong></h4>
-			</div>
 
-			<hr>
+				<div>
+					<h3><strong>Client Details :-</strong></h3>
+				</div>
 
-			<div class="md-form">
-				<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
-				<label for="clientemail" class="active">Email</label>
-			</div>
+				<hr>
+
+				<div class="md-form">
+					<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
+					<label for="clientemail" class="active">Email</label>
+				</div>
 				<!-- 
 				<div class="md-form form-group">
 					<label class="active"  for="clientemail">Email</label>
