@@ -1,4 +1,3 @@
-
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
@@ -34,7 +33,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low',  dueDate: "" };
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	task;
 	tasks;
 	projects: any;
@@ -176,14 +175,13 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
-			estimatedTime: new FormControl('',[Validators.required]),
+			date: new FormControl('',[Validators.required]),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
@@ -196,8 +194,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		});
 		this._pushNotificationService.requestPermission();
-		this.myFunction();
-
+	this.myFunction();
 
 		
 	}
@@ -243,18 +240,19 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+
 	}
 
 	getProject(id){
-		// this.loader = true;
+		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				this.pro = res;
+				this.pro = res.pmanagerId;
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
 
-					res.Teams.push(this.pro.pmanagerId); 
+					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					this.projectTeam.sort(function(a, b){
@@ -269,9 +267,8 @@ export class ProjectDetailComponent implements OnInit {
 					})
 
 				},(err:any)=>{
-					console.log("err of project============>"  ,err);
+					console.log("err of team============>"  ,err);
 				});
-<<<<<<< HEAD
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -295,45 +292,22 @@ export class ProjectDetailComponent implements OnInit {
 						}else{
 							if(task.status == track.id){
 								track.tasks.push(task);
-=======
-
-				this._projectService.getTaskById(id).subscribe((res:any)=>{
-					console.log("all response ======>" , res);
-					this.getEmptyTracks();
-					this.project = res;
-					this.project.sort(custom_sort);
-					this.project.reverse();
-					console.log("PROJECT=================>", this.project);
-					_.forEach(this.project , (task)=>{
-						// console.log("task ======>" , task);
-						_.forEach(this.tracks , (track)=>{
-							if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-								if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-									track.tasks.push(task);
-								}
-							}else{
-								if(task.status == track.id){
-									track.tasks.push(task);
-								}
->>>>>>> 07abe64a8b166a17505a4674344852f292b7bc05
 							}
-						})
+						}
 					})
-					this.loader = false;
-				},err=>{
-					console.log(err);
-					this.loader = false;
 				})
+				this.loader = false;
 			},err=>{
 				console.log(err);
+				this.loader = false;
 			})
-
 
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
+
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -350,7 +324,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
-
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		// console.log(event);
@@ -376,7 +349,6 @@ export class ProjectDetailComponent implements OnInit {
 
 				console.log(err);
 			})
-
 		}
 	}
 	sortTasksByCreatedAt(type){
@@ -460,17 +432,16 @@ export class ProjectDetailComponent implements OnInit {
 		},err=>{
 			console.log(err);
 
-
 		})
 
 	}
 
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate: "" };
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	}
 
 	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate: "" };
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#input_starttime').pickatime({});
@@ -496,28 +467,12 @@ export class ProjectDetailComponent implements OnInit {
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
-
 			}
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				this.loader = false;
-			},err=>{
-				$('#alert').css('display','block');
-				console.log("error========>",err);
-			})
 		}
-
-
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#modal').modal('hide');
+			$('#exampleModalPreviewLabel').modal('hide');
 			this.loader = false;
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
@@ -544,10 +499,6 @@ export class ProjectDetailComponent implements OnInit {
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
 
-
-
-
-
 	sendComment(taskId){
 		console.log(this.comment);
 		var data : any;
@@ -573,7 +524,9 @@ export class ProjectDetailComponent implements OnInit {
 			console.error(err);
 		})
 	}
-	
+	searchTask(){
+		console.log("btn tapped");
+	}
 	onKey(searchText){
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
@@ -582,19 +535,10 @@ export class ProjectDetailComponent implements OnInit {
 		this.getEmptyTracks();
 		_.forEach(task, (content)=>{
 			_.forEach(this.tracks, (track)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-						// if(content.status == track.id){
-							track.tasks.push(content);
-						}
-
-					}
-					else{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
-					}
-				})
+				if(content.status == track.id){
+					track.tasks.push(content);
+				}
+			})
 		})
 	}
 
@@ -615,7 +559,6 @@ export class ProjectDetailComponent implements OnInit {
 		})
 	}
 
-
 	onSelectFile(event){
 		this.files = event.target.files;
 	}
@@ -629,3 +572,4 @@ export class ProjectDetailComponent implements OnInit {
 		});
 	}
 }
+
