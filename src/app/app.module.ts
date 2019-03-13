@@ -48,6 +48,7 @@ import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
 
 import { PushNotificationService } from 'ngx-push-notifications';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { PushNotificationService } from 'ngx-push-notifications';
     AllLeaveAppComponent,
     AllEmployeeComponent,
     SummaryComponent,
+    EditprofileComponent,
    ],
 
     imports: [

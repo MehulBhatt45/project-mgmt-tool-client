@@ -49,14 +49,4 @@ export class AllEmployeeComponent implements OnInit {
 			console.log("update Employee====>", err);
 		})
 	}
-	//delete employee profile
-	// deleteEmployee(id){
-	// 	console.log("delete",id);
-	// 	this._projectService.deleteUserById(this.developer).subscribe((res:any)=>{
-	// 		console.log("Delete employee======>" , res);
-	// 		this.developer = res;
-	// 	},(err:any)=>{
-	// 		console.log("error in delete employee=====>" , err);
-	// 	});
-	// }
 }
