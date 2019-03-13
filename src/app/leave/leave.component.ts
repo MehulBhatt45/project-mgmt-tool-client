@@ -6,7 +6,7 @@ import {ProjectService} from '../services/project.service';
 
 declare var $ : any;
 	
-declare var $ : any;
+// declare var $ : any;
 
 @Component({
 	selector: 'app-leave',
