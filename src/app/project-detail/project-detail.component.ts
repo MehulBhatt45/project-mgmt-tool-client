@@ -1,4 +1,3 @@
-
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
@@ -516,10 +515,6 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
-
-
-
-
 
 	sendComment(taskId){
 		console.log(this.comment);

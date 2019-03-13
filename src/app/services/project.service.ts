@@ -364,4 +364,26 @@ export class ProjectService {
 				formData.append("uploadFile",file[0]);
 				return this.http.post(config.baseApiUrl+"project/upload-file", formData);
 			}
+			//update employee profile (allemployee.component.ts) -adminSide
+			updateUserById(data){
+				var id = data._id;
+				const httpOptions = {
+					headers: new HttpHeaders({
+						'Content-Type':  'application/json',
+						'x-access-token':  JSON.parse(localStorage.getItem('token'))
+					})
+				};
+				return this.http.put(config.baseApiUrl+"user/update-details/"+id, httpOptions);
+			}
+			// delete employee profile (allemployee.component.ts) - adminSide
+			// deleteUserById(data){
+			// 	var id = data._id;
+			// 	const httpOptions = {
+			// 		headers: new HttpHeaders({
+			// 			'Content-Type':  'application/json',
+			// 			'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			// 		})
+			// 	};
+			// 	return this.http.delete(config.baseApiUrl+"user/delete-user-by-id/"+id, httpOptions);
+			// }
 		}
