@@ -1,4 +1,3 @@
-
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
@@ -111,6 +110,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
+			console.log("tracks====-=-_+_++",this.tracks);
 		}
 		else{
 			this.tracks = [
@@ -139,7 +139,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
-
+			
 		}
 	}
 	getPriorityClass(priority){
@@ -270,6 +270,31 @@ export class ProjectDetailComponent implements OnInit {
 				},(err:any)=>{
 					console.log("err of project============>"  ,err);
 				});
+<<<<<<< HEAD
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+			this._projectService.getTaskById(id).subscribe((res:any)=>{
+				console.log("all response ======>" , res);
+				this.getEmptyTracks();
+				this.project = res;
+				this.project.sort(custom_sort);
+				this.project.reverse();
+				console.log("PROJECT=================>", this.project);
+				_.forEach(this.project , (task)=>{
+					// console.log("task ======>" , task);
+					_.forEach(this.tracks , (track)=>{
+						// console.log("tracks==-=-=-=-",this.tracks);
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+								console.log("tracks==-=-=-=-",track);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+=======
 
 				this._projectService.getTaskById(id).subscribe((res:any)=>{
 					console.log("all response ======>" , res);
@@ -289,6 +314,7 @@ export class ProjectDetailComponent implements OnInit {
 								if(task.status == track.id){
 									track.tasks.push(task);
 								}
+>>>>>>> 07abe64a8b166a17505a4674344852f292b7bc05
 							}
 						})
 					})
@@ -356,12 +382,12 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("Sorting tasks by = ",type)
 
 		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
+			console.log("Sorting track =()()() ",track.title);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 		});
 
 		function custom_sort(a, b) {
@@ -516,10 +542,6 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
-
-
-
-
 
 	sendComment(taskId){
 		console.log(this.comment);

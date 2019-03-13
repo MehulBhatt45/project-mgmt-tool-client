@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
-import { FormGroup , FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as _ from "lodash";
 declare var $ : any;
 @Component({

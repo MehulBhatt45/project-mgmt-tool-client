@@ -20,52 +20,41 @@
         <li><a href="https://twitter.com/RaoInfotech" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
       </ul>
     </li>
-    <!--/Social-->
-    <!--Search Form-->
-     <!--  <li>
-        <form class="search-form" role="search">
-          <div class="form-group md-form mt-0 pt-1 waves-light">
-            <i class="fas fa-search" style="    font-size: 15px;
-            margin-left: 15px;"></i>
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-        </form>
-      </li> -->
-      <!--/.Search Form-->
-      <!-- Side navigation links -->
-      <li>
-        <ul class="collapsible collapsible-accordion">
-          <li><a class="collapsible-header waves-effect arrow-r"><span style="outline: none;" routerLink="/view-projects"><i class="fas fa-tasks"></i>  Projects</span>
-            <i class="fa fa-angle-down rotate-icon"></i>
-            <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects">
-                  <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
-                </ul>
-              </div>
-            </li>
-            <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-edit"></i>Create Project</a>
-            </li>
-            <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-sitemap"></i>    Item List</a></li>
-            <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-blog"></i>     Logs</a></li>
-            <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Notice</a></li>
-            <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
+    
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        <li><a class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects"><i class="fas fa-tasks"></i>  Projects</span>
+          <i class="fa fa-angle-down rotate-icon"></i>
+          <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li *ngFor="let project of projects">
+                <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
+              </ul>
+            </div>
+          </li>
+          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-edit"></i>Create Project</a>
+          </li>
+          <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-sitemap"></i>    Item List</a></li>
+          <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-blog"></i>     Logs</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Notice</a></li>
+          <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
 
-            <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole =='projectManager' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
+          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole =='projectManager' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
 
-            <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i>   All Employee</a></li>
-            <li><a routerLink="/all-developer" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members</a></li>
-            <li><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
-            <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
-            <!-- <a routerLink = '/leave'>Leave Form</a> -->
-          </ul>
-        </li>
-        <!--/. Side navigation links -->
-      </ul>
-      <!-- <div class="sidenav-bg rgba-blue-strong"></div> -->
-    </div>
-    <!--/. Sidebar navigation -->
+          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i>   All Employee</a></li>
+          <li><a routerLink="/all-developer" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members</a></li>
+          <li><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
+          <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
+          <!-- <a routerLink = '/leave'>Leave Form</a> -->
+        </ul>
+      </li>
+      <!--/. Side navigation links -->
+    </ul>
+    <!-- <div class="sidenav-bg rgba-blue-strong"></div> -->
+  </div>
+  <!--/. Sidebar navigation -->
     <!-- <ul id="slide-out" class="side-nav">
       <li style="cursor: pointer;" title="User Profile">
         <div class="user-box">

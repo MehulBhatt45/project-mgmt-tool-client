@@ -58,6 +58,7 @@ import { MessagingService } from './services/messaging.service';
 import { environment } from '../environments/environment';
 import { AsyncPipe } from '../../node_modules/@angular/common';
 import { firebaseConfig } from './../environments/firebase.config';
+import {EditprofileComponent} from './editprofile/editprofile.component'
 
 
 
@@ -93,6 +94,7 @@ import { firebaseConfig } from './../environments/firebase.config';
     AllLeaveAppComponent,
     AllEmployeeComponent,
     SummaryComponent,
+    EditprofileComponent,
    ],
 
     imports: [
