@@ -2,19 +2,19 @@
 	<div class="container mt-6">
 		<div class="card panels-card">
 			<div class="container">
-			<h5 class="top-nav-collapse white-text text-center py-4" style="margin-top: -22px;">
-				<strong>Login</strong>
-			</h5>
-			<div class="card-body box pt-1">
-				<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-					<div class="md-form">
-						<i class="fas fa-envelope prefix"></i>
-						<input mdbInput type="text" id="form2" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-						<label for="form2">Username</label>
-						<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-							<div *ngIf="f.email.errors.required">Username is required</div>
+				<h5 class="top-nav-collapse white-text text-center py-4" style="margin-top: -22px;">
+					<strong>Login</strong>
+				</h5>
+				<div class="card-body box pt-1">
+					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+						<div class="md-form">
+							<i class="fas fa-envelope prefix"></i>
+							<input mdbInput type="text" id="form2" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+							<label for="form2">Username</label>
+							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+								<div *ngIf="f.email.errors.required">Username is required</div>
+							</div>
 						</div>
-					</div>
 
 
 
@@ -51,6 +51,6 @@
 			</form>
 		</div>
 	</div>
-	</div>	
+</div>	
 </div>
 </div>
