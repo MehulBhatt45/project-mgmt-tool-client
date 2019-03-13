@@ -155,8 +155,26 @@ ol.breadcrumb.hidden-lg-down li a {
   margin: 0;
   margin-top: 10px;
 }
-.logo-wrapper img{
-  border-radius: 50%;
-  margin-left: 19px;
-  height: 176px !important;
+.profile_picture{
+  height: 160px;
+  width: 160px;
+  border-radius: 255%;
+  display: block;
+  /*margin: 0px auto;*/
+  margin-top: 30px;
+  margin-bottom: 27px;
+  margin-left: 54px;
+  position: relative;
+  z-index: 11;
+  overflow: hidden;
+  padding: 4px;
+  /*  background-color: rgba(255,255,255,0.75);*/
+  background-color: #fff;
+}
+.profile_picture img{
+  min-height: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  border-radius: 86px;
 }
