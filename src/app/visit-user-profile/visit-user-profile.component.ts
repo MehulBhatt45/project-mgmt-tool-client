@@ -14,11 +14,10 @@ declare var $ : any;
 	styleUrls: ['./visit-user-profile.component.css']
 })
 export class VisitUserProfileComponent implements OnInit {
-	// projects;
+	developers;
 	userId;
-	// projectArr = [];
-	// finalarr = [];
-	
+	user;
+
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 
 	}
@@ -28,40 +27,19 @@ export class VisitUserProfileComponent implements OnInit {
 			this.userId = param.id;
 			this.getDeveloperById(this.userId);
 		});
-
-		// this.getAllProjects();
 		
 	}
-	// getAllProjects(){
-	// 	this._projectService.getProjects().subscribe(res=>{
-	// 		console.log("all projects =====>" , res);
-	// 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-	// 		console.log("current user ====>" , userId);
-	// 		this.projects = res;
-	// 		_.forEach(this.projects , (task)=>{
-	// 			_.forEach(task.Teams , (singleTask)=>{
-	// 				if(singleTask._id == userId){
-	// 					this.projectArr.push(task);
-	// 				}
-	// 			})
-	// 		})			
-	// 		this.finalarr.push(this.projectArr[0]);
-	// 		console.log("response======>",this.finalarr);
-	// 	},err=>{
-	// 		this._alertService.error(err);
-	// 		console.log(err);
-	// 	})
-	// }
-
 	getDeveloperById(id){
+		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
-			this.userId = res;
-			console.log("response =============>",res);
+			this.user = res;
+			console.log("all users =============>",res);
+			var userId = JSON.parse(localStorage.getItem('userId'))._id;
+			console.log(" user profile ====>" , userId);
 		},(err:any)=>{
 			console.log("eroooooor=========>",err);
 		})
 	}
-
 }
 
 // this Component is created for guest-user who can visit all team members profile....

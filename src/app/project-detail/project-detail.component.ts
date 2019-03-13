@@ -4,7 +4,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {SearchTaskPipe} from '../search-task.pipe';
@@ -15,6 +15,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
+
 
 
 @Component({
@@ -32,7 +33,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-	newTask;
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	task;
 	tasks;
 	projects: any;
@@ -60,7 +61,7 @@ export class ProjectDetailComponent implements OnInit {
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
-
+		$('.datepicker').pickadate();
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
@@ -173,27 +174,32 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
+			date: new FormControl('',[Validators.required]),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
 	ngOnInit() {
+		$('.datepicker').pickadate();
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 		// var refresh;
+		// alert('Button clicked. Disabling...');
 		$('#save_changes').on('click', function(){
-			// alert('Button clicked. Disabling...');
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
 
 		});
+
 		// function myFunction() {
 			// 	 document.getElementById("refresh_icon").append (`<i  class="fa fa-refresh refresh"></i>`);
 			// 	// element.classList.toggle("mystyle");
 			// }
 		}
+
+		
 
 		getAllDevelopers(){
 			this._projectService.getAllDevelopers().subscribe(res=>{
@@ -214,24 +220,19 @@ export class ProjectDetailComponent implements OnInit {
 
 		}
 
-		getProject(id){
 
-			console.log("id_+_+_+===>>>",id);
+		getProject(id){
 			this.loader = true;
 			setTimeout(()=>{
-
 				this._projectService.getProjectById(id).subscribe((res:any)=>{
-					console.log("id++++>____>>>",id);
 					this.pro = res.pmanagerId;
 					console.log("project detail===>>>>",this.pro);
-
 					this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 						//this.projectTeam = res.team;
 
 						res.Teams.push(this.pro); 
 						console.log("response of team============>"  ,res.Teams);
 						this.projectTeam = res.Teams;
-						console.log("projectTeam=-{}{}{}{}",this.projectTeam);
 						this.projectTeam.sort(function(a, b){
 							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 							if (nameA < nameB) //sort string ascending
@@ -240,8 +241,9 @@ export class ProjectDetailComponent implements OnInit {
 								return 1
 							return 0 //default return value (no sorting)
 							this.projectTeam.push
-							console.log("response of team============()()()",this.projectTeam);
+							console.log("response of team============>"  ,this.projectTeam);
 						})
+
 
 					},(err:any)=>{
 						console.log("err of team============>"  ,err);
@@ -277,6 +279,7 @@ export class ProjectDetailComponent implements OnInit {
 					this.loader = false;
 				})
 
+
 			},1000);
 			function custom_sort(a, b) {
 				return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -298,6 +301,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 			}
 		}
+
 
 		onTrackDrop(event: CdkDragDrop<any>) {
 			// console.log(event);
@@ -323,6 +327,7 @@ export class ProjectDetailComponent implements OnInit {
 
 					console.log(err);
 				})
+
 			}
 		}
 		sortTasksByCreatedAt(type){
@@ -406,7 +411,9 @@ export class ProjectDetailComponent implements OnInit {
 			},err=>{
 				console.log(err);
 
+
 			})
+
 
 		}
 
@@ -424,7 +431,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 		saveTheData(task){
-
+			this.loader = true;
 			task['projectId']= this.projectId;
 			task.priority = Number(task.priority); 
 			task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -441,19 +448,35 @@ export class ProjectDetailComponent implements OnInit {
 			if(this.files.length>0){
 				for(var i=0;i<this.files.length;i++){
 					data.append('fileUpload', this.files[i]);	
+
 				}
+				// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+				// console.log(subUrl);
+				this._projectService.addTask(data).subscribe((res:any)=>{
+					console.log("response task***++",res);
+					this.getProject(res.projectId);
+					$('#save_changes').attr("disabled", false);
+					$('#refresh_icon').css('display','none');
+					$('.modal').modal('hide');
+				},err=>{
+					$('#alert').css('display','block');
+					console.log("error========>",err);
+				})
 			}
+
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
 			this._projectService.addTask(data).subscribe((res:any)=>{
+				$('#exampleModalPreviewLabel').modal('hide');
+				this.loader = false;
 				console.log("response task***++",res);
 				this.getProject(res.projectId);
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				$('.modal').modal('hide');
 			},err=>{
-				$('#alert').css('display','block');
-				console.log("error========>",err);
+				this.loader = false;
+				// $('.alert').alert()
+				var err;
+
+				console.log(err);
 			})
 		}
 		public Editor = DecoupledEditor;
@@ -470,6 +493,7 @@ export class ProjectDetailComponent implements OnInit {
 			const data = editor.getData();
 			this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 		}
+
 
 
 
@@ -558,6 +582,7 @@ export class ProjectDetailComponent implements OnInit {
 									console.error(err);
 								})
 							}
+
 
 							onSelectFile(event){
 								this.files = event.target.files;
