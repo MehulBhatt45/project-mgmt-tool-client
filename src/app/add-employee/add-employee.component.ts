@@ -11,6 +11,7 @@ declare var $ : any;
 export class AddEmployeeComponent implements OnInit {
 	addEmployeeForm: FormGroup;
 	files: Array<File> = [];
+	materialSelect;
 	constructor( private formBuilder: FormBuilder, public _projectservice:ProjectService) {
 		this.addEmployeeForm = this.formBuilder.group({
 			fname:new FormControl( '', [Validators.required]),
@@ -28,11 +29,9 @@ export class AddEmployeeComponent implements OnInit {
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
-
-		// $(document).ready(function() {
-			// 	$('.mdb-select').materialSelect();
-			// });
+		
 		}
+
 		addEmployee(addEmployeeForm){
 			console.log("btn tapped");
 			

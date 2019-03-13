@@ -34,7 +34,7 @@
   <script type="text/javascript">
     $(document).ready(function () {
       $('.datepicker').pickadate();
-      
+      $('#estimatedTime').pickatime({});
       $('.button-collapse').sideNav({
         edge: 'left',
         closeOnClick: true
@@ -43,6 +43,8 @@
       Ps.initialize(el);
     })
 
+    
+    
     $(".button-collapse").sideNav();
     var sideNavScrollbar = document.querySelector('.custom-scrollbar');
     Ps.initialize(sideNavScrollbar);
