@@ -311,10 +311,15 @@ table {
     float: right;
     margin: 0 !important; 
   }
+  #refresh_icon{
+    display: none;
+  }
   #myDIV{
     display: none;
   }
-
+#alert{
+  display: none;
+}
   @-webkit-keyframes rotation {
     from {
       -webkit-transform: rotate(0deg);

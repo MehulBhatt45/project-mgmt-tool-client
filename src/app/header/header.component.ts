@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 	task;
 	userId
 	project;
-	baseMediaUrl;
+	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
