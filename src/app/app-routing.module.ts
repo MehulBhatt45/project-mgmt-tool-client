@@ -24,13 +24,8 @@ import {LeaveComponent} from './leave/leave.component';
 import { AllDeveloperComponent} from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
 import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
+import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import {SummaryComponent} from './summary/summary.component';
-
-
-
-
-
-
 
 
 
@@ -144,9 +139,8 @@ const routes: Routes = [
 			component:LeaveComponent
 		},
 		{
-			path:'visit-user-profile',
-
-			//pathMatch: "full",
+			path:'visit-user-profile/:id',
+			pathMatch: "full",
 			component:VisitUserProfileComponent
 		},
 		{
@@ -156,15 +150,20 @@ const routes: Routes = [
 		},
 		
 		{
-			path:'userprofile',
+			path:'userprofile/:id',
+			pathMatch: "full",
 			component:UserprofileComponent
 		},
-
+		{
+			path:'all-employee',
+			component:AllEmployeeComponent
+		},
 		{
 			path:'summary/:id',
 			component:SummaryComponent
 		}
 		]
+
 	}];
 
 	@NgModule({
