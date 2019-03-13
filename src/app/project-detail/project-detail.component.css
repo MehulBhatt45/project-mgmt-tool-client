@@ -291,7 +291,10 @@ table {
   }
   #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
+  }
 
+  .modal-header {
+    padding: 2rem;
   }
   .refresh{
     margin: 0;
@@ -303,6 +306,9 @@ table {
   .fa-refresh[_ngcontent-c2] {
     float: right;
     margin: 0 !important; 
+  }
+  #refresh_icon{
+    display: none;
   }
   #myDIV{
     display: none;
@@ -321,7 +327,7 @@ table {
   .modal-header {
     padding: 2rem;
   }
-.break{
+  .break{
 
-  word-break: break-all;
-}
+    word-break: break-all;
+  }
