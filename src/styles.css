@@ -247,13 +247,13 @@ ul{
 	padding: 0px;
 	margin: 0px;
 }
+/*
 nav.navbar {
-	border: none;
-	border-radius: 0px;
-	margin: 0px;
+  border: none;
+  border-radius: 0px;
+  margin: 0px;
   padding: 0px;
 }
-/*
 .blue{
 	height: 15px;
 	width: 15px;
@@ -333,4 +333,21 @@ nav.navbar {
 
 .font-monospace{
 	font-family: monospace !important;
+}
+
+.font-robo-condensed{
+  font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+.purple-gradient-2{
+  background: -webkit-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
+    background: -o-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
+    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
+}
+
+.morpheus-den-gradient {
+    /*background-image: -webkit-gradient(linear,left bottom,right top,from(#30cfd0),to(#330867));*/
+    background-image: -webkit-linear-gradient(left,#30cfd0 0,#330867 100%);
+    background-image: -o-linear-gradient(bottom,#30cfd0 0,#330867 100%);
+    background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%);
 }
