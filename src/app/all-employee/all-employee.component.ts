@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
-
+import { config } from '../config';
 @Component({
 	selector: 'app-all-employee',
 	templateUrl: './all-employee.component.html',
@@ -11,6 +11,7 @@ import { AlertService } from '../services/alert.service';
 export class AllEmployeeComponent implements OnInit {
 	developers;
 	userId;
+	path = config.baseMediaUrl;
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService) { }
 
