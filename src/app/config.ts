@@ -1,16 +1,14 @@
 
-
+// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 const baseUrl = "http://206.189.231.135:4000/";
 // const baseUrl = "http://132.140.160.60:4000/";
-// const baseUrl = "http://localhost:4000/";
+// const baseMediaUrl = "http://132.140.160.60/project_mgmt_tool/server/uploads/";
+const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
 
-//const baseUrlForMedia = "http://localhost/project_mgmt_tool/server";
-//const baseUrlForMedia = "http://132.140.160.60/project_mgmt_tool/server";
-const baseUrlForMedia = "http://206.189.231.135/project_mgmt_tool/server";
-
+//const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 export const config = {
     baseApiUrl: baseUrl,
-    baseMediaUrl:baseUrlForMedia,
+    baseMediaUrl: baseMediaUrl,
     "priorityList": [
     { id: "1", value: 'low', colorCode: 'blue' },
     { id: "2", value: 'medium', colorCode: 'yellow' },
@@ -23,4 +21,3 @@ export const config = {
     { id: "4", value: 'complete', colorCode: 'success' }
     ],
 }
-

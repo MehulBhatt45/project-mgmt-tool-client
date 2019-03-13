@@ -32,3 +32,6 @@ img.loading_img {
     height: 25px;
     margin-left: 15px;
 }
+.deep-purple-skin .top-nav-collapse {
+    background-color: #372e5f;
+}

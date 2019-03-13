@@ -33,7 +33,7 @@
 				</div> -->
 				<div class="md-form form-group">
 					<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
-					<label for="date-picker-example">Try me...</label>
+					<!-- <label for="date-picker-example">Try me...</label> -->
 				</div>
 				<div class="form-group">
 					<label for="userrole">UserRole</label>
@@ -48,13 +48,48 @@
 					<label for="experience">Experience (Before Joining)</label>
 					<input type="text" formControlName="experience" class="form-control">
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="profile">Profile photo</label>
 					<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
-				</div>
+				</div> -->
 				<div class="form-group">
-					<label for="cv">CV</label>
-					<input type="file" formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf">
+					<form class="md-form my-3" action="#">
+						<div class="file-field">
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light">
+								<span>Choose files</span>
+								<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
+							</div>
+						</div>
+					</form>
+
+
+				</div>
+					<!-- <div class="file-field" action="#">
+						<label for="profile">Profile photo</label>
+						<div class="btn btn-primary btn-sm float-left">
+							<span>Profile photo</span>
+							<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="Upload one or more files">
+						</div>
+					</div> -->
+			
+				<div class="form-group">
+					<form class="md-form my-3" action="#">
+						<div class="file-field">
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light">
+								<span>Choose files</span>
+								<input type="file" formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your CV">
+							</div>
+						</div>
+					</form>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-default" (click)="addEmployee(addEmployeeForm)">Add Employee</button>

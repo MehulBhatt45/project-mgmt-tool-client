@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 import * as _ from "lodash";
+declare var $ : any;
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',
@@ -25,12 +26,14 @@ export class EditProjectComponent implements OnInit {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
 			desc: new FormControl(''),
-			uniqueId: new FormControl('' , Validators.required),
-			clientEmail: new FormControl('' , Validators.required),
-			clientFullName: new FormControl('', Validators.required),
-			clientContactNo: new FormControl('',Validators.required),
+			uniqueId: new FormControl('' ),
+			deadline: new FormControl('' ),
+			clientEmail: new FormControl('' ),
+			clientFullName: new FormControl(''),
+			clientContactNo: new FormControl(''),
 			clientDesignation: new FormControl(''),
-			avatar:new FormControl('')
+			avatar:new FormControl(''),
+			date: new FormControl('')
 		});
 		this.route.params.subscribe(params=>{
 			this.getProjectById(params.id);
@@ -38,10 +41,12 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		$('.datepicker').pickadate();
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
 		this.getProjects();
+		
 	}
 	getProjects(){
 		localStorage.setItem('teamShow' , JSON.stringify(false));
@@ -157,10 +162,11 @@ export class EditProjectComponent implements OnInit {
 			this.showDeveloper = false;	
 		}
 		
-			
+
 	}
 	addRemoveDeveloper(developerId){
 		var arr = [];
+		var arVariable;
 		console.log("heyyyyyyyy");
 		console.log("all developers ====>" , this.availableDevelopers);
 		console.log("all project team ====>" , this.projectTeam);
@@ -172,33 +178,33 @@ export class EditProjectComponent implements OnInit {
 				if(developer._id == developerId){
 					console.log("found developer ====>" , developer , index);
 					arr.push(index);
-					this.projectTeam.push(developer);
-					// this.availData.Teams.push(developer);
+					//this.projectTeam.push(developer);
+					this.availData.Teams.push(developer);
 					// console.log("In if",this.availData);
 					// this.availDevelopers.splice(index,1); 
 
 				}
 			})
-			arr = arr[0];
-			this.availDevelopers.splice(arr,1);
-			console.log("arr ===>" , arr);
+			arVariable = arr[0];
+			console.log("arr ====>" , arVariable);
+			this.availableDevelopers.splice(arVariable,1);
+			console.log("arr ===>" , this.availableDevelopers);
 		}
 		else{
 			console.log("this . temas in addRemoveDeveloper else ======>" , this.availData);
 			_.forEach(this.availData.Teams , (developer , index)=>{
 				console.log("developerss ===>" , developer._id , index);	
 				if(developer._id == developerId){
+					this.availableDevelopers.push(developer);
 					console.log("found User" , developer , index);
 					arr.push(index);
-					this.availData.Teams.splice(index,1);
-					console.log("In else",this.availData) 
+				//	this.availData.Teams.splice(index,1);
+					//console.log("In else",this.availData) 
 				}
 			})
 			console.log("arr ====>" , arr);
-			for(var i = 0; i<arr.length ; i++){
-				var p = arr[i];
-				this.availData.Teams.splice(p , 1);
-			}
+			var p = arr[0];
+			this.availData.Teams.splice(p , 1);
 			localStorage.setItem('teams' , JSON.stringify(this.availData));
 			console.log("after Splice else ====>" , this.availData.Teams);
 			//this.editProject();

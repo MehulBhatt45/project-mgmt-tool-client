@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
 declare var $ : any;
-
+import { config } from '../config';
 @Component({
 	selector: 'app-userprofile',
 	templateUrl: './userprofile.component.html',
@@ -21,8 +21,9 @@ export class UserprofileComponent implements OnInit {
 	finalarr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	baseMediaUrl = config.baseMediaUrl;
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
-		private router: Router, public _projectService: ProjectService,) { 
+		private router: Router, public _projectService: ProjectService, public _loginService: LoginService) { 
 	}
 
 	createEditEmail(){
@@ -35,9 +36,13 @@ export class UserprofileComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAllProjects();
-		this.getAllDevelopers();
-		// this.sendMail();
+		this.route.params.subscribe(param=>{
+			this.userId = param.id;
+			this.getDeveloperById(this.userId);
+		});
 		this.createEditEmail();
+		this.getAllDevelopers();
+		this.uploadFile();
 
 	}
 	getAllProjects(){
@@ -61,32 +66,47 @@ export class UserprofileComponent implements OnInit {
 		})
 	}
 
-  getAllDevelopers(){
-    this._projectService.getAllDevelopers().subscribe(res=>{
-      this.developers = res;
-      this.developers.sort(function(a, b){
-        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        if (nameA < nameB) //sort string ascending
-          return -1 
-        if (nameA > nameB)
-          return 1
-        return 0 //default return value (no sorting)
-      })
-      console.log("Developers",this.developers);
-    },err=>{
-      console.log("Couldn't get all developers ",err);
-      this._alertService.error(err);
-    })
-  }
 
-	// sendMail(){
-		// 	$('#editEmailModel').modal('show');
-		// }
-		openModel(task){
-			$('#editEmailModel').modal('show');
-		}
-
+	getDeveloperById(id){
+		console.log("id=>>>",id);
+		this._loginService.getUserById(id).subscribe((res:any)=>{
+			this.currentUser = res;
+			console.log("all users =============>",res);
+			var userId = JSON.parse(localStorage.getItem('user'))._id;
+			console.log(" currentUser profile ====>" , userId);
+		},(err:any)=>{
+			console.log("eroooooor=========>",err);
+		})
 	}
+
+	getAllDevelopers(){
+		this._projectService.getAllDevelopers().subscribe(res=>{
+			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
+			console.log("Developers",this.developers);
+		},err=>{
+			console.log("Couldn't get all developers ",err);
+			this._alertService.error(err);
+		})
+	}
+
+	openModel(task){
+		$('#editEmailModel').modal('show');
+	}
+	uploadFile(){
+
+	
+	}
+
+	
+}
 
 
 

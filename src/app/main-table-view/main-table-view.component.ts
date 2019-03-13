@@ -38,6 +38,8 @@ export class MainTableViewComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	searchText;
+	selectedProjectId = "all";
+	selectedDeveloperId = "all";
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
 		this.route.params.subscribe(param=>{
@@ -159,7 +161,7 @@ export class MainTableViewComponent implements OnInit {
 					// _.forEach(task.tasks, (tsk)=>{
 						// console.log("===================>th",tsk);
 						_.forEach(this.tracks , (track)=>{
-							if(this.currentUser.userRole!='projectManager'){
+							if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 								if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 									track.tasks.push(task);
 								}
@@ -263,8 +265,6 @@ export class MainTableViewComponent implements OnInit {
 			return '';
 		}
 	}
-	
-
 	sortTasksByPriority(type){
 
 		console.log("hdgfhd=>>>>..");
@@ -334,13 +334,15 @@ export class MainTableViewComponent implements OnInit {
 	}
 	
 	filterTracks(projectId, developerId){
+		this.selectedDeveloperId = developerId;
+		this.selectedProjectId = projectId;
 		console.log(projectId, developerId);
 		this.getEmptyTracks();
 		if(projectId!='all' && developerId == 'all'){
 			_.forEach(this.tasks, (project)=>{
 				if(project.projectId._id == projectId){
 					_.forEach(this.tracks, (track)=>{
-						if(this.currentUser.userRole!='projectManager'){
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
 								track.tasks.push(project);
 							}
@@ -350,7 +352,7 @@ export class MainTableViewComponent implements OnInit {
 							}
 						}
 					})
-				}
+				}	
 			})
 		}else if(projectId=='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
@@ -376,7 +378,7 @@ export class MainTableViewComponent implements OnInit {
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
 				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager'){
+					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
 							track.tasks.push(project);
 						}
@@ -409,19 +411,91 @@ export class MainTableViewComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-	onKey(event: any){
-		console.log(event, this.tasks);
+
+// 	developerId;
+// 	onKey(event: any){
+// 		console.log(event, this.tasks);
+
+	// onKey(event: any){
+	// 	console.log(event, this.tasks);
+	// 	var dataToBeFiltered = [this.tasks];
+	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+	// 	console.log("In Component",task);
+	// 	this.getEmptyTracks();
+	// 	_.forEach(task, (content)=>{
+	// 		_.forEach(this.tracks, (track)=>{
+	// 			if(content.status == track.id){
+	// 				track.tasks.push(content);
+	// 			}
+	// 		})
+	// 	})
+	// }
+	onKey(searchText){
+		console.log(this.tasks);
+
 		var dataToBeFiltered = [this.tasks];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
 		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
+
+		if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
+			_.forEach(task, (project)=>{
+				if(project.projectId._id == this.selectedProjectId){
+					_.forEach(this.tracks, (track)=>{
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+								track.tasks.push(project);
+							}
+						}else{
+							if(project.status == track.id){
+								track.tasks.push(project);
+							}
+						}
+					})
+				}	
+			})
+		}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
+			_.forEach(task, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+						track.tasks.push(project);
+					}
+				})
+			})
+		}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
+			_.forEach(task, (project)=>{
+				console.log(project);
+				if(project.projectId._id == this.selectedProjectId){
+					_.forEach(this.tracks, (track)=>{
+						if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+							track.tasks.push(project);
+						}
+					})
+
+		// _.forEach(task, (content)=>{	
+		// 	_.forEach(this.tracks, (track)=>{
+		// 		if(content.status == track.id){
+		// 			track.tasks.push(content);
+
 				}
 			})
-		})
+		}else{
+			_.forEach(task, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+							track.tasks.push(project);
+						}
+					}else{
+						if(project.status == track.id){
+							track.tasks.push(project);
+						}
+					}
+				})
+			})
+		}
 	}
 	projects;
 	getAllProjects(){
