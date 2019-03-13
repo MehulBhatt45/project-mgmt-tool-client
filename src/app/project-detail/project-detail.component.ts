@@ -14,6 +14,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
 
@@ -57,7 +58,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 
 	
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
 		$('.datepicker').pickadate();
@@ -191,8 +192,35 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 
 		});
+		this._pushNotificationService.requestPermission();
+	this.myFunction();
 
 		
+	}
+
+	myFunction() {
+		const title = 'Hello';
+		const options = new PushNotificationOptions();
+		options.body = 'New Task Asssign to You';
+
+		this._pushNotificationService.create(title, options).subscribe((notif) => {
+			if (notif.event.type === 'show') {
+				console.log('onshow');
+				setTimeout(() => {
+					notif.notification.close();
+				}, 25000);
+			}
+			if (notif.event.type === 'click') {
+				console.log('click');
+				notif.notification.close();
+			}
+			if (notif.event.type === 'close') {
+				console.log('close');
+			}
+		},
+		(err) => {
+			console.log(err);
+		});
 	}
 
 	getAllDevelopers(){
@@ -214,28 +242,28 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-getProject(id){
-	this.loader = true;
-	setTimeout(()=>{
-		this._projectService.getProjectById(id).subscribe((res:any)=>{
-			this.pro = res.pmanagerId;
-			console.log("project detail===>>>>",this.pro);
-			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-				//this.projectTeam = res.team;
+	getProject(id){
+		this.loader = true;
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				this.pro = res.pmanagerId;
+				console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					//this.projectTeam = res.team;
 
-				res.Teams.push(this.pro); 
-				console.log("response of team============>"  ,res.Teams);
-				this.projectTeam = res.Teams;
-				this.projectTeam.sort(function(a, b){
-					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-					if (nameA < nameB) //sort string ascending
-						return -1 
-					if (nameA > nameB)
-						return 1
-					return 0 //default return value (no sorting)
-					this.projectTeam.push
-					console.log("response of team============>"  ,this.projectTeam);
-				})
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					this.projectTeam.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+						this.projectTeam.push
+						console.log("response of team============>"  ,this.projectTeam);
+					})
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
