@@ -492,18 +492,18 @@ export class ProjectDetailComponent implements OnInit {
 
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				$('#modal').modal('hide');
-				this.loader = false;
-				console.log("response task***++",res);
-				this.getProject(res.projectId);
-			},err=>{
-				this.loader = false;
-				// $('.alert').alert()
-				var err;
+			// this._projectService.addTask(data).subscribe((res:any)=>{
+			// 	$('#modal').modal('hide');
+			// 	this.loader = false;
+			// 	console.log("response task***++",res);
+			// 	this.getProject(res.projectId);
+			// },err=>{
+			// 	this.loader = false;
+				
+			// 	var err;
 
-				console.log(err);
-			})
+			// 	console.log(err);
+			// })
 		}
 		public Editor = DecoupledEditor;
 
