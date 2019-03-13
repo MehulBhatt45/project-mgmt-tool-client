@@ -313,6 +313,7 @@ export class ProjectService {
 
 		addUser_with_file(body,files:any){
 			console.log("fhvg=>",files);
+			console.log("bodyyyyyyyyy===>",body);
 			let formdata = new FormData();
 			formdata.append('fname',body.fname);
 			formdata.append('lname',body.lname);

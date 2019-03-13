@@ -4,3 +4,9 @@
 .table tr:first-child th {
     border-top: none !important;
 }
+.table_content{
+	padding-left: 20px;
+}
+h4{
+	margin: 0px;
+}
