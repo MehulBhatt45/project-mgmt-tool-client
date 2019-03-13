@@ -39,11 +39,12 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		$('.datepicker').pickadate();
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
 		this.getProjects();
-		$('.datepicker').pickadate();
+		
 	}
 	getProjects(){
 		localStorage.setItem('teamShow' , JSON.stringify(false));
@@ -175,6 +176,6 @@ export class EditProjectComponent implements OnInit {
 			localStorage.setItem("showDeveloper" , JSON.stringify(false));
 			this.showDeveloper = false;	
 		}
-			
+		
 	}
 }
