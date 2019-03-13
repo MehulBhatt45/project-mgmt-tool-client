@@ -110,6 +110,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
+			console.log("tracks====-=-_+_++",this.tracks);
 		}
 		else{
 			this.tracks = [
@@ -138,7 +139,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
-
+			
 		}
 	}
 	getPriorityClass(priority){
@@ -282,9 +283,11 @@ export class ProjectDetailComponent implements OnInit {
 				_.forEach(this.project , (task)=>{
 					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
+						// console.log("tracks==-=-=-=-",this.tracks);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
+								console.log("tracks==-=-=-=-",track);
 							}
 						}else{
 							if(task.status == track.id){
@@ -352,12 +355,12 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("Sorting tasks by = ",type)
 
 		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
+			console.log("Sorting track =()()() ",track.title);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 		});
 
 		function custom_sort(a, b) {
