@@ -1,4 +1,4 @@
-*[role="form"] {
+/**[role="form"] {
     max-width: 530px;
     padding: 15px;
     margin: 0 auto;
@@ -7,10 +7,11 @@
     border: 1px solid;
     margin-top: 80px;
     border: 1px solid black;
-}
+}*/
 h2{ 
-    font-size: 30px;
-    color: #000000;    
+    /*font-size: 30px;
+    color: #000000; */   
+    margin:0;
 }
 .card-header {
     background-color: #372e5f;
@@ -18,4 +19,5 @@ h2{
 .file-field .btn{
     line-height: normal!important;
     background-color: #413670 !important;
+    margin : 0;
 }
