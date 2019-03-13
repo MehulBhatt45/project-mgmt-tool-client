@@ -307,7 +307,9 @@ table {
   #myDIV{
     display: none;
   }
-
+#alert{
+  display: none;
+}
   @-webkit-keyframes rotation {
     from {
       -webkit-transform: rotate(0deg);
