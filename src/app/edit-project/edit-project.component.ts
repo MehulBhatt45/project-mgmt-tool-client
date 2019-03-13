@@ -10,7 +10,8 @@ declare var $ : any;
 	styleUrls: ['./edit-project.component.css']
 })
 export class EditProjectComponent implements OnInit {
-
+	availableDevelopers = [];
+	projectTeam;
 	projects;
 	editAvail;
 	projectId;
@@ -25,13 +26,14 @@ export class EditProjectComponent implements OnInit {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
 			desc: new FormControl(''),
-			uniqueId: new FormControl('' , Validators.required),
-			deadline: new FormControl('' , Validators.required),
-			clientEmail: new FormControl('' , Validators.required),
-			clientFullName: new FormControl('', Validators.required),
-			clientContactNo: new FormControl('',Validators.required),
+			uniqueId: new FormControl('' ),
+			deadline: new FormControl('' ),
+			clientEmail: new FormControl('' ),
+			clientFullName: new FormControl(''),
+			clientContactNo: new FormControl(''),
 			clientDesignation: new FormControl(''),
-			avatar:new FormControl('')
+			avatar:new FormControl(''),
+			date: new FormControl('')
 		});
 		this.route.params.subscribe(params=>{
 			this.getProjectById(params.id);
@@ -88,48 +90,30 @@ export class EditProjectComponent implements OnInit {
 
 	}
 	
-	addRemoveDeveloper(developerId){
-		var arr = [];
-		console.log("heyyyyyyyy");
-		console.log("all developers ====>" , this.availDevelopers);
-		console.log("developer Show ===>" , this.developerShow);
-		if(this.developerShow == true){
-			console.log("this . teams in addRemoveDeveloper if ======>" , this.availData);
-			_.forEach(this.allDevelopers , (developer, index)=>{
-				if(developer._id == developerId){
-					console.log("found developer ====>" , developer , index);
-					this.availData.Teams.push(developer);
-					console.log("In if",this.availData);
-					this.availDevelopers.splice(index,1); 
-
-				}
-			})
-		}
-		else{
-			console.log("this . temas in addRemoveDeveloper else ======>" , this.availData);
-			_.forEach(this.availData.Teams , (developer , index)=>{
-				console.log("developerss ===>" , developer._id , index);	
-				if(developer._id == developerId){
-					console.log("found User" , developer , index);
-					arr.push(index);
-					this.availData.Teams.splice(index,1);
-					console.log("In else",this.availData) 
-				}
-			})
-			console.log("arr ====>" , arr);
-			for(var i = 0; i<arr.length ; i++){
-				var p = arr[i];
-				this.availData.Teams.splice(p , 1);
-			}
-			localStorage.setItem('teams' , JSON.stringify(this.availData));
-			console.log("after Splice else ====>" , this.availData.Teams);
-			/*this.editProject();*/
-		}
-	}
 	getProjectById(id){
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
-			console.log(this.availData);
+			console.log("this . avail data ==========>" ,this.availData);
+			this.projectTeam = this.availData.Teams;
+			this._projectService.getAllDevelopers().subscribe((res:any)=>{
+			var flag = 0;
+			console.log("All developers ========>" , res);
+			console.log("this . project teams ========>" , this.projectTeam);
+			_.forEach(res , (allDeveloper)=>{
+				console.log("All developers ================================>" , allDeveloper);
+				_.forEach(this.projectTeam , (projectTeam)=>{
+					console.log("project team ========>" , projectTeam);
+					if(allDeveloper._id == projectTeam._id){
+						flag = 1;
+					}
+				})
+					if(flag == 0){
+						this.availableDevelopers.push(allDeveloper);			
+					}
+					flag = 0;
+			})
+			console.log("this . avail developer =======>" , this.availableDevelopers);
+		})
 		},err=>{
 			console.log(err);
 		})
@@ -165,6 +149,7 @@ export class EditProjectComponent implements OnInit {
 			localStorage.setItem("teamShow" , JSON.stringify(false));
 			this.teamShow = false;	
 		}
+			localStorage.setItem("showDeveloper" , JSON.stringify(false));
 	}
 	getDevelopers(){
 		console.log("show developer" , this.showDeveloper);
@@ -177,5 +162,52 @@ export class EditProjectComponent implements OnInit {
 			this.showDeveloper = false;	
 		}
 		
+
+	}
+	addRemoveDeveloper(developerId){
+		var arr = [];
+		var arVariable;
+		console.log("heyyyyyyyy");
+		console.log("all developers ====>" , this.availableDevelopers);
+		console.log("all project team ====>" , this.projectTeam);
+
+		console.log("developer Show ===>" , this.developerShow);
+		if(this.showDeveloper == true){
+			console.log("this . teams in addRemoveDeveloper if ======>" , this.availData);
+			_.forEach(this.availableDevelopers , (developer, index)=>{
+				if(developer._id == developerId){
+					console.log("found developer ====>" , developer , index);
+					arr.push(index);
+					//this.projectTeam.push(developer);
+					this.availData.Teams.push(developer);
+					// console.log("In if",this.availData);
+					// this.availDevelopers.splice(index,1); 
+
+				}
+			})
+			arVariable = arr[0];
+			console.log("arr ====>" , arVariable);
+			this.availableDevelopers.splice(arVariable,1);
+			console.log("arr ===>" , this.availableDevelopers);
+		}
+		else{
+			console.log("this . temas in addRemoveDeveloper else ======>" , this.availData);
+			_.forEach(this.availData.Teams , (developer , index)=>{
+				console.log("developerss ===>" , developer._id , index);	
+				if(developer._id == developerId){
+					this.availableDevelopers.push(developer);
+					console.log("found User" , developer , index);
+					arr.push(index);
+				//	this.availData.Teams.splice(index,1);
+					//console.log("In else",this.availData) 
+				}
+			})
+			console.log("arr ====>" , arr);
+			var p = arr[0];
+			this.availData.Teams.splice(p , 1);
+			localStorage.setItem('teams' , JSON.stringify(this.availData));
+			console.log("after Splice else ====>" , this.availData.Teams);
+			//this.editProject();
+		}
 	}
 }

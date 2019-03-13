@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 	task;
 	userId
 	project;
-	baseMediaUrl;
+	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
@@ -177,7 +177,7 @@ export class HeaderComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
 				if (nameA < nameB) //sort string ascending
 					return -1 
 				if (nameA > nameB)

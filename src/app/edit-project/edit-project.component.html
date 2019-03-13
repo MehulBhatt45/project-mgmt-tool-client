@@ -71,7 +71,11 @@
 						</div>	
 					</div>
 					<div class="col-md-6">
+<<<<<<< HEAD
 						<div class="md-form form-group">
+=======
+						<div class="md-form">
+>>>>>>> 07abe64a8b166a17505a4674344852f292b7bc05
 							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientDesignation" [(ngModel)]="availData.clientDesignation">
 							<label for="clientdesignation">Designation</label>
 						</div>
@@ -104,7 +108,7 @@
 						</div>
 						<button class="btn btn-default btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
 						<div *ngIf="showDeveloper"> 
-							<div class="row" *ngFor="let i of availDevelopers">
+							<div class="row" *ngFor="let i of availableDevelopers">
 								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
 								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
 							</div>
@@ -112,6 +116,7 @@
 					</div>
 				</div>
 				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
+<<<<<<< HEAD
 				<div class="md-form form-group">
 					<input type="text" id="form1" class="form-control">
 					<label for="form1">Project Alias</label>
@@ -123,6 +128,8 @@
 				<div>
 					<button type="button" class="btn btn-default" (click)="view_Project()" mdbBtn color="primary" mdbWavesEffect>Submit</button>
 				</div>
+=======
+>>>>>>> 07abe64a8b166a17505a4674344852f292b7bc05
 			</form>
 		</div>
 		
