@@ -8,8 +8,6 @@
   overflow-x: auto;
   overflow-y: hidden;
 }
-
-
 .card-list {
   height:auto;
   width: calc(25% - 12px);
@@ -44,6 +42,7 @@
 .card-list-content {
   /*overflow: auto;
   flex-grow: 1;*/
+  padding: 4px;
   background-color: #f6f4f6;
   height: 100%;
 }
@@ -114,9 +113,12 @@ table {
     padding: 1px 3px 0;
     height: 40px;
   }
-  .mat-card{
+  mat-card.mat-card {
     padding: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
   }
   .track_title{
     color: #5E6C84;
@@ -291,6 +293,21 @@ table {
   }
   #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
+
+  }
+
+  .modal-header {
+    padding: 2rem;
+  }
+  .refresh{
+    margin: 0;
+    padding: 5px;
+    font-size: 20px;
+  }
+  .fa-refresh[_ngcontent-c2] {
+    float: right;
+    margin: 0 !important; 
+
   }
 
   .modal-header {
@@ -307,10 +324,15 @@ table {
     float: right;
     margin: 0 !important; 
   }
+  #refresh_icon{
+    display: none;
+  }
   #myDIV{
     display: none;
   }
-
+  #alert{
+    display: none;
+  }
   @-webkit-keyframes rotation {
     from {
       -webkit-transform: rotate(0deg);
@@ -332,6 +354,18 @@ table {
   }
 
   .break{
+   word-break: break-all;
+ }
 
-    word-break: break-all;
-  }
+.task_img img{
+  min-width: 50%;
+  max-width: 50%;
+  min-height: 50%;
+  max-height: 50%;
+  object-fit: cover;
+  margin-left: auto;
+ }
+ .comment_section{
+  height: auto;
+  margin: 5px;
+}

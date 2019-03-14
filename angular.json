@@ -20,12 +20,15 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json" 
             ],
             "styles": [
               "src/styles.css",
               "./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
-              "./node_modules/froala-editor/css/froala_style.min.css"
+              "./node_modules/froala-editor/css/froala_style.min.css",
+              "./node_modules/ngx-select-dropdown/dist/assets/style.css"
             ],
             "scripts": [
               "./node_modules/froala-editor/js/froala_editor.pkgd.min.js"

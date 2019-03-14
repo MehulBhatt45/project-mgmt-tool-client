@@ -16,7 +16,12 @@ export class CreateProjectComponent implements OnInit {
   files:FileList;
   addForm:FormGroup;
   url = '';
-  developers: any
+  developers: any;
+  config = {
+    displayKey: "name", //if objects array passed which key to be displayed defaults to description
+    search: true
+  };
+  objectsArray: any = [];
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 
 
@@ -80,7 +85,7 @@ export class CreateProjectComponent implements OnInit {
             }
           }
           data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-          this._projectservice.addProject(data).subscribe((res:any)=>{
+          this._projectService.addProject(data).subscribe((res:any)=>{
             console.log(res);
             console.log("addproject2 is called");
           },err=>{
@@ -126,10 +131,4 @@ export class CreateProjectComponent implements OnInit {
             this._alertService.error(err);
           })
         }
-
-
-
-}
-
-
-
+      }

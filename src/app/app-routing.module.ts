@@ -26,6 +26,7 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
 import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import {SummaryComponent} from './summary/summary.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 
 
@@ -100,7 +101,7 @@ const routes: Routes = [
 			component:FileListComponent
 		},
 		{
-			path:'all-developer',
+			path:'project-team/:id',
 			component:AllDeveloperComponent
 		},
 		{
@@ -128,12 +129,7 @@ const routes: Routes = [
 			//pathMatch: "full",
 			component:ResetPasswordComponent
 		},
-		{
-
-			path:'add-employee',
-			component:AddEmployeeComponent
-			
-		},
+		
 		{
 			path:'leave',
 			component:LeaveComponent
@@ -161,6 +157,11 @@ const routes: Routes = [
 		{
 			path:'summary/:id',
 			component:SummaryComponent
+		},
+		{
+			path:'editprofile/:id',
+			pathMatch: "full",
+			component:EditprofileComponent
 		}
 		]
 

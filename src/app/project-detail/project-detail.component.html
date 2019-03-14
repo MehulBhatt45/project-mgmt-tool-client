@@ -4,22 +4,22 @@
 	<span></span>
 	<span></span>
 </div>
-<!-- <div class="body_content" *ngIf="!loader"> -->
+<div class="body_content" *ngIf="!loader">
 
 	<div class="row" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
-
-
 	<div class="row">
 		<div class="col-12 col-md-8 ">
 			<div class="md-form form-group">
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
 				<label for="exampleForm2">search text goes here</label>
-			</div>
 
+
+			</div>
 		</div>
+
 		<div class="col-12 col-md-4 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
@@ -38,12 +38,13 @@
 					<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 				</div>
 
+
 				<!-- <a routerLink = '/leave'>Leave Form</a> -->
+
 
 			</div>
 		</div>
 	</div>
-
 
 
 	<div *ngIf="developers">
@@ -86,12 +87,16 @@
 								<td colspan="2">
 									<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
 								</td>
+								<td *ngIf="task.images && task.images.length>0">
+									<div class="task_img text-right" *ngFor="let image of task.images">
+										<img src="{{path}}{{image}}">
+									</div>
+								</td>
 							</tr>
 						</table>
 						<div class="details">
 							<div class="row">
 								<div class="col-12 col-md-6">
-
 									<p  *ngIf="task.createdBy">
 										<label><strong>Created By: &nbsp;</strong></label>
 										<span>{{task.createdBy.name}}</span>
@@ -103,6 +108,13 @@
 									<p *ngIf="task.status">
 										<label><strong>Status: &nbsp;</strong></label>
 										<span>{{task.status}}</span>
+									</p>
+									<p>
+										<label><strong>start time: &nbsp;</strong></label>
+									</p>
+									<p>
+										<label><strong>estimated time: &nbsp;</strong></label>
+										<span>{{task.estimatedTime}}</span>
 									</p>
 								</div>
 								<div class="col-12 col-md-6">
@@ -118,14 +130,12 @@
 										<label><strong>DueDay: &nbsp;</strong></label>
 										<span>{{task.dueDate}}</span>
 									</p>
+									<p>
+										<label><strong> end time: &nbsp;</strong></label>
+									</p>
+
 								</div>
-								<div class="col-6">
-									<label><strong>start time: &nbsp;</strong></label>
-									
-								</div>
-								<div class="col-6">
-									<label><strong> end time: &nbsp;</strong></label>
-								</div>
+
 								<div class="row justify-content-between">
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
@@ -156,14 +166,14 @@
 											</a>
 										</li>
 									</ul>
-									<div>
+									<div class="comment_section">
 										<p class="developerName" *ngIf="i.userId">
 											{{i.userId.name}}
 										</p>
-										<p class="break">
-											{{i.content}}
-										</p>
-										<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
+										<span class="break" innerHtml="{{i.content}}">
+											<!-- {{i.content}} -->
+										</span>
+										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 									</div>
 								</div>
 							</div>
@@ -178,7 +188,7 @@
 
 					<div class="btn btn-default" (click)="commentImg.click()">
 						<span>Upload image with comment</span>
-						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'images')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 					</div>
 					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 				</div>
@@ -205,7 +215,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<form style="width: 100%;" [formGroup]="editTaskForm">
+					<form style="width: 100%;" [formGroup]="editTaskForm" id="myForm">
 						<div class="form-group col-12">
 							<label for="title">Title</label>
 							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
@@ -252,7 +262,8 @@
 							<div class="form-group col-6">
 								<label for="estimatedTime">Estimated Time</label>
 								<div class="md-form form-group">
-									<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+									<!-- <input placeholder="Selected date" type="text" id="estimatedTime" class="form-control ti" formControlName="estimatedTime"> -->
+									<input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime">
 								</div>
 							</div>
 
@@ -266,7 +277,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" id="myForm">
 				<div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
 					<strong>ERROR!</strong>  Task couldn't be added.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -274,14 +285,15 @@
 					</button>
 				</div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<div id="refresh_icon"> 
+				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<div *ngIf="currentUser.userRole=='projectManager'">
+				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
 				</div>
-				<button type="submit" id="save_changes" class="btn btn-default"  [disabled]="editTaskForm.invalid || loader"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
+				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value);" >Save changes</button>
 			</div>
 		</div>
+
 	</div>
 </div>

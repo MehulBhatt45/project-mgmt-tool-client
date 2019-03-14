@@ -6,6 +6,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 declare var $ : any;
 import * as _ from 'lodash';
 import { config } from '../config';
+import { MessagingService } from "../services/messaging.service";
 
 @Component({
   selector: 'app-view-project',
@@ -17,26 +18,33 @@ export class ViewProjectComponent implements OnInit {
   addForm:FormGroup; 
   files:FileList;
   url = '';
+  developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
+  message;
+  constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
+      deadline: new FormControl('', Validators.required),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      avatar: new FormControl('')
+      avatar: new FormControl(''),
+      allDeveloper:new FormControl(''),
+      Teams: new FormControl([])
     });
   }
 
   ngOnInit() {
+    this.getAllDevelopers();
+    $('.datepicker').pickadate();
     this.loader=true;
     setTimeout(()=>{
-      this._projectservice.getProjects().subscribe(res=>{
+      this._projectService.getProjects().subscribe(res=>{
         console.log(res);
         this.projects = res;
         this.loader=false;
@@ -45,6 +53,11 @@ export class ViewProjectComponent implements OnInit {
         this.loader=false;
       })
     },3000);
+    const currentUserId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log("currentUser",currentUserId);
+    this.messagingService.requestPermission(currentUserId)
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage
   }
 
   getTitle(name){
@@ -70,7 +83,7 @@ export class ViewProjectComponent implements OnInit {
       }
     }
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-    this._projectservice.addProject(data).subscribe((res:any)=>{
+    this._projectService.addProject(data).subscribe((res:any)=>{
       console.log(res);
       console.log("addproject2 is called");
     },err=>{
@@ -87,7 +100,7 @@ export class ViewProjectComponent implements OnInit {
   addIcon(value){
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
-    this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
+    this.url = 'http://localhost/project-mgmt-tool/server'+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
   }
   
@@ -104,7 +117,23 @@ export class ViewProjectComponent implements OnInit {
       }
     }
   }
-
+  getAllDevelopers(){
+    this._projectService.getAllDevelopers().subscribe(res=>{
+      this.developers = res;
+      this.developers.sort(function(a, b){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 //default return value (no sorting)
+      })
+      console.log("Developers",this.developers);
+    },err=>{
+      console.log("Couldn't get all developers ",err);
+      this._alertService.error(err);
+    })
+  }
 }
 
 

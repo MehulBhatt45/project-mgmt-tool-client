@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
@@ -42,16 +42,20 @@ export class SummaryComponent implements OnInit {
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
-	developers: any
+	developers: any;
 	loader : boolean = false;
-
+	developerId;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
 
 	projectTeam;
 	Teams;
-	myproject=this.project[0];
+	myresponse:any;
+	selectedProjectId = "all";
+	selectedDeveloperId = "all";
+	Team;
+	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 
@@ -63,11 +67,16 @@ export class SummaryComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();	
+
+		
 	}
 
 	ngOnInit() {
 
-		
+
+		this.selectedProjectId = this.projectId;
+		this.selectedDeveloperId = this.developerId;
+		this.filterTracks(this.projectId,this.developerId);
 	}
 	
 	getEmptyTracks(){
@@ -108,6 +117,9 @@ export class SummaryComponent implements OnInit {
 				]
 			}
 			];
+			console.log("tracks====-=-_+_++",this.tracks);
+			this.myresponse=this.tracks.tasks;
+			console.log("tracks response_+()()()",this.tracks.tasks);
 		}
 		else{
 			this.tracks = [
@@ -201,7 +213,7 @@ export class SummaryComponent implements OnInit {
 							return 1
 						return 0 //default return value (no sorting)
 						this.projectTeam.push
-						console.log("response of team============()()()",this.projectTeam);
+						
 					})
 
 				},(err:any)=>{
@@ -221,10 +233,12 @@ export class SummaryComponent implements OnInit {
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					// console.log("task ======>" , task);
+					// console.log("task ======>()" , task);
 					_.forEach(this.tracks , (track)=>{
+						// console.log("track ======>()" , track);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								console.log("sorttask==()()()",task);
 								track.tasks.push(task);
 							}
 						}else{
@@ -234,6 +248,7 @@ export class SummaryComponent implements OnInit {
 						}
 					})
 				})
+
 				this.loader = false;
 			},err=>{
 				console.log(err);
@@ -244,6 +259,76 @@ export class SummaryComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+	}
+
+	
+	filterTracks(projectId, developerId){
+		// this.selectedDeveloperId = developerId;
+		// this.selectedProjectId = projectId;
+		console.log(projectId, developerId);
+		this.getEmptyTracks();
+		if(projectId!='all' && developerId == 'all'){
+			_.forEach(this.tasks, (project)=>{
+				if(project.projectId._id == projectId){
+					_.forEach(this.tracks, (track)=>{
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+								track.tasks.push(project);
+							}
+						}else{
+							if(project.status == track.id){
+								track.tasks.push(project);
+							}
+						}
+					})
+				}	
+			})
+		}else if(projectId=='all' && developerId != 'all'){
+			_.forEach(this.tasks, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
+						track.tasks.push(project);
+					}
+				})
+			})
+		}else if(projectId!='all' && developerId != 'all'){
+			_.forEach(this.tasks, (project)=>{
+				console.log("trackfilter()__+++",this.tasks);
+				if(project.projectId._id == projectId){
+					_.forEach(this.tracks, (track)=>{
+						if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
+							track.tasks.push(project);
+						}
+					})
+				}
+			})
+		}else{
+			_.forEach(this.tasks, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+							track.tasks.push(project);
+						}
+					}else{
+						if(project.status == track.id){
+							track.tasks.push(project);
+						}
+					}
+				})
+			})
+		}
+		console.log("task()()()()()++_+_+_+",this.tracks);
+	}
+
+	getTaskCount(userId, status){
+		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	}
+
+	getTaskPriority(priority, status){
+		console.log(priority, status);
+		return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
 	}
 
 

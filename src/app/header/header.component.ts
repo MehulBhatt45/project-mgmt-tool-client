@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 	task;
 	userId
 	project;
-	baseMediaUrl;
+	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
@@ -110,11 +110,6 @@ export class HeaderComponent implements OnInit {
 		
 		this.getAllDevelopers();
 		this.getEmptyTracks();
-
-		this.route.params.subscribe(param=>{
-			this.userId = param.id;
-			this.getDeveloperById(this.userId);
-		});
 
 	}	
 

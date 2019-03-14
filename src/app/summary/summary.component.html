@@ -1,7 +1,291 @@
-<!-- <div class="row">
+<div class="container">
+	<div class="row">
+		<h1><i class="fas fa-tasks"></i> Total number of Task in the project</h1>
+		<div class="progress blue">
+			<span class="progress-left">
+				<span class="progress-bar"></span>
+			</span>
+			<span class="progress-right">
+				<span class="progress-bar"></span>
+			</span>
+			<div class="progress-value" *ngIf="project">{{project.length}}</div>
+		</div>
+	</div><hr/>
+	<div class="row">
+		<h1><i class="fas fa-tasks"></i> Number of tasks in each tracks</h1>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
+					<th scope="col"><i class="fas fa-tasks"></i> Number Of Tasks</th>
 
-	<h1>Total Task:{{myproject}}</h1>
-	<div *ngFor="let alltask of project,let i=index">
-		{{alltask.assignTo.tasks[0]}}
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let track of tracks">
+					<th scope="row">{{track.id}}</th>
+					<!-- <td>
+						<div class="progress blue">
+							<span class="progress-left">
+								<span class="progress-bar"></span>
+							</span>
+							<span class="progress-right">
+								<span class="progress-bar"></span>
+							</span>
+							<div class="progress-value">{{track.tasks.length}}</div>
+						</div>
+					</td> -->
+					<td >{{track.tasks.length}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div><hr/>
+	<div class="row">
+		<h2><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track</h2>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th scope="col"><i class="fas fa-signature"></i>Team-member</th>
+					<th scope="col">To Do</th>
+					<th scope="col">In Progress</th>
+					<th scope="col">Testing</th>
+					<th scope="col">Complete</th>
+					
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of projectTeam">
+					<td scope="row" >{{user.name}}</td>
+					<td>{{getTaskCount(user._id, 'to do')}}</td>
+					<td>{{getTaskCount(user._id, 'in progress')}}</td>
+					<td>{{getTaskCount(user._id, 'testing')}}</td>
+					<td>{{getTaskCount(user._id, 'complete')}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div><hr/>
+	<div class="row">
+		<h2><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete</h2>
+		<div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> Highest Priority</th>
+						<!-- <th scope="col">To Do</th>
+						<th scope="col">In Progress</th>
+						<th scope="col">Testing</th>
+						<th scope="col">Complete</th> -->
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.title}}</th>
+						<td >{{getTaskPriority(1, track.id)}}</td>
+						<!-- <td >{{getTaskPriority(1, 'in progress')}}</td>
+						<td >{{getTaskPriority(1, 'testing')}}</td>
+						<td >{{getTaskPriority(1, 'complete')}}</td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> High Priority</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.title}}</th>
+						<td >{{getTaskPriority(2, track.id)}}</td>
+						<!-- <td >{{getTaskPriority(track.priority, 'in progress')}}</td>
+						<td >{{getTaskPriority(track.priority, 'testing')}}</td>
+						<td >{{getTaskPriority(track.priority, 'complete')}}</td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div><hr/>
+		<!-- <div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> Midium Priority</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.id}}</th>
+						<td >{{getTaskPriority(track.priority, 'to do')}}</td>
+						<td >{{getTaskPriority(track.priority, 'in progress')}}</td>
+						<td >{{getTaskPriority(track.priority, 'testing')}}</td>
+						<td >{{getTaskPriority(track.priority, 'complete')}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> Low Priority</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.id}}</th>
+						<td >{{getTaskPriority(track.priority, 'to do')}}</td>
+						<td >{{getTaskPriority(track.priority, 'in progress')}}</td>
+						<td >{{getTaskPriority(track.priority, 'testing')}}</td>
+						<td >{{getTaskPriority(track.priority, 'complete')}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div> -->
 	</div>
-</div> -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+	<div class="row">
+		<div class="col-sm">
+			<div class="card">
+
+		
+				<div class="card-body">
+
+	
+					<h4 class="card-title"><a><strong><i class="fas fa-tasks"></i> Total task in the project</strong></a></h4>
+					<p class="card-text" *ngIf="project">{{project.length}}</p>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+			
+				<div class="card-body" >
+
+			
+					<h4 class="card-title" ><a><i class="fas fa-tasks"></i> Number Of task in each track </a></h4><hr/>
+					<div class="card-text" >
+						<ul class="list-group" *ngFor="let track of tracks">
+							<li class="list-group-item active">{{track.id}}</li>
+							<li class="list-group-item">{{track.tasks.length}}</li>
+						</ul>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+			
+				<div class="card-body">
+
+			
+					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track</a></h4>
+		
+					<div class="card-text">
+						<ul class="list-group" *ngFor="let user of projectTeam">
+							<li class="list-group-item ">{{user.name}}
+			
+
+							</li>
+							
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+
+				<div class="card-body">
+
+
+					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> Total Number of High Priority tasks and Highest priority tasks in TODO, IN PROGRESS AND TESTING</a></h4>
+	
+					<div class="card-text">
+						<ul class="list-group" >
+							<li class="list-group-item ">Highest
+								<ul *ngFor="let track of tracks">
+									<li>{{track.id}}</li>
+									<li>{{track.tasks.priority}}</li>
+								</ul>
+							</li>
+							
+						</ul>
+						<ul class="list-group" >
+							<li class="list-group-item ">High
+								<ul *ngFor="let track of tracks">
+									<li>{{track.id}}</li>
+									<li>{{track.tasks.priority}}</li>
+								</ul>
+							</li>
+							
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+ -->
