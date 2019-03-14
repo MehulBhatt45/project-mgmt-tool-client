@@ -18,8 +18,8 @@
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
 				<label for="exampleForm2">search text goes here</label>
-			</div>
 
+			</div>
 		</div>
 		<div class="col-12 col-md-4 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
@@ -44,7 +44,6 @@
 			</div>
 		</div>
 	</div>
-
 
 
 	<div *ngIf="developers">
@@ -89,53 +88,53 @@
 								</td>
 								<td><div>
 									<img src="{{path}}{{task.images}}"></div></td>
-							</tr>
-						</table>
-						<div class="details">
-							<div class="row">
-								<div class="col-12 col-md-6">
+								</tr>
+							</table>
+							<div class="details">
+								<div class="row">
+									<div class="col-12 col-md-6">
 
-									<p  *ngIf="task.createdBy">
-										<label><strong>Created By: &nbsp;</strong></label>
-										<span>{{task.createdBy.name}}</span>
-									</p>
-									<p *ngIf="task.createdAt">
-										<label><strong>Created Date: &nbsp;</strong></label>
-										<span>{{task.createdAt | date:'short'}}</span>
-									</p>
-									<p *ngIf="task.status">
-										<label><strong>Status: &nbsp;</strong></label>
-										<span>{{task.status}}</span>
-									</p>
-									<p>
-									<label><strong>start time: &nbsp;</strong></label>
-								</p>
-								<p>
-									<label><strong>estimated time: &nbsp;</strong></label>
-									<span>{{task.estimatedTime}}</span>
-								</p>
-								</div>
-								<div class="col-12 col-md-6">
-									<p>
-										<label><strong>Assign To: &nbsp;</strong></label>
-										<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-									</p>
-									<p *ngIf="task.priority">
-										<label><strong>Prority: &nbsp;</strong></label>
-										<span>{{getPriorityClass(task.priority).title}}</span>
-									</p>
-									<p *ngIf="task.dueDate">
-										<label><strong>DueDay: &nbsp;</strong></label>
-										<span>{{task.dueDate}}</span>
-									</p>
-									<p>
-									<label><strong> end time: &nbsp;</strong></label>
-								</p>
+										<p  *ngIf="task.createdBy">
+											<label><strong>Created By: &nbsp;</strong></label>
+											<span>{{task.createdBy.name}}</span>
+										</p>
+										<p *ngIf="task.createdAt">
+											<label><strong>Created Date: &nbsp;</strong></label>
+											<span>{{task.createdAt | date:'short'}}</span>
+										</p>
+										<p *ngIf="task.status">
+											<label><strong>Status: &nbsp;</strong></label>
+											<span>{{task.status}}</span>
+										</p>
+										<p>
+											<label><strong>start time: &nbsp;</strong></label>
+										</p>
+										<p>
+											<label><strong>estimated time: &nbsp;</strong></label>
+											<span>{{task.estimatedTime}}</span>
+										</p>
+									</div>
+									<div class="col-12 col-md-6">
+										<p>
+											<label><strong>Assign To: &nbsp;</strong></label>
+											<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+										</p>
+										<p *ngIf="task.priority">
+											<label><strong>Prority: &nbsp;</strong></label>
+											<span>{{getPriorityClass(task.priority).title}}</span>
+										</p>
+										<p *ngIf="task.dueDate">
+											<label><strong>DueDay: &nbsp;</strong></label>
+											<span>{{task.dueDate}}</span>
+										</p>
+										<p>
+											<label><strong> end time: &nbsp;</strong></label>
+										</p>
+										
+									</div>
 									
-								</div>
-								
-								<div class="row justify-content-between">
-									
+									<div class="row justify-content-between">
+										
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
@@ -294,5 +293,6 @@
 				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value);" >Save changes</button>
 			</div>
 		</div>
+
 	</div>
 </div>

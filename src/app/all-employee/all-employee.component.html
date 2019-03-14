@@ -1,6 +1,10 @@
-<div>
- <p class="h4 mb-1 text-secondary">Employee</p>
+<div class="row btn_content">
+	<button type="button" class="btn btn-default" routerLink="/add-employee">Add Employee</button>
 </div>
+<div class="row">
+	<p class="h4 mb-1 text-secondary">Employee Profile</p>
+</div>
+<!-- search user profile -->
 <form>
 	<div class="form-row">
 		<div class="col">
@@ -16,16 +20,22 @@
 			</div>
 		</div>
 		<div class="col">
-			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+			<button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false">Select Designation</button>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="#">Admin</a>
-				<a class="dropdown-item" href="#">Project Manager</a>
-				<a class="dropdown-item" href="#">Developer</a>
+			<div class="dropdown-menu drop_btn">
+				<a class="dropdown-item" href="#">Android Developer</a>
+				<a class="dropdown-item" href="#">MeanStack Developer</a>
+				<a class="dropdown-item" href="#">React Native Developer</a>
+				<a class="dropdown-item" href="#">Php Developer</a>
 			</div>
 		</div>
+		<!-- <div class="col">
+			<button class="btn btn-default" type="button">Search</button>
+		</div> -->
 	</div>
 </form>
+
+<!-- all developer profile -->
 <section class="section pb-3 text-center">
 	<div class="row">
 		<div class="col-lg-3 col-md-12 mb-4" *ngFor="let developer of developers">
@@ -36,16 +46,17 @@
 						<i class="fa fa-ellipsis-v"></i>
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#"><i class="fas fa-pen"></i>Edit</a>
-						<a class="dropdown-item" href="#"><i class="far fa-trash-alt"></i>Delete</a>
+						<a class="dropdown-item" href="#" (click)="updateEmployee(developer)"><i class="fas fa-pen"></i>Edit</a>
+						<a class="dropdown-item" href="#" (click)="deleteEmployee(developer)"><i class="far fa-trash-alt"></i>Delete</a>
 					</div>
 				</div>
 				<div class="avatar white img_section">
-					<img src="assets/avatar/coding.png"
-					alt="avatar mx-auto white" class="rounded-circle img-fluid">
+					<img src="{{path}}{{developer.avatar}}" 
+					onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid">
 				</div>
 				<div class="card-body">
-					<h4 class="card-title mt-1">{{developer.name}}</h4>
+					<h5 class="card-title mt-1">{{developer.name}}</h5>
+					<h6 class="card-title">{{developer.userRole}}</h6>
 				</div>
 			</div>
 		</div>		
