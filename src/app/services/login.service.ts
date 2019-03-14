@@ -57,7 +57,21 @@ export class LoginService {
         console.log("file is===>>>",files);
         return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
     }
-    
+    editUserProfileWithFile( data,files: any){
+        var id = JSON.parse(localStorage.getItem('currentUser'))._id;
+        console.log("data is=====================>",data);
+        let formdata = new FormData();
+        formdata.append('fname',data.fname);
+        formdata.append('lname',data.lname);
+        formdata.append('email',data.email);
+        formdata.append('userRole',data.userRole);
+        formdata.append('phone',data.mobile);
+        formdata.append('experience',data.experience);
+        formdata.append('profilePhoto',files[0]);
+        console.log("file is===>>>",files);
+        console.log("change data issssss===>>>",data);
+        return this.http.put(config.baseApiUrl+"user/update-details/"+id,formdata);
+    }
 
     logout() {
         // remove user from local storage to log user out

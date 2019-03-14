@@ -11,9 +11,9 @@ const baseUrl = "http://localhost:4000/";
 
 
 
-const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
-
-// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
+// const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
+// 
+const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 
 
 
