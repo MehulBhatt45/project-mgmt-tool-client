@@ -130,6 +130,3 @@ export class CreateProjectComponent implements OnInit {
 
 
 }
-
-
-
