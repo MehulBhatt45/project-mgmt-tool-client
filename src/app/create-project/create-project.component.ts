@@ -131,7 +131,4 @@ export class CreateProjectComponent implements OnInit {
             this._alertService.error(err);
           })
         }
-
-
-
-}
+      }

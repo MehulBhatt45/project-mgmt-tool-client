@@ -41,7 +41,7 @@ export class LoginService {
         return this.http.post(config.baseApiUrl+"user/signup", user);
     }
     resetPassword(user){
-        return this.http.post(config.baseApiUrl+"user/reset-password", user);
+        return this.http.put(config.baseApiUrl+"user/reset-password", user);
     }
 
     getUserById(id){
