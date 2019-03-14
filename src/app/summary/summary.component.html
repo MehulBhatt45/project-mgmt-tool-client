@@ -1,14 +1,146 @@
 <div class="container">
 	<div class="row">
+		<h1><i class="fas fa-tasks"></i> Total number of Task in the project</h1>
+		<div class="progress md-progress">
+			<div class="progress-bar bg-success" *ngFor="let track of tracks" role="progressbar" style="width: 31%;height: 40px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{track.tasks.length}}</div>
+		</div>
+		<div class="progress md-progress">
+			<div class="progress-bar bg-info" *ngFor="let track of tracks" role="progressbar" style="width: 70%;height: 40px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{track.tasks.length}}</div>
+		</div>
+		
+		<div *ngIf="project">
+			<p>Total No Of Tasks:<b> {{project.length}}</b></p>
+		</div>
+	</div><hr/>
+	<div class="row">
+		<h1><i class="fas fa-tasks"></i> Number of tasks in each tracks</h1>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
+					<th scope="col"><i class="fas fa-tasks"></i> Number Of Tasks</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let track of tracks">
+					<th scope="row">{{track.id}}</th>
+					<td >{{track.tasks.length}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div><hr/>
+	<div class="row">
+		<h2><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track</h2>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th scope="col"><i class="fas fa-signature"></i>Team-member</th>
+					<th scope="col">To Do</th>
+					<th scope="col">In Progress</th>
+					<th scope="col">Testing</th>
+					<th scope="col">Complete</th>
+					
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of projectTeam">
+					<td scope="row" >{{user.name}}</td>
+					<td ></td>
+				</tr>
+			</tbody>
+		</table>
+	</div><hr/>
+	<div class="row">
+		<h2><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in TODO, IN PROGRESS AND TESTING</h2>
+		<div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> Highest Priority</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.id}}</th>
+						<td >{{track.tasks.length}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-tasks"></i> High Priority</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.id}}</th>
+						<td >{{track.tasks.length}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
+	<div class="row">
 		<div class="col-sm">
 			<div class="card">
 
-				<!-- Card content -->
+		
 				<div class="card-body">
 
-					<!-- Title -->
-					<h4 class="card-title"><a><i class="fas fa-tasks"></i> Total task in the project</a></h4>
-					<!-- Text -->
+	
+					<h4 class="card-title"><a><strong><i class="fas fa-tasks"></i> Total task in the project</strong></a></h4>
 					<p class="card-text" *ngIf="project">{{project.length}}</p>
 
 				</div>
@@ -18,15 +150,16 @@
 		<div class="col-sm">
 			<div class="card">
 
-				<!-- Card content -->
+			
 				<div class="card-body" >
 
-					<!-- Title -->
+			
 					<h4 class="card-title" ><a><i class="fas fa-tasks"></i> Number Of task in each track </a></h4><hr/>
-					<!-- Text -->
-					<div class="card-text" *ngFor="let track of tracks">
-						<h4>=>{{track.id}}</h4>
-						<p>{{track.tasks.length}}</p>
+					<div class="card-text" >
+						<ul class="list-group" *ngFor="let track of tracks">
+							<li class="list-group-item active">{{track.id}}</li>
+							<li class="list-group-item">{{track.tasks.length}}</li>
+						</ul>
 
 					</div>
 
@@ -37,22 +170,16 @@
 		<div class="col-sm">
 			<div class="card">
 
-				<!-- Card content -->
+			
 				<div class="card-body">
 
-					<!-- Title -->
+			
 					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track</a></h4>
-					<!-- Text -->
+		
 					<div class="card-text">
 						<ul class="list-group" *ngFor="let user of projectTeam">
 							<li class="list-group-item ">{{user.name}}
-								<!-- <ul class="list-group" *ngFor="let track of tracks">
-									<li class="list-group-item">{{track.tasks.assignTo.tasks.length}}
-
-
-									</li>
-
-								</ul> -->
+			
 
 							</li>
 							
@@ -66,12 +193,12 @@
 		<div class="col-sm">
 			<div class="card">
 
-				<!-- Card content -->
+
 				<div class="card-body">
 
-					<!-- Title -->
+
 					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> Total Number of High Priority tasks and Highest priority tasks in TODO, IN PROGRESS AND TESTING</a></h4>
-					<!-- Text -->
+	
 					<div class="card-text">
 						<ul class="list-group" >
 							<li class="list-group-item ">Highest
@@ -100,3 +227,4 @@
 	</div>
 </div>
 
+ -->

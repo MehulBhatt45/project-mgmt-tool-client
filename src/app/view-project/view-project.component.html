@@ -15,21 +15,21 @@
                     <div class="card-title " routerLink="/project-details/{{project._id}}">
                         <h4 style="color:#6027E2;" class="font-robo-condensed project_title">{{project.title}}</h4>
                     </div>      
-                  </div>
-              </div>
-              <a class="btn-floating btn-action padding-5 mdb-color dark-3"><i class="fas fa-chevron-right pr-10"></i></a>
+                </div>
+            </div>
+            <a class="btn-floating btn-action padding-5 mdb-color dark-3"><i class="fas fa-chevron-right pr-10"></i></a>
 
-              <!-- Avatar -->
-              <div class="avatar ">
+            <!-- Avatar -->
+            <div class="avatar ">
                 <img src="{{path}}{{project.avatar}}" class="avatar_image z-depth-5" onerror="this.src='assets/4.jpeg'" >
             </div>
 
             <!-- Content -->
             <div class="card-body text-center">
-                
+
                 <div class="rounded-bottom hover purple-gradient-2 text-center text-white">
                     <div class="row padding-15 bottom-0">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
                             <strong title="task" class="text-center">
                                 <!-- <img src="assets/icons/task.png" class="tib-prefix"> -->
                                 <!-- <span class="tib-view-projects-description">{{(project.taskId.length>0)?project.taskId.length:0}}</span> -->
@@ -39,7 +39,7 @@
 
                             </strong>
                         </div>
-                        <div class="col-md-4 text-center border-left">
+                        <div class="col-md-3 text-center border-left">
                            <strong title="Issue" class="text-center" > 
                             <!-- <img src="assets/icons/issues.png" class="tib-prefix"> -->
                             <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
@@ -49,11 +49,20 @@
 
                         </strong>
                     </div>
-                    <div class="col-md-4 text-center border-left">
+                    <div class="col-md-3 text-center border-left">
                         <strong title="Bug" class=" text-center">
                             <!-- <img src="assets/icons/bug-2.png" class="tib-prefix"> -->
                             <i class="fas font-project-view-small fa-bug fa-fw"></i>
                             <span class="badge badge-pill z-depth-0 badge-dark">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
+
+                            <!-- <span class="tib-view-projects-description"></span> -->
+                        </strong>
+                    </div>  
+                    <div class="col-md-3 text-center border-left">
+                        <strong title="Summary" class=" text-center">
+                            <!-- <img src="assets/icons/bug-2.png" class="tib-prefix"> -->
+                            
+                            <span routerLink="/summary/{{project._id}}"><i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i></span>
 
                             <!-- <span class="tib-view-projects-description"></span> -->
                         </strong>

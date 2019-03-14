@@ -1,0 +1,19 @@
+.card{
+
+	width: 100%;
+	background-color: darkgray;
+}
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #607D8B;
+    border-color: #607D8B;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #3ccabc;
+    border: 1px solid rgba(0,0,0,.125);
+}

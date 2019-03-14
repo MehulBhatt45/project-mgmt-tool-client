@@ -14,7 +14,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
-import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+// import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
 
@@ -58,7 +58,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 
 	
-	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
 		$('.datepicker').pickadate();
@@ -193,36 +193,36 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 
 		});
-		this._pushNotificationService.requestPermission();
-	this.myFunction();
+	// 	this._pushNotificationService.requestPermission();
+	// this.myFunction();
 
 		
 	}
 
-	myFunction() {
-		const title = 'Hello';
-		const options = new PushNotificationOptions();
-		options.body = 'New Task Asssign to You';
+	// myFunction() {
+	// 	const title = 'Hello';
+	// 	const options = new PushNotificationOptions();
+	// 	options.body = 'New Task Asssign to You';
 
-		this._pushNotificationService.create(title, options).subscribe((notif) => {
-			if (notif.event.type === 'show') {
-				console.log('onshow');
-				setTimeout(() => {
-					notif.notification.close();
-				}, 25000);
-			}
-			if (notif.event.type === 'click') {
-				console.log('click');
-				notif.notification.close();
-			}
-			if (notif.event.type === 'close') {
-				console.log('close');
-			}
-		},
-		(err) => {
-			console.log(err);
-		});
-	}
+	// 	this._pushNotificationService.create(title, options).subscribe((notif) => {
+	// 		if (notif.event.type === 'show') {
+	// 			console.log('onshow');
+	// 			setTimeout(() => {
+	// 				notif.notification.close();
+	// 			}, 25000);
+	// 		}
+	// 		if (notif.event.type === 'click') {
+	// 			console.log('click');
+	// 			notif.notification.close();
+	// 		}
+	// 		if (notif.event.type === 'close') {
+	// 			console.log('close');
+	// 		}
+	// 	},
+	// 	(err) => {
+	// 		console.log(err);
+	// 	});
+	// }
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -263,12 +263,13 @@ export class ProjectDetailComponent implements OnInit {
 							return 1
 						return 0 //default return value (no sorting)
 						this.projectTeam.push
-						console.log("response of team============>"  ,this.projectTeam);
+						console.log("sort============>"  ,this.projectTeam);
 					})
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});
+
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -287,11 +288,14 @@ export class ProjectDetailComponent implements OnInit {
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
-								console.log("tracks==-=-=-=-",track);
+
+				
 							}
 						}else{
 							if(task.status == track.id){
 								track.tasks.push(task);
+
+				
 							}
 						}
 					})
