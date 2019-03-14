@@ -16,9 +16,9 @@ export class CreateProjectComponent implements OnInit {
   files:FileList;
   addForm:FormGroup;
   url = '';
-  developers: any
-  constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
-    public _alertService: AlertService,) { 
+  developers: any;
+  constructor(public router:Router, public _projectService: ProjectService,
+    public _alertService: AlertService) { 
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -80,7 +80,7 @@ export class CreateProjectComponent implements OnInit {
             }
           }
           data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-          this._projectservice.addProject(data).subscribe((res:any)=>{
+          this._projectService.addProject(data).subscribe((res:any)=>{
             console.log(res);
             console.log("addproject2 is called");
           },err=>{

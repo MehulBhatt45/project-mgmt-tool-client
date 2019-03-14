@@ -18,27 +18,33 @@ export class ViewProjectComponent implements OnInit {
   addForm:FormGroup; 
   files:FileList;
   url = '';
+  developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   message;
-  constructor(private messagingService: MessagingService,public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
+  constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
+      deadline: new FormControl('', Validators.required),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      avatar: new FormControl('')
+      avatar: new FormControl(''),
+      allDeveloper:new FormControl(''),
+      Teams: new FormControl([])
     });
   }
 
   ngOnInit() {
+    this.getAllDevelopers();
+    $('.datepicker').pickadate();
     this.loader=true;
     setTimeout(()=>{
-      this._projectservice.getProjects().subscribe(res=>{
+      this._projectService.getProjects().subscribe(res=>{
         console.log(res);
         this.projects = res;
         this.loader=false;
@@ -77,7 +83,7 @@ export class ViewProjectComponent implements OnInit {
       }
     }
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-    this._projectservice.addProject(data).subscribe((res:any)=>{
+    this._projectService.addProject(data).subscribe((res:any)=>{
       console.log(res);
       console.log("addproject2 is called");
     },err=>{
@@ -111,7 +117,23 @@ export class ViewProjectComponent implements OnInit {
       }
     }
   }
-
+  getAllDevelopers(){
+    this._projectService.getAllDevelopers().subscribe(res=>{
+      this.developers = res;
+      this.developers.sort(function(a, b){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 //default return value (no sorting)
+      })
+      console.log("Developers",this.developers);
+    },err=>{
+      console.log("Couldn't get all developers ",err);
+      this._alertService.error(err);
+    })
+  }
 }
 
 
