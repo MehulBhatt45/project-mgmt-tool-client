@@ -6,6 +6,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 declare var $ : any;
 import * as _ from 'lodash';
 import { config } from '../config';
+import { MessagingService } from "../services/messaging.service";
 
 @Component({
   selector: 'app-view-project',
@@ -20,7 +21,8 @@ export class ViewProjectComponent implements OnInit {
   path = config.baseMediaUrl;
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
+  message;
+  constructor(private messagingService: MessagingService,public router:Router, public _projectservice:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
@@ -45,6 +47,11 @@ export class ViewProjectComponent implements OnInit {
         this.loader=false;
       })
     },3000);
+    const currentUserId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log("currentUser",currentUserId);
+    this.messagingService.requestPermission(currentUserId)
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage
   }
 
   getTitle(name){

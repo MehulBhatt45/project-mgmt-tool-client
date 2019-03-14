@@ -270,29 +270,26 @@ export class ProjectDetailComponent implements OnInit {
 				},(err:any)=>{
 					console.log("err of project============>"  ,err);
 				});
-			},(err:any)=>{
-				console.log("err of project============>"  ,err);
-			});
 
-			this._projectService.getTaskById(id).subscribe((res:any)=>{
-				console.log("all response ======>" , res);
-				this.getEmptyTracks();
-				this.project = res;
-				this.project.sort(custom_sort);
-				this.project.reverse();
-				console.log("PROJECT=================>", this.project);
-				_.forEach(this.project , (task)=>{
-					_.forEach(this.tracks , (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-								track.tasks.push(task);
-								console.log("tracks==-=-=-=-",track);
+				this._projectService.getTaskById(id).subscribe((res:any)=>{
+					console.log("all response ======>" , res);
+					this.getEmptyTracks();
+					this.project = res;
+					this.project.sort(custom_sort);
+					this.project.reverse();
+					console.log("PROJECT=================>", this.project);
+					_.forEach(this.project , (task)=>{
+						_.forEach(this.tracks , (track)=>{
+							if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+								if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+									track.tasks.push(task);
+								}
+							}else{
+								if(task.status == track.id){
+									track.tasks.push(task);
+								}
 							}
-						}else{
-							if(task.status == track.id){
-								track.tasks.push(task);
-							}
-						}
+						});
 					});
 				});
 				this.loader = false;
