@@ -4,7 +4,7 @@ import { LoginService } from '../services/login.service';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
-
+import {config} from '../config';
 
 @Component({
 	selector: 'app-all-developer',
@@ -14,6 +14,8 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 export class AllDeveloperComponent implements OnInit {
 	developers;
 	userId;
+	path = config.baseMediaUrl;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { }
 
