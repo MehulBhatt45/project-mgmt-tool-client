@@ -270,7 +270,6 @@ export class ProjectDetailComponent implements OnInit {
 				},(err:any)=>{
 					console.log("err of project============>"  ,err);
 				});
-<<<<<<< HEAD
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -283,9 +282,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						// console.log("tracks==-=-=-=-",this.tracks);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
@@ -294,40 +291,15 @@ export class ProjectDetailComponent implements OnInit {
 						}else{
 							if(task.status == track.id){
 								track.tasks.push(task);
-=======
-
-				this._projectService.getTaskById(id).subscribe((res:any)=>{
-					console.log("all response ======>" , res);
-					this.getEmptyTracks();
-					this.project = res;
-					this.project.sort(custom_sort);
-					this.project.reverse();
-					console.log("PROJECT=================>", this.project);
-					_.forEach(this.project , (task)=>{
-						// console.log("task ======>" , task);
-						_.forEach(this.tracks , (track)=>{
-							if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-								if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-									track.tasks.push(task);
-								}
-							}else{
-								if(task.status == track.id){
-									track.tasks.push(task);
-								}
->>>>>>> 07abe64a8b166a17505a4674344852f292b7bc05
 							}
-						})
-					})
-					this.loader = false;
-				},err=>{
-					console.log(err);
-					this.loader = false;
-				})
+						}
+					});
+				});
+				this.loader = false;
 			},err=>{
 				console.log(err);
+				this.loader = false;
 			})
-
-
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -364,7 +336,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			},err=>{
 				console.log(err);
-			})
+			});
 		}else{
 			data.status = newStatus;
 			console.log("UniqueId", data.uniqueId);
@@ -374,7 +346,7 @@ export class ProjectDetailComponent implements OnInit {
 			},(err:any)=>{
 
 				console.log(err);
-			})
+			});
 
 		}
 	}
@@ -458,9 +430,7 @@ export class ProjectDetailComponent implements OnInit {
 			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
 			console.log(err);
-
-
-		})
+		});
 
 	}
 
@@ -472,13 +442,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate: "" };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
-		$('#input_starttime').pickatime({});
+		$('#estimatedTime').pickatime({});
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 
 	saveTheData(task){
-		this.loader = true;
+		// this.loader = true;
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -490,13 +460,16 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
-			data.append(key, value)
+			if(key!="estimatedTime")
+				data.append(key, value)
+			else
+				data.append(key, $('#estimatedTime').val())
 		});
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
-
 			}
+		}
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
 			this._projectService.addTask(data).subscribe((res:any)=>{
@@ -505,28 +478,12 @@ export class ProjectDetailComponent implements OnInit {
 				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
+				this.newTask = this.getEmptyTask();
 				this.loader = false;
 			},err=>{
 				$('#alert').css('display','block');
 				console.log("error========>",err);
-			})
-		}
-
-
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
-		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#modal').modal('hide');
-			this.loader = false;
-			console.log("response task***++",res);
-			this.getProject(res.projectId);
-		},err=>{
-			this.loader = false;
-			// $('.alert').alert()
-			var err;
-
-			console.log(err);
-		})
+			});
 	}
 	public Editor = DecoupledEditor;
 
@@ -540,7 +497,8 @@ export class ProjectDetailComponent implements OnInit {
 
 	public onChange( { editor }: ChangeEvent ) {
 		const data = editor.getData();
-		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+		// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+		this.comment = data;
 	}
 
 	sendComment(taskId){
@@ -566,7 +524,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.getAllCommentOfTask(res.taskId);
 		},err=>{
 			console.error(err);
-		})
+		});
 	}
 	
 	onKey(searchText){
@@ -589,8 +547,8 @@ export class ProjectDetailComponent implements OnInit {
 							track.tasks.push(content);
 						}
 					}
-				})
-		})
+				});
+		});
 	}
 
 	getAllProjects(){
@@ -599,7 +557,7 @@ export class ProjectDetailComponent implements OnInit {
 		},err=>{
 			this._alertService.error(err);
 			console.log(err);
-		})
+		});
 	}
 
 	getAllCommentOfTask(taskId){
@@ -607,7 +565,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.comments = res;
 		}, err=>{
 			console.error(err);
-		})
+		});
 	}
 
 
