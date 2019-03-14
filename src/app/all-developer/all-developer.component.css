@@ -22,14 +22,22 @@ img{
   margin-right: 10px !important;
 }
 .img_section{
-  height: 150px;
+  height: 100px;
   width: 100px;
+  margin: 0 auto;
+}
+.img_section img{
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
   margin: 0 auto;
 }
 .card{
   padding: 10px;
 }
-.btn_section{
+/*.btn_section{
 	width: 20px;
 }
 .drop_btn{
@@ -55,8 +63,15 @@ img{
 .dropdown-content.open{
   display: block !important;
   opacity: 1;
-}
+}*/
 
 .fa-ellipsis-v{
   color: #4B515D;
+}
+.h4{
+  color: black;
+}
+.prefix{
+  margin-top:18px;
+  font-size: 27px;
 }

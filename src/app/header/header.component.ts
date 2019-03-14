@@ -111,11 +111,6 @@ export class HeaderComponent implements OnInit {
 		this.getAllDevelopers();
 		this.getEmptyTracks();
 
-		this.route.params.subscribe(param=>{
-			this.userId = param.id;
-			this.getDeveloperById(this.userId);
-		});
-
 	}	
 
 	logout() {

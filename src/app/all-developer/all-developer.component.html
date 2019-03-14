@@ -28,24 +28,25 @@
 
 -->
 
-<div class="row">
-	<p class="h4 mb-1 text-secondary">Employee Profile</p>
-</div>
+
+<p class="h4 mb-1">Team Member Profile</p>
+
 <form>
 	<div class="form-row">
-		<div class="col">
+		<!-- <div class="col">
 			<div class="md-form">
 				<input type="text" id="empId" class="form-control">
 				<label for="empId">Employee Id</label>
 			</div>
-		</div>
-		<div class="col">
-			<div class="md-form">
+		</div> -->
+		<!-- <div class="col-12 col-sm-12">
+			<div class="md-form  form-group w-100">
+				<i class="fas fa-search prefix"></i>
 				<input type="text" id="empName" class="form-control">
-				<label for="empName">Employee Name</label>
+				<label for="empName">Search Employee Name</label>
 			</div>
-		</div>
-		<div class="col">
+		</div> -->
+		<!-- <div class="col-12 col-sm-4 text-right">
 			<button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false">Select Designation</button>
 			<div class="dropdown-menu drop_btn">
@@ -53,7 +54,7 @@
 				<a class="dropdown-item" href="#">Developer</a>
 				
 			</div>
-		</div>
+		</div> -->
 		<!-- <div class="col">
 			<button class="btn btn-default" type="button">Search</button>
 		</div> -->
@@ -62,28 +63,37 @@
 
 <!-- all developer profile -->
 <section class="section pb-3 text-center">
+	<p class="h5 mb-1 text-left">Project Manager</p>
 	<div class="row">
-		<div class="col-lg-3 col-md-12 mb-4" *ngFor="let developer of developers">
+		<div class="col-lg-3 col-md-12 mb-4">
 			<div class="card testimonial-card">
 				<div class="card-up deep-purple lighten-2"></div>
-				<div class="dropdown">
-					<a href="#" class="action-icon float-right" data-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-ellipsis-v"></i>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#" (click)="updateEmployee(developer)"><i class="fas fa-pen"></i>Edit</a>
-						<a class="dropdown-item" href="#" (click)="deleteEmployee(developer)"><i class="far fa-trash-alt"></i>Delete</a>
+				<div class="avatar white img_section">
+					<a routerLink = "/visit-user-profile/{{pro.pmanagerId._id}}" ><img src="{{path}}{{pro.pmanagerId.profilePhoto}}" 
+						onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;"></a>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title mt-1">{{pro.pmanagerId.name}}</h5>
+						<h6 class="card-title">{{pro.pmanagerId.userRole}}</h6>
 					</div>
 				</div>
-				<div class="avatar white img_section">
-					<img src="{{path}}{{developer.avatar}}" 
-					onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid">
-				</div>
-				<div class="card-body">
-					<h5 class="card-title mt-1">{{developer.name}}</h5>
-					<h6 class="card-title">{{developer.userRole}}</h6>
-				</div>
+			</div>		
+		</div>
+		<p class="h5 mb-1 text-left">Developers</p>
+		<div class="row">
+			<div class="col-lg-3 col-md-12 mb-4" *ngFor="let team of Teams">
+				<div class="card testimonial-card">
+					<div class="card-up deep-purple lighten-2"></div>
+					<div class="avatar white img_section">
+						<a routerLink = "/visit-user-profile/{{team._id}}" ><img src="{{path}}{{team.profilePhoto}}" 
+							onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;"></a>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title mt-1">{{team.name}}</h5>
+							<h6 class="card-title">{{team.userRole}}</h6>
+						</div>
+					</div>
+				</div>		
 			</div>
-		</div>		
-	</div>
-</section>
+
+		</section>

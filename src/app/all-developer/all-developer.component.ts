@@ -1,3 +1,5 @@
+/*this componant is created for all team member of project*/
+
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
@@ -16,32 +18,101 @@ export class AllDeveloperComponent implements OnInit {
 	userId;
 	path = config.baseMediaUrl;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	Teams;
+	projectId;
+	loader:boolean = false;
+	pro;
+	
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(param=>{
-			this.userId = param.id;
-			this.getUserById(this.userId);
-		})
+			this.projectId = param.id;
+			this.getProject(this.projectId);
+		});
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+			this.getProjectManager(this.projectId);
+		});
+
 	}
 
-	getUserById(id){
-		this._projectService.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
-			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
+
+
+	getProject(id){
+		this.loader = true;
+		console.log("project id======>",this.projectId);
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				this.pro = res;
+				console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					//this.projectTeam = res.team;
+
+					// res.Teams.push(this.pro.pmanagerId); 
+					console.log("response of team============>"  ,res.Teams);
+					this.Teams = res.Teams;
+					this.Teams.sort(function(a, b){
+						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						if (nameA < nameB) //sort string ascending
+							return -1 
+						if (nameA > nameB)
+							return 1
+						return 0 //default return value (no sorting)
+						this.projectTeam.push
+						console.log("response of team============>"  ,this.projectTeam);
+					})
+
+
+				},(err:any)=>{
+					console.log("err of project============>"  ,err);
+				});
+
+
+				this.loader = false;
+			},err=>{
+				console.log(err);
+				this.loader = false;
 			})
-			console.log("Developers",this.developers);
-		},err=>{
-			console.log("Couldn't get all developers ",err);
-			this._alertService.error(err);
-		})
+		},1000);
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
+
+
+	}
+	getProjectManager(id){
+		this.loader = true;
+		console.log("project id======>",this.projectId);
+		setTimeout(()=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				this.pro = res;
+				console.log("project detaill===>>>>",this.pro);
+				},err=>{
+				console.log(err);
+				this.loader = false;
+			})
+		},1000);
 	}
 
 }
+// getUserById(id){
+	// 	this._projectService.getAllDevelopers().subscribe(res=>{
+		// 		this.developers = res;
+		// 		this.developers.sort(function(a, b){
+			// 			var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+			// 			if (nameA < nameB) //sort string ascending
+			// 				return -1 
+			// 			if (nameA > nameB)
+			// 				return 1
+			// 			return 0 //default return value (no sorting)
+			// 		})
+			// 		console.log("Developers",this.developers);
+			// 	},err=>{
+				// 		console.log("Couldn't get all developers ",err);
+				// 		this._alertService.error(err);
+				// 	})
+					// }
+
+
