@@ -44,7 +44,7 @@ export class SummaryComponent implements OnInit {
 	editTaskForm;
 	developers: any;
 	loader : boolean = false;
-	developerId
+	developerId;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
@@ -68,15 +68,15 @@ export class SummaryComponent implements OnInit {
 		});
 		this.createEditTaskForm();	
 
-		this.selectedDeveloperId = this.developerId;
-		this.selectedProjectId = this.projectId;
-		this.filterTracks(this.projectId,this.developerId);
+		
 	}
 
 	ngOnInit() {
 
 
-		
+		this.selectedProjectId = this.projectId;
+		this.selectedDeveloperId = this.developerId;
+		this.filterTracks(this.projectId,this.developerId);
 	}
 	
 	getEmptyTracks(){
@@ -261,11 +261,11 @@ export class SummaryComponent implements OnInit {
 		}
 	}
 
+	
 	filterTracks(projectId, developerId){
-		this.selectedDeveloperId = developerId;
-		this.selectedProjectId = projectId;
-		console.log("msg{}{}{}{}{}");
-		console.log("pid did+++_+_{}{}{}",projectId, developerId);
+		// this.selectedDeveloperId = developerId;
+		// this.selectedProjectId = projectId;
+		console.log(projectId, developerId);
 		this.getEmptyTracks();
 		if(projectId!='all' && developerId == 'all'){
 			_.forEach(this.tasks, (project)=>{
@@ -320,6 +320,15 @@ export class SummaryComponent implements OnInit {
 			})
 		}
 		console.log("task()()()()()++_+_+_+",this.tracks);
+	}
+
+	getTaskCount(userId, status){
+		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	}
+
+	getTaskPriority(priority, status){
+		console.log(priority, status);
+		return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
 	}
 
 
