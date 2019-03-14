@@ -17,6 +17,7 @@ import * as moment from 'moment';
 // import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
+
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -46,19 +47,13 @@ export class ProjectDetailComponent implements OnInit {
 	assignTo;
 	developers: any
 	loader : boolean = false;
-	path = config.baseMediaUrl;
-
-
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
-
 	projectTeam;
 	Teams;
-	// files:FileList;
-
 	files:Array<File> = [];
-
+	path = config.baseMediaUrl;
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -70,10 +65,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
-
 	}
 
-	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
 		if(this.currentUser.userRole == "projectManager"){
@@ -169,7 +162,6 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
-	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -247,6 +239,8 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
+
+		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
@@ -353,7 +347,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -462,7 +456,9 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-		// this.loader = true;
+
+		this.loader = true;
+	
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -495,28 +491,30 @@ export class ProjectDetailComponent implements OnInit {
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
 				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
+				$('#exampleModalPreview').modal('hide');
 				this.newTask = this.getEmptyTask();
-					this.editTaskForm.reset();
-					this.assignTo.reset();
+				this.editTaskForm.reset();
+				this.assignTo.reset();
 				this.loader = false;
 			},err=>{
 				$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
+
 	}
+
 	
 	public Editor = DecoupledEditor;
 
 
-			public onReady( editor ) {
-				editor.ui.getEditableElement().parentElement.insertBefore(
-					editor.ui.view.toolbar.element,
-					editor.ui.getEditableElement()
-					);
-			}
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
 
 	public onChange( { editor }: ChangeEvent ) {
@@ -535,6 +533,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.append("userId",this.currentUser._id);
 			data.append("projectId",this.projectId);
 			data.append("taskId",taskId);
+			// data.append("Images",this.images);
 			for(var i = 0; i < this.files.length; i++)
 				data.append("fileUpload",this.files[i]);
 		}else{
@@ -578,7 +577,7 @@ export class ProjectDetailComponent implements OnInit {
 				});
 		});
 	}
-
+	
 	
 
 			getAllProjects(){
@@ -611,3 +610,4 @@ export class ProjectDetailComponent implements OnInit {
 				});
 			}
 		}
+	

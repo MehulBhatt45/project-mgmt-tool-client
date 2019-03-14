@@ -1,9 +1,9 @@
 
-.img_card{
+/*.img_card{
 	
 	height: 160px;
 	width: 180px;
-}
+}*/
 .profile_icon{
 	margin-top: 50px;
 	margin-left: 85px;
@@ -20,4 +20,11 @@
 }
 .user_activity{
 	margin-left: -16px; 
+}
+.img_card img{
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
 }

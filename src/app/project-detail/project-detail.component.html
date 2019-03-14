@@ -4,14 +4,11 @@
 	<span></span>
 	<span></span>
 </div>
-<!-- <div class="body_content" *ngIf="!loader"> -->
+<div class="body_content" *ngIf="!loader">
 
 	<div class="row" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
-
-
-
 	<div class="row">
 		<div class="col-12 col-md-8 ">
 			<div class="md-form form-group">
@@ -19,8 +16,10 @@
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
 				<label for="exampleForm2">search text goes here</label>
 
+
 			</div>
 		</div>
+
 		<div class="col-12 col-md-4 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
@@ -39,7 +38,9 @@
 					<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 				</div>
 
+
 				<!-- <a routerLink = '/leave'>Leave Form</a> -->
+
 
 			</div>
 		</div>
@@ -86,55 +87,58 @@
 								<td colspan="2">
 									<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
 								</td>
-								<td><div>
-									<img src="{{path}}{{task.images}}"></div></td>
-								</tr>
-							</table>
-							<div class="details">
-								<div class="row">
-									<div class="col-12 col-md-6">
+								<td *ngIf="task.images && task.images.length>0">
+									<div class="task_img text-right" *ngFor="let image of task.images">
+										<img src="{{path}}{{image}}">
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="details">
+							<div class="row">
+								<div class="col-12 col-md-6">
 
-										<p  *ngIf="task.createdBy">
-											<label><strong>Created By: &nbsp;</strong></label>
-											<span>{{task.createdBy.name}}</span>
-										</p>
-										<p *ngIf="task.createdAt">
-											<label><strong>Created Date: &nbsp;</strong></label>
-											<span>{{task.createdAt | date:'short'}}</span>
-										</p>
-										<p *ngIf="task.status">
-											<label><strong>Status: &nbsp;</strong></label>
-											<span>{{task.status}}</span>
-										</p>
-										<p>
-											<label><strong>start time: &nbsp;</strong></label>
-										</p>
-										<p>
-											<label><strong>estimated time: &nbsp;</strong></label>
-											<span>{{task.estimatedTime}}</span>
-										</p>
-									</div>
-									<div class="col-12 col-md-6">
-										<p>
-											<label><strong>Assign To: &nbsp;</strong></label>
-											<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-										</p>
-										<p *ngIf="task.priority">
-											<label><strong>Prority: &nbsp;</strong></label>
-											<span>{{getPriorityClass(task.priority).title}}</span>
-										</p>
-										<p *ngIf="task.dueDate">
-											<label><strong>DueDay: &nbsp;</strong></label>
-											<span>{{task.dueDate}}</span>
-										</p>
-										<p>
-											<label><strong> end time: &nbsp;</strong></label>
-										</p>
-										
-									</div>
-									
-									<div class="row justify-content-between">
-										
+									<p  *ngIf="task.createdBy">
+										<label><strong>Created By: &nbsp;</strong></label>
+										<span>{{task.createdBy.name}}</span>
+									</p>
+									<p *ngIf="task.createdAt">
+										<label><strong>Created Date: &nbsp;</strong></label>
+										<span>{{task.createdAt | date:'short'}}</span>
+									</p>
+									<p *ngIf="task.status">
+										<label><strong>Status: &nbsp;</strong></label>
+										<span>{{task.status}}</span>
+									</p>
+									<p>
+										<label><strong>start time: &nbsp;</strong></label>
+									</p>
+									<p>
+										<label><strong>estimated time: &nbsp;</strong></label>
+										<span>{{task.estimatedTime}}</span>
+									</p>
+								</div>
+								<div class="col-12 col-md-6">
+									<p>
+										<label><strong>Assign To: &nbsp;</strong></label>
+										<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+									</p>
+									<p *ngIf="task.priority">
+										<label><strong>Prority: &nbsp;</strong></label>
+										<span>{{getPriorityClass(task.priority).title}}</span>
+									</p>
+									<p *ngIf="task.dueDate">
+										<label><strong>DueDay: &nbsp;</strong></label>
+										<span>{{task.dueDate}}</span>
+									</p>
+									<p>
+										<label><strong> end time: &nbsp;</strong></label>
+									</p>
+
+								</div>
+
+								<div class="row justify-content-between">
+
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
@@ -164,14 +168,14 @@
 											</a>
 										</li>
 									</ul>
-									<div>
+									<div class="comment_section">
 										<p class="developerName" *ngIf="i.userId">
 											{{i.userId.name}}
 										</p>
-										<p class="break">
-											{{i.content}}
-										</p>
-										<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
+										<span class="break" innerHtml="{{i.content}}">
+											<!-- {{i.content}} -->
+										</span>
+										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 									</div>
 								</div>
 							</div>
@@ -186,7 +190,7 @@
 
 					<div class="btn btn-default" (click)="commentImg.click()">
 						<span>Upload image with comment</span>
-						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'images')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 					</div>
 					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 				</div>
