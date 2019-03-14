@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
-
+import { config } from '../config';
 @Component({
 	selector: 'app-all-employee',
 	templateUrl: './all-employee.component.html',
@@ -10,7 +10,9 @@ import { AlertService } from '../services/alert.service';
 })
 export class AllEmployeeComponent implements OnInit {
 	developers;
+	developer;
 	userId;
+	path = config.baseMediaUrl;
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService) { }
 
@@ -35,6 +37,16 @@ export class AllEmployeeComponent implements OnInit {
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
+		})
+	}
+	// update employee profile
+	updateEmployee(id){
+		console.log("update",id);
+		this._projectService.updateUserById(this.developer).subscribe((res:any)=>{
+			console.log("update Employee Profile",res);
+			this.developer = res;
+		},(err:any)=>{
+			console.log("update Employee====>", err);
 		})
 	}
 }

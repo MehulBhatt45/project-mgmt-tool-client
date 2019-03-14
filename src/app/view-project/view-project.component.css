@@ -1,3 +1,7 @@
+body{
+    margin: 0;
+    padding: 0;
+}
 table{
 	margin-top: 50px;
 }
@@ -8,7 +12,7 @@ table{
     vertical-align: middle;
 }
 .project_title, .project_description{
-    width: 350px;
+    /*width: 350px;*/
 }
 .team, .action{
 	white-space: nowrap;
@@ -16,8 +20,12 @@ table{
 .card {
     height: 100%;
 }
+.card-header{
+    height: 100px;
+}
 .card-header, .card-body{
 	cursor: pointer;
+    padding: 0px!important;
 }
 .card-action span strong{
 	cursor: pointer;
@@ -131,33 +139,45 @@ ul.project-avatar li:hover {
 }
 
 .project_title{
-    float: right;
+    /*float: right;
     display: inline-block;
     width: calc(100% - 85px);
-    height: 100%;
-    position: relative;
+    height: 80%;
+    position: relative;*/
+
+    text-align: center;
+    font-size: 32px;
+    padding-top: 50px;
+
 }
 .avatar_image{
     float: left;
-    height: 70px;
-    width: 70px;
-    margin-right: 15px;
+    height: 110px;
+    width: 110px;
     display: inline-block;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
-    top: 45px;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    top: -48px;
+    left: 36%;
+/*    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);*/
     outline: none;
     background-color: #bcc2c0;
-}
-.card-body {
-    padding-top: 35px;
 }
 .project_title .float-right {
     position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.project_title{
+    text-transform: capitalize !important;
+    font-weight: bold;
+}
+
+.font-project-view-small{
+    font-size: 20px;
+    
 }

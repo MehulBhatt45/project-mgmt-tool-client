@@ -1,7 +1,102 @@
-<!-- <div class="row">
+<div class="container">
+	<div class="row">
+		<div class="col-sm">
+			<div class="card">
 
-	<h1>Total Task:{{myproject}}</h1>
-	<div *ngFor="let alltask of project,let i=index">
-		{{alltask.assignTo.tasks[0]}}
+				<!-- Card content -->
+				<div class="card-body">
+
+					<!-- Title -->
+					<h4 class="card-title"><a><i class="fas fa-tasks"></i> Total task in the project</a></h4>
+					<!-- Text -->
+					<p class="card-text" *ngIf="project">{{project.length}}</p>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+				<!-- Card content -->
+				<div class="card-body" >
+
+					<!-- Title -->
+					<h4 class="card-title" ><a><i class="fas fa-tasks"></i> Number Of task in each track </a></h4><hr/>
+					<!-- Text -->
+					<div class="card-text" *ngFor="let track of tracks">
+						<h4>=>{{track.id}}</h4>
+						<p>{{track.tasks.length}}</p>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+				<!-- Card content -->
+				<div class="card-body">
+
+					<!-- Title -->
+					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track</a></h4>
+					<!-- Text -->
+					<div class="card-text">
+						<ul class="list-group" *ngFor="let user of projectTeam">
+							<li class="list-group-item ">{{user.name}}
+								<!-- <ul class="list-group" *ngFor="let track of tracks">
+									<li class="list-group-item">{{track.tasks.assignTo.tasks.length}}
+
+
+									</li>
+
+								</ul> -->
+
+							</li>
+							
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm">
+			<div class="card">
+
+				<!-- Card content -->
+				<div class="card-body">
+
+					<!-- Title -->
+					<h4 class="card-title"><a><i class="fas fa-list-alt"></i> Total Number of High Priority tasks and Highest priority tasks in TODO, IN PROGRESS AND TESTING</a></h4>
+					<!-- Text -->
+					<div class="card-text">
+						<ul class="list-group" >
+							<li class="list-group-item ">Highest
+								<ul *ngFor="let track of tracks">
+									<li>{{track.id}}</li>
+									<li>{{track.tasks.priority}}</li>
+								</ul>
+							</li>
+							
+						</ul>
+						<ul class="list-group" >
+							<li class="list-group-item ">High
+								<ul *ngFor="let track of tracks">
+									<li>{{track.id}}</li>
+									<li>{{track.tasks.priority}}</li>
+								</ul>
+							</li>
+							
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
 	</div>
-</div> -->
+</div>
+

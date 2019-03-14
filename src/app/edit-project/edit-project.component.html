@@ -14,9 +14,9 @@
 				</div>
 
 				<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
-					<div class="md-form">
-						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title">
-						<label for="projecttitle" class="active">Project Title</label>
+					<div class="md-form form-group">
+						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
+						<label for="projecttitle" class="active" >Project Title</label>
 					</div>
 
 
@@ -24,7 +24,7 @@
 					<label class="active" for="projecttitle">Project Title</label>
 					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
 				</div> -->
-				<div class="md-form">
+				<div class="md-form form-group">
 					<textarea type="text" id="desc" class="md-textarea md-textarea-auto form-control" [(ngModel)]="availData.desc" tabindex="-1" autofocus="autofocus" mdbInput></textarea>
 					<label for="desc">Description</label>
 				</div>
@@ -34,27 +34,28 @@
 					<textarea tabindex="-1" id="desc" rows="5" formControlName="desc" [(ngModel)]="availData.desc" class="form-control rounded-0 md-textarea" autofocus="autofocus" ></textarea>
 				</div> -->
 
-				<div class="md-form">
-					<input  type="text" id="deadline" class="form-control datepicker" formControlName="deadline" tabindex="-1" [(ngModel)]="availData.deadline" >
-					<label for="deadline">Selected date</label>
+				<div class="md-form form-group">
+					<input  type="text" id="date-picker-example" class="form-control datepicker">
+					<label for="date-picker-example">Select Date</label>
 				</div>
-			<div>
-				<h4><strong>Client Details :-</strong></h4>
-			</div>
 
-			<hr>
+				<div>
+					<h3><strong>Client Details :-</strong></h3>
+				</div>
 
-			<div class="md-form">
-				<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
-				<label for="clientemail" class="active">Email</label>
-			</div>
+				<hr>
+
+				<div class="md-form form-group">
+					<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
+					<label for="clientemail" class="active">Email</label>
+				</div>
 				<!-- 
 				<div class="md-form form-group">
 					<label class="active"  for="clientemail">Email</label>
 					<input  type="email" id="clientemail" formControlName="clientEmail" [(ngModel)]="availData.clientEmail" class="form-control">
 				</div> -->
-				<div class="md-form">
-					<input mdbInput type="text" id="clientfullname" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientFullName">
+				<div class="md-form form-group">
+					<input mdbInput type="text" id="clientfullname" class="form-control" formControlName="clientFullName" [(ngModel)]="availData.clientFullName">
 					<label for="clientfullname" class="active">Full Name</label>
 				</div>
 
@@ -64,14 +65,16 @@
 				</div> -->
 				<div class="row">
 					<div class="col-md-6">
-						<div class="md-form ">
+						<div class="md-form form-group">
 							<label class="active" for="clientcontactno">Contact No.</label>
 							<input mdbInput type="number" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
 						</div>	
 					</div>
 					<div class="col-md-6">
-						<div class="md-form">
-							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientdesignation" [(ngModel)]="availData.clientDesignation">
+
+						<div class="md-form form-group">
+
+							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientDesignation" [(ngModel)]="availData.clientDesignation">
 							<label for="clientdesignation">Designation</label>
 						</div>
 
@@ -103,7 +106,7 @@
 						</div>
 						<button class="btn btn-default btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
 						<div *ngIf="showDeveloper"> 
-							<div class="row" *ngFor="let i of availDevelopers">
+							<div class="row" *ngFor="let i of availableDevelopers">
 								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
 								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
 							</div>
@@ -111,15 +114,19 @@
 					</div>
 				</div>
 				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
-				<div class="md-form">
+
+				<div class="md-form form-group">
 					<input type="text" id="form1" class="form-control">
 					<label for="form1">Project Alias</label>
 				</div>
-				<div class="md-form">
+				<div class="md-form form-group">
 					<textarea type="text" id="descr" class="md-textarea md-textarea-auto form-control"  tabindex="-1" autofocus="autofocus" mdbInput></textarea>
 					<label for="descr">Description</label>
 				</div>
-				<button type="button" class="btn btn-default" (click)="view_Project()" mdbBtn color="primary" mdbWavesEffect>Submit</button>
+				<div>
+					<button type="button" class="btn btn-default" (click)="view_Project()" mdbBtn color="primary" mdbWavesEffect>Submit</button>
+				</div>
+
 			</form>
 		</div>
 		

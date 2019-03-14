@@ -8,7 +8,7 @@
 </div>
 
 <div class="card card-cascade narrower">
-	<div class="view view-cascade card-header narrower py-2 mx-4 mb-3">
+	<div class="view view-cascade card-header narrower py-3 mx-4 mb-3">
 		<h4 class="white-text text-center mx-3">Logs</h4>
 	</div>
 	<div class="px-4">
@@ -18,14 +18,14 @@
 					<tr>
 						<th class="th-lg">Title</th>
 						<th class="th-lg">Unique-ID</th>
-						<th class="th-lg">Desc</th>
+						<th class="th-lg table_content">Desc</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let i of projectName" routerLink="{{i._id}}">
 						<td>{{i.title}}</td>
 						<td>{{i.uniqueId}}</td>
-						<td>{{i.desc}}</td>
+						<td class="table_content">{{i.desc}}</td>
 					</tr>
 				</tbody>
 			</table>

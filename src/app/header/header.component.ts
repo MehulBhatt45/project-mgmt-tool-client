@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 	task;
 	userId
 	project;
-	baseMediaUrl;
+	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
@@ -127,20 +127,20 @@ export class HeaderComponent implements OnInit {
 		return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
 	}
 
-	// getInitialsOfName(name){
+	getInitialsOfName(name){
 
-	// 	// console.log(name);
+		// console.log(name);
 
-	// 	if(name != 'admin'){
-	// 		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-	// 		return str.toUpperCase();
-	// 	}else if(name == 'admin'){
-	// 		return "A";
-	// 	}else{
-	// 		return "";
-	// 	}
-	// 	// return name.split(' ')[0][0]+name.split(' ')[1][0];
-	// }
+		if(name != 'admin'){
+			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+			return str.toUpperCase();
+		}else if(name == 'admin'){
+			return "A";
+		}else{
+			return "";
+		}
+		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+	}
 	getDeveloperById(id){
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
@@ -177,7 +177,7 @@ export class HeaderComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
 				if (nameA < nameB) //sort string ascending
 					return -1 
 				if (nameA > nameB)

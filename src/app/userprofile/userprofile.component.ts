@@ -25,6 +25,7 @@ export class UserprofileComponent implements OnInit {
 	finalarr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	baseMediaUrl = config.baseMediaUrl;
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService, public _loginService: LoginService) { 
 	}
@@ -45,8 +46,7 @@ export class UserprofileComponent implements OnInit {
 		});
 		this.createEditEmail();
 		this.getAllDevelopers();
-		
-
+	
 	}
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
@@ -68,7 +68,6 @@ export class UserprofileComponent implements OnInit {
 			console.log(err);
 		})
 	}
-
 
 	getDeveloperById(id){
 		console.log("id=>>>",id);
@@ -103,21 +102,6 @@ export class UserprofileComponent implements OnInit {
 	openModel(task){
 		$('#editEmailModel').modal('show');
 	}
-
-	// uploadFile(event){
-	// 	console.log("response from changefile=========>",event.target.files);
-	// 	this.files = event.target.files;
-	// 	var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-	// 	console.log("userId=====>",userId);
-	// 	if (event.target.files && event.target.files[0]) {
-	// 		console.log("get Profile=====>",event.target.files);
-	// 		var reader = new FileReader();
-	// 		reader.readAsDataURL(event.target.files[0]); 
-	// 		reader.onload = (event: any) => { 
-	// 			this.url = event.target.result;
-	// 		}
-	// 	}
-	// }
 
 	uploadFile(e){
 		console.log("file============>",e.target.files);
