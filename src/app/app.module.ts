@@ -59,7 +59,7 @@ import { environment } from '../environments/environment';
 import { AsyncPipe } from '../../node_modules/@angular/common';
 import { firebaseConfig } from './../environments/firebase.config';
 import {EditprofileComponent} from './editprofile/editprofile.component'
-
+// import {PushNotificationOptions, PushNotificationService} from 'ngx-push-notifications';
 
 
 @NgModule({
@@ -114,6 +114,8 @@ import {EditprofileComponent} from './editprofile/editprofile.component'
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
+    // PushNotificationOptions, 
+    // PushNotificationService
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],
     bootstrap: [AppComponent]

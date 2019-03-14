@@ -101,7 +101,7 @@ const routes: Routes = [
 			component:FileListComponent
 		},
 		{
-			path:'all-developer',
+			path:'project-team/:id',
 			component:AllDeveloperComponent
 		},
 		{
@@ -129,12 +129,7 @@ const routes: Routes = [
 			//pathMatch: "full",
 			component:ResetPasswordComponent
 		},
-		{
-
-			path:'add-employee',
-			component:AddEmployeeComponent
-			
-		},
+		
 		{
 			path:'leave',
 			component:LeaveComponent

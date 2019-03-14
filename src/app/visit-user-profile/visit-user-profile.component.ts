@@ -5,8 +5,9 @@ import { AlertService } from '../services/alert.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
+import {config} from '../config';
 declare var $ : any;
-import { config } from '../config';
+
 
 @Component({
 	selector: 'app-visit-user-profile',
@@ -15,9 +16,14 @@ import { config } from '../config';
 })
 export class VisitUserProfileComponent implements OnInit {
 	developers;
-	userId;
 	developer;
-	baseMediaUrl = config.baseMediaUrl;
+	userId;
+
+	user;
+	path = config.baseMediaUrl;
+	
+
+
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 
 	}
@@ -34,8 +40,6 @@ export class VisitUserProfileComponent implements OnInit {
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.developer = res;
 			console.log("all users =============>",res);
-			var userId = JSON.parse(localStorage.getItem('userId'))._id;
-			console.log(" user profile ====>" , userId);
 		},(err:any)=>{
 			console.log("eroooooor=========>",err);
 		})
