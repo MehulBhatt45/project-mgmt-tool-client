@@ -39,14 +39,4 @@ export class AllEmployeeComponent implements OnInit {
 			this._alertService.error(err);
 		})
 	}
-	// update employee profile
-	updateEmployee(id){
-		console.log("update",id);
-		this._projectService.updateUserById(this.developer).subscribe((res:any)=>{
-			console.log("update Employee Profile",res);
-			this.developer = res;
-		},(err:any)=>{
-			console.log("update Employee====>", err);
-		})
-	}
 }

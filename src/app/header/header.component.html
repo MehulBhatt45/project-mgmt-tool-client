@@ -7,7 +7,7 @@
       <!-- Logo -->
       <li>
        <div class="profile_picture">
-         <img src="{{path}}{{currentUser.profile}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" >
+         <img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" >
        </div>
        <h2 style="text-align: center;">{{currentUser.name}}</h2>
      </li>
@@ -137,7 +137,7 @@
               <a class="dropdown-item" (click)="addItem('Task')">Task</a>
               <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
               <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-              <a class="dropdown-item" [routerLink]="['/edit-project']">Add Team</a>
+              <a class="dropdown-item" [routerLink]="['/add-team']">Add Team</a>
             </div>
           </div>
         </div>

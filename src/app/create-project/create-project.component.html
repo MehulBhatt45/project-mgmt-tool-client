@@ -1,67 +1,64 @@
 <div class="container">
-	<div class="card">
-		<div class="card card-cascade narrower" >
-			<!-- Card image -->
-			<div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
-				<!-- Title -->
-				<h5 class="card-header white-text text-center py-4">
-					<strong>Create Project</strong>
-				</h5>
-			</div>
-			<!-- Card content -->
-			<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
-				<!-- Text -->
-				<div class="container">
-					
-					<div class="card-body px-lg-5 pt-1">
-						<form class="md-form" [formGroup]='addForm' style="color: #757575;">
-							<div class="md-form form-group">
-								<label for="projecttitle">Project Title</label>
-								<input type="text" id="projecttitle"  formControlName="title" class="form-control">
-							</div>
-							<div class="md-form form-group">
-								<label for="projectalias">Project Alias</label>
-								<input type="text" id="projectalias"  formControlName="uniqueId" class="form-control">
-							</div>
-							<div class="md-form form-group">
-								<label for="desc">Description</label>
-								<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
-							</div>
-							<div class="md-form form-group">
-								<label for="date-picker-example">Deadline</label>
-								<input type="text" id="date-picker" 
-								formControlName="deadline"	class="form-control datepicker" >
-							</div>
-							<div>
-								<h4><strong>Client Details :-</strong></h4>
-							</div>
-							<div class="md-form form-group">
-								<label for="clientemail">Email</label>
-								<input type="email" id="clientemail" formControlName="clientEmail" class="form-control">
-							</div>
-							<div class="md-form form-group">
-								<label for="clientfullname">Full Name</label>
-								<input type="text" id="clientfullname" formControlName="clientFullName" class="form-control">
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="md-form form-group">
-										<label for="clientcontactno">Contact No.</label>
-										<input type="number" id="clientcontactno" formControlName="clientContactNo" class="form-control">
-									</div>	
-								</div>
-								<div class="col-md-6">
-									<div class="md-form form-group">
-										<label for="clientdesignation">Designation</label>
-										<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
-									</div>
-								</div>
-							</div>
+	<div class="card card-cascade narrower" >
+		<!-- Card image -->
+		<div class="view view-cascade gradient-card-header" style="background-color: #372e5f">
+			<!-- Title -->
+			<h2 class="card-header-title white-text text-center py-3" align="center">Create Project</h2>
+		</div>
+		<!-- Card content -->
+		<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
+			<!-- Text -->
+			<div class="container">
 
-							<div class="form-group">
-								<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
-									<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
-								</select>
+				<div class="card-body px-lg-5 pt-1">
+					<form class="md-form" [formGroup]='addForm' style="color: #757575;">
+						<div class="md-form form-group">
+							<label for="projecttitle">Project Title</label>
+							<input type="text" id="projecttitle"  formControlName="title" class="form-control">
+						</div>
+						<div class="md-form form-group">
+							<label for="projectalias">Project Alias</label>
+							<input type="text" id="projectalias"  formControlName="uniqueId" class="form-control">
+						</div>
+						<div class="md-form form-group">
+							<label for="desc">Description</label>
+							<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+						</div>
+						<div class="md-form form-group">
+							<label for="date-picker-example">Deadline</label>
+							<input type="text" id="date-picker" 
+							formControlName="deadline"	class="form-control datepicker" >
+						</div>
+						<div>
+							<h4><strong>Client Details :-</strong></h4>
+						</div>
+						<div class="md-form form-group">
+							<label for="clientemail">Email</label>
+							<input type="email" id="clientemail" formControlName="clientEmail" class="form-control">
+						</div>
+						<div class="md-form form-group">
+							<label for="clientfullname">Full Name</label>
+							<input type="text" id="clientfullname" formControlName="clientFullName" class="form-control">
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="md-form form-group">
+									<label for="clientcontactno">Contact No.</label>
+									<input type="number" id="clientcontactno" formControlName="clientContactNo" class="form-control">
+								</div>	
+							</div>
+							<div class="col-md-6">
+								<div class="md-form form-group">
+									<label for="clientdesignation">Designation</label>
+									<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
+								<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
+							</select>
 					<!-- <select class="browser-default custom-select custom-select-lg mb-3" formControlName="Teams">
 						<option value="" disabled selected>Choose your option</option>
 						<option value="1">Option 1</option>
@@ -85,12 +82,13 @@
 					Select Project avatar
 				</button>
 				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
+				<!-- <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button> -->
 			</form>
 		</div>
 	</div>
 </div>
-
-
+</div>
+</div>
 
 
 <!-- Modal Start Here -->
@@ -118,12 +116,12 @@ aria-hidden="true">
 				</div>
 				<ul class="project-avatar">
 					<li>
-						<button class="icon-button" (click)="addIcon('avatar/school.png')">
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
 							<img src="assets/avatar/school.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('avatar/mortarboard.png')">
+						<button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
 							<img src="assets/avatar/mortarboard.png" height="56" width="56">
 						</button>
 					</li>
@@ -205,6 +203,7 @@ aria-hidden="true">
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <!-- Modal End Here -->
 
