@@ -44,6 +44,10 @@ import { LeaveComponent } from './leave/leave.component';
 import { AllDeveloperComponent } from './all-developer/all-developer.component';
 import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profile.component';
 import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
+import { AllEmployeeComponent } from './all-employee/all-employee.component';
+import { SummaryComponent } from './summary/summary.component';
+
+import { PushNotificationService } from 'ngx-push-notifications';
 
 
 @NgModule({
@@ -76,6 +80,8 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
     AllDeveloperComponent,
     VisitUserProfileComponent,
     AllLeaveAppComponent,
+    AllEmployeeComponent,
+    SummaryComponent,
    ],
 
     imports: [
@@ -92,7 +98,7 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
     NgxEditorModule,
     CKEditorModule,
     ],
-    providers: [],
+    providers: [PushNotificationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

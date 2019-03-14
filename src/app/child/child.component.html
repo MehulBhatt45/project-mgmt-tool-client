@@ -1,4 +1,4 @@
-<div class="all_card">
+<div class="all_card" style="margin-top: 25px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt">
 			<div class="card">

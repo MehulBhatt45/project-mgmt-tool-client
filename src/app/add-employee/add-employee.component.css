@@ -12,3 +12,10 @@ h2{
     font-size: 30px;
     color: #000000;    
 }
+.card-header {
+    background-color: #372e5f;
+}
+.file-field .btn{
+    line-height: normal!important;
+    background-color: #413670 !important;
+}

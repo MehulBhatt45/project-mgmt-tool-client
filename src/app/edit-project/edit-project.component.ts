@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 import * as _ from "lodash";
+declare var $ : any;
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',
@@ -38,10 +39,12 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		$('.datepicker').pickadate();
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
 		this.getProjects();
+		
 	}
 	getProjects(){
 		localStorage.setItem('teamShow' , JSON.stringify(false));
@@ -173,6 +176,6 @@ export class EditProjectComponent implements OnInit {
 			localStorage.setItem("showDeveloper" , JSON.stringify(false));
 			this.showDeveloper = false;	
 		}
-			
+		
 	}
 }

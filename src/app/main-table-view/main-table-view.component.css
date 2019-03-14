@@ -141,3 +141,21 @@ label{
 #fullHeightModalRight .modal-body{
   overflow-y: auto!important;
 }
+.form-group{
+  display: inline-block;
+}
+.btn{
+  margin:0 !important;
+}
+.width{
+  width: 50%;
+  margin-left: 10px;
+}
+.prefix{
+  margin-top:20px;
+  font-size: 24px;
+}
+/*.all_prjct_drpdown{
+  margin-left: 10px;
+}
+*/

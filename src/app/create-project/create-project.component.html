@@ -4,7 +4,7 @@
 			<strong>Create Project</strong>
 		</h5>
 		<div class="card-body px-lg-5 pt-1">
-			<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
+			<form class="md-form" [formGroup]='addForm' style="color: #757575;">
 				<div class="md-form form-group">
 					<label for="projecttitle">Project Title</label>
 					<input type="text" id="projecttitle"  formControlName="title" class="form-control">
@@ -18,8 +18,9 @@
 					<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
 				</div>
 				<div class="md-form form-group">
-					<input type="text" id="date-picker-example" class="form-control datepicker" formControlName="deadline">
 					<label for="date-picker-example">Deadline</label>
+					<input type="text" id="date-picker" 
+					formControlName="deadline"	class="form-control datepicker" >
 				</div>
 				<div>
 					<h4><strong>Client Details :-</strong></h4>
@@ -51,8 +52,22 @@
 					<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
 						<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
 					</select>
+					<!-- <select class="browser-default custom-select custom-select-lg mb-3" formControlName="Teams">
+						<option value="" disabled selected>Choose your option</option>
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+						<option value="3">Option 3</option>
+					</select> -->
 				</div>
 
+				<!-- <select class="mdb-select md-form multi_select" multiple searchable="Search here..">
+					<option value="" disabled selected>Choose your country</option>
+					<option value="1">USA</option>
+					<option value="2">Germany</option>
+					<option value="3">France</option>
+					<option value="3">Poland</option>
+					<option value="3">Japan</option>
+				</select> -->
 				<!-- demo code -->
 				<img [src]="url" height="150" width="150"> <br/>
 				<!-- demo code -->
