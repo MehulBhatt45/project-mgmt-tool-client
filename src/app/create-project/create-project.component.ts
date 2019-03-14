@@ -17,8 +17,13 @@ export class CreateProjectComponent implements OnInit {
   addForm:FormGroup;
   url = '';
   developers: any;
-  constructor(public router:Router, public _projectService: ProjectService,
-    public _alertService: AlertService) { 
+  config = {
+    displayKey: "name", //if objects array passed which key to be displayed defaults to description
+    search: true
+  };
+  objectsArray: any = [];
+  constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
+    public _alertService: AlertService,) { 
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),

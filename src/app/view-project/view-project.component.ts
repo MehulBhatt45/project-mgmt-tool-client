@@ -100,7 +100,7 @@ export class ViewProjectComponent implements OnInit {
   addIcon(value){
     this.addForm.value['avatar'] = value;
     console.log(this.addForm.value['avatar']);
-    this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
+    this.url = 'http://localhost/project-mgmt-tool/server'+this.addForm.value['avatar'];
     $('#basicExampleModal').modal('hide');
   }
   

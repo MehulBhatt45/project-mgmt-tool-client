@@ -237,7 +237,8 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-		// this.loader = true;
+		console.log("projectId=====>",this.projectId);
+		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res;
@@ -334,7 +335,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -441,7 +442,9 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-		// this.loader = true;
+
+		this.loader = true;
+	
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -467,25 +470,26 @@ export class ProjectDetailComponent implements OnInit {
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
+			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+			// console.log(subUrl);
 
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
+			this._projectService.addTask(data).subscribe((res:any)=>{
+				console.log("response task***++",res);
+				this.getProject(res.projectId);
+				$('#save_changes').attr("disabled", false);
+				$('#refresh_icon').css('display','none');
+				$('#exampleModalPreview').modal('hide');
+				this.newTask = this.getEmptyTask();
+				this.editTaskForm.reset();
+				this.assignTo.reset();
+				this.loader = false;
+			},err=>{
+				$('#alert').css('display','block');
+				console.log("error========>",err);
+			});
 
-		this._projectService.addTask(data).subscribe((res:any)=>{
-			console.log("response task***++",res);
-			this.getProject(res.projectId);
-			$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-			$('#save_changes').attr("disabled", false);
-			$('#refresh_icon').css('display','none');
-			this.newTask = this.getEmptyTask();
-			this.editTaskForm.reset();
-			this.assignTo.reset();
-			this.loader = false;
-		},err=>{
-			$('#alert').css('display','block');
-			console.log("error========>",err);
-		});
 	}
+
 	
 	public Editor = DecoupledEditor;
 
