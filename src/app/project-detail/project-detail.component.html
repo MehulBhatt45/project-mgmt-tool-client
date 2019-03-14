@@ -272,7 +272,7 @@
 				<div *ngIf="currentUser.userRole=='projectManager'">
 					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
 				</div>
-				<button type="submit" id="save_changes" class="btn btn-default"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
+				<button type="submit" id="save_changes" class="btn btn-default"  [disabled]="editTaskForm.invalid || loader"  (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
 			</div>
 		</div>
 	</div>

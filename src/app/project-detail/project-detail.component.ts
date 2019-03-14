@@ -14,6 +14,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
 
@@ -35,6 +36,7 @@ export class ProjectDetailComponent implements OnInit {
 	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	task;
 	tasks;
+	taskId;
 	projects: any;
 	project;
 	comment;
@@ -57,7 +59,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 
 	
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
 		$('.datepicker').pickadate();
@@ -191,9 +193,36 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 
 		});
+		this._pushNotificationService.requestPermission();
+		this.myFunction();
+
+		
 	}
 
+	myFunction() {
+		const title = 'Hello';
+		const options = new PushNotificationOptions();
+		options.body = 'New Task Asssign to You';
 
+		this._pushNotificationService.create(title, options).subscribe((notif) => {
+			if (notif.event.type === 'show') {
+				console.log('onshow');
+				setTimeout(() => {
+					notif.notification.close();
+				}, 25000);
+			}
+			if (notif.event.type === 'click') {
+				console.log('click');
+				notif.notification.close();
+			}
+			if (notif.event.type === 'close') {
+				console.log('close');
+			}
+		},
+		(err) => {
+			console.log(err);
+		});
+	}
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -211,6 +240,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+
 
 	}
 
@@ -236,6 +266,7 @@ export class ProjectDetailComponent implements OnInit {
 						this.projectTeam.push
 						console.log("response of team============>"  ,this.projectTeam);
 					})
+
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
@@ -275,7 +306,10 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		
+
 	}
+
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -392,6 +426,7 @@ export class ProjectDetailComponent implements OnInit {
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
+	
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
@@ -418,7 +453,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-
+		this.loader = true;
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -440,16 +475,19 @@ export class ProjectDetailComponent implements OnInit {
 		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 		// console.log(subUrl);
 		this._projectService.addTask(data).subscribe((res:any)=>{
+			$('#exampleModalPreviewLabel').modal('hide');
+			this.loader = false;
 			console.log("response task***++",res);
 			this.getProject(res.projectId);
-			$('#save_changes').attr("disabled", false);
-			$('#refresh_icon').css('display','none');
-			$('.modal').modal('hide');
 		},err=>{
-			$('#alert').css('display','block');
-			console.log("error========>",err);
+			this.loader = false;
+			// $('.alert').alert()
+			var err;
+
+			console.log(err);
 		})
 	}
+	
 	public Editor = DecoupledEditor;
 
 
@@ -464,9 +502,6 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
-
-
-
 
 
 	sendComment(taskId){
@@ -497,6 +532,7 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
+
 	// onKey(event: any){
 		// 	console.log(event);
 		// 	var dataToBeFiltered = [...this.project.taskId, ...this.project.BugId, ...this.project.IssueId];
@@ -556,5 +592,7 @@ export class ProjectDetailComponent implements OnInit {
 							console.log("error in delete Task=====>" , err);
 						});
 					}
-				}
+				
+			}
+				
 

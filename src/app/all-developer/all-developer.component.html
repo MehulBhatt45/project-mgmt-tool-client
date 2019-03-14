@@ -4,9 +4,8 @@
 			<div class="card-header bg-default">
 				<span>Team Members</span>
 			</div>
-			<div class="table border">
-				<table>
-					
+			<table class="table table-hover border pl-5">
+				<thead>
 					<tr align="center" >
 						<th>Name</th>
 						<th>action</th>
@@ -17,9 +16,9 @@
 						<td>{{developer.name}}</td>
 						<td><a routerLink="/visit-user-profile/{{developer._id}}">See Profile</a></td>
 					</tr>
-				</table>
-			</div>
-		</div>		
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 

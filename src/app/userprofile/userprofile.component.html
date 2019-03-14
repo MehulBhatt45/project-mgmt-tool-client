@@ -4,22 +4,23 @@
 	<div class="container">
 
 		<div class="row">
-			<div class="col-12 col-md-3">
+			<div class="col-12 profile_image">
 				<div class="card img_card">
 					<div class="profile_picture">
-						<img  src="{{baseMediaUrl}}{{currentUser.profile}}" class="img-fluid" onerror ="this.src ='assets/6.jpg'">
+						<img  src="{{path}}{{currentUser.profilePhoto}}" class="img-fluid" onerror ="this.src ='assets/6.jpg'">
 						<label class="upload_or_edit_profile" for="profile">
 							<i class="fa fa-camera" aria-hidden="true"></i>
 						</label>
-						<input type="file" id="profile" name="fileUpload" (change)="uploadFile($event,'profile')" hidden="true" style="display:none;">
+						<input type="file" id="profile" name="fileUpload" (change)="uploadFile($event,changeType)" hidden="true" style="display:none;">
 					</div>
 				</div>
 			</div>
-			<div class="col-12 col-md-5">
+			<div class="col-12 profile_content">
 				<div class="user_detail">
 					<p><b>{{currentUser.name}}</b></p>
 					<span> {{currentUser.email}}</span><br>
 					<span>{{currentUser.userRole}}</span><br>
+					<!-- <span>{{currentUser.phone}}</span><br> -->
 					<span> Other details </span><br>
 					<span><i class="far fa-edit"></i><a [routerLink]="['/reset-password']"> Edit profile</a></span>
 				</div>
@@ -92,7 +93,7 @@
 
 							<div class="form-group col-12 ">
 
-								<label for="inputMDEx">Asign To</label>
+								<label for="inputMDEx">Send To</label>
 								<select class="browser-default custom-select custom-select-lg mb-3" id="sendTo" formControlName="sendTo" >
 									<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 								</select>
