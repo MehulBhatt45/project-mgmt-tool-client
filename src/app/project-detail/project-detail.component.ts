@@ -1,4 +1,3 @@
-
 import { Component, OnInit, HostListener } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
@@ -111,6 +110,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
+			console.log("tracks====-=-_+_++",this.tracks);
 		}
 		else{
 			this.tracks = [
@@ -139,7 +139,7 @@ export class ProjectDetailComponent implements OnInit {
 				]
 			}
 			];
-
+			
 		}
 	}
 	getPriorityClass(priority){
@@ -356,12 +356,12 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("Sorting tasks by = ",type)
 
 		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
+			console.log("Sorting track =()()() ",track.title);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 		});
 
 		function custom_sort(a, b) {
@@ -518,10 +518,6 @@ export class ProjectDetailComponent implements OnInit {
 		const data = editor.getData();
 		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
 	}
-
-
-
-
 
 	sendComment(taskId){
 		console.log(this.comment);

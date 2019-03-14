@@ -137,9 +137,9 @@ ol.breadcrumb.hidden-lg-down li a {
   display: block !important;
   opacity: 1;
 }*/
-.navbar {
+/*.navbar {
   background-color: #372e5f !important;
-}
+}*/
 .dropdown-item:hover{
   background-color: #372e5f !important;
   color: #fff!important;
