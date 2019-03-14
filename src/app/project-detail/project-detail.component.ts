@@ -15,8 +15,7 @@ import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
 import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
-
-
+import * as async from 'async';
 
 @Component({
 	selector: 'app-project-detail',
@@ -44,20 +43,16 @@ export class ProjectDetailComponent implements OnInit {
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
+	assignTo;
 	developers: any
 	loader : boolean = false;
-
-
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
-
 	projectTeam;
 	Teams;
-	// files:FileList;
-
 	files:Array<File> = [];
-
+	path = config.baseMediaUrl;
 	
 	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -69,10 +64,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
-
 	}
 
-	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
 		if(this.currentUser.userRole == "projectManager"){
@@ -168,7 +161,6 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
-	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -457,6 +449,10 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
+		task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		task.images = $("#images").val();
+		console.log("images====>",task.images);
 		console.log(task.dueDate);
 		console.log(task.title);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -474,23 +470,27 @@ export class ProjectDetailComponent implements OnInit {
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				this.newTask = this.getEmptyTask();
-				this.loader = false;
-			},err=>{
-				$('#alert').css('display','block');
-				console.log("error========>",err);
 
-		
-			})
-}
+
+		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		// console.log(subUrl);
+
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
+			$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			this.newTask = this.getEmptyTask();
+			this.editTaskForm.reset();
+			this.assignTo.reset();
+			this.loader = false;
+		},err=>{
+			$('#alert').css('display','block');
+			console.log("error========>",err);
+		});
+	}
+
 	
 	public Editor = DecoupledEditor;
 
@@ -501,6 +501,7 @@ export class ProjectDetailComponent implements OnInit {
 			editor.ui.getEditableElement()
 			);
 	}
+
 
 	public onChange( { editor }: ChangeEvent ) {
 		const data = editor.getData();
@@ -518,6 +519,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.append("userId",this.currentUser._id);
 			data.append("projectId",this.projectId);
 			data.append("taskId",taskId);
+			// data.append("Images",this.images);
 			for(var i = 0; i < this.files.length; i++)
 				data.append("fileUpload",this.files[i]);
 		}else{
@@ -558,24 +560,26 @@ export class ProjectDetailComponent implements OnInit {
 				});
 		});
 	}
-
+	getAllCommentOfTask(taskId){
+		this._commentService.getAllComments(taskId).subscribe(res=>{
+			this.comments = res;
+			async.forEach(this.comments, (comment, cb)=>{
+				console.log(comment);
+				$("#"+comment._id).html(comment.content);
+				cb();
+			})
+		}, err=>{
+			console.error(err);
+		});
+	}
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			this.projects = res;
 		},err=>{
 			this._alertService.error(err);
 			console.log(err);
-		});
+		})
 	}
-
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		});
-	}
-
 
 	onSelectFile(event){
 		this.files = event.target.files;

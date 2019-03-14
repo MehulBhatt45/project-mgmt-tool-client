@@ -8,8 +8,6 @@
   overflow-x: auto;
   overflow-y: hidden;
 }
-
-
 .card-list {
   height:auto;
   width: calc(25% - 12px);
@@ -121,7 +119,7 @@ table {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
-}
+  }
   .track_title{
     color: #5E6C84;
     font-size: 0.85714286em;
@@ -296,21 +294,21 @@ table {
   #fullHeightModalRight .modal-body{
     overflow-y: auto!important;
 
-}
+  }
 
-.modal-header {
+  .modal-header {
     padding: 2rem;
-}
-.refresh{
-  margin: 0;
-  padding: 5px;
-  font-size: 20px;
-}
-.fa-refresh[_ngcontent-c2] {
+  }
+  .refresh{
+    margin: 0;
+    padding: 5px;
+    font-size: 20px;
+  }
+  .fa-refresh[_ngcontent-c2] {
     float: right;
-     margin: 0 !important; 
+    margin: 0 !important; 
 
-}
+  }
 
   .modal-header {
     padding: 2rem;
@@ -332,9 +330,9 @@ table {
   #myDIV{
     display: none;
   }
-#alert{
-  display: none;
-}
+  #alert{
+    display: none;
+  }
   @-webkit-keyframes rotation {
     from {
       -webkit-transform: rotate(0deg);
@@ -356,6 +354,9 @@ table {
   }
 
   .break{
-
-    word-break: break-all;
-  }
+   word-break: break-all;
+ }
+ .comment_section{
+  height: auto;
+  margin: 5px;
+}
