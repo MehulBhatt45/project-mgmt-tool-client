@@ -74,7 +74,7 @@ export class UserprofileComponent implements OnInit {
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
 			console.log("all users =============>",res);
-			var userId = JSON.parse(localStorage.getItem('user'))._id;
+			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log(" currentUser profile ====>" , userId);
 		},(err:any)=>{
 			console.log("eroooooor=========>",err);
