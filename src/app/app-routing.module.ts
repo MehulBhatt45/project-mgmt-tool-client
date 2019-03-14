@@ -164,7 +164,8 @@ const routes: Routes = [
 			component:SummaryComponent
 		},
 		{
-			path:'editprofile',
+			path:'editprofile/:id',
+			pathMatch: "full",
 			component:EditprofileComponent
 		}
 		]
