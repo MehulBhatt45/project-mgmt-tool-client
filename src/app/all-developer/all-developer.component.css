@@ -1,4 +1,4 @@
-.card-header.bg-default {
+/*.card-header.bg-default {
     text-align: center;
     color: white;
     background-color: #372e5f;
@@ -7,7 +7,10 @@
 	margin: 0 auto;
 	width: 500px;
     max-width: 100%;
-}
+}*/
 table {
     width: 100%;
+}
+h3{
+	margin: 0;
 }

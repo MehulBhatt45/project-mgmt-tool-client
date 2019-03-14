@@ -1,26 +1,36 @@
 <div class="container">
-	<div class="row">
-		<div class="card">
-			<div class="card-header bg-default">
-				<span>Team Members</span>
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card card-cascade narrower">
+				<!-- <div class="card-header bg-default">
+					<span>Team Members</span>
+				</div> -->
+				<div class="view view-cascade gradient-card-header" style="background-color: #372e5f">
+					<!-- Title -->
+					<h3 class="card-header-title white-text  text-center py-2" align="center" >Team Members </h3>
+				</div>
+				<!-- Card content -->
+				<!-- <div class="card-body  card-body-cascade text-center px-lg-5" style="padding-top: 35px;"> -->
+					<div class="container">
+						<table class="table table-hover border pl-5">
+							<thead>
+								<tr align="center" >
+									<th>Name</th>
+									<th>action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let developer of developers">
+									<!-- <td><img src="{{path}}{{curruntUser.profilePhoto}}"></td> -->
+									<td>{{developer.name}}</td>
+									<td><a [routerLink]="['/visit-user-profile']">See Profile</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<!-- </div> -->
 			</div>
-			<table class="table table-hover border pl-5">
-				<thead>
-					<tr align="center" >
-						<th>Name</th>
-						<th>action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let developer of developers">
-						<td>{{developer.name}}</td>
-						<td><a [routerLink]="['/visit-user-profile']">See Profile</a></td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 	</div>
 </div>
-
-
 

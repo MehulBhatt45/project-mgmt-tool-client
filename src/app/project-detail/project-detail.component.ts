@@ -245,7 +245,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-		// this.loader = true;
+		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res;
@@ -344,7 +344,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -453,6 +453,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		this.loader = true;
+		setTimeout(()=>{
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -501,6 +502,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			console.log(err);
 		})
+		},1000);
 	}
 	public Editor = DecoupledEditor;
 
