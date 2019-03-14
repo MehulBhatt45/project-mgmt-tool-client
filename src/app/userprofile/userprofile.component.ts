@@ -16,7 +16,11 @@ import { config } from '../config';
 export class UserprofileComponent implements OnInit {
 	projects;
 	developers;
+	path = config.baseMediaUrl;
 	userId;
+	url = '';
+	user;
+	files;
 	projectArr = [];
 	finalarr = [];
 	editTEmail;
@@ -42,8 +46,7 @@ export class UserprofileComponent implements OnInit {
 		});
 		this.createEditEmail();
 		this.getAllDevelopers();
-		this.uploadFile();
-
+	
 	}
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
@@ -66,7 +69,6 @@ export class UserprofileComponent implements OnInit {
 		})
 	}
 
-
 	getDeveloperById(id){
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
@@ -82,6 +84,7 @@ export class UserprofileComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			console.log("Developers",this.developers);
 			this.developers.sort(function(a, b){
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 				if (nameA < nameB) //sort string ascending
@@ -90,7 +93,6 @@ export class UserprofileComponent implements OnInit {
 					return 1
 				return 0 //default return value (no sorting)
 			})
-			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
@@ -100,13 +102,29 @@ export class UserprofileComponent implements OnInit {
 	openModel(task){
 		$('#editEmailModel').modal('show');
 	}
-	uploadFile(){
 
-	
+	uploadFile(e){
+		console.log("file============>",e.target.files);
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("userId===============>",this.userId);
+		this.files = e.target.files;
+		console.log("files===============>",this.files);
+		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+			console.log("resss=======>",res);
+			setTimeout(()=>{
+				this.currentUser = res;
+				localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+			},1000);
+		},error=>{
+			console.log("errrorrrrrr====>",error);
+		});  
 	}
-
 	
 }
+
+
+
+
 
 
 

@@ -16,7 +16,7 @@
 					<tr *ngFor="let developer of developers">
 						<td></td>
 						<td>{{developer.name}}</td>
-						<td><a [routerLink]="['/visit-user-profile']">See Profile</a></td>
+						<td><a routerLink="/visit-user-profile/{{developer._id}}">See Profile</a></td>
 					</tr>
 				</tbody>
 			</table>

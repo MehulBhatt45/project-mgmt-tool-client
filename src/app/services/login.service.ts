@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { config } from '../config';
@@ -11,7 +11,7 @@ export class LoginService {
 	private currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http:HttpClient) {
         this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -23,18 +23,18 @@ export class LoginService {
     login(userCredentials) {
         console.log("heyy");
         return this.http.post<any>(config.baseApiUrl+"user/login", userCredentials)
-            .pipe(map(user => {
-                console.log("login user=========>", user);
-                // login successful if there's a jwt token in the response
-                if (user && user.data && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user.data));
-                    localStorage.setItem('token', JSON.stringify(user.token));
-                    this.currentUserSubject.next(user);
-                }
+        .pipe(map(user => {
+            console.log("login user=========>", user);
+            // login successful if there's a jwt token in the response
+            if (user && user.data && user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('currentUser', JSON.stringify(user.data));
+                localStorage.setItem('token', JSON.stringify(user.token));
+                this.currentUserSubject.next(user);
+            }
 
-                return user;
-            }));
+            return user;
+        }));
     }
 
     register(user) {
@@ -46,10 +46,18 @@ export class LoginService {
 
     getUserById(id){
         var id = id;
-         return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
-         console.log("user id is==========>",id);
+        return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
+        console.log("user id is==========>",id);
     }
-   
+    changeProfilePicture(files: any, data){
+        console.log(data);
+        let formdata = new FormData();
+        formdata.append("userId",data);
+        formdata.append("profilePhoto",files[0]);
+        console.log("file is===>>>",files);
+        return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
+    }
+    
 
     logout() {
         // remove user from local storage to log user out
@@ -58,3 +66,6 @@ export class LoginService {
         this.currentUserSubject.next(null);
     }
 }
+
+
+

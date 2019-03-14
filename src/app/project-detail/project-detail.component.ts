@@ -36,6 +36,7 @@ export class ProjectDetailComponent implements OnInit {
 	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low',  dueDate: "" };
 	task;
 	tasks;
+	taskId;
 	projects: any;
 	project;
 	comment;
@@ -197,8 +198,6 @@ export class ProjectDetailComponent implements OnInit {
 		this._pushNotificationService.requestPermission();
 		this.myFunction();
 
-
-		
 	}
 
 	myFunction() {
@@ -242,6 +241,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+
 	}
 
 	getProject(id){
@@ -266,6 +266,7 @@ export class ProjectDetailComponent implements OnInit {
 						this.projectTeam.push
 						console.log("response of team============>"  ,this.projectTeam);
 					})
+
 
 				},(err:any)=>{
 					console.log("err of project============>"  ,err);
@@ -301,6 +302,8 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		
+
 	}
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
@@ -420,6 +423,7 @@ export class ProjectDetailComponent implements OnInit {
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
+	
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
@@ -482,6 +486,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("error========>",err);
 			});
 	}
+	
 	public Editor = DecoupledEditor;
 
 
@@ -497,6 +502,7 @@ export class ProjectDetailComponent implements OnInit {
 		// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
 		this.comment = data;
 	}
+
 
 	sendComment(taskId){
 		console.log(this.comment);
@@ -523,7 +529,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.error(err);
 		});
 	}
-	
+
 	onKey(searchText){
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
