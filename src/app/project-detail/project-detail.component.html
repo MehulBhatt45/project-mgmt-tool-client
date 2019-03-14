@@ -146,14 +146,14 @@
 											</a>
 										</li>
 									</ul>
-									<div>
+									<div class="comment_section">
 										<p class="developerName" *ngIf="i.userId">
 											{{i.userId.name}}
 										</p>
-										<p class="break">
-											{{i.content}}
-										</p>
-										<img [src]="" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
+										<span class="break" innerHtml="{{i.content}}">
+											<!-- {{i.content}} -->
+										</span>
+										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
 									</div>
 								</div>
 							</div>
@@ -168,7 +168,7 @@
 
 					<div class="btn btn-default" (click)="commentImg.click()">
 						<span>Upload image with comment</span>
-						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'images')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 					</div>
 					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 				</div>

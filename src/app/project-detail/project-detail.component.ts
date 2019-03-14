@@ -15,8 +15,7 @@ import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
 import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
-
-
+import * as async from 'async';
 
 @Component({
 	selector: 'app-project-detail',
@@ -46,18 +45,13 @@ export class ProjectDetailComponent implements OnInit {
 	editTaskForm;
 	developers: any
 	loader : boolean = false;
-
-
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
-
 	projectTeam;
 	Teams;
-	// files:FileList;
-
 	files:Array<File> = [];
-
+	path = config.baseMediaUrl;
 	
 	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -471,20 +465,20 @@ export class ProjectDetailComponent implements OnInit {
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				this.newTask = this.getEmptyTask();
-				this.loader = false;
-			},err=>{
-				$('#alert').css('display','block');
-				console.log("error========>",err);
-			});
+		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+		// console.log(subUrl);
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			this.getProject(res.projectId);
+			$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			this.newTask = this.getEmptyTask();
+			this.loader = false;
+		},err=>{
+			$('#alert').css('display','block');
+			console.log("error========>",err);
+		});
 	}
 	
 	public Editor = DecoupledEditor;
@@ -513,6 +507,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.append("userId",this.currentUser._id);
 			data.append("projectId",this.projectId);
 			data.append("taskId",taskId);
+			// data.append("Images",this.images);
 			for(var i = 0; i < this.files.length; i++)
 				data.append("fileUpload",this.files[i]);
 		}else{
@@ -566,6 +561,11 @@ export class ProjectDetailComponent implements OnInit {
 	getAllCommentOfTask(taskId){
 		this._commentService.getAllComments(taskId).subscribe(res=>{
 			this.comments = res;
+			async.forEach(this.comments, (comment, cb)=>{
+				console.log(comment);
+				$("#"+comment._id).html(comment.content);
+				cb();
+			})
 		}, err=>{
 			console.error(err);
 		});
