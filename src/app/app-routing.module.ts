@@ -101,7 +101,7 @@ const routes: Routes = [
 			component:FileListComponent
 		},
 		{
-			path:'project-team/:projectId',
+			path:'project-team/:id',
 			component:AllDeveloperComponent
 		},
 		{
