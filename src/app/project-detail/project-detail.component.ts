@@ -18,7 +18,6 @@ import * as moment from 'moment';
 import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
-
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -44,8 +43,10 @@ export class ProjectDetailComponent implements OnInit {
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
+	assignTo;
 	developers: any
 	loader : boolean = false;
+	path = config.baseMediaUrl;
 
 
 	currentDate = new Date();
@@ -196,8 +197,14 @@ export class ProjectDetailComponent implements OnInit {
 		});
 		this._pushNotificationService.requestPermission();
 		this.myFunction();
-
-
+		 // $(function(){
+   //          var defaultValue = $("#assignTo").val();
+   //          $("#save_changes").click(function () {
+   //              $("#assignTo").reset();
+   //          });
+   //      });
+		
+		
 		
 	}
 
@@ -457,6 +464,10 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
+		task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		task.images = $("#images").val();
+		console.log("images====>",task.images);
 		console.log(task.dueDate);
 		console.log(task.title);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -474,132 +485,134 @@ export class ProjectDetailComponent implements OnInit {
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
 
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				this.loader = false;
-			},err=>{
-				$('#alert').css('display','block');
-				console.log("error========>",err);
-			})
-		}
+			// this._projectService.addTask(data).subscribe((res:any)=>{
+				// 	console.log("response task***++",res);
+				// 	this.getProject(res.projectId);
+				// 	$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+				// 	$('#save_changes').attr("disabled", false);
+				// 	$('#refresh_icon').css('display','none');
+				// 	this.loader = false;
+				// },err=>{
+					// 	$('#alert').css('display','block');
+					// 	console.log("error========>",err);
+					// })
+				}
 
 
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
-		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#modal').modal('hide');
-			this.loader = false;
-			console.log("response task***++",res);
-			this.getProject(res.projectId);
-		},err=>{
-			this.loader = false;
-			// $('.alert').alert()
-			var err;
+				// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+				// console.log(subUrl);
+				this._projectService.addTask(data).subscribe((res:any)=>{
 
-			console.log(err);
-		})
-	}
-	public Editor = DecoupledEditor;
-
-
-	public onReady( editor ) {
-		editor.ui.getEditableElement().parentElement.insertBefore(
-			editor.ui.view.toolbar.element,
-			editor.ui.getEditableElement()
-			);
-	}
-
-	public onChange( { editor }: ChangeEvent ) {
-		const data = editor.getData();
-		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-	}
-
-
-
-
-
-	sendComment(taskId){
-		console.log(this.comment);
-		var data : any;
-		if(this.files.length>0){
-			data = new FormData();
-			data.append("content",this.comment?this.comment:"");
-			data.append("userId",this.currentUser._id);
-			data.append("projectId",this.projectId);
-			data.append("taskId",taskId);
-			for(var i = 0; i < this.files.length; i++)
-				data.append("fileUpload",this.files[i]);
-		}else{
-			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-		}
-		console.log(data);
-		this._commentService.addComment(data).subscribe((res:any)=>{
-			console.log(res);
-			this.comment = "";
-			this.model.editorData = 'Enter comments here';
-			this.files = [];
-			this.getAllCommentOfTask(res.taskId);
-		},err=>{
-			console.error(err);
-		})
-	}
-	
-	onKey(searchText){
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-						// if(content.status == track.id){
-							track.tasks.push(content);
-						}
-
-					}
-					else{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
-					}
+					this.loader = false;
+					console.log("response task***++",res);
+					$('#save_changes').attr("disabled", false);
+					$('#refresh_icon').css('display','none');
+					$('#exampleModalPreview').modal('hide');
+					this.editTaskForm.reset();
+					this.assignTo.reset();
+					this.getProject(res.projectId);
+				},err=>{
+					$('#alert').css('display','block');
+					console.log("error========>",err);
 				})
-		})
-	}
-
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		})
-	}
+			}
+			public Editor = DecoupledEditor;
 
 
-	onSelectFile(event){
-		this.files = event.target.files;
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			console.log("error in delete Task=====>" , err);
-		});
-	}
-}
+			public onReady( editor ) {
+				editor.ui.getEditableElement().parentElement.insertBefore(
+					editor.ui.view.toolbar.element,
+					editor.ui.getEditableElement()
+					);
+			}
+
+			public onChange( { editor }: ChangeEvent ) {
+				const data = editor.getData();
+				this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+			}
+
+
+
+
+
+			sendComment(taskId){
+				console.log(this.comment);
+				var data : any;
+				if(this.files.length>0){
+					data = new FormData();
+					data.append("content",this.comment?this.comment:"");
+					data.append("userId",this.currentUser._id);
+					data.append("projectId",this.projectId);
+					data.append("taskId",taskId);
+					for(var i = 0; i < this.files.length; i++)
+						data.append("fileUpload",this.files[i]);
+				}else{
+					data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+				}
+				console.log(data);
+				this._commentService.addComment(data).subscribe((res:any)=>{
+					console.log(res);
+					this.comment = "";
+					this.model.editorData = 'Enter comments here';
+					this.files = [];
+					this.getAllCommentOfTask(res.taskId);
+				},err=>{
+					console.error(err);
+				})
+			}
+
+			onKey(searchText){
+				console.log(this.project);
+				var dataToBeFiltered = [this.project];
+				var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+				console.log("In Component",task);
+				this.getEmptyTracks();
+				_.forEach(task, (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+								// if(content.status == track.id){
+									track.tasks.push(content);
+								}
+
+							}
+							else{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							}
+						})
+				})
+			}
+
+			getAllProjects(){
+				this._projectService.getProjects().subscribe(res=>{
+					this.projects = res;
+				},err=>{
+					this._alertService.error(err);
+					console.log(err);
+				})
+			}
+
+			getAllCommentOfTask(taskId){
+				this._commentService.getAllComments(taskId).subscribe(res=>{
+					this.comments = res;
+				}, err=>{
+					console.error(err);
+				})
+			}
+
+
+			onSelectFile(event){
+				this.files = event.target.files;
+			}
+			deleteTask(taskId){
+				console.log(taskId);
+				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+					console.log("Delete Task======>" , res);
+					this.task = res;
+				},(err:any)=>{
+					console.log("error in delete Task=====>" , err);
+				});
+			}
+		}

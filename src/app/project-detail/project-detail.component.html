@@ -10,24 +10,7 @@
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 
-<<<<<<< HEAD
-	<div class="row justify-content-end">
-		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
-			<div class="dropdown-menu dropdown-default">
-				<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Task'; newTask = getEmptyTask()">Task</a>
-				<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Bug'; newTask = getEmptyTask()">Bug</a>
-				<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Issue'; newTask = getEmptyTask()">Issue</a>
-			</div>
-		</div>
-		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
-			<div class="dropdown-menu dropdown-default">
-				<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Due Date <i class="fas fa-arrow-up"></i></a>
-				<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Due Date <i class="fas fa-arrow-down"></i></a>
-				<a class="dropdown-item" (click)="sortTasksByPriority('asc')">Priority <i class="fas fa-arrow-up"></i></a>
-				<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
-=======
+
 
 	<div class="row">
 		<div class="col-12 col-md-8 ">
@@ -58,23 +41,12 @@
 
 				<!-- <a routerLink = '/leave'>Leave Form</a> -->
 
->>>>>>> d7b6d05ce2ce8154a784d88e155c554703daede0
 			</div>
 		</div>
-
-<<<<<<< HEAD
 	</div>
 
-	<div class="row">
-		<div class="form-group w-100">
-			<label for="exampleForm2">Search Task</label>
-			<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="search text goes here" (keyup)="onKey(searchText)">
-		</div>
-	</div>
-=======
 
 
->>>>>>> d7b6d05ce2ce8154a784d88e155c554703daede0
 	<div *ngIf="developers">
 		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 	</div>
@@ -115,6 +87,8 @@
 								<td colspan="2">
 									<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
 								</td>
+								<td><div>
+									<img src="{{path}}{{task.images}}"></div></td>
 							</tr>
 						</table>
 						<div class="details">
@@ -133,6 +107,13 @@
 										<label><strong>Status: &nbsp;</strong></label>
 										<span>{{task.status}}</span>
 									</p>
+									<p>
+									<label><strong>start time: &nbsp;</strong></label>
+								</p>
+								<p>
+									<label><strong>estimated time: &nbsp;</strong></label>
+									<span>{{task.estimatedTime}}</span>
+								</p>
 								</div>
 								<div class="col-12 col-md-6">
 									<p>
@@ -147,15 +128,14 @@
 										<label><strong>DueDay: &nbsp;</strong></label>
 										<span>{{task.dueDate}}</span>
 									</p>
-								</div>
-								<div class="col-6">
-									<label><strong>start time: &nbsp;</strong></label>
-
-								</div>
-								<div class="col-6">
+									<p>
 									<label><strong> end time: &nbsp;</strong></label>
+								</p>
+									
 								</div>
+								
 								<div class="row justify-content-between">
+									
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
@@ -234,7 +214,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<form style="width: 100%;" [formGroup]="editTaskForm">
+					<form style="width: 100%;" [formGroup]="editTaskForm" id="myForm">
 						<div class="form-group col-12">
 							<label for="title">Title</label>
 							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
@@ -297,13 +277,13 @@
 					</form>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<!-- <div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
+			<div class="modal-footer" id="myForm">
+				<div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
 					<strong>ERROR!</strong>  Task couldn't be added.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-				</div> -->
+				</div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
@@ -311,7 +291,7 @@
 				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
 				</div>
-				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value); ">Save changes</button>
+				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value);" >Save changes</button>
 			</div>
 		</div>
 	</div>
