@@ -86,55 +86,58 @@
 								<td colspan="2">
 									<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
 								</td>
-								<td><div>
-									<img src="{{path}}{{task.images}}"></div></td>
-								</tr>
-							</table>
-							<div class="details">
-								<div class="row">
-									<div class="col-12 col-md-6">
+								<td *ngIf="task.images && task.images.length>0">
+									<div class="task_img text-right" *ngFor="let image of task.images">
+										<img src="{{path}}{{image}}">
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="details">
+							<div class="row">
+								<div class="col-12 col-md-6">
 
-										<p  *ngIf="task.createdBy">
-											<label><strong>Created By: &nbsp;</strong></label>
-											<span>{{task.createdBy.name}}</span>
-										</p>
-										<p *ngIf="task.createdAt">
-											<label><strong>Created Date: &nbsp;</strong></label>
-											<span>{{task.createdAt | date:'short'}}</span>
-										</p>
-										<p *ngIf="task.status">
-											<label><strong>Status: &nbsp;</strong></label>
-											<span>{{task.status}}</span>
-										</p>
-										<p>
-											<label><strong>start time: &nbsp;</strong></label>
-										</p>
-										<p>
-											<label><strong>estimated time: &nbsp;</strong></label>
-											<span>{{task.estimatedTime}}</span>
-										</p>
-									</div>
-									<div class="col-12 col-md-6">
-										<p>
-											<label><strong>Assign To: &nbsp;</strong></label>
-											<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-										</p>
-										<p *ngIf="task.priority">
-											<label><strong>Prority: &nbsp;</strong></label>
-											<span>{{getPriorityClass(task.priority).title}}</span>
-										</p>
-										<p *ngIf="task.dueDate">
-											<label><strong>DueDay: &nbsp;</strong></label>
-											<span>{{task.dueDate}}</span>
-										</p>
-										<p>
-											<label><strong> end time: &nbsp;</strong></label>
-										</p>
-										
-									</div>
-									
-									<div class="row justify-content-between">
-										
+									<p  *ngIf="task.createdBy">
+										<label><strong>Created By: &nbsp;</strong></label>
+										<span>{{task.createdBy.name}}</span>
+									</p>
+									<p *ngIf="task.createdAt">
+										<label><strong>Created Date: &nbsp;</strong></label>
+										<span>{{task.createdAt | date:'short'}}</span>
+									</p>
+									<p *ngIf="task.status">
+										<label><strong>Status: &nbsp;</strong></label>
+										<span>{{task.status}}</span>
+									</p>
+									<p>
+										<label><strong>start time: &nbsp;</strong></label>
+									</p>
+									<p>
+										<label><strong>estimated time: &nbsp;</strong></label>
+										<span>{{task.estimatedTime}}</span>
+									</p>
+								</div>
+								<div class="col-12 col-md-6">
+									<p>
+										<label><strong>Assign To: &nbsp;</strong></label>
+										<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+									</p>
+									<p *ngIf="task.priority">
+										<label><strong>Prority: &nbsp;</strong></label>
+										<span>{{getPriorityClass(task.priority).title}}</span>
+									</p>
+									<p *ngIf="task.dueDate">
+										<label><strong>DueDay: &nbsp;</strong></label>
+										<span>{{task.dueDate}}</span>
+									</p>
+									<p>
+										<label><strong> end time: &nbsp;</strong></label>
+									</p>
+
+								</div>
+
+								<div class="row justify-content-between">
+
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>

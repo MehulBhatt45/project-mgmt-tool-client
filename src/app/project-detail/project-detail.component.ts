@@ -482,12 +482,12 @@ export class ProjectDetailComponent implements OnInit {
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
 				this.getProject(res.projectId);
-				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
+				$('#exampleModalPreview').modal('hide');
 				this.newTask = this.getEmptyTask();
-					this.editTaskForm.reset();
-					this.assignTo.reset();
+				this.editTaskForm.reset();
+				this.assignTo.reset();
 				this.loader = false;
 			},err=>{
 				$('#alert').css('display','block');
