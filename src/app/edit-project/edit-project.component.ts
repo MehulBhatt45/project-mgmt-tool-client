@@ -4,6 +4,7 @@ import { ProjectService } from '../services/project.service';
 import { FormControl, FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as _ from "lodash";
 declare var $ : any;
+
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',

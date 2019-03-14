@@ -46,7 +46,7 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
 import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
-
+import { PushNotificationService } from 'ngx-push-notifications';
 
 
 //All component for firebase notification
@@ -115,7 +115,7 @@ import {EditprofileComponent} from './editprofile/editprofile.component'
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
     ],
-    providers: [MessagingService,AsyncPipe],
+    providers: [MessagingService, AsyncPipe, PushNotificationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

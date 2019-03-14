@@ -11,6 +11,7 @@
 }
 .profile_picture{
 	position: relative;
+	height: 220px;
 }
 .user_detail{
 	margin-top: 15px;
@@ -44,4 +45,10 @@
     background-color: rgba(66, 57, 109, 0.8);
     color: #fff;
     border-radius: 10px 0px 0px 0px;
+}
+.profile_image{
+	max-width: 250px;
+}
+.profile_content{
+	max-width: calc(100% - 250px);
 }

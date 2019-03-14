@@ -36,6 +36,7 @@ export class ProjectDetailComponent implements OnInit {
 	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 	task;
 	tasks;
+	taskId;
 	projects: any;
 	project;
 	comment;
@@ -197,6 +198,7 @@ export class ProjectDetailComponent implements OnInit {
 	// this.myFunction();
 
 		
+		
 	}
 
 	// myFunction() {
@@ -266,10 +268,10 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("sort============>"  ,this.projectTeam);
 					})
 
+
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});
-
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -300,16 +302,18 @@ export class ProjectDetailComponent implements OnInit {
 						}
 					})
 				})
+				
 				this.loader = false;
 			},err=>{
 				console.log(err);
 				this.loader = false;
 			})
-
 		},1000);
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+		
+
 	}
 
 	get trackIds(): string[] {
@@ -342,7 +346,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			},err=>{
 				console.log(err);
-			})
+			});
 		}else{
 			data.status = newStatus;
 			console.log("UniqueId", data.uniqueId);
@@ -353,6 +357,7 @@ export class ProjectDetailComponent implements OnInit {
 
 				console.log(err);
 			})
+
 		}
 	}
 	sortTasksByCreatedAt(type){
@@ -428,6 +433,7 @@ export class ProjectDetailComponent implements OnInit {
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
+	
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
@@ -437,6 +443,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(err);
 
 		})
+
 
 	}
 
@@ -448,13 +455,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
-		$('#input_starttime').pickatime({});
+		$('#estimatedTime').pickatime({});
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 
 	saveTheData(task){
-		this.loader = true;
+		// this.loader = true;
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -466,28 +473,33 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
-			data.append(key, value)
+			if(key!="estimatedTime")
+				data.append(key, value)
+			else
+				data.append(key, $('#estimatedTime').val())
 		});
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
-		// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		// console.log(subUrl);
-		this._projectService.addTask(data).subscribe((res:any)=>{
-			$('#exampleModalPreviewLabel').modal('hide');
-			this.loader = false;
-			console.log("response task***++",res);
-			this.getProject(res.projectId);
-		},err=>{
-			this.loader = false;
-			// $('.alert').alert()
-			var err;
 
-			console.log(err);
-		})
+			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
+			// console.log(subUrl);
+			this._projectService.addTask(data).subscribe((res:any)=>{
+				console.log("response task***++",res);
+				this.getProject(res.projectId);
+				$('#exampleModalPreviewLabel').css({'visibility': 'hidden'});
+				$('#save_changes').attr("disabled", false);
+				$('#refresh_icon').css('display','none');
+				this.newTask = this.getEmptyTask();
+				this.loader = false;
+			},err=>{
+				$('#alert').css('display','block');
+				console.log("error========>",err);
+			});
 	}
+	
 	public Editor = DecoupledEditor;
 
 
@@ -500,8 +512,10 @@ export class ProjectDetailComponent implements OnInit {
 
 	public onChange( { editor }: ChangeEvent ) {
 		const data = editor.getData();
-		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+		// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+		this.comment = data;
 	}
+
 
 	sendComment(taskId){
 		console.log(this.comment);
@@ -526,11 +540,12 @@ export class ProjectDetailComponent implements OnInit {
 			this.getAllCommentOfTask(res.taskId);
 		},err=>{
 			console.error(err);
-		})
+		});
 	}
 	searchTask(){
 		console.log("btn tapped");
 	}
+
 	onKey(searchText){
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
@@ -539,11 +554,20 @@ export class ProjectDetailComponent implements OnInit {
 		this.getEmptyTracks();
 		_.forEach(task, (content)=>{
 			_.forEach(this.tracks, (track)=>{
-				if(content.status == track.id){
-					track.tasks.push(content);
-				}
-			})
-		})
+				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+						// if(content.status == track.id){
+							track.tasks.push(content);
+						}
+
+					}
+					else{
+						if(content.status == track.id){
+							track.tasks.push(content);
+						}
+					}
+				});
+		});
 	}
 
 	getAllProjects(){
@@ -552,7 +576,7 @@ export class ProjectDetailComponent implements OnInit {
 		},err=>{
 			this._alertService.error(err);
 			console.log(err);
-		})
+		});
 	}
 
 	getAllCommentOfTask(taskId){
@@ -560,7 +584,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.comments = res;
 		}, err=>{
 			console.error(err);
-		})
+		});
 	}
 
 	onSelectFile(event){
