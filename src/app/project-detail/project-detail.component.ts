@@ -17,7 +17,6 @@ import * as moment from 'moment';
 // import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 
-
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -44,8 +43,10 @@ export class ProjectDetailComponent implements OnInit {
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
+	assignTo;
 	developers: any
 	loader : boolean = false;
+	path = config.baseMediaUrl;
 
 
 	currentDate = new Date();
@@ -466,6 +467,10 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
+		task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		task.images = $("#images").val();
+		console.log("images====>",task.images);
 		console.log(task.dueDate);
 		console.log(task.title);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -486,6 +491,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
+
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
 				this.getProject(res.projectId);
@@ -493,6 +499,8 @@ export class ProjectDetailComponent implements OnInit {
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
 				this.newTask = this.getEmptyTask();
+					this.editTaskForm.reset();
+					this.assignTo.reset();
 				this.loader = false;
 			},err=>{
 				$('#alert').css('display','block');
@@ -503,12 +511,13 @@ export class ProjectDetailComponent implements OnInit {
 	public Editor = DecoupledEditor;
 
 
-	public onReady( editor ) {
-		editor.ui.getEditableElement().parentElement.insertBefore(
-			editor.ui.view.toolbar.element,
-			editor.ui.getEditableElement()
-			);
-	}
+			public onReady( editor ) {
+				editor.ui.getEditableElement().parentElement.insertBefore(
+					editor.ui.view.toolbar.element,
+					editor.ui.getEditableElement()
+					);
+			}
+
 
 	public onChange( { editor }: ChangeEvent ) {
 		const data = editor.getData();
@@ -570,34 +579,35 @@ export class ProjectDetailComponent implements OnInit {
 		});
 	}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		});
-	}
+	
 
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		});
-	}
+			getAllProjects(){
+				this._projectService.getProjects().subscribe(res=>{
+					this.projects = res;
+				},err=>{
+					this._alertService.error(err);
+					console.log(err);
+				})
+			}
+			getAllCommentOfTask(taskId){
+				this._commentService.getAllComments(taskId).subscribe(res=>{
+					this.comments = res;
+				}, err=>{
+					console.error(err);
+				})
+			}
 
-	onSelectFile(event){
-		this.files = event.target.files;
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			console.log("error in delete Task=====>" , err);
-		});
-	}
-}
 
+			onSelectFile(event){
+				this.files = event.target.files;
+			}
+			deleteTask(taskId){
+				console.log(taskId);
+				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+					console.log("Delete Task======>" , res);
+					this.task = res;
+				},(err:any)=>{
+					console.log("error in delete Task=====>" , err);
+				});
+			}
+		}
