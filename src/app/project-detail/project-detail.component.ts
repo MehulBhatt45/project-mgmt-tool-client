@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
 import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
-
+import * as async from 'async';
 
 @Component({
 	selector: 'app-project-detail',
@@ -46,19 +46,13 @@ export class ProjectDetailComponent implements OnInit {
 	assignTo;
 	developers: any
 	loader : boolean = false;
-	path = config.baseMediaUrl;
-
-
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
-
 	projectTeam;
 	Teams;
-	// files:FileList;
-
 	files:Array<File> = [];
-
+	path = config.baseMediaUrl;
 	
 	constructor(private _pushNotificationService: PushNotificationService,public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -70,10 +64,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
-
 	}
 
-	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
 		if(this.currentUser.userRole == "projectManager"){
@@ -169,7 +161,6 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
-	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -246,7 +237,8 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-		// this.loader = true;
+		console.log("projectId=====>",this.projectId);
+		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res;
@@ -343,7 +335,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -450,7 +442,9 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-		// this.loader = true;
+
+		this.loader = true;
+	
 		task['projectId']= this.projectId;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
@@ -493,17 +487,19 @@ export class ProjectDetailComponent implements OnInit {
 				$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
+
 	}
+
 	
 	public Editor = DecoupledEditor;
 
 
-			public onReady( editor ) {
-				editor.ui.getEditableElement().parentElement.insertBefore(
-					editor.ui.view.toolbar.element,
-					editor.ui.getEditableElement()
-					);
-			}
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
 
 
 	public onChange( { editor }: ChangeEvent ) {
@@ -522,6 +518,7 @@ export class ProjectDetailComponent implements OnInit {
 			data.append("userId",this.currentUser._id);
 			data.append("projectId",this.projectId);
 			data.append("taskId",taskId);
+			// data.append("Images",this.images);
 			for(var i = 0; i < this.files.length; i++)
 				data.append("fileUpload",this.files[i]);
 		}else{
@@ -562,37 +559,37 @@ export class ProjectDetailComponent implements OnInit {
 				});
 		});
 	}
+	getAllCommentOfTask(taskId){
+		this._commentService.getAllComments(taskId).subscribe(res=>{
+			this.comments = res;
+			async.forEach(this.comments, (comment, cb)=>{
+				console.log(comment);
+				$("#"+comment._id).html(comment.content);
+				cb();
+			})
+		}, err=>{
+			console.error(err);
+		});
+	}
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+	}
 
-	
-
-			getAllProjects(){
-				this._projectService.getProjects().subscribe(res=>{
-					this.projects = res;
-				},err=>{
-					this._alertService.error(err);
-					console.log(err);
-				})
-			}
-
-			getAllCommentOfTask(taskId){
-				this._commentService.getAllComments(taskId).subscribe(res=>{
-					this.comments = res;
-				}, err=>{
-					console.error(err);
-				})
-			}
-
-
-			onSelectFile(event){
-				this.files = event.target.files;
-			}
-			deleteTask(taskId){
-				console.log(taskId);
-				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-					console.log("Delete Task======>" , res);
-					this.task = res;
-				},(err:any)=>{
-					console.log("error in delete Task=====>" , err);
-				});
-			}
-		}
+	onSelectFile(event){
+		this.files = event.target.files;
+	}
+	deleteTask(taskId){
+		console.log(taskId);
+		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			console.log("Delete Task======>" , res);
+			this.task = res;
+		},(err:any)=>{
+			console.log("error in delete Task=====>" , err);
+		});
+	}
+}
