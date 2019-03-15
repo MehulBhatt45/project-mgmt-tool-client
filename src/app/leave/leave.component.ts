@@ -75,7 +75,7 @@ export class LeaveComponent implements OnInit {
 		if(form.singleDate){
 			form.noOfDays = "1-day";
 		}
-		console.log(form);
+		console.log("form data========>",form);
 		if(form.noOfDays == "1-day"){
 			form['endingDate'] = form['singleDate'];
 			form['startingDate'] = form['singleDate'];
