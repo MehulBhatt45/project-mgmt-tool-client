@@ -18,8 +18,7 @@ export class EditprofileComponent implements OnInit {
 	userDetails;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
-			fname:new FormControl( ''),
-			lname:new FormControl( ''),
+			name:new FormControl(''),
 			email: new FormControl(''),
 			mobile:new FormControl(''),
 			userRole:new FormControl(''),
