@@ -11,6 +11,7 @@ declare var $ : any;
 })
 export class AddEmployeeComponent implements OnInit {
 	addEmployeeForm: FormGroup;
+	
 	files: Array<File> = [];
 	materialSelect;
 	constructor( private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {

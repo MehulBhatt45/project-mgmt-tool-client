@@ -1,3 +1,10 @@
+.table-bordered {
+    border: 2px solid darkgrey;
+}
+.min-chart {
+    margin-top: 0px;
+    margin-bottom: -36px;
+}
 /*.card{
 
 	width: 100%;
