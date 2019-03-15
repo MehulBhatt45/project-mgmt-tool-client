@@ -49,6 +49,7 @@ ngOnInit() {
 	get f() { return this.resetPasswordForm.controls; }
 
 	resetPassword() {
+		console.log("user is=========>");
 		// stop here if form is invalid
 		if (this.resetPasswordForm.invalid) {
 			return;

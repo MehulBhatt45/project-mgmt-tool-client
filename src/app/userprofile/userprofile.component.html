@@ -22,9 +22,8 @@
 					<p><b>{{currentUser.name}}</b></p>
 					<span> {{currentUser.email}}</span><br>
 					<span>{{currentUser.userRole}}</span><br>
-					<!-- <span>{{currentUser.phone}}</span><br> -->
 					<span> Other details </span><br>
-					<span><i class="far fa-edit"></i><a [routerLink]="['/reset-password']"> Edit profile</a></span>
+					<span><i class="far fa-edit"></i><a routerLink="/editprofile/{{currentUser._id}}">Edit profile</a></span>
 				</div>
 
 			</div>
@@ -55,8 +54,8 @@
 								</ul>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">rtgyhtjuy.</div>
-						<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">fdgrefgtryhht.</div>
+						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">All summary of User.</div>
+						<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">User's contact.</div>
 					</div>
 				</div>
 			</div>

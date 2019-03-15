@@ -7,41 +7,67 @@
     border: 1px solid;
     margin-top: 80px;
     border: 1px solid black;
-}*/
-h5{ 
-    font-size: 30px;
-    color: #000000;
-    /*background-color: #ae79ff;     */
-}
-.card.panels-card{
-    width: 700px;
-    margin: 0 auto;
-    max-width: 100%;
-}
-.form-group .form-control{
-    padding: 10px 15px;
-    box-sizing: border-box;
-    height: 50px;
-    border: 1px solid #4b405a;
-    box-shadow: none!important;
-}
-.form-check{
-	padding: 0;
-}
-label{
-	font-size: 18px;
-	margin-bottom: 0;
-	font-weight: 5px;
-}
-.btn-default{
-	/*background-color: #4285F4 !important;*/
-	border-radius: 5px;
-	font-size: 16px;
-}
-.purple-border textarea {
+    }*/
+    h5{ 
+        font-size: 30px;
+        color: #000000;
+        /*background-color: #ae79ff;     */
+    }
+    .card.panels-card{
+        width: 700px;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    .form-group .form-control{
+        padding: 10px 15px;
+        box-sizing: border-box;
+        height: 50px;
+        border: 1px solid #4b405a;
+        box-shadow: none!important;
+    }
+    .form-check{
+     padding: 0;
+ }
+ label{
+     font-size: 18px;
+     margin-bottom: 0;
+     font-weight: 5px;
+ }
+ .btn-default{
+     /*background-color: #4285F4 !important;*/
+     border-radius: 5px;
+     font-size: 16px;
+ }
+ .purple-border textarea {
     border: 2px solid #ba68c8;
 }
 .purple-border .form-control:focus {
     border: 1px solid #ba68c8;
     box-shadow: 0 0 15px rgba(186, 104, 200, .25) !important;
 }
+.md-form .prefix{
+    left: 0px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 32px;
+}
+.btn-group .btn {
+     margin: 5px !important; 
+}
+.btn .fas {
+    /*left: -3px;*/
+    margin-right: 10px;
+    font-size: 25px;
+    /*padding: auto;*/
+    /* padding-top: 9px; */
+}
+/*.forOneDay{
+    display: none;
+}
+.forMoreDays{
+    display: none;
+}
+.hide{
+    display: none;
+}*/

@@ -18,9 +18,11 @@ export class VisitUserProfileComponent implements OnInit {
 	developers;
 	developer;
 	userId;
+
 	user;
 	path = config.baseMediaUrl;
 	
+
 
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { 

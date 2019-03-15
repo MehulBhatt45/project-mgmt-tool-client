@@ -2,6 +2,12 @@ select{
 	display: inline-block;
 }
 
+:host ::ng-deep .ng-dropdown-panel{
+	position: relative !important;
+}
+h2{
+    margin:0px;
+}
 button{
 	display: table;
 	margin: 0px auto;
@@ -48,7 +54,7 @@ ul.project-avatar li:hover {
 }
 
 .card-header {
-    background-color: #372e5f;
+    background-color: #372e5f !important;
 }
 
 
