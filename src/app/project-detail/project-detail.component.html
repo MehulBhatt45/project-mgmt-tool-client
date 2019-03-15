@@ -15,8 +15,6 @@
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
 				<label for="exampleForm2">search text goes here</label>
-
-
 			</div>
 		</div>
 
@@ -37,11 +35,6 @@
 					<a class="dropdown-item" (click)="sortTasksByPriority('asc')">Priority <i class="fas fa-arrow-up"></i></a>
 					<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
 				</div>
-
-
-				<!-- <a routerLink = '/leave'>Leave Form</a> -->
-
-
 			</div>
 		</div>
 	</div>
@@ -50,95 +43,93 @@
 	<div *ngIf="developers">
 		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 	</div>
-
-	<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<i class="fa fa-times"></i>
-					</button>
-				</div>
-				<div class="modal-body" *ngIf="task">
-					<div class="container-fluid">
-						<table style="width: 100%;">
-							<tr>
-								<td style="width: 20px;">
-									<ul class="team-members">	
-										<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-											<a href="javascript:void(0);">
-												{{getInitialsOfName(task.assignTo.name)}}
-											</a>
-										</li>
-										<li *ngIf="!task.assignTo" class="add-member">
-											<a href="javascript:void(0);" title="Add Member">
-												<i class="fa fa-user-plus"></i>
-											</a>
-										</li>
-									</ul>
-								</td>
-								<td>
-									<p class="card-title" style="color: #222;padding: 16px 10px;margin: 0;font-size: 16px;
-									font-weight: bold;;">{{task.title}}</p>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
-								</td>
-								<td *ngIf="task.images && task.images.length>0">
-									<div class="task_img text-right" *ngFor="let image of task.images">
-										<img src="{{path}}{{image}}">
-									</div>
-								</td>
-							</tr>
-						</table>
-						<div class="details">
-							<div class="row">
-								<div class="col-12 col-md-6">
-
-									<p  *ngIf="task.createdBy">
-										<label><strong>Created By: &nbsp;</strong></label>
-										<span>{{task.createdBy.name}}</span>
-									</p>
-									<p *ngIf="task.createdAt">
-										<label><strong>Created Date: &nbsp;</strong></label>
-										<span>{{task.createdAt | date:'short'}}</span>
-									</p>
-									<p *ngIf="task.status">
-										<label><strong>Status: &nbsp;</strong></label>
-										<span>{{task.status}}</span>
-									</p>
-									<p>
-										<label><strong>start time: &nbsp;</strong></label>
-									</p>
-									<p>
-										<label><strong>estimated time: &nbsp;</strong></label>
-										<span>{{task.estimatedTime}}</span>
-									</p>
+</div>
+<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="fa fa-times"></i>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="task">
+				<div class="container-fluid">
+					<table style="width: 100%;">
+						<tr>
+							<td style="width: 20px;">
+								<ul class="team-members">	
+									<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+										<a href="javascript:void(0);">
+											{{getInitialsOfName(task.assignTo.name)}}
+										</a>
+									</li>
+									<li *ngIf="!task.assignTo" class="add-member">
+										<a href="javascript:void(0);" title="Add Member">
+											<i class="fa fa-user-plus"></i>
+										</a>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<p class="card-title" style="color: #222;padding: 16px 10px;margin: 0;font-size: 16px;
+								font-weight: bold;;">{{task.title}}</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
+							</td>
+							<td *ngIf="task.images && task.images.length>0">
+								<div class="task_img text-right" *ngFor="let image of task.images">
+									<img src="{{path}}{{image}}">
 								</div>
-								<div class="col-12 col-md-6">
-									<p>
-										<label><strong>Assign To: &nbsp;</strong></label>
-										<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
-									</p>
-									<p *ngIf="task.priority">
-										<label><strong>Prority: &nbsp;</strong></label>
-										<span>{{getPriorityClass(task.priority).title}}</span>
-									</p>
-									<p *ngIf="task.dueDate">
-										<label><strong>DueDay: &nbsp;</strong></label>
-										<span>{{task.dueDate}}</span>
-									</p>
-									<p>
-										<label><strong> end time: &nbsp;</strong></label>
-									</p>
+							</td>
+						</tr>
+					</table>
+					<div class="details">
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<p  *ngIf="task.createdBy">
+									<label><strong>Created By: &nbsp;</strong></label>
+									<span>{{task.createdBy.name}}</span>
+								</p>
+								<p *ngIf="task.createdAt">
+									<label><strong>Created Date: &nbsp;</strong></label>
+									<span>{{task.createdAt | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.status">
+									<label><strong>Status: &nbsp;</strong></label>
+									<span>{{task.status}}</span>
+								</p>
+								<p>
+									<label><strong>start time: &nbsp;</strong></label>
+								</p>
+								<p>
+									<label><strong>estimated time: &nbsp;</strong></label>
+									<span>{{task.estimatedTime}}</span>
+								</p>
+							</div>
+							<div class="col-12 col-md-6">
+								<p>
+									<label><strong>Assign To: &nbsp;</strong></label>
+									<span>{{(task.assignTo)?task.assignTo.name:'null'}}</span>
+								</p>
+								<p *ngIf="task.priority">
+									<label><strong>Prority: &nbsp;</strong></label>
+									<span>{{getPriorityClass(task.priority).title}}</span>
+								</p>
+								<p *ngIf="task.dueDate">
+									<label><strong>DueDay: &nbsp;</strong></label>
+									<span>{{task.dueDate}}</span>
+								</p>
+								<p>
+									<label><strong> end time: &nbsp;</strong></label>
+								</p>
 
-								</div>
+							</div>
 
-								<div class="row justify-content-between">
-
+							<div class="row justify-content-between">
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
@@ -217,7 +208,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row">
-					<form style="width: 100%;" [formGroup]="editTaskForm" id="myForm">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
 						<div class="form-group col-12">
 							<label for="title">Title</label>
 							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
@@ -235,7 +226,6 @@
 						<div class="row no-margin no-padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
@@ -259,14 +249,14 @@
 						<div class="row no-margin no padding" >
 							<div class="form-group col-6">
 								<label for="dueDate">Due Days</label>
-								<input placeholder="Selected days" id="dueDate" type="number" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+								<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 							</div>
 							
 							<div class="form-group col-6">
 								<label for="estimatedTime">Estimated Time</label>
 								<div class="md-form form-group">
 									<!-- <input placeholder="Selected date" type="text" id="estimatedTime" class="form-control ti" formControlName="estimatedTime"> -->
-									<input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime">
+									<input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime">
 								</div>
 							</div>
 
@@ -280,7 +270,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="modal-footer" id="myForm">
+			<div class="modal-footer">
 				<div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
 					<strong>ERROR!</strong>  Task couldn't be added.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">

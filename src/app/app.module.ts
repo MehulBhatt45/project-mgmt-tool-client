@@ -60,7 +60,7 @@ import { AsyncPipe } from '../../node_modules/@angular/common';
 import { firebaseConfig } from './../environments/firebase.config';
 import {EditprofileComponent} from './editprofile/editprofile.component'
 import { SelectDropDownModule } from 'ngx-select-dropdown'
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -114,7 +114,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    SelectDropDownModule
+    SelectDropDownModule,
+    NgSelectModule
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],
     bootstrap: [AppComponent]
