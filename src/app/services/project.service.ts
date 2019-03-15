@@ -89,8 +89,24 @@ export class ProjectService {
 					'x-access-token' : JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.get(config.baseApiUrl+"leave/pendingLeaves");
+			return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
 		}
+
+
+		leaveApproval(req, body){
+			var body = body;
+			var id = req;
+			console.log("req=============",req);
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					'x-access-token': JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
+		}
+
+
 
 		addProject(body){
 			console.log("addproject2 is calling");
