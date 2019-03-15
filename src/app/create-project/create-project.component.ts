@@ -86,7 +86,7 @@ export class CreateProjectComponent implements OnInit {
             }
           }
           data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-          this._projectservice.addProject(data).subscribe((res:any)=>{
+          this._projectService.addProject(data).subscribe((res:any)=>{
             console.log(res);
             console.log("addproject2 is called");
           },err=>{

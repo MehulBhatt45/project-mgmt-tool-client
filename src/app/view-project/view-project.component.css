@@ -30,7 +30,9 @@ table{
 .card-action span strong{
 	cursor: pointer;
 }
-
+h2{
+    margin:0px;
+}
 .team-members li{
 	height: 40px;
     width: 40px;
@@ -178,6 +180,5 @@ ul.project-avatar li:hover {
 }
 
 .font-project-view-small{
-    font-size: 20px;
-    
+    font-size: 20px;  
 }
