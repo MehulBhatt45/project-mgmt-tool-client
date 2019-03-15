@@ -76,16 +76,16 @@
     border-radius: 5px;
     border:none;
     outline: none;
-    background-color: transparent;
+    background-color: transparent !important;
     cursor: pointer;
     color:white;
 }
-/*.btn_style:hover{
+.btn_style:hover{
+    background-color: #d6778c ;
+}
+.deep-purple-skin .btn-primary:hover, .deep-purple-skin .btn-primary:focus {
     background-color: #d6778c !important;
-}*/
-/*.deep-purple-skin .btn-primary:hover, .deep-purple-skin .btn-primary:focus {
-    background-color: #d6778c !important;
-}*/
+}
 b{
     font-size: 20px;
 }
