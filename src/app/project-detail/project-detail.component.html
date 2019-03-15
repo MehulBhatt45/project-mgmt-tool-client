@@ -97,7 +97,6 @@
 						<div class="details">
 							<div class="row">
 								<div class="col-12 col-md-6">
-
 									<p  *ngIf="task.createdBy">
 										<label><strong>Created By: &nbsp;</strong></label>
 										<span>{{task.createdBy.name}}</span>
@@ -138,7 +137,6 @@
 								</div>
 
 								<div class="row justify-content-between">
-
 							<!-- <div>
 								<button class="btn btn-default">Remove Assignment</button>
 								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
@@ -235,7 +233,6 @@
 						<div class="row no-margin no-padding" >
 							<div class="form-group col-12 col-lg-6">
 								<label for="assignTo">Assign To</label>
-
 								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>

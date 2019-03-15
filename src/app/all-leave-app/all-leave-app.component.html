@@ -1,12 +1,13 @@
 <div class="container">
-	<div class="row">
-		<!-- Table with panel -->
-<div class="card card-cascade narrower">
+	<div class="row justify-content-center">
+    <div class="col-12 col-md-12">
+      <!-- Table with panel -->
+      <div class="card card-cascade narrower">
 
-  <!--Card image-->
-  <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+        <!--Card image-->
+        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
 
-    <div>
+          <div>
       <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
         <i class="fas fa-th-large mt-0"></i>
       </button>
@@ -43,50 +44,62 @@
           <tr>
             <th>
               <input class="form-check-input" type="checkbox" id="checkbox">
-              <label class="form-check-label" for="checkbox" class="mr-2 label-table"></label>
+              <label class="form-check-label" for="checkbox" class="mr-2 label-table" style="    margin-top: 12px;"></label>
             </th>
             <th class="th-lg">
-              <a>E-mail
-                <i class="fas fa-sort ml-1"></i>
-              </a>
+              <span>E-mail
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
             </th>
             <th class="th-lg">
-              <a href="">Name
-                <i class="fas fa-sort ml-1"></i>
-              </a>
+              <span>Name
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
+            </th> 
+            <th class="th-lg">
+              <span>Leave-Duration
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
             </th>
             <th class="th-lg">
-              <a href="">Leave-Duration
-                <i class="fas fa-sort ml-1"></i>
-              </a>
+              <span>From Date
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
             </th>
             <th class="th-lg">
-              Leave-Reason
-              <a href=""><i class="fas fa-sort ml-1"></i></a>
+              <span>To Date
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
             </th>
             <th class="th-lg">
-              <a href="">Leave-Status
+              <span>Leave-Reason</span>
+              <!-- <a href=""><i class="fas fa-sort ml-1"></i></a> -->
+            </th>
+            <th class="th-lg">
+              <span>Leave-Status
                <!--  <i class="fas fa-sort ml-1"></i> -->
-              </a>
-            </th>
-          </tr>
-        </thead>
-        <!--Table head-->
+             </span>
+           </th>
+         </tr>
+       </thead>
+       <!--Table head-->
 
-        <!--Table body-->
-        <tbody>
-          <tr>
-            <th scope="row">
-              <input class="form-check-input" type="checkbox" id="checkbox1">
-              <label class="form-check-label" for="checkbox1" class="label-table"></label>
-            </th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Otto</td>
-          </tr>
-          <tr>
+       <!--Table body-->
+       <tbody>
+        <tr *ngFor="let leaves of leaveApp">
+          <th scope="row">
+            <input class="form-check-input" type="checkbox" id="checkbox1">
+            <label class="form-check-label" for="checkbox1" class="label-table"></label>
+          </th>
+          <td>{{leaves.email}}</td>
+          <td>{{leaves.name}}</td>
+          <td>{{leaves.noOfDays}}</td>
+          <td>{{leaves.startingDate}}</td>
+          <td>{{leaves.endingDate}}</td>
+          <td>{{leaves.typeOfLeave}}</td>
+          <td>{{leaves.status}}<a href=""><i class="fa fa-check a_icon" aria-hidden="true"></i><i class="fa fa-times r_icon" aria-hidden="true"></i></a></td>
+        </tr>
+         <!--  <tr>
             <th scope="row">
               <input class="form-check-input" type="checkbox" id="checkbox2">
               <label class="form-check-label" for="checkbox2" class="label-table"></label>
@@ -129,7 +142,7 @@
             <td>@twitter</td>
             <td>Larry</td>
             <td>the Bird</td>
-          </tr>
+          </tr> -->
         </tbody>
         <!--Table body-->
       </table>
@@ -139,5 +152,6 @@
   </div>
 
 </div>
-	</div>
+</div>
+</div>
 </div>

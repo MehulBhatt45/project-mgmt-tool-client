@@ -3,12 +3,14 @@
 
 
 
-// const baseUrl = "http://localhost:4000/";
-// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 
+
+// const baseMediaUrl = "http://132.140.160.60/project_mgmt_tool/server/";
 
 // const baseUrl = "http://132.140.160.60:4000/";
 //const baseMediaUrl = "http://132.140.160.60/project_mgmt_tool/server/";
+// const baseUrl = "http://localhost:4000/";
+// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 
 
 
@@ -26,6 +28,7 @@ const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
 // const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/";
 
 
+// const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
 // const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 export const config = {
     baseApiUrl: baseUrl,
