@@ -31,8 +31,15 @@
 
 <p class="h4 mb-1">Team Member Profile</p>
 
-<form>
+
 	<div class="form-row">
+		<div class="col-12 col-md-8 ">
+			<div class="md-form form-group">
+				<i class="fas fa-search prefix"></i>
+				<input type="text" id="exampleForm3" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
+				<label for="exampleForm3">search text goes here</label>
+			</div>
+		</div>
 		<!-- <div class="col">
 			<div class="md-form">
 				<input type="text" id="empId" class="form-control">
@@ -59,7 +66,6 @@
 			<button class="btn btn-default" type="button">Search</button>
 		</div> -->
 	</div>
-</form>
 
 <!-- all developer profile -->
 <section class="section pb-3 text-center">

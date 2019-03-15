@@ -41,10 +41,12 @@
           <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Notice</a></li>
           <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
 
-          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole =='projectManager' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
+          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
 
-          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i>   All Employee</a></li>
-          <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members</a>
+          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
+          <li *ngIf="currentUser.userRole=='admin'"><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
+           <i class="fa fa-angle-down rotate-icon"></i></a>
+           
            <div class="collapsible-body">
             <ul>
               <li *ngFor="let project of projects">
