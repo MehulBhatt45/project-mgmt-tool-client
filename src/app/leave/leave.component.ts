@@ -74,6 +74,7 @@ export class LeaveComponent implements OnInit {
 		form.endingDate = $('#endDate').val();
 		if(form.singleDate){
 			form.noOfDays = "1-day";
+			console.log("single date======>",form.singleDate);
 		}
 		console.log("form data========>",form);
 		if(form.noOfDays == "1-day"){
