@@ -243,9 +243,9 @@ export class ProjectService {
 			return this.http.get(config.baseApiUrl+"tasks/all-task");		
 		}
 
-		updateTask(task){
+		updateTask(id, task){
 			console.log("task =========>",task);
-			var id = task._id;
+			// var id = task._id;
 			return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 		}
 

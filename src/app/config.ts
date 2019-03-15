@@ -7,7 +7,7 @@
 const baseUrl = "http://132.140.160.60:4000/";
 // const baseUrl = "http://localhost:4000/";
 
-const baseMediaUrl = "http://132.140.160.60/project_mgmt_tool/server/";
+const baseMediaUrl = "http://132.140.160.60/project_mgmt_tool/server/uploads/";
 
 
 

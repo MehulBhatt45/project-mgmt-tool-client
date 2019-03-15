@@ -170,12 +170,14 @@ export class ProjectDetailComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
 			date: new FormControl('',[Validators.required]),
+			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
+		$('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
@@ -244,12 +246,12 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				this.pro = res.pmanagerId;
+				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
 
-					res.Teams.push(this.pro); 
+					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					this.projectTeam.sort(function(a, b){
@@ -400,9 +402,13 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	getInitialsOfName(name){
+		if(name){
 		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
 		return str.toUpperCase();
 		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+		}else{
+			return '';
+		}
 	}
 
 	getColorCodeOfPriority(priority) {
@@ -424,15 +430,34 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask = task;
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
-		$('#input_starttime').pickatime({});
+		$('#estimatedTime').pickatime({});
 		$('#exampleModalPreviewLabel').modal('show');
 	}
 
 	
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
+		let data = new FormData();
+		// _.forOwn(task, function(value, key) {
+		// 	if(key!="estimatedTime")
+		// 		data.append(key, value)
+		// 	else
+		// 		data.append(key, $('#estimatedTime').val())
+		// });
+		data.append('projectId', task.projectId);
+		data.append('title', task.title);
+		data.append('desc', task.desc);
+		data.append('assignTo', task.assignTo);
+		data.append('priority', task.priority);
+		data.append('dueDate', task.dueDate);
+		data.append('estimatedTime', task.estimatedTime);
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
 		console.log("update =====>",task);
-		this._projectService.updateTask(task).subscribe((res:any)=>{
+		this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
 			$('#exampleModalPreviewLabel').modal('hide');
 		},err=>{
 			console.log(err);
