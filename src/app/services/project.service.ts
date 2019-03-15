@@ -26,7 +26,7 @@ export class ProjectService {
 		};
 		return this.http.get(config.baseApiUrl+"project/all", httpOptions);
 	}
-
+	
 	getAllDevelopers(){
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -314,6 +314,7 @@ export class ProjectService {
 				// 	formdata.append("uploadFile",files[i]);
 				// }
 				console.log("body===>>>",body);
+				 
 
 
 				return this.http.post(config.baseApiUrl+"user/signup",formdata);
