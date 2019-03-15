@@ -47,6 +47,7 @@ export class AllEmployeeComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			// console.log(this.developers);
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
