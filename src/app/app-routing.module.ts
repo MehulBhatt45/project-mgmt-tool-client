@@ -27,6 +27,7 @@ import {AllLeaveAppComponent} from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import {SummaryComponent} from './summary/summary.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
+import { UserSummaryComponent} from './user-summary/user-summary.component';
 
 
 
@@ -162,6 +163,11 @@ const routes: Routes = [
 			path:'editprofile/:id',
 			pathMatch: "full",
 			component:EditprofileComponent
+		},
+		{
+			path:'user-summary/:id',
+			pathMatch: "full",
+			component:UserSummaryComponent
 		}
 		]
 

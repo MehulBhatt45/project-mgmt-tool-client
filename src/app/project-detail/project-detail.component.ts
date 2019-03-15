@@ -486,6 +486,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 	
 		task['projectId']= this.projectId;
+		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.startDate = $("#startDate").val();
