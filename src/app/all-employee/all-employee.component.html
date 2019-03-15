@@ -46,13 +46,14 @@
 						<i class="fa fa-ellipsis-v"></i>
 					</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#" routerLink="/editprofile"><i class="fas fa-pen"></i>Edit</a>
+						<a class="dropdown-item" href="#" routerLink="/editprofile/{{developer._id}}"><i class="fas fa-pen"></i>Edit</a>
 						<a class="dropdown-item" href="#"><i class="far fa-trash-alt"></i>Delete</a>
 					</div>
 				</div>
 				<div class="avatar white img_section">
+					<a routerLink = "/visit-user-profile/{{developer._id}}">
 					<img src="{{path}}{{developer.profilePhoto}}" 
-					onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid">
+					onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid"></a>
 				</div>
 				<div class="card-body">
 					<h5 class="card-title mt-1">{{developer.name}}</h5>
