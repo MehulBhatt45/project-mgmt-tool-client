@@ -72,6 +72,8 @@ export class SummaryComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
+		
 	}
 	
 	getEmptyTracks(){
@@ -191,9 +193,12 @@ export class SummaryComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
+
 				console.log("id-=-=-=-()()()",id);
-				this.pro = res.pmanagerId;
-				console.log("project detail===>>>>",this.pro);
+				this.pro=res;
+				console.log("title{}{}{}{}",this.pro);
+				// this.pro = res.pmanagerId;
+				// console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					// this.projectTeam = res.team;
 					res.Teams.push(this.pro); 
