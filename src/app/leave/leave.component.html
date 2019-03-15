@@ -108,11 +108,11 @@
 							</div> -->
 
 							<div class="btn-group btn-group-toggle d-flex flex-column flex-md-row" data-toggle="buttons">
-								<label class="btn btn-primary ">
-									<button (click)="showOneDay()" value="1-day">For One Day</button> 
+								<label class="btn btn-primary btnbgcolor">
+									<button (click)="showOneDay()" value="1-day" class="btn_style">For One Day</button> 
 								</label>
-								<label class="btn btn-primary">
-									<button (click)="showMoreDays()" value="more-day">For More Days</button>
+								<label class="btn btn-primary btnbgcolor">
+									<button (click)="showMoreDays()" value="more-day" class="btn_style">For More Days</button>
 								</label>
 							</div>
 							<span [hidden]="!showMoreDayss">
@@ -120,13 +120,13 @@
 										<div class="col">
 											<div class="md-form">
 												<i class="far fa-calendar-alt prefix"></i>
-												<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+												<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" value="more-day" style="margin-bottom: 30px;">
 											</div>	
 										</div>
 										<div class="col">
 											<div class="md-form">
 												<i class="far fa-calendar-alt prefix"></i>
-												<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+												<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" value="more-day" style="margin-bottom: 30px;">
 											</div>	
 										</div>
 									</div>
@@ -142,15 +142,15 @@
 								<div class="form-group">
 									<div class="form-check" style="text-align: left; padding: 0;">
 										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="duration" value="firsthalf-day">
-										<label class="form-check-label" for="leaveDuration1">First Half</label>	
+										<label class="form-check-label" for="leaveDuration1" value="1-day">First Half</label>	
 									</div>
 									<div class="form-check" style="text-align: left; padding: 0;">
 										<input type="radio" class="form-check-input" id="leaveDuration2" formControlName="leaveDuration" value="secondhalf-day">
-										<label class="form-check-label" for="leaveDuration2">Second Half</label>
+										<label class="form-check-label" for="leaveDuration2" value="1-day">Second Half</label>
 									</div>
 									<div class="form-check" style="text-align: left; padding: 0;">
 										<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="full-day">
-										<label class="form-check-label" for="leaveDuration3">Full Day</label>
+										<label class="form-check-label" for="leaveDuration3" value="1-day">Full Day</label>
 									</div>
 								</div>
 							</div> 

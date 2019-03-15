@@ -28,7 +28,7 @@ export class LeaveComponent implements OnInit {
 		this.addForm = new FormGroup({
 			email: new FormControl ('',Validators.required),
 			name: new FormControl ('',Validators.required),
-			duration : new FormControl (''),
+			leaveDuration : new FormControl (''),
 			typeOfLeave : new FormControl (''),
 			reasonForLeave : new FormControl ('', Validators.required),
 			startingDate: new FormControl (''),

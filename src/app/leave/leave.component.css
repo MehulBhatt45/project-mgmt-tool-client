@@ -71,3 +71,19 @@
 .hide{
     display: none;
 }*/
+.btnbgcolor {
+    background-color: #372e5f !important;
+}
+.btn_style{
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: #372e5f;
+    color: white;
+}
+/*.btnbgcolor .btn-primary.active{
+    background-color: #372e4f !important;
+}
+.deep-purple-skin .btn-primary.active {
+    background-color: #372e4f !important;
+}*/
