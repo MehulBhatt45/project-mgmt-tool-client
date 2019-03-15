@@ -12,6 +12,8 @@ export class AllLeaveAppComponent implements OnInit {
 
 
 	leaveApp;
+  acceptedLeave;
+  rejectedLeave;
 	// apps;
 
   constructor(public router:Router, public _projectservice:ProjectService) { }
@@ -33,6 +35,46 @@ export class AllLeaveAppComponent implements OnInit {
   		console.log(err);
   	})
   }
+
+  leaveAccepted(req){
+    var body;
+    console.log("dsfdsbgfdf",this.leaveApp);
+    console.log("reeeeeeee",req);
+    _.forEach(this.leaveApp, (apply)=>{
+      if(apply._id == req){
+       body = apply;
+      }
+    })
+    body.status = "approved";
+    console.log("bodyyyyyyyyyyyyyyy",body);
+    this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+      console.log("respondsssssss",res);
+      this.acceptedLeave = res;
+      console.log("acceptedd===========>",this.acceptedLeave);
+    },(err:any)=>{
+      console.log(err);
+    })
+  }
   
+
+  leaveRejected(req){
+    var body;
+    console.log("rejected",this.leaveApp);
+    console.log("gtgt",req);
+    _.forEach(this.leaveApp, (apply)=>{
+      if(apply._id == req){
+       body = apply;
+      }
+    })
+    body.status = "rejected";
+    console.log("body",body);
+    this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+      console.log("response",res);
+      this.rejectedLeave = res;
+      console.log("rejected===========>",this.rejectedLeave);
+    },(err:any)=>{
+      console.log(err);
+    })
+  }
 
 }
