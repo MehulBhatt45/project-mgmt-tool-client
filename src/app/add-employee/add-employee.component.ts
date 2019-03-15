@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import {ProjectService} from '../services/project.service';
+import {LoginService} from '../services/login.service';
 declare var $ : any;
 
 @Component({
@@ -10,9 +11,10 @@ declare var $ : any;
 })
 export class AddEmployeeComponent implements OnInit {
 	addEmployeeForm: FormGroup;
+	
 	files: Array<File> = [];
 	materialSelect;
-	constructor( private formBuilder: FormBuilder, public _projectservice:ProjectService) {
+	constructor( private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
 			fname:new FormControl( '', [Validators.required]),
 			lname:new FormControl( '', [Validators.required]),
@@ -38,7 +40,7 @@ export class AddEmployeeComponent implements OnInit {
 			this.addEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 			this.addEmployeeForm.value.date = $('.datepicker').val();
 			console.log("form value=====>>>",addEmployeeForm.value);
-			this._projectservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
+			this._loginservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
 				console.log("res",res);
 			},err=>{
 				console.log("error",err);    

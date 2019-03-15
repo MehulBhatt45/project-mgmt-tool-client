@@ -13,13 +13,8 @@
 					<div class="container">
 						<form [formGroup]="editEmployeeForm" autocomplete="off">
 							<div class="md-form form-group">
-								<label for="firstName">First Name</label>
-								<input type="text" formControlName="fname" class="form-control" id="firstName" [ngModel]="userDetails.fname">
-							</div>
-
-							<div class="md-form form-group">
-								<label for="lastName">Last Name</label> 
-								<input type="text" formControlName="lname" class="form-control"  id="lastName" [ngModel]="userDetails.lname">
+								<label for="name">Name</label> 
+								<input type="text" formControlName="name" class="form-control"  id="name" [ngModel]="userDetails.name">
 							</div>
 
 							<div class="md-form form-group">
@@ -32,9 +27,8 @@
 								<input type="number" formControlName="mobile" class="form-control" id="mobile" [ngModel]="userDetails.phone">
 							</div>
 							<div class="md-form form-group" style="height: 45px;">
-								<!-- <label for="userrole">UserRole</label> -->
+								<label for="userrole">UserRole</label>
 								<select class="custom-select custom-select-lg mb-3" formControlName="userRole" [ngModel]="userDetails.userRole">
-									<option value="" disabled selected>Choose user Role</option>
 									<option value="admin">Admin</option>
 									<option value="projectmanager">Project Manager</option>
 									<option value="developer">Developer</option>

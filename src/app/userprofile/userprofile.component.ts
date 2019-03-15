@@ -7,6 +7,7 @@ import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
 declare var $ : any;
 import { config } from '../config';
+
 @Component({
 	selector: 'app-userprofile',
 	templateUrl: './userprofile.component.html',
@@ -22,7 +23,7 @@ export class UserprofileComponent implements OnInit {
 	user;
 	files;
 	projectArr = [];
-	finalarr = [];
+	finalArr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
@@ -46,23 +47,25 @@ export class UserprofileComponent implements OnInit {
 		});
 		this.createEditEmail();
 		this.getAllDevelopers();
-	
+
 	}
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			console.log("all projects =====>" , res);
 			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log("current user ====>" , userId);
+			// this.pro = res.userId;
+			// console.log("project detail===>>>>",this.pro);
 			this.projects = res;
 			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (singleTask)=>{
-					if(singleTask._id == userId){
+				_.forEach(task.Teams , (project)=>{
+					if(project._id == userId){
 						this.projectArr.push(task);
 					}
 				})
 			})			
-			this.finalarr.push(this.projectArr[0]);
-			console.log("response======>",this.finalarr);
+			this.finalArr.push(this.projectArr[0]);
+			console.log("response======>",this.finalArr);
 		},err=>{
 			this._alertService.error(err);
 			console.log(err);

@@ -15,14 +15,12 @@ import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
 
-
 @Component({
-	selector: 'app-summary',
-	templateUrl: './summary.component.html',
-	styleUrls: ['./summary.component.css']
+	selector: 'app-user-summary',
+	templateUrl: './user-summary.component.html',
+	styleUrls: ['./user-summary.component.css']
 })
-export class SummaryComponent implements OnInit {
-
+export class UserSummaryComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	comments:any;
@@ -36,7 +34,7 @@ export class SummaryComponent implements OnInit {
 	task;
 	tasks;
 	projects: any;
-	project;
+	project = [];
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
@@ -55,8 +53,7 @@ export class SummaryComponent implements OnInit {
 	selectedProjectId = "all";
 	selectedDeveloperId = "all";
 	Team;
-	// myproject=this.project[0];
-	
+
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 
 		
@@ -75,10 +72,9 @@ export class SummaryComponent implements OnInit {
 
 		
 	}
-	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
-		if(this.currentUser.userRole == "projectManager"){
+		if(this.currentUser.userRole == "user"){
 
 			this.tracks = [
 			{
@@ -197,8 +193,7 @@ export class SummaryComponent implements OnInit {
 				console.log("id-=-=-=-()()()",id);
 				this.pro=res;
 				console.log("title{}{}{}{}",this.pro);
-				// this.pro = res.pmanagerId;
-				// console.log("project detail===>>>>",this.pro);
+				
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					// this.projectTeam = res.team;
 					res.Teams.push(this.pro); 
@@ -233,9 +228,9 @@ export class SummaryComponent implements OnInit {
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					// console.log("task ======>()" , task);
+					
 					_.forEach(this.tracks , (track)=>{
-						// console.log("track ======>()" , track);
+						
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								console.log("sorttask==()()()",task);
@@ -266,8 +261,16 @@ export class SummaryComponent implements OnInit {
 	}
 
 	getTaskPriority(priority, status){
-		// console.log(priority, status);
-		return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		// console.log(typeof priority , "user Id " , userId);
+		return _.filter(this.project, function(o) {
+			// console.log("oo =====>" , o);
+			if (o.priority == priority && o.status == status && o.assignTo._id == userId){
+				// console.log("found log =====>" , o)	
+				return o 
+			}
+		}).length;
+		
 	}
 
 

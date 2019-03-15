@@ -61,6 +61,7 @@ import { firebaseConfig } from './../environments/firebase.config';
 import {EditprofileComponent} from './editprofile/editprofile.component'
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgSelectModule } from '@ng-select/ng-select';
+import { UserSummaryComponent } from './user-summary/user-summary.component';
 
 @NgModule({
     declarations: [
@@ -95,6 +96,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AllEmployeeComponent,
     SummaryComponent,
     EditprofileComponent,
+    UserSummaryComponent,
    ],
 
     imports: [

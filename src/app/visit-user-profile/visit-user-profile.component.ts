@@ -18,7 +18,6 @@ export class VisitUserProfileComponent implements OnInit {
 	developers;
 	developer;
 	userId;
-
 	user;
 	path = config.baseMediaUrl;
 	

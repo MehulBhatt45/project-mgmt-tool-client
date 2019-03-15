@@ -57,12 +57,38 @@ export class LoginService {
         console.log("file is===>>>",files);
         return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
     }
+
+
+    addUser_with_file(body,files:any){
+            console.log("fhvg=>",files);
+            console.log("bodyyyyyyyyy===>",body);
+            let formdata = new FormData();
+            formdata.append('fname',body.fname);
+            formdata.append('lname',body.lname);
+            formdata.append('email',body.email);
+            formdata.append('userRole',body.userRole);
+            formdata.append('password',body.password);
+            formdata.append('joiningDate',body.date);
+            formdata.append('phone',body.mobile);
+            formdata.append('experience',body.experience);
+            formdata.append('profilePhoto',files[0]);
+            formdata.append("profilePhoto",files[1]);
+            // for(var i =0; i < files.length; i++){
+                //     formdata.append("uploadFile",files[i]);
+                // }
+                console.log("body===>>>",body);
+
+
+                return this.http.post(config.baseApiUrl+"user/signup",formdata);
+
+            }
+    
+
     editUserProfileWithFile( data,files: any){
         var id = JSON.parse(localStorage.getItem('currentUser'))._id;
         console.log("data is=====================>",data);
         let formdata = new FormData();
-        formdata.append('fname',data.fname);
-        formdata.append('lname',data.lname);
+        formdata.append('name',data.name);
         formdata.append('email',data.email);
         formdata.append('userRole',data.userRole);
         formdata.append('phone',data.mobile);
@@ -72,6 +98,7 @@ export class LoginService {
         console.log("change data issssss===>>>",data);
         return this.http.put(config.baseApiUrl+"user/update-details/"+id,formdata);
     }
+
 
     logout() {
         // remove user from local storage to log user out

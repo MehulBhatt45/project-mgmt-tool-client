@@ -1,5 +1,17 @@
 <div class="container">
-	<div class="row justify-content-center">
+  <div class="row">
+    <div class="text-right col-12 col-md-12">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Leaves List</button>
+        <div class="dropdown-menu dropdown-default">
+          <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Approved Leaves'">Approved Leaves</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Rejected Leaves'">Rejected Leaves</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
+  <div class="row justify-content-center">
     <div class="col-12 col-md-12">
       <!-- Table with panel -->
       <div class="card card-cascade narrower">
@@ -16,7 +28,7 @@
       </button> -->
     </div>
 
-    <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Table name</h3>
+    <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
 
     <div>
       <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
@@ -37,67 +49,81 @@
 
     <div class="table-wrapper">
       <!--Table-->
-      <table class="table table-hover mb-0">
+      <table class="table table-hover mb-0 css-serial">
 
         <!--Table head-->
         <thead>
           <tr>
-            <th>
+            <!-- <th>
               <input class="form-check-input" type="checkbox" id="checkbox">
-              <label class="form-check-label" for="checkbox" class="mr-2 label-table" style="    margin-top: 12px;"></label>
-            </th>
-            <th class="th-lg">
-              <span>E-mail
+              <label class="form-check-label" for="checkbox" class="mr-2 label-table" style=" margin-top: 12px;"></label>
+            </th> -->
+            <th class="th-lg text-left">
+              <span class="text-left">Sr No.
                 <!-- <i class="fas fa-sort ml-1"></i> -->
               </span>
             </th>
-            <th class="th-lg">
-              <span>Name
+            <th class="th-lg text-left">
+              <span class="text-left">E-mail
+                <!-- <i class="fas fa-sort ml-1"></i> -->
+              </span>
+            </th>
+            <th class="th-lg text-left">
+              <span class="text-left">Name
                 <!-- <i class="fas fa-sort ml-1"></i> -->
               </span>
             </th> 
-            <th class="th-lg">
-              <span>Leave-Duration
+            <th class="th-lg text-left">
+              <span class="text-left">Leave-Duration
                 <!-- <i class="fas fa-sort ml-1"></i> -->
               </span>
             </th>
-            <th class="th-lg">
-              <span>From Date
+            <th class="th-lg text-left">
+              <span class="text-left">From Date
                 <!-- <i class="fas fa-sort ml-1"></i> -->
               </span>
             </th>
-            <th class="th-lg">
-              <span>To Date
+            <th class="th-lg text-left">
+              <span class="text-left">To Date
                 <!-- <i class="fas fa-sort ml-1"></i> -->
               </span>
             </th>
-            <th class="th-lg">
-              <span>Leave-Reason</span>
+
+            <th class="th-lg text-left">
+              <span class="text-left">Types Of Leave</span>
               <!-- <a href=""><i class="fas fa-sort ml-1"></i></a> -->
             </th>
-            <th class="th-lg">
-              <span>Leave-Status
-               <!--  <i class="fas fa-sort ml-1"></i> -->
-             </span>
-           </th>
-         </tr>
-       </thead>
-       <!--Table head-->
+            <th class="th-lg text-left">
+              <span class="text-left">Leave-Reason</span>
+              <!-- <a href=""><i class="fas fa-sort ml-1"></i></a> -->
+            </th>
+            <th class="th-lg text-left">
+              <span class="text-left">Leave-Status</span>
+              <!-- <i class="fas fa-sort ml-1"></i> -->
 
-       <!--Table body-->
-       <tbody>
-        <tr *ngFor="let leaves of leaveApp">
-          <th scope="row">
+            </th>
+          </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+          <tr *ngFor="let leaves of leaveApp">
+          <!-- <th scope="row">
             <input class="form-check-input" type="checkbox" id="checkbox1">
             <label class="form-check-label" for="checkbox1" class="label-table"></label>
-          </th>
-          <td>{{leaves.email}}</td>
-          <td>{{leaves.name}}</td>
-          <td>{{leaves.noOfDays}}</td>
-          <td>{{leaves.startingDate}}</td>
-          <td>{{leaves.endingDate}}</td>
-          <td>{{leaves.typeOfLeave}}</td>
-          <td>{{leaves.status}}<a href=""><i class="fa fa-check a_icon" aria-hidden="true"></i><i class="fa fa-times r_icon" aria-hidden="true"></i></a></td>
+
+          </th> -->
+          <td ></td>
+          <td  class="text-left">{{leaves.email}}</td>
+          <td class="text-left">{{leaves.name}}</td>
+          <td >{{leaves.leaveDuration}}</td>
+          <td class="text-left">{{leaves.startingDate}}</td>
+          <td class="text-left">{{leaves.endingDate}}</td>
+          <td class="text-left">{{leaves.typeOfLeave}}</td>
+          <td class="text-left description">{{leaves.reasonForLeave}}</td>
+          <td class="text-left "><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+         
         </tr>
          <!--  <tr>
             <th scope="row">
@@ -154,4 +180,21 @@
 </div>
 </div>
 </div>
+</div>
+<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+       
+
+  </div>
 </div>
