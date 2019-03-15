@@ -71,11 +71,11 @@
 <div class="container-fluid ">
 	<div class="row justify-content-center">
 		<div class="col-md-12">
-			<div class="card card-cascade narrower" >
+			<div class="card card-cascade narrower"  >
 				<!-- Card image -->
 				<div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
 					<!-- Title -->
-					<h2 class="card-header-title" align="center" style="margin: 0; padding: 10px 0; color: white">Apply Leave</h2>
+					<h2 class="card-header-title white-text text-center py-4" align="center" style="margin: 0;">Apply Leave</h2>
 				</div>
 				<!-- Card content -->
 				<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
@@ -108,28 +108,30 @@
 							</div> -->
 
 							<div class="btn-group btn-group-toggle d-flex flex-column flex-md-row" data-toggle="buttons">
-								<label class="btn btn-primary btnbgcolor">
-									<button (click)="showOneDay()" value="1-day" class="btn_style">For One Day</button> 
+
+								<label class="btn btn-primary btn_bgcolor">
+									<button (click)="showOneDay()" value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i>For One Day</button> 
 								</label>
-								<label class="btn btn-primary btnbgcolor">
-									<button (click)="showMoreDays()" value="more-day" class="btn_style">For More Days</button>
+								<label class="btn btn-primary btn_bgcolor">
+									<button (click)="showMoreDays()" value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i>For More Days</button>
 								</label>
 							</div>
 							<span [hidden]="!showMoreDayss">
-									<div class="row">
-										<div class="col">
-											<div class="md-form">
-												<i class="far fa-calendar-alt prefix"></i>
-												<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" value="more-day" style="margin-bottom: 30px;">
-											</div>	
-										</div>
-										<div class="col">
-											<div class="md-form">
-												<i class="far fa-calendar-alt prefix"></i>
-												<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" value="more-day" style="margin-bottom: 30px;">
-											</div>	
-										</div>
+								<div class="row">
+									<div class="col">
+										<div class="md-form">
+											<i class="far fa-calendar-alt prefix"></i>
+											<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+										</div>	
+
 									</div>
+									<div class="col">
+										<div class="md-form">
+											<i class="far fa-calendar-alt prefix"></i>
+											<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+										</div>	
+									</div>
+								</div>
 							</span>
 							<div [hidden]="!showOneDays">
 								<div class="col">
@@ -180,12 +182,16 @@
 								<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="personalleave">
 								<label class="custom-control-label" for="PersonalLeave" style="margin-bottom: 30px;">Personal Leave</label>
 							</div>
-							<div class="form-group purple-border" style="text-align: left; padding: 0;">
-								<label for="exampleFormControlTextarea4">Reason For Leave:-</label>
+							
+
+							<div class="form-group purple-border " style="text-align: left; padding: 0;width:98%;">
+								<label for="exampleFormControlTextarea4"><b>Reason For Leave:-</b></label>
 								<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
 							</div>
+
+							
 							<div>
-								<button type="button" class="btn btn-deep-purple waves-effect" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
+								<button type="button" class="btn btn-deep-purple waves-effect btn-default" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
 							</div>
 						</form>
 					</div>
