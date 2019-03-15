@@ -75,7 +75,7 @@
 						<ng-template ng-option-tmp let-item="item">
 							<!-- <img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}
 								<p>{{item.email}}</p> -->
-								<div style="margin: 10px 0;" class="card">
+								<div style="margin: 10px 0; padding: 10px" class="card">
 									<div class="card-body">
 										<h5 class="card-title" [ngOptionHighlight]="search"><img height="30" width="30" src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'"/>{{item.name}}</h5>
 										<h6 class="card-subtitle mb-2 text-muted">{{item.email}}</h6>
