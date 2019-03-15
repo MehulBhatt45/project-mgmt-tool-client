@@ -26,7 +26,7 @@ export class ProjectService {
 		};
 		return this.http.get(config.baseApiUrl+"project/all", httpOptions);
 	}
-
+	
 	getAllDevelopers(){
 		const httpOptions = {
 			headers: new HttpHeaders({
