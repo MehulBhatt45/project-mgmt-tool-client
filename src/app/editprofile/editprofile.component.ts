@@ -22,6 +22,7 @@ export class EditprofileComponent implements OnInit {
 			lname:new FormControl( ''),
 			email: new FormControl(''),
 			mobile:new FormControl(''),
+			name:new FormControl(''),
 			userRole:new FormControl(''),
 			experience:new FormControl(''),
 			cv:new FormControl('')

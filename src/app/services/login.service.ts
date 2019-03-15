@@ -63,6 +63,7 @@ export class LoginService {
         let formdata = new FormData();
         formdata.append('fname',data.fname);
         formdata.append('lname',data.lname);
+        formdata.append('name',data.name);
         formdata.append('email',data.email);
         formdata.append('userRole',data.userRole);
         formdata.append('phone',data.mobile);
