@@ -231,22 +231,36 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
-                                            <option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
-                                        </select>
-                                    </div>
+                                     <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
+                                        <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                            <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+                                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                        </ng-template>
 
-                                    <!-- demo code -->
-                                    <img [src]="url" height="150" width="150"> <br/>
-                                    <!-- demo code -->
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
-                                        Select Project avatar
-                                    </button>
-                                    <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
-                                </form>
-                            </div>
+                                        <ng-template ng-option-tmp let-item="item">
+                                            <div style="margin: 10px 0; padding: 10px" class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title" [ngOptionHighlight]="search"><img height="30" width="30" src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'"/>{{item.name}}</h5>
+                                                    <h6 class="card-subtitle mb-2 text-muted">{{item.email}}</h6>
+                                                    <p class="card-text">
+                                                        {{item.userRole}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
+
+                                <!-- demo code -->
+                                <img [src]="url" height="150" width="150"> <br/>
+                                <!-- demo code -->
+                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+                                    Select Project avatar
+                                </button>
+                                <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
+                            </form>
+                        </div>
                             <!-- <div class="modal-footer">
                                 <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
                                 <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button>
