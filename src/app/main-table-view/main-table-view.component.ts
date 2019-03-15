@@ -300,7 +300,7 @@ export class MainTableViewComponent implements OnInit {
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
-		this._projectService.updateTask(task).subscribe((res:any)=>{
+		this._projectService.updateTask(task._id, task).subscribe((res:any)=>{
 			console.log("res ===>" , res);
 		},(err:any)=>{
 			console.log("err ===>" , err);
