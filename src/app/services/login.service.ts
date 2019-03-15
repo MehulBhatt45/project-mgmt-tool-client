@@ -61,8 +61,6 @@ export class LoginService {
         var id = JSON.parse(localStorage.getItem('currentUser'))._id;
         console.log("data is=====================>",data);
         let formdata = new FormData();
-        formdata.append('fname',data.fname);
-        formdata.append('lname',data.lname);
         formdata.append('name',data.name);
         formdata.append('email',data.email);
         formdata.append('userRole',data.userRole);
