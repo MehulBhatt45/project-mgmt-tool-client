@@ -51,6 +51,13 @@
   counter-increment: serial-number;  /* Increment the serial number counter */
   content: counter(serial-number);  /* Display the counter */
 }
+.dropdown{
+	margin-bottom: 10px;
+	
+}
+.dropdown-toggle{
+	/*background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%) !important;*/
+}
 
 /*.card{
 	width:118% !important;

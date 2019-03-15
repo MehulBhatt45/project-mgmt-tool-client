@@ -1,5 +1,17 @@
 <div class="container">
-	<div class="row justify-content-center">
+  <div class="row">
+    <div class="text-right col-12 col-md-12">
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Leaves List</button>
+        <div class="dropdown-menu dropdown-default">
+          <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Task'; newTask = getEmptyTask()">Approved Leaves</a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Bug'; newTask = getEmptyTask()">Rejected Leaves</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
+  <div class="row justify-content-center">
     <div class="col-12 col-md-12">
       <!-- Table with panel -->
       <div class="card card-cascade narrower">
@@ -87,16 +99,16 @@
             </th>
             <th class="th-lg text-left">
               <span class="text-left">Leave-Status</span>
-                <!-- <i class="fas fa-sort ml-1"></i> -->
-             
-           </th>
-         </tr>
-       </thead>
-       <!--Table head-->
+              <!-- <i class="fas fa-sort ml-1"></i> -->
 
-       <!--Table body-->
-       <tbody>
-        <tr *ngFor="let leaves of leaveApp">
+            </th>
+          </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+          <tr *ngFor="let leaves of leaveApp">
           <!-- <th scope="row">
             <input class="form-check-input" type="checkbox" id="checkbox1">
             <label class="form-check-label" for="checkbox1" class="label-table"></label>
@@ -168,4 +180,18 @@
 </div>
 </div>
 </div>
+</div>
+<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+       
+
+  </div>
 </div>
