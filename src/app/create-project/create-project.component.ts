@@ -21,6 +21,7 @@ export class CreateProjectComponent implements OnInit {
     displayKey: "name", //if objects array passed which key to be displayed defaults to description
     search: true
   };
+  baseUrl = config.baseMediaUrl;
   objectsArray: any = [];
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 

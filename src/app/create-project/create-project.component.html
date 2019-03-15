@@ -59,16 +59,36 @@
 							</div>
 
 							<div class="form-group">
-								<select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
+								<!-- <select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
 									<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
-								</select>
+								</select> -->
 					<!-- <select class="browser-default custom-select custom-select-lg mb-3" formControlName="Teams">
 						<option value="" disabled selected>Choose your option</option>
 						<option value="1">Option 1</option>
 						<option value="2">Option 2</option>
 						<option value="3">Option 3</option>
 					</select> -->
-					<ngx-select-dropdown tabindex="0" [multiple]="true" [(ngModel)]="objectsArray" [options]="developers" [config]="config"></ngx-select-dropdown>
+					<!-- <ngx-select-dropdown tabindex="0" [multiple]="true" [(ngModel)]="objectsArray" [options]="developers" [config]="config"></ngx-select-dropdown> -->
+					<ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
+						<ng-template ng-label-tmp let-item="item" let-clear="clear">
+							<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+							<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+						</ng-template>
+
+						<ng-template ng-option-tmp let-item="item">
+							<!-- <img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}
+								<p>{{item.email}}</p> -->
+								<div style="margin: 10px 0;" class="card">
+									<div class="card-body">
+										<h5 class="card-title" [ngOptionHighlight]="search"><img height="30" width="30" src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'"/>{{item.name}}</h5>
+										<h6 class="card-subtitle mb-2 text-muted">{{item.email}}</h6>
+										<p class="card-text">
+											{{item.userRole}}
+										</p>
+									</div>
+								</div>
+						</ng-template>
+					</ng-select>
 				</div>
 
 				<!-- <select class="mdb-select md-form multi_select" multiple searchable="Search here..">

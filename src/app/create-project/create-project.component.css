@@ -2,6 +2,10 @@ select{
 	display: inline-block;
 }
 
+:host ::ng-deep .ng-dropdown-panel{
+	position: relative !important;
+}
+
 button{
 	display: table;
 	margin: 0px auto;
