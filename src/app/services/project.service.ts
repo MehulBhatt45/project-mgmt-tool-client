@@ -298,6 +298,7 @@ export class ProjectService {
 				// 	formdata.append("uploadFile",files[i]);
 				// }
 				console.log("body===>>>",body);
+				 
 
 
 				return this.http.post(config.baseApiUrl+"user/signup",formdata);
