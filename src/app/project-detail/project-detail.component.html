@@ -72,7 +72,7 @@
 								</ul>
 							</td>
 							<td>
-								<p class="card-title" style="color: #222;padding: 16px 10px;margin: 0;font-size: 16px;
+								<p class="card-title text-left" style="color: #222;padding: 16px 10px;margin: 0;font-size: 16px;
 								font-weight: bold;;">{{task.title}}</p>
 							</td>
 						</tr>
@@ -80,13 +80,14 @@
 							<td colspan="2">
 								<div class="card-text" style="display: block;white-space: pre-line;margin: 4px 15px;">{{task.desc}}</div>
 							</td>
-							<td *ngIf="task.images && task.images.length>0">
-								<div class="task_img text-right" *ngFor="let image of task.images">
-									<img src="{{path}}{{image}}">
-								</div>
-							</td>
 						</tr>
 					</table>
+					<div *ngIf="task.images && task.images.length>0">
+						<span class="task_img text-left" *ngFor="let image of task.images">
+							<img src="{{path}}{{image}}">
+						</span>
+					</div>
+					
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-6">
