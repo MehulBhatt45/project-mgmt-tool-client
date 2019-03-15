@@ -104,9 +104,13 @@ export class ChildComponent  {
 
 
   getInitialsOfName(name){
+    if(name){
     var str = name.split(' ')[0][0]+name.split(' ')[1][0];
     return str.toUpperCase();
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
+    }else{
+      return '';
+    }
   }
 
   openModel(task){
