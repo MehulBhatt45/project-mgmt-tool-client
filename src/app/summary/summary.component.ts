@@ -73,10 +73,7 @@ export class SummaryComponent implements OnInit {
 
 	ngOnInit() {
 
-
-		this.selectedProjectId = this.projectId;
-		this.selectedDeveloperId = this.developerId;
-		this.filterTracks(this.projectId,this.developerId);
+		
 	}
 	
 	getEmptyTracks(){
@@ -196,9 +193,12 @@ export class SummaryComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
+
 				console.log("id-=-=-=-()()()",id);
-				this.pro = res.pmanagerId;
-				console.log("project detail===>>>>",this.pro);
+				this.pro=res;
+				console.log("title{}{}{}{}",this.pro);
+				// this.pro = res.pmanagerId;
+				// console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					// this.projectTeam = res.team;
 					res.Teams.push(this.pro); 
@@ -261,73 +261,12 @@ export class SummaryComponent implements OnInit {
 		}
 	}
 
-	
-	filterTracks(projectId, developerId){
-		// this.selectedDeveloperId = developerId;
-		// this.selectedProjectId = projectId;
-		console.log(projectId, developerId);
-		this.getEmptyTracks();
-		if(projectId!='all' && developerId == 'all'){
-			_.forEach(this.tasks, (project)=>{
-				if(project.projectId._id == projectId){
-					_.forEach(this.tracks, (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-								track.tasks.push(project);
-							}
-						}else{
-							if(project.status == track.id){
-								track.tasks.push(project);
-							}
-						}
-					})
-				}	
-			})
-		}else if(projectId=='all' && developerId != 'all'){
-			_.forEach(this.tasks, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
-						track.tasks.push(project);
-					}
-				})
-			})
-		}else if(projectId!='all' && developerId != 'all'){
-			_.forEach(this.tasks, (project)=>{
-				console.log("trackfilter()__+++",this.tasks);
-				if(project.projectId._id == projectId){
-					_.forEach(this.tracks, (track)=>{
-						if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
-							track.tasks.push(project);
-						}
-					})
-				}
-			})
-		}else{
-			_.forEach(this.tasks, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-							track.tasks.push(project);
-						}
-					}else{
-						if(project.status == track.id){
-							track.tasks.push(project);
-						}
-					}
-				})
-			})
-		}
-		console.log("task()()()()()++_+_+_+",this.tracks);
-	}
-
 	getTaskCount(userId, status){
 		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 	}
 
 	getTaskPriority(priority, status){
-		console.log(priority, status);
+		// console.log(priority, status);
 		return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
 	}
 

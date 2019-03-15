@@ -23,12 +23,13 @@ export class LeaveComponent implements OnInit {
 	// durationDays;
 	showOneDays;
 	showMoreDayss;
+	leaveDuration;
 
 	constructor(public router:Router, public _projectservice:ProjectService) {
 		this.addForm = new FormGroup({
 			email: new FormControl ('',Validators.required),
 			name: new FormControl ('',Validators.required),
-			duration : new FormControl (''),
+			leaveDuration : new FormControl (''),
 			typeOfLeave : new FormControl (''),
 			reasonForLeave : new FormControl ('', Validators.required),
 			startingDate: new FormControl (''),
@@ -74,8 +75,9 @@ export class LeaveComponent implements OnInit {
 		form.endingDate = $('#endDate').val();
 		if(form.singleDate){
 			form.noOfDays = "1-day";
+			console.log("single date======>",form.singleDate);
 		}
-		console.log(form);
+		console.log("form data========>",form);
 		if(form.noOfDays == "1-day"){
 			form['endingDate'] = form['singleDate'];
 			form['startingDate'] = form['singleDate'];
@@ -86,11 +88,16 @@ export class LeaveComponent implements OnInit {
 			var date1 = new Date(form.endingDate);
 			console.log("staring date ===" , date2);
 			console.log("ending date ===" , date1);
+			form['endingDate'] = date1;
+			form['startingDate'] = date2;
+			console.log("staring date ...... ===" , date2);
+			console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());
 			var daysDuration = Math.ceil(timeDuration/(1000 * 3600 * 24));
 			console.log("daysDuration =======+>" , daysDuration);
+			form['leaveDuration'] = daysDuration;
+		console.log("form data======>",form);
 		}
-		console.log(form);
 		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
 
 			console.log("ressssssssssssss",res);

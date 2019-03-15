@@ -246,6 +246,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
+				console.log("title=={}{}{}{}{}",res);
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
@@ -580,6 +581,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onKey(searchText){
+		console.log("searchText",searchText);
 		console.log(this.project);
 		var dataToBeFiltered = [this.project];
 		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);

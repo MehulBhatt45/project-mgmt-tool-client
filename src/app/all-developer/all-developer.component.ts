@@ -6,7 +6,10 @@ import { LoginService } from '../services/login.service';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import {SearchTaskPipe} from '../search-task.pipe';
 import {config} from '../config';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import * as _ from 'lodash';
 
 @Component({
 	selector: 'app-all-developer',
@@ -22,9 +25,11 @@ export class AllDeveloperComponent implements OnInit {
 	projectId;
 	loader:boolean = false;
 	pro;
-	
+	searchText;
+
 	constructor(private route: ActivatedRoute,
-		private router: Router, public _projectService: ProjectService, public _alertService: AlertService, private _loginService: LoginService) { }
+		private router: Router, public _projectService: ProjectService,
+		public _alertService: AlertService, private _loginService: LoginService, public searchTextFilter: SearchTaskPipe) { }
 
 	ngOnInit() {
 		this.route.params.subscribe(param=>{
@@ -94,6 +99,21 @@ export class AllDeveloperComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+	}
+
+	onKey(searchText){
+		console.log("searchText",searchText);
+		console.log(this.Teams);
+		var dataToBeFiltered = [this.Teams];
+		var team = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+		console.log('tasks =======>', team);
+		// console.log("In Component",task);
+		// this.getEmptyTracks();
+		_.forEach(team, (content)=>{
+			_.forEach(this.Teams, (team)=>{
+				team.Teams.push(content);
+			});
+		});
 	}
 
 }

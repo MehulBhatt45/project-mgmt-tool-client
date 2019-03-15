@@ -35,7 +35,7 @@
 										<ul class="team-members">	
 											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 												<a href="javascript:void(0);">
-													{{getInitialsOfName(task.assignTo.name)}}
+													<div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
 												</a>
 											</li>
 											<li *ngIf="!task.assignTo" class="add-member">
@@ -47,7 +47,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label class="float-left"> <a style="color: black;" [routerLink]="['/userprofile']">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+								<label class="float-left"> <a style="color: black;" >{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>
