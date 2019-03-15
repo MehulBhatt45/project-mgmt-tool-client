@@ -13,13 +13,8 @@
 					<div class="container">
 						<form [formGroup]="editEmployeeForm" autocomplete="off">
 							<div class="md-form form-group">
-								<label for="firstName">First Name</label>
-								<input type="text" formControlName="fname" class="form-control" id="firstName" [ngModel]="userDetails.fname">
-							</div>
-
-							<div class="md-form form-group">
-								<label for="lastName">Last Name</label> 
-								<input type="text" formControlName="lname" class="form-control"  id="lastName" [ngModel]="userDetails.lname">
+								<label for="name">Name</label> 
+								<input type="text" formControlName="name" class="form-control"  id="name" [ngModel]="userDetails.name">
 							</div>
 
 							<div class="md-form form-group">
