@@ -54,7 +54,7 @@ export class LoginService {
         let formdata = new FormData();
         formdata.append("userId",data);
         formdata.append("profilePhoto",files[0]);
-        console.log("file is===>>>",files);
+        console.log("file is===>>>",files[0]);
         return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
     }
 

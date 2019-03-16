@@ -49,6 +49,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { PushNotificationService } from 'ngx-push-notifications';
 
 
+
 //All component for firebase notification
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -117,9 +118,11 @@ import { UserSummaryComponent } from './user-summary/user-summary.component';
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
     SelectDropDownModule,
-    NgSelectModule
+     NgSelectModule,
+
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    
 })
-export class AppModule { }
+export class AppModule {  }

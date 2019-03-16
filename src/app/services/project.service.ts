@@ -77,7 +77,7 @@ export class ProjectService {
 					'x-access-token': JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.post(config.baseApiUrl+"leave/leaveApplication",form);
+			return this.http.post(config.baseApiUrl+"leave/add-leave",form);
 		}
 
 
