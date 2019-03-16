@@ -23,6 +23,7 @@ export class ViewProjectComponent implements OnInit {
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   message;
+  objectsArray:any;
   constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),

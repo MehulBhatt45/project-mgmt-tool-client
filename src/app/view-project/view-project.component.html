@@ -232,25 +232,27 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                     <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
-                                        <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                            <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-                                            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                                        </ng-template>
-
-                                        <ng-template ng-option-tmp let-item="item">
-                                            <div style="margin: 10px 0; padding: 10px" class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title" [ngOptionHighlight]="search"><img height="30" width="30" src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'"/>{{item.name}}</h5>
-                                                    <h6 class="card-subtitle mb-2 text-muted">{{item.email}}</h6>
-                                                    <p class="card-text">
-                                                        {{item.userRole}}
-                                                    </p>
-                                                </div>
+                                        <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
+                                            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                                <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+                                                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                            </ng-template>
+                                            <div class="row">
+                                                <ng-template ng-option-tmp let-item="item">
+                                                    <div class="card testimonial-card">
+                                                        <div class="card-up deep-purple lighten-2"></div>
+                                                        <div class="avatar white img_section">
+                                                            <img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid" style="height: 100px;">
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h5 class="card-title mt-1">{{item.name}}</h5>
+                                                            <h6 class="card-title">{{item.userRole}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
                                             </div>
-                                        </ng-template>
-                                    </ng-select>
-                                </div>
+                                        </ng-select>
+                                    </div>
 
                                 <!-- demo code -->
                                 <img [src]="url" height="150" width="150"> <br/>

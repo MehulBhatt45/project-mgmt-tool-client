@@ -33,7 +33,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'' };
 	task;
 	tasks;
 	taskId;
@@ -469,11 +469,11 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
 	}
 
 	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#estimatedTime').pickatime({});
