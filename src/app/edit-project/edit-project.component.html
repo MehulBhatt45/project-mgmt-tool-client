@@ -1,9 +1,9 @@
 <div class="container" *ngIf="availData">
 	<div class="card">
 		<div class="container">
-			<h5 class="card-header white-text text-center py-4" style="margin-top: -20px;">
-				<strong>Update Project</strong>
-				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;">Delete Project</button>
+			<h5 class="card-header white-text text-center py-4" style="margin-top: -35px;background-color: darkslateblue;">
+				<strong>Edit Project</strong>
+				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;background-color: #01c0d8;">Delete Project</button>
 
 			</h5>
 			<div class="card-body px-lg-5 pt-1">
@@ -24,20 +24,20 @@
 					<label class="active" for="projecttitle">Project Title</label>
 					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
 				</div> -->
-				<div class="md-form form-group">
+				<!-- <div class="md-form form-group">
 					<textarea type="text" id="desc" class="md-textarea md-textarea-auto form-control" [(ngModel)]="availData.desc" tabindex="-1" autofocus="autofocus" mdbInput></textarea>
 					<label for="desc">Description</label>
-				</div>
+				</div> -->
 
 				<!-- <div class="md-form form-group">
 					<label class="active" for="desc">Description</label>
 					<textarea tabindex="-1" id="desc" rows="5" formControlName="desc" [(ngModel)]="availData.desc" class="form-control rounded-0 md-textarea" autofocus="autofocus" ></textarea>
 				</div> -->
 
-				<div class="md-form form-group">
+				<!-- <div class="md-form form-group">
 					<input  type="text" id="date-picker-example" class="form-control datepicker">
 					<label for="date-picker-example">Select Date</label>
-				</div>
+				</div> -->
 
 				<div>
 					<h3><strong>Client Details :-</strong></h3>
@@ -104,7 +104,7 @@
 						</div>
 						<button class="btn btn-default btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
 						<div *ngIf="showDeveloper"> 
-							<div class="row" *ngFor="let i of availableDevelopers">
+							<div class="row" *ngFor="let i of showDeveloper">
 								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
 								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
 							</div>
@@ -112,7 +112,7 @@
 					</div>
 				</div>
 				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
-				<div class="md-form form-group">
+				<!-- <div class="md-form form-group">
 					<input type="text" id="form1" class="form-control">
 					<label for="form1">Project Alias</label>
 				</div>
@@ -121,8 +121,8 @@
 					<label for="descr">Description</label>
 				</div>
 				<div>
-					<button type="button" class="btn btn-default" (click)="view_Project()" mdbBtn color="primary" mdbWavesEffect>Submit</button>
-				</div>
+					<button type="button" class="btn btn-default" (click)="updateProject(updateForm)" mdbBtn color="primary" mdbWavesEffect>Submit</button>
+				</div> -->
 
 			</form>
 		</div>
