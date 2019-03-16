@@ -36,7 +36,7 @@ export class ViewProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       avatar: new FormControl(''),
       allDeveloper:new FormControl(''),
-      Teams: new FormControl([])
+      // Teams: new FormControl([])
     });
   }
 
@@ -76,16 +76,17 @@ export class ViewProjectComponent implements OnInit {
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
       data.append(key, value)
+      console.log("data====()()",data);
     });
-    console.log(addForm, this.files);
+    console.log("my file()()){}",addForm, this.files);
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('uploadfile', this.files[i]);
       }
     }
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
+    console.log("data__+__+{}{}{}{}{}{}",data);
     this._projectService.addProject(data).subscribe((res:any)=>{
-      console.log(res);
       console.log("addproject2 is called");
     },err=>{
       console.log(err);    

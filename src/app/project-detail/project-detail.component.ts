@@ -69,7 +69,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
-		if(this.currentUser.userRole == "projectManager"){
+		if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
 			this.tracks = [
 			{

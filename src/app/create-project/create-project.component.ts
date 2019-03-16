@@ -38,7 +38,7 @@ export class CreateProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       // avatar:new FormControl(''),
       allDeveloper:new FormControl(''),
-      Teams: new FormControl([])
+      // Teams: new FormControl([])
 
     });
 
