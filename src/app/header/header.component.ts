@@ -104,6 +104,11 @@ export class HeaderComponent implements OnInit {
 		},err=>{
 			console.log(err);
 		});
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+			this.getEmptyTracks();
+			this.getProject(this.projectId);
+		});
 		// $('#login_details').click(function (){
 		// 	$(this).children('.dropdown-content').toggleClass('open');
 		// });
@@ -186,13 +191,15 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 
-	addItem(option){
+	addItem(option, id){
 		// this.loader=true;
 		setTimeout(()=>{
 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 			this.modalTitle = 'Add '+option;
 			$('.datepicker').pickadate();
 			$('#editModel').modal('show');
+			
+			this.getProject(this.projectId);
 			// this.loader=false;
 		},1000);
 	}

@@ -75,31 +75,32 @@
 			<div class="card testimonial-card">
 				<div class="card-up deep-purple lighten-2"></div>
 				<div class="avatar white img_section">
-					<a routerLink = "/visit-user-profile/{{pro.pmanagerId._id}}" ><img src="{{path}}{{pro.pmanagerId.profilePhoto}}" 
-						onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;"></a>
-					</div>
-					<div class="card-body">
-						<h5 class="card-title mt-1">{{pro.pmanagerId.name}}</h5>
-						<h6 class="card-title">{{pro.pmanagerId.userRole}}</h6>
-					</div>
+					<a routerLink = "/visit-user-profile/{{pro.pmanagerId._id}}" >
+						<img src="{{path}}{{pro.pmanagerId.profilePhoto}}" onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;">
+					</a>
 				</div>
-			</div>		
-		</div>
-		<p class="h5 mb-1 text-left">Developers</p>
-		<div class="row">
-			<div class="col-lg-3 col-md-12 mb-4" *ngFor="let team of Teams">
-				<div class="card testimonial-card">
-					<div class="card-up deep-purple lighten-2"></div>
-					<div class="avatar white img_section">
-						<a routerLink = "/visit-user-profile/{{team._id}}" ><img src="{{path}}{{team.profilePhoto}}" 
-							onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;"></a>
-						</div>
-						<div class="card-body">
-							<h5 class="card-title mt-1">{{team.name}}</h5>
-							<h6 class="card-title">{{team.userRole}}</h6>
-						</div>
-					</div>
-				</div>		
+				<div class="card-body">
+					<h5 class="card-title mt-1">{{pro.pmanagerId.name}}</h5>
+					<h6 class="card-title">{{pro.pmanagerId.userRole}}</h6>
+				</div>
 			</div>
-
-		</section>
+		</div>		
+	</div>
+	<p class="h5 mb-1 text-left">Developers</p>
+	<div class="row">
+		<div class="col-lg-3 col-md-12 mb-4" *ngFor="let team of Teams">
+			<div class="card testimonial-card">
+				<div class="card-up deep-purple lighten-2"></div>
+				<div class="avatar white img_section">
+					<a routerLink = "/visit-user-profile/{{team._id}}" >
+						<img src="{{path}}{{team.profilePhoto}}" onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;">
+					</a>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title mt-1">{{team.name}}</h5>
+					<h6 class="card-title">{{team.userRole}}</h6>
+				</div>
+			</div>
+		</div>		
+	</div>
+</section>

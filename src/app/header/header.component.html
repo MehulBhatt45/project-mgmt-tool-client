@@ -43,7 +43,7 @@
 
           <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i>   Add Employee</a></li>
 
-          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
+          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='admin'"><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
            <i class="fa fa-angle-down rotate-icon"></i></a>
            
@@ -132,7 +132,7 @@
             <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
           </div> 
           <!-- *ngIf="currentUser.userRole=='projectManager'" -->
-          <div class="second_icondropdown" id="plus_details">
+          <div class="second_icondropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager'">
             <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true" ></i></a>
             <div class="dropdown-menu">
               <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
