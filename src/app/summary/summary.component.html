@@ -37,7 +37,7 @@
 						<div class="progress-value" *ngFor="let track of tracks">{{track.tasks.length}}</div>
 					</div>
 				</div>
-				 -->
+			-->
 				<!-- <div class="progress md-progress" style="height: 20px;">
 					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 40%;height: 20px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 				</div>
@@ -94,7 +94,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let user of projectTeam">
-					<td scope="row" style="text-align: left;" >{{user.name}}</td>
+					<td scope="row" style="text-align: left;">{{user.name}}</td>
 					<td>{{getTaskCount(user._id, 'to do')}}</td>
 					<td>{{getTaskCount(user._id, 'in progress')}}</td>
 					<td>{{getTaskCount(user._id, 'testing')}}</td>

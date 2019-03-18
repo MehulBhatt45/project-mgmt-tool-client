@@ -262,6 +262,7 @@ export class SummaryComponent implements OnInit {
 	}
 
 	getTaskCount(userId, status){
+		console.log("userId===-=-={}{}{}{}{}",userId);
 		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 	}
 
