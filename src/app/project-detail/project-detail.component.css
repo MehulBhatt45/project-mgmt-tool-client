@@ -54,6 +54,9 @@
   opacity: 0;
 }
 
+.btn-default{
+    margin-left: 0px!important;
+}
 
 .team-members li:hover{
   z-index: 1;
@@ -277,24 +280,6 @@ table {
     overflow-y: auto!important;
 
   }
-
-  .modal-header {
-    padding: 2rem;
-  }
-  .refresh{
-    margin: 0;
-    padding: 5px;
-    font-size: 20px;
-  }
-  .fa-refresh[_ngcontent-c2] {
-    float: right;
-    margin: 0 !important; 
-
-  }
-
-  .modal-header {
-    padding: 2rem;
-  }
   .refresh{
     margin: 0;
     padding: 5px;
@@ -324,7 +309,8 @@ table {
     }
   }
   .modal-header {
-    padding: 2rem;
+    background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%);
+    color: white;
   }
 
   .dropdown{

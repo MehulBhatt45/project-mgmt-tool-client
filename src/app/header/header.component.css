@@ -108,8 +108,8 @@ ol.breadcrumb.hidden-lg-down li a {
 
 .dropdown-menu a.dropdown-item {
   text-align: left;
-  padding: 5px 15px;
-  font-size: 13px;
+ padding: 16px;
+    font-size: 15px;
   border-radius: 5px!important;
   transition: all 0.7s;
 }
