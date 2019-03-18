@@ -27,17 +27,17 @@ export class CreateProjectComponent implements OnInit {
     public _alertService: AlertService,) { 
 
     this.addForm = new FormGroup({
-      title: new FormControl('', Validators.required),
-      avatar:new FormControl(''),
+      title: new FormControl('',Validators.required),
+      avatar:new FormControl('',Validators.required),
       desc: new FormControl(''),
-      deadline: new FormControl('', Validators.required),
-      uniqueId: new FormControl('' , Validators.required),
-      clientEmail: new FormControl('' , Validators.required),
-      clientFullName: new FormControl('', Validators.required),
+      deadline: new FormControl(''),
+      uniqueId: new FormControl('',Validators.required),
+      clientEmail: new FormControl('',Validators.required),
+      clientFullName: new FormControl('',Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      // avatar:new FormControl(''),
-      allDeveloper:new FormControl(''),
+      //avatar:new FormControl(''),
+      //allDeveloper:new FormControl(''),
       // Teams: new FormControl([])
 
     });

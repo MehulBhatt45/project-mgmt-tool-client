@@ -28,7 +28,7 @@ export class ViewProjectComponent implements OnInit {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
-      deadline: new FormControl('', Validators.required),
+      deadline: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),

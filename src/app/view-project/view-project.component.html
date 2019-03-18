@@ -9,7 +9,7 @@
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
             <div class="card testimonial-card z-depth-5">
               <!-- Background image -->
-              <div class="card-up" style="background-image: url('../assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
+              <div class="card-up" style="background-image: url('/assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
                   <div style="top:0; left:0; right:0;bottom:0; background-color: rgba(250, 250, 250,0.7); height: 150px;">
                     <!-- Project Name -->
                     <div class="card-title " routerLink="/project-details/{{project._id}}">
@@ -232,7 +232,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                   <!--  <div class="form-group">
                                         <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
                                             <ng-template ng-label-tmp let-item="item" let-clear="clear">
                                                 <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
@@ -253,7 +253,7 @@
                                                 </ng-template>
                                             </div>
                                         </ng-select>
-                                    </div>
+                                    </div> -->
 
 
                                 <!-- demo code -->
