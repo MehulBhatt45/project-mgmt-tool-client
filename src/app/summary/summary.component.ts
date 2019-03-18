@@ -55,6 +55,8 @@ export class SummaryComponent implements OnInit {
 	selectedProjectId = "all";
 	selectedDeveloperId = "all";
 	Team;
+	completedTask ;
+	projectLength;
 	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -72,9 +74,13 @@ export class SummaryComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		
-	}
+		// var completedTask=this.getCompletedTask(status);
+		// console.log("completed))___+++",completedTask);
+
+		}
+
+	
 	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
@@ -262,7 +268,13 @@ export class SummaryComponent implements OnInit {
 	}
 
 	getTaskCount(userId, status){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
 		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	}
+
+	getCompletedTask(status){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
+		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 	}
 
 	getTaskPriority(priority, status){

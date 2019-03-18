@@ -92,6 +92,18 @@ export class ProjectService {
 			return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
 		}
 
+			leavesById(email){
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					'x-access-token': JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			 // var email = JSON.parse(localStorage.getItem('currentUser')).email;
+			return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
+		}
+
+
 
 		leaveApproval(req, body){
 			var body = body;
@@ -105,7 +117,6 @@ export class ProjectService {
 			};
 			return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
 		}
-
 
 
 		addProject(body){
@@ -358,6 +369,10 @@ export class ProjectService {
 						'x-access-token':  JSON.parse(localStorage.getItem('token'))
 					})
 				};
-				return this.http.put(config.baseApiUrl+"user/update-details/"+id, httpOptions);
+				return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+			}
+
+			getUsersNotInProject(id){
+				return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
 			}
 		}
