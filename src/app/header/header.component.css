@@ -61,8 +61,8 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 }
 .dropdown-content a.dropdown-item {
   text-align: left;
-  padding: 5px 15px;
-  font-size: 13px;
+  padding:16px;
+  font-size: 15px;
   border-radius: 5px!important;
 }
 .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
