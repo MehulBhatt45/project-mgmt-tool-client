@@ -48,7 +48,7 @@
 	<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+				<h4 class="modal-title w-100 text-center" id="myModalLabel">Task Details</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<i class="fa fa-times"></i>
 				</button>
@@ -110,6 +110,9 @@
 									<label><strong>estimated time: &nbsp;</strong></label>
 									<span>{{task.estimatedTime}}</span>
 								</p>
+
+								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
+
 							</div>
 							<div class="col-12 col-md-6">
 								<p>
@@ -141,7 +144,7 @@
 								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
 							</div> -->
 							<div>
-								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
+								
 							</div>
 						</div>
 					</div>
@@ -177,7 +180,7 @@
 				<div *ngIf="task.comment && task.comment.length<=0">
 					<p>No comments on this be the first one to comments on...</p>
 				</div>
-				<div class="padding-20">
+				<div>
 					<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 
 					<div class="btn btn-default" (click)="commentImg.click()">
