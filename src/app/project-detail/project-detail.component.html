@@ -204,14 +204,14 @@
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header view view-cascade narrower">
 				<h5 class="modal-title" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<div class="row">
+			<div class="modal-body view view-cascade">
+				<div class="container">
 					<form style="width: 100%;" [formGroup]="editTaskForm">
 						<div class="form-group col-12">
 							<label for="title">Title</label>
@@ -227,29 +227,25 @@
 								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
 						</div>
-						<div class="row no-margin no-padding" >
-							<div class="form-group col-12 col-lg-6">
+						<div class="row no-margin no-padding  border" >
+							<div class="form-group col-12 col-lg-6 pt-1">
 								<label for="assignTo">Assign To</label>
-								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
-								<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
 									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 								</select>
 							</div>
-							<div class="form-group col-12 col-lg-6">
+							<div class="form-group col-12 col-lg-6 pt-1">
 								<label for="priority">Priority</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+								<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
 									<option value="4">Low</option>
-									<option value="3">Medium</option>
+										<option value="3">Medium</option>
 									<option value="2">High</option>
 									<option value="1">Highest</option>
 								</select>
 							</div>
-						</div>
-
-						
-						<div class="row no-margin no padding" >
 							<div class="form-group col-6">
 								<label for="dueDate">Due Days</label>
 								<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
@@ -262,8 +258,8 @@
 									<input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime">
 								</div>
 							</div>
-
 						</div>
+
 						<div class="form-group col-12">
 							<label for="status">Status</label>
 							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
@@ -284,9 +280,9 @@
 				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-					<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
-				</div>
+				<!-- <div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)">Delete Task</button>
+				</div> -->
 				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value);" >Save changes</button>
 			</div>
 		</div>
