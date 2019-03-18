@@ -12,9 +12,17 @@
 				<div class="card-body  card-body-cascade text-center px-lg-5" style="padding-top: 35px;">
 					<div class="container">
 						<form [formGroup]="editEmployeeForm" autocomplete="off">
+
+
+
 							<div class="md-form form-group">
-								<label for="name">Name</label> 
-								<input type="text" formControlName="name" class="form-control"  id="name" [ngModel]="userDetails.name">
+								<label for="name">Firstname</label> 
+								<input type="text" formControlName="fname" class="form-control"  id="name" [ngModel]="userDetails.name">
+							</div>
+
+							<div class="md-form form-group">
+								<label for="name">Lastname</label> 
+								<input type="text" formControlName="lname" class="form-control"  id="name" [ngModel]="userDetails.lname">
 							</div>
 
 							<div class="md-form form-group">

@@ -369,6 +369,10 @@ export class ProjectService {
 						'x-access-token':  JSON.parse(localStorage.getItem('token'))
 					})
 				};
-				return this.http.put(config.baseApiUrl+"user/update-details/"+id, httpOptions);
+				return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+			}
+
+			getUsersNotInProject(id){
+				return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
 			}
 		}

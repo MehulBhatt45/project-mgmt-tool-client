@@ -63,7 +63,7 @@ export class LoginService {
             console.log("fhvg=>",files);
             console.log("bodyyyyyyyyy===>",body);
             let formdata = new FormData();
-            formdata.append('fname',body.fname);
+            formdata.append('name',body.fname);
             formdata.append('lname',body.lname);
             formdata.append('email',body.email);
             formdata.append('userRole',body.userRole);

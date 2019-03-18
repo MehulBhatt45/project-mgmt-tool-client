@@ -23,6 +23,7 @@ export class CreateProjectComponent implements OnInit {
   };
   baseUrl = config.baseMediaUrl;
   objectsArray: any = [];
+  setDate:any;
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 
 
@@ -38,97 +39,88 @@ export class CreateProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       //avatar:new FormControl(''),
       //allDeveloper:new FormControl(''),
-      // Teams: new FormControl([])
+      Teams: new FormControl([])
 
     });
 
   }
 
   ngOnInit() {
-    // $('.mdb-select').materialSelect();
     this.getAllDevelopers();
-    $('.datepicker').pickadate();
-    // var options = [];
-
-    // $( '.dropdown-menu' ).on( 'click', function( event ) {
-
-      //   var $target = $( event.currentTarget ),
-      //   val = $target.attr( '[ngValue]' ),
-      //   $inp = $target.find( 'input' ),
-      //   idx;
-
-      //   if ( ( idx = options.indexOf( val ) ) > -1 ) {
-        //     options.splice( idx, 1 );
-        //     setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
-        //   } else {
-          //     options.push( val );
-          //     setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
-          //   }
-
-          //   $( event.target ).blur();
-          
-          //   console.log( options );
-          //   return false;
-          // });
-        }
-        
-        addProject(addForm){
-          console.log(addForm);
-          var data = new FormData();
-          _.forOwn(addForm, function(value, key) {
-            data.append(key, value)
-          });
-          console.log(addForm, this.files);
-          if(this.files && this.files.length>0){
-            for(var i=0;i<this.files.length;i++){
-              data.append('uploadfile', this.files[i]);
-            }
-          }
-          data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-          this._projectService.addProject(data).subscribe((res:any)=>{
-            console.log(res);
-            console.log("addproject2 is called");
-          },err=>{
-            console.log(err);    
-          }) 
-        }
-
-        addIcon(value){
-          this.addForm.value['avatar'] = value;
-          console.log(this.addForm.value['avatar']);
-          this.url = 'http://localhost/project_mgmt_tool/server'+this.addForm.value['avatar'];
-          $('#basicExampleModal').modal('hide');
-        }
-        
-        onSelectFile(event) {
-          console.log("response from changefile",event.target.files);
-          this.files = event.target.files;
-          $('#basicExampleModal').modal('hide');
-          if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]); // read file as data url
-            reader.onload = (event:any) => { // called once readAsDataURL is completed
-              this.url = event.target.result;
-
-            }
-          }
-        }
-
-        getAllDevelopers(){
-          this._projectService.getAllDevelopers().subscribe(res=>{
-            this.developers = res;
-            this.developers.sort(function(a, b){
-              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-              if (nameA < nameB) //sort string ascending
-                return -1 
-              if (nameA > nameB)
-                return 1
-              return 0 //default return value (no sorting)
-            })
-            console.log("Developers",this.developers);
-          },err=>{
-            console.log("Couldn't get all developers ",err);
-            this._alertService.error(err);
-          })
-        }
+    $('.datepicker').pickadate({
+      onSet: function(context) {
+        console.log('Just set stuff:', context);
+        setDate(context);
       }
+    });
+    var setDate = (context)=>{
+      this.timePicked();
+    }
+  }
+
+  addProject(addForm){
+    console.log(addForm, this.files);
+    var data = new FormData();
+    _.forOwn(addForm, function(value, key) {
+      data.append(key, value)
+    });
+    if(this.files && this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('uploadfile', this.files[i]);
+      }
+    }
+    data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
+    this._projectService.addProject(data).subscribe((res:any)=>{
+      console.log(res);
+      console.log("addproject2 is called");
+      this.addForm.reset();
+      this.url = '';
+      this.router.navigate(['/view-projects']);
+    },err=>{
+      console.log(err);    
+    }) 
+  }
+
+  timePicked(){
+    this.addForm.controls.deadline.setValue($('.datepicker').val())
+  }
+
+  addIcon(value){
+    this.addForm.value['avatar'] = value;
+    console.log(this.addForm.value['avatar']);
+    this.url = this.baseUrl+this.addForm.value['avatar'];
+    $('#basicExampleModal').modal('hide');
+  }
+
+  onSelectFile(event) {
+    console.log("response from changefile",event.target.files);
+    this.files = event.target.files;
+    $('#basicExampleModal').modal('hide');
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      reader.onload = (event:any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+
+      }
+    }
+  }
+
+  getAllDevelopers(){
+    this._projectService.getAllDevelopers().subscribe(res=>{
+      this.developers = res;
+      this.developers.sort(function(a, b){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 //default return value (no sorting)
+      })
+      console.log("Developers",this.developers);
+    },err=>{
+      console.log("Couldn't get all developers ",err);
+      this._alertService.error(err);
+    })
+  }
+}
