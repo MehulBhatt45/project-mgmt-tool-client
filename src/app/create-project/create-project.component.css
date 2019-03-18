@@ -5,19 +5,7 @@ select{
 /*:host ::ng-deep .ng-dropdown-panel{
 	position: relative !important;
 }*/
-.img_section{
-  height: 60px;
-  width: 60px;
-  margin: 0 auto;
-}
-.img_section img{
-  max-height: 100%;
-  max-width: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  object-fit: cover;
-  margin: 0 auto;
-}
+
 .card{
   padding: 10px;
 }
@@ -111,6 +99,24 @@ ul.project-avatar li:hover {
 }
 */
 
+.img_section{
+  height: 60px;
+  width: 60px;
+  margin: 0 auto;
+}
+.img_section img{
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.card.testimonial-card .card-body h5 {
+    padding: 0 5px;
+    font-size: 18px;
+}
 
 
 :host ::ng-deep .ng-dropdown-panel-items.scroll-host > div + div {

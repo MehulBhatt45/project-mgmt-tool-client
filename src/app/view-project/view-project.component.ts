@@ -35,14 +35,21 @@ export class ViewProjectComponent implements OnInit {
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
       avatar: new FormControl(''),
-      allDeveloper:new FormControl(''),
-      // Teams: new FormControl([])
+      Teams: new FormControl([])
     });
   }
 
   ngOnInit() {
     this.getAllDevelopers();
-    $('.datepicker').pickadate();
+   $('.datepicker').pickadate({
+      onSet: function(context) {
+        console.log('Just set stuff:', context);
+        setDate(context);
+      }
+    });
+    var setDate = (context)=>{
+      this.timePicked();
+    }
     this.loader=true;
     setTimeout(()=>{
       this._projectService.getProjects().subscribe(res=>{
@@ -59,6 +66,10 @@ export class ViewProjectComponent implements OnInit {
     this.messagingService.requestPermission(currentUserId)
     this.messagingService.receiveMessage()
     this.message = this.messagingService.currentMessage
+  }
+
+  timePicked(){
+    this.addForm.controls.deadline.setValue($('.datepicker').val())
   }
 
   getTitle(name){

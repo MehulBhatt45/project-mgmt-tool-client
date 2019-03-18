@@ -9,7 +9,7 @@
         <div class="col-12 col-md-3 margin-bottom-30" *ngFor="let project of projects">
             <div class="card testimonial-card z-depth-5">
               <!-- Background image -->
-              <div class="card-up" style="background-image: url('/assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
+              <div class="card-up" style="background-image: url('assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
                   <div style="top:0; left:0; right:0;bottom:0; background-color: rgba(250, 250, 250,0.7); height: 150px;">
                     <!-- Project Name -->
                     <div class="card-title " routerLink="/project-details/{{project._id}}">
@@ -232,8 +232,8 @@
                                         </div>
                                     </div>
 
-                                   <!--  <div class="form-group">
-                                        <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
+                                    <div class="form-group">
+                                        <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams">
                                             <ng-template ng-label-tmp let-item="item" let-clear="clear">
                                                 <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
                                                 <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
@@ -253,7 +253,7 @@
                                                 </ng-template>
                                             </div>
                                         </ng-select>
-                                    </div> -->
+                                    </div>
 
 
                                 <!-- demo code -->
@@ -302,82 +302,82 @@ aria-hidden="true">
                 </div>
                 <ul class="project-avatar">
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/school.png')">
                             <img src="../assets/avatar/school.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/mortarboard.png')">
                             <img src="assets/avatar/mortarboard.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/alarm-clock.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/alarm-clock.png')">
                             <img src="assets/avatar/alarm-clock.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button"  (click)="addIcon('/uploads/avatar/stethoscope.png')">
+                        <button class="icon-button"  (click)="addIcon('/avatar/stethoscope.png')">
                             <img src="assets/avatar/stethoscope.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/doctor.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/doctor.png')">
                             <img src="assets/avatar/doctor.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/bookshelf.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/bookshelf.png')">
                             <img src="assets/avatar/bookshelf.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/flask.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/flask.png')">
                             <img src="assets/avatar/flask.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/customer-service.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/customer-service.png')">
                             <img src="assets/avatar/customer-service.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/payment-method.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/payment-method.png')">
                             <img src="assets/avatar/payment-method.png" height="56" width="56">
                         </button>   
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/beach.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/beach.png')">
                             <img src="assets/avatar/beach.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/coding.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/coding.png')">
                             <img src="assets/avatar/coding.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/maintenance.png')">
                             <img src="assets/avatar/maintenance.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/birthday-cake.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/birthday-cake.png')">
                             <img src="assets/avatar/birthday-cake.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/conversation.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/conversation.png')">
                             <img src="assets/avatar/conversation.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/food.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/food.png')">
                             <img src="assets/avatar/food.png" height="56" width="56">
                         </button>
                     </li>
                     <li>
-                        <button class="icon-button" (click)="addIcon('/uploads/avatar/shopping-basket.png')">
+                        <button class="icon-button" (click)="addIcon('/avatar/shopping-basket.png')">
                             <img src="assets/avatar/shopping-basket.png" height="56" width="56">
                         </button>
                     </li>
