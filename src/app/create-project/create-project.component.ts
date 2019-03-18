@@ -16,24 +16,29 @@ export class CreateProjectComponent implements OnInit {
   files:FileList;
   addForm:FormGroup;
   url = '';
-  developers: any
+  developers: any;
+  config = {
+    displayKey: "name", //if objects array passed which key to be displayed defaults to description
+    search: true
+  };
+  baseUrl = config.baseMediaUrl;
+  objectsArray: any = [];
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 
 
     this.addForm = new FormGroup({
-      title: new FormControl('', Validators.required),
-      avatar:new FormControl(''),
+      title: new FormControl('',Validators.required),
+      avatar:new FormControl('',Validators.required),
       desc: new FormControl(''),
-      deadline: new FormControl('', Validators.required),
-      Designation: new FormControl('', Validators.required),
-      uniqueId: new FormControl('' , Validators.required),
-      clientEmail: new FormControl('' , Validators.required),
-      clientFullName: new FormControl('', Validators.required),
+      deadline: new FormControl(''),
+      uniqueId: new FormControl('',Validators.required),
+      clientEmail: new FormControl('',Validators.required),
+      clientFullName: new FormControl('',Validators.required),
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
-      // avatar:new FormControl(''),
-      allDeveloper:new FormControl(''),
-      Teams: new FormControl([])
+      //avatar:new FormControl(''),
+      //allDeveloper:new FormControl(''),
+      // Teams: new FormControl([])
 
     });
 
@@ -80,7 +85,7 @@ export class CreateProjectComponent implements OnInit {
             }
           }
           data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
-          this._projectservice.addProject(data).subscribe((res:any)=>{
+          this._projectService.addProject(data).subscribe((res:any)=>{
             console.log(res);
             console.log("addproject2 is called");
           },err=>{
@@ -126,10 +131,4 @@ export class CreateProjectComponent implements OnInit {
             this._alertService.error(err);
           })
         }
-
-
-
-}
-
-
-
+      }

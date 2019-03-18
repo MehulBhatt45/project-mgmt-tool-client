@@ -104,17 +104,17 @@ export class HeaderComponent implements OnInit {
 		},err=>{
 			console.log(err);
 		});
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+			// this.getEmptyTracks();
+			// this.getProject(this.projectId);
+		});
 		// $('#login_details').click(function (){
 		// 	$(this).children('.dropdown-content').toggleClass('open');
 		// });
 		
 		this.getAllDevelopers();
 		this.getEmptyTracks();
-
-		this.route.params.subscribe(param=>{
-			this.userId = param.id;
-			this.getDeveloperById(this.userId);
-		});
 
 	}	
 
@@ -176,6 +176,7 @@ export class HeaderComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			console.log("Developers",this.developers);
 			this.developers.sort(function(a, b){
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
 				if (nameA < nameB) //sort string ascending
@@ -184,20 +185,21 @@ export class HeaderComponent implements OnInit {
 					return 1
 				return 0 //default return value (no sorting)
 			})
-			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
 	}
 
-	addItem(option){
+	addItem(option, id){
 		// this.loader=true;
 		setTimeout(()=>{
 			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
 			this.modalTitle = 'Add '+option;
 			$('.datepicker').pickadate();
 			$('#editModel').modal('show');
+			
+			// this.getProject(this.projectId);
 			// this.loader=false;
 		},1000);
 	}
@@ -236,7 +238,7 @@ export class HeaderComponent implements OnInit {
 		console.log("ama pn jovanu che ho ========>",subUrl);
 		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
 			$('#editModel').modal('hide');
-			this.getProject(this.projectId);
+			// this.getProject(this.projectId);
 			console.log("kai vandho pde che===>",this.projectId);
 		},err=>{
 			console.log(err);

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter, HostListener } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import { config } from '../config';
 
 declare var $ : any;
 @Component({
@@ -17,6 +18,7 @@ export class ChildComponent  {
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   taskId;
+  path = config.baseMediaUrl;
   // trackChangeProjectWise;
   // trackChangeDeveloperWise;
   // projects;
@@ -104,9 +106,13 @@ export class ChildComponent  {
 
 
   getInitialsOfName(name){
+    if(name){
     var str = name.split(' ')[0][0]+name.split(' ')[1][0];
     return str.toUpperCase();
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
+    }else{
+      return '';
+    }
   }
 
   openModel(task){

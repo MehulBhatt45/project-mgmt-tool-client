@@ -2,17 +2,21 @@
 	<div class="row">
 		<div class="col-12 col-md-3">
 			<div class="card img_card">
+
 				<div class="profile_picture">
-					<img class="img-fluid" src="assets/6.jpg">
+					<!-- <img class="img-fluid" src="assets/6.jpg"> -->
+					<!-- <img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/3.png'"> -->
+
 				</div>
 			</div>
 		</div>
 		<div class="col-12 col-md-9">
 			<div class="user_detail">
-				<p *ngFor="let developer of developers"></p>
-				<p>{{user.name}}</p>
-				<p>{{user.email}}</p>
-				<p> {{user.userRole}} </p>
+
+				<!-- <p *ngFor="let developer of devel"></p> -->
+				<p>{{developer.name}}</p>
+				<p>{{developer.email}}</p>
+				<p> {{developer.userRole}} </p>
 				<p> Other Details </p>
 			</div>
 		</div>

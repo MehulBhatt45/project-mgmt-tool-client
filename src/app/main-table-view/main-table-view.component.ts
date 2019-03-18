@@ -300,7 +300,7 @@ export class MainTableViewComponent implements OnInit {
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		console.log("update =====>",task);
-		this._projectService.updateTask(task).subscribe((res:any)=>{
+		this._projectService.updateTask(task._id, task).subscribe((res:any)=>{
 			console.log("res ===>" , res);
 		},(err:any)=>{
 			console.log("err ===>" , err);
@@ -365,7 +365,7 @@ export class MainTableViewComponent implements OnInit {
 			})
 		}else if(projectId!='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
-				console.log(project);
+				console.log("trackfilter()__+++",this.tasks);
 				if(project.projectId._id == projectId){
 					_.forEach(this.tracks, (track)=>{
 						if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
@@ -390,6 +390,7 @@ export class MainTableViewComponent implements OnInit {
 				})
 			})
 		}
+		console.log("task()()()()()++_+_+_+",this.tracks);
 	}
 	public Editor = DecoupledEditor;
 

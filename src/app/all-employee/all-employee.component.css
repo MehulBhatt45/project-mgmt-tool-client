@@ -13,7 +13,7 @@
 	width: 20px;
 }
 .drop_btn{
-	width: 69%;
+	width: 65%;
 }
 .dropdown-content {
   bottom: 12.5px;
@@ -41,4 +41,25 @@
 }
 .fa-ellipsis-v{
   color: #4B515D;
+}
+.img_section img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  display: inline-block;
+  text-align: center;
+  padding: 6px;
+  font-weight: 700;
+  font-size: 43px;
+  background-color: #372e5f;
+  float: left;
+  box-shadow: 0 0 20px 0 rgba(171,171,171,.8);
+  position: relative;
+  cursor: pointer;
+}
+.img_content{
+  float: left;
+  color: white;
+  text-transform: uppercase;
 }

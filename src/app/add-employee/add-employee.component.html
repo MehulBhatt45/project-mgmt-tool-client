@@ -2,27 +2,25 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card card-cascade narrower">
-				<!-- <h5 class="card-header white-text text-center py-4">
-					<strong>Add Employee Details</strong>
-				</h5> -->
+				
 				<!-- Card image -->
 				<div class="view view-cascade gradient-card-header" style="background-color: #372e5f">
 					<!-- Title -->
-					<h2 class="card-header-title white-text  text-center py-2" align="center" >Add Employee </h2>
+					<h2 class="card-header-title white-text  text-center py-4" align="center" >Add Employee </h2>
 				</div>
 				<!-- Card content -->
 				<div class="card-body  card-body-cascade text-center px-lg-5" style="padding-top: 35px;">
 					<div class="container">
 						<form [formGroup]="addEmployeeForm" autocomplete="off">
 							<div class="md-form form-group">
-								<label for="firstName">First Name</label>
+								<label for="firstName"> Name</label>
 								<input type="text" formControlName="fname" class="form-control" id="firstName">
 							</div>
 
-							<div class="md-form form-group">
+						<!-- 	<div class="md-form form-group">
 								<label for="lastName">Last Name</label> 
 								<input type="text" formControlName="lname" class="form-control"  id="lastName">
-							</div>
+							</div> -->
 
 							<div class="md-form form-group">
 								<label for="email">Email</label>
@@ -41,7 +39,7 @@
 					<input type="date" formControlName="date" class="form-control">
 				</div> -->
 				<div class="md-form form-group">
-					<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+					<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
 					<!-- <label for="date-picker-example">Try me...</label> -->
 				</div>
 				<div class="md-form form-group" style="height: 45px;">
@@ -53,17 +51,7 @@
 						<option value="developer">Developer</option>
 					</select>
 				</div>
-				<!-- <div class="row">
-					<div class="input-field">
-
-						<select class="mdb-select md-form">
-							<option value="" disabled selected>Choose your option</option>
-							<option value="1">Option 1</option>
-							<option value="2">Option 2</option>
-							<option value="3">Option 3</option>
-						</select>	
-					</div>
-				</div> -->
+				
 				<div class="md-form form-group">
 					<label for="experience">Experience (Before Joining)</label>
 					<input type="text" formControlName="experience" class="form-control" id="experience">
@@ -72,14 +60,14 @@
 					<label for="profile">Profile photo</label>
 					<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
 				</div> -->
-						<div class="file-field">
-							<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
-								<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
-							</div>
-						</div>
+				<div class="file-field">
+					<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
+						<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
+					</div>
+				</div>
 				<!-- <div class="md-form form-group">
 					<form class="md-form my-3" action="#">
 					</form>
@@ -95,14 +83,14 @@
 						</div>
 					</div> -->
 
-							<div class="file-field" >
-								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
-									<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload Your CV">
-								</div>
-							</div>
+					<div class="file-field" >
+						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
+							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="Upload Your CV">
+						</div>
+					</div>
 					<!-- <div class="md-form form-group">
 						<form class="md-form my-3" action="#">
 						</form>

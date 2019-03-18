@@ -7,6 +7,7 @@ import { LoginService } from '../services/login.service';
 import * as _ from 'lodash';
 declare var $ : any;
 import { config } from '../config';
+
 @Component({
 	selector: 'app-userprofile',
 	templateUrl: './userprofile.component.html',
@@ -16,9 +17,13 @@ import { config } from '../config';
 export class UserprofileComponent implements OnInit {
 	projects;
 	developers;
+	path = config.baseMediaUrl;
 	userId;
+	url = '';
+	user;
+	files;
 	projectArr = [];
-	finalarr = [];
+	finalArr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
@@ -42,7 +47,6 @@ export class UserprofileComponent implements OnInit {
 		});
 		this.createEditEmail();
 		this.getAllDevelopers();
-		this.uploadFile();
 
 	}
 	getAllProjects(){
@@ -50,29 +54,30 @@ export class UserprofileComponent implements OnInit {
 			console.log("all projects =====>" , res);
 			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log("current user ====>" , userId);
+			// this.pro = res.userId;
+			// console.log("project detail===>>>>",this.pro);
 			this.projects = res;
 			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (singleTask)=>{
-					if(singleTask._id == userId){
+				_.forEach(task.Teams , (project)=>{
+					if(project._id == userId){
 						this.projectArr.push(task);
 					}
 				})
 			})			
-			this.finalarr.push(this.projectArr[0]);
-			console.log("response======>",this.finalarr);
+			this.finalArr.push(this.projectArr[0]);
+			console.log("response======>",this.finalArr);
 		},err=>{
 			this._alertService.error(err);
 			console.log(err);
 		})
 	}
 
-
 	getDeveloperById(id){
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
 			console.log("all users =============>",res);
-			var userId = JSON.parse(localStorage.getItem('user'))._id;
+			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log(" currentUser profile ====>" , userId);
 		},(err:any)=>{
 			console.log("eroooooor=========>",err);
@@ -82,6 +87,7 @@ export class UserprofileComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			console.log("Developers",this.developers);
 			this.developers.sort(function(a, b){
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 				if (nameA < nameB) //sort string ascending
@@ -90,7 +96,6 @@ export class UserprofileComponent implements OnInit {
 					return 1
 				return 0 //default return value (no sorting)
 			})
-			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
@@ -100,13 +105,29 @@ export class UserprofileComponent implements OnInit {
 	openModel(task){
 		$('#editEmailModel').modal('show');
 	}
-	uploadFile(){
 
-	
+	uploadFile(e){
+		console.log("file============>",e.target.files);
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("userId===============>",this.userId);
+		this.files = e.target.files;
+		console.log("files===============>",this.files);
+		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+			console.log("resss=======>",res);
+			setTimeout(()=>{
+				this.currentUser = res;
+				localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+			},1000);
+		},error=>{
+			console.log("errrorrrrrr====>",error);
+		});  
 	}
-
 	
 }
+
+
+
+
 
 
 

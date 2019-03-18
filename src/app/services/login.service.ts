@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { config } from '../config';
@@ -11,7 +11,7 @@ export class LoginService {
 	private currentUserSubject: BehaviorSubject<any>;
     public currentUser: Observable<any>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http:HttpClient) {
         this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -23,33 +23,82 @@ export class LoginService {
     login(userCredentials) {
         console.log("heyy");
         return this.http.post<any>(config.baseApiUrl+"user/login", userCredentials)
-            .pipe(map(user => {
-                console.log("login user=========>", user);
-                // login successful if there's a jwt token in the response
-                if (user && user.data && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user.data));
-                    localStorage.setItem('token', JSON.stringify(user.token));
-                    this.currentUserSubject.next(user);
-                }
+        .pipe(map(user => {
+            console.log("login user=========>", user);
+            // login successful if there's a jwt token in the response
+            if (user && user.data && user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('currentUser', JSON.stringify(user.data));
+                localStorage.setItem('token', JSON.stringify(user.token));
+                this.currentUserSubject.next(user);
+            }
 
-                return user;
-            }));
+            return user;
+        }));
     }
 
     register(user) {
         return this.http.post(config.baseApiUrl+"user/signup", user);
     }
     resetPassword(user){
-        return this.http.post(config.baseApiUrl+"user/reset-password", user);
+        return this.http.put(config.baseApiUrl+"user/reset-password", user);
     }
 
     getUserById(id){
         var id = id;
-         return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
-         console.log("user id is==========>",id);
+        return this.http.get(config.baseApiUrl+"user/get-user-by-id/"+id);   
+        console.log("user id is==========>",id);
     }
-   
+    changeProfilePicture(files: any, data){
+        console.log(data);
+        let formdata = new FormData();
+        formdata.append("userId",data);
+        formdata.append("profilePhoto",files[0]);
+        console.log("file is===>>>",files[0]);
+        return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
+    }
+
+
+    addUser_with_file(body,files:any){
+            console.log("fhvg=>",files);
+            console.log("bodyyyyyyyyy===>",body);
+            let formdata = new FormData();
+            formdata.append('fname',body.fname);
+            formdata.append('lname',body.lname);
+            formdata.append('email',body.email);
+            formdata.append('userRole',body.userRole);
+            formdata.append('password',body.password);
+            formdata.append('joiningDate',body.date);
+            formdata.append('phone',body.mobile);
+            formdata.append('experience',body.experience);
+            formdata.append('profilePhoto',files[0]);
+            formdata.append("profilePhoto",files[1]);
+            // for(var i =0; i < files.length; i++){
+                //     formdata.append("uploadFile",files[i]);
+                // }
+                console.log("body===>>>",body);
+
+
+                return this.http.post(config.baseApiUrl+"user/signup",formdata);
+
+            }
+    
+
+    editUserProfileWithFile( data,files: any){
+        var id = JSON.parse(localStorage.getItem('currentUser'))._id;
+        console.log("data is=====================>",data);
+        let formdata = new FormData();
+        formdata.append('name',data.name);
+        formdata.append('email',data.email);
+        formdata.append('userRole',data.userRole);
+        formdata.append('phone',data.mobile);
+        formdata.append('experience',data.experience);
+        formdata.append('profilePhoto',files[0]);
+        console.log("file is===>>>",files);
+        console.log("change data issssss===>>>",data);
+        return this.http.put(config.baseApiUrl+"user/update-details/"+id,formdata);
+    }
+
 
     logout() {
         // remove user from local storage to log user out
@@ -58,3 +107,6 @@ export class LoginService {
         this.currentUserSubject.next(null);
     }
 }
+
+
+

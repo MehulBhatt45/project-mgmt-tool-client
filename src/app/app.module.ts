@@ -46,9 +46,23 @@ import { VisitUserProfileComponent } from './visit-user-profile/visit-user-profi
 import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
-
 import { PushNotificationService } from 'ngx-push-notifications';
 
+
+
+//All component for firebase notification
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { MessagingService } from './services/messaging.service';
+import { environment } from '../environments/environment';
+import { AsyncPipe } from '../../node_modules/@angular/common';
+import { firebaseConfig } from './../environments/firebase.config';
+import {EditprofileComponent} from './editprofile/editprofile.component'
+import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { NgSelectModule } from '@ng-select/ng-select';
+import { UserSummaryComponent } from './user-summary/user-summary.component';
 
 @NgModule({
     declarations: [
@@ -82,6 +96,8 @@ import { PushNotificationService } from 'ngx-push-notifications';
     AllLeaveAppComponent,
     AllEmployeeComponent,
     SummaryComponent,
+    EditprofileComponent,
+    UserSummaryComponent,
    ],
 
     imports: [
@@ -97,8 +113,16 @@ import { PushNotificationService } from 'ngx-push-notifications';
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    SelectDropDownModule,
+     NgSelectModule,
+
     ],
-    providers: [PushNotificationService],
-    bootstrap: [AppComponent]
+    providers: [MessagingService, AsyncPipe, PushNotificationService],
+    bootstrap: [AppComponent],
+    
 })
-export class AppModule { }
+export class AppModule {  }

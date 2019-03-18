@@ -1,63 +1,10 @@
-<div class="cont">
-	<div class="container">
-		<div class="row" style="margin-top: -48px;">
-			<div class="card" style="background-color: #713971;">
-				<div class="card-body" *ngIf="pro">
-
-					<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">{{pro.title}}</a></h2>
-
-
-
-				</div>
-
+<div class="container">
+	<div class="row" style="margin-top: -48px;">
+		<div class="card" style="background-color: #f1ffef;">
+			<div class="card-body" *ngIf="pro">
+				<h2 class="card-title" style="text-align: center;"><a style="color: black;">{{pro.title}}</a></h2>
 			</div>
-
 		</div>
-
-		<div class="container">
-			<div class="row" style="margin-top: 30px;">
-				<h3 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total number of Task in the project:</h3>
-				<div class="progress blue">
-					<span class="progress-left">
-						<span class="progress-bar"></span>
-					</span>
-					<span class="progress-right">
-						<span class="progress-bar"></span>
-					</span>
-					<div class="progress-value" *ngIf="project">Task: <b>{{project.length}}</b></div>
-				</div>
-				<!-- <div class="row">
-					<div class="progress yellow" >
-						<span class="progress-left">
-							<span class="progress-bar"></span>
-						</span>
-						<span class="progress-right">
-							<span class="progress-bar"></span>
-						</span>
-						<div class="progress-value" *ngFor="let track of tracks">{{track.tasks.length}}</div>
-					</div>
-				</div>
-				 -->
-				<!-- <div class="progress md-progress" style="height: 20px;">
-					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 40%;height: 20px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-				</div>
-				<div class="pull-right">
-					<div class="row">
-						<h5 style="margin-top: 13px;margin-left: 16px;"><span class="label green badge" style="height: 30px;">Total Number Of Tasks: <i class="fas fa-arrow-circle-right"></i></span></h5>
-						<span class="min-chart" id="chart-sales" data-percent="56" *ngIf="project"><b style="font-size: 40px;">{{project.length}}</b></span>
-
-					</div>
-				</div> -->
-				<!-- <div *ngIf="project">Total Number Of Tasks:<b></b></div> -->
-		<!-- <div class="progress blue">
-			<span class="progress-left">
-				<span class="progress-bar"></span>
-			</span>
-			<span class="progress-right">
-				<span class="progress-bar"></span>
-			</span>
-			<div class="progress-value" *ngIf="project">{{project.length}}</div>
-		</div> -->
 	</div>
 	<div class="row" style="margin-top: 25px;">
 		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
@@ -66,7 +13,6 @@
 				<tr>
 					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
 					<th scope="col"style="text-align: center;"><i class="fas fa-tasks"></i> Number Of Tasks</th>
-
 				</tr>
 			</thead>
 			<tbody>
@@ -76,42 +22,15 @@
 				</tr>
 			</tbody>
 		</table>
-		
 	</div>
 	<div class="row" style="margin-top: 25px;">
-		<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
-		<table class="table table-bordered" style="text-align: center;">
-			<thead>
-				<tr>
-					<th scope="col" style="text-align: left;"><i class="fas fa-users"></i> Team-member</th>
-					<th scope="col">To Do</th>
-					<th scope="col">In Progress</th>
-					<th scope="col">Testing</th>
-					<th scope="col">Complete</th>
-					
-
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let user of projectTeam">
-					<td scope="row" style="text-align: left;" >{{user.name}}</td>
-					<td>{{getTaskCount(user._id, 'to do')}}</td>
-					<td>{{getTaskCount(user._id, 'in progress')}}</td>
-					<td>{{getTaskCount(user._id, 'testing')}}</td>
-					<td>{{getTaskCount(user._id, 'complete')}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="row" style="margin-top: 25px;">
-		<h3><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
-		<div class="col-sm-6" style="padding-left: 0px;">
+		<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
+		<div class="col-sm-6">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col"  style="background-color: #ff0000;color: #fff;"><i class="fas fa-tasks"></i> Highest Priority</th>
 						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-
 					</tr>
 				</thead>
 				<tbody>
@@ -122,7 +41,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-sm-6" style="padding-right: 0px;">
+		<div class="col-sm-6">
 			<table class="table table-bordered" >
 				<thead>
 					<tr>
@@ -138,11 +57,11 @@
 				</tbody>
 			</table>
 		</div><hr/>
-		<div class="col-sm-6" style="padding-left: 0px;">
+		<div class="col-sm-6">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th scope="col" style="background-color: green;color: #fff;"><i class="fas fa-tasks"></i> Midium Priority</th>
+						<th scope="col" style="background-color: green;color: #fff;"><i class="fas fa-tasks"></i> Medium Priority</th>
 						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
 					</tr>
 				</thead>
@@ -154,7 +73,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-sm-6" style="padding-right: 0px;">
+		<div class="col-sm-6">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -170,11 +89,9 @@
 				</tbody>
 			</table>
 		</div>
-		
 	</div>
 </div>
-</div>
-</div>
+
 
 
 
