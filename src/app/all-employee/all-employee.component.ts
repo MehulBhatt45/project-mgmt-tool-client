@@ -63,4 +63,14 @@ export class AllEmployeeComponent implements OnInit {
 			this._alertService.error(err);
 		})
 	}
+
+	deleteEmployee(id){
+		console.log("msgggg--=--",id);
+
+		this._projectService.deleteEmployeeById(id).subscribe(res=>{
+
+			console.log("delete{}{}{}{}",res);
+		})
+
+	}
 }
