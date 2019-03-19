@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormControl, FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
@@ -25,7 +25,7 @@ export class EditProjectComponent implements OnInit {
 	showDeveloper:boolean = false;
 	basMediaUrl = config.baseMediaUrl;
 	developers;
-	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute) {
+	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
 			desc: new FormControl(''),
@@ -42,6 +42,13 @@ export class EditProjectComponent implements OnInit {
 			this.getProjectById(params.id);
 			this.getAllDevelopersNotInProject(params.id);
 		})
+	}
+
+	ngViewAfterChecked(){
+		this._change.detectChanges();
+	}
+	ngOnDestroy(){
+		this._change.detach();
 	}
 
 	ngOnInit() {
@@ -176,7 +183,11 @@ export class EditProjectComponent implements OnInit {
 
 	removeDeveloper(event){
 		console.log(event);
-		this.projectTeam.splice(_.findIndex(this.projectTeam, event.value), 1);	
+		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
+		if(_.findIndex(this.availableDevelopers, function(o) { return o._id == event._id; }) == -1 ){
+			console.log("in fi");
+			this.availableDevelopers.push(event);
+		}
 	}
 
 	clearSelection(event){
