@@ -83,7 +83,7 @@ h2{
     margin-bottom: 30px;
 }
 .margin_left{
-    margin-left: 45px;
+    margin-left: 50px;
 }
 .fixed-action-btn{
     bottom: 45px;
@@ -290,5 +290,8 @@ span.badge.badge-pill.z-depth-0.badge-dark {
   }
      a.btn-floating.btn-action {
     margin-right: 49px;
+}
+.margin_left{
+    margin-left: -15px;
 }
 }
