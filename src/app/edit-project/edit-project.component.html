@@ -1,4 +1,4 @@
-<div class="container" [hidden]="!availData">
+<div class="container">
 	<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
 		<div class="card">
 			<h5 class="card-header white-text text-center py-4" style="margin-top: -35px;background-color: darkslateblue;">
@@ -6,18 +6,18 @@
 				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;background-color: #01c0d8;">Delete Project</button>
 			</h5>
 			<div class="card-body px-lg-5 pt-1">
-				<!-- <div *ngIf="availData.avatar">
-					<img class="text-center" src="{{baseMediaUrl}}{{availData.avatar}}" height="100" width="100">
-				</div> -->
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData && availData.avatar">
+					<img src="{{baseMediaUrl}}{{availData.avatar}}" onerror="this.src='assets/4.jpeg'" height="100" width="100">
+				</div>
+				<div class="md-form form-group" *ngIf="availData && availData.title">
 					<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
 					<label for="projecttitle" class="active" >Project Title</label>
 				</div>
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData && availData.desc">
 					<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
 					<label for="desc" class="active" >Project Discription</label>
 				</div>
-				<div class="md-form form-group">
+				<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
 					<label for="date-picker-example">Deadline</label>
 					<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
 				</div>
@@ -25,23 +25,23 @@
 					<h3><strong>Client Details :-</strong></h3>
 				</div>
 				<hr>
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData && availData.clientemail">
 					<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
 					<label for="clientemail" class="active">Email</label>
 				</div>
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData && availData.clientfullname">
 					<input mdbInput type="text" id="clientfullname" class="form-control" formControlName="clientFullName" [(ngModel)]="availData.clientFullName">
 					<label for="clientfullname" class="active">Full Name</label>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<div class="md-form form-group">
+						<div class="md-form form-group" *ngIf="availData && availData.clientcontactno">
 							<label class="active" for="clientcontactno">Contact No.</label>
 							<input mdbInput type="tel" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
 						</div>	
 					</div>
 					<div class="col-md-6">
-						<div class="md-form form-group">
+						<div class="md-form form-group" *ngIf="availData && availData.clientdesignation">
 							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientDesignation" [(ngModel)]="availData.clientDesignation">
 							<label for="clientdesignation">Designation</label>
 						</div>
@@ -53,7 +53,7 @@
 			<h3 class="card-title text-center">Project Teams:</h3>
 			<div class="card-body">
 				<div class="form-group">
-					<ng-select placeholder="Select Developers" [items]="availableDevelopers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event)" (clear)="clearSelection($event)">
+					<ng-select placeholder="Select Developers" [items]="availableDevelopers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)">
 						<ng-template ng-label-tmp let-item="item" let-clear="clear">
 							<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
 							<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
@@ -84,6 +84,9 @@
 							<div class="card-body">
 								<h5 class="card-title mt-1">{{item.name}}</h5>
 								<h6 class="card-title">{{item.userRole}}</h6>
+							</div>
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeDeveloper(item)"><i class="fas fa-trash fa-3x"></i></a>
 							</div>
 						</div>
 					</div>
