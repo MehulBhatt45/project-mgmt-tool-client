@@ -35,7 +35,7 @@
                                 <!-- <span class="tib-view-projects-description">{{(project.taskId.length>0)?project.taskId.length:0}}</span> -->
                                 <!-- <i class="fas fa-exclamation-triangle fa-fw"></i> -->
                                 <i class="fas font-project-view-small fa-tasks fa-fw"></i>                        
-                                <span class="badge badge-pill z-depth-0 badge-dark">{{(project.taskId.length>0)?project.taskId.length:0}}</span>
+                                <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
 
                             </strong>
                         </div>
@@ -44,7 +44,7 @@
                             <!-- <img src="assets/icons/issues.png" class="tib-prefix"> -->
                             <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
                             
-                            <span class="badge badge-pill z-depth-0 badge-dark">{{(project.IssueId.length>0)?project.IssueId.length:0}}</span>
+                            <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
                             
 
                         </strong>
@@ -53,7 +53,7 @@
                         <strong title="Bug" class=" text-center">
                             <!-- <img src="assets/icons/bug-2.png" class="tib-prefix"> -->
                             <i class="fas font-project-view-small fa-bug fa-fw"></i>
-                            <span class="badge badge-pill z-depth-0 badge-dark">{{(project.BugId.length>0)?project.BugId.length:0}}</span>
+                            <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
 
                             <!-- <span class="tib-view-projects-description"></span> -->
                         </strong>

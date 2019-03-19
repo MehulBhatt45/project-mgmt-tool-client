@@ -52,9 +52,21 @@ export class ViewProjectComponent implements OnInit {
     }
     this.loader=true;
     setTimeout(()=>{
-      this._projectService.getProjects().subscribe(res=>{
-        console.log(res);
-        this.projects = res;
+      this._projectService.getProjects().subscribe((res:any)=>{
+        if(this.currentUser.userRole == 'projectManager'){
+          this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+          console.log("IN If=========================================",this.projects);
+        }
+        else{
+          this.projects = [];
+          _.forEach(res, (p)=>{
+            _.forEach(p.Teams, (user)=>{
+              if(user._id == this.currentUser._id)
+                this.projects.push(p);
+            })
+          });
+          console.log("IN Else=========================================",this.projects);
+        }
         this.loader=false;
       },err=>{
         this._alertService.error(err);
@@ -146,6 +158,14 @@ export class ViewProjectComponent implements OnInit {
       console.log("Couldn't get all developers ",err);
       this._alertService.error(err);
     })
+  }
+
+  getLength(project, opt){
+    // console.log(project, opt);
+    if(project.tasks && project.tasks.length)
+      return _.filter(project.tasks,{ 'type': opt }).length;
+    else
+      return 0;
   }
 }
 
