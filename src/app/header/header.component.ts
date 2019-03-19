@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
 	developers;
 	editTaskForm:FormGroup;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	files : FileList;
+	files: Array<File> = [];
 	loader: boolean = false;
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
@@ -51,7 +51,6 @@ export class HeaderComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
-			date: new FormControl('',[Validators.required]),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: ''}, Validators.required)
 		})
@@ -59,6 +58,24 @@ export class HeaderComponent implements OnInit {
 
 
 	ngOnInit() {
+		this.editTaskForm.reset()
+		this.task = this.getEmptyTask();
+		$('#editModel').on('hidden.bs.modal', function (e) {
+			reset();
+		})
+		var reset = ()=>{
+			this.editTaskForm.reset()
+			this.task = this.getEmptyTask();
+		}
+		$('#estimatedTime').pickatime({
+			afterDone: function(context) {
+				console.log('Just set stuff:', context);
+				setDate(context);
+			}
+		});
+		var setDate = (context)=>{
+			this.timePicked();
+		}
 		$('.button-collapse').sideNav({
 			edge: 'left',
 			closeOnClick: true
@@ -67,7 +84,7 @@ export class HeaderComponent implements OnInit {
 			this.projectId = param.id;
 		});
 		this.getProjects();
-		this.getAllDevelopers();
+		// this.getAllDevelopers();
 		this.tracks = [
 			{
 				"title": "Todo",
@@ -102,6 +119,32 @@ export class HeaderComponent implements OnInit {
 				]
 			}
 			];
+	}
+
+	timePicked(){
+		this.editTaskForm.controls.estimatedTime.setValue($('#estimatedTime').val())
+	}
+	projectSelected(item){
+		if(item && item._id){
+		console.log(item);
+		this.loader = true;
+		$(".progress").addClass("abc");
+		// $(".progress .progress-bar").css({"width": '100%'});
+		setTimeout(()=>{
+			this.loader = false;
+			$(".progress").removeClass("abc");
+			this.task.projectId = item._id;	
+			this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
+			console.log(this.developers);
+		},3000);
+		}else{
+			this.editTaskForm.reset();
+			this.task = this.getEmptyTask();
+		}
+	}
+
+	clearSelection(event){
+		console.log(event);
 	}
 
 	getProjects(){
@@ -175,7 +218,7 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 
-	addItem(option, id){
+	addItem(option){
 		this.task = this.getEmptyTask();
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
@@ -210,10 +253,10 @@ export class HeaderComponent implements OnInit {
 		console.log(task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
-			if(key!="estimatedTime")
+			// if(key!="estimatedTime")
+			// 	data.append(key, value)
+			// else
 				data.append(key, value)
-			else
-				data.append(key, $('#estimatedTime').val())
 		});
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){

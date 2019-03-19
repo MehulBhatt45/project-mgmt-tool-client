@@ -112,8 +112,8 @@ ol.breadcrumb.hidden-lg-down li a {
 
 .dropdown-menu a.dropdown-item {
   text-align: left;
- padding: 16px;
-    font-size: 15px;
+  padding: 16px;
+  font-size: 15px;
   border-radius: 5px!important;
   transition: all 0.7s;
 }
@@ -170,27 +170,117 @@ ol.breadcrumb.hidden-lg-down li a {
     border-radius: 50%;
     border: 2px solid #fff;
     display: inline-block;
-  
+
     float: left;
     box-shadow: 0 0 20px 0 rgba(171,171,171,.8);
     position: relative;
     cursor: pointer;
 
   }
-.modal-header {
+  .modal-header {
     background-color: #372e5f;
     color: white;
   }
- @media (max-width:1199px) {
-      header{
-  margin-bottom: 80px;
-}  
- }
+  @media (max-width:1199px) {
+    header{
+      margin-bottom: 80px;
+    }  
+  }
   @media (max-width:576px) {
     .side_fixed_nav{
       visibility: hidden;
     }
     header{
-  margin-bottom: 50px;
-}
+      margin-bottom: 50px;
+    }
   }
+
+.progress{
+  visibility: hidden;
+}
+.progress .progress-bar {
+    width: 0%;
+  transition: none;
+}
+.progress.abc{
+  visibility: visible;
+}
+.progress.abc .progress-bar{
+  width: 100%;
+    transition: all 3s ease 0s;
+}
+
+
+.img_section{
+  height: 60px;
+  width: 60px;
+  margin: 0 auto;
+}
+.img_section img{
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.card.testimonial-card .card-body h5 {
+    padding: 0 5px;
+    font-size: 18px;
+}
+
+
+:host ::ng-deep .ng-dropdown-panel-items.scroll-host > div + div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #dfdff5;
+}
+
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 10px;
+    margin: 5px 0px;
+}
+.card.testimonial-card .card-body {
+    padding: 0;
+    text-align: center;
+}
+
+
+
+:host ::ng-deep .ng-dropdown-panel-items.scroll-host::-webkit-scrollbar {
+  width: 5px;
+}
+:host ::ng-deep .ng-dropdown-panel-items.scroll-host::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+:host ::ng-deep .ng-dropdown-panel-items.scroll-host::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+:host ::ng-deep .ng-dropdown-panel-items.scroll-host::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+:host ::ng-deep span.ng-value-label img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 2px;
+    border-radius: 0px;
+}
+:host ::ng-deep span.ng-value-icon.right{
+  margin-left: 8px;
+}
+:host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
+  background-color: #6657a9
+}
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
+  color: #372e5f;
+}
+
