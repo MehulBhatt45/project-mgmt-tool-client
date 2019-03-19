@@ -24,7 +24,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.get(config.baseApiUrl+"project/all", httpOptions);
+		return this.http.get(config.baseApiUrl+"project/all");
 	}
 	
 	getAllDevelopers(){
@@ -34,7 +34,7 @@ export class ProjectService {
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		return this.http.get(config.baseApiUrl+"user/get-all-developers", httpOptions);	
+		return this.http.get(config.baseApiUrl+"user/get-all-developers");	
 	}
 
 	getProjectById(id){
@@ -46,7 +46,7 @@ export class ProjectService {
 		};
 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("user ID ====>" , userId);
-		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id, httpOptions);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id);
 	}
 
 	// addProject_With_image(body,files:FileList){
@@ -140,7 +140,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.post(config.baseApiUrl+subUrl, data, httpOptions);
+			return this.http.post(config.baseApiUrl+subUrl, data,);
 		}
 
 		updateData(data, subUrl){
@@ -152,7 +152,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.put(config.baseApiUrl+subUrl+data._id, data, httpOptions);
+			return this.http.put(config.baseApiUrl+subUrl+data._id, data,);
 		}
 
 		updateStatus(data){
@@ -163,7 +163,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.put(config.baseApiUrl+"tasks/update-task-status-by-id", data, httpOptions);
+			return this.http.put(config.baseApiUrl+"tasks/update-task-status-by-id", data);
 		}
 
 		completeItem(data){
@@ -174,7 +174,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.put(config.baseApiUrl+"tasks/update-task-status-complete", data, httpOptions);
+			return this.http.put(config.baseApiUrl+"tasks/update-task-status-complete", data);
 		}
 
 
@@ -186,7 +186,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId , httpOptions);
+			return this.http.get(config.baseApiUrl+"user/get-logs/"+memberId);
 		}
 
 		getAllDevelopersByProjectManager(){
@@ -213,7 +213,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.get(config.baseApiUrl+"user/get-logs/"+developerId , httpOptions);
+			return this.http.get(config.baseApiUrl+"user/get-logs/"+developerId);
 		}
 		getAllFilesInfolder(id){
 			var obj = { projectId: id };
@@ -232,7 +232,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
+			return this.http.put(config.baseApiUrl+"project/update/"+projectId , data);
 		}
 		getProjectByIdAndUserId(id){
 			console.log("id is==========>",id);
@@ -244,7 +244,7 @@ export class ProjectService {
 			};
 			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log("user ID ====>" , userId);
-			return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId, httpOptions);		
+			return this.http.get(config.baseApiUrl+"project/get-project-by-id-and-by-userid/"+id+"/"+userId);		
 		}
 
 		addNotice(data){
@@ -264,7 +264,7 @@ export class ProjectService {
 					'x-access-token':  JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.delete(config.baseApiUrl+"project/delete/"+projectId,httpOptions);
+			return this.http.delete(config.baseApiUrl+"project/delete/"+projectId);
 		}
 
 		getAllTasks(){
@@ -341,7 +341,7 @@ export class ProjectService {
 						'x-access-token':  JSON.parse(localStorage.getItem('token'))
 					})
 				};
-				return this.http.post(config.baseApiUrl+"user/signup_without_file",body,httpOptions);
+				return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
 
 			}
 			deleteTaskById(data){
@@ -352,7 +352,7 @@ export class ProjectService {
 						'x-access-token':  JSON.parse(localStorage.getItem('token'))
 					})
 				};
-				return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId,httpOptions);
+				return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
 			}
 			uploadFilesToFolder(data, file: FileList){
 				console.log(data);
