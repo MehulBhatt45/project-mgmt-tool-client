@@ -5,3 +5,21 @@
     margin-top: 0px;
     margin-bottom: -36px;
 }
+
+.header{
+    margin-top: -38px;
+} 
+.for_title{
+    background-color: #f1ffef;
+    text-align: center;
+   
+}
+.number_of_task{
+    margin-top: 25px;
+}
+.task_table{
+    text-align: center;
+}
+.priority_base_task{
+    margin-top: 25px;
+}

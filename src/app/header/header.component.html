@@ -26,7 +26,7 @@
       <ul class="collapsible collapsible-accordion">
         <li><a class="collapsible-header waves-effect arrow-r"><span routerLink="/view-projects"><i class="fas fa-tasks"></i>  Projects</span>
           <i class="fa fa-angle-down rotate-icon"></i>
-          <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
+          <i class="fa fa-refresh" aria-hidden="true" (click)="getProjects()"></i></a>
           <div class="collapsible-body">
             <ul>
               <li *ngFor="let project of projects">
@@ -56,179 +56,142 @@
           </li>
           <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
           <li *ngIf="currentUser.userRole=='user' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
-          <!-- <a routerLink = '/leave'>Leave Form</a> -->
         </ul>
       </li>
-      <!--/. Side navigation links -->
     </ul>
-    <!-- <div class="sidenav-bg rgba-blue-strong"></div> -->
   </div>
-  <!--/. Sidebar navigation -->
-    <!-- <ul id="slide-out" class="side-nav">
-      <li style="cursor: pointer;" title="User Profile">
-        <div class="user-box">
-          <div class="image_box">
-            <img src="https://lh6.ggpht.com/6QMiCnokHb6XBXxViikTK5YdFpGPVrbaZOru91T95w1o26JM0TY3Yc4MS9wIR4oIvGY=h900" class="img-fluid" style="border-radius: 50%;">
-          </div>
-          <p class="user text-center">Rao Info Tech</p>
-        </div>
-      </li>
-      <li>
-        <ul class="collapsible collapsible-accordion">
-          <li><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">
-            <span routerLink="/view-projects">Projects</span>
-            <i class="fa fa-angle-down rotate-icon"></i>
-            <i class="fa fa-refresh" aria-hidden="true" (click)="reloadProjects()"></i></a>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects">
-                  <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
-                </ul>
-              </div>
-            </li>
+  <nav class="navbar fixed-top navbar-toggleable-md morpheus-den-gradient navbar-dark scrolling-navbar double-nav">
+    <div class="float-left">
+      <ol class="breadcrumb hidden-lg-down">
+        <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
+        <li class="breadcrumb-item active"><a>Dashboard</a></li>
+      </ol>
+    </div>
+  </nav>
+</header>
 
-            <li><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Create Project</a></li>
-            <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Item List</a></li>
-            <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
-            <li><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Add Notice</a></li>
-            <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Notice Board</a></li>
-            <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Logs</a></li>
-
-          </ul>
-          </li>
-        <div class="sidenav-bg mask-strong"></div>
-      </ul> -->
-      <nav class="navbar fixed-top navbar-toggleable-md morpheus-den-gradient navbar-dark scrolling-navbar double-nav">
-        <div class="float-left">
-          <ol class="breadcrumb hidden-lg-down">
-            <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
-            <li class="breadcrumb-item active"><a>Dashboard</a></li>
-          </ol>
-        </div>
-       <!--  <ul class="nav navbar-nav nav-flex-icons ml-auto">
-         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user"></i> <span class="hidden-sm-down">Profile</span>
-            </a>
-            <div class="dropdown-menu dropdown-ins dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" (click)="logout()">Log Out</a>
-                <a id="account" class="dropdown-item" [routerLink]="['my-account']">My account</a>
-            </div>
-        </li>
-      </ul> -->                
-    </nav>
-  </header>
-
-  <div class="side_fixed_nav hidden-xs">
-    <div class="top_icon">
-
-        <!-- <div class="second_icon">
-            <a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a>
-          </div> -->
-          <div class="second_icon">
-            <a href="" class="star_link " data-toggle="tooltip"  title="Starred and recent(\)" data-placement="right"><i class="far fa-star" aria-hidden="true"></i></a>
-          </div>
-          <div class="second_icon">
-            <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
-          </div> 
-          <!-- *ngIf="currentUser.userRole=='projectManager'" -->
-          <div class="second_icondropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager'">
-            <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true" ></i></a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
-              <a class="dropdown-item" (click)="addItem('Task')">Task</a>
-              <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-              <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
-              <a class="dropdown-item" [routerLink]="['/add-team']">Add Team</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="bottom_icon">
-          <div class="second_icon">
-            <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
-          </div>  
-          <div class="second_icon">
-            <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i> </a>
-          </div>
-          <div class="second_icon">
-            <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
-          </div>
-          <div class="second_icon dropdown">
-            <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
-            <ul class="team-members">
-              <li id="login_details">
-                <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
-                <div class="dropdown-menu"> 
-                  <a class="dropdown-item" (click)="logout()">Log Out</a>
-                  <a  class="dropdown-item" routerLink="/userprofile/{{currentUser._id}}">My Profile</a>
-                </div>
-              </li>   
-            </ul>
-          </div> 
-        </div>
+<div class="side_fixed_nav">
+  <div class="top_icon">
+    <div class="second_icon">
+      <a href="" class="star_link " data-toggle="tooltip"  title="Starred and recent(\)" data-placement="right"><i class="far fa-star" aria-hidden="true"></i></a>
+    </div>
+    <div class="second_icon">
+      <a href="" class="star_link" title="Search(\)" data-toggle="tooltip" data-placement="right"><i class="fa fa-search" aria-hidden="true" ></i></a>
+    </div> 
+    <div class="second_icondropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+      <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true" ></i></a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
+        <a class="dropdown-item" (click)="addItem('Task')">Task</a>
+        <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+        <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+        <a class="dropdown-item" [routerLink]="['/add-team']">Add Team</a>
       </div>
-      <div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg container" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title w-100 text-center" id="myModalLabel">{{modalTitle}}</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+    </div>
+  </div>
+
+  <div class="bottom_icon">
+    <div class="second_icon">
+      <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
+    </div>  
+    <div class="second_icon">
+      <a href="" class="star_link" title="Switch to..." data-toggle="tooltip" data-placement="right"><i class="fa fa-th" aria-hidden="true" ></i> </a>
+    </div>
+    <div class="second_icon">
+      <a href="" class="star_link" title="Help" data-toggle="tooltip" data-placement="right"><i class="fa fa-question-circle" aria-hidden="true" ></i></a>
+    </div>
+    <div class="second_icon dropdown">
+      <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+      <ul class="team-members">
+        <li id="login_details">
+          <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
+          <div class="dropdown-menu"> 
+            <a class="dropdown-item" (click)="logout()">Log Out</a>
+            <a  class="dropdown-item" routerLink="/userprofile/{{currentUser._id}}">My Profile</a>
+          </div>
+        </li>   
+      </ul>
+    </div> 
+  </div>
+</div>
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg container" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center" id="myModalLabel">{{modalTitle}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form style="width: 100%;" [formGroup]="editTaskForm">
+            <div class="form-group col-12 col-lg-12 pt-1">
+                <label for="projectId">Project ID</label>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="projectId" formControlName="projectId" [(ngModel)]="task.projectId">
+                  <option *ngFor="let team of projects" value="{{team._id}}">{{team.title}}</option>
+                </select>
+              </div>
+            <div class="form-group col-12">
+              <label for="title">Title</label>
+              <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+            </div>
+            <div class="form-group col-12">
+              <label for="desc">Discription</label>
+              <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+            </div>
+            <div class=" row form-group col-12">
+              <button class="btn btn-default" (click)="fileUpload.click()">
+                <i class="fa fa-paperclip mr-1"></i> Add Files
+                <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
               </button>
             </div>
-            <div class="modal-body" *ngIf="task">
-              <div class="container">
-                <form style="width: 100%;" [formGroup]="editTaskForm">
-                  <div class=" col-12">
-                    <label for="title" style="font-size: 22px;">Title</label>
-                    <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="desc">Discription</label>
-                    <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-                  </div>
-                  <div class="row no-margin padding-6 border" >
-                    <div class="form-group col-12 col-lg-6 pt-1">
-                      <label for="assignTo">Assign To</label>
-                      <select class="browser-default custom-select custom-select-lg" id="assignTo" formControlName="assignTo" [(ngModel)]="task.assignTo._id">
-                        <option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-12 col-lg-6 pt-1">
-                      <label for="priority">Priority</label>
-                      <select class="browser-default custom-select custom-select-lg mdb-select md-form colorful-select dropdown-primary" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                        <option value="highest">Highest</option>
-
-                      </select>
-                    </div>
-                     <div class="form-group col-12 col-lg-6">
-                      <label for="startDate">Start Date</label>
-                      <input placeholder="Selected date" type="text" id="startDate" formControlName="startDate" [(ngModel)]="task.startDate" class="form-control datepicker">
-                    </div>
-                    <div class="form-group col-12 col-lg-6">
-
-                      <label for="dueDate">Due Days</label>
-                      <input placeholder="Selected days" type="number" id="dueDate" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
-
-                    </div>
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="status">Status</label>
-                    <select class="browser-default custom-select custom-select-lg" id="status" formControlName="status" [(ngModel)]="task.status">
-                      <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-                    </select>
-                  </div>
-                </form>
+            <div class="row no-margin no-padding  border" >
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="assignTo">Assign To</label>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="priority">Priority</label>
+                <select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                  <option value="4">Low</option>
+                  <option value="3">Medium</option>
+                  <option value="2">High</option>
+                  <option value="1">Highest</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="dueDate">Due Days</label>
+                <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
+              </div>
+              
+              <div class="form-group col-6">
+                <label for="estimatedTime">Estimated Time</label>
+                <div class="md-form form-group">
+                  <!-- <input placeholder="Selected date" type="text" id="estimatedTime" class="form-control ti" formControlName="estimatedTime"> -->
+                  <input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime">
+                </div>
               </div>
             </div>
-            <div class="modal-footer float-right">
-                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)">Save changes</button>
+
+            <div class="form-group col-12">
+              <label for="status">Status</label>
+              <select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+                <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+              </select>
             </div>
-          </div>
+          </form>
         </div>
       </div>
+      <div class="modal-footer float-right">
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
