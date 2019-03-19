@@ -31,7 +31,6 @@ export class CreateProjectComponent implements OnInit {
       avatar:new FormControl(''),
       desc: new FormControl(''),
       deadline: new FormControl('', Validators.required),
-      Designation: new FormControl('', Validators.required),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
@@ -39,7 +38,7 @@ export class CreateProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       // avatar:new FormControl(''),
       allDeveloper:new FormControl(''),
-      Teams: new FormControl([])
+      // Teams: new FormControl([])
 
     });
 

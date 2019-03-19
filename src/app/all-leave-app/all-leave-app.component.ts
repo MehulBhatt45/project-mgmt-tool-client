@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+declare var $ : any;
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -48,6 +49,7 @@ export class AllLeaveAppComponent implements OnInit {
     body.status = "approved";
     console.log("bodyyyyyyyyyyyyyyy",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+     
       console.log("respondsssssss",res);
       this.acceptedLeave = res;
       console.log("acceptedd===========>",this.acceptedLeave);
@@ -69,6 +71,7 @@ export class AllLeaveAppComponent implements OnInit {
     body.status = "rejected";
     console.log("body",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+       
       console.log("response",res);
       this.rejectedLeave = res;
       console.log("rejected===========>",this.rejectedLeave);
