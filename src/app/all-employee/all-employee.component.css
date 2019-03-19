@@ -37,7 +37,7 @@
   opacity: 1;
 }
 .btn_content{
-	float: right !important;
+	text-align: right !important;
 }
 .fa-ellipsis-v{
   color: #4B515D;
@@ -58,8 +58,16 @@
   position: relative;
   cursor: pointer;
 }
+.form-row{
+  margin: 0;
+}
 .img_content{
   float: left;
   color: white;
   text-transform: uppercase;
+}
+
+
+@media (max-width: 1199px){
+  
 }

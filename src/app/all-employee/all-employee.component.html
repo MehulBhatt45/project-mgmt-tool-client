@@ -1,7 +1,7 @@
-<div class="row btn_content">
+<div class="btn_content">
 	<button type="button" class="btn btn-default" routerLink="/add-employee">Add Employee</button>
 </div>
-<div class="row">
+<div>
 	<p class="h4 mb-1 text-secondary">Employee Profile</p>
 </div>
 <!-- search user profile -->
@@ -47,9 +47,8 @@
 					</div>
 				</div>
 				<div class="avatar white img_section">
-
 					<a routerLink = "/visit-user-profile/{{developer._id}}">
-						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/6.jpg'" class="rounded-circle img-fluid img_content"></a>
+						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/avatar.png'" class="rounded-circle img-fluid img_content"></a>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title mt-1">{{developer.name}}</h5>
@@ -58,4 +57,5 @@
 				</div>
 			</div>
 		</div>
-		</section>
+	</div>
+</section>
