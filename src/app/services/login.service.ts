@@ -55,7 +55,7 @@ export class LoginService {
         let formdata = new FormData();
         formdata.append("userId",data);
         formdata.append("profilePhoto",files[0]);
-        console.log("file is===>>>",files);
+        console.log("file is===>>>",files[0]);
         return this.http.put(config.baseApiUrl+"user/change-profile/"+data,formdata);
     }
 
@@ -64,7 +64,7 @@ export class LoginService {
             console.log("fhvg=>",files);
             console.log("bodyyyyyyyyy===>",body);
             let formdata = new FormData();
-            formdata.append('fname',body.fname);
+            formdata.append('name',body.fname);
             formdata.append('lname',body.lname);
             formdata.append('email',body.email);
             formdata.append('userRole',body.userRole);

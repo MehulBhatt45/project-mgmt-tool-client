@@ -58,7 +58,8 @@ export class UserSummaryComponent implements OnInit {
 		
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
-			this.getProject(this.projectId);
+			this.userId = param.id;
+			this.getProject(this.projectId,this.userId);
 			this.userId = param.id;
 			// this.getTaskByUserId(this.projectId,this.userId)
 			this.getEmptyTracks();
@@ -181,12 +182,12 @@ export class UserSummaryComponent implements OnInit {
 		})
 	}
 
-	getProject(id){
+	getProject(projectId,userId){
 		this.loader = true;
-		console.log("project id is ===>",id);
+		console.log("project id is ===>",projectId);
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				console.log(" Project id is ==========>",id);
+			this._projectService.getProjectById(projectId).subscribe((res:any)=>{
+				console.log(" Project id is ==========>",projectId);
 				this.pro=res;
 				console.log(" project details ==================>",this.pro);
 				
@@ -218,9 +219,9 @@ export class UserSummaryComponent implements OnInit {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
-	getTaskByUserId(id){
-		this._projectService.getTaskById(id).subscribe((res:any)=>{
-			console.log("Project Id is =====>",id);
+	getTaskByUserId(userId){
+		this._projectService.getTaskById(userId).subscribe((res:any)=>{
+			console.log("Project Id is =====>",userId);
 			this.getEmptyTracks();
 			this.project = res;
 			// this.project.sort(custom_sort);

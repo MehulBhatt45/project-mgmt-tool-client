@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormControl, FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as _ from "lodash";
 declare var $ : any;
-
+import { config } from '../config';
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',
@@ -12,7 +12,7 @@ declare var $ : any;
 })
 export class EditProjectComponent implements OnInit {
 	availableDevelopers = [];
-	projectTeam;
+	projectTeam:any = [];
 	projects;
 	editAvail;
 	projectId;
@@ -23,7 +23,9 @@ export class EditProjectComponent implements OnInit {
 	availDevelopers;
 	teamShow:boolean = false;
 	showDeveloper:boolean = false;
-	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute) {
+	basMediaUrl = config.baseMediaUrl;
+	developers;
+	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
 			desc: new FormControl(''),
@@ -34,21 +36,67 @@ export class EditProjectComponent implements OnInit {
 			clientContactNo: new FormControl(''),
 			clientDesignation: new FormControl(''),
 			avatar:new FormControl(''),
-			date: new FormControl('')
+			Teams: new FormControl([])
 		});
 		this.route.params.subscribe(params=>{
 			this.getProjectById(params.id);
+			this.getAllDevelopersNotInProject(params.id);
 		})
 	}
 
+	ngViewAfterChecked(){
+		this._change.detectChanges();
+	}
+	ngOnDestroy(){
+		this._change.detach();
+	}
+
 	ngOnInit() {
-		$('.datepicker').pickadate();
+		$('.datepicker').pickadate({
+			onSet: function(context) {
+				console.log('Just set stuff:', context);
+				setDate(context);
+			}
+		});
+		var setDate = (context)=>{
+			this.timePicked();
+		}
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
 		this.getProjects();
-		
+		this.getAllDevelopers();		
 	}
+	timePicked(){
+		this.updateForm.controls.deadline.setValue($('.datepicker').val())
+	}
+
+	getAllDevelopers(){
+		this._projectService.getAllDevelopers().subscribe(res=>{
+			this.developers = res;
+			this.developers.sort(function(a, b){
+				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1 
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
+			console.log("Developers",this.developers);
+		},err=>{
+			console.log("Couldn't get all developers ",err);
+			// this._alertService.error(err);
+		})
+	}
+
+	getAllDevelopersNotInProject(id){
+		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
+			this.availableDevelopers = res;
+		},err=>{
+			console.log(err);
+		})
+	}
+
 	getProjects(){
 		localStorage.setItem('teamShow' , JSON.stringify(false));
 		this.teamShow = false;
@@ -85,45 +133,30 @@ export class EditProjectComponent implements OnInit {
 			console.log("err in requested project in edit project component ====>" , err);
 		})
 	}
-	view_Project(){
 
-		this.router.navigate(['./view-project']);
-
-	}
-	
 	getProjectById(id){
+		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
 			console.log("this . avail data ==========>" ,this.availData);
 			this.projectTeam = this.availData.Teams;
-			this._projectService.getAllDevelopers().subscribe((res:any)=>{
-			var flag = 0;
-			console.log("All developers ========>" , res);
-			console.log("this . project teams ========>" , this.projectTeam);
-			_.forEach(res , (allDeveloper)=>{
-				console.log("All developers ================================>" , allDeveloper);
-				_.forEach(this.projectTeam , (projectTeam)=>{
-					console.log("project team ========>" , projectTeam);
-					if(allDeveloper._id == projectTeam._id){
-						flag = 1;
-					}
-				})
-					if(flag == 0){
-						this.availableDevelopers.push(allDeveloper);			
-					}
-					flag = 0;
-			})
-			console.log("this . avail developer =======>" , this.availableDevelopers);
-		})
+			localStorage.setItem('teams', JSON.stringify(this.projectTeam)); 
 		},err=>{
 			console.log(err);
 		})
 
 	}
 	updateProject(updateForm){
+		updateForm.Teams = [];
+		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
+		updateForm.uniqueId = this.availData.uniqueId;
+		updateForm.avatar = this.availData.avatar;
+		updateForm._id = this.availData._id;
+		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
-		this._projectService.updateProject(this.availData).subscribe((res:any)=>{
+		this._projectService.updateProject(updateForm).subscribe((res:any)=>{
 			console.log("response of update form  ====>" , res);
+			this.router.navigate(['./view-projects']);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 		})
@@ -136,79 +169,29 @@ export class EditProjectComponent implements OnInit {
 			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
 				console.log("Delete project======>" , res);
 				this.projects = res;
+				this.router.navigate(['./view-projects']);
 			},(err:any)=>{
 				console.log("error in delete project =====>" , err);
 			});
 		}
 	}
-	showTeams(){
-		if(this.teamShow == false){
-			localStorage.setItem("teamShow" , JSON.stringify(true));
-			this.teamShow = true;
-		}
-		else{
-			localStorage.setItem("teamShow" , JSON.stringify(false));
-			this.teamShow = false;	
-		}
-			localStorage.setItem("showDeveloper" , JSON.stringify(false));
+
+	addDeveloper(event){
+		console.log(event);
+		this.projectTeam.push(event);
 	}
-	getDevelopers(){
-		console.log("show developer" , this.showDeveloper);
-		if(this.showDeveloper == false){
-			localStorage.setItem("showDeveloper" , JSON.stringify(true));
-			this.showDeveloper = true;
-		}
-		else{
-			localStorage.setItem("showDeveloper" , JSON.stringify(false));
-			this.showDeveloper = false;	
-		}
-		
 
+	removeDeveloper(event){
+		console.log(event);
+		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
+		if(_.findIndex(this.availableDevelopers, function(o) { return o._id == event._id; }) == -1 ){
+			console.log("in fi");
+			this.availableDevelopers.push(event);
+		}
 	}
-	addRemoveDeveloper(developerId){
-		var arr = [];
-		var arVariable;
-		console.log("heyyyyyyyy");
-		console.log("all developers ====>" , this.availableDevelopers);
-		console.log("all project team ====>" , this.projectTeam);
 
-		console.log("developer Show ===>" , this.developerShow);
-		if(this.showDeveloper == true){
-			console.log("this . teams in addRemoveDeveloper if ======>" , this.availData);
-			_.forEach(this.availableDevelopers , (developer, index)=>{
-				if(developer._id == developerId){
-					console.log("found developer ====>" , developer , index);
-					arr.push(index);
-					//this.projectTeam.push(developer);
-					this.availData.Teams.push(developer);
-					// console.log("In if",this.availData);
-					// this.availDevelopers.splice(index,1); 
-
-				}
-			})
-			arVariable = arr[0];
-			console.log("arr ====>" , arVariable);
-			this.availableDevelopers.splice(arVariable,1);
-			console.log("arr ===>" , this.availableDevelopers);
-		}
-		else{
-			console.log("this . temas in addRemoveDeveloper else ======>" , this.availData);
-			_.forEach(this.availData.Teams , (developer , index)=>{
-				console.log("developerss ===>" , developer._id , index);	
-				if(developer._id == developerId){
-					this.availableDevelopers.push(developer);
-					console.log("found User" , developer , index);
-					arr.push(index);
-				//	this.availData.Teams.splice(index,1);
-					//console.log("In else",this.availData) 
-				}
-			})
-			console.log("arr ====>" , arr);
-			var p = arr[0];
-			this.availData.Teams.splice(p , 1);
-			localStorage.setItem('teams' , JSON.stringify(this.availData));
-			console.log("after Splice else ====>" , this.availData.Teams);
-			//this.editProject();
-		}
+	clearSelection(event){
+		console.log(this.availData);
+		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
 	}
 }

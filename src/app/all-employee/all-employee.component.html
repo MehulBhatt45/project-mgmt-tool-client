@@ -47,15 +47,15 @@
 					</div>
 				</div>
 				<div class="avatar white img_section">
-					<!-- <a routerLink="['/visit-user-profile/{{developer._id}}']" routerLink="'./user-summary/{{project._id}}'"> -->
-						<a routerLink = "/visit-user-profile/{{developer._id}}">
-							<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/6.jpg'" class="rounded-circle img-fluid img_content"></a>
-						</div>
-						<div class="card-body">
-							<h5 class="card-title mt-1">{{developer.name}}</h5>
-							<h6 class="card-title">{{developer.userRole}}</h6>
-						</div>
+
+					<a routerLink = "/visit-user-profile/{{developer._id}}">
+						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/6.jpg'" class="rounded-circle img-fluid img_content"></a>
 					</div>
-				</div>		
+					<div class="card-body">
+						<h5 class="card-title mt-1">{{developer.name}} {{developer.lname}}</h5>
+						<h6 class="card-title">{{developer.userRole}}</h6>
+					</div>
+				</div>
 			</div>
+		</div>
 		</section>

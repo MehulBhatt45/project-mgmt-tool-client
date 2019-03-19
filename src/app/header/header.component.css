@@ -61,8 +61,8 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 }
 .dropdown-content a.dropdown-item {
   text-align: left;
-  padding: 5px 15px;
-  font-size: 13px;
+  padding:16px;
+  font-size: 15px;
   border-radius: 5px!important;
 }
 .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
@@ -108,8 +108,8 @@ ol.breadcrumb.hidden-lg-down li a {
 
 .dropdown-menu a.dropdown-item {
   text-align: left;
-  padding: 5px 15px;
-  font-size: 13px;
+ padding: 16px;
+    font-size: 15px;
   border-radius: 5px!important;
   transition: all 0.7s;
 }
@@ -172,4 +172,8 @@ ol.breadcrumb.hidden-lg-down li a {
     position: relative;
     cursor: pointer;
 
+  }
+.modal-header {
+    background-color: #372e5f;
+    color: white;
   }

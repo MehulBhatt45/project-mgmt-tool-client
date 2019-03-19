@@ -20,6 +20,7 @@
 				<span><i class="far fa-edit"></i><a routerLink="/editprofile/{{currentUser._id}}">Edit profile</a></span>
 				<div *ngIf="currentUser.userRole == 'admin'">
 					<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
+
 				</div>
 			</div>
 		</div>

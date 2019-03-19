@@ -26,8 +26,7 @@
 						</div>
 						<div class="md-form form-group">
 							<label for="date-picker-example">Deadline</label>
-							<input type="text" id="date-picker" 
-							formControlName="deadline"	class="form-control datepicker" >
+							<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" >
 						</div>
 						<div>
 							<h4><strong>Client Details :-</strong></h4>
@@ -56,71 +55,40 @@
 						</div>
 
 						<div class="form-group">
-								<!-- <select formControlName="Teams"  class="browser-default custom-select custom-select-lg mb-3" multiple>
-									<option *ngFor="let developer of developers" [ngValue]="developer._id">{{developer.name}}</option>
-								</select> -->
-					<!-- <select class="browser-default custom-select custom-select-lg mb-3" formControlName="Teams">
-						<option value="" disabled selected>Choose your option</option>
-						<option value="1">Option 1</option>
-						<option value="2">Option 2</option>
-						<option value="3">Option 3</option>
-					</select> -->
-					<!-- <ngx-select-dropdown tabindex="0" [multiple]="true" [(ngModel)]="objectsArray" [options]="developers" [config]="config"></ngx-select-dropdown> -->
-					<ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
-						<ng-template ng-label-tmp let-item="item" let-clear="clear">
-							<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-							<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-						</ng-template>
-						<div class="row">
-							<ng-template ng-option-tmp let-item="item">
-								<!-- <div class="card testimonial-card">
-									<div class="card-up deep-purple lighten-2"></div>
-									<div class="avatar white img_section">
-										<a><img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid" style="height: 100px;"></a>
-									</div>
-									<div class="card-body">
-										<h5 class="card-title mt-1">{{item.name}}</h5>
-										<h6 class="card-title">{{item.userRole}}</h6>
-									</div>
-								</div> -->
-									<div class="card testimonial-card">
-										<div class="card-up deep-purple lighten-2"></div>
-										<div class="avatar white img_section">
-											<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid" style="height: 100px;">
+							<ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams">
+								<ng-template ng-label-tmp let-item="item" let-clear="clear">
+									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+								</ng-template>
+								<div class="row">
+									<ng-template ng-option-tmp let-item="item">
+										<div class="card testimonial-card">
+											<div class="card-up deep-purple lighten-2"></div>
+											<div class="avatar white img_section">
+												<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+											</div>
+											<div class="card-body">
+												<h5 class="card-title mt-1">{{item.name}}</h5>
+												<h6 class="card-title">{{item.userRole}}</h6>
+											</div>
 										</div>
-										<div class="card-body">
-											<h5 class="card-title mt-1">{{item.name}}</h5>
-											<h6 class="card-title">{{item.userRole}}</h6>
-										</div>
-									</div>
-							</ng-template>
+									</ng-template>
+								</div>
+							</ng-select>
 						</div>
-						</ng-select>
-					</div>
-
-				<!-- <select class="mdb-select md-form multi_select" multiple searchable="Search here..">
-					<option value="" disabled selected>Choose your country</option>
-					<option value="1">USA</option>
-					<option value="2">Germany</option>
-					<option value="3">France</option>
-					<option value="3">Poland</option>
-					<option value="3">Japan</option>
-				</select> -->
-				<!-- demo code -->
-				<img [src]="url" height="150" width="150"> <br/>
-				<!-- demo code -->
-				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
-					Select Project avatar
-				</button>
-				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm)" [disabled]="addForm.invalid">Create Project</button>
-				<!-- <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button> -->
-			</form>
+						<img [src]="url" height="150" width="150"> <br/>
+						<!-- demo code -->
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+							Select Project avatar
+						</button>
+						<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)">Create Project</button>
+						<!-- <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button> -->
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-</div>
-</div>
-
 
 <!-- Modal Start Here -->
 
@@ -147,82 +115,82 @@ aria-hidden="true">
 				</div>
 				<ul class="project-avatar">
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/school.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/school.png')">
 							<img src="assets/avatar/school.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/mortarboard.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/mortarboard.png')">
 							<img src="assets/avatar/mortarboard.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/alarm-clock.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/alarm-clock.png')">
 							<img src="assets/avatar/alarm-clock.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button"  (click)="addIcon('/uploads/avatar/stethoscope.png')">
+						<button class="icon-button"  (click)="addIcon('/avatar/stethoscope.png')">
 							<img src="assets/avatar/stethoscope.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/doctor.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/doctor.png')">
 							<img src="assets/avatar/doctor.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/bookshelf.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/bookshelf.png')">
 							<img src="assets/avatar/bookshelf.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/flask.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/flask.png')">
 							<img src="assets/avatar/flask.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/customer-service.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/customer-service.png')">
 							<img src="assets/avatar/customer-service.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/payment-method.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/payment-method.png')">
 							<img src="assets/avatar/payment-method.png" height="56" width="56">
 						</button>	
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/beach.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/beach.png')">
 							<img src="assets/avatar/beach.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/coding.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/coding.png')">
 							<img src="assets/avatar/coding.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/maintenance.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/maintenance.png')">
 							<img src="assets/avatar/maintenance.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/birthday-cake.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/birthday-cake.png')">
 							<img src="assets/avatar/birthday-cake.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/conversation.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/conversation.png')">
 							<img src="assets/avatar/conversation.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/food.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/food.png')">
 							<img src="assets/avatar/food.png" height="56" width="56">
 						</button>
 					</li>
 					<li>
-						<button class="icon-button" (click)="addIcon('/uploads/avatar/shopping-basket.png')">
+						<button class="icon-button" (click)="addIcon('/avatar/shopping-basket.png')">
 							<img src="assets/avatar/shopping-basket.png" height="56" width="56">
 						</button>
 					</li>
