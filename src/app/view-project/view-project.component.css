@@ -258,3 +258,32 @@ ul.project-avatar li:hover {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
     color: #372e5f;
 }
+
+@media (max-width: 1199px){
+  .avatar_image{
+    left: 120px;
+  }
+  a.btn-floating.btn-action {
+    margin-right: 4px;
+}
+}
+@media (max-width: 991px){
+
+}
+@media (max-width: 767px){
+     .avatar_image{
+    left: 41%;
+  }
+     a.btn-floating.btn-action {
+    margin-right: 70px;
+}
+
+}
+@media (max-width: 576px){
+    .avatar_image{
+    left: 38%;
+  }
+     a.btn-floating.btn-action {
+    margin-right: 49px;
+}
+}

@@ -24,6 +24,7 @@ export class ViewProjectComponent implements OnInit {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   message;
   objectsArray:any;
+  optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -40,6 +41,11 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.optionsSelect = [
+  { value: '1', label: 'Option 1' },
+  { value: '2', label: 'Option 2' },
+  { value: '3', label: 'Option 3' },
+  ]
     this.getAllDevelopers();
    $('.datepicker').pickadate({
       onSet: function(context) {

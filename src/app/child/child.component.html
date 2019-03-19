@@ -18,7 +18,7 @@
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
-								<table>
+								<table class="table-responsive">
 									<tr>
 										<td colspan="2">
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
