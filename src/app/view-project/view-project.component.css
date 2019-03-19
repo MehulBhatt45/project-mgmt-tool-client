@@ -151,6 +151,8 @@ ul.project-avatar li:hover {
     text-align: center;
     font-size: 32px;
     padding-top: 50px;
+    cursor: pointer;
+    outline: none;
 
 }
 .avatar_image{

@@ -53,10 +53,16 @@
 .cdk-drag-placeholder {
   opacity: 0;
 }
-
+label{
+  font-weight: bold;  
+}
 .btn-default{
     margin-left: 0px!important;
-        padding: 17px 45px;
+        padding: 17px 46px;
+}
+.btn-info {
+    background: #33b5e5;
+    margin-left: 13px;
 }
 
 .team-members li:hover{
@@ -310,7 +316,7 @@ table {
     }
   }
   .modal-header {
-    background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%);
+    background-color: #372e5f;
     color: white;
   }
 
@@ -361,7 +367,7 @@ table {
   box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   padding: 5px;
   top: 10px;
-  border-radius: 10px 10px 10px 10px;
+  /*border-radius: 10px 10px 10px 10px;*/
 }
 .dropdown-menu a.dropdown-item {
   text-align: left;
