@@ -1,29 +1,29 @@
 <div class="container">
-	<div class="row" style="margin-top: -48px;">
-		<div class="card" style="background-color: #f1ffef;">
+	<div class="row header">
+		<div class="card for_title">
 			<div class="card-body" *ngIf="pro">
-				<h2 class="card-title" style="text-align: center;"><a style="color: black;">{{pro.title}}</a></h2>
+				<h2 class="card-title"><a style="color: black;">{{pro.title}}</a></h2>
 			</div>
 		</div>
 	</div>
-	<div class="row" style="margin-top: 25px;">
+	<div class="row number_of_task">
 		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
-		<table class="table table-bordered">
+		<table class="table table-bordered task_table">
 			<thead>
 				<tr>
 					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
-					<th scope="col"style="text-align: center;"><i class="fas fa-tasks"></i> Number Of Tasks</th>
+					<th scope="col"><i class="fas fa-tasks"></i> Number Of Tasks</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let track of tracks">
 					<th scope="row">{{track.id}}</th>
-					<td style="text-align: center;">{{track.tasks.length}}</td>
+					<td>{{track.tasks.length}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="row" style="margin-top: 25px;">
+	<div class="row priority_base_task">
 		<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
 		<div class="col-sm-6">
 			<table class="table table-bordered">
@@ -42,7 +42,7 @@
 			</table>
 		</div>
 		<div class="col-sm-6">
-			<table class="table table-bordered" >
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col" style="background-color: #c5c502;color: #fff;"><i class="fas fa-tasks"></i> High Priority</th>
@@ -81,6 +81,7 @@
 						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
 					</tr>
 				</thead>
+				
 				<tbody>
 					<tr *ngFor="let track of tracks">
 						<th scope="row">{{track.title}}</th>
@@ -90,6 +91,29 @@
 			</table>
 		</div>
 	</div>
+	<!-- <div class="row" style="margin-top: 25px;">
+		<h3><i class="fas fa-list-alt"></i> List of team members who working in project with all tracks :</h3>
+		<table class="table table-bordered" style="text-align: center;">
+			<thead>
+				<tr>
+					<th scope="col" style="text-align: left;"><i class="fas fa-users"></i> Team-member</th>
+					<th scope="col">To Do</th>
+					<th scope="col">In Progress</th>
+					<th scope="col">Testing</th>
+					<th scope="col">Complete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of projectTeam">
+					<td scope="row" style="text-align: left;" >{{user.name}}</td>
+					<td>{{getTaskCount(user._id, 'to do')}}</td>
+					<td>{{getTaskCount(user._id, 'in progress')}}</td>
+					<td>{{getTaskCount(user._id, 'testing')}}</td>
+					<td>{{getTaskCount(user._id, 'complete')}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> -->
 </div>
 
 

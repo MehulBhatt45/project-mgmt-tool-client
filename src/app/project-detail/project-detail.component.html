@@ -61,7 +61,7 @@
 								<ul class="team-members">	
 									<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 										<a href="javascript:void(0);">
-											<div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
+											<div class="user_profile_pic"><img src="{{path}}{{task.assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
 										</a>
 									</li>
 									<li *ngIf="!task.assignTo" class="add-member">
