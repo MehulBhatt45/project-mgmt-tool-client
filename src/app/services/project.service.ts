@@ -379,6 +379,6 @@ export class ProjectService {
 
 			deleteEmployeeById(developerid){
 				console.log("devloperId{}{}{}-===",developerid);
-				return this.http.delete(config.baseApiUrl+"employee/deleteEmp/"+developerid);
+				return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
 			}
 		}

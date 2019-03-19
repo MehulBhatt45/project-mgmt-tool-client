@@ -70,7 +70,12 @@ export class AllEmployeeComponent implements OnInit {
 		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
 
 			console.log("delete{}{}{}{}",res);
-		})
+			this.getAllDevelopers();
+		},err=>{
+			console.log("errr=-=-=-= ",err);
+			
 
+		})
 	}
+
 }
