@@ -75,7 +75,7 @@ export class SummaryComponent implements OnInit {
 
 	ngOnInit() {
 		
-		// var completedTask=this.getCompletedTask(status);
+		// var completedTask=this.getCompletedTask("complete");
 		// console.log("completed))___+++",completedTask);
 
 		}
