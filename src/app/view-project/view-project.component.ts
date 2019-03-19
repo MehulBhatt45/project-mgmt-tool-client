@@ -35,7 +35,10 @@ export class ViewProjectComponent implements OnInit {
       clientContactNo: new FormControl('',Validators.required),
       clientDesignation: new FormControl(''),
       avatar: new FormControl(''),
-      Teams: new FormControl([])
+      allDeveloper:new FormControl(''),
+      // Teams: new FormControl([])
+      // Teams: new FormControl([])
+
     });
   }
 

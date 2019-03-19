@@ -50,7 +50,8 @@ export class LoginService {
         console.log("user id is==========>",id);
     }
     changeProfilePicture(files: any, data){
-        console.log(data);
+        console.log("file is=================>",files);
+        console.log("data is ============>",data);
         let formdata = new FormData();
         formdata.append("userId",data);
         formdata.append("profilePhoto",files[0]);
