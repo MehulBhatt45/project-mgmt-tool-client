@@ -186,6 +186,11 @@ ul.project-avatar li:hover {
     font-size: 20px;  
 }
 
+span.badge.badge-pill.z-depth-0.badge-dark {
+    margin: 0 5px;
+    vertical-align: text-bottom;
+}
+
 
 .img_section{
   height: 60px;

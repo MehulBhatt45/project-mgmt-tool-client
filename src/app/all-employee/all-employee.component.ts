@@ -64,10 +64,10 @@ export class AllEmployeeComponent implements OnInit {
 		})
 	}
 
-	deleteEmployee(id){
-		console.log("msgggg--=--",id);
+	deleteEmployee(developerid){
+		console.log("msgggg--=--",developerid);
 
-		this._projectService.deleteEmployeeById(id).subscribe(res=>{
+		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
 
 			console.log("delete{}{}{}{}",res);
 		})

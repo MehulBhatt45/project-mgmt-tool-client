@@ -85,19 +85,9 @@ export class LoginService {
             }
     
 
-    editUserProfileWithFile( data,files: any){
+    editUserProfileWithFile( data){
         var id = JSON.parse(localStorage.getItem('currentUser'))._id;
-        console.log("data is=====================>",data);
-        let formdata = new FormData();
-        formdata.append('name',data.name);
-        formdata.append('email',data.email);
-        formdata.append('userRole',data.userRole);
-        formdata.append('phone',data.mobile);
-        formdata.append('experience',data.experience);
-        formdata.append('profilePhoto',files[0]);
-        console.log("file is===>>>",files);
-        console.log("change data issssss===>>>",data);
-        return this.http.put(config.baseApiUrl+"user/update-details/"+id,formdata);
+        return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
     }
 
 
