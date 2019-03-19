@@ -6,21 +6,21 @@
 </div>
 <!-- search user profile -->
 <form>
-	<div class="form-row">
-		<div class="col">
+	<div class="form row">
+		<div class="col-sm-4">
 			<div class="md-form">
 				<input type="text" id="empId" class="form-control">
 				<label for="empId">Employee Id</label>
 			</div>
 		</div>
-		<div class="col">
+		<div class="col-sm-4">
 			<div class="md-form">
 				<input type="text" id="empName" class="form-control">
 				<label for="empName">Employee Name</label>
 			</div>
 		</div>
-		<div class="col">
-			<button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
+		<div class="col-sm-4">
+			<button class="btn btn-default btn-designation" type="button" data-toggle="dropdown" aria-haspopup="true"
 			aria-expanded="false">Select Designation</button>
 			<div class="dropdown-menu drop_btn">
 				<a class="dropdown-item" href="#">User</a>
@@ -34,7 +34,7 @@
 <!-- all developer profile -->
 <section class="section pb-3 text-center">
 	<div class="row">
-		<div class="col-lg-3 col-md-12 mb-4" *ngFor="let developer of developers">
+		<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let developer of developers">
 			<div class="card testimonial-card">
 				<div class="card-up deep-purple lighten-2"></div>
 				<div class="dropdown">
@@ -48,7 +48,7 @@
 				</div>
 				<div class="avatar white img_section">
 					<a routerLink = "/visit-user-profile/{{developer._id}}">
-						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/avatar.png'" class="rounded-circle img-fluid img_content"></a>
+						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content"></a>
 					</div>
 					<div class="card-body">
 						<h5 class="card-title mt-1">{{developer.name}}</h5>

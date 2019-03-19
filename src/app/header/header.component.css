@@ -181,19 +181,7 @@ ol.breadcrumb.hidden-lg-down li a {
     background-color: #372e5f;
     color: white;
   }
-  @media (max-width:1199px) {
-    header{
-      margin-bottom: 80px;
-    }  
-  }
-  @media (max-width:576px) {
-    .side_fixed_nav{
-      visibility: hidden;
-    }
-    header{
-      margin-bottom: 50px;
-    }
-  }
+  
 
 .progress{
   visibility: hidden;
@@ -284,3 +272,16 @@ ol.breadcrumb.hidden-lg-down li a {
   color: #372e5f;
 }
 
+@media (max-width:1199px) {
+    header{
+      margin-bottom: 80px;
+    }  
+  }
+  @media (max-width:575px) {
+    .side_fixed_nav{
+      display: none;
+    }
+    header{
+      margin-bottom: 50px;
+    }
+  }

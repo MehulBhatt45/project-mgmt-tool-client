@@ -155,19 +155,20 @@ ul.project-avatar li:hover {
     outline: none;
 
 }
+.avatar {
+    position: relative;
+}
 .avatar_image{
-    float: left;
     height: 110px;
     width: 110px;
-    display: inline-block;
+    display: table;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
     top: -48px;
-    left: 36%;
-/*    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);*/
+    left: 0;
+    right: 0;
+    margin: auto;
     outline: none;
     background-color: #bcc2c0;
 }
@@ -263,33 +264,23 @@ span.badge.badge-pill.z-depth-0.badge-dark {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
     color: #372e5f;
 }
-
-@media (max-width: 1199px){
-  .avatar_image{
-    left: 120px;
-  }
-  a.btn-floating.btn-action {
+a.btn-floating.btn-action {
     margin-right: 4px;
+    display: table;
+    text-align: center;
+    }
+a.btn-floating.btn-action i{
+    width: auto;
 }
+@media (max-width: 1199px){
 }
 @media (max-width: 991px){
-
 }
 @media (max-width: 767px){
-     .avatar_image{
-    left: 41%;
-  }
+}
+@media (max-width: 575px){
      a.btn-floating.btn-action {
     margin-right: 10px;
-}
-
-}
-@media (max-width: 576px){
-    .avatar_image{
-    left: 38%;
-  }
-     a.btn-floating.btn-action {
-    margin-right: 49px;
 }
 .margin_left{
     margin-left: -15px;
