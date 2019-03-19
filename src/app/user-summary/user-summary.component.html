@@ -2,7 +2,7 @@
 	<div class="row header">
 		<div class="card for_title">
 			<div class="card-body" *ngIf="pro">
-				<h2 class="card-title"><a style="color: black;">{{pro.title}}</a></h2>
+				<h2 class="card-title" style="color: black;">{{pro.title}}</h2>
 			</div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 			<tbody>
 				<tr *ngFor="let track of tracks">
 					<th scope="row">{{track.id}}</th>
-					<td>{{track.tasks.length}}</td>
+					<td>{{getTaskCount(track._id,track.id)}}</td>
 				</tr>
 			</tbody>
 		</table>

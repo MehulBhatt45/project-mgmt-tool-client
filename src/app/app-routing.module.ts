@@ -165,7 +165,7 @@ const routes: Routes = [
 			component:EditprofileComponent
 		},
 		{
-			path:'user-summary/:projectId/:userId',
+			path:'user-summary/:id',
 			pathMatch: "full",
 			component:UserSummaryComponent
 		}
