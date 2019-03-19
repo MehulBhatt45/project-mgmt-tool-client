@@ -235,6 +235,7 @@ export class ProjectService {
 			return this.http.put(config.baseApiUrl+"project/update/"+projectId , data , httpOptions);
 		}
 		getProjectByIdAndUserId(id){
+			console.log("id is==========>",id);
 			const httpOptions = {
 				headers: new HttpHeaders({
 					'Content-Type':  'application/json',

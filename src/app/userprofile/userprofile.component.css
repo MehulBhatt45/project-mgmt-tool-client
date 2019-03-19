@@ -59,7 +59,7 @@
 
 
 
-.progress{
+/*.progress{
     	width: 150px;
     	height: 150px;
     	line-height: 150px;
@@ -208,3 +208,4 @@
     @media only screen and (max-width: 990px){
     	.progress{ margin-bottom: 20px; }
     }
+*/
