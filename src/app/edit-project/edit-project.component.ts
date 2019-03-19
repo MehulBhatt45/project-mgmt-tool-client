@@ -21,7 +21,7 @@ export class EditProjectComponent implements OnInit {
 	developerShow = false;
 	allDevelopers;
 	availDevelopers;
-	teamShow:boolean = false;
+	loader:boolean = false;
 	showDeveloper:boolean = false;
 	basMediaUrl = config.baseMediaUrl;
 	developers;
@@ -98,12 +98,6 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getProjects(){
-		localStorage.setItem('teamShow' , JSON.stringify(false));
-		this.teamShow = false;
-		localStorage.setItem('developerShow' , JSON.stringify(false));
-		this.developerShow = false;
-		localStorage.setItem('editAvail' , JSON.stringify(false));
-		this.editAvail = false;	
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log("res of all projects in edit project component ====>" , res);
 			this.projects = res;
@@ -112,15 +106,6 @@ export class EditProjectComponent implements OnInit {
 		})
 	}
 	editProject(projectId){
-		
-		console.log(projectId);
-		console.log("heyy");
-		console.log("on right path");
-		localStorage.setItem('teamShow' , JSON.stringify(false));
-		this.teamShow = false;
-		localStorage.setItem('developerShow' , JSON.stringify(false));
-		this.developerShow = false;
-
 		this._projectService.getProjectById(projectId).subscribe((res:any)=>{
 			console.log("res of requested project in edit project component ====>" , res);
 			this.availData = res;
@@ -135,14 +120,17 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getProjectById(id){
+		this.loader = true;
 		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
+			this.loader = false;
 			console.log("this . avail data ==========>" ,this.availData);
 			this.projectTeam = this.availData.Teams;
 			localStorage.setItem('teams', JSON.stringify(this.projectTeam)); 
 		},err=>{
 			console.log(err);
+			this.loader = false;
 		})
 
 	}

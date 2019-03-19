@@ -16,13 +16,13 @@ export class EditprofileComponent implements OnInit {
 	files: Array<File> = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	userDetails;
+	loader: boolean = false;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
-			fname:new FormControl(''),
-			lname:new FormControl(''),
+			name:new FormControl(''),
 			email: new FormControl(''),
-			mobile:new FormControl(''),
-			userRole:new FormControl(''),
+			phone:new FormControl(''),
+			userRole:new FormControl({value: '', disabled: true}),
 			experience:new FormControl(''),
 			cv:new FormControl('')
 		}); 
@@ -33,15 +33,23 @@ export class EditprofileComponent implements OnInit {
 		this.getDetails();
 	}
 	addFile(event){
-		this.files.push(event.target.files[0]);
+		this.files = event.target.files;
 	}
 
 	updateProfile(editEmployeeForm){
+		console.log(this.files);
 		console.log("btn tapped");
+		this.editEmployeeForm['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("form value=====>>>",editEmployeeForm);
+		let data = new FormData();
+		data.append('name', editEmployeeForm.name?editEmployeeForm.name:"");
+		data.append('email', editEmployeeForm.email?editEmployeeForm.email:"");
+		data.append('phone', editEmployeeForm.phone?editEmployeeForm.phone:"");
+		data.append('experience', editEmployeeForm.experience?editEmployeeForm.experience:"");
+		if(this.files && this.files.length)
+			data.append('cv', this.files[0]);
 
-		this.editEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("form value=====>>>",editEmployeeForm.value);
-		this._loginService.editUserProfileWithFile(editEmployeeForm.value,this.files).subscribe((res:any)=>{
+		this._loginService.editUserProfileWithFile(data).subscribe((res:any)=>{
 			console.log("res",res);
 		},err=>{
 			console.log("error",err);    
@@ -49,14 +57,17 @@ export class EditprofileComponent implements OnInit {
 
 	}
 	getDetails(){
+		this.loader = true;
 		var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("user Di ======++>" , id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			console.log(res);
 			this.userDetails = res;
+			this.loader = false;
 			console.log("this user dateailsls ==>" , this.userDetails);
 		},(err:any)=>{
 			console.log(err);
+			this.loader = false;
 		})
 	}
 
