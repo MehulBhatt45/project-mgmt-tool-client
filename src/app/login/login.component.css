@@ -35,3 +35,9 @@ img.loading_img {
 .deep-purple-skin .top-nav-collapse {
     background-color: #372e5f;
 }
+.forgottxt{
+    margin: -20px 0 0 6px !important;
+}
+.btn-deep-orange {
+    background: #413670;
+}

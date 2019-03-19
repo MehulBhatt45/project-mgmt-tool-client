@@ -49,8 +49,47 @@
 
 				</div>
 			</form>
+			<div class="modal fade" id="modalForgotPasswordForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<h4 class="modal-title w-100 font-weight-bold">Forgot Password</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mx-3">
+						<form [formGroup]="forgotPasswordForm">
+							<div class="md-form mb-3">
+								<i class="fas fa-envelope prefix grey-text"></i>
+								<input type="text" id="email" class="form-control" formControlName="email">
+								<label>Email address</label>
+							</div>
+							<div class="md-form mb-3">
+								<i class="fas fa-lock prefix grey-text"></i>
+								<input type="password" id="password" class="form-control" formControlName="password">
+								<label>Password</label>
+							</div>
+
+							<div class="md-form mb-3">
+								<i class="fas fa-lock prefix grey-text"></i>
+								<input type="password" id="confirmpassword" class="form-control" formControlName="confirmpassword">
+								<label>Confirm password</label>
+							</div>
+							<div class="modal-footer d-flex justify-content-center">
+								<button class="btn btn-deep-orange" (click)=updatePassword()>Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<a href="" class="forgottxt" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password</a>
 		</div>
 	</div>
+</div>
 </div>	
 </div>
 </div>

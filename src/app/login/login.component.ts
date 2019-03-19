@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  forgotPasswordForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,12 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
+    });
+
+    this.forgotPasswordForm = this.formBuilder.group({
+      email: [''],
+      password: [''],
+      confirmpassword: ['']
     });
 
     // get return url from route parameters or default to '/'
@@ -62,6 +69,23 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       });
   }
-    
+
+  updatePassword(){
+    console.log(this.forgotPasswordForm.value);
+    if(this.forgotPasswordForm.value.password == this.forgotPasswordForm.value.confirmpassword){
+      delete this.forgotPasswordForm.value["confirmpassword"];
+      console.log(this.forgotPasswordForm.value);
+      this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
+        console.log("res-=-=",res);
+      },err=>{
+        console.log("res-=-=",err);
+      })
+    }
+    else{
+      alert("Please enter same password");
+    }    
+    this.router.navigate(["/login"]);
+  }
+
 
 }
