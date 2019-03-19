@@ -7,17 +7,42 @@
     border: 1px solid;
     margin-top: 80px;
     border: 1px solid black;
-}*/
-h2{ 
+    }*/
+    h2{ 
     /*font-size: 30px;
     color: #000000; */   
     margin:0;
 }
 .card-header {
     background-color: #372e5f;
+    font-size: 32px;
 }
 .file-field .btn{
     line-height: normal!important;
     background-color: #413670 !important;
     margin : 0;
+}
+
+@media (max-width: 1199px){
+    h2.card-header-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 991px){
+}
+
+@media (max-width: 767px){
+   h2.card-header-title {
+    font-size: 22px;
+}
+.col-md-12{
+    margin-top: 0 !important;
+}
+}
+
+@media (max-width: 576px){
+   h2.card-header-title {
+    font-size: 20px;
+}
 }

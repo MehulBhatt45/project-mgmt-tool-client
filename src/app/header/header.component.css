@@ -1,3 +1,6 @@
+header{
+  margin-bottom: 100px;
+}
 .side_fixed_nav{
   align-items: center;
   box-sizing: border-box;
@@ -27,6 +30,7 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   flex-direction: column;
   width: 100%;
   padding-bottom: 16px;
+  padding-top: 28px;
 }
 .bottom_icon{
   -webkit-box-align: center;
@@ -108,8 +112,8 @@ ol.breadcrumb.hidden-lg-down li a {
 
 .dropdown-menu a.dropdown-item {
   text-align: left;
- padding: 16px;
-    font-size: 15px;
+  padding: 16px;
+  font-size: 15px;
   border-radius: 5px!important;
   transition: all 0.7s;
 }
@@ -166,19 +170,33 @@ ol.breadcrumb.hidden-lg-down li a {
     border-radius: 50%;
     border: 2px solid #fff;
     display: inline-block;
-  
+
     float: left;
     box-shadow: 0 0 20px 0 rgba(171,171,171,.8);
     position: relative;
     cursor: pointer;
 
   }
-.modal-header {
+  .modal-header {
     background-color: #372e5f;
     color: white;
   }
+  @media (max-width:1199px) {
+    header{
+      margin-bottom: 80px;
+    }  
+  }
+  @media (max-width:576px) {
+    .side_fixed_nav{
+      visibility: hidden;
+    }
+    header{
+      margin-bottom: 50px;
+    }
+  }
+
 .progress{
-    visibility: hidden;
+  visibility: hidden;
 }
 .progress .progress-bar {
     width: 0%;
@@ -265,3 +283,4 @@ ol.breadcrumb.hidden-lg-down li a {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
   color: #372e5f;
 }
+
