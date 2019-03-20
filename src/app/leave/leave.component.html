@@ -85,11 +85,11 @@
 
 							<div class="btn-group btn-group-toggle d-flex flex-column flex-md-row" data-toggle="buttons">
 
-								<label class="btn btn-primary btn_bgcolor">
-									<button (click)="showOneDay()" value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i>For One Day</button> 
+								<label class="btn btn-primary btn_bgcolor" (click)="showOneDay()">
+									<button  value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i>For One Day</button> 
 								</label>
-								<label class="btn btn-primary btn_bgcolor">
-									<button (click)="showMoreDays()" value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i>For More Days</button>
+								<label class="btn btn-primary btn_bgcolor" (click)="showMoreDays()">
+									<button  value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i>For More Days</button>
 								</label>
 							</div>
 							<span [hidden]="!showMoreDayss">
@@ -160,7 +160,7 @@
 							</div>
 
 
-							<div class="form-group purple-border " style="text-align: left; padding: 0;width:98%;">
+							<div class="form-group purple-border " style="text-align: left; padding: 0;width:100%;">
 								<label for="exampleFormControlTextarea4"><b>Reason For Leave:-</b></label>
 								<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
 							</div>

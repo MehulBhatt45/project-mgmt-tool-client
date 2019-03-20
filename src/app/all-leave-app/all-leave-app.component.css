@@ -39,6 +39,7 @@
 }
 .view{
 	height: 87px;
+	margin-bottom: 20px;
 }
 .table td.description{
 	white-space: normal;
@@ -51,10 +52,13 @@
   counter-increment: serial-number;  /* Increment the serial number counter */
   content: counter(serial-number);  /* Display the counter */
 }
-
-
 .card{
-	width:118% !important;
-	}
+	max-width: 100%;
+}
+h3{
+	text-align: center;
+}
+
+
 
 

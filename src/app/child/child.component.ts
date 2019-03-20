@@ -100,6 +100,7 @@ export class ChildComponent  {
       var str = name.split(' ');
       return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
     }else{
+      
       return '';
     }
   }
