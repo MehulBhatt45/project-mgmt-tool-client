@@ -9,8 +9,9 @@ import { HttpClient} from '@angular/common/http';
 import { config } from '../config';
 import {AlertService} from './alert.service';
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MessagingService {
 
   currentMessage = new BehaviorSubject(null);
@@ -66,9 +67,8 @@ export class MessagingService {
 
   addEntry(udata){
     console.log("notification data",udata);
-    this.http.post("http://localhost:4000/notification/addUser",udata).subscribe((success) => {
-      //alert("success");
-
+    this.http.post(config.baseMediaUrl+"notification/addUser",udata).subscribe((success) => {
+      alert("success");
     });
   }
 }
