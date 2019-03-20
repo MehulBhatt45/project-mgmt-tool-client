@@ -16,20 +16,21 @@ import * as _ from 'lodash';
 })
 export class HeaderComponent implements OnInit {
 	tracks:any;
-	task;
+	task = this.getEmptyTask();
 	userId
 	project;
 	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
-	addUserProfile;
+	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	developers;
-	editTaskForm;
+	editTaskForm:FormGroup;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	files : FileList;
+	files: Array<File> = [];
+	loader: boolean = false;
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -42,81 +43,130 @@ export class HeaderComponent implements OnInit {
 		this.createEditTaskForm();
 	}
 
-	getEmptyTracks(){
-		this.tracks = [
-		{
-			"title": "Todo",
-			"id": "to do",
-			"class":"primary",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "In Progress",
-			"id": "in progress",
-			"class":"info",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Testing",
-			"id": "testing",
-			"class":"warning",
-			"tasks": [
-
-			]
-		},
-		{
-			"title": "Done",
-			"id": "complete",
-			"class":"success",
-			"tasks": [
-
-			]
-		}
-		];
-	}
-
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
-			startDate : new FormControl('', Validators.required),
-			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
+			projectId : new FormControl('', Validators.required),
+			dueDate : new FormControl('',Validators.required),
+			estimatedTime: new FormControl('',[Validators.required]),
+			status : new FormControl({value: ''}, Validators.required)
 		})
 	}
 
 
 	ngOnInit() {
+		this.editTaskForm.reset()
+		this.task = this.getEmptyTask();
+		$('#editModel').on('hidden.bs.modal', function (e) {
+			reset();
+		})
+		var reset = ()=>{
+			this.editTaskForm.reset()
+			this.task = this.getEmptyTask();
+		}
+		$('#estimatedTime').pickatime({
+			afterDone: function(context) {
+				console.log('Just set stuff:', context);
+				setDate(context);
+			}
+		});
+		var setDate = (context)=>{
+			this.timePicked();
+		}
 		$('.button-collapse').sideNav({
 			edge: 'left',
 			closeOnClick: true
 		});
-		this._projectService.getProjects().subscribe(res=>{
-			console.log(res);
-			this.projects = res;
-			// console.log(this.projects.pmanagerId);
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+		});
+		this.getProjects();
+		// this.getAllDevelopers();
+		this.tracks = [
+			{
+				"title": "Todo",
+				"id": "to do",
+				"class":"primary",
+				"tasks": [
+
+				]
+			},
+			{
+				"title": "In Progress",
+				"id": "in progress",
+				"class":"info",
+				"tasks": [
+
+				]
+			},
+			{
+				"title": "Testing",
+				"id": "testing",
+				"class":"warning",
+				"tasks": [
+
+				]
+			},
+			{
+				"title": "Done",
+				"id": "complete",
+				"class":"success",
+				"tasks": [
+
+				]
+			}
+			];
+	}
+
+	timePicked(){
+		this.editTaskForm.controls.estimatedTime.setValue($('#estimatedTime').val())
+	}
+	projectSelected(item){
+		if(item && item._id){
+		console.log(item);
+		this.loader = true;
+		$(".progress").addClass("abc");
+		// $(".progress .progress-bar").css({"width": '100%'});
+		setTimeout(()=>{
+			this.loader = false;
+			$(".progress").removeClass("abc");
+			this.task.projectId = item._id;	
+			this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
+			console.log(this.developers);
+		},3000);
+		}else{
+			this.editTaskForm.reset();
+			this.task = this.getEmptyTask();
+		}
+	}
+
+	clearSelection(event){
+		console.log(event);
+	}
+
+	getProjects(){
+		this._projectService.getProjects().subscribe((res:any)=>{
+			if(this.currentUser.userRole == 'projectManager'){
+				this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+				console.log("IN If=========================================",this.projects);
+			}
+			else{
+				this.projects = [];
+				_.forEach(res, (p)=>{
+					_.forEach(p.Teams, (user)=>{
+						if(user._id == this.currentUser._id)
+							this.projects.push(p);
+					})
+				});
+				console.log("IN Else=========================================",this.projects);
+			}
 		},err=>{
 			console.log(err);
 		});
-		this.route.params.subscribe(param=>{
-			this.projectId = param.id;
-			// this.getEmptyTracks();
-			// this.getProject(this.projectId);
-		});
-		// $('#login_details').click(function (){
-		// 	$(this).children('.dropdown-content').toggleClass('open');
-		// });
-		
-		this.getAllDevelopers();
-		this.getEmptyTracks();
-
-	}	
+	}
 
 	logout() {
 		this._loginService.logout();
@@ -128,9 +178,6 @@ export class HeaderComponent implements OnInit {
 	}
 
 	getInitialsOfName(name){
-
-		// console.log(name);
-
 		if(name != 'admin'){
 			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
 			return str.toUpperCase();
@@ -139,7 +186,6 @@ export class HeaderComponent implements OnInit {
 		}else{
 			return "";
 		}
-		// return name.split(' ')[0][0]+name.split(' ')[1][0];
 	}
 	getDeveloperById(id){
 		console.log("id=>>>",id);
@@ -153,26 +199,7 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 
-	editTask(task){
-		this.task = task;
-		this.modalTitle = 'Edit Item'
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-	}
-
-	updateTask(task){
-		console.log(task);
-		var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/update/":'' || _.includes(task.uniqueId, 'BUG')?"bug/update/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/update/":'';
-		console.log(subUrl);
-		this._projectService.updateData(task, subUrl).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
-		},err=>{
-			console.log(err);
-			
-		})
-		
-	}
+	
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -191,24 +218,17 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 
-	addItem(option, id){
-		// this.loader=true;
-		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#editModel').modal('show');
-			
-			// this.getProject(this.projectId);
-			// this.loader=false;
-		},1000);
+	addItem(option){
+		this.task = this.getEmptyTask();
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#editModel').modal('show');
+		
 	}
 	getProject(id){
-		// this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				console.log(res);
-				this.getEmptyTracks()
 				this.project = res;
 				_.forEach([...this.project.taskId, ...this.project.IssueId, ...this.project.BugId], (content)=>{
 					_.forEach(this.tracks, (track)=>{
@@ -218,31 +238,45 @@ export class HeaderComponent implements OnInit {
 					})
 				})
 				console.log(this.tracks);
-				// this.loader = false;
 			},err=>{
 				console.log(err);
-				// this.loader = false;
 			})
 		},1000);
 	}
 	saveTheData(task){
-
-		task['projectId']= this.projectId; 
-		console.log("ave che ke nai===>",this.projectId);
-		task['uniqueId']= _.includes(this.modalTitle, 'Task')?'TSK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
+		this.loader = true;
+		task.priority = Number(task.priority); 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		task.estimatedTime = $("#estimatedTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
-		console.log("task here==>>>",task);
-		var subUrl; 
-		subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-		console.log("ama pn jovanu che ho ========>",subUrl);
-		this._projectService.addData(task, subUrl).subscribe((res:any)=>{
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log(task);
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			// if(key!="estimatedTime")
+			// 	data.append(key, value)
+			// else
+				data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
+		}
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			this.loader = false;
 			$('#editModel').modal('hide');
-			// this.getProject(this.projectId);
-			console.log("kai vandho pde che===>",this.projectId);
+			this.task = this.getEmptyTask();
+			this.editTaskForm.reset();
 		},err=>{
-			console.log(err);
-		})
+			$('#alert').css('display','block');
+			this.loader = false;
+			console.log("error========>",err);
+		});
+	}
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
 	}
 
 	reloadProjects(){
@@ -265,5 +299,9 @@ export class HeaderComponent implements OnInit {
 		},error=>{
 			console.log("errrorrrrrr====>",error);
 		});  
+	}
+
+	onSelectFile(event){
+		this.files = event.target.files;
 	}
 }

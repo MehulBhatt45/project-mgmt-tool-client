@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {LoginService} from '../services/login.service';
@@ -17,8 +19,8 @@ export class AddEmployeeComponent implements OnInit {
 	materialSelect;
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
-			fname:new FormControl( '', [Validators.required]),
-			lname:new FormControl( '', [Validators.required]),
+			name:new FormControl( '', [Validators.required]),
+			// lname:new FormControl( '', [Validators.required]),
 			password:new FormControl('',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),

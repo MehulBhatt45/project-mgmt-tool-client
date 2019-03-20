@@ -1,6 +1,6 @@
 <div class="container ">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
+	
+		<div class="col-md-12">
 			<div class="card card-cascade narrower">
 				
 				<!-- Card image -->
@@ -14,25 +14,24 @@
 						<form [formGroup]="addEmployeeForm" autocomplete="off">
 							<div class="md-form form-group">
 								<label for="firstName"> Name</label>
-								<input type="text" formControlName="name" class="form-control" id="firstName">
+								<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
 							</div>
 
 						<!-- 	<div class="md-form form-group">
 								<label for="lastName">Last Name</label> 
 								<input type="text" formControlName="lname" class="form-control"  id="lastName">
 							</div> -->
-
 							<div class="md-form form-group">
 								<label for="email">Email</label>
-								<input type="email" formControlName="email" class="form-control" id="email">
+								<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
 							</div>
 							<div class="md-form form-group">
 								<label for="password">Password</label>
-								<input type="password" formControlName="password" class="form-control" id="password">
+								<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
 							</div>
 							<div class="md-form form-group">
 								<label for="mobile">Phone No.</label>
-								<input type="number" formControlName="mobile" class="form-control" id="mobile">
+								<input type="number" autocomplete= 'false | random-string'  formControlName="mobile" class="form-control" id="mobile">
 							</div>
 				<!-- <div class="form-group">
 					<label for="date">Joining Date</label>
@@ -54,7 +53,7 @@
 				
 				<div class="md-form form-group">
 					<label for="experience">Experience (Before Joining)</label>
-					<input type="text" formControlName="experience" class="form-control" id="experience">
+					<input type="text" autocomplete= 'false | random-string'  formControlName="experience" class="form-control" id="experience">
 				</div>
 				<!-- <div class="form-group">
 					<label for="profile">Profile photo</label>
@@ -104,6 +103,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 </div>

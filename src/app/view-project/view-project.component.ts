@@ -24,6 +24,7 @@ export class ViewProjectComponent implements OnInit {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   message;
   objectsArray:any;
+  optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -43,8 +44,9 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getProjects();
     this.getAllDevelopers();
-   $('.datepicker').pickadate({
+    $('.datepicker').pickadate({
       onSet: function(context) {
         console.log('Just set stuff:', context);
         setDate(context);
@@ -53,29 +55,7 @@ export class ViewProjectComponent implements OnInit {
     var setDate = (context)=>{
       this.timePicked();
     }
-    this.loader=true;
-    setTimeout(()=>{
-      this._projectService.getProjects().subscribe((res:any)=>{
-        if(this.currentUser.userRole == 'projectManager'){
-          this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
-          console.log("IN If=========================================",this.projects);
-        }
-        else{
-          this.projects = [];
-          _.forEach(res, (p)=>{
-            _.forEach(p.Teams, (user)=>{
-              if(user._id == this.currentUser._id)
-                this.projects.push(p);
-            })
-          });
-          console.log("IN Else=========================================",this.projects);
-        }
-        this.loader=false;
-      },err=>{
-        this._alertService.error(err);
-        this.loader=false;
-      })
-    },3000);
+
     const currentUserId = JSON.parse(localStorage.getItem('currentUser'))._id;
     console.log("currentUser",currentUserId);
     this.messagingService.requestPermission(currentUserId)
@@ -85,6 +65,30 @@ export class ViewProjectComponent implements OnInit {
 
   timePicked(){
     this.addForm.controls.deadline.setValue($('.datepicker').val())
+  }
+
+  getProjects(){
+    this.loader=true;
+    this._projectService.getProjects().subscribe((res:any)=>{
+      if(this.currentUser.userRole == 'projectManager'){
+        this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+        console.log("IN If=========================================",this.projects);
+      }
+      else{
+        this.projects = [];
+        _.forEach(res, (p)=>{
+          _.forEach(p.Teams, (user)=>{
+            if(user._id == this.currentUser._id)
+              this.projects.push(p);
+          })
+        });
+        console.log("IN Else=========================================",this.projects);
+      }
+      this.loader=false;
+    },err=>{
+      this._alertService.error(err);
+      this.loader=false;
+    })
   }
 
   getTitle(name){
