@@ -65,13 +65,21 @@ label{
     margin-left: 13px;
 }
 
-.team-members li:hover{
-  z-index: 1;
+.team-members[_ngcontent-c4] {
+    display: inline-block;
+    float: left;
+    margin-right: 15px;
 }
 
 .team-members li.add-member{
   margin-right: 0;
   padding: 8px 12px;
+}
+.comment_content[_ngcontent-c4] {
+    width: calc(100% - 65px);
+    height: calc(100% - 65px);
+    display: inline-block;
+    float: left;
 }
 
 .team-members li a{
@@ -261,6 +269,12 @@ table {
     font-size: 20px;
     font-weight: bold;
   }
+  .comment_profile{
+    width: 50px;
+    height: 50px;
+
+  }
+  
   .profilePhoto{
     height: 80px; 
     width: 100px;
@@ -270,9 +284,9 @@ table {
     height: 100px;
   }
   .comment_area{
-    height: 200px;
+    /*height: 200px;*/
     /*overflow-x: hidden;*/
-    overflow-y: auto;
+    /*overflow-y: auto;*/
   }
 /*.modal-full-height{
   max-height: 100%;
@@ -361,6 +375,19 @@ table {
     cursor: pointer;
 
   }
+  .comment_profile{
+   object-position: relative;
+    object-fit: cover;
+    /*height: 40px;
+    width: 40px;*/
+   /* border-radius: 50%;*/
+    border: 2px solid #fff;
+    display: inline-block;
+    float: left;
+    box-shadow: 0 0 20px 0 rgba(171,171,171,.8);
+    position: relative;
+    cursor: pointer;
+  }
   .dropdown-menu {
   /*bottom: 12.5px;*/
   left: 30px;
@@ -377,4 +404,44 @@ table {
 }
 .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
   background-color: #372e5f;
+}
+
+.selected-avatar{
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 5px;
+}
+.selected-avatar:hover .delete-team-member{
+  display: block;
+}
+.delete-team-member{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    height: 100px;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+}
+.delete-team-member a{
+  position: absolute;
+    display: table;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+}
+.delete-team-member a i{
+    color: red;
 }

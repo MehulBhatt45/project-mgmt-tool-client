@@ -4,6 +4,10 @@
 	height: 160px;
 	width: 180px;
 }*/
+h1,h2,h3,hr,h5,h6,p{
+    margin: 0px;
+    padding: 0px;
+}
 .profile_icon{
 	margin-top: 50px;
 	margin-left: 85px;
@@ -14,12 +18,13 @@
 .user_detail{
 	margin-top: 20px;
 	margin-left: 20px;
+    position: relative;
 }
 .nav-link{
 	color: black
 }
 .user_activity{
-	margin-left: -16px; 
+	margin-left: -16px;    
 }
 .img_card img{
 	min-width: 100%;
@@ -31,4 +36,56 @@
 .user_activity{
 	margin-top:15px;
 	margin-left: -30px;
+}
+.cover_image{
+    width: 100%;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+    border:1px solid #000;
+    /*margin-top: 30px;*/
+    top: -21px;
+    background: linear-gradient(#BBD2C5, #536976);
+
+}
+.cover_image img{
+    min-height: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
+}
+.profile_picture{
+    height: 160px;
+    width: 160px;
+    border-radius: 255%;
+    display: block;
+    bottom: 51px;
+    margin-left: 54px;
+    position: absolute; 
+    z-index: 11;
+    overflow: hidden;
+    padding: 3px;
+    background-color: #fff;
+  }
+  .profile_picture img{
+    min-height: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    border-radius: 86px;
+  }
+ .card{
+    margin:10px auto;
+ }
+ .cover_image{
+    background-color: 
+ }
+ .user_name{
+    position: absolute;
+    bottom: -15%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    color: #fff;
 }

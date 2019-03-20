@@ -54,7 +54,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams">
 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
 									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
@@ -75,8 +75,13 @@
 									</ng-template>
 								</div>
 							</ng-select>
+						</div> -->
+						<div class="text-center selected-avatar" *ngIf="url">
+							<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+							</div>
 						</div>
-						<img [src]="url" height="150" width="150"> <br/>
 						<!-- demo code -->
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
 							Select Project avatar
@@ -107,7 +112,7 @@ aria-hidden="true">
 				<div class="file-field">
 					<div class="btn btn-default btn-sm float-left">
 						<span>Upload a new avatar</span>
-						<input type="file" name="fileUpload" (change)="onSelectFile($event)">
+						<input type="file" name="fileUpload" accept=".jpg, .jpeg, .png" (change)="onSelectFile($event)">
 					</div>
 					<div class="file-path-wrapper">
 						<input  class="file-path validate" type="text" placeholder="Upload your file">
