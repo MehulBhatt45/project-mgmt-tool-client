@@ -48,10 +48,10 @@
 				</div>
 				<div class="avatar white img_section">
 					<a routerLink = "/visit-user-profile/{{developer._id}}">
-						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content"></a>
+						<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content" style="outline: none; cursor: pointer;"></a>
 					</div>
 					<div class="card-body">
-						<h5 class="card-title mt-1">{{developer.name}}</h5>
+						<h5 class="card-title mt-1" routerLink = "/visit-user-profile/{{developer._id}}" style="outline: none; cursor: pointer;">{{developer.name}}</h5>
 						<h6 class="card-title">{{developer.userRole}}</h6>
 					</div>
 				</div>

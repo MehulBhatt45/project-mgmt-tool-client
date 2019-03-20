@@ -61,7 +61,7 @@
 								<ul class="team-members">	
 									<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 										<a href="javascript:void(0);">
-											<div class="user_profile_pic"><img src="{{path}}{{task.assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
+											<div class="user_profile_pic"><img src="{{path}}{{task.assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" style="outline: none;" routerLink = "/visit-user-profile/{{task.assignTo._id}}"></div>
 										</a>
 									</li>
 									<li *ngIf="!task.assignTo" class="add-member">
@@ -159,12 +159,12 @@
 									<ul class="team-members">	
 										<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
 											<a href="javascript:void(0);">
-												<div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
+												<div class="user_profile_pic"><img src="{{path}}{{i.userId.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" style="outline:none; cursor: pointer;" routerLink = "/visit-user-profile/{{i.userId._id}}"></div>
 											</a>
 										</li>
 									</ul>
 									<div class="comment_section">
-										<p class="developerName" *ngIf="i.userId">
+										<p class="developerName" *ngIf="i.userId" routerLink = "/visit-user-profile/{{i.userId._id}}" style="outline:none; cursor: pointer;">
 											{{i.userId.name}}
 										</p>
 										<span class="break" innerHtml="{{i.content}}">
