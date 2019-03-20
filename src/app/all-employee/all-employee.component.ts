@@ -47,7 +47,7 @@ export class AllEmployeeComponent implements OnInit {
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
-			console.log(this.developers);
+			console.log("dev()()",this.developers);
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
@@ -63,4 +63,19 @@ export class AllEmployeeComponent implements OnInit {
 			this._alertService.error(err);
 		})
 	}
+
+	deleteEmployee(developerid){
+		console.log("msgggg--=--",developerid);
+
+		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
+
+			console.log("delete{}{}{}{}",res);
+			this.getAllDevelopers();
+		},err=>{
+			console.log("errr=-=-=-= ",err);
+			
+
+		})
+	}
+
 }

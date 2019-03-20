@@ -53,7 +53,17 @@
 .cdk-drag-placeholder {
   opacity: 0;
 }
-
+label{
+  font-weight: bold;  
+}
+.btn-default{
+    margin-left: 0px!important;
+        padding: 17px 46px;
+}
+.btn-info {
+    background: #33b5e5;
+    margin-left: 13px;
+}
 
 .team-members li:hover{
   z-index: 1;
@@ -227,7 +237,7 @@ table {
     left: 30px;
     box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     padding: 5px;
-    border-radius: 10px 10px 10px 0px;
+    border-radius: 10px 10px 10px 10px;
   }
   .dropdown-content a.dropdown-item {
     text-align: left;
@@ -277,24 +287,6 @@ table {
     overflow-y: auto!important;
 
   }
-
-  .modal-header {
-    padding: 2rem;
-  }
-  .refresh{
-    margin: 0;
-    padding: 5px;
-    font-size: 20px;
-  }
-  .fa-refresh[_ngcontent-c2] {
-    float: right;
-    margin: 0 !important; 
-
-  }
-
-  .modal-header {
-    padding: 2rem;
-  }
   .refresh{
     margin: 0;
     padding: 5px;
@@ -324,7 +316,8 @@ table {
     }
   }
   .modal-header {
-    padding: 2rem;
+    background-color: #372e5f;
+    color: white;
   }
 
   .dropdown{
@@ -368,3 +361,20 @@ table {
     cursor: pointer;
 
   }
+  .dropdown-menu {
+  /*bottom: 12.5px;*/
+  left: 30px;
+  box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  padding: 5px;
+  top: 10px;
+  /*border-radius: 10px 10px 10px 10px;*/
+}
+.dropdown-menu a.dropdown-item {
+  text-align: left;
+  padding:16px;
+  font-size: 15px;
+  border-radius: 5px!important;
+}
+.dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
+  background-color: #372e5f;
+}

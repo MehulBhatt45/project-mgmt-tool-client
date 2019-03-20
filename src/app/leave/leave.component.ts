@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import {ProjectService} from '../services/project.service';
+
 
 
 
@@ -24,11 +26,13 @@ export class LeaveComponent implements OnInit {
 	showOneDays;
 	showMoreDayss;
 	leaveDuration;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
 
 	constructor(public router:Router, public _projectservice:ProjectService) {
 		this.addForm = new FormGroup({
-			email: new FormControl ('',Validators.required),
-			name: new FormControl ('',Validators.required),
+			email: new FormControl (''),
+			name: new FormControl (''),
 			leaveDuration : new FormControl (''),
 			typeOfLeave : new FormControl (''),
 			reasonForLeave : new FormControl ('', Validators.required),
@@ -38,6 +42,9 @@ export class LeaveComponent implements OnInit {
 			singleDate: new FormControl('')
 		})
 	}
+
+
+	
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
@@ -73,6 +80,11 @@ export class LeaveComponent implements OnInit {
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
+		var name = JSON.parse(localStorage.getItem('currentUser')).name;
+		var email = JSON.parse(localStorage.getItem('currentUser')).email;
+		form['name'] = name;
+		form['email'] = email;
+		console.log("valueeeeeeeeeeee",form);
 		if(form.singleDate){
 			form.noOfDays = "1-day";
 			console.log("single date======>",form.singleDate);
@@ -96,7 +108,7 @@ export class LeaveComponent implements OnInit {
 			var daysDuration = Math.ceil(timeDuration/(1000 * 3600 * 24));
 			console.log("daysDuration =======+>" , daysDuration);
 			form['leaveDuration'] = daysDuration;
-		console.log("form data======>",form);
+			console.log("form data======>",form);
 		}
 		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
 

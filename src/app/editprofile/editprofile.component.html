@@ -1,4 +1,10 @@
-<div class="container ">
+<div class="loader" [hidden]="!loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+<div class="container" [hidden]="loader">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card card-cascade narrower">
@@ -12,45 +18,48 @@
 				<div class="card-body  card-body-cascade text-center px-lg-5" style="padding-top: 35px;">
 					<div class="container">
 						<form [formGroup]="editEmployeeForm" autocomplete="off">
-							<div class="md-form form-group">
-								<label for="name">Name</label> 
-								<input type="text" formControlName="name" class="form-control"  id="name" [ngModel]="userDetails.name">
+
+
+
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="name">Full Name</label> 
+								<input type="text" formControlName="name" class="form-control"  id="name" [(ngModel)]="userDetails.name">
 							</div>
 
-							<div class="md-form form-group">
-								<label for="email">Email</label>
-								<input type="email" formControlName="email" class="form-control" id="email" [ngModel]="userDetails.email">
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="email">Email</label>
+								<input type="email" formControlName="email" class="form-control" id="email" [(ngModel)]="userDetails.email">
 							</div>
 							
-							<div class="md-form form-group">
-								<label for="mobile">Phone No.</label>
-								<input type="number" formControlName="mobile" class="form-control" id="mobile" [ngModel]="userDetails.phone">
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="mobile">Phone No.</label>
+								<input type="tel" formControlName="phone" class="form-control" id="mobile" [(ngModel)]="userDetails.phone">
 							</div>
-							<div class="md-form form-group" style="height: 45px;">
-								<label for="userrole">UserRole</label>
-								<select class="custom-select custom-select-lg mb-3" formControlName="userRole" [ngModel]="userDetails.userRole">
+							<label class="float-left" for="userrole" *ngIf="userDetails">UserRole</label>
+							<div class="md-form form-group" *ngIf="userDetails">
+								<select class="custom-select custom-select-lg mb-3" formControlName="userRole" [(ngModel)]="userDetails.userRole">
 									<option value="admin">Admin</option>
 									<option value="projectmanager">Project Manager</option>
-									<option value="developer">Developer</option>
+									<option value="user">Developer</option>
 								</select>
 							</div>
 
-							<div class="md-form form-group">
-								<label for="experience">Experience</label>
-								<input type="text" formControlName="experience" class="form-control" id="experience" [ngModel]="userDetails.experience">
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="experience">Experience</label>
+								<input type="text" formControlName="experience" class="form-control" id="experience" [(ngModel)]="userDetails.experience">
 							</div>
 
-							<div class="file-field" >
+							<div class="md-form form-group file-field" *ngIf="userDetails">
 								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
 									<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 								</div>
 								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload Your CV" [ngModel]="userDetails.CV">
+									<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV.split('/').reverse()[0]" readonly>
 								</div>
 							</div>
 
-							<div class="md-form form-group">
-								<button type="submit" class="btn btn-default" (click)="updateProfile(editEmployeeForm)" style="margin-top: 30px;">Save changes</button>
+							<div class="md-form form-group" *ngIf="userDetails">
+								<button type="submit" class="btn btn-default" (click)="updateProfile(editEmployeeForm.value)" style="margin-top: 30px;">Save changes</button>
 								<button type="submit" class="btn btn-default" style="margin-top: 30px;" routerLink="/reset-password">Reset Password</button>
 
 							</div>

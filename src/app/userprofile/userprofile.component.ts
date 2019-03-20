@@ -40,7 +40,7 @@ export class UserprofileComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getAllProjects();
+		// this.getAllProjects();
 		this.route.params.subscribe(param=>{
 			this.userId = param.id;
 			this.getDeveloperById(this.userId);
@@ -49,36 +49,38 @@ export class UserprofileComponent implements OnInit {
 		this.getAllDevelopers();
 
 	}
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			console.log("all projects =====>" , res);
-			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("current user ====>" , userId);
-			// this.pro = res.userId;
-			// console.log("project detail===>>>>",this.pro);
-			this.projects = res;
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (project)=>{
-					if(project._id == userId){
-						this.projectArr.push(task);
-					}
-				})
-			})			
-			this.finalArr.push(this.projectArr[0]);
-			console.log("response======>",this.finalArr);
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
+	// getAllProjects(){
+	// 	this._projectService.getProjects().subscribe(res=>{
+	// 		console.log("all projects =====>" , res);
+	// 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+	// 		console.log("current user ====>" , userId);
+	// 		// this.pro = res.userId;
+	// 		// console.log("project detail===>>>>",this.pro);
+	// 		this.projects = res;
+	// 		_.forEach(this.projects , (task)=>{
+	// 			_.forEach(task.Teams , (project)=>{
+	// 				if(project._id == userId){
+	// 					this.projectArr.push(task);
+	// 				}
+	// 			})
+	// 		})
+	// 		for(var i=0;i<this.projects.length;i++){
+	// 			this.finalArr.push(this.projectArr[i]);
+	// 			console.log("response======>",this.finalArr);
+	// 		}	
+	// 	},err=>{
+	// 		this._alertService.error(err);
+	// 		console.log(err);
+	// 	})
+	// }
 
 	getDeveloperById(id){
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
-			console.log("all users =============>",res);
+			console.log("current user =============>",res);
 			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log(" currentUser profile ====>" , userId);
+			// console.log(" currentUser  ====>" , userId);
 		},(err:any)=>{
 			console.log("eroooooor=========>",err);
 		})
@@ -88,14 +90,14 @@ export class UserprofileComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			console.log("Developers",this.developers);
-			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
-			})
+			// this.developers.sort(function(a, b){
+			// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+			// 	if (nameA < nameB) //sort string ascending
+			// 		return -1 
+			// 	if (nameA > nameB)
+			// 		return 1
+			// 	return 0 //default return value (no sorting)
+			// })
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
@@ -109,7 +111,7 @@ export class UserprofileComponent implements OnInit {
 	uploadFile(e){
 		console.log("file============>",e.target.files);
 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("userId===============>",this.userId);
+		console.log("userId===============>",userId);
 		this.files = e.target.files;
 		console.log("files===============>",this.files);
 		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{

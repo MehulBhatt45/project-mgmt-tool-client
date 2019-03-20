@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+declare var $ : any;
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -10,16 +11,19 @@ import * as _ from 'lodash';
 })
 export class AllLeaveAppComponent implements OnInit {
 
-
-	leaveApp;
+  leaves;
+  leaveApp;
   acceptedLeave;
   rejectedLeave;
-	// apps;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+  // apps;
 
   constructor(public router:Router, public _projectservice:ProjectService) { }
 
   ngOnInit() {
   	this.getLeaves();
+    this.leavesByUserId();
   }
   getLeaves(){
   	this._projectservice.pendingLeaves().subscribe(res=>{
@@ -30,10 +34,10 @@ export class AllLeaveAppComponent implements OnInit {
         leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
       })
       //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
-  		console.log("applicationsss==>",this.leaveApp);
-  	},err=>{
-  		console.log(err);
-  	})
+      console.log("applicationsss==>",this.leaveApp);
+    },err=>{
+      console.log(err);
+    })
   }
 
   leaveAccepted(req){
@@ -42,12 +46,13 @@ export class AllLeaveAppComponent implements OnInit {
     console.log("reeeeeeee",req);
     _.forEach(this.leaveApp, (apply)=>{
       if(apply._id == req){
-       body = apply;
+        body = apply;
       }
     })
     body.status = "approved";
     console.log("bodyyyyyyyyyyyyyyy",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+
       console.log("respondsssssss",res);
       this.acceptedLeave = res;
       console.log("acceptedd===========>",this.acceptedLeave);
@@ -63,16 +68,34 @@ export class AllLeaveAppComponent implements OnInit {
     console.log("gtgt",req);
     _.forEach(this.leaveApp, (apply)=>{
       if(apply._id == req){
-       body = apply;
+        body = apply;
       }
     })
     body.status = "rejected";
     console.log("body",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
+
       console.log("response",res);
       this.rejectedLeave = res;
       console.log("rejected===========>",this.rejectedLeave);
     },(err:any)=>{
+      console.log(err);
+    })
+  }
+
+
+  leavesByUserId(){
+    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+    console.log("email of login user",obj);
+    this._projectservice.leavesById(obj).subscribe((res:any)=>{
+      console.log("resppppppondssss",res);
+      this.leaves = res;
+      _.forEach(this.leaves , (leave)=>{
+        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+      })
+      console.log("statussssssss",this.leaves);
+    },err=>{
       console.log(err);
     })
   }

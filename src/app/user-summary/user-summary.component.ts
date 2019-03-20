@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { AlertService } from '../services/alert.service';
-import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
@@ -46,7 +46,7 @@ export class UserSummaryComponent implements OnInit {
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
-
+	userId;
 	projectTeam;
 	Teams;
 	myresponse:any;
@@ -54,27 +54,27 @@ export class UserSummaryComponent implements OnInit {
 	selectedDeveloperId = "all";
 	Team;
 
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
-
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		
-
+		
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
+			console.log("projectid--=-=-=+++",this.projectId);
 			this.getEmptyTracks();
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();	
 
-		
+
 	}
 
 	ngOnInit() {
 
-		
 	}
+	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
-		if(this.currentUser.userRole == "user"){
+		if(this.currentUser.userRole == "projectManager"){
 
 			this.tracks = [
 			{
@@ -169,7 +169,6 @@ export class UserSummaryComponent implements OnInit {
 		}
 	}
 
-	
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
@@ -181,21 +180,20 @@ export class UserSummaryComponent implements OnInit {
 		})
 	}
 
-	
-
-	
-
 	getProject(id){
+		console.log("id{}{}---",id);
 		this.loader = true;
+
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 
 				console.log("id-=-=-=-()()()",id);
 				this.pro=res;
 				console.log("title{}{}{}{}",this.pro);
-				
+				this.pro = res.pmanagerId;
+				console.log("project detail===>>>>",this.pro);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					// this.projectTeam = res.team;
+					this.projectTeam = res.team;
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -228,9 +226,9 @@ export class UserSummaryComponent implements OnInit {
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					
+					// console.log("task ======>()" , task);
 					_.forEach(this.tracks , (track)=>{
-						
+						// console.log("track ======>()" , track);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								console.log("sorttask==()()()",task);
@@ -257,21 +255,31 @@ export class UserSummaryComponent implements OnInit {
 	}
 
 	getTaskCount(userId, status){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
 		return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 	}
 
-	getTaskPriority(priority, status){
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		// console.log(typeof priority , "user Id " , userId);
-		return _.filter(this.project, function(o) {
-			// console.log("oo =====>" , o);
-			if (o.priority == priority && o.status == status && o.assignTo._id == userId){
-				// console.log("found log =====>" , o)	
-				return o 
-			}
-		}).length;
-		
+	getCompletedTask(status){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
+		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 	}
 
+	// getTaskPriority(priority, status){
+		// 	// console.log(priority, status);
+		// 	return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
+		// }
 
-}
+		getTaskPriority(priority, status){
+			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			// console.log(typeof priority , "user Id " , userId);
+			return _.filter(this.project, function(o) {
+				// console.log("oo =====>" , o);
+				if (o.priority == priority && o.status == status && o.assignTo._id == userId){
+					// console.log("found log =====>" , o)	
+					return o 
+				}
+			}).length;
+
+		}
+		
+	}

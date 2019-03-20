@@ -23,11 +23,13 @@ export class ViewProjectComponent implements OnInit {
   loader:boolean=false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   message;
+  objectsArray:any;
+  optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,public router:Router, public _projectService:ProjectService, public _alertService: AlertService) {
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
-      deadline: new FormControl('', Validators.required),
+      deadline: new FormControl(''),
       uniqueId: new FormControl('' , Validators.required),
       clientEmail: new FormControl('' , Validators.required),
       clientFullName: new FormControl('', Validators.required),
@@ -35,29 +37,58 @@ export class ViewProjectComponent implements OnInit {
       clientDesignation: new FormControl(''),
       avatar: new FormControl(''),
       allDeveloper:new FormControl(''),
-      Teams: new FormControl([])
+      // Teams: new FormControl([])
+      // Teams: new FormControl([])
+
     });
   }
 
   ngOnInit() {
+    this.getProjects();
     this.getAllDevelopers();
-    $('.datepicker').pickadate();
-    this.loader=true;
-    setTimeout(()=>{
-      this._projectService.getProjects().subscribe(res=>{
-        console.log(res);
-        this.projects = res;
-        this.loader=false;
-      },err=>{
-        this._alertService.error(err);
-        this.loader=false;
-      })
-    },3000);
+    $('.datepicker').pickadate({
+      onSet: function(context) {
+        console.log('Just set stuff:', context);
+        setDate(context);
+      }
+    });
+    var setDate = (context)=>{
+      this.timePicked();
+    }
+
     const currentUserId = JSON.parse(localStorage.getItem('currentUser'))._id;
     console.log("currentUser",currentUserId);
     this.messagingService.requestPermission(currentUserId)
     this.messagingService.receiveMessage()
     this.message = this.messagingService.currentMessage
+  }
+
+  timePicked(){
+    this.addForm.controls.deadline.setValue($('.datepicker').val())
+  }
+
+  getProjects(){
+    this.loader=true;
+    this._projectService.getProjects().subscribe((res:any)=>{
+      if(this.currentUser.userRole == 'projectManager'){
+        this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+        console.log("IN If=========================================",this.projects);
+      }
+      else{
+        this.projects = [];
+        _.forEach(res, (p)=>{
+          _.forEach(p.Teams, (user)=>{
+            if(user._id == this.currentUser._id)
+              this.projects.push(p);
+          })
+        });
+        console.log("IN Else=========================================",this.projects);
+      }
+      this.loader=false;
+    },err=>{
+      this._alertService.error(err);
+      this.loader=false;
+    })
   }
 
   getTitle(name){
@@ -75,16 +106,17 @@ export class ViewProjectComponent implements OnInit {
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
       data.append(key, value)
+      console.log("data====()()",data);
     });
-    console.log(addForm, this.files);
+    console.log("my file()()){}",addForm, this.files);
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('uploadfile', this.files[i]);
       }
     }
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
+    console.log("data__+__+{}{}{}{}{}{}",data);
     this._projectService.addProject(data).subscribe((res:any)=>{
-      console.log(res);
       console.log("addproject2 is called");
     },err=>{
       console.log(err);    
@@ -133,6 +165,14 @@ export class ViewProjectComponent implements OnInit {
       console.log("Couldn't get all developers ",err);
       this._alertService.error(err);
     })
+  }
+
+  getLength(project, opt){
+    // console.log(project, opt);
+    if(project.tasks && project.tasks.length)
+      return _.filter(project.tasks,{ 'type': opt }).length;
+    else
+      return 0;
   }
 }
 

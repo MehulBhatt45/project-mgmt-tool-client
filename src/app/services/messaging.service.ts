@@ -5,15 +5,17 @@ import { AngularFireMessaging } from '@angular/fire/messaging';
 import { mergeMapTo } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { config } from '../config';
+import {AlertService} from './alert.service';
+
 
 @Injectable()
 export class MessagingService {
 
   currentMessage = new BehaviorSubject(null);
 
-  constructor(private http:HttpClient,
+  constructor(public alert:AlertService,public http:HttpClient,
     private angularFireDB: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth,
     private angularFireMessaging: AngularFireMessaging) {
@@ -31,24 +33,23 @@ export class MessagingService {
         const data = {};
         data[userId] = token;
         this.angularFireDB.object('fcmTokens/').update(data);
+
         console.log("updated token",data);
       })
   }
-
 
   requestPermission(userId) {
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
         console.log(token);
         console.log(userId);
-       const udata={
+        const udata={
           userId:userId,
           token:token
         }
-        console.log("notification data",udata);
-        this.http.post(config.baseApiUrl+"notification/addUser",udata);
+        this.addEntry(udata);
 
-        this.updateToken(userId, token);
+        //this.updateToken(userId, token);
       },
       (err) => {
         console.error('Unable to get permission to notify.', err);
@@ -61,5 +62,13 @@ export class MessagingService {
         console.log("new message received. ", payload);
         this.currentMessage.next(payload);
       })
+  }
+
+  addEntry(udata){
+    console.log("notification data",udata);
+    this.http.post("http://localhost:4000/notification/addUser",udata).subscribe((success) => {
+      //alert("success");
+
+    });
   }
 }

@@ -33,7 +33,7 @@ export class ProjectDetailComponent implements OnInit {
 	};
 	url;
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'' };
 	task;
 	tasks;
 	taskId;
@@ -69,7 +69,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
-		if(this.currentUser.userRole == "projectManager"){
+		if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
 			this.tracks = [
 			{
@@ -189,38 +189,8 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 
 		});
-	// 	this._pushNotificationService.requestPermission();
-	// this.myFunction();
-
-		
 		
 	}
-
-	// myFunction() {
-	// 	const title = 'Hello';
-	// 	const options = new PushNotificationOptions();
-	// 	options.body = 'New Task Asssign to You';
-
-	// 	this._pushNotificationService.create(title, options).subscribe((notif) => {
-	// 		if (notif.event.type === 'show') {
-	// 			console.log('onshow');
-	// 			setTimeout(() => {
-	// 				notif.notification.close();
-	// 			}, 25000);
-	// 		}
-	// 		if (notif.event.type === 'click') {
-	// 			console.log('click');
-	// 			notif.notification.close();
-	// 		}
-	// 		if (notif.event.type === 'close') {
-	// 			console.log('close');
-	// 		}
-	// 	},
-	// 	(err) => {
-	// 		console.log(err);
-	// 	});
-	// }
-
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -469,11 +439,11 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
 	}
 
 	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#estimatedTime').pickatime({});

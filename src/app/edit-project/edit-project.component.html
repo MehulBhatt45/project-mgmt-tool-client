@@ -1,139 +1,104 @@
-<div class="container" *ngIf="availData">
-	<div class="card">
-		<div class="container">
-			<h5 class="card-header white-text text-center py-4" style="margin-top: -20px;">
-				<strong>Update Project</strong>
-				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;">Delete Project</button>
-
+<div class="loader" [hidden]="!loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+<div class="container" [hidden]="loader">
+	<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
+		<div class="card">
+			<h5 class="card-header white-text text-center py-4" style="margin-top: -35px;background-color: darkslateblue;">
+				<strong>Edit Project</strong>
+				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;background-color: #01c0d8;">Delete Project</button>
 			</h5>
 			<div class="card-body px-lg-5 pt-1">
-
-				<div *ngIf="availData.avatar">
-					<img class="text-center" src="http://localhost/project_mgmt_tool/server{{availData.avatar}}" height="100" width="100">
-
+				<div class="md-form form-group" *ngIf="availData">
+					<img src="{{baseMediaUrl}}{{availData.avatar}}" onerror="this.src='assets/4.jpeg'" height="100" width="100">
 				</div>
-
-				<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
-					<div class="md-form form-group">
-						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
-						<label for="projecttitle" class="active" >Project Title</label>
-					</div>
-
-
-				<!-- <div class="md-form form-group">
-					<label class="active" for="projecttitle">Project Title</label>
-					<input   type="text" id="projecttitle"  formControlName="title" [(ngModel)]="availData.title"  class="form-control">
-				</div> -->
-				<div class="md-form form-group">
-					<textarea type="text" id="desc" class="md-textarea md-textarea-auto form-control" [(ngModel)]="availData.desc" tabindex="-1" autofocus="autofocus" mdbInput></textarea>
-					<label for="desc">Description</label>
+				<div class="md-form form-group" *ngIf="availData">
+					<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
+					<label for="projecttitle" class="active" >Project Title</label>
 				</div>
-
-				<!-- <div class="md-form form-group">
-					<label class="active" for="desc">Description</label>
-					<textarea tabindex="-1" id="desc" rows="5" formControlName="desc" [(ngModel)]="availData.desc" class="form-control rounded-0 md-textarea" autofocus="autofocus" ></textarea>
-				</div> -->
-
-				<div class="md-form form-group">
-					<input  type="text" id="date-picker-example" class="form-control datepicker">
-					<label for="date-picker-example">Select Date</label>
+				<div class="md-form form-group" *ngIf="availData">
+					<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
+					<label for="desc" class="active" >Project Discription</label>
 				</div>
-
+				<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
+					<label for="date-picker-example">Deadline</label>
+					<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
+				</div>
 				<div>
 					<h3><strong>Client Details :-</strong></h3>
 				</div>
-
 				<hr>
-
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData">
 					<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
-					<label for="clientemail" class="active">Email</label>
+					<label for="clientemail">Email</label>
 				</div>
-				<!-- 
-				<div class="md-form form-group">
-					<label class="active"  for="clientemail">Email</label>
-					<input  type="email" id="clientemail" formControlName="clientEmail" [(ngModel)]="availData.clientEmail" class="form-control">
-				</div> -->
-				<div class="md-form form-group">
+				<div class="md-form form-group" *ngIf="availData">
 					<input mdbInput type="text" id="clientfullname" class="form-control" formControlName="clientFullName" [(ngModel)]="availData.clientFullName">
-					<label for="clientfullname" class="active">Full Name</label>
+					<label for="clientfullname">Full Name</label>
 				</div>
-
-				<!-- <div class="md-form form-group">
-					<label class="active"  for="clientfullname">Full Name</label>
-					<input autofocus type="text" id="clientfullname" formControlName="clientFullName" [(ngModel)]="availData.clientFullName" class="form-control">
-				</div> -->
 				<div class="row">
 					<div class="col-md-6">
-						<div class="md-form form-group">
-							<label class="active" for="clientcontactno">Contact No.</label>
-							<input mdbInput type="number" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
+						<div class="md-form form-group" *ngIf="availData">
+							<label for="clientcontactno">Contact No.</label>
+							<input mdbInput type="tel" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
 						</div>	
 					</div>
 					<div class="col-md-6">
-						<div class="md-form form-group">
+						<div class="md-form form-group" *ngIf="availData">
 							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientDesignation" [(ngModel)]="availData.clientDesignation">
 							<label for="clientdesignation">Designation</label>
 						</div>
-
-					<!-- 	<div class="md-form form-group">
-							<label class="active" for="clientdesignation">Designation</label>
-							<input autofocus type="text" id="clientdesignation"  formControlName="clientDesignation" class="form-control" [(ngModel)]="availData.clientDesignation">
-						</div> -->
 					</div>
 				</div>
-				<div >
-					<button class="btn btn-default btn-rounded z-depth-1" (click)="showTeams()">Add/Edit Teams</button>
-					<div *ngIf="teamShow">
-						<div class="row" *ngFor="let j of availData.Teams">
-							<div class="col-md-3">
-								<div class="md-form form-group">
-									<label class="active" for="name">name</label>
-									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.name}}" class="form-control">
-								</div>		
-							</div>
-							<div class="col-md-3">
-								<div class="md-form form-group">
-									<label class="active" for="name">Role</label>
-									<input autofocus type="text" id="name" formControlName="clientContactNo" value="{{j.userRole}}" class="form-control">
-								</div>
-							</div>
-							<div class="col-md-3">
-								<a *ngIf="!showDeveloper" (click)="addRemoveDeveloper(j._id)">remove</a>
-							</div>
-						</div>
-						<button class="btn btn-default btn-rounded z-depth-1" (click)=getDevelopers()>Add Members</button>
-						<div *ngIf="showDeveloper"> 
-							<div class="row" *ngFor="let i of availableDevelopers">
-								<div class="col-md-6" style="text-align: right;"><p>{{i.name}}</p></div>
-								<div class="col-md-6" style="text-align: left;"><a (click)="addRemoveDeveloper(i._id)">Add</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="updateProject(updateForm)" [disabled]="updateForm.invalid">Update Project</button>
-				<div class="md-form form-group">
-					<input type="text" id="form1" class="form-control">
-					<label for="form1">Project Alias</label>
-				</div>
-				<div class="md-form form-group">
-					<textarea type="text" id="descr" class="md-textarea md-textarea-auto form-control"  tabindex="-1" autofocus="autofocus" mdbInput></textarea>
-					<label for="descr">Description</label>
-				</div>
-				<div>
-					<button type="button" class="btn btn-default" (click)="view_Project()" mdbBtn color="primary" mdbWavesEffect>Submit</button>
-				</div>
-
-			</form>
+			</div>
 		</div>
-		
-		<!-- <div class="md-form">
-			<input type="text" id="form1" class="form-control">
-			<label for="form1">Project Alias</label>
-		</div> -->
-<!-- 
-	<button type="button" class="btn btn-default" (click)="view_Project()">Submit</button> -->
-
-</div>
-</div>
+		<div class="card mt-1 p-1">
+			<h3 class="card-title text-center">Project Teams:</h3>
+			<div class="card-body">
+				<div class="form-group">
+					<ng-select placeholder="Select Developers" [items]="availableDevelopers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)">
+						<ng-template ng-label-tmp let-item="item" let-clear="clear">
+							<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+							<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+						</ng-template>
+						<div class="row">
+							<ng-template ng-option-tmp let-item="item">
+								<div class="card testimonial-card">
+									<div class="card-up deep-purple lighten-2"></div>
+									<div class="avatar white img_section">
+										<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+									</div>
+									<div class="card-body">
+										<h5 class="card-title mt-1">{{item.name}}</h5>
+										<h6 class="card-title">{{item.userRole}}</h6>
+									</div>
+								</div>
+							</ng-template>
+						</div>
+					</ng-select>
+				</div>
+				<div class="row">
+					<div class="col-12 col-md-3 mb-2" *ngFor="let item of projectTeam">
+						<div class="card" style="padding: 10px 0; text-align: center;">
+							<div class="card-up deep-purple lighten-2"></div>
+							<div class="avatar white img_section">
+								<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title mt-1">{{item.name}}</h5>
+								<h6 class="card-title">{{item.userRole}}</h6>
+							</div>
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeDeveloper(item)"><i class="fas fa-trash fa-3x"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
+	</form>
 </div>
