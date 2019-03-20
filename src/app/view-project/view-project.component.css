@@ -214,10 +214,11 @@ a.view_more_detail{
     margin: auto;
     border-radius: 10px;
     background-color:#fedfdd;
-    transition: all 0.5s;
+    transition: all 1s;
 }
 .open a.view_more_detail {
     transform: rotate(180deg);
+    transition: all 1s;
 }
 .open .project_header{
     z-index: 20!important;
