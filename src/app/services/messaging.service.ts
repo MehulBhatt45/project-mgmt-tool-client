@@ -67,7 +67,7 @@ export class MessagingService {
   addEntry(udata){
     console.log("notification data",udata);
     this.http.post("http://localhost:4000/notification/addUser",udata).subscribe((success) => {
-      alert("success");
+      //alert("success");
 
     });
   }

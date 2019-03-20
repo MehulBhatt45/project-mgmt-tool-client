@@ -97,7 +97,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let user of projectTeam">
-					<td scope="row" style="text-align: left;">{{user.name}}</td>
+					<td scope="row" style="text-align: left;cursor: pointer;" routerLink="/visit-user-profile/{{user._id}}" >{{user.name}}</td>
 					<td>{{getTaskCount(user._id, 'to do')}}</td>
 					<td>{{getTaskCount(user._id, 'in progress')}}</td>
 					<td>{{getTaskCount(user._id, 'testing')}}</td>
