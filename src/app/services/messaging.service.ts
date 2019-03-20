@@ -69,7 +69,6 @@ export class MessagingService {
     console.log("notification data",udata);
     this.http.post(config.baseMediaUrl+"notification/addUser",udata).subscribe((success) => {
       alert("success");
-
     });
   }
 }
