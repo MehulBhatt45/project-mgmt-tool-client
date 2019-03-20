@@ -129,4 +129,10 @@ export class CreateProjectComponent implements OnInit {
       this._alertService.error(err);
     })
   }
+
+  removeAvatar(){
+    this.url = "";
+    if(this.files && this.files.length)
+      this.files = null;
+  }
 }

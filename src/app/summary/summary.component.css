@@ -9,6 +9,41 @@
     margin-top: 0px;
     margin-bottom: -36px;
 }
+.border1{
+
+    display: block;
+    width: 540px;
+    height: 270px;
+    border: 1px solid red;
+}
+.border2{
+
+    display: block;
+    width: 540px;
+    height: 270px;
+    border: 1px solid green;
+}
+.border3{
+
+    display: block;
+    width: 540px;
+    height: 270px;
+    border: 1px solid yellow;
+}
+.border4{
+
+    display: block;
+    width: 540px;
+    height: 270px;
+    border: 1px solid blue;
+}
+.table-responsive {
+   display: inline-table; 
+   width: 100%;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
 /*.card{
 
 	width: 100%;
