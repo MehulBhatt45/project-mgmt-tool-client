@@ -21,6 +21,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div>
 		<div class="col-12 col-md-12">
 			<div class="user_activity">
@@ -35,7 +36,7 @@
 						<div class="form-group">
 							<ul>
 								<li> <b>My  All Projects  </b></li> <br>
-								<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}/{{currentUser._id}}"> {{project.title}}</li><br>
+								<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}"> {{project.title}}</li><br>
 							</ul>
 						</div>
 					</div>

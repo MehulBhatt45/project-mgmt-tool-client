@@ -376,4 +376,9 @@ export class ProjectService {
 			getUsersNotInProject(id){
 				return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
 			}
+
+			deleteEmployeeById(developerid){
+				console.log("devloperId{}{}{}-===",developerid);
+				return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
+			}
 		}

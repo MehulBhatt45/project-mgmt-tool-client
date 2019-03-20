@@ -77,7 +77,6 @@ export class SummaryComponent implements OnInit {
 		
 		var completedTask=this.getCompletedTask(status);
 		console.log("completed))___+++",completedTask);
-
 		}
 
 	

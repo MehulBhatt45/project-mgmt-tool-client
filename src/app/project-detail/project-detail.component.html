@@ -6,7 +6,7 @@
 </div>
 <div class="body_content" *ngIf="!loader">
 
-	<div class="row" *ngIf="pro">
+	<div class="row no-margin no-padding" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 	<div class="row">
@@ -55,13 +55,13 @@
 			</div>
 			<div class="modal-body" *ngIf="task">
 				<div class="container-fluid">
-					<table style="width: 100%;">
+					<table class="table-responsive" style="width: 100%;">
 						<tr>
 							<td style="width: 20px;">
 								<ul class="team-members">	
 									<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 										<a href="javascript:void(0);">
-											<div class="user_profile_pic"><img src="{{path}}{{assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
+											<div class="user_profile_pic"><img src="{{path}}{{task.assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
 										</a>
 									</li>
 									<li *ngIf="!task.assignTo" class="add-member">
