@@ -75,8 +75,8 @@ export class SummaryComponent implements OnInit {
 
 	ngOnInit() {
 		
-		// var completedTask=this.getCompletedTask(status);
-		// console.log("completed))___+++",completedTask);
+		var completedTask=this.getCompletedTask(status);
+		console.log("completed))___+++",completedTask);
 
 		}
 
@@ -274,7 +274,8 @@ export class SummaryComponent implements OnInit {
 
 	getCompletedTask(status){
 		// console.log("userId===-=-={}{}{}{}{}",userId);
-		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
+		 _.filter(this.project, function(o) { if (o.status == status) return o }).length;
+		console.log("statuuuuuuuuuuuuuuuusssssss",status.length);
 	}
 
 	getTaskPriority(priority, status){

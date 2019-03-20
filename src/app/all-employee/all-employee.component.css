@@ -63,3 +63,7 @@
   color: white;
   text-transform: uppercase;
 }
+.card-wrapper .card-rotating.flipped {
+    /*-webkit-transform: rotateY(180deg);*/
+    transform: rotateY(180deg);
+}
