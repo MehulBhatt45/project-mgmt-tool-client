@@ -378,3 +378,43 @@ table {
 .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
   background-color: #372e5f;
 }
+
+.selected-avatar{
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 5px;
+}
+.selected-avatar:hover .delete-team-member{
+  display: block;
+}
+.delete-team-member{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    height: 100px;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+}
+.delete-team-member a{
+  position: absolute;
+    display: table;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+}
+.delete-team-member a i{
+    color: red;
+}
