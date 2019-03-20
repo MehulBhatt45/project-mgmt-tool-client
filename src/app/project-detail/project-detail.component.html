@@ -134,49 +134,81 @@
 							</div>
 
 							<div class="row justify-content-between">
-							<!-- <div>
-								<button class="btn btn-default">Remove Assignment</button>
-								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
-								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
-								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							</div> -->
-							<!-- <div *ngIf="currentUser.userRole=='projectManager'">
-								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
-							</div> -->
-							<div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<h2>Comments</h2>
-				<div *ngIf="comments && comments.length>0">
-					<div class="comment_area">
-						<div class="comment_section" *ngFor = "let i of comments">
-							<div class="card">
-								<div class="card-body">
-									<ul class="team-members">	
-										<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
-											<a href="javascript:void(0);">
-												<div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
-											</a>
-										</li>
-									</ul>
-									<div class="comment_section">
-										<p class="developerName" *ngIf="i.userId">
-											{{i.userId.name}}
-										</p>
-										<span class="break" innerHtml="{{i.content}}">
-											<!-- {{i.content}} -->
-										</span>
-										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
-									</div>
+
+								<div>
+
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					<hr>
+					<div class="mb-3 wow fadeIn">
+						<h2>Comments</h2>
+
+						<div *ngIf="comments && comments.length>0">
+							<div class="comment_area">
+								<div class="comment_section" *ngFor = "let i of comments">
+									<div class="card">
+										<div class="card-body">
+											<div class="team-members">	
+												<div *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+													<a href="javascript:void(0);">
+														<div><img class="comment_profile" src="{{path}}{{currentUser.profilePhoto}}"  onerror="this.src='assets/4.jpeg'" >
+														</div>
+													</a>
+												</div>
+											</div>
+
+											<div class="comment_content">
+												<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
+													{{i.userId.name}}
+												</h5>
+
+												<span class="break" innerHtml="{{i.content}}">
+													<!-- {{i.content}} -->
+												</span>
+												<!-- <img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
+
+											
+
+												<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}"><img src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"></a>
+
+
+
+
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<!--Comments-->
+				<!-- <div class="card card-comments mb-3 wow fadeIn">
+					<div class="card-header font-weight-bold">3 comments</div>
+					<div class="card-body">
+
+						<div class="media d-block d-md-flex mt-4">
+							<img class="d-flex mb-3 mx-auto " src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" alt="Generic placeholder image">
+							<div class="media-body text-center text-md-left ml-md-3 ml-0">
+								<h5 class="mt-0 font-weight-bold">Miley Steward
+									<a href="" class="pull-right">
+										<i class="fa fa-reply"></i>
+									</a>
+								</h5>
+								Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+								cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+							</div>
+						</div>
+					</div>
+				-->
+
+				<!-- regular -->
 				<div *ngIf="task.comment && task.comment.length<=0">
 					<p>No comments on this be the first one to comments on...</p>
 				</div>
@@ -195,10 +227,10 @@
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-default">Save changes</button>
 			</div> -->
-		</div>
+		<!-- </div>
 	</div>
 </div>
-
+-->
 
 <!-- Modal Start Here -->
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
@@ -241,7 +273,7 @@
 								<label for="priority">Priority</label>
 								<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
 									<option value="4">Low</option>
-										<option value="3">Medium</option>
+									<option value="3">Medium</option>
 									<option value="2">High</option>
 									<option value="1">Highest</option>
 								</select>
