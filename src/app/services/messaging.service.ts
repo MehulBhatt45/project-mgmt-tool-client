@@ -40,6 +40,10 @@ export class MessagingService {
   }
 
   requestPermission(userId) {
+    
+      if ('Notification' in window) {
+  console.log('supported'); } else {
+ console.log(' not supported'); }
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
         console.log(token);

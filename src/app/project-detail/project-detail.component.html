@@ -142,60 +142,67 @@
 							</div>
 
 							<div class="row justify-content-between">
-							<!-- <div>
-								<button class="btn btn-default">Remove Assignment</button>
-								<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
-								<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
-								<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							</div> -->
-							<!-- <div *ngIf="currentUser.userRole=='projectManager'">
-								<button class="btn btn-default" type="button" (click)="deleteTask(task)">Delete Task</button>
-							</div> -->
-							<div>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<h2>Comments</h2>
-				<div *ngIf="comments && comments.length>0">
-					<div class="comment_area">
-						<div class="comment_section" *ngFor = "let i of comments">
-							<div class="card">
-								<div class="card-body">
-									<ul class="team-members">	
-										<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
-											<a href="javascript:void(0);">
-												<div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div>
-											</a>
-										</li>
-									</ul>
-									<div class="comment_section">
-										<p class="developerName" *ngIf="i.userId">
-											{{i.userId.name}}
-										</p>
-										<span class="break" innerHtml="{{i.content}}">
-											<!-- {{i.content}} -->
-										</span>
-										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
-									</div>
+
+								<div>
+
 								</div>
 							</div>
 						</div>
 					</div>
+					<hr>
+					<div class="mb-3 wow fadeIn">
+						<h2>Comments</h2>
+
+						<div *ngIf="comments && comments.length>0">
+							<div class="comment_area">
+								<div class="comment_section" *ngFor = "let i of comments">
+									<div class="card">
+										<div class="card-body">
+											<div class="team-members">	
+												<div *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+													<a href="javascript:void(0);">
+														<div><img class="comment_profile" src="{{path}}{{currentUser.profilePhoto}}"  onerror="this.src='assets/4.jpeg'" >
+														</div>
+													</a>
+												</div>
+											</div>
+											<div class="comment_content">
+												<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
+													{{i.userId.name}}
+												</h5>
+												<span class="break" innerHtml="{{i.content}}">
+													<!-- {{i.content}} -->
+												</span>
+												<!-- <img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
+												<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}"><img src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
-				<div *ngIf="task.comment && task.comment.length<=0">
+				<div *ngIf="comments && comments.length<=0">
 					<p>No comments on this be the first one to comments on...</p>
 				</div>
 				<div>
-					<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+					<ckeditor [config]="configuration" class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 
 					<div class="btn btn-default" (click)="commentImg.click()">
 						<span>Upload image with comment</span>
-						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'images')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 					</div>
 					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
+				</div>
+				<div *ngIf="commentUrl && commentUrl.length">
+				<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
+					<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
+					<div class="delete-team-member">
+						<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -203,10 +210,10 @@
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-default">Save changes</button>
 			</div> -->
-		</div>
+		<!-- </div>
 	</div>
 </div>
-
+-->
 
 <!-- Modal Start Here -->
 <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
@@ -229,11 +236,27 @@
 							<label for="desc">Discription</label>
 							<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
 						</div>
-						<div class=" row form-group col-12">
+						<div class="row form-group col-12">
 							<button class="btn btn-default" (click)="fileUpload.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
+						</div>
+						<div *ngIf="newTask.images && newTask.images.length>0">
+							<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+								<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+								<div class="delete-team-member">
+									<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><i class="fas fa-trash fa-2x"></i></a>
+								</div>
+							</div>
+						</div>
+						<div  *ngIf="url && url.length">
+						<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
+							<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><i class="fas fa-trash fa-2x"></i></a>
+							</div>
+						</div>
 						</div>
 						<div class="row no-margin no-padding  border" >
 							<div class="form-group col-12 col-lg-6 pt-1">
@@ -263,17 +286,17 @@
 								<label for="estimatedTime">Estimated Time</label>
 								<div class="md-form form-group">
 									<!-- <input placeholder="Selected date" type="text" id="estimatedTime" class="form-control ti" formControlName="estimatedTime"> -->
-									<input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime">
+									<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
 								</div>
 							</div>
 						</div>
 
-						<div class="form-group col-12">
+						<!-- <div class="form-group col-12">
 							<label for="status">Status</label>
 							<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="newTask.status">
 								<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
 							</select>
-						</div>
+						</div> -->
 					</form>
 				</div>
 			</div>
@@ -288,9 +311,9 @@
 				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<!-- <div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)">Delete Task</button>
-				</div> -->
+				</div>
 				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value);" >Save changes</button>
 			</div>
 		</div>

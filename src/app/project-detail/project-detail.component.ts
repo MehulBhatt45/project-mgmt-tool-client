@@ -29,11 +29,12 @@ export class ProjectDetailComponent implements OnInit {
 	comments:any;
 
 	public model = {
-		editorData: 'Enter comments here'
+		editorData: ''
 	};
-	url;
+	url = [];
+	commentUrl = [];
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'' };
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task;
 	tasks;
 	taskId;
@@ -56,6 +57,7 @@ export class ProjectDetailComponent implements OnInit {
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -171,15 +173,14 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
-			date: new FormControl('',[Validators.required]),
 			estimatedTime: new FormControl('',[Validators.required]),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
+			status : new FormControl({value: 'to do', disabled: true}, Validators.required)
 		})
 	}
 
 	ngOnInit() {
 		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
+		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
@@ -417,46 +418,54 @@ export class ProjectDetailComponent implements OnInit {
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		let data = new FormData();
-		// _.forOwn(task, function(value, key) {
-			// 	if(key!="estimatedTime")
-			// 		data.append(key, value)
-			// 	else
-			// 		data.append(key, $('#estimatedTime').val())
-			// });
-			data.append('projectId', task.projectId);
-			data.append('title', task.title);
-			data.append('desc', task.desc);
-			data.append('assignTo', task.assignTo);
-			data.append('priority', task.priority);
-			data.append('dueDate', task.dueDate);
-			data.append('estimatedTime', task.estimatedTime);
-			if(this.files.length>0){
-				for(var i=0;i<this.files.length;i++){
-					data.append('fileUpload', this.files[i]);	
-				}
+
+		data.append('projectId', task.projectId);
+		data.append('title', task.title);
+		data.append('desc', task.desc);
+		data.append('assignTo', task.assignTo);
+		data.append('priority', task.priority);
+		data.append('dueDate', task.dueDate);
+		data.append('estimatedTime', task.estimatedTime);
+		data.append('images', task.images);
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
 			}
-			console.log("update =====>",task);
-			this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-				$('#exampleModalPreviewLabel').modal('hide');
-			},err=>{
-				console.log(err);
-
-			})
-
-
 		}
+		console.log("update =====>",task);
+		this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('#exampleModalPreview').modal('hide');
+			this.newTask = this.getEmptyTask();
+			this.files = this.url = [];
+			this.editTaskForm.reset();
+			this.loader = false;
+		},err=>{
+			console.log(err);
+			this.loader = false;
+			$('#alert').css('display','block');
+		})
 
-		getEmptyTask(){
-			return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
-		}
+			}
 
-		addItem(option){
-			this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#estimatedTime').pickatime({});
-			$('#exampleModalPreviewLabel').modal('show');
-		}
+
+
+
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+	}
+
+	addItem(option){
+		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+		this.modalTitle = 'Add '+option;
+		$('.datepicker').pickadate();
+		$('#estimatedTime').pickatime({});
+		$('#exampleModalPreviewLabel').modal('show');
+	}
+
+
+		
 
 
 		saveTheData(task){
@@ -488,7 +497,7 @@ export class ProjectDetailComponent implements OnInit {
 				for(var i=0;i<this.files.length;i++){
 					data.append('fileUpload', this.files[i]);	
 				}
-			}
+
 
 			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
 			// console.log(subUrl);
@@ -501,7 +510,8 @@ export class ProjectDetailComponent implements OnInit {
 				$('#exampleModalPreview').modal('hide');
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
-				this.assignTo.reset();
+				this.files = this.url = [];
+				// this.assignTo.reset();
 				this.loader = false;
 			},err=>{
 				$('#alert').css('display','block');
@@ -509,9 +519,12 @@ export class ProjectDetailComponent implements OnInit {
 			});
 
 		}
+	}
 
+	
+	public Editor = DecoupledEditor;
+	public configuration = { placeholder: 'Enter Comment Text...'};
 
-		public Editor = DecoupledEditor;
 
 
 		public onReady( editor ) {
@@ -555,9 +568,10 @@ export class ProjectDetailComponent implements OnInit {
 				console.error(err);
 			});
 		}
-		searchTask(){
-			console.log("btn tapped");
-		}
+	searchTask(){
+		console.log("btn tapped");
+	}
+
 
 		onKey(searchText){
 			console.log("searchText",searchText);
@@ -584,36 +598,68 @@ export class ProjectDetailComponent implements OnInit {
 			});
 		}
 
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+	}
+	getAllCommentOfTask(taskId){
+		this._commentService.getAllComments(taskId).subscribe(res=>{
+			this.comments = res;
+		}, err=>{
+			console.error(err);
+		})
+	}
 
 
-		getAllProjects(){
-			this._projectService.getProjects().subscribe(res=>{
-				this.projects = res;
-			},err=>{
-				this._alertService.error(err);
-				console.log(err);
+	onSelectFile(event, option){
+		_.forEach(event.target.files, (file:any)=>{
+			this.files.push(file);
+		})
+		console.log(this.files);
+		if (event.target.files && event.target.files.length) {
+			_.forEach(event.target.files, file=>{
+			var reader = new FileReader();
+			reader.readAsDataURL(file); // read file as data url
+			reader.onload = (e:any) => { // called once readAsDataURL is completed
+				if(option == 'item')
+					this.url.push(e.target.result);
+				else
+					this.commentUrl.push(e.target.result);
+			}
 			})
-		}
-		getAllCommentOfTask(taskId){
-			this._commentService.getAllComments(taskId).subscribe(res=>{
-				this.comments = res;
-			}, err=>{
-				console.error(err);
-			})
-		}
-
-
-		onSelectFile(event){
-			this.files = event.target.files;
-		}
-		deleteTask(taskId){
-			console.log(taskId);
-			this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-				console.log("Delete Task======>" , res);
-				this.task = res;
-			},(err:any)=>{
-				console.log("error in delete Task=====>" , err);
-			});
 		}
 	}
-	
+	deleteTask(taskId){
+		console.log(taskId);
+		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			console.log("Delete Task======>" , res);
+			this.task = res;
+		},(err:any)=>{
+			console.log("error in delete Task=====>" , err);
+		});
+	}
+
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);
+	}
+	removeCommentImage(file, index){
+		console.log(file, index);
+		this.commentUrl.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);	
+	}
+
+	removeAlreadyUplodedFile(option){
+		this.newTask.images.splice(option,1);
+	}
+}
+
