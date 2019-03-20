@@ -126,7 +126,7 @@
 
 				<div class="modal-body" *ngIf="task">
 					<div class="container-fluid">
-						<table style="width: 100%;">
+						<table class="table-responsive" style="width: 100%;">
 							<tr>
 								<td style="width: 20px;">
 									<ul class="team-members">	
@@ -207,7 +207,7 @@
 							<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 							<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
 						</div>
-					</div>
+				<!-- 	</div> -->
 				</div>
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
