@@ -83,11 +83,8 @@ export class SummaryComponent implements OnInit {
 
 
 		
-		
+	}	
 
-	}
-
-	
 	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
@@ -406,7 +403,8 @@ export class SummaryComponent implements OnInit {
 },err=>{
 	console.log(err);
 	this.loader = false;
-})
+});
+
 
 },1000);
 function custom_sort(a, b) {
