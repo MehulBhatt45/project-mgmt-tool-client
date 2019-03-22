@@ -5,6 +5,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 import { config } from '../config';
 declare var $ : any;
 import * as _ from 'lodash';
+import Swal from 'sweetalert2';
 
 
 
@@ -20,6 +21,7 @@ export class NoticeboardComponent implements OnInit {
   newNotice;
   path:any;
   editNoticeForm;
+  swal:any;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   ngOnInit() {
@@ -42,9 +44,11 @@ export class NoticeboardComponent implements OnInit {
   deleteNotice(id){
     console.log("deleted id",id);
     this._projectservice.deleteNotice(id).subscribe((res:any)=>{
+      Swal.fire({type: 'success',title: 'Notice Deleted Successfully',showConfirmButton:false,timer: 2000})
       this.getAllNotice();
     },err=>{
       console.log(err);
+       Swal.fire('Oops...', 'Something went wrong!', 'error')
     })
   }
 
@@ -58,14 +62,13 @@ export class NoticeboardComponent implements OnInit {
   }
 
   updateNotice(notice){
-
     console.log("update Notice =====>",notice);
     this._projectservice.updateNotice(notice).subscribe((res:any)=>{
       $('#exampleModalPreview').modal('hide');
+      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
     },err=>{
       console.log(err);
-      
+      Swal.fire('Oops...', 'Something went wrong!', 'error')
     })
-    
   }
 }

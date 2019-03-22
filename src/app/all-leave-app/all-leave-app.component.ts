@@ -5,6 +5,7 @@ import { AlertService } from '../services/alert.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -53,6 +54,7 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
+
 
     getAllDevelopers(){
       this._projectService.getAllDevelopers().subscribe(res=>{

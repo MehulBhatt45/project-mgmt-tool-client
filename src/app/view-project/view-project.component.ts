@@ -7,6 +7,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { config } from '../config';
 import { MessagingService } from "../services/messaging.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-project',
@@ -128,9 +129,12 @@ getTechName(tech){
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
     console.log("data__+__+{}{}{}{}{}{}",data);
     this._projectService.addProject(data).subscribe((res:any)=>{
+      Swal.fire({type: 'success',title: 'Project Created Successfully',showConfirmButton:false,timer: 2000})
       console.log("addproject2 is called");
+
     },err=>{
-      console.log(err);    
+      console.log(err);  
+      Swal.fire('Oops...', 'Something went wrong!', 'error')  
     }) 
   }
 
