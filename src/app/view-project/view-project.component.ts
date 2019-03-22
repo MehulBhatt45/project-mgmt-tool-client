@@ -85,6 +85,13 @@ export class ViewProjectComponent implements OnInit {
         console.log("IN Else=========================================",this.projects);
       }
       this.loader=false;
+      setTimeout(()=>{
+        console.log('view project -------------------------------------');
+        $("a.view_more_detail").on("click", function(){
+          $(this).parents(".card.testimonial-card").toggleClass("open");
+          // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
+        });
+      }, 100);
     },err=>{
       this._alertService.error(err);
       this.loader=false;
