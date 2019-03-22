@@ -60,33 +60,33 @@
 						</button>
 					</div>
 					<div class="modal-body mx-3">
-						<form [formGroup]="forgotPasswordForm">
+						<form [formGroup]="forgotPasswordForm" (ngSubmit)="updatePassword()" ngNativeValidate>
 							<div class="md-form mb-3">
 								<i class="fas fa-envelope prefix grey-text"></i>
-								<input type="text" id="email" class="form-control" formControlName="email">
-								<label>Email address</label>
+								<input type="text" id="email" class="form-control" formControlName="email" required="required">
+								<label for="email">Email address</label>
 							</div>
 							<div class="md-form mb-3">
 								<i class="fas fa-lock prefix grey-text"></i>
-								<input type="password" id="password" class="form-control" formControlName="password">
-								<label>Password</label>
+								<input type="password" id="password" class="form-control" formControlName="password" required="required">
+								<label for="password">Password</label>
 							</div>
 
 							<div class="md-form mb-3">
 								<i class="fas fa-lock prefix grey-text"></i>
-								<input type="password" id="confirmpassword" class="form-control" formControlName="confirmpassword">
-								<label>Confirm password</label>
+								<input type="password" id="confirmpassword" class="form-control" formControlName="confirmpassword" required="required">
+								<label for="confirmpassword">Confirm password</label>
 							</div>
 							<div class="modal-footer d-flex justify-content-center">
-								<button class="btn btn-deep-orange" (click)=updatePassword()>Submit</button>
+								<button class="btn btn-deep-orange" type="submit">Submit</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div>
-			<a href="" class="forgottxt" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password</a>
+		<div class="forgottxt">
+			<a href="" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password</a>
 		</div>
 	</div>
 </div>

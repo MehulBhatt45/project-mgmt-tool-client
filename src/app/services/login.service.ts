@@ -99,7 +99,7 @@ export class LoginService {
     }
 
     resetPwd(user){
-        console.log("res-=-=",user);
+        // console.log("res-=-=",user);
         return this.http.put(config.baseApiUrl+"user/forgot-password",user);
     }
 }

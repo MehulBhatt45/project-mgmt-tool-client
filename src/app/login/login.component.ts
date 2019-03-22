@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@a
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
+declare var $:any;
+
 
 @Component({
   selector: 'app-login',
@@ -71,21 +73,22 @@ export class LoginComponent implements OnInit {
   }
 
   updatePassword(){
-    console.log(this.forgotPasswordForm.value);
+    // console.log(this.forgotPasswordForm.value);
     if(this.forgotPasswordForm.value.password == this.forgotPasswordForm.value.confirmpassword){
       delete this.forgotPasswordForm.value["confirmpassword"];
-      console.log(this.forgotPasswordForm.value);
+      // console.log(this.forgotPasswordForm.value);
       this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
         console.log("res-=-=",res);
+        $('#modalForgotPasswordForm').modal('hide');
       },err=>{
         console.log("res-=-=",err);
+        alert("email not found");
       })
     }
     else{
       alert("Please enter same password");
     }    
-    this.router.navigate(["/login"]);
-  }
+  }  
 
 
 }
