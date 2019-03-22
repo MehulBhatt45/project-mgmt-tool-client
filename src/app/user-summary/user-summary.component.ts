@@ -63,22 +63,22 @@ export class UserSummaryComponent implements OnInit {
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		
 
-		this.activatedRoute.queryParams.subscribe(params => {
-			this.uid = params['key1'];
-			console.log("uid============>",this.uid);
-			this.pid = params['key2'];
-			console.log("pid============>",this.pid);
-		});
-		// this.route.params.subscribe(param=>{
-			// 	this.projectId = param.id;
-			// 	console.log("projectid--=-=-=+++",this.projectId);
-			// 	this.userId = param.id;
-			// 	console.log("currentUserId--=-=-=+++",this.userId);	
+		// this.activatedRoute.queryParams.subscribe(params => {
+		// 	this.uid = params['key1'];
+		// 	console.log("uid============>",this.uid);
+		// 	this.pid = params['key2'];
+		// 	console.log("pid============>",this.pid);
+		// });
+		this.route.params.subscribe(param=>{
+				this.projectId = param.id;
+				console.log("projectid--=-=-=+++",this.projectId);
+				this.userId = param.id;
+				console.log("currentUserId--=-=-=+++",this.userId);	
 
-			// 	this.getEmptyTracks();
-			// 	this.getProject(this.projectId);
-			// });
-			// this.createEditTaskForm();	
+				this.getEmptyTracks();
+				this.getProject(this.projectId);
+			});
+			this.createEditTaskForm();	
 
 
 		}
