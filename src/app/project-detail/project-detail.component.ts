@@ -10,11 +10,11 @@ import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
 import { config } from '../config'
 import {LeaveComponent} from '../leave/leave.component';
-declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
-// import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+import Swal from 'sweetalert2';
+declare var $ : any;
 
 
 
@@ -488,6 +488,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
+				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 				this.getProject(res.projectId);
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
@@ -498,7 +499,8 @@ export class ProjectDetailComponent implements OnInit {
 				// this.assignTo.reset();
 				this.loader = false;
 			},err=>{
-				$('#alert').css('display','block');
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				//$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
 
