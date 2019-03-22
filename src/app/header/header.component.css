@@ -139,15 +139,23 @@ ol.breadcrumb.hidden-lg-down li a {
     margin: 0;
     margin-top: 10px;
   }
+  .profile_section{
+    outline: none;
+    cursor: pointer;
+    /*margin: 30px auto;*/
+  }
+  /*.user_name{
+    margin: 0px auto;
+  }*/
   .profile_picture{
     height: 160px;
     width: 160px;
     border-radius: 255%;
     display: block;
-    /*margin: 0px auto;*/
-    margin-top: 30px;
+    margin: 30px auto;
+   /* margin-top: 30px;
     margin-bottom: 27px;
-    margin-left: 54px;
+    margin-left: 54px;*/
     position: relative;
     z-index: 11;
     overflow: hidden;

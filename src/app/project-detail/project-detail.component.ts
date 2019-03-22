@@ -10,11 +10,11 @@ import {SearchTaskPipe} from '../search-task.pipe';
 import { ChildComponent } from '../child/child.component';
 import { config } from '../config'
 import {LeaveComponent} from '../leave/leave.component';
-declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
-// import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+import Swal from 'sweetalert2';
+declare var $ : any;
 
 
 
@@ -424,6 +424,7 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		console.log("update =====>",task);
 		this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#exampleModalPreview').modal('hide');
@@ -432,9 +433,10 @@ export class ProjectDetailComponent implements OnInit {
 			this.editTaskForm.reset();
 			this.loader = false;
 		},err=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log(err);
 			this.loader = false;
-			$('#alert').css('display','block');
+			//$('#alert').css('display','block');
 		})
 
 
@@ -488,6 +490,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
+				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 				this.getProject(res.projectId);
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
@@ -498,7 +501,8 @@ export class ProjectDetailComponent implements OnInit {
 				// this.assignTo.reset();
 				this.loader = false;
 			},err=>{
-				$('#alert').css('display','block');
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				//$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
 
@@ -618,9 +622,11 @@ export class ProjectDetailComponent implements OnInit {
 	deleteTask(taskId){
 		console.log(taskId);
 		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("Delete Task======>" , res);
 			this.task = res;
 		},(err:any)=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log("error in delete Task=====>" , err);
 		});
 	}

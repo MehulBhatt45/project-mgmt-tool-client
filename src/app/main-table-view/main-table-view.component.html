@@ -22,7 +22,7 @@
 				</select>
 			</div>
 			<div class="form-group ">
-				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole =='developer'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
 					<option value="all" selected>All Developer</option>
 					<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 				</select>
@@ -130,9 +130,9 @@
 							<tr>
 								<td style="width: 20px;">
 									<ul class="team-members">	
-										<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+										<li *ngIf="task.assignTo" >
 											<a href="javascript:void(0);">
-												{{getInitialsOfName(task.assignTo.name)}}
+												<div class="user_profile_pic"><img src="{{path}}{{task.assignTo.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" style="outline: none;" routerLink = "/visit-user-profile/{{task.assignTo._id}}"></div>
 											</a>
 										</li>
 										<li *ngIf="!task.assignTo" class="add-member">

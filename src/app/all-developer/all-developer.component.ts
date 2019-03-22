@@ -12,7 +12,6 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as _ from 'lodash';
 declare var $ : any;
 
-
 @Component({
 	selector: 'app-all-developer',
 	templateUrl: './all-developer.component.html',
