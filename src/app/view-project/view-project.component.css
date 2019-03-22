@@ -29,6 +29,7 @@ h2{
 }
 .card-title{
     outline: none;
+    text-transform: capitalize;
 }
 .team-members li{
 	height: 40px;
@@ -341,4 +342,27 @@ a.btn-floating.btn-action i{
 .margin_left{
     margin-left: -15px;
 }
+}
+
+
+
+
+
+.width-80{
+    max-width: 50% !important;
+}
+
+.margin-auto{
+    margin:auto;
+}
+
+.margin-tb-20{
+    margin-top:25px;
+    margin-bottom:25px;
+}
+.card_up{
+    background-color: #ddd;
+    border-radius: 5px;
+    margin: 0px 10px;
+    padding: 10px;
 }
