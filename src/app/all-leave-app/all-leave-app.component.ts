@@ -4,6 +4,7 @@ import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -52,12 +53,14 @@ export class AllLeaveAppComponent implements OnInit {
     body.status = "approved";
     console.log("bodyyyyyyyyyyyyyyy",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
-
       console.log("respondsssssss",res);
+      Swal.fire({type: 'success',title: 'Leave Approve Successfully',showConfirmButton:false,timer: 2000})
       this.acceptedLeave = res;
+      this.getLeaves();
       console.log("acceptedd===========>",this.acceptedLeave);
     },(err:any)=>{
       console.log(err);
+      Swal.fire('Oops...', 'Something went wrong!', 'error')
     })
   }
   
@@ -74,12 +77,13 @@ export class AllLeaveAppComponent implements OnInit {
     body.status = "rejected";
     console.log("body",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
-
+      Swal.fire({type: 'success',title: 'Leave Rejected Successfully',showConfirmButton:false,timer: 2000})
       console.log("response",res);
       this.rejectedLeave = res;
       console.log("rejected===========>",this.rejectedLeave);
     },(err:any)=>{
       console.log(err);
+       Swal.fire('Oops...', 'Something went wrong!', 'error')
     })
   }
 

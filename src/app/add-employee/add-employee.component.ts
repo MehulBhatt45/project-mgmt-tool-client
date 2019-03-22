@@ -44,9 +44,11 @@ export class AddEmployeeComponent implements OnInit {
 		this.addEmployeeForm.value.date = $('.datepicker').val();
 		console.log("form value=====>>>",addEmployeeForm.value);
 		this._loginservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
+			alert("Employee Added Successfully");
 			this.router.navigate(['./all-employee']);
 			console.log("res=-=-=()()",res);
 		},err=>{
+			alert("Something Went Wrong");
 			console.log("error",err);    
 		})
 	}
