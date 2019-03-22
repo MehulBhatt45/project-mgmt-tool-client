@@ -51,7 +51,7 @@
           <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
             <a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
             <li *ngIf="currentUser.userRole=='admin'"><a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
-             <i class="fa fa-angle-down rotate-icon"></i></a>
+             <i class="fa fa-angle-down rotate-icon"></i></a></li>
 
            
            <div class="collapsible-body">
@@ -61,9 +61,8 @@
               </ul>
             </div>
           </li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a>
           <li *ngIf="currentUser.userRole=='user' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
-        </ul>
       </li>
     </ul>
   </div>

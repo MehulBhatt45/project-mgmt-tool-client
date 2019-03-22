@@ -6,7 +6,57 @@
 </div>
 <div class="project_bord" *ngIf="!loader">
     <div class="row">
-        <div class="col-xl-3 col-lg-4 col-sm-6 col-12 margin-bottom-30" *ngFor="let project of projects">
+        <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
+            <div class="card card-cascade narrower">
+              <div class="view view-cascade overlay" style="background-color: #ddd">
+                <img  class="img-responsive margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
+                <div class="margin-top-10 margin-bottom-10 text-center">
+                    <h4 class="font-weight-bold card-title">{{project.title}}</h4>
+                </div>
+                <div class="row text-center margin-20">
+                    <div class="col-md-4 indigo-text">
+                     <strong title="task" class="text-center">
+                        <i class="fas font-project-view-small fa-tasks fa-fw"></i>
+                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
+                    </strong>
+                </div>
+                <div class="col-md-4 pink-text">
+                    <strong title="Issue" class="text-center" > 
+                        <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
+                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
+                    </strong>
+                </div>
+                <div class="col-md-4 red-text">
+                 <strong title="Bug" class=" text-center">
+                    <i class="fas font-project-view-small fa-bug fa-fw"></i>
+                    <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
+                </strong>
+            </div>
+        </div>
+    </div>
+    <div class="card-share">
+        <div class="social-reveal">
+          <a type="button" class="btn-floating btn-fb mt-0 mx-1" title="Edit Project"><i class="far fa-edit padding-top-5"></i></a>
+          <a type="button" class="btn-floating btn-tw mt-0 mx-1" title="Project Details"><i class="fas fa-info padding-top-5"></i></a>
+          <a type="button" class="btn-floating btn-gplus mt-0 mx-1" title="Project Summary"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
+      </div>
+      <a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right"><i class="fas fa-ellipsis-v padding-top-5"></i></a>
+  </div>
+  <div class="card-body card-body-cascade">
+    <h5 class="deep-purple-text pb-2 pt-1">
+        <i class="fab fa-react">{{getTechName('fa-react')}}</i>
+        <!-- <i class="fas fa-spider" *ngIf="!project.fa"></i> -->
+        <!-- <i class="fas {{project.fa}}" *ngIf="project.fa"></i> {{getTechName('react')}}</h5> -->
+    </h5>
+    <h6 class="font-weight-bold">Project Manager</h6>
+    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Narrower -->
+        <!-- <div class="col-xl-3 col-lg-4 col-sm-6 col-12 margin-bottom-30" *ngFor="let project of projects">
             <div class="card testimonial-card z-depth-5">
                 <div class="card-body">
                     <div class="project_header" style="background-size: 100% 100%;background-position: center center;background-image: url(../assets/pmtUp.jpg);height: 100%;display: table;width: 100%;z-index: 11;position: relative;border-radius: 10px;">
@@ -64,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div> -->
         <!-- <div class="col-xl-3 col-lg-4 col-sm-6 col-12 margin-bottom-30" *ngFor="let project of projects">
             <div class="card testimonial-card z-depth-5">
                 <div class="card-up" style="background-image: url('assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
@@ -108,7 +158,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div> 
         <div *ngIf="currentUser.userRole=='projectManager'">
          <div class="fixed-action-btn">
             <a href="javascript:void(0);" title="Add Project" data-toggle="modal" data-target="#createProject" class="btn-floating btn-large" ripple-radius (click)="fixed.toggle()">
@@ -117,7 +167,56 @@
         </div>
     </div>
 </div>
+</div>-->
+
+<!-- Card -->
+<div class="col-md-3">
+<div class="card">
+  <!-- Card image -->
+  <div class="card-cascade narrower">
+    <div class="card_up">
+    </div>
+    <a>
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+  <!-- Social buttons -->
+  <div class="card-share">
+
+    <div class="social-reveal">
+
+      <!-- Facebook -->
+      <a type="button" class="btn-floating btn-fb mt-0 mx-1" title="Edit Project"><i class="far fa-edit padding-top-5"></i></a>
+      <!-- Twitter -->
+      <a type="button" class="btn-floating btn-tw mt-0 mx-1" title="Project Details"><i class="fas fa-info padding-top-5"></i></a>
+      <!-- Google -->
+      <a type="button" class="btn-floating btn-gplus mt-0 mx-1" title="Project Summary"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
+
+    </div>
+
+    <!-- Button action -->
+    <a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right"><i class="fas fa-ellipsis-v padding-top-5"></i></a>
+
+  </div>
+
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title">Card title</h4>
+    <hr>
+    <!-- Text -->
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+      content.</p>
+    <button class="btn btn-indigo btn-rounded btn-md">Read more</button>
+
+  </div>
 </div>
+<!-- Card -->    
+</div>
+
+
 <div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
