@@ -53,10 +53,8 @@ export class AllLeaveAppComponent implements OnInit {
     body.status = "approved";
     console.log("bodyyyyyyyyyyyyyyy",body);
     this._projectservice.leaveApproval(req, body).subscribe((res:any)=>{
-
       console.log("respondsssssss",res);
       Swal.fire({type: 'success',title: 'Leave Approve Successfully',showConfirmButton:false,timer: 2000})
-
       this.acceptedLeave = res;
       this.getLeaves();
       console.log("acceptedd===========>",this.acceptedLeave);
