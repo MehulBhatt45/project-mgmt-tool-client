@@ -109,6 +109,10 @@ export class ViewProjectComponent implements OnInit {
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
+
+getTechName(tech){
+  if(tech == "fa-react") return "React JS"
+}
   addProject(addForm){
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
