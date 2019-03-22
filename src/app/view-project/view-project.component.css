@@ -366,3 +366,30 @@ a.btn-floating.btn-action i{
     margin: 0px 10px;
     padding: 10px;
 }
+.dropdown-menu{
+    background-color: transparent;
+    box-shadow: none; 
+    padding: 10px;
+    float: right;
+        top: -10px!important;
+    left: 15px!important;
+}
+.dropdown-item{
+    border-radius: 50%;
+    transition: all 15s!important;
+}
+.dropdown-item i{
+    font-size: 17px;
+    padding-top: 0px;
+}
+button{
+    height: 37px;
+    width: 37px;
+    font-size: 14px;
+    top: -20px;
+    right: -15px;
+/*    float: right;*/
+}
+.btn-floating i{
+    font-size: 14px!important;
+}
