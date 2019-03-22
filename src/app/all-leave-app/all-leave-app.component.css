@@ -69,7 +69,12 @@
 h3{
 	text-align: center;
 }
-
+.selected{
+	display: none;
+}
+.unselected{
+	display: block;
+}
 
 
 

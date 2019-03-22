@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import {ProjectService} from '../services/project.service';
 import { LoginService } from '../services/login.service';
 declare var $ : any;
+import Swal from 'sweetalert2';
+
 
 @Component({
 	selector: 'app-editprofile',
@@ -51,8 +53,10 @@ export class EditprofileComponent implements OnInit {
 
 		this._loginService.editUserProfileWithFile(data).subscribe((res:any)=>{
 			console.log("res",res);
+			  Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 		},err=>{
-			console.log("error",err);    
+			console.log("error",err); 
+			  Swal.fire('Oops...', 'Something went wrong!', 'error')   
 		})
 
 	}

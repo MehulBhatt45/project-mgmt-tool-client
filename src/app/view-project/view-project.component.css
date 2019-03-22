@@ -29,6 +29,7 @@ h2{
 }
 .card-title{
     outline: none;
+    text-transform: capitalize;
 }
 .team-members li{
 	height: 40px;
@@ -341,4 +342,54 @@ a.btn-floating.btn-action i{
 .margin_left{
     margin-left: -15px;
 }
+}
+
+
+
+
+
+.width-80{
+    max-width: 50% !important;
+}
+
+.margin-auto{
+    margin:auto;
+}
+
+.margin-tb-20{
+    margin-top:25px;
+    margin-bottom:25px;
+}
+.card_up{
+    background-color: #ddd;
+    border-radius: 5px;
+    margin: 0px 10px;
+    padding: 10px;
+}
+.dropdown-menu{
+    background-color: transparent;
+    box-shadow: none; 
+    padding: 10px;
+    float: right;
+        top: -10px!important;
+    left: 15px!important;
+}
+.dropdown-item{
+    border-radius: 50%;
+    transition: all 15s!important;
+}
+.dropdown-item i{
+    font-size: 17px;
+    padding-top: 0px;
+}
+button{
+    height: 37px;
+    width: 37px;
+    font-size: 14px;
+    top: -20px;
+    right: -15px;
+/*    float: right;*/
+}
+.btn-floating i{
+    font-size: 14px!important;
 }

@@ -5,6 +5,8 @@ import { FormControl, FormGroup, AbstractControl, FormBuilder, Validators } from
 import * as _ from "lodash";
 declare var $ : any;
 import { config } from '../config';
+import Swal from 'sweetalert2';
+
 @Component({
 	selector: 'app-edit-project',
 	templateUrl: './edit-project.component.html',
@@ -108,6 +110,8 @@ export class EditProjectComponent implements OnInit {
 	editProject(projectId){
 		this._projectService.getProjectById(projectId).subscribe((res:any)=>{
 			console.log("res of requested project in edit project component ====>" , res);
+			this.loader = false;
+			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
 			// localStorage.setItem("teams" , JSON.stringify(this.availData));
 			// this.teams = true;
@@ -115,6 +119,7 @@ export class EditProjectComponent implements OnInit {
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;
 		},(err:any)=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log("err in requested project in edit project component ====>" , err);
 		})
 	}
@@ -143,23 +148,30 @@ export class EditProjectComponent implements OnInit {
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm).subscribe((res:any)=>{
+			this.loader = false;
 			console.log("response of update form  ====>" , res);
+			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.router.navigate(['./view-projects']);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
 	deleteProject(projectId){
 		console.log(projectId);
 		if(projectId.BugId.length>0 || projectId.IssueId.length>0 || projectId.taskId.length>0 || projectId.Teams.length>0){
 			console.log("You can't delete this");
+			Swal.fire('Oops...', 'You Can not Delete This!', 'error')
+
 		}else{
 			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
 				console.log("Delete project======>" , res);
 				this.projects = res;
+				Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
 				this.router.navigate(['./view-projects']);
 			},(err:any)=>{
 				console.log("error in delete project =====>" , err);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
 			});
 		}
 	}
