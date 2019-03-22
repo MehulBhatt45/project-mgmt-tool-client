@@ -9,9 +9,9 @@
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
               <div class="view view-cascade overlay" style="background-color: #ddd">
-                <img  class="img-responsive margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
+                <img  routerLink="/project-details/{{project._id}}" class="img-responsive margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
                 <div class="margin-top-10 margin-bottom-10 text-center">
-                    <h4 class="font-weight-bold card-title">{{project.title}}</h4>
+                    <h4  routerLink="/project-details/{{project._id}}" class="font-weight-bold card-title">{{project.title}}</h4>
                 </div>
                 <div class="row text-center margin-20">
                     <div class="col-md-4 indigo-text">
@@ -34,16 +34,17 @@
             </div>
         </div>
     </div>
-    <div class="card-share">
-        <div class="social-reveal">
-          <a type="button" class="btn-floating btn-fb mt-0 mx-1" title="Edit Project"><i class="far fa-edit padding-top-5"></i></a>
-          <a type="button" class="btn-floating btn-tw mt-0 mx-1" title="Project Details"><i class="fas fa-info padding-top-5"></i></a>
-          <a type="button" class="btn-floating btn-gplus mt-0 mx-1" title="Project Summary"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
-      </div>
-      <a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right"><i class="fas fa-ellipsis-v padding-top-5"></i></a>
+  <div class="btn-group dropleft float-right">
+  <button type="button" style="border-radius: 50%;" class="btn btn-default  btn-floating padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+    <a  class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Project Details"  routerLink="/project-details/{{project._id}}"><i class="fas fa-info padding-top-5"></i></a>
+     <a  class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
   </div>
+</div>
   <div class="card-body card-body-cascade">
-    <h5 class="deep-purple-text pb-2 pt-1">
+    <h5 class="deep-purple-text">
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
         <!-- <i class="fas fa-spider" *ngIf="!project.fa"></i> -->
         <!-- <i class="fas {{project.fa}}" *ngIf="project.fa"></i> {{getTechName('react')}}</h5> -->
@@ -168,55 +169,7 @@
     </div>
 </div>
 </div>-->
-
-<!-- Card -->
-<div class="col-md-3">
-<div class="card">
-  <!-- Card image -->
-  <div class="card-cascade narrower">
-    <div class="card_up">
-    </div>
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  </div>
-
-  <!-- Social buttons -->
-  <div class="card-share">
-
-    <div class="social-reveal">
-
-      <!-- Facebook -->
-      <a type="button" class="btn-floating btn-fb mt-0 mx-1" title="Edit Project"><i class="far fa-edit padding-top-5"></i></a>
-      <!-- Twitter -->
-      <a type="button" class="btn-floating btn-tw mt-0 mx-1" title="Project Details"><i class="fas fa-info padding-top-5"></i></a>
-      <!-- Google -->
-      <a type="button" class="btn-floating btn-gplus mt-0 mx-1" title="Project Summary"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
-
-    </div>
-
-    <!-- Button action -->
-    <a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right"><i class="fas fa-ellipsis-v padding-top-5"></i></a>
-
-  </div>
-
-  <!-- Card content -->
-  <div class="card-body">
-
-    <!-- Title -->
-    <h4 class="card-title">Card title</h4>
-    <hr>
-    <!-- Text -->
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-      content.</p>
-    <button class="btn btn-indigo btn-rounded btn-md">Read more</button>
-
-  </div>
-</div>
-<!-- Card -->    
-</div>
-
-
+<!-- modal start -->
 <div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
