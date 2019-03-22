@@ -424,6 +424,7 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		console.log("update =====>",task);
 		this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#exampleModalPreview').modal('hide');
@@ -432,9 +433,10 @@ export class ProjectDetailComponent implements OnInit {
 			this.editTaskForm.reset();
 			this.loader = false;
 		},err=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log(err);
 			this.loader = false;
-			$('#alert').css('display','block');
+			//$('#alert').css('display','block');
 		})
 
 
@@ -620,9 +622,11 @@ export class ProjectDetailComponent implements OnInit {
 	deleteTask(taskId){
 		console.log(taskId);
 		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("Delete Task======>" , res);
 			this.task = res;
 		},(err:any)=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log("error in delete Task=====>" , err);
 		});
 	}

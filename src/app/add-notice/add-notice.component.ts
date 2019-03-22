@@ -14,7 +14,6 @@ import Swal from 'sweetalert2';
 export class AddNoticeComponent implements OnInit {
 	files:FileList;
 	addForm:FormGroup;
-	swal:any;
 
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
