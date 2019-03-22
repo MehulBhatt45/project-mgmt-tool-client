@@ -10,6 +10,8 @@ import {SearchTaskPipe} from '../search-task.pipe';
 import {config} from '../config';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as _ from 'lodash';
+declare var $ : any;
+
 
 @Component({
 	selector: 'app-all-developer',
@@ -26,6 +28,7 @@ export class AllDeveloperComponent implements OnInit {
 	loader:boolean = false;
 	pro;
 	searchText;
+	developerId;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService,
@@ -36,6 +39,7 @@ export class AllDeveloperComponent implements OnInit {
 			this.projectId = param.id;
 			this.getProject(this.projectId);
 		});
+		
 		// this.route.params.subscribe(param=>{
 		// 	this.projectId = param.id;
 		// 	this.getProjectManager(this.projectId);
@@ -86,6 +90,7 @@ export class AllDeveloperComponent implements OnInit {
 		},1000);
 		
 	}
+	
 	// getProjectManager(id){
 	// 	this.loader = true;
 	// 	console.log("project id======>",this.projectId);
@@ -115,6 +120,7 @@ export class AllDeveloperComponent implements OnInit {
 			});
 		});
 	}
+	
 
 }
 // getUserById(id){

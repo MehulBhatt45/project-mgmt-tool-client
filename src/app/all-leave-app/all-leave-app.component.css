@@ -19,14 +19,7 @@
 	padding: 8px;
 	white-space: nowrap;
 }
-.purple-gradient-2{
-	/*background: -webkit-linear-gradient(10deg,#5E4D89,#A274E0)!important;*/
-	background-color: #5d2bdb;
-	/*    
-	background: -o-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
-    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
-    */
-}
+
 .a_icon{
 	font-size: 28px;
 	color:green;
