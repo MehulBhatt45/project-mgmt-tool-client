@@ -16,18 +16,27 @@
 
 		<div class="container">
 			<div class="row" style="margin-top: 30px;">
-				<h3 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total number of Task in the project:</h3>
-				<div class="progress blue">
-					<span class="progress-left">
-						<span class="progress-bar"></span>
-					</span>
-					<span class="progress-right">
-						<span class="progress-bar"></span>
-					</span>
-					<div class="progress-value"><b>{{total}}%</b></div>
-					<!-- <div class="progress-value" *ngIf="project"><b>{{getCompletedTask( "complete")}}" + ' * 100 / ' + {{project.length}}%</b></div> -->
-					<!-- <div class="progress-value" id="c1" *ngIf="project"><b>{{getCompletedTask( "complete")}}</b></div> -->
-					<!-- <div class="progress-value" id="c2" *ngIf="project"><b>{{project.length}}</b></div> -->
+				<div class="col-sm-6">
+					<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
+					<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
+					<p>Our Completed Project: <b>{{round}}%</b></p>
+				</div>
+				<!-- <div class="col-sm-3">
+					<div class="progress blue">
+						<span class="progress-left">
+							<span class="progress-bar"></span>
+						</span>
+						<span class="progress-right">
+							<span class="progress-bar"></span>
+						</span>
+						<div class="progress-value"><b>{{round}}%</b></div>
+						
+					</div>
+				</div> -->
+				<div class="col-sm-6">
+
+					<canvas id="pieChart5"></canvas>
+
 				</div>
 				<!-- <div class="row">
 					<div class="progress yellow" >
@@ -63,10 +72,12 @@
 		</div> -->
 	</div>
 	<div class="row" style="margin-top: 25px;">
-		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
-	</div>
-	<div class="row" style="margin-top: 25px;">
-		<canvas id="myChart" style="width: 500px;height: 200px;"></canvas>
+		<div class="col-sm-6" style="margin-top: 70px;">
+			<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
+		</div>
+		<div class="col-sm-6" style="margin-top: 50px;">
+			<canvas id="myChart" style="width: 50%;"></canvas>
+		</div>
 	</div>
 		<!-- <table class="table table-bordered table-responsive">
 			<thead>
