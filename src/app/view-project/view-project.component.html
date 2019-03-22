@@ -15,7 +15,7 @@
                 </div>
                 <div class="row text-center margin-20">
                     <div class="col-md-4 indigo-text">
-                     <strong title="task" class="text-center">
+                       <strong title="task" class="text-center">
                         <i class="fas font-project-view-small fa-tasks fa-fw"></i>
                         <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
                     </strong>
@@ -27,30 +27,30 @@
                     </strong>
                 </div>
                 <div class="col-md-4 red-text">
-                 <strong title="Bug" class=" text-center">
+                   <strong title="Bug" class=" text-center">
                     <i class="fas font-project-view-small fa-bug fa-fw"></i>
                     <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
                 </strong>
             </div>
         </div>
     </div>
-  <div class="btn-group dropleft float-right">
-  <button type="button" style="border-radius: 50%;" class="btn btn-default  btn-floating padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-    <a  class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Project Details"  routerLink="/project-details/{{project._id}}"><i class="fas fa-info padding-top-5"></i></a>
-     <a  class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart padding-top-5" aria-hidden="true"></i></a>
-  </div>
+    <div class="btn-group dropleft float-right">
+      <button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-info"></i></a>
+        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+    </div>
 </div>
-  <div class="card-body card-body-cascade">
+<div class="card-body card-body-cascade">
     <h5 class="deep-purple-text">
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
         <!-- <i class="fas fa-spider" *ngIf="!project.fa"></i> -->
         <!-- <i class="fas {{project.fa}}" *ngIf="project.fa"></i> {{getTechName('react')}}</h5> -->
     </h5>
-    <h6 class="font-weight-bold">Project Manager</h6>
-    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
+    <span class="font-weight-bold">Project Manager</span>
+    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit</p>
 </div>
 </div>
 </div>

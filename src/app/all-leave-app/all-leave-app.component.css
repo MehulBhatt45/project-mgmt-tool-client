@@ -64,12 +64,17 @@
 	/*background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%) !important;*/
 }
 .card{
-	max-width: 100%;
+	width: 118%;
 }
 h3{
 	text-align: center;
 }
-
+.selected{
+	display: none;
+}
+.unselected{
+	display: block;
+}
 
 
 
