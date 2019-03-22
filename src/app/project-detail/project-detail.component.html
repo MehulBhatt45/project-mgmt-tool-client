@@ -149,7 +149,44 @@
 							</div>
 						</div>
 					</div>
-				</div>
+
+					<hr>
+					<div class="mb-3 wow fadeIn">
+						<h2>Comments</h2>
+
+						<div *ngIf="comments && comments.length>0">
+							<div class="comment_area">
+								<div class="comment_section" *ngFor = "let i of comments">
+									<div class="card">
+										<div class="card-body">
+											<div class="team-members">	
+												<div *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+													<a href="javascript:void(0);">
+														<div><img class="comment_profile" src="{{path}}{{currentUser.profilePhoto}}"  onerror="this.src='assets/4.jpeg'" >
+														</div>
+													</a>
+												</div>
+											</div>
+
+											<div class="comment_content">
+												<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
+													{{i.userId.name}}
+												</h5>
+
+												<span class="break" innerHtml="{{i.content}}">
+													<!-- {{i.content}} -->
+												</span>
+												<!-- <img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
+
+											
+
+												<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}"><img src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"></a>
+
+											</div>
+
+										</div>
+
+				<!-- </div>
 				<hr>
 				<h2>Comments</h2>
 				<div *ngIf="comments && comments.length>0">
@@ -169,9 +206,9 @@
 											{{i.userId.name}}
 										</p>
 										<span class="break" innerHtml="{{i.content}}">
-											<!-- {{i.content}} -->
+											
 										</span>
-										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
+										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
 									</div>
 								</div>
 							</div>

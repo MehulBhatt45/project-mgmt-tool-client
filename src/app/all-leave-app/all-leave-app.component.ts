@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router,ActivatedRoute} from '@angular/router';
 import {ProjectService} from '../services/project.service';
+import { AlertService } from '../services/alert.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -15,18 +17,26 @@ export class AllLeaveAppComponent implements OnInit {
   leaveApp;
   acceptedLeave;
   rejectedLeave;
-  id;
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+  developers;
+  developerId;
+  // projectTeam;
+  // Teams;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  selectedDeveloperId = "all";
   // apps;
 
-  constructor(public router:Router, public _projectservice:ProjectService) { }
+  constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
+    public _alertService: AlertService,private route: ActivatedRoute) { 
+
+  }
 
   ngOnInit() {
-  	this.getLeaves();
+    this.getLeaves();
     this.leavesByUserId();
+    this.getAllDevelopers();
 
-    // this.$filter('orderBy')(this.leaveApp,'startingDate');
+    
   }
 
   getLeaves(){
@@ -42,7 +52,7 @@ export class AllLeaveAppComponent implements OnInit {
     },err=>{
       console.log(err);
     })
-    
+
   }
   // getLeaves(){
     //   this._projectservice.pendingLeaves().subscribe(res=>{
@@ -167,6 +177,64 @@ export class AllLeaveAppComponent implements OnInit {
 
             }
 
+          
+
+
+
+
+
+          getAllDevelopers(){
+            this._projectService.getAllDevelopers().subscribe(res=>{
+              console.log("function calling===>")
+              this.developers = res;
+              this.developers.sort(function(a, b){
+                var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+                if (nameA < nameB) //sort string ascending
+                  return -1 
+                if (nameA > nameB)
+                  return 1
+                return 0 
+              })
+              console.log("Developers",this.developers);
+            },err=>{
+              console.log("Couldn't get all developers ",err);
+              this._alertService.error(err);
+            });
           }
+
+
+
+
+
+          filterTracks(developerId){
+            console.log("this . leave app =======>" , this.leaveApp);
+
+            console.log("this . leaves =======>" , this.leaves);
+            console.log("filter====>");
+            this.selectedDeveloperId = developerId;
+            console.log(developerId);
+            if( developerId!='all'){
+              this.leaveApp = [];
+              $('.unselected').css('display','block');
+              $('.selected').css('display','none');
+              console.log("sucess");
+              _.forEach(this.leaves , (leave)=>{
+                if(developerId == leave.email ){
+                  console.log(leave);
+                  $('.unselected').css('display','none');
+                  $('.selected').css('display','block');
+                  this.leaveApp.push(leave);
+                }
+              });
+            }else{
+              console.log("not found");
+            }
+
+          }
+
+
+
+        }
+
 
 
