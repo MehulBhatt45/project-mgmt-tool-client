@@ -44,6 +44,8 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+
     this.getProjects();
     this.getAllDevelopers();
     $('.datepicker').pickadate({
@@ -109,7 +111,6 @@ export class ViewProjectComponent implements OnInit {
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
-
 getTechName(tech){
   if(tech == "fa-react") return "React JS"
 }
@@ -137,6 +138,16 @@ getTechName(tech){
   openDropdown(){
     if (this.currentUser.userRole=='projectManager') {
       $('.dropdown-toggle').dropdown();
+      $('.btn_popover_menu').click(function(){
+        // setTimeout(()=>{
+          $('[data-toggle="popover-hover"]').popover({
+            html: true,
+            trigger: 'hover',
+            placement: 'bottom',
+            content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+          });
+        // },1000);
+      });
     }
   }
 
