@@ -622,6 +622,7 @@ export class ProjectDetailComponent implements OnInit {
 	deleteTask(taskId){
 		console.log(taskId);
 		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			$('#exampleModalPreview').modal('hide');
 			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("Delete Task======>" , res);
 			this.task = res;
