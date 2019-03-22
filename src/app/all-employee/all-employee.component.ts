@@ -62,6 +62,12 @@ export class AllEmployeeComponent implements OnInit {
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
+		setTimeout(()=>{
+			console.log("rotate js--------------------")
+			$('a.rotate-btn').click(function () {
+				$(this).parents(".card-rotating").toggleClass('flipped');
+			});
+		},2000);
 	}
 
 	deleteEmployee(developerid){
