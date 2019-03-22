@@ -85,6 +85,13 @@ export class ViewProjectComponent implements OnInit {
         console.log("IN Else=========================================",this.projects);
       }
       this.loader=false;
+      setTimeout(()=>{
+        console.log('view project -------------------------------------');
+        $("a.view_more_detail").on("click", function(){
+          $(this).parents(".card.testimonial-card").toggleClass("open");
+          // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
+        });
+      }, 100);
     },err=>{
       this._alertService.error(err);
       this.loader=false;
@@ -102,6 +109,10 @@ export class ViewProjectComponent implements OnInit {
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
+
+getTechName(tech){
+  if(tech == "fa-react") return "React JS"
+}
   addProject(addForm){
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
