@@ -497,11 +497,7 @@ export class ProjectDetailComponent implements OnInit {
 				for(var i=0;i<this.files.length;i++){
 					data.append('fileUpload', this.files[i]);	
 				}
-
-
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-
+		}
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
 				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
@@ -519,8 +515,6 @@ export class ProjectDetailComponent implements OnInit {
 				//$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
-
-		}
 	}
 
 	
