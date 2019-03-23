@@ -14,9 +14,16 @@
 	<div class="row">
 		<h5>Total task: <b>{{getTaskCount()}}</b></h5>
 	</div>
-	<!-- <div class="row number_of_task">
-		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
-		<table class="table table-bordered task_table">
+
+	<div class="row" style="margin-top: 25px;">
+		<div class="col-sm-6" style="margin-top: 70px;">
+			<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
+		</div>
+		<div class="col-sm-6" style="margin-top: 50px;">
+			<canvas id="myChart" style="width: 50%;"></canvas>
+		</div>
+	</div>
+		<!-- <table class="table table-bordered task_table">
 			<thead>
 				<tr>
 					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
@@ -26,16 +33,15 @@
 			<tbody>
 				<tr *ngFor="let track of tracks">
 					<th scope="row">{{track.id}}</th>
-					<td>{{getTaskCount(track._id,track.id)}}</td>
+					<td>{{getTaskCountEachTrack(track.id)}}</td>
 				</tr>
 			</tbody>
-		</table>
-	</div> -->
-	<div class="row priority_base_task">
-		<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
-		<div class="col-sm-6">
-			<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-			<canvas id="pieChart1" class="border1"></canvas>
+		</table> -->
+		<div class="row priority_base_task">
+			<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
+			<div class="col-sm-6">
+				<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+				<canvas id="pieChart1" class="border1"></canvas>
 			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
