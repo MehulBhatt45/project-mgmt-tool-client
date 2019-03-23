@@ -205,7 +205,28 @@ table {
   width: 100%;
   padding-top: 8px;
 }
+.sorting_arrows{
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
 
+.due_date_sorting_btn, 
+.priority_sorting_btn{
+  padding: 14.5px 30px!important;
+}
+.due_date_sorting_btn i.fas,
+.priority_sorting_btn i.fas {
+    /*font-size: 20px;*/
+    vertical-align: middle;
+    opacity: 0.75;
+    display: block;
+}
+.due_date_sorting_btn i.fas.hide,
+.priority_sorting_btn i.fas.hide{
+  opacity: 1;
+  pointer-events: none;
+}
 
 .details {
   border: 1px solid lightgray;

@@ -51,10 +51,13 @@ export class ProjectDetailComponent implements OnInit {
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
+	asc;
+	desc;
 	projectTeam;
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -187,8 +190,8 @@ export class ProjectDetailComponent implements OnInit {
 		$('#save_changes').on('click', function(){
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
-
 		});
+
 		
 	}
 	getAllDevelopers(){
@@ -259,13 +262,13 @@ export class ProjectDetailComponent implements OnInit {
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
 
-				
+
 							}
 						}else{
 							if(task.status == track.id){
 								track.tasks.push(task);
 
-				
+
 							}
 						}
 					})
@@ -328,6 +331,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		}
 	}
+	
 	sortTasksByCreatedAt(type){
 		console.log("Sorting tasks by = ",type)
 
@@ -344,6 +348,7 @@ export class ProjectDetailComponent implements OnInit {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 		console.log("sorting======>",custom_sort);
+		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 	sortTasksByPriority(type){
 
@@ -354,14 +359,18 @@ export class ProjectDetailComponent implements OnInit {
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =====> ",track.tasks);
 		});
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
 		console.log("nthi avtu=======>",custom_sort1);
+		$(".priority_sorting_btn i.fas").toggleClass("hide");
 	}
+
+
+
 	getTitle(name){
 		if(name){
 			var str = name.split(' ');
@@ -374,9 +383,9 @@ export class ProjectDetailComponent implements OnInit {
 
 	getInitialsOfName(name){
 		if(name){
-		var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-		return str.toUpperCase();
-		// return name.split(' ')[0][0]+name.split(' ')[1][0];
+			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+			return str.toUpperCase();
+			// return name.split(' ')[0][0]+name.split(' ')[1][0];
 		}else{
 			return '';
 		}
@@ -402,13 +411,14 @@ export class ProjectDetailComponent implements OnInit {
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 	
 	updateTask(task){
 		task.assignTo = this.editTaskForm.value.assignTo;
 		let data = new FormData();
+
 		data.append('projectId', task.projectId);
 		data.append('title', task.title);
 		data.append('desc', task.desc);
@@ -427,7 +437,7 @@ export class ProjectDetailComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
-			$('#exampleModalPreview').modal('hide');
+			$('#itemManipulationModel').modal('hide');
 			this.newTask = this.getEmptyTask();
 			this.files = this.url = [];
 			this.editTaskForm.reset();
@@ -439,8 +449,10 @@ export class ProjectDetailComponent implements OnInit {
 			//$('#alert').css('display','block');
 		})
 
+			}
 
-	}
+
+
 
 	getEmptyTask(){
 		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
@@ -449,52 +461,50 @@ export class ProjectDetailComponent implements OnInit {
 	addItem(option){
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 
-	saveTheData(task){
+		
 
-		this.loader = true;
-	
-		task['projectId']= this.projectId;
-		console.log("projectId=========>",this.projectId);
-		task.priority = Number(task.priority); 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
-		task.estimatedTime = task.estimatedTime;
-		console.log("estimated time=====>",task.estimatedTime);
-		task.images = $("#images").val();
-		console.log("images====>",task.images);
-		console.log(task.dueDate);
-		console.log(task.title);
-		var tomorrow = new Date();
-		// tomorrow.setDate(tomorrow.getDate() + Number(task.dueDate));
-		task.dueDate = new Date(tomorrow.setDate(tomorrow.getDate() + Number(task.dueDate))).toLocaleString();
-		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
-		let data = new FormData();
-		_.forOwn(task, function(value, key) {
-			data.append(key, value)
-		});
-		if(this.files.length>0){
-			for(var i=0;i<this.files.length;i++){
-				data.append('fileUpload', this.files[i]);	
-			}
+
+		saveTheData(task){
+
+			this.loader = true;
+
+			task['projectId']= this.projectId;
+			console.log("projectId=========>",this.projectId);
+			task.priority = Number(task.priority); 
+			task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+			task.startDate = $("#startDate").val();
+			task.estimatedTime = $("#estimatedTime").val();
+			console.log("estimated time=====>",task.estimatedTime);
+			task.images = $("#images").val();
+			console.log("images====>",task.images);
+			console.log(task.dueDate);
+			console.log(task.title);
+			task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
+			task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log(task);
+			let data = new FormData();
+			_.forOwn(task, function(value, key) {
+				if(key!="estimatedTime")
+					data.append(key, value)
+				else
+					data.append(key, $('#estimatedTime').val())
+			});
+			if(this.files.length>0){
+				for(var i=0;i<this.files.length;i++){
+					data.append('fileUpload', this.files[i]);	
+				}
 		}
-
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-
 			this._projectService.addTask(data).subscribe((res:any)=>{
 				console.log("response task***++",res);
 				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 				this.getProject(res.projectId);
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
-				$('#exampleModalPreview').modal('hide');
+				$('#itemManipulationModel').modal('hide');
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
 				this.files = this.url = [];
@@ -505,84 +515,84 @@ export class ProjectDetailComponent implements OnInit {
 				//$('#alert').css('display','block');
 				console.log("error========>",err);
 			});
-
 	}
 
 	
 	public Editor = DecoupledEditor;
 	public configuration = { placeholder: 'Enter Comment Text...'};
 
-	public onReady( editor ) {
-		editor.ui.getEditableElement().parentElement.insertBefore(
-			editor.ui.view.toolbar.element,
-			editor.ui.getEditableElement()
-			);
-	}
 
 
-	public onChange( { editor }: ChangeEvent ) {
-		const data = editor.getData();
-		// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-		this.comment = data;
-	}
-
-
-	sendComment(taskId){
-		console.log(this.comment);
-		var data : any;
-		if(this.files.length>0){
-			data = new FormData();
-			data.append("content",this.comment?this.comment:"");
-			data.append("userId",this.currentUser._id);
-			data.append("projectId",this.projectId);
-			data.append("taskId",taskId);
-			// data.append("Images",this.images);
-			for(var i = 0; i < this.files.length; i++)
-				data.append("fileUpload",this.files[i]);
-		}else{
-			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+		public onReady( editor ) {
+			editor.ui.getEditableElement().parentElement.insertBefore(
+				editor.ui.view.toolbar.element,
+				editor.ui.getEditableElement()
+				);
 		}
-		console.log(data);
-		this._commentService.addComment(data).subscribe((res:any)=>{
-			console.log(res);
-			this.comment = "";
-			this.model.editorData = 'Enter comments here';
-			this.files = this.commentUrl = [];
-			this.getAllCommentOfTask(res.taskId);
-		},err=>{
-			console.error(err);
-		});
-	}
+
+
+		public onChange( { editor }: ChangeEvent ) {
+			const data = editor.getData();
+			// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+			this.comment = data;
+		}
+
+
+		sendComment(taskId){
+			console.log(this.comment);
+			var data : any;
+			if(this.files.length>0){
+				data = new FormData();
+				data.append("content",this.comment?this.comment:"");
+				data.append("userId",this.currentUser._id);
+				data.append("projectId",this.projectId);
+				data.append("taskId",taskId);
+				// data.append("Images",this.images);
+				for(var i = 0; i < this.files.length; i++)
+					data.append("fileUpload",this.files[i]);
+			}else{
+				data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+			}
+			console.log(data);
+			this._commentService.addComment(data).subscribe((res:any)=>{
+				console.log(res);
+				this.comment = "";
+				this.model.editorData = 'Enter comments here';
+				this.files = [];
+				this.getAllCommentOfTask(res.taskId);
+			},err=>{
+				console.error(err);
+			});
+		}
 	searchTask(){
 		console.log("btn tapped");
 	}
 
-	onKey(searchText){
-		console.log("searchText",searchText);
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-						// if(content.status == track.id){
-							track.tasks.push(content);
-						}
 
-					}
-					else{
-						if(content.status == track.id){
-							track.tasks.push(content);
+		onKey(searchText){
+			console.log("searchText",searchText);
+			console.log(this.project);
+			var dataToBeFiltered = [this.project];
+			var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+			console.log("In Component",task);
+			this.getEmptyTracks();
+			_.forEach(task, (content)=>{
+				_.forEach(this.tracks, (track)=>{
+					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+							// if(content.status == track.id){
+								track.tasks.push(content);
+							}
+
 						}
-					}
-				});
-		});
-	}
-	
-	
+						else{
+							if(content.status == track.id){
+								track.tasks.push(content);
+							}
+						}
+					});
+			});
+		}
 
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
@@ -604,24 +614,20 @@ export class ProjectDetailComponent implements OnInit {
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
 			this.files.push(file);
-		})
-		console.log(this.files);
-		if (event.target.files && event.target.files.length) {
-			_.forEach(event.target.files, file=>{
 			var reader = new FileReader();
-			reader.readAsDataURL(file); // read file as data url
-			reader.onload = (e:any) => { // called once readAsDataURL is completed
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
 				if(option == 'item')
 					this.url.push(e.target.result);
-				else
+				if(option == 'comment')
 					this.commentUrl.push(e.target.result);
 			}
-			})
-		}
+		})
 	}
 	deleteTask(taskId){
 		console.log(taskId);
 		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+			$('#exampleModalPreview').modal('hide');
 			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("Delete Task======>" , res);
 			this.task = res;
@@ -650,3 +656,4 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask.images.splice(option,1);
 	}
 }
+
