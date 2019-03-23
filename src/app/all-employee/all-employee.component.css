@@ -9,11 +9,15 @@
 /*.card{
   padding: 10px;
 }*/
-.float-right {
+/*.float-right {
     float: right!important;
     margin-top: -18px;
     margin-right: -18px;
       
+}*/
+.action-icon{
+  margin-top: -18px;
+  float: left
 }
 .btn_section{
 	width: 20px;
