@@ -402,7 +402,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 	
@@ -427,7 +427,7 @@ export class ProjectDetailComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
-			$('#exampleModalPreview').modal('hide');
+			$('#itemManipulationModel').modal('hide');
 			this.newTask = this.getEmptyTask();
 			this.files = this.url = [];
 			this.editTaskForm.reset();
@@ -449,9 +449,7 @@ export class ProjectDetailComponent implements OnInit {
 	addItem(option){
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 
@@ -494,7 +492,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.getProject(res.projectId);
 				$('#save_changes').attr("disabled", false);
 				$('#refresh_icon').css('display','none');
-				$('#exampleModalPreview').modal('hide');
+				$('#itemManipulationModel').modal('hide');
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
 				this.files = this.url = [];
