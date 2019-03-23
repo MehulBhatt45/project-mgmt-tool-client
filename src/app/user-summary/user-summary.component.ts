@@ -264,7 +264,45 @@ export class UserSummaryComponent implements OnInit {
 
 					this.loader = false;
 					setTimeout(()=>{
-						
+
+						var ctx = document.getElementById("myChart");
+						var myChart = new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: ["to do", "In Progress", "testing", "Complete"],
+								datasets: [{
+									label: '# of Tasks',
+									// data:[7,14,43,33],
+									data: this.getTaskCountEachTrack(this.tracks),
+									backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)'
+
+									],
+									borderColor: [
+									'rgba(255,99,132,1)',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)'
+
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
+
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
+
 
 						var ctxP = document.getElementById("pieChart1");
 						var myPieChart = new Chart(ctxP, {
@@ -356,19 +394,63 @@ export class UserSummaryComponent implements OnInit {
 							}
 						});
 
+						var ctxP = document.getElementById("pieChart5");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									data: this.getTaskCountEachTrack(this.tracks),
+									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom",
 
+
+								}
+							}
+						});
 					},1000);
-				},err=>{
-					console.log(err);
-					this.loader = false;
-				})
 
-			},1000);
+
+
+
+
+
+
+},err=>{
+	console.log(err);
+	this.loader = false;
+})
+
+},1000);
 function custom_sort(a, b) {
 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 }
 }
 
+getTaskCountEachTrack(tracks){
+
+	var userId = this.userId;
+	// console.log("uid+_+_+{}{}====",userId);
+
+	// return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	var count1 = [];
+	_.forEach(tracks,track=>{
+
+		count1.push(_.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
+	});
+	console.log("count1---------==========",count1);
+	return count1;
+
+
+}
 getTaskCount(){
 	// console.log("userId===-=-={}{}{}{}{}",userId);
 	var userId = this.userId;
@@ -387,13 +469,15 @@ getCompletedTask(status){
 
 	getTaskPriority(priority,tracks){
 		var userId = this.userId;
+
+		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status && o.assignTo._id == userId) return o }).length;
 		// console.log("currentUserId--=-=-=+++",this.userId);	
 		// console.log("userId=-==-=-{}{}{}{}{}",userId);
 		var count = [];
 		_.forEach(tracks, track=>{
-			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.assignTo._id == userId) return o }).length);
 		});
-		console.log(count);
+		console.log("cnt=-=-===============",count);
 		return count;
 	}
 }

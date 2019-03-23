@@ -4,7 +4,7 @@
   <span></span>
   <span></span>
 </div>
-<div class="project_bord">
+<div class="project_bord" *ngIf="!loader">
     <div class="row">
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
@@ -47,12 +47,10 @@
 <div class="card-body card-body-cascade margin-bottom-0 text-center">
     <h5 class="deep-purple-text">
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
-        <!-- <i class="fas fa-spider" *ngIf="!project.fa"></i> -->
-        <!-- <i class="fas {{project.fa}}" *ngIf="project.fa"></i> {{getTechName('react')}}</h5> -->
     </h5>
     <span class="font-weight-bold">Project Manager</span>
     <p>24-01-2019</p>
-    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit</p>
+    <p class="card-text">{{project.desc}}</p>
     <button class="btn btn-default progress_summary">Progress</button>
     <div class="summary">
         <h4>{{project.title}}</h4>
@@ -91,16 +89,11 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="card card-cascade narrower">
-                    <!-- Card image -->
                     <div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
-                        <!-- Title -->
                         <h2 class="card-header-title white-text text-center py-3" align="center">Create Project</h2>
                     </div>
-                    <!-- Card content -->
                     <div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
-                        <!-- Text -->
                         <div class="container">
-
                             <div class="card-body px-lg-5 pt-1">
                                 <form class="md-form" [formGroup]='addForm' style="color: #757575;">
                                     <div class="md-form form-group">
@@ -145,42 +138,18 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                   <!--  <div class="form-group">
-                                        <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
-                                            <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                                <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-                                                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                                            </ng-template>
-                                            <div class="row">
-                                                <ng-template ng-option-tmp let-item="item">
-                                                    <div class="card testimonial-card">
-                                                        <div class="card-up deep-purple lighten-2"></div>
-                                                        <div class="avatar white img_section">
-                                                            <img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid" style="height: 100px;">
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <h5 class="card-title mt-1">{{item.name}}</h5>
-                                                            <h6 class="card-title">{{item.userRole}}</h6>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </div>
-                                        </ng-select>
-                                    </div> -->
-                                    <!-- demo code -->
-                                    <img [src]="url" height="150" width="150"> <br/>
-                                    <!-- demo code -->
+                                    <div class="text-center selected-avatar" *ngIf="url">
+                                        <img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
+                                        <div class="delete-team-member">
+                                            <a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+                                        </div>
+                                    </div>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
                                         Select Project avatar
                                     </button>
                                     <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)">Create Project</button>
                                 </form>
                             </div>
-                            <!-- <div class="modal-footer">
-                                <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
-                                <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -189,7 +158,6 @@
     </div>
 </div>
 
-<!-- Modal Start Here -->
 
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
@@ -302,7 +270,6 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-<!-- Modal End Here -->
 
 <!-- id start -->
 <div id="#progress">

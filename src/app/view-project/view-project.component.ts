@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
-  files:FileList;
+  files:Array<File>;
   url = '';
   developers: any;
   path = config.baseMediaUrl;
@@ -179,7 +179,6 @@ getTechName(tech){
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event:any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
-
       }
     }
   }
@@ -207,6 +206,12 @@ getTechName(tech){
       return _.filter(project.tasks,{ 'type': opt }).length;
     else
       return 0;
+  }
+
+  removeAvatar(){
+    this.url = '';
+    this.addForm.value['avatar'] = '';
+    this.files = [];
   }
 }
 
