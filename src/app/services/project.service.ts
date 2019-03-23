@@ -91,6 +91,15 @@ export class ProjectService {
 			};
 			return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
 		}
+		getAllLeaves(){
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					'x-access-token' : JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			return this.http.get(config.baseApiUrl+"leave/getleave");
+		}
 
 			leavesById(email){
 			const httpOptions = {
