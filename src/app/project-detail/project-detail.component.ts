@@ -600,20 +600,15 @@ export class ProjectDetailComponent implements OnInit {
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
 			this.files.push(file);
-		})
-		console.log(this.files);
-		if (event.target.files && event.target.files.length) {
-			_.forEach(event.target.files, file=>{
 			var reader = new FileReader();
-			reader.readAsDataURL(file); // read file as data url
-			reader.onload = (e:any) => { // called once readAsDataURL is completed
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
 				if(option == 'item')
 					this.url.push(e.target.result);
-				else
+				if(option == 'comment')
 					this.commentUrl.push(e.target.result);
 			}
-			})
-		}
+		})
 	}
 	deleteTask(taskId){
 		console.log(taskId);
