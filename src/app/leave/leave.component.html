@@ -118,15 +118,15 @@
 								<p style="text-align: left; margin-bottom: 10px;"><b>Duration:-</b></p>
 								<div class="form-group">
 									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="first half-day">
-										<label class="form-check-label" for="leaveDuration1" value="1-day">First Half</label>	
+										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="0.5">
+										<label class="form-check-label" for="leaveDuration1" value="1-day">Half Day</label>	
 									</div>
-									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration2" formControlName="leaveDuration" value="second half-day">
+								<!-- 	<div class="form-check" style="text-align: left; padding: 0;">
+										<input type="radio" class="form-check-input" id="leaveDuration2" formControlName="leaveDuration" value="1/2">
 										<label class="form-check-label" for="leaveDuration2" value="1-day">Second Half</label>
-									</div>
+									</div> -->
 									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="full-day">
+										<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="1">
 										<label class="form-check-label" for="leaveDuration3" value="1-day">Full Day</label>
 									</div>
 								</div>
@@ -142,19 +142,19 @@
 
 							<p style="text-align: left; margin-bottom: 10px;"><b>Reason:-</b></p>
 							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="SickLeave" formControlName="typeOfLeave" value="sickleave">
+								<input type="radio" class="custom-control-input" id="SickLeave" formControlName="typeOfLeave" value="Sick_Leave">
 								<label class="custom-control-label" for="SickLeave">Sick Leave</label>
 							</div>
 							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="Emergencyleave" formControlName="typeOfLeave" value="emergencyleave" checked>
+								<input type="radio" class="custom-control-input" id="Emergencyleave" formControlName="typeOfLeave" value="Emergency_Leave" checked>
 								<label class="custom-control-label" for="Emergencyleave">Emergency leave</label>
 							</div>
 							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="withoutpay" formControlName="typeOfLeave" value="leavewithoutpay">
+								<input type="radio" class="custom-control-input" id="withoutpay" formControlName="typeOfLeave" value="Leave_WithoutPay">
 								<label class="custom-control-label" for="withoutpay">without pay</label>
 							</div>
 							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="personalleave">
+								<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="Personal_Leave">
 								<label class="custom-control-label" for="PersonalLeave" style="margin-bottom: 30px;">Personal Leave</label>
 							</div>
 

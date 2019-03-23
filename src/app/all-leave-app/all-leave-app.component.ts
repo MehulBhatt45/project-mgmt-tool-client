@@ -119,21 +119,21 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
 
-    // leavesByUserId(){
-    //   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-    //   console.log("email of login user",obj);
-    //   this._projectservice.leavesById(obj).subscribe((res:any)=>{
-    //     console.log("resppppppondssss",res);
-    //     this.leaves = res;
-    //     _.forEach(this.leaves , (leave)=>{
-    //       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-    //       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-    //     })
-    //     console.log("statussssssss",this.leaves);
-    //   },err=>{
-    //     console.log(err);
-    //   })
-    // }
+    leavesByUserId(){
+      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+      console.log("email of login user",obj);
+      this._projectservice.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
+        _.forEach(this.leaves , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+      },err=>{
+        console.log(err);
+      })
+    }
 
             filterTracks(developerId){
               console.log("this . leave app =======>" , this.leaveApp);

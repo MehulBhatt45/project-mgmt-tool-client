@@ -118,7 +118,7 @@
 		<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title w-100" id="myModalLabel">{{modalTitle}}</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<i class="fa fa-times"></i>
 					</button>
@@ -185,10 +185,10 @@
 							</div>
 							<div class="row justify-content-between">
 								<div>
-									<button class="btn btn-default">Remove Assignment</button>
-									<button class="btn btn-default" *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
-									<button class="btn btn-default" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
-									<button class="btn btn-default" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+									<button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="margin: 20px;">Remove Assignment</button>
+									<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
+									<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
+									<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
 								</div>
 								<div>
 									<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'">Edit</button>
@@ -197,84 +197,127 @@
 						</div>
 						<hr>
 						<h2>Comments</h2>
-						<div *ngIf="task.comment && task.comment.length>0">
-							<p>comments</p>
-						</div>
-						<div *ngIf="task.comment && task.comment.length<=0">
-							<p>No comments on this be the first one to comments on...</p>
-						</div>
-						<div class="padding-20">
-							<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-							<button class="btn btn-default" (click)="sendComment()" [disabled]="!comment">Add Comment</button>
-						</div>
-				<!-- 	</div> -->
-				</div>
-				<div class="modal-footer justify-content-center">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-default">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" *ngIf="task">
-					<div class="row">
-						<form style="width: 100%;" [formGroup]="editTaskForm">
-							<div class="form-group col-12">
-								<label for="title">Title</label>
-								<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
-							</div>
-							<div class="form-group col-12">
-								<label for="desc">Discription</label>
-								<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-							</div>
-							<div class=" row form-group col-12">
-								<button class="btn btn-default" (click)="fileUpload.click()">
-									<i class="fa fa-paperclip mr-1"></i> Add Files
-									<input type="file" formControlName="files" [(ngModel)]="task.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
-								</button>
-							</div>
-							<div class="row no-margin no padding" >
-								<div class="form-group col-12 col-lg-6">
-									<label for="assignTo">Assign To</label>
-									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
-									</select>
-									<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-										<option *ngFor="let team of projectTeam" value="{{projectTeam._id}}">{{team.name}}</option>
-									</select>
-								</div>
-								<div class="form-group col-12 col-lg-6">
-									<label for="priority">Priority</label>
-									<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-										<option value="low">Low</option>
-										<option value="medium">Medium</option>
-										<option value="high">High</option>
-									</select>
+						<div *ngIf="comments && comments.length>0">
+							<div class="comment_area">
+								<div class="comment_section" *ngFor = "let i of comments">
+									<div class="card card-for-comment">
+										<div class="card-body">
+											<div class="team-members">	
+												<div *ngIf="i.userId" [title]="getTitle(i.userId.name)">
+													<a href="javascript:void(0);">
+														<div><img class="comment_profile" src="{{path}}{{currentUser.profilePhoto}}"  onerror="this.src='assets/4.jpeg'" >
+														</div>
+													</a>
+												</div>
+											</div>
+											<div class="comment_content">
+												<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
+													{{i.userId.name}}
+												</h5>
+												<span class="break" innerHtml="{{i.content}}">
+												</span>
+												<!-- <a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}"> -->
+													<img src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'">
+													<!-- </a> -->
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="form-group col-12">
-								<label for="status">Status</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
-									<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
-								</select>
-							</div>
-						</form>
+						<div *ngIf="comments && comments.length<=0">
+					<p>No comments on this be the first one to comments on...</p>
+				</div>
+				<div>
+					<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+					<div class="btn btn-default" (click)="commentImg.click()">
+						<span>Upload image with comment</span>
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+					</div>
+					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
+				</div>
+				<div *ngIf="commentUrl && commentUrl.length">
+					<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
+						<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
+						<div class="delete-team-member">
+							<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
+						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid">Save changes</button>
+							<!-- 	</div> -->
+						</div>
+					<!-- <div class="modal-footer justify-content-center">
+						<div class="padding-20">
+							<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default">Save changes</button>
+					</div> -->
 				</div>
 			</div>
 		</div>
-	</div>
+
+		<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="card card-cascade narrower modal-header view view-cascade ">
+						<h5 class="modal-title text-center" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<!-- <span aria-hidden="true">&times;</span> -->
+						</button>
+					</div>
+					<div class="modal-body" *ngIf="task">
+						<div class="row">
+							<form style="width: 100%;" [formGroup]="editTaskForm">
+								<div class="form-group col-12">
+									<label for="title">Title</label>
+									<input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+								</div>
+								<div class="form-group col-12">
+									<label for="desc">Discription</label>
+									<textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+								</div>
+								<div class=" row form-group col-12">
+									<button class="btn btn-default" (click)="fileUpload.click()">
+										<i class="fa fa-paperclip mr-1"></i> Add Files
+										<input type="file" formControlName="files" [(ngModel)]="task.files" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+									</button>
+								</div>
+								<div class="row no-margin no padding" >
+									<div class="form-group col-12 col-lg-6">
+										<label for="assignTo">Assign To</label>
+										<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+											<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+										</select>
+										<select  class="browser-default custom-select custom-select-lg mb-3" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+											<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+										</select>
+									</div>
+									<div class="form-group col-12 col-lg-6">
+										<label for="priority">Priority</label>
+										<select class="browser-default custom-select custom-select-lg mb-3" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+											<option value="low">Low</option>
+											<option value="medium">Medium</option>
+											<option value="high">High</option>
+											<option value="1">Highest</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group col-12">
+									<label for="status">Status</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
+										<option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
+									</select>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal" >Close</button>
+						<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+							<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
+						</div>
+						<button type="button" class="btn btn-default btn-lg" (click)="(modalTitle == 'Edit Item')?updateTask(task):saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>

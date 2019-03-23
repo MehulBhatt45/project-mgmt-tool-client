@@ -3,12 +3,12 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
+import { config } from '../config';
+import { CommentService } from '../services/comment.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 declare var $ : any;
 import {SearchTaskPipe} from '../search-task.pipe';
 import * as _ from 'lodash';
-
-
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
@@ -21,12 +21,18 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 export class MainTableViewComponent implements OnInit {
 	tracks:any;
 	modalTitle;
+	comments:any;
+
 	public model = {
-		editorData: 'Enter comments here'
+		editorData: ''
 	};
+	url = [];
+	commentUrl = [];
+	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task;
 	project;
 	tasks;
+	taskId;
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
@@ -36,12 +42,15 @@ export class MainTableViewComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+	files:Array<File> = [];
+	path = config.baseMediaUrl;
 	searchText;
+	projectTeam;
+	Teams;
 	selectedProjectId = "all";
 	selectedDeveloperId = "all";
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
-		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe) {
+		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,public _commentService: CommentService) {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 		});
@@ -114,7 +123,8 @@ export class MainTableViewComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			startDate : new FormControl('', Validators.required),
 			dueDate : new FormControl('', Validators.required),
-			status : new FormControl({value: '', disabled: true}, Validators.required)
+			status : new FormControl({value: '', disabled: true}, Validators.required),
+			files : new FormControl()
 		})
 	}
 
@@ -392,120 +402,190 @@ export class MainTableViewComponent implements OnInit {
 		}
 		console.log("task()()()()()++_+_+_+",this.tracks);
 	}
-	public Editor = DecoupledEditor;
 
-	public onReady( editor ) {
-		editor.ui.getEditableElement().parentElement.insertBefore(
-			editor.ui.view.toolbar.element,
-			editor.ui.getEditableElement()
-			);
-	}
+	// public onReady( editor ) {
+		// 	editor.ui.getEditableElement().parentElement.insertBefore(
+		// 		editor.ui.view.toolbar.element,
+		// 		editor.ui.getEditableElement()
+		// 		);
+		// }
 
-	public onChange( { editor }: ChangeEvent ) {
-		const data = editor.getData();
-		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-	}
+		// public onChange( { editor }: ChangeEvent ) {
+			// 	const data = editor.getData();
+			// 	this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+			// }
 
-	sendComment(){
-		console.log(this.comment);
-	}
-	searchTask(){
-		console.log("btn tapped");
-	}
-
-// 	developerId;
-// 	onKey(event: any){
-// 		console.log(event, this.tasks);
-
-	// onKey(event: any){
-	// 	console.log(event, this.tasks);
-	// 	var dataToBeFiltered = [this.tasks];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
-	onKey(searchText){
-		console.log(this.tasks);
-
-		var dataToBeFiltered = [this.tasks];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-
-		if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
-			_.forEach(task, (project)=>{
-				if(project.projectId._id == this.selectedProjectId){
-					_.forEach(this.tracks, (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-								track.tasks.push(project);
-							}
-						}else{
-							if(project.status == track.id){
-								track.tasks.push(project);
-							}
-						}
-					})
-				}	
-			})
-		}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
-			_.forEach(task, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-						track.tasks.push(project);
-					}
-				})
-			})
-		}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
-			_.forEach(task, (project)=>{
-				console.log(project);
-				if(project.projectId._id == this.selectedProjectId){
-					_.forEach(this.tracks, (track)=>{
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-							track.tasks.push(project);
-						}
-					})
-
-		// _.forEach(task, (content)=>{	
-		// 	_.forEach(this.tracks, (track)=>{
-		// 		if(content.status == track.id){
-		// 			track.tasks.push(content);
-
+			// sendComment(){
+				// 	console.log(this.comment);
+				// }
+				public Editor = DecoupledEditor;
+				public configuration = { placeholder: 'Enter Comment Text...'};
+				public onReady( editor ) {
+					editor.ui.getEditableElement().parentElement.insertBefore(
+						editor.ui.view.toolbar.element,
+						editor.ui.getEditableElement()
+						);
 				}
-			})
-		}else{
-			_.forEach(task, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-							track.tasks.push(project);
-						}
+
+
+				public onChange( { editor }: ChangeEvent ) {
+					const data = editor.getData();
+					// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+					this.comment = data;
+				}
+				sendComment(taskId){
+					console.log(this.comment);
+					var data : any;
+					if(this.files.length>0){
+						data = new FormData();
+						data.append("content",this.comment?this.comment:"");
+						data.append("userId",this.currentUser._id);
+						data.append("projectId",this.projectId);
+						data.append("taskId",taskId);
+						// data.append("Images",this.images);
+						for(var i = 0; i < this.files.length; i++)
+							data.append("fileUpload",this.files[i]);
 					}else{
-						if(project.status == track.id){
-							track.tasks.push(project);
-						}
+						data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
 					}
-				})
-			})
-		}
-	}
-	projects;
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-}
+					console.log(data);
+					this._commentService.addComment(data).subscribe((res:any)=>{
+						console.log(res);
+						this.comment = "";
+						this.model.editorData = 'Enter comments here';
+						this.files = [];
+						this.getAllCommentOfTask(res.taskId);
+					},err=>{
+						console.error(err);
+					});
+				}
+				searchTask(){
+					console.log("btn tapped");
+				}
+				getAllCommentOfTask(taskId){
+					this._commentService.getAllComments(taskId).subscribe(res=>{
+						this.comments = res;
+					}, err=>{
+						console.error(err);
+					})
+				}
+				onSelectFile(event, option){
+					_.forEach(event.target.files, (file:any)=>{
+						this.files.push(file);
+						var reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = (e:any) => {
+							if(option == 'item')
+								this.url.push(e.target.result);
+							if(option == 'comment')
+								this.commentUrl.push(e.target.result);
+						}
+					})
+				}
+				removeCommentImage(file, index){
+					console.log(file, index);
+					this.commentUrl.splice(index, 1);
+					if(this.files && this.files.length)
+						this.files.splice(index,1);
+					console.log(this.files);	
+				}
+				removeAlreadyUplodedFile(option){
+					this.newTask.images.splice(option,1);
+				}
+				// 	developerId;
+				// 	onKey(event: any){
+					// 		console.log(event, this.tasks);
+
+					// onKey(event: any){
+						// 	console.log(event, this.tasks);
+						// 	var dataToBeFiltered = [this.tasks];
+						// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+						// 	console.log("In Component",task);
+						// 	this.getEmptyTracks();
+						// 	_.forEach(task, (content)=>{
+							// 		_.forEach(this.tracks, (track)=>{
+								// 			if(content.status == track.id){
+									// 				track.tasks.push(content);
+									// 			}
+									// 		})
+									// 	})
+									// }
+									onKey(searchText){
+										console.log(this.tasks);
+
+										var dataToBeFiltered = [this.tasks];
+										var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+										console.log("In Component",task);
+										this.getEmptyTracks();
+
+										if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
+											_.forEach(task, (project)=>{
+												if(project.projectId._id == this.selectedProjectId){
+													_.forEach(this.tracks, (track)=>{
+														if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+															if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+																track.tasks.push(project);
+															}
+														}else{
+															if(project.status == track.id){
+																track.tasks.push(project);
+															}
+														}
+													})
+												}	
+											})
+										}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
+											_.forEach(task, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+														track.tasks.push(project);
+													}
+												})
+											})
+										}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
+											_.forEach(task, (project)=>{
+												console.log(project);
+												if(project.projectId._id == this.selectedProjectId){
+													_.forEach(this.tracks, (track)=>{
+														if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+															track.tasks.push(project);
+														}
+													})
+
+													// _.forEach(task, (content)=>{	
+														// 	_.forEach(this.tracks, (track)=>{
+															// 		if(content.status == track.id){
+																// 			track.tasks.push(content);
+
+															}
+														})
+										}else{
+											_.forEach(task, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+														if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+															track.tasks.push(project);
+														}
+													}else{
+														if(project.status == track.id){
+															track.tasks.push(project);
+														}
+													}
+												})
+											})
+										}
+									}
+									projects;
+									getAllProjects(){
+										this._projectService.getProjects().subscribe(res=>{
+											this.projects = res;
+										},err=>{
+											this._alertService.error(err);
+											console.log(err);
+										})
+									}
+
+								}
 

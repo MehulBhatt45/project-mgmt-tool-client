@@ -6,7 +6,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="row number_of_task">
+	<div class="row">
+
+		<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
+
+	</div>
+	<div class="row">
+		<p>Total task: <b>{{getTaskCount()}}</b></p>
+	</div>
+	<!-- <div class="row number_of_task">
 		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
 		<table class="table table-bordered task_table">
 			<thead>
@@ -22,11 +30,13 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div> -->
 	<div class="row priority_base_task">
 		<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
 		<div class="col-sm-6">
-			<table class="table table-bordered">
+			<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+			<canvas id="pieChart1" class="border1"></canvas>
+			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col"  style="background-color: #ff0000;color: #fff;"><i class="fas fa-tasks"></i> Highest Priority</th>
@@ -39,10 +49,12 @@
 						<td style="text-align:center;">{{getTaskPriority(1, track.id)}}</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div>
 		<div class="col-sm-6">
-			<table class="table table-bordered">
+			<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
+			<canvas id="pieChart2" class="border2"></canvas>
+			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col" style="background-color: #c5c502;color: #fff;"><i class="fas fa-tasks"></i> High Priority</th>
@@ -55,10 +67,12 @@
 						<td style="text-align:center;">{{getTaskPriority(2, track.id)}}</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div><hr/>
 		<div class="col-sm-6">
-			<table class="table table-bordered">
+			<h3 style="text-align:center;margin-top: 30px;">Medium Priority</h3>
+			<canvas id="pieChart3" class="border3"></canvas>
+			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col" style="background-color: green;color: #fff;"><i class="fas fa-tasks"></i> Medium Priority</th>
@@ -71,10 +85,12 @@
 						<td style="text-align:center;">{{getTaskPriority(3, track.id)}}</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div>
 		<div class="col-sm-6">
-			<table class="table table-bordered">
+			<h3 style="text-align:center;margin-top: 30px;">Low Priority</h3>
+			<canvas id="pieChart4" class="border4"></canvas>
+			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
 						<th scope="col" style="background-color: #4e4eff;color: #fff;"><i class="fas fa-tasks"></i> Low Priority</th>
@@ -88,7 +104,7 @@
 						<td style="text-align:center;">{{getTaskPriority(4, track.id)}}</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</div>
 	</div>
 	<!-- <div class="row" style="margin-top: 25px;">

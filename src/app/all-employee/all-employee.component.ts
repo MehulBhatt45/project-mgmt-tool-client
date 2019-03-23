@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { config } from '../config';
 declare var $ : any;
 import { LoginService } from '../services/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-all-employee',
@@ -74,13 +75,12 @@ export class AllEmployeeComponent implements OnInit {
 		console.log("msgggg--=--",developerid);
 
 		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
-
+			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("delete{}{}{}{}",res);
 			this.getAllDevelopers();
 		},err=>{
 			console.log("errr=-=-=-= ",err);
-			
-
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
 

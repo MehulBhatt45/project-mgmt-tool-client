@@ -40,6 +40,10 @@ img{
 .card{
   padding: 10px;
 }
+.action-icon{
+  margin-top: -18px;
+  float: left
+}
 /*.btn_section{
 	width: 20px;
 }
