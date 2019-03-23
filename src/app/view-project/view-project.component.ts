@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
-  files:FileList;
+  files:Array<File>;
   url = '';
   developers: any;
   path = config.baseMediaUrl;
@@ -45,7 +45,15 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    setTimeout(()=>{
+      
+    $('[data-toggle="popover-hover"]').popover({
+      html: true,
+      trigger: 'hover',
+      placement: 'bottom',
+      content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+    });
+    },2000);
 
     this.getProjects();
     this.getAllDevelopers();
@@ -171,7 +179,6 @@ getTechName(tech){
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event:any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
-
       }
     }
   }
@@ -199,6 +206,12 @@ getTechName(tech){
       return _.filter(project.tasks,{ 'type': opt }).length;
     else
       return 0;
+  }
+
+  removeAvatar(){
+    this.url = '';
+    this.addForm.value['avatar'] = '';
+    this.files = [];
   }
 }
 

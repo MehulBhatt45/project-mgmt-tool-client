@@ -1,41 +1,58 @@
-<div class="container">
-	<div class="row header">
-		<div class="card for_title">
-			<div class="card-body" *ngIf="pro">
-				<h2 class="card-title" style="color: black;">{{pro.title}}</h2>
+<div class="cont">
+	<div class="container">
+		<div class="row header">
+			<div class="card for_title" style="background-color: #372e5f;">
+				<div class="card-body" *ngIf="pro">
+					<h2 class="card-title" style="color: #fff;">{{pro.title}}</h2>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
+		<div class="row">
 
-		<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
+			<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
 
-	</div>
-	<div class="row">
-		<p>Total task: <b>{{getTaskCount()}}</b></p>
-	</div>
-	<!-- <div class="row number_of_task">
-		<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
-		<table class="table table-bordered task_table">
-			<thead>
-				<tr>
-					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
-					<th scope="col"><i class="fas fa-tasks"></i> Number Of Tasks</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let track of tracks">
-					<th scope="row">{{track.id}}</th>
-					<td>{{getTaskCount(track._id,track.id)}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div> -->
-	<div class="row priority_base_task">
-		<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
-		<div class="col-sm-6">
-			<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-			<canvas id="pieChart1" class="border1"></canvas>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 top">
+				<p>Total Task In Project : <b>{{getTaskCount()}}</b></p>
+			</div>
+
+			<div class="col-sm-6">
+
+				<canvas id="pieChart5"></canvas>
+
+			</div>
+		</div>
+
+		<div class="row" style="margin-top: 25px;">
+			<div class="col-sm-6" style="margin-top: 70px;">
+				<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
+			</div>
+			<div class="col-sm-6" style="margin-top: 50px;">
+				<canvas id="myChart" style="width: 50%;"></canvas>
+			</div>
+		</div>
+
+
+			<!-- <table class="table table-bordered task_table">
+				<thead>
+					<tr>
+						<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
+						<th scope="col"><i class="fas fa-tasks"></i> Number Of Tasks</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let track of tracks">
+						<th scope="row">{{track.id}}</th>
+						<td>{{getTaskCountEachTrack(track.id)}}</td>
+					</tr>
+				</tbody>
+			</table> -->
+			<div class="row priority_base_task">
+				<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
+				<div class="col-sm-6">
+					<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+					<canvas id="pieChart1" class="border1"></canvas>
 			<!-- <table class="table table-bordered">
 				<thead>
 					<tr>
@@ -130,6 +147,7 @@
 			</tbody>
 		</table>
 	</div> -->
+</div>
 </div>
 
 
