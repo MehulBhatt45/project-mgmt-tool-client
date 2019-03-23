@@ -214,12 +214,12 @@ getTechName(tech){
     this.files = [];
   }
 
-  getTaskCount(status){
+  // getTaskCount(status){
 
-   return _.filter(function(o) { if (o.status == status) return o }).length;
+  //  return _.filter(function(o) { if (o.status == status) return o }).length;
 
 
-  }
+  // }
 }
 
 
