@@ -4,189 +4,67 @@
   <span></span>
   <span></span>
 </div>
-<div class="project_bord">
+<div class="project_bord" *ngIf="!loader">
     <div class="row">
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
-              <div class="view view-cascade overlay" style="background-color: #ddd">
-                <img  routerLink="/project-details/{{project._id}}" class="img-responsive title_image margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
-                <div class="margin-top-10 margin-bottom-10 text-center">
-                    <h4  routerLink="/project-details/{{project._id}}" class="font-weight-bold card-title">{{project.title}}</h4>
+                <div class="view view-cascade overlay" style="background-color: #ddd">
+                    <img  routerLink="/project-details/{{project._id}}" class="img-responsive margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
+                    <div class="margin-top-10 margin-bottom-10 text-center">
+                        <h4  routerLink="/project-details/{{project._id}}" class="font-weight-bold card-title">{{project.title}}</h4>
+                    </div>
+                    <div class="row text-center margin-20">
+                        <div class="col-md-4 indigo-text">
+                            <strong title="task" class="text-center">
+                                <i class="fas font-project-view-small fa-tasks fa-fw"></i>
+                                <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
+                            </strong>
+                        </div>
+                        <div class="col-md-4 pink-text">
+                            <strong title="Issue" class="text-center" > 
+                                <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
+                                <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
+                            </strong>
+                        </div>
+                        <div class="col-md-4 red-text">
+                            <strong title="Bug" class=" text-center">
+                                <i class="fas font-project-view-small fa-bug fa-fw"></i>
+                                <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
+                            </strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="row text-center margin-20">
-                    <div class="col-md-4 indigo-text">
-                       <strong title="task" class="text-center">
-                        <i class="fas font-project-view-small fa-tasks fa-fw"></i>
-                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
-                    </strong>
+                <div class="btn-group dropleft float-right">
+                    <button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i> 
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+                        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-info"></i></a>
+                        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4 pink-text">
-                    <strong title="Issue" class="text-center" > 
-                        <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
-                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
-                    </strong>
+                <div class="card-body card-body-cascade">
+                    <h5 class="deep-purple-text">
+                        <i class="fab fa-react">{{getTechName('fa-react')}}</i>
+                    </h5>
+                    <span class="font-weight-bold">Project Manager</span>
+                    <p class="card-text">{{project.desc}}</p>
                 </div>
-                <div class="col-md-4 red-text">
-                   <strong title="Bug" class=" text-center">
-                    <i class="fas font-project-view-small fa-bug fa-fw"></i>
-                    <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
-                </strong>
             </div>
         </div>
     </div>
-    <div class="btn-group dropleft float-right">
-      <button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-info"></i></a>
-        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-    </div>
 </div>
-<div class="card-body card-body-cascade">
-    <h5 class="deep-purple-text">
-        <i class="fab fa-react">{{getTechName('fa-react')}}</i>
-        <!-- <i class="fas fa-spider" *ngIf="!project.fa"></i> -->
-        <!-- <i class="fas {{project.fa}}" *ngIf="project.fa"></i> {{getTechName('react')}}</h5> -->
-    </h5>
-    <span class="font-weight-bold">Project Manager</span>
-    <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit</p>
-
-</div>
-
-</div>
-</div>
-</div>
-</div>
-<!-- Card Narrower -->
-        <!-- <div class="col-xl-3 col-lg-4 col-sm-6 col-12 margin-bottom-30" *ngFor="let project of projects">
-            <div class="card testimonial-card z-depth-5">
-                <div class="card-body">
-                    <div class="project_header" style="background-size: 100% 100%;background-position: center center;background-image: url(../assets/pmtUp.jpg);height: 100%;display: table;width: 100%;z-index: 11;position: relative;border-radius: 10px;">
-                        <div class="avatar">
-                            <img src="{{path}}{{project.avatar}}" class="avatar_image z-depth-5" onerror="this.src='assets/4.jpeg'" >
-                        </div>
-                        <div class="card-title  animated bounceInDown" routerLink="/project-details/{{project._id}}">
-                            <h4 style="color:#6027E2;" class="font-robo-condensed project_title">{{project.title}}</h4>
-                        </div>
-                        <a class="view_more_detail" title="Project Detail" href="javascript:void(0);"><i class="fas fa-chevron-right"></i></a>
-                    </div>
-                    <div class="project_detail z-depth-5 padding-20">
-                        <div class="container">
-                            <div class="col-sm-12 pt-2">
-                                <h3>Project Details</h3>
-                            </div>
-                            <div class="row border border-dark mb-2">
-                                <div class="col-md-6  padding-10 border-right border-bottom border-dark">
-                                    <strong title="task" class="text-center">
-                                        <i class="fas font-project-view-small fa-tasks fa-fw"></i>
-                                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
-                                    </strong>
-                                </div>
-                                <div class="col-md-6  padding-10 border-bottom border-dark">
-                                    <strong title="Issue" class="text-center" > 
-                                        <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
-                                        <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
-                                    </strong>
-                                </div>
-                                <div class="col-md-6  padding-10 border-right border-dark">
-                                    <div class="chip-warning">
-                                        <strong title="Bug" class=" text-center">
-                                            <i class="fas font-project-view-small fa-bug fa-fw"></i>
-                                            <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
-                                        </strong>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6  padding-10">
-                                    <strong title="Summary" class=" text-center">
-                                        <span routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-                                    </strong>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4>Project Description</h4>
-                                    <p>This project for project Management tool..This project for project Management tool.. </p>
-                                </div>
-                            </div>
-                            <div class="row margin-top-20">
-                                <a class="btn-floating btn-action padding-5 mdb-color dark-3"><i class="fas fa-edit"  style="font-size: 16px;padding-left: 4px;" title="edit-project" routerLink="/edit-project/{{project._id}}"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="col-xl-3 col-lg-4 col-sm-6 col-12 margin-bottom-30" *ngFor="let project of projects">
-            <div class="card testimonial-card z-depth-5">
-                <div class="card-up" style="background-image: url('assets/pmtUp.jpg'); background-size:cover; height: 150px; background-position: center center;">
-                    <div style="top:0; left:0; right:0;bottom:0; background-color: rgba(250, 250, 250,0.7); height: 150px;">
-                        <div class="card-title" routerLink="/project-details/{{project._id}}">
-                            <h4 style="color:#6027E2;" class="font-robo-condensed project_title">{{project.title}}</h4>
-                        </div>      
-                    </div>
-                </div>
-                <a class="btn-floating btn-action padding-5 mdb-color dark-3"><i class="fas fa-chevron-right pr-10" title="edit-project" routerLink="/edit-project/{{project._id}}"></i></a>
-                <div class="avatar">
-                    <img src="{{path}}{{project.avatar}}" class="avatar_image z-depth-5" onerror="this.src='assets/4.jpeg'" >
-                </div>
-                <div class="card-body text-center">
-                    <div class="rounded-bottom hover purple-gradient-2 text-center text-white">
-                        <div class="row padding-15 bottom-0">
-                            <div class="col-3 text-center">
-                                <strong title="task" class="text-center">
-                                    <i class="fas font-project-view-small fa-tasks fa-fw"></i>
-                                    <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
-                                </strong>
-                            </div>
-                            <div class="col-3 text-center border-left">
-                                <strong title="Issue" class="text-center" > 
-                                    <i class="fas font-project-view-small fa-exclamation-triangle fa-fw"></i>
-                                    <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'ISSUE')}}</span>
-                                </strong>
-                            </div>
-                            <div class="col-3 text-center border-left">
-                                <strong title="Bug" class=" text-center">
-                                    <i class="fas font-project-view-small fa-bug fa-fw"></i>
-                                    <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
-                                </strong>
-                            </div>  
-                            <div class="col-3 text-center border-left">
-                                <strong title="Summary" class=" text-center">
-                                    <span routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-                                </strong>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        <div *ngIf="currentUser.userRole=='projectManager'">
-         <div class="fixed-action-btn">
-            <a href="javascript:void(0);" title="Add Project" data-toggle="modal" data-target="#createProject" class="btn-floating btn-large" ripple-radius (click)="fixed.toggle()">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
-    </div>
-</div>
-</div>-->
-<!-- modal start -->
 <div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="card card-cascade narrower">
-                    <!-- Card image -->
                     <div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
-                        <!-- Title -->
                         <h2 class="card-header-title white-text text-center py-3" align="center">Create Project</h2>
                     </div>
-                    <!-- Card content -->
                     <div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
-                        <!-- Text -->
                         <div class="container">
-
                             <div class="card-body px-lg-5 pt-1">
                                 <form class="md-form" [formGroup]='addForm' style="color: #757575;">
                                     <div class="md-form form-group">
@@ -231,42 +109,18 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                   <!--  <div class="form-group">
-                                        <ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" [(ngModel)]="objectsArray" [closeOnSelect]="false" formControlName="Teams">
-                                            <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                                <span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-                                                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                                            </ng-template>
-                                            <div class="row">
-                                                <ng-template ng-option-tmp let-item="item">
-                                                    <div class="card testimonial-card">
-                                                        <div class="card-up deep-purple lighten-2"></div>
-                                                        <div class="avatar white img_section">
-                                                            <img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid" style="height: 100px;">
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <h5 class="card-title mt-1">{{item.name}}</h5>
-                                                            <h6 class="card-title">{{item.userRole}}</h6>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </div>
-                                        </ng-select>
-                                    </div> -->
-                                    <!-- demo code -->
-                                    <img [src]="url" height="150" width="150"> <br/>
-                                    <!-- demo code -->
+                                    <div class="text-center selected-avatar" *ngIf="url">
+                                        <img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
+                                        <div class="delete-team-member">
+                                            <a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+                                        </div>
+                                    </div>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
                                         Select Project avatar
                                     </button>
                                     <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)">Create Project</button>
                                 </form>
                             </div>
-                            <!-- <div class="modal-footer">
-                                <button type="submit" class="btn btn-default btn-rounded z-depth-1" (click)="addProject(addForm.value)" [disabled]="addForm.invalid">Create Project</button>
-                                <button type="button" class="btn btn-default btn-rounded z-depth-1" data-dismiss="modal" aria-label="Close">Cancle</button>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -275,7 +129,6 @@
     </div>
 </div>
 
-<!-- Modal Start Here -->
 
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
@@ -388,5 +241,4 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-<!-- Modal End Here -->
 
