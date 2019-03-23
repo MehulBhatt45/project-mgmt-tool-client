@@ -188,8 +188,10 @@ label{
 
 .due_date_sorting_btn, 
 .priority_sorting_btn{
-  padding: 14.5px 30px!important;
-    margin-top: -195px;
+  padding: 10.9px 28px!important;
+  margin-top: -193px;
+  height: 47px;
+  border-radius: 3px;
 }
 .due_date_sorting_btn i.fas,
 .priority_sorting_btn i.fas {
@@ -209,7 +211,7 @@ label{
   margin-top: -112px;
 }
 .due_date_sorting_btn{
-  margin-left: 910px;
+  margin-left: 900px;
 
 }
 
