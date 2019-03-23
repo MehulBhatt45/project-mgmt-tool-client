@@ -14,14 +14,14 @@
 					<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 						<div class="md-form form-group">
 							<label for="projecttitle" style="margin: 0; padding: 0;">Notice Title</label>
-							<input type="text" id="projecttitle"  formControlName="title" class="form-control">
+							<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control">
 						</div>
 						<div class="md-form form-group">
 							<label for="desc" style="margin: 0; padding: 0;">Notice Content</label>
 							<textarea style="margin: 0; padding: 0;" id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
 						</div>
 						<div class="md-form form-group">
-							<input placeholder="Selected date" type="date" formControlName="expireon">
+							<input autocomplete= 'false | random-string' placeholder="Selected date" type="date" formControlName="expireon">
 						</div>
 						
 						<!-- Material switch -->

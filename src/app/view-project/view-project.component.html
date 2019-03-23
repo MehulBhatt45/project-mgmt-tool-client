@@ -4,12 +4,12 @@
   <span></span>
   <span></span>
 </div>
-<div class="project_bord" *ngIf="!loader">
+<div class="project_bord">
     <div class="row">
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
               <div class="view view-cascade overlay" style="background-color: #ddd">
-                <img  routerLink="/project-details/{{project._id}}" class="img-responsive margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
+                <img  routerLink="/project-details/{{project._id}}" class="img-responsive title_image margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
                 <div class="margin-top-10 margin-bottom-10 text-center">
                     <h4  routerLink="/project-details/{{project._id}}" class="font-weight-bold card-title">{{project.title}}</h4>
                 </div>
@@ -39,7 +39,7 @@
       </button>
       <div class="dropdown-menu">
         <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-info"></i></a>
+        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-info"></i></a>
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
     </div>
 </div>
@@ -51,7 +51,9 @@
     </h5>
     <span class="font-weight-bold">Project Manager</span>
     <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit</p>
+
 </div>
+
 </div>
 </div>
 </div>

@@ -1,5 +1,5 @@
 
-<div class="unselected" *ngIf="currentUser.userRole=='user' || currentUser.userRole=='admin' ">
+<div class="unselected" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
   <div class="row justify-content-center">
     <!-- <div>
@@ -58,6 +58,7 @@
                   <span class="text-left">To Date
                   </span>
                 </th>
+
 
                 <th class="th-lg text-left">
                   <span class="text-left">Types Of Leave</span>
@@ -183,7 +184,7 @@
             <label class="form-check-label" for="checkbox1" class="label-table"></label>
 
           </th> -->
-          <td ></td>
+          <td>{{i}}</td>
           <td  class="text-left">{{leaves.email}}</td>
           <td class="text-left">{{leaves.name}}</td>
           <td >{{leaves.leaveDuration}}</td>
@@ -191,9 +192,12 @@
           <td class="text-left">{{leaves.endingDate}}</td>
           <td class="text-left">{{leaves.typeOfLeave}}</td>
           <td class="text-left description">{{leaves.reasonForLeave}}</td>
+
           <td class="text-left">{{leaves.status}}</td>
           
+
         </tr>
+
       </tbody>
       <!--Table body-->
     </table>
@@ -207,8 +211,6 @@
 </div>
 
 </div>
-
-
 
 
 
