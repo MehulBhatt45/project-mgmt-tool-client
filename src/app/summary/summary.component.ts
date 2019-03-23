@@ -72,9 +72,12 @@ export class SummaryComponent implements OnInit {
 			this.projectId = param.id;
 			this.getEmptyTracks();
 			this.getProject(this.projectId);
+			
+
+			
 		});
 		this.createEditTaskForm();	
-
+		
 		
 	}
 	ngOnInit() {
@@ -439,6 +442,7 @@ function custom_sort(a, b) {
 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 }
 }
+
 
 
 

@@ -1,12 +1,6 @@
 .btn-primary{
 	background-color: green !important
 }
-.table{
-	margin: 5px;
-	padding: 5px;
-	text-align: center;
-	/*display: inline-block;*/
-}
 .table th{
 	font-size: 20px;
 	vertical-align: middle;
@@ -16,7 +10,6 @@
 }
 .table td{
 	vertical-align: middle;
-	padding: 8px;
 	white-space: nowrap;
 }
 
@@ -37,14 +30,8 @@
 .table td.description{
 	white-space: normal;
 }
-.css-serial {
-	counter-reset: serial-number;  /* Set the serial number counter to 0 */
-}
 
-.css-serial td:first-child:before {
-	counter-increment: serial-number;  /* Increment the serial number counter */
-	content: counter(serial-number);  /* Display the counter */
-}
+
 
 .sign{
 	float: right;
@@ -57,7 +44,7 @@
 	/*background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%) !important;*/
 }
 .card{
-	width: 118%;
+	max-width: 100%;
 }
 h3{
 	text-align: center;
@@ -68,7 +55,21 @@ h3{
 .unselected{
 	display: block;
 }
-
-
+.table a{
+    display: table;
+    margin: 0;
+}
+/*.avatar{
+  position: relative;
+}*/
+/*.img-fluid {
+    
+    height: 40px !important;
+    object-fit: cover;
+}
+*/
+li a{
+	font-size: 24px;
+}
 
 

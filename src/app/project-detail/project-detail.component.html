@@ -110,12 +110,9 @@
 									<label><strong>Status: &nbsp;</strong></label>
 									<span>{{task.status}}</span>
 								</p>
-								<p>
-									<label><strong>start time: &nbsp;</strong></label>
-								</p>
-								<p>
+								<p *ngIf="task.estimatedTime">
 									<label><strong>estimated time: &nbsp;</strong></label>
-									<span>{{task.estimatedTime}}</span>
+									<span>{{task.estimatedTime}} Hours</span>
 								</p>
 
 								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
@@ -132,12 +129,8 @@
 								</p>
 								<p *ngIf="task.dueDate">
 									<label><strong>DueDay: &nbsp;</strong></label>
-									<span>{{task.dueDate}}</span>
+									<span>{{task.dueDate | date:'short'}}</span>
 								</p>
-								<p>
-									<label><strong> end time: &nbsp;</strong></label>
-								</p>
-
 							</div>
 
 							<div class="row justify-content-between">

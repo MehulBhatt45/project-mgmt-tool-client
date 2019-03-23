@@ -466,53 +466,53 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
-		saveTheData(task){
 
-			this.loader = true;
+		
 
-			task['projectId']= this.projectId;
-			console.log("projectId=========>",this.projectId);
-			task.priority = Number(task.priority); 
-			task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-			task.startDate = $("#startDate").val();
-			task.estimatedTime = $("#estimatedTime").val();
-			console.log("estimated time=====>",task.estimatedTime);
-			task.images = $("#images").val();
-			console.log("images====>",task.images);
-			console.log(task.dueDate);
-			console.log(task.title);
-			task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
-			task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log(task);
-			let data = new FormData();
-			_.forOwn(task, function(value, key) {
-				if(key!="estimatedTime")
-					data.append(key, value)
-				else
-					data.append(key, $('#estimatedTime').val())
-			});
-			if(this.files.length>0){
-				for(var i=0;i<this.files.length;i++){
-					data.append('fileUpload', this.files[i]);	
-				}
+
+	saveTheData(task){
+
+		this.loader = true;
+
+		task['projectId']= this.projectId;
+		console.log("projectId=========>",this.projectId);
+		task.priority = Number(task.priority); 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		// task.startDate = $("#startDate").val();
+		// task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		task.images = $("#images").val();
+		console.log("images====>",task.images);
+		console.log(task.dueDate);
+		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log(task);
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
 		}
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-				this.getProject(res.projectId);
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				$('#itemManipulationModel').modal('hide');
-				this.newTask = this.getEmptyTask();
-				this.editTaskForm.reset();
-				this.files = this.url = [];
-				// this.assignTo.reset();
-				this.loader = false;
-			},err=>{
-				Swal.fire('Oops...', 'Something went wrong!', 'error')
-				//$('#alert').css('display','block');
-				console.log("error========>",err);
-			});
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+			this.getProject(res.projectId);
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('#itemManipulationModel').modal('hide');
+			this.newTask = this.getEmptyTask();
+			this.editTaskForm.reset();
+			this.files = this.url = [];
+			// this.assignTo.reset();
+			this.loader = false;
+		},err=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			//$('#alert').css('display','block');
+			console.log("error========>",err);
+		});
 	}
 
 	

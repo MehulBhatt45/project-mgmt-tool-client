@@ -22,7 +22,7 @@
 				</select>
 			</div>
 			<div class="form-group ">
-				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole =='developer'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers && currentUser.userRole =='projectManager'" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
 					<option value="all" selected>All Developer</option>
 					<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 				</select>
