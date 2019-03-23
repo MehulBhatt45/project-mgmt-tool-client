@@ -1,29 +1,86 @@
-<div class="container">
-	<div class="row">
-		<div class="col-12 col-md-3">
-			<div class="card img_card">
-
-				<div class="profile_picture">
-
-					<img src="{{path}}{{currentUser.profilePhoto}}" onerror="this.src='../assets/3.png'">
-
+<!-- <div class="card testimonial-card">
+	<div class="card-up indigo lighten-1"></div>
+	<div class="avatar mx-auto white profile_picture">
+		<img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/3.png'">
+	</div>
+	<div class="card-body">
+		<div class="user_detail">	
+			<h4 class="card-title">{{currentUser.name | uppercase}}</h4><hr>
+			<p> {{currentUser.email}}</p><br>
+			<p>{{currentUser.userRole}}</p><br>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="col-12 col-md-12">
+		<div class="user_activity">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+					aria-selected="true">User Activity</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<div class="form-group">
+						<ul>
+							<li> <b>My  All Projects  </b></li> <br>
+							<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}"> {{project.title}}</li><br>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-md-9">
-			<div class="user_detail">
+	</div>
+</div> -->
 
-				<p><b>{{currentUser.name | uppercase}}</b></p>
-				<span> {{currentUser.email}}</span><br>
-				<span>{{currentUser.userRole}}</span><br>
-				<span> Other details </span><br>
 
+<div class="col-12 col-md-12">
+	<!-- <div class="card img_card"> -->
+		<div class="cover_image">
+			<div class="user_name">
+				<h2>{{currentUser.name | uppercase}}</h2>
+			</div>
+		</div>
+		<div class="profile_picture">
+			<img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/3.png'">
+		</div>
+
+		<!-- </div> -->
+		
+		<div class="user_detail">
+
+			<span> {{currentUser.email}}</span><br>
+			<span>{{currentUser.userRole}}</span><br>
+			<!-- <span> Other details </span><br> -->
+		</div>
+	</div>
+	<!-- <button class="btn btn-default" data-target="myModalLabel" id="sideModalTR" data-toggle="modal">User Activity</button>
+	<div class="modal fade right" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-side modal-top-right" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title w-100" id="myModalLabel">User Detail</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ul>
+					<li> <b>My  All Projects  </b></li> <br>
+					<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}">{{project.title}}</li><br>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
 			</div>
 		</div>
 	</div>
+</div> -->
 
-	<div>
-		<div class="col-12 col-md-12">
+		 <div class="col-12 col-md-12">
 			<div class="user_activity">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
@@ -36,13 +93,13 @@
 						<div class="form-group">
 							<ul>
 								<li> <b>My  All Projects  </b></li> <br>
-								<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}"> {{project.title}}</li><br>
+								<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}"> {{project.title}}</li><br>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	
+
 

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AlertService } from '../services/alert.service';
 import { first } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-reset-password',
@@ -11,7 +12,7 @@ import { LoginService } from '../services/login.service';
 	styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-ngOnInit() {
+	ngOnInit() {
 
 		console.log("Component Re-Initialized.");
 
@@ -60,11 +61,11 @@ ngOnInit() {
 		this._loginService.resetPassword(this.resetPasswordForm.value)
 		.pipe(first())
 		.subscribe(data => {
-			this._alertService.success('Password change successfully', true);
+			Swal.fire({type: 'success',title: 'Password Change Successfully',showConfirmButton:false,timer: 2000})
 			this.router.navigate(['/login']);
 		},
 		error => {
-			this._alertService.error(error);
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		});
 	}
 

@@ -19,14 +19,7 @@
 	padding: 8px;
 	white-space: nowrap;
 }
-.purple-gradient-2{
-	/*background: -webkit-linear-gradient(10deg,#5E4D89,#A274E0)!important;*/
-	background-color: #5d2bdb;
-	/*    
-	background: -o-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
-    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
-    */
-}
+
 .a_icon{
 	font-size: 28px;
 	color:green;
@@ -45,18 +38,35 @@
 	white-space: normal;
 }
 .css-serial {
-  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+	counter-reset: serial-number;  /* Set the serial number counter to 0 */
 }
 
 .css-serial td:first-child:before {
-  counter-increment: serial-number;  /* Increment the serial number counter */
-  content: counter(serial-number);  /* Display the counter */
+	counter-increment: serial-number;  /* Increment the serial number counter */
+	content: counter(serial-number);  /* Display the counter */
+}
+
+.sign{
+	float: right;
+}
+.dropdown{
+	margin-bottom: 10px;
+	
+}
+.dropdown-toggle{
+	/*background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%) !important;*/
 }
 .card{
-	max-width: 100%;
+	width: 118%;
 }
 h3{
 	text-align: center;
+}
+.selected{
+	display: none;
+}
+.unselected{
+	display: block;
 }
 
 

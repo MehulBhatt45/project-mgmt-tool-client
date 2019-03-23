@@ -10,6 +10,7 @@ import {SearchTaskPipe} from '../search-task.pipe';
 import {config} from '../config';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as _ from 'lodash';
+declare var $ : any;
 
 @Component({
 	selector: 'app-all-developer',
@@ -26,6 +27,7 @@ export class AllDeveloperComponent implements OnInit {
 	loader:boolean = false;
 	pro;
 	searchText;
+	developerId;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService,
@@ -36,15 +38,12 @@ export class AllDeveloperComponent implements OnInit {
 			this.projectId = param.id;
 			this.getProject(this.projectId);
 		});
-		this.route.params.subscribe(param=>{
-			this.projectId = param.id;
-			this.getProjectManager(this.projectId);
-		});
-
+		
+		// this.route.params.subscribe(param=>{
+		// 	this.projectId = param.id;
+		// 	this.getProjectManager(this.projectId);
+		// });
 	}
-
-
-
 	getProject(id){
 		this.loader = true;
 		console.log("project id======>",this.projectId);
@@ -52,9 +51,14 @@ export class AllDeveloperComponent implements OnInit {
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
+				setTimeout(()=>{
+					console.log("PM rotate js-------------------------------------------------------------------")
+					$('a.rotate-btn').click(function () {
+						$(this).parents(".card-rotating").toggleClass('flipped');
+					});
+				},2000);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
-
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.Teams = res.Teams;
@@ -67,39 +71,39 @@ export class AllDeveloperComponent implements OnInit {
 						return 0 //default return value (no sorting)
 						this.projectTeam.push
 						console.log("response of team============>"  ,this.projectTeam);
+						setTimeout(()=>{
+							console.log("TM rotate js-------------------------------------------------------------------")
+							$('a.rotate-btn').click(function () {
+								$(this).parents(".card-rotating").toggleClass('flipped');
+							});
+						},2000);
 					})
-
-
 				},(err:any)=>{
 					console.log("err of project============>"  ,err);
 				});
-
-
 				this.loader = false;
 			},err=>{
 				console.log(err);
 				this.loader = false;
 			})
 		},1000);
-		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		}
-
-
+		
 	}
-	getProjectManager(id){
-		this.loader = true;
-		console.log("project id======>",this.projectId);
-		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				this.pro = res;
-				console.log("project detaill===>>>>",this.pro);
-				},err=>{
-				console.log(err);
-				this.loader = false;
-			})
-		},1000);
-	}
+	
+	// getProjectManager(id){
+	// 	this.loader = true;
+	// 	console.log("project id======>",this.projectId);
+	// 	setTimeout(()=>{
+	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
+	// 			this.pro = res;
+	// 			console.log("project detaill===>>>>",this.pro);
+	// 			},err=>{
+	// 			console.log(err);
+	// 			this.loader = false;
+	// 		})
+	// 	},10000);
+		
+	// }
 
 	onKey(searchText){
 		console.log("searchText",searchText);
@@ -115,6 +119,7 @@ export class AllDeveloperComponent implements OnInit {
 			});
 		});
 	}
+	
 
 }
 // getUserById(id){

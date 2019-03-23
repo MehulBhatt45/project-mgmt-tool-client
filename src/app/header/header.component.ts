@@ -6,8 +6,10 @@ import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
 import { config } from '../config';
-declare var $ : any;
 import * as _ from 'lodash';
+import Swal from 'sweetalert2';
+declare var $ : any;
+
 
 @Component({
 	selector: 'app-header',
@@ -86,39 +88,39 @@ export class HeaderComponent implements OnInit {
 		this.getProjects();
 		// this.getAllDevelopers();
 		this.tracks = [
-			{
-				"title": "Todo",
-				"id": "to do",
-				"class":"primary",
-				"tasks": [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "In Progress",
-				"id": "in progress",
-				"class":"info",
-				"tasks": [
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "Testing",
-				"id": "testing",
-				"class":"warning",
-				"tasks": [
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "Done",
-				"id": "complete",
-				"class":"success",
-				"tasks": [
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
 
-				]
-			}
-			];
+			]
+		}
+		];
 	}
 
 	timePicked(){
@@ -126,17 +128,17 @@ export class HeaderComponent implements OnInit {
 	}
 	projectSelected(item){
 		if(item && item._id){
-		console.log(item);
-		this.loader = true;
-		$(".progress").addClass("abc");
-		// $(".progress .progress-bar").css({"width": '100%'});
-		setTimeout(()=>{
-			this.loader = false;
-			$(".progress").removeClass("abc");
-			this.task.projectId = item._id;	
-			this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
-			console.log(this.developers);
-		},3000);
+			console.log(item);
+			this.loader = true;
+			$(".progress").addClass("abc");
+			// $(".progress .progress-bar").css({"width": '100%'});
+			setTimeout(()=>{
+				this.loader = false;
+				$(".progress").removeClass("abc");
+				this.task.projectId = item._id;	
+				this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
+				console.log(this.developers);
+			},3000);
 		}else{
 			this.editTaskForm.reset();
 			this.task = this.getEmptyTask();
@@ -256,7 +258,7 @@ export class HeaderComponent implements OnInit {
 			// if(key!="estimatedTime")
 			// 	data.append(key, value)
 			// else
-				data.append(key, value)
+			data.append(key, value)
 		});
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
@@ -265,12 +267,14 @@ export class HeaderComponent implements OnInit {
 		}
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
+			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 			this.loader = false;
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
 		},err=>{
-			$('#alert').css('display','block');
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			//$('#alert').css('display','block');
 			this.loader = false;
 			console.log("error========>",err);
 		});
