@@ -101,14 +101,14 @@ export class ProjectService {
 			return this.http.get(config.baseApiUrl+"leave/getleave");
 		}
 
-			leavesById(email){
+		leavesById(email){
 			const httpOptions = {
 				headers: new HttpHeaders({
 					'Content-Type': 'application/json',
 					'x-access-token': JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			 // var email = JSON.parse(localStorage.getItem('currentUser')).email;
+			// var email = JSON.parse(localStorage.getItem('currentUser')).email;
 			return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
 		}
 
@@ -335,7 +335,7 @@ export class ProjectService {
 				// 	formdata.append("uploadFile",files[i]);
 				// }
 				console.log("body===>>>",body);
-				 
+
 
 
 				return this.http.post(config.baseApiUrl+"user/signup",formdata);
@@ -389,5 +389,16 @@ export class ProjectService {
 			deleteEmployeeById(developerid){
 				console.log("devloperId{}{}{}-===",developerid);
 				return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
+			}
+
+
+			changeNoticePicture(files: any, data){
+				console.log("file is=================>",files);
+				console.log("data is ============>",data);
+				let formdata = new FormData();
+				formdata.append("noticeid",data);
+				formdata.append("profilePhoto",files[0]);
+				console.log("file is===>>>",files[0]);
+				return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 			}
 		}

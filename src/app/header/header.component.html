@@ -190,11 +190,7 @@
         <div class="container">
           <form style="width: 100%;" [formGroup]="editTaskForm">
             <div class="form-group col-12 col-lg-12 pt-1">
-
-             <!--  <label for="projectId">Select Project</label>
-              <select  class="browser-default custom-select custom-select-lg mb-1" id="projectId" formControlName="projectId" (change)="projectSelected($event.target.value)">
-                <option *ngFor="let team of projects" value="{{team._id}}">{{team.title}}</option>
-              </select> -->
+              
               <ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
                   <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
