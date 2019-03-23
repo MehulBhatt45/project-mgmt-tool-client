@@ -10,7 +10,7 @@
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 	<div class="row">
-		<div class="col-12 col-md-8 ">
+		<div class="col-12 col-md-6 ">
 			<div class="md-form form-group">
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 
-		<div class="col-12 col-md-4 text-right">
+		<div class="col-12 col-md-6 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
@@ -28,13 +28,21 @@
 				</div>
 			</div>
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
-				<div class="dropdown-menu dropdown-default">
-					<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Due Date <i class="fas fa-arrow-up"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Due Date <i class="fas fa-arrow-down"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByPriority('asc')">Priority <i class="fas fa-arrow-up"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
-				</div>
+				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
+					Due Date
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up hide" (click)="sortTasksByCreatedAt('desc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByCreatedAt('asc')"></i>
+					</span>
+				</button>
+
+				<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
+					Priority 
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up hide" (click)="sortTasksByPriority('desc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByPriority('asc')"></i>
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -87,7 +95,7 @@
 							<img src="{{path}}{{image}}">
 						</span>
 					</div>
-					
+
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-6">
