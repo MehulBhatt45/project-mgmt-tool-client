@@ -267,7 +267,7 @@ a.btn-floating.btn-action {
     margin-right: 4px;
     display: table;
     text-align: center;
-    }
+}
 a.btn-floating.btn-action i{
     width: auto;
 }
@@ -278,12 +278,12 @@ a.btn-floating.btn-action i{
 @media (max-width: 767px){
 }
 @media (max-width: 575px){
-a.btn-floating.btn-action {
-    margin-right: 10px;
-}
-.margin_left{
-    margin-left: -15px;
-}
+    a.btn-floating.btn-action {
+        margin-right: 10px;
+    }
+    .margin_left{
+        margin-left: -15px;
+    }
 }
 
 .width-80{
@@ -304,7 +304,7 @@ a.btn-floating.btn-action {
     box-shadow: none; 
     padding: 10px;
     float: right;
-        top: -10px!important;
+    top: -10px!important;
     left: 15px!important;
 }
 .dropdown-item{
@@ -315,13 +315,13 @@ a.btn-floating.btn-action {
     padding-top: 0px;
     transition: all 10s;
 }
-button{
+.btn_popover_menu{
     height: 37px;
     width: 37px;
     font-size: 14px;
     top: -20px;
     right: -15px;
-/*    float: right;*/
+    /*    float: right;*/
 }
 .btn-floating i{
     font-size: 14px!important;
@@ -330,4 +330,22 @@ button{
     height: 200px;
     width: 100%;
     object-fit: cover;
+}
+.summary{
+    position: fixed;
+    display: none;
+     z-index: 999;
+     background-color: gray;
+    height: 300px;
+    width: 300px;
+    top: 85px;
+    right: 5px;
+    border-radius: 5px; 
+}
+.progress_summary {
+    position: relative;
+    z-index: 1;
+}
+.progress_summary:hover + .summary{
+    display: block;
 }

@@ -32,6 +32,7 @@
 						<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
 					</select>
 				</div>
+
 			</div>
 		</div>
 		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
