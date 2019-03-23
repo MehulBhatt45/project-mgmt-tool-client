@@ -411,7 +411,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.modalTitle = 'Edit Item';
 		$('.datepicker').pickadate();
 		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 	
@@ -437,7 +437,7 @@ export class ProjectDetailComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
-			$('#exampleModalPreview').modal('hide');
+			$('#itemManipulationModel').modal('hide');
 			this.newTask = this.getEmptyTask();
 			this.files = this.url = [];
 			this.editTaskForm.reset();
@@ -461,68 +461,56 @@ export class ProjectDetailComponent implements OnInit {
 	addItem(option){
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 		this.modalTitle = 'Add '+option;
-		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
-		$('#exampleModalPreviewLabel').modal('show');
+		$('#itemManipulationModel').modal('show');
 	}
 
 
 		
 
 
-		saveTheData(task){
+	saveTheData(task){
 
-			this.loader = true;
+		this.loader = true;
 
-			task['projectId']= this.projectId;
-			console.log("projectId=========>",this.projectId);
-			task.priority = Number(task.priority); 
-			task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-			task.startDate = $("#startDate").val();
-			task.estimatedTime = $("#estimatedTime").val();
-			console.log("estimated time=====>",task.estimatedTime);
-			task.images = $("#images").val();
-			console.log("images====>",task.images);
-			console.log(task.dueDate);
-			console.log(task.title);
-			task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
-			task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log(task);
-			let data = new FormData();
-			_.forOwn(task, function(value, key) {
-				if(key!="estimatedTime")
-					data.append(key, value)
-				else
-					data.append(key, $('#estimatedTime').val())
-			});
-			if(this.files.length>0){
-				for(var i=0;i<this.files.length;i++){
-					data.append('fileUpload', this.files[i]);	
-				}
-
-
-			// subUrl = _.includes(task.uniqueId, 'TSK')?"task/add-task/":'' || _.includes(task.uniqueId, 'BUG')?"bug/add-bug/":'' || _.includes(task.uniqueId, 'ISSUE')?"issue/add-issue/":'';
-			// console.log(subUrl);
-
-			this._projectService.addTask(data).subscribe((res:any)=>{
-				console.log("response task***++",res);
-				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-				this.getProject(res.projectId);
-				$('#save_changes').attr("disabled", false);
-				$('#refresh_icon').css('display','none');
-				$('#exampleModalPreview').modal('hide');
-				this.newTask = this.getEmptyTask();
-				this.editTaskForm.reset();
-				this.files = this.url = [];
-				// this.assignTo.reset();
-				this.loader = false;
-			},err=>{
-				Swal.fire('Oops...', 'Something went wrong!', 'error')
-				//$('#alert').css('display','block');
-				console.log("error========>",err);
-			});
-
+		task['projectId']= this.projectId;
+		console.log("projectId=========>",this.projectId);
+		task.priority = Number(task.priority); 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		// task.startDate = $("#startDate").val();
+		// task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		task.images = $("#images").val();
+		console.log("images====>",task.images);
+		console.log(task.dueDate);
+		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log(task);
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
+			}
 		}
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+			this.getProject(res.projectId);
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('#itemManipulationModel').modal('hide');
+			this.newTask = this.getEmptyTask();
+			this.editTaskForm.reset();
+			this.files = this.url = [];
+			// this.assignTo.reset();
+			this.loader = false;
+		},err=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			//$('#alert').css('display','block');
+			console.log("error========>",err);
+		});
 	}
 
 	
@@ -622,20 +610,15 @@ export class ProjectDetailComponent implements OnInit {
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
 			this.files.push(file);
-		})
-		console.log(this.files);
-		if (event.target.files && event.target.files.length) {
-			_.forEach(event.target.files, file=>{
 			var reader = new FileReader();
-			reader.readAsDataURL(file); // read file as data url
-			reader.onload = (e:any) => { // called once readAsDataURL is completed
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
 				if(option == 'item')
 					this.url.push(e.target.result);
-				else
+				if(option == 'comment')
 					this.commentUrl.push(e.target.result);
 			}
-			})
-		}
+		})
 	}
 	deleteTask(taskId){
 		console.log(taskId);

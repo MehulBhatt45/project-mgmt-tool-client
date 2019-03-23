@@ -21,6 +21,7 @@ export class AllEmployeeComponent implements OnInit {
 	path = config.baseMediaUrl;
 	addEmployeeForm;
 	files: Array<File> = [];
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	
 	constructor(private formBuilder: FormBuilder, private _loginService: LoginService,private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService) { }

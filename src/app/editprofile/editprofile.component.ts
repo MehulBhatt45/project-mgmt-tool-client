@@ -76,6 +76,15 @@ export class EditprofileComponent implements OnInit {
 			this.userDetails = res;
 			this.loader = false;
 			console.log("this user dateailsls ==>" , this.userDetails);
+			if(this.currentUser.userRole=='projectManager'){
+				this.editEmployeeForm.controls['name'].disable();
+				this.editEmployeeForm.controls['email'].disable();
+				this.editEmployeeForm.controls['phone'].disable();
+				this.editEmployeeForm.controls['experience'].disable();
+				this.editEmployeeForm.controls['cv'].disable();
+			}else{
+				this.editEmployeeForm.controls['userRole'].disable();
+			}
 		},(err:any)=>{
 			console.log(err);
 			this.loader = false;
