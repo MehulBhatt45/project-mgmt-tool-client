@@ -76,8 +76,8 @@ label{
   padding: 8px 12px;
 }
 .comment_content[_ngcontent-c4] {
-    width: calc(100% - 65px);
-    height: calc(100% - 85px);
+    width: calc(100% - 85px);
+    height: calc(100% - 95px);
     display: inline-block;
     float: left;
 }

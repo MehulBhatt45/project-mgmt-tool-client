@@ -32,7 +32,7 @@ export class AllLeaveAppComponent implements OnInit {
 
   ngOnInit() {
     this.getLeaves();
-    this.leavesByUserId();
+    // this.leavesByUserId();
     this.getAllDevelopers();
     // this.route.params.subscribe(param=>{
       //   this.developerId = param.id;
@@ -119,34 +119,21 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
 
-    leavesByUserId(){
-      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-      console.log("email of login user",obj);
-      this._projectservice.leavesById(obj).subscribe((res:any)=>{
-        console.log("resppppppondssss",res);
-        this.leaves = res;
-        _.forEach(this.leaves , (leave)=>{
-          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-        })
-        console.log("statussssssss",this.leaves);
-      },err=>{
-        console.log(err);
-      })
-    }
-
-    //   filterTracks(developerId){
-      //     console.log("filter====>");
-      //     this.selectedDeveloperId = developerId;
-      //     console.log(developerId);
-      //     if( developerId!='all'){
-        //         console.log("sucess");
-        //       _.forEach(this.leaves,(leave)=>{
-          //         });
-          //       }else{
-            //         console.log("not found");
-            //       }
-            // }
+    // leavesByUserId(){
+    //   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+    //   console.log("email of login user",obj);
+    //   this._projectservice.leavesById(obj).subscribe((res:any)=>{
+    //     console.log("resppppppondssss",res);
+    //     this.leaves = res;
+    //     _.forEach(this.leaves , (leave)=>{
+    //       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+    //       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+    //     })
+    //     console.log("statussssssss",this.leaves);
+    //   },err=>{
+    //     console.log(err);
+    //   })
+    // }
 
             filterTracks(developerId){
               console.log("this . leave app =======>" , this.leaveApp);
@@ -160,7 +147,8 @@ export class AllLeaveAppComponent implements OnInit {
                 $('.unselected').css('display','block');
                 $('.selected').css('display','none');
                 console.log("sucess");
-                _.forEach(this.leaves , (leave)=>{
+                _.forEach(this.leaves,(leave)=>{
+                  console.log("hello");
                   if(developerId == leave.email ){
                     console.log(leave);
                     $('.unselected').css('display','none');
