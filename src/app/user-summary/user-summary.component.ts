@@ -264,7 +264,7 @@ export class UserSummaryComponent implements OnInit {
 
 					this.loader = false;
 					setTimeout(()=>{
-						
+
 
 						var ctxP = document.getElementById("pieChart1");
 						var myPieChart = new Chart(ctxP, {
@@ -355,9 +355,14 @@ export class UserSummaryComponent implements OnInit {
 								}
 							}
 						});
-
-
 					},1000);
+
+
+
+
+
+
+
 				},err=>{
 					console.log(err);
 					this.loader = false;
@@ -369,31 +374,49 @@ function custom_sort(a, b) {
 }
 }
 
-getTaskCount(){
-	// console.log("userId===-=-={}{}{}{}{}",userId);
+getTaskCountEachTrack(status){
+
 	var userId = this.userId;
-	return _.filter(this.project, function(o) { if (o.assignTo._id == userId) return o }).length;
-}
+	// console.log("uid+_+_+{}{}====",userId);
 
-getCompletedTask(status){
-	// console.log("userId===-=-={}{}{}{}{}",userId);
-	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
-}
+	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	// var count1 = [];
+	// _.forEach(tracks,track=>{
 
-// getTaskPriority(priority, status){
-	// 	// console.log(priority, status);
-	// 	return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
-	// }
+		// 	count1.push(_.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
+		// });
+		// console.log("count1---------==========",count1);
+		// return count1;
 
-	getTaskPriority(priority,tracks){
-		var userId = this.userId;
-		// console.log("currentUserId--=-=-=+++",this.userId);	
-		// console.log("userId=-==-=-{}{}{}{}{}",userId);
-		var count = [];
-		_.forEach(tracks, track=>{
-			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
-		});
-		console.log(count);
-		return count;
+
 	}
-}
+	getTaskCount(){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
+		var userId = this.userId;
+		return _.filter(this.project, function(o) { if (o.assignTo._id == userId) return o }).length;
+	}
+
+	getCompletedTask(status){
+		// console.log("userId===-=-={}{}{}{}{}",userId);
+		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
+	}
+
+	// getTaskPriority(priority, status){
+		// 	// console.log(priority, status);
+		// 	return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
+		// }
+
+		getTaskPriority(priority,tracks){
+			var userId = this.userId;
+
+			// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status && o.assignTo._id == userId) return o }).length;
+			// console.log("currentUserId--=-=-=+++",this.userId);	
+			// console.log("userId=-==-=-{}{}{}{}{}",userId);
+			var count = [];
+			_.forEach(tracks, track=>{
+				count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.assignTo._id == userId) return o }).length);
+			});
+			console.log("cnt=-=-===============",count);
+			return count;
+		}
+	}
