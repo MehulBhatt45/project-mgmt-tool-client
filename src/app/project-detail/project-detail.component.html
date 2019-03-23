@@ -10,7 +10,7 @@
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 	</div>
 	<div class="row">
-		<div class="col-12 col-md-8 ">
+		<div class="col-12 col-md-6 ">
 			<div class="md-form form-group">
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
@@ -18,23 +18,31 @@
 			</div>
 		</div>
 
-		<div class="col-12 col-md-4 text-right">
+		<div class="col-12 col-md-6 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
-					<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Task'; newTask = getEmptyTask()">Task</a>
-					<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Bug'; newTask = getEmptyTask()">Bug</a>
-					<a class="dropdown-item" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Add Issue'; newTask = getEmptyTask()">Issue</a>
+					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
+					<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
+					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 				</div>
 			</div>
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sorting</button>
-				<div class="dropdown-menu dropdown-default">
-					<a class="dropdown-item" (click)="sortTasksByCreatedAt('asc')">Due Date <i class="fas fa-arrow-up"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByCreatedAt('desc')">Due Date <i class="fas fa-arrow-down"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByPriority('asc')">Priority <i class="fas fa-arrow-up"></i></a>
-					<a class="dropdown-item" (click)="sortTasksByPriority('desc')">Priority <i class="fas fa-arrow-down"></i></a>
-				</div>
+				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
+					Due Date
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up hide" (click)="sortTasksByCreatedAt('desc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByCreatedAt('asc')"></i>
+					</span>
+				</button>
+
+				<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
+					Priority 
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up hide" (click)="sortTasksByPriority('desc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByPriority('asc')"></i>
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -87,7 +95,7 @@
 							<img src="{{path}}{{image}}">
 						</span>
 					</div>
-					
+
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-6">
@@ -103,15 +111,12 @@
 									<label><strong>Status: &nbsp;</strong></label>
 									<span>{{task.status}}</span>
 								</p>
-								<p>
-									<label><strong>start time: &nbsp;</strong></label>
-								</p>
-								<p>
+								<p *ngIf="task.estimatedTime">
 									<label><strong>estimated time: &nbsp;</strong></label>
-									<span>{{task.estimatedTime}}</span>
+									<span>{{task.estimatedTime}} Hours</span>
 								</p>
 
-								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModalPreview" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
+								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel" (click)="modalTitle='Edit Item'; newTask = task">Edit</button>
 
 							</div>
 							<div class="col-12 col-md-6">
@@ -125,12 +130,8 @@
 								</p>
 								<p *ngIf="task.dueDate">
 									<label><strong>DueDay: &nbsp;</strong></label>
-									<span>{{task.dueDate}}</span>
+									<span>{{task.dueDate | date:'short'}}</span>
 								</p>
-								<p>
-									<label><strong> end time: &nbsp;</strong></label>
-								</p>
-
 							</div>
 
 							<div class="row justify-content-between">
@@ -145,7 +146,6 @@
 					<hr>
 					<div class="mb-3 wow fadeIn">
 						<h2>Comments</h2>
-
 						<div *ngIf="comments && comments.length>0">
 							<div class="comment_area">
 								<div class="comment_section" *ngFor = "let i of comments">
@@ -159,53 +159,19 @@
 													</a>
 												</div>
 											</div>
-
 											<div class="comment_content">
 												<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
 													{{i.userId.name}}
 												</h5>
-
 												<span class="break" innerHtml="{{i.content}}">
-													<!-- {{i.content}} -->
 												</span>
-												<!-- <img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
-
-											
-
 												<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}"><img src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"></a>
-
 											</div>
-
 										</div>
-
-				<!-- </div>
-				<hr>
-				<h2>Comments</h2>
-				<div *ngIf="comments && comments.length>0">
-					<div class="comment_area">
-						<div class="comment_section" *ngFor = "let i of comments">
-							<div class="card">
-								<div class="card-body">
-									<ul class="team-members">	
-										<li *ngIf="i.userId" [title]="getTitle(i.userId.name)">
-											<a href="javascript:void(0);">
-												<div class="user_profile_pic"><img src="{{path}}{{i.userId.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" style="outline:none; cursor: pointer;" routerLink = "/visit-user-profile/{{i.userId._id}}"></div>
-											</a>
-										</li>
-									</ul>
-									<div class="comment_section">
-										<p class="developerName" *ngIf="i.userId" routerLink = "/visit-user-profile/{{i.userId._id}}" style="outline:none; cursor: pointer;">
-											{{i.userId.name}}
-										</p>
-										<span class="break" innerHtml="{{i.content}}">
-											
-										</span>
-										<img *ngIf="i.images.length>0" src="{{path}}{{i.images}}" width="200" height="100" onerror="this.src='assets/icons/issues.png'"> -->
 									</div>
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<div *ngIf="comments && comments.length<=0">
@@ -230,21 +196,16 @@
 				</div>
 			</div>
 		</div>
-			<!-- <div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-default">Save changes</button>
-			</div> -->
-		<!-- </div>
 	</div>
 </div>
--->
+
 
 <!-- Modal Start Here -->
-<div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+<div class="modal fade right" id="itemManipulationModel" tabindex="-1" role="dialog" aria-labelledby="itemModal" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header view view-cascade narrower">
-				<h5 class="modal-title" id="exampleModalPreviewLabel">{{modalTitle}}</h5>
+				<h5 class="modal-title" id="itemModal">{{modalTitle}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>

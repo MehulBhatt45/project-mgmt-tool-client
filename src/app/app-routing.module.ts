@@ -147,7 +147,7 @@ const routes: Routes = [
 		},
 		
 		{
-			path:'userprofile/:id',
+			path:'userprofile',
 			pathMatch: "full",
 			component:UserprofileComponent
 		},
@@ -165,7 +165,7 @@ const routes: Routes = [
 			component:EditprofileComponent
 		},
 		{
-			path:'user-summary/,{ queryParams: { key1: userId, key2: projectId } }',
+			path:'user-summary/:userId/:projectId',
 			pathMatch: "full",
 			component:UserSummaryComponent
 		}

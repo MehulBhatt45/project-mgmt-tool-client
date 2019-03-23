@@ -81,6 +81,7 @@ export class ProjectService {
 		// }
 
 
+
 		// pendingLeaves(){
 		// 	const httpOptions = {
 		// 		headers: new HttpHeaders({
@@ -324,7 +325,7 @@ export class ProjectService {
 				// 	formdata.append("uploadFile",files[i]);
 				// }
 				console.log("body===>>>",body);
-				 
+
 
 
 				return this.http.post(config.baseApiUrl+"user/signup",formdata);
@@ -378,5 +379,16 @@ export class ProjectService {
 			deleteEmployeeById(developerid){
 				console.log("devloperId{}{}{}-===",developerid);
 				return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
+			}
+
+
+			changeNoticePicture(files: any, data){
+				console.log("file is=================>",files);
+				console.log("data is ============>",data);
+				let formdata = new FormData();
+				formdata.append("noticeid",data);
+				formdata.append("profilePhoto",files[0]);
+				console.log("file is===>>>",files[0]);
+				return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 			}
 		}

@@ -185,38 +185,6 @@ ul.project-avatar li:hover {
     right: 0;
     bottom: 0;
 }
-a.view_more_detail{
-    display: inline-block;
-    position: absolute;
-    z-index: 11;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background-color: #372e5f;
-    text-align: center;
-    padding: 11px 7px;
-    color: #fff;
-    font-size: 18px;
-    line-height: 18px;
-    top: 0;
-    bottom: 0;
-    right: -20px;
-    margin: auto;
-}
-.project_detail{
-    position: absolute;
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    border-radius: 10px;
-    background-color:#fedfdd;
-    transition: all 1s;
-}
 .open a.view_more_detail {
     transform: rotate(180deg);
     transition: all 1s;
@@ -243,32 +211,6 @@ span.badge.badge-pill.z-depth-0.badge-dark {
     margin: 0 5px;
     vertical-align: text-bottom;
 }
-
-
-.img_section{
-  height: 60px;
-  width: 60px;
-  margin: 0 auto;
-}
-.img_section img{
-  max-height: 100%;
-  max-width: 100%;
-  min-height: 100%;
-  min-width: 100%;
-  object-fit: cover;
-  margin: 0 auto;
-}
-.card.testimonial-card{
-    width: 300px;
-    height: 400px;
-    margin: 0px auto;
-    border-radius: 10px;
-}
-.card.testimonial-card .card-body h5 {
-    padding: 0 5px;
-    font-size: 18px;
-}
-
 :host ::ng-deep .ng-dropdown-panel-items.scroll-host > div + div {
     display: -ms-flexbox;
     display: flex;
@@ -336,7 +278,7 @@ a.btn-floating.btn-action i{
 @media (max-width: 767px){
 }
 @media (max-width: 575px){
-     a.btn-floating.btn-action {
+a.btn-floating.btn-action {
     margin-right: 10px;
 }
 .margin_left{
@@ -344,27 +286,18 @@ a.btn-floating.btn-action i{
 }
 }
 
-
-
-
-
 .width-80{
     max-width: 50% !important;
 }
 
 .margin-auto{
     margin:auto;
+    margin-top: 10px;
 }
 
 .margin-tb-20{
     margin-top:25px;
     margin-bottom:25px;
-}
-.card_up{
-    background-color: #ddd;
-    border-radius: 5px;
-    margin: 0px 10px;
-    padding: 10px;
 }
 .dropdown-menu{
     background-color: transparent;
@@ -376,11 +309,11 @@ a.btn-floating.btn-action i{
 }
 .dropdown-item{
     border-radius: 50%;
-    transition: all 15s!important;
 }
 .dropdown-item i{
     font-size: 17px;
     padding-top: 0px;
+    transition: all 10s;
 }
 button{
     height: 37px;
@@ -392,4 +325,9 @@ button{
 }
 .btn-floating i{
     font-size: 14px!important;
+}
+.title_image{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
 }

@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
-  files:FileList;
+  files:Array<File>;
   url = '';
   developers: any;
   path = config.baseMediaUrl;
@@ -45,6 +45,16 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(()=>{
+      
+    $('[data-toggle="popover-hover"]').popover({
+      html: true,
+      trigger: 'hover',
+      placement: 'bottom',
+      content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+    });
+    },2000);
+
     this.getProjects();
     this.getAllDevelopers();
     $('.datepicker').pickadate({
@@ -110,7 +120,6 @@ export class ViewProjectComponent implements OnInit {
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
-
 getTechName(tech){
   if(tech == "fa-react") return "React JS"
 }
@@ -141,6 +150,16 @@ getTechName(tech){
   openDropdown(){
     if (this.currentUser.userRole=='projectManager') {
       $('.dropdown-toggle').dropdown();
+      $('.btn_popover_menu').click(function(){
+        // setTimeout(()=>{
+          $('[data-toggle="popover-hover"]').popover({
+            html: true,
+            trigger: 'hover',
+            placement: 'bottom',
+            content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+          });
+        // },1000);
+      });
     }
   }
 
@@ -160,7 +179,6 @@ getTechName(tech){
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event:any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
-
       }
     }
   }
@@ -188,6 +206,12 @@ getTechName(tech){
       return _.filter(project.tasks,{ 'type': opt }).length;
     else
       return 0;
+  }
+
+  removeAvatar(){
+    this.url = '';
+    this.addForm.value['avatar'] = '';
+    this.files = [];
   }
 }
 

@@ -14,6 +14,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
+import { Chart } from 'chart.js';
 
 
 @Component({
@@ -22,6 +23,7 @@ import * as moment from 'moment';
 	styleUrls: ['./user-summary.component.css']
 })
 export class UserSummaryComponent implements OnInit {
+	chart = []; 
 	tracks:any;
 	modalTitle;
 	comments:any;
@@ -63,27 +65,30 @@ export class UserSummaryComponent implements OnInit {
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		
 
-		this.activatedRoute.queryParams.subscribe(params => {
-			this.uid = params['key1'];
-			console.log("uid============>",this.uid);
-			this.pid = params['key2'];
-			console.log("pid============>",this.pid);
-		});
-		// this.route.params.subscribe(param=>{
-			// 	this.projectId = param.id;
-			// 	console.log("projectid--=-=-=+++",this.projectId);
-			// 	this.userId = param.id;
-			// 	console.log("currentUserId--=-=-=+++",this.userId);	
-
-			// 	this.getEmptyTracks();
-			// 	this.getProject(this.projectId);
+		// this.activatedRoute.queryParams.subscribe(params => {
+			// 	this.uid = params['key1'];
+			// 	console.log("uid============>",this.uid);
+			// 	this.pid = params['key2'];
+			// 	console.log("pid============>",this.pid);
 			// });
-			// this.createEditTaskForm();	
+			this.route.params.subscribe(param=>{
+				console.log("params=======-=-=-=-=-",param);
+				this.projectId = param.projectId;
+				console.log("projectid--=-=-=+++",this.projectId);
+				this.userId = param.userId;
+				console.log("currentUserId--=-=-=+++",this.userId);	
+
+				this.getEmptyTracks();
+				this.getProject(this.projectId);
+			});
+			this.createEditTaskForm();	
 
 
 		}
 
 		ngOnInit() {
+
+			this.getEmptyTracks();
 
 		}
 
@@ -205,8 +210,8 @@ export class UserSummaryComponent implements OnInit {
 					console.log("id-=-=-=-()()()",id);
 					this.pro=res;
 					console.log("title{}{}{}{}",this.pro);
-					this.pro = res.pmanagerId;
-					console.log("project detail===>>>>",this.pro);
+					// this.pro = res.pmanagerId;
+					// console.log("project detail===>>>>",this.pro);
 					this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 						this.projectTeam = res.team;
 						res.Teams.push(this.pro); 
@@ -258,43 +263,221 @@ export class UserSummaryComponent implements OnInit {
 					})
 
 					this.loader = false;
-				},err=>{
-					console.log(err);
-					this.loader = false;
-				})
+					setTimeout(()=>{
 
-			},1000);
-			function custom_sort(a, b) {
-				return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-			}
-		}
+						var ctx = document.getElementById("myChart");
+						var myChart = new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: ["to do", "In Progress", "testing", "Complete"],
+								datasets: [{
+									label: '# of Tasks',
+									// data:[7,14,43,33],
+									data: this.getTaskCountEachTrack(this.tracks),
+									backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)'
 
-		getTaskCount(userId, status){
-			// console.log("userId===-=-={}{}{}{}{}",userId);
-			return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
-		}
+									],
+									borderColor: [
+									'rgba(255,99,132,1)',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)'
 
-		getCompletedTask(status){
-			// console.log("userId===-=-={}{}{}{}{}",userId);
-			return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
-		}
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
 
-		// getTaskPriority(priority, status){
-			// 	// console.log(priority, status);
-			// 	return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
-			// }
+								scales: {
+									yAxes: [{
+										ticks: {
+											beginAtZero: true
+										}
+									}]
+								}
+							}
+						});
 
-			getTaskPriority(priority, status){
-				var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-				// console.log(typeof priority , "user Id " , userId);
-				return _.filter(this.project, function(o) {
-					// console.log("oo =====>" , o);
-					if (o.priority == priority && o.status == status && o.assignTo._id == userId){
-						// console.log("found log =====>" , o)	
-						return o 
-					}
-				}).length;
 
-			}
+						var ctxP = document.getElementById("pieChart1");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									// data:[10,20,30,40],
+									data: this.getTaskPriority(1,this.tracks),
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom"
+								}
+							}
+						});
 
-		}
+
+
+						var ctxP = document.getElementById("pieChart2");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									data: this.getTaskPriority(2,this.tracks),
+									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom"
+								}
+							}
+						});
+
+
+						var ctxP = document.getElementById("pieChart3");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									data: this.getTaskPriority(3,this.tracks),
+									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom"
+								}
+							}
+						});
+
+
+						var ctxP = document.getElementById("pieChart4");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									data: this.getTaskPriority(4,this.tracks),
+									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom",
+
+
+								}
+							}
+						});
+
+						var ctxP = document.getElementById("pieChart5");
+						var myPieChart = new Chart(ctxP, {
+							type: 'pie',
+							data: {
+								labels: ["To Do", "In Progress", "Testing", "Complete"],
+								datasets: [{
+									data: this.getTaskCountEachTrack(this.tracks),
+									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+								}]
+							},
+							options: {
+								responsive: true,
+								legend:{
+									position:"bottom",
+
+
+								}
+							}
+						});
+					},1000);
+
+
+
+
+
+
+
+},err=>{
+	console.log(err);
+	this.loader = false;
+})
+
+},1000);
+function custom_sort(a, b) {
+	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+}
+}
+
+getTaskCountEachTrack(tracks){
+
+	var userId = this.userId;
+	// console.log("uid+_+_+{}{}====",userId);
+
+	// return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	var count1 = [];
+	_.forEach(tracks,track=>{
+
+		count1.push(_.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
+	});
+	console.log("count1---------==========",count1);
+	return count1;
+
+
+}
+getTaskCount(){
+	// console.log("userId===-=-={}{}{}{}{}",userId);
+	var userId = this.userId;
+	return _.filter(this.project, function(o) { if (o.assignTo._id == userId) return o }).length;
+}
+
+getCompletedTask(status){
+	// console.log("userId===-=-={}{}{}{}{}",userId);
+	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
+}
+
+// getTaskPriority(priority, status){
+	// 	// console.log(priority, status);
+	// 	return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status) return o }).length;
+	// }
+
+	getTaskPriority(priority,tracks){
+		var userId = this.userId;
+
+		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == status && o.assignTo._id == userId) return o }).length;
+		// console.log("currentUserId--=-=-=+++",this.userId);	
+		// console.log("userId=-==-=-{}{}{}{}{}",userId);
+		var count = [];
+		_.forEach(tracks, track=>{
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.assignTo._id == userId) return o }).length);
+		});
+		console.log("cnt=-=-===============",count);
+		return count;
+	}
+}
