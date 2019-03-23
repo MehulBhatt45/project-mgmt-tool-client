@@ -69,54 +69,52 @@ export class ProjectService {
 		// 	// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
 
 		// }
-		addLeave(form){
-			console.log("formmmmmmmmmmmmmmmmmm",form);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token': JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.post(config.baseApiUrl+"leave/add-leave",form);
-		}
+		// addLeave(form){
+		// 	console.log("formmmmmmmmmmmmmmmmmm",form);
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.post(config.baseApiUrl+"leave/add-leave",form);
+		// }
 
 
-		pendingLeaves(){
-			// console.log("apppppppppssssssssssss",apps);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token' : JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
-		}
+		// pendingLeaves(){
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token' : JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
+		// }
 
-			leavesById(email){
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token': JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			 // var email = JSON.parse(localStorage.getItem('currentUser')).email;
-			return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
-		}
+		// 	leavesById(email){
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
+		// }
 
 
 
-		leaveApproval(req, body){
-			var body = body;
-			var id = req;
-			console.log("req=============",req);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token': JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
-		}
+		// leaveApproval(req, body){
+		// 	var body = body;
+		// 	var id = req;
+		// 	console.log("req=============",req);
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
+		// }
 
 
 		addProject(body){
