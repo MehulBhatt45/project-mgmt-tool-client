@@ -150,25 +150,44 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
     leaveAccepted(req){
-      var body;
-      console.log("dsfdsbgfdf",this.leaveApp);
-      console.log("reeeeeeee",req);
-      _.forEach(this.leaveApp, (apply)=>{
-        if(apply._id == req){
-          body = apply;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Approve it!'
+      }).then((result) => {
+        if (result.value) {
+          var body;
+          console.log("dsfdsbgfdf",this.leaveApp);
+          console.log("reeeeeeee",req);
+          _.forEach(this.leaveApp, (apply)=>{
+            if(apply._id == req){
+              body = apply;
+            }
+          })
+          this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+            Swal.fire(
+              'Approve!',
+              'Your Leave has been Approve.',
+              'success'
+              )
+            body.status = "approved";
+            console.log("bodyyyyyyyyyyyyyyy",body);
+            console.log("respondsssssss",res);
+            this.acceptedLeave = res;
+            console.log("acceptedd===========>",this.acceptedLeave);
+            this.getLeaves();
+          },(err:any)=>{
+            console.log(err);
+            Swal.fire('Oops...', 'Something went wrong!', 'error')
+          })
         }
       })
-      body.status = "approved";
-      console.log("bodyyyyyyyyyyyyyyy",body);
-      this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-
-        console.log("respondsssssss",res);
-        this.acceptedLeave = res;
-        console.log("acceptedd===========>",this.acceptedLeave);
-      },(err:any)=>{
-        console.log(err);
-      })
     }
+
 
 
     leaveRejected(req){
@@ -250,7 +269,7 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
-       }
+    }
 
-}
+  }
 
