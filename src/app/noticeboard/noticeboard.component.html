@@ -23,58 +23,72 @@
 	</div>
 </div>
 
+<div class="container">
+	<h1 class="text-center font-weight-bold deep-purple-text">Notice Board</h1>
+	<section class="my-5">
+		<div class="row border border-radius-2 margin-bottom-30 padding-20 height-200" style="background-image: linear-gradient(#eee,#ddd)"  *ngFor="let notice of notice">
+			<div class="col-lg-5">
+				<div class="notice-image ">
+					<div class="view overlay z-depth-5 mb-lg-0" *ngFor="let image of notice.images">		</div>
+				</div>
+			</div>
+			<div class="col-lg-7 padding-left-20 mt-1">
+				<a href="#!" class="deep-purple-text">
+					<h6 class="font-weight-bold mb-1"><i class="fas fa-clipboard pr-2"></i>Notice <p class="float-right"> 19/08/2018</p></h6>
 
+				</a>
+				<h3 class="font-weight-bold"><strong>{{notice.title}}</strong></h3>
+				<p>{{notice.desc}}</p>
+				<div *ngIf="currentUser.userRole=='projectManager'">
+					<a class="btn btn-xs btn-danger border-radius-10" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
+					<a class="btn btn-indigo border-radius-10" data-toggle="modal" data-target="#exampleModalPreview" (click)="newNotice = notice"><i class="fas fa-edit"></i></a>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
 
-
-<!-- <div class="view overlay z-depth-2 mb-lg-0" *ngFor="let image of notice.images">
-						<img class="img-fluid" src="{{path}}{{image}}" alt="Sample image">
-						<a href="{{path}}{{image}}" rel="lightbox" title="">
-							<img src="{{path}}{{image}}" alt=""/>
-							<div class="mask rgba-white-slight"></div>
-						</a>
-					</div> -->
-
-					<!-- Modal Start Here -->
-					<div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalPreviewLabel">Edit Notice</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
+		<!-- Modal Start Here -->
+		<div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalPreviewLabel">Edit Notice</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" *ngIf="newNotice">
+						<div class="row">
+							<form style="width: 100%;" [formGroup]="editNoticeForm">
+								<div class="form-group col-12">
+									<label for="title">Title</label>
+									<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newNotice.title">
 								</div>
-								<div class="modal-body" *ngIf="newNotice">
-									<div class="row">
-										<form style="width: 100%;" [formGroup]="editNoticeForm">
-											<div class="form-group col-12">
-												<label for="title">Title</label>
-												<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newNotice.title">
-											</div>
-											<div class="form-group col-12">
-												<label for="desc">Discription</label>
-												<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
-											</div>
-											<div class="form-group col-12">
-												<label for="published">published</label>
-												<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
-													<option value="true">True</option>
-													<option value="false">False</option>
-												</select>
-											</div>
-											<div class="form-group col-12">
-												<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
-											</div>
-										</form>
-									</div>
+								<div class="form-group col-12">
+									<label for="desc">Discription</label>
+									<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
 								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-									<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice)">Save changes</button>
+								<div class="form-group col-12">
+									<label for="published">published</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
+										<option value="true">True</option>
+										<option value="false">False</option>
+									</select>
 								</div>
-							</div>
+								<div class="form-group col-12">
+									<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
+								</div>
+							</form>
 						</div>
 					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+						<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice)">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-					<!-- Modal End Here -->
+		<!-- Modal End Here -->
 
