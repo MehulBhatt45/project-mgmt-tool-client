@@ -45,7 +45,15 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    setTimeout(()=>{
+      
+    $('[data-toggle="popover-hover"]').popover({
+      html: true,
+      trigger: 'hover',
+      placement: 'bottom',
+      content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+    });
+    },2000);
 
     this.getProjects();
     this.getAllDevelopers();
