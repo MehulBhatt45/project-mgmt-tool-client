@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@a
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
+import Swal from 'sweetalert2';
 declare var $:any;
 
 
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   forgotPasswordForm: FormGroup;
+  loader = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,9 +41,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.forgotPasswordForm = this.formBuilder.group({
-      email: [''],
-      password: [''],
-      confirmpassword: ['']
+      email: ['']
     });
 
     // get return url from route parameters or default to '/'
@@ -74,21 +74,23 @@ export class LoginComponent implements OnInit {
 
   updatePassword(){
     // console.log(this.forgotPasswordForm.value);
-    if(this.forgotPasswordForm.value.password == this.forgotPasswordForm.value.confirmpassword){
-      delete this.forgotPasswordForm.value["confirmpassword"];
-      // console.log(this.forgotPasswordForm.value);
-      this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
-        console.log("res-=-=",res);
-        $('#modalForgotPasswordForm').modal('hide');
-      },err=>{
-        console.log("res-=-=",err);
-        alert("email not found");
+    this.loader = true;
+    this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
+      console.log("res-=-=",res);
+      this.loader = false;
+      // alert("Reset password link sent on your email");
+      Swal.fire("","Reset password link sent on your email","success");
+      $('#modalForgotPasswordForm').modal('hide');
+    },err=>{
+      console.log("res-=-=",err);
+      this.loader = false;
+      // alert("email not found");
+      Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Email not found!',
+        footer: ''
       })
-    }
-    else{
-      alert("Please enter same password");
-    }    
+    })    
   }  
-
-
 }

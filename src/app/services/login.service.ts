@@ -102,6 +102,10 @@ export class LoginService {
         // console.log("res-=-=",user);
         return this.http.put(config.baseApiUrl+"user/forgot-password",user);
     }
+
+    updatepwd(user){
+        return this.http.put(config.baseApiUrl+"user/update-password",user);
+    }
 }
 
 

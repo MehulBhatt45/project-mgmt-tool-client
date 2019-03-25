@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="row">
+		<div class="col-12 col-lg-6 offset-lg-3">
+			<h3>Reset Password</h3>
+			<form [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword()" ngNativeValidate>
+				<div class="md-form mb-3">
+					<i class="fas fa-envelope prefix grey-text"></i>
+					<input type="password" id="password" class="form-control" formControlName="password" required="required">
+					<label for="password">password</label>
+				</div>
+				<div class="md-form mb-3">
+					<i class="fas fa-envelope prefix grey-text"></i>
+					<input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" required="required">
+					<label for="confirmPassword">confirmPassword</label>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button class="btn btn-deep-orange" type="submit">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
