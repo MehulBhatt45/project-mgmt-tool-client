@@ -335,12 +335,13 @@ a.btn-floating.btn-action i{
     position: fixed;
     display: none;
      z-index: 999;
-     background-color: gray;
+     background-image: linear-gradient(gray,#31c8cc);
     height: 300px;
     width: 300px;
     top: 85px;
     right: 5px;
-    border-radius: 5px; 
+    border-radius: 5px;
+    color: white;
 }
 .progress_summary {
     position: relative;
