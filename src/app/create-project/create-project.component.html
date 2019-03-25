@@ -14,11 +14,11 @@
 					<form class="md-form" [formGroup]='addForm' style="color: #757575;">
 						<div class="md-form form-group">
 							<label for="projecttitle">Project Title</label>
-							<input type="text" id="projecttitle"  formControlName="title" class="form-control">
+							<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control">
 						</div>
 						<div class="md-form form-group">
 							<label for="projectalias">Project Alias</label>
-							<input type="text" id="projectalias"  formControlName="uniqueId" class="form-control">
+							<input type="text" autocomplete= 'false | random-string' id="projectalias"  formControlName="uniqueId" class="form-control">
 						</div>
 						<div class="md-form form-group">
 							<label for="desc">Description</label>
@@ -33,23 +33,23 @@
 						</div>
 						<div class="md-form form-group">
 							<label for="clientemail">Email</label>
-							<input type="email" id="clientemail" formControlName="clientEmail" class="form-control">
+							<input type="email" autocomplete= 'false | random-string' id="clientemail" formControlName="clientEmail" class="form-control">
 						</div>
 						<div class="md-form form-group">
 							<label for="clientfullname">Full Name</label>
-							<input type="text" id="clientfullname" formControlName="clientFullName" class="form-control">
+							<input type="text" autocomplete= 'false | random-string' id="clientfullname" formControlName="clientFullName" class="form-control">
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="md-form form-group">
 									<label for="clientcontactno">Contact No.</label>
-									<input type="number" id="clientcontactno" formControlName="clientContactNo" class="form-control">
+									<input type="number" autocomplete= 'false | random-string' id="clientcontactno" formControlName="clientContactNo" class="form-control">
 								</div>	
 							</div>
 							<div class="col-md-6">
 								<div class="md-form form-group">
 									<label for="clientdesignation">Designation</label>
-									<input type="text" id="clientdesignation" formControlName="clientDesignation" class="form-control">
+									<input type="text" autocomplete= 'false | random-string' id="clientdesignation" formControlName="clientDesignation" class="form-control">
 								</div>
 							</div>
 						</div>
@@ -115,7 +115,7 @@ aria-hidden="true">
 						<input type="file" name="fileUpload" accept=".jpg, .jpeg, .png" (change)="onSelectFile($event)">
 					</div>
 					<div class="file-path-wrapper">
-						<input  class="file-path validate" type="text" placeholder="Upload your file">
+						<input  class="file-path validate" autocomplete= 'false | random-string' type="text" placeholder="Upload your file">
 					</div>
 				</div>
 				<ul class="project-avatar">

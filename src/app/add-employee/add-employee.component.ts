@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
-
 import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {LoginService} from '../services/login.service';
 declare var $ : any;
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-add-employee',
@@ -26,15 +26,21 @@ export class AddEmployeeComponent implements OnInit {
 			date:new FormControl('',[Validators.required]),
 			mobile:new FormControl('',[Validators.required]),
 			userRole:new FormControl('',[Validators.required]),
-			experience:new FormControl('',[Validators.required]),
+			experience:new FormControl('',[Validators.required]),	
 			profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
 	}
 
 	ngOnInit() {
-		$('.datepicker').pickadate();
-		
+		$('.datepicker').pickadate({
+			onSet: function(context) {
+				change();
+			}
+		});
+		var change:any = ()=>{
+			this.addEmployeeForm.controls.date.setValue($('.datepicker').val());
+		}
 	}
 
 	addEmployee(addEmployeeForm){
@@ -44,9 +50,11 @@ export class AddEmployeeComponent implements OnInit {
 		this.addEmployeeForm.value.date = $('.datepicker').val();
 		console.log("form value=====>>>",addEmployeeForm.value);
 		this._loginservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Employee Added Successfully',showConfirmButton:false,timer: 2000})
 			this.router.navigate(['./all-employee']);
 			console.log("res=-=-=()()",res);
 		},err=>{
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			console.log("error",err);    
 		})
 	}

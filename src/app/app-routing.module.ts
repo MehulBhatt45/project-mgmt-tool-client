@@ -152,7 +152,7 @@ const routes: Routes = [
 		},
 		
 		{
-			path:'userprofile/:id',
+			path:'userprofile',
 			pathMatch: "full",
 			component:UserprofileComponent
 		},
@@ -170,7 +170,7 @@ const routes: Routes = [
 			component:EditprofileComponent
 		},
 		{
-			path:'user-summary/:id',
+			path:'user-summary/:userId/:projectId',
 			pathMatch: "full",
 			component:UserSummaryComponent
 		},

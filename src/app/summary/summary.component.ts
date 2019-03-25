@@ -61,6 +61,7 @@ export class SummaryComponent implements OnInit {
 	completedTask ;
 	projectLength;
 	total:any;
+	round:any;
 	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -71,9 +72,12 @@ export class SummaryComponent implements OnInit {
 			this.projectId = param.id;
 			this.getEmptyTracks();
 			this.getProject(this.projectId);
+			
+
+			
 		});
 		this.createEditTaskForm();	
-
+		
 		
 	}
 	ngOnInit() {
@@ -272,6 +276,10 @@ export class SummaryComponent implements OnInit {
 					this.total=allcompleteproject;
 					console.log("total()()++++++++++++++++",this.total);
 
+					this.round = Math.round(this.total);
+					console.log("round()()+++++++++++++++++",this.round);
+
+
 					var ctx = document.getElementById("myChart");
 					var myChart = new Chart(ctx, {
 						type: 'bar',
@@ -318,7 +326,7 @@ export class SummaryComponent implements OnInit {
 							datasets: [{
 								// data:[10,20,30,40],
 								data: this.getTaskPriority(1,this.tracks),
-								backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
 								// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
 								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 							}]
@@ -341,7 +349,7 @@ export class SummaryComponent implements OnInit {
 							datasets: [{
 								data: this.getTaskPriority(2,this.tracks),
 								// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-								backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
 								// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
 								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 							}]
@@ -364,7 +372,7 @@ export class SummaryComponent implements OnInit {
 								data: this.getTaskPriority(3,this.tracks),
 								// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
 								// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-								backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
 								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 							}]
 						},
@@ -386,7 +394,30 @@ export class SummaryComponent implements OnInit {
 								data: this.getTaskPriority(4,this.tracks),
 								// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
 								// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-								backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+							}]
+						},
+						options: {
+							responsive: true,
+							legend:{
+								position:"bottom",
+
+
+							}
+						}
+					});
+
+					var ctxP = document.getElementById("pieChart5");
+					var myPieChart = new Chart(ctxP, {
+						type: 'pie',
+						data: {
+							labels: ["To Do", "In Progress", "Testing", "Complete"],
+							datasets: [{
+								data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
+								// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+								// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
 								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 							}]
 						},
@@ -411,6 +442,7 @@ function custom_sort(a, b) {
 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 }
 }
+
 
 
 

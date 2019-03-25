@@ -6,6 +6,7 @@ import { FormGroup , FormControl, Validators } from '@angular/forms';
 import { config } from '../config';
 declare var $:any;
 import * as _ from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-project',
@@ -78,12 +79,13 @@ export class CreateProjectComponent implements OnInit {
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
     this._projectService.addProject(data).subscribe((res:any)=>{
       console.log(res);
-      console.log("addproject2 is called");
+      Swal.fire({type: 'success',title: 'Project Created Successfully',showConfirmButton:false,timer: 2000})
       this.addForm.reset();
       this.url = '';
       this.router.navigate(['/view-projects']);
     },err=>{
-      console.log(err);    
+      console.log(err); 
+       Swal.fire('Oops...', 'Something went wrong!', 'error')   
     }) 
   }
 

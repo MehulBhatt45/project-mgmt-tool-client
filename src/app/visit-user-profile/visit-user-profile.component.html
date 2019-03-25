@@ -48,12 +48,12 @@
 
 		<!-- </div> -->
 		
-		<div class="user_detail">
+		<!-- <div class="user_detail">
 
 			<span> {{currentUser.email}}</span><br>
 			<span>{{currentUser.userRole}}</span><br>
-			<!-- <span> Other details </span><br> -->
-		</div>
+			
+		</div> -->
 	</div>
 	<!-- <button class="btn btn-default" data-target="myModalLabel" id="sideModalTR" data-toggle="modal">User Activity</button>
 	<div class="modal fade right" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -80,26 +80,69 @@
 	</div>
 </div> -->
 
-		 <div class="col-12 col-md-12">
-			<div class="user_activity">
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-						aria-selected="true">User Activity</a>
-					</li>
-				</ul>
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-						<div class="form-group">
-							<ul>
-								<li> <b>My  All Projects  </b></li> <br>
-								<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{project._id}}"> {{project.title}}</li><br>
+<div class="tabbar">
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about"
+			aria-selected="true">About</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
+			aria-selected="false">Projects</a>
+		</li>
+								<!-- <li class="nav-item">
+									<a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress"
+									aria-selected="false">Progress</a>
+								</li> -->
 							</ul>
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+									<div class="card about_detail" style="border-radius: 5px;padding: 10px;">
+										<!-- <button type="button" class="btn btn-default" style="margin-top: 30px;" routerLink="/editprofile/{{currentUser._id}}"><i class="far fa-edit"></i>Edit profile</button> -->
+										<h5 class="text-bold">{{currentUser.name | uppercase}}</h5>
+										<!-- <span class="span_label">Email:</span> -->
+										<span><i class="fas fa-envelope"></i> <label class="txt_label">{{currentUser.email}}</label></span>
+										<!-- <span class="span_label">UserRole:</span> -->
+										<span><i class="fas fa-user-alt"></i><label class="txt_label">{{currentUser.userRole}}</label></span>
+
+										<span><label class="txt_label"> Other details </label></span>
+										<!-- <span><i class="far fa-edit"></i><a routerLink="/editprofile/{{currentUser._id}}">Edit profile</a></span> -->
+									</div>
+							<!-- <div *ngIf="currentUser.userRole == 'admin'">
+								<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
+							</div> -->
 						</div>
+						<div class="tab-pane fade" id="leave" role="tabpanel" aria-labelledby="leave-tab">
+
+							<div class="card about_detail" style="border-radius: 5px;">
+								<div class="form-group">
+									<h5 class="text-bold" style="text-transform: uppercase;">My All Projects  </h5>
+									<ul>
+										<li  *ngFor = "let project of finalArr" style="cursor: pointer;"> 
+											<div class="row" style="margin-top: 5px;">
+												<div class="col col-1">
+													<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='assets/4.jpeg'" >
+												</div>
+												<div class="col col-11"> 
+													<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
+												</div>
+												
+											</div>
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+
+							
+						</div>
+						
 					</div>
 				</div>
-			</div>
-		</div>
-	
+					<!-- <ul>
+						<li> <b>My  All Projects  </b></li> <br>
+						<li  *ngFor = "let project of finalArr" style="cursor: pointer;" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}"> {{project.title}}</li><br>
+					</ul> -->
+
 
 

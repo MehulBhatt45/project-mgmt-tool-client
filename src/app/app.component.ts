@@ -8,8 +8,10 @@ declare var $ : any;
 })
 export class AppComponent implements OnInit {
 	title = 'project-manager';
-	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	currentUser:any;
 	constructor(public router : Router){
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		// var obj = JSON.parse(this.currentUser.replace(/ 0+(?![\. }])/g, ' '));
 
 	}
 

@@ -49,6 +49,19 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id);
 	}
 
+	getDeveloperOfProject(id){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
+		return this.http.get(config.baseApiUrl+"project/get-developer-of-project"+id);
+	}
+
+
 	// addProject_With_image(body,files:FileList){
 
 		// 	console.log("addproject is calling");
@@ -69,54 +82,66 @@ export class ProjectService {
 		// 	// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
 
 		// }
-		addLeave(form){
-			console.log("formmmmmmmmmmmmmmmmmm",form);
+		// addLeave(form){
+		// 	console.log("formmmmmmmmmmmmmmmmmm",form);
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.post(config.baseApiUrl+"leave/add-leave",form);
+		// }
+
+
+
+
+		leavesById(email){
 			const httpOptions = {
 				headers: new HttpHeaders({
 					'Content-Type': 'application/json',
 					'x-access-token': JSON.parse(localStorage.getItem('token'))
 				})
 			};
-			return this.http.post(config.baseApiUrl+"leave/add-leave",form);
-		}
-
-
-		pendingLeaves(){
-			// console.log("apppppppppssssssssssss",apps);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token' : JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
-		}
-
-			leavesById(email){
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token': JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			 // var email = JSON.parse(localStorage.getItem('currentUser')).email;
+			// var email = JSON.parse(localStorage.getItem('currentUser')).email;
 			return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
 		}
 
+		// pendingLeaves(){
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token' : JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
+		// }
 
 
-		leaveApproval(req, body){
-			var body = body;
-			var id = req;
-			console.log("req=============",req);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-					'x-access-token': JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
-		}
+		// 	leavesById(email){
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
+		// }
+
+
+
+		// leaveApproval(req, body){
+		// 	var body = body;
+		// 	var id = req;
+		// 	console.log("req=============",req);
+		// 	const httpOptions = {
+		// 		headers: new HttpHeaders({
+		// 			'Content-Type': 'application/json',
+		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 		})
+		// 	};
+		// 	return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
+		// }
 
 
 		addProject(body){
@@ -326,7 +351,7 @@ export class ProjectService {
 				// 	formdata.append("uploadFile",files[i]);
 				// }
 				console.log("body===>>>",body);
-				 
+
 
 
 				return this.http.post(config.baseApiUrl+"user/signup",formdata);
@@ -380,5 +405,16 @@ export class ProjectService {
 			deleteEmployeeById(developerid){
 				console.log("devloperId{}{}{}-===",developerid);
 				return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
+			}
+
+
+			changeNoticePicture(files: any, data){
+				console.log("file is=================>",files);
+				console.log("data is ============>",data);
+				let formdata = new FormData();
+				formdata.append("noticeid",data);
+				formdata.append("profilePhoto",files[0]);
+				console.log("file is===>>>",files[0]);
+				return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 			}
 		}

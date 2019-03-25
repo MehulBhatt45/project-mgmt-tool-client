@@ -9,7 +9,7 @@
 					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 						<div class="md-form">
 							<i class="fas fa-envelope prefix"></i>
-							<input mdbInput type="text" id="form2" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+							<input mdbInput type="text" id="form2" autocomplete= 'false | random-string'  class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
 							<label for="form2">Username</label>
 							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
 								<div *ngIf="f.email.errors.required">Username is required</div>
@@ -26,7 +26,7 @@
 				</div> -->
 				<div class="md-form">
 					<i class="fa fa-lock prefix"></i>
-					<input mdbInput type="password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+					<input mdbInput type="password" autocomplete="new-password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
 					<label for="form2">Password</label>
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 						<div *ngIf="f.password.errors.required">Password is required</div>

@@ -1,12 +1,6 @@
 .btn-primary{
 	background-color: green !important
 }
-.table{
-	margin: 5px;
-	padding: 5px;
-	text-align: center;
-	/*display: inline-block;*/
-}
 .table th{
 	font-size: 20px;
 	vertical-align: middle;
@@ -16,17 +10,9 @@
 }
 .table td{
 	vertical-align: middle;
-	padding: 8px;
 	white-space: nowrap;
 }
-.purple-gradient-2{
-	/*background: -webkit-linear-gradient(10deg,#5E4D89,#A274E0)!important;*/
-	background-color: #5d2bdb;
-	/*    
-	background: -o-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
-    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
-    */
-}
+
 .a_icon{
 	font-size: 28px;
 	color:green;
@@ -44,14 +30,8 @@
 .table td.description{
 	white-space: normal;
 }
-.css-serial {
-	counter-reset: serial-number;  /* Set the serial number counter to 0 */
-}
 
-.css-serial td:first-child:before {
-	counter-increment: serial-number;  /* Increment the serial number counter */
-	content: counter(serial-number);  /* Display the counter */
-}
+
 
 .sign{
 	float: right;
@@ -69,8 +49,32 @@
 h3{
 	text-align: center;
 }
+.selected{
+	display: none;
+}
+.unselected{
+	display: block;
+}
+.table a{
+    display: table;
+    margin: 0;
+}
+/*.avatar{
+  position: relative;
+}*/
+/*.img-fluid {
+    
+    height: 40px !important;
+    object-fit: cover;
+}
+*/
+li a{
+	font-size: 24px;
+}
 
 
-
-
-
+.nav-link {
+    display: block;
+     padding: 0 !important; 
+     cursor: pointer;
+}

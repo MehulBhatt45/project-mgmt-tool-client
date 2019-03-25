@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import {ProjectService} from '../services/project.service';
 import { LoginService } from '../services/login.service';
 declare var $ : any;
+import Swal from 'sweetalert2';
+
 
 @Component({
 	selector: 'app-editprofile',
@@ -16,13 +18,14 @@ export class EditprofileComponent implements OnInit {
 	files: Array<File> = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	userDetails;
+	developerId;
 	loader: boolean = false;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 			name:new FormControl(''),
 			email: new FormControl(''),
 			phone:new FormControl(''),
-			userRole:new FormControl({value: '', disabled: true}),
+			userRole:new FormControl({value: ''}),
 			experience:new FormControl(''),
 			cv:new FormControl('')
 		}); 
@@ -30,7 +33,13 @@ export class EditprofileComponent implements OnInit {
 
 
 	ngOnInit() {
-		this.getDetails();
+		this.route.params.subscribe(param=>{
+			this.developerId = param.id;
+			this.getDetails(this.developerId);
+			
+
+		})
+		// this.getDetails();
 	}
 	addFile(event){
 		this.files = event.target.files;
@@ -51,20 +60,31 @@ export class EditprofileComponent implements OnInit {
 
 		this._loginService.editUserProfileWithFile(data).subscribe((res:any)=>{
 			console.log("res",res);
+			  Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 		},err=>{
-			console.log("error",err);    
+			console.log("error",err); 
+			  Swal.fire('Oops...', 'Something went wrong!', 'error')   
 		})
 
 	}
-	getDetails(){
+	getDetails(id){
 		this.loader = true;
-		var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
+		// var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("user Di ======++>" , id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			console.log(res);
 			this.userDetails = res;
 			this.loader = false;
 			console.log("this user dateailsls ==>" , this.userDetails);
+			if(this.currentUser.userRole=='projectManager'){
+				this.editEmployeeForm.controls['name'].disable();
+				this.editEmployeeForm.controls['email'].disable();
+				this.editEmployeeForm.controls['phone'].disable();
+				this.editEmployeeForm.controls['experience'].disable();
+				this.editEmployeeForm.controls['cv'].disable();
+			}else{
+				this.editEmployeeForm.controls['userRole'].disable();
+			}
 		},(err:any)=>{
 			console.log(err);
 			this.loader = false;

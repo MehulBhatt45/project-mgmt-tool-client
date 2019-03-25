@@ -7,6 +7,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { config } from '../config';
 import { MessagingService } from "../services/messaging.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-project',
@@ -16,7 +17,7 @@ import { MessagingService } from "../services/messaging.service";
 export class ViewProjectComponent implements OnInit {
   projects;
   addForm:FormGroup; 
-  files:FileList;
+  files:Array<File>;
   url = '';
   developers: any;
   path = config.baseMediaUrl;
@@ -44,6 +45,16 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(()=>{
+      
+    $('[data-toggle="popover-hover"]').popover({
+      html: true,
+      trigger: 'hover',
+      placement: 'bottom',
+      content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+    });
+    },2000);
+
     this.getProjects();
     this.getAllDevelopers();
     $('.datepicker').pickadate({
@@ -109,6 +120,9 @@ export class ViewProjectComponent implements OnInit {
     // return name.split(' ')[0][0]+name.split(' ')[1][0];
   }
 
+getTechName(tech){
+  if(tech == "fa-react") return "React JS"
+}
   addProject(addForm){
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
@@ -124,15 +138,28 @@ export class ViewProjectComponent implements OnInit {
     data.append('pmanagerId', JSON.parse(localStorage.getItem('currentUser'))._id);
     console.log("data__+__+{}{}{}{}{}{}",data);
     this._projectService.addProject(data).subscribe((res:any)=>{
+      Swal.fire({type: 'success',title: 'Project Created Successfully',showConfirmButton:false,timer: 2000})
       console.log("addproject2 is called");
+
     },err=>{
-      console.log(err);    
+      console.log(err);  
+      Swal.fire('Oops...', 'Something went wrong!', 'error')  
     }) 
   }
 
   openDropdown(){
     if (this.currentUser.userRole=='projectManager') {
       $('.dropdown-toggle').dropdown();
+      $('.btn_popover_menu').click(function(){
+        // setTimeout(()=>{
+          $('[data-toggle="popover-hover"]').popover({
+            html: true,
+            trigger: 'hover',
+            placement: 'bottom',
+            content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+          });
+        // },1000);
+      });
     }
   }
 
@@ -152,7 +179,6 @@ export class ViewProjectComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]); // read file as data url
       reader.onload = (event:any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
-
       }
     }
   }
@@ -181,6 +207,19 @@ export class ViewProjectComponent implements OnInit {
     else
       return 0;
   }
+
+  removeAvatar(){
+    this.url = '';
+    this.addForm.value['avatar'] = '';
+    this.files = [];
+  }
+
+  // getTaskCount(status){
+
+  //  return _.filter(function(o) { if (o.status == status) return o }).length;
+
+
+  // }
 }
 
 
