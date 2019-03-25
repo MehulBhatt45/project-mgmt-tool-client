@@ -122,3 +122,7 @@
 .card-wrapper .card-up {
   height: 45% !important;
 }
+.prefix{
+  margin-top:10px;
+  font-size: 24px;
+}

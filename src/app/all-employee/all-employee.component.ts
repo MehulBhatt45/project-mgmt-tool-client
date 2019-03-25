@@ -9,6 +9,8 @@ import { LoginService } from '../services/login.service';
 import Swal from 'sweetalert2';
 import {SearchTaskPipe} from '../search-task.pipe';
 import * as _ from 'lodash';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
 	selector: 'app-all-employee',
@@ -18,10 +20,12 @@ import * as _ from 'lodash';
 export class AllEmployeeComponent implements OnInit {
 	tracks:any;
 	Teams;
+	tasks;
 	developers;
 	developer;
 	userId;
 	projectId;
+	searchText;
 	teamArray = [];
 	loader:boolean=false;
 	path = config.baseMediaUrl;
@@ -102,66 +106,41 @@ export class AllEmployeeComponent implements OnInit {
 			console.log(err);
 		})
 	}
+
 	onKey(searchText){
 		console.log("searchText",searchText);
+		console.log("all employee",this.developers);
 		var dataToBeFiltered = [this.developers];
-		var name = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",name);
-		_.forEach(name, (content)=>{
-			_.forEach(this.developers, (developer)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == name ){
-						developer.name.push(content);
-					}
-				}
-				else{
-					if(content.status == developer.id){
-						developer.name.push(content);
-					}
-				}
-			});
+		var developer = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+		console.log('developer =======>', developer);
+		this.developers =[];
+		console.log("new filter=====>",this.developers);
+		_.forEach(developer, (content)=>{
+			this.developers.push(content);
 		});
 	}
-
 	getDeveloper(projectId){
 		this.selectedProjectId = projectId;
 		console.log(" project id is===========>",projectId);
-
-		this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
-			console.log("response of team============>"  ,res.Teams);
-			console.log("filter====>");
-			this.Teams = res.Teams;
-			console.log("response of team============>"  ,this.Teams);
-			this.developers.push(this.Teams);
+		console.log(" project id is===========>",this.developers);
+		if (projectId !='all') {
+			this.developers =[];
 			console.log(this.developers);
-			// this.Teams = res.Teams;
-			// this.Teams.sort(function(a, b){
-				// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				// 	if (nameA < nameB) //sort string ascending
-				// 		return -1 
-				// 	if (nameA > nameB)
-				// 		return 1
-				// 	return 0 //default return value (no sorting)
-				// 	this.Teams.push
-				// 	console.log("response of team============>"  ,this.Teams);
-				// })
-
-
-				// if( projectId!='all'){
-					// 	this.teamArray = [];
-					// 	_.forEach(this.Teams , (team)=>{
-						// 		if(projectId == projectId.team ){
-							// 			this.teamArray.push(team);
-							// 		}
-							// 	});
-
-							// }
-							// (err:any)=>{
-								// 	console.log("err of project============>"  ,err);
-								// }
-							}
-							)};
+			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+				this.Teams = res.Teams;
+				console.log("response of developer============>"  ,this.Teams);
+				_.forEach(this.Teams, (content)=>{
+					console.log("content is =====>",content);
+					this.developers.push(content);
+					console.log(this.developers);
+				});
+			})
+		}
 	}
+}
+
+
+
 
 
 

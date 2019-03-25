@@ -166,8 +166,11 @@ export class AllLeaveAppComponent implements OnInit {
           _.forEach(this.leaveApp, (apply)=>{
             if(apply._id == req){
               body = apply;
+              body.status = "approved";
             }
           })
+          console.log("req ========>" , req);
+          console.log("bodyy ========>" , body);
           this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
             Swal.fire(
               'Approve!',
