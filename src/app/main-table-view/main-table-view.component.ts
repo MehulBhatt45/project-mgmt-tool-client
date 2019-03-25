@@ -230,40 +230,25 @@ export class MainTableViewComponent implements OnInit {
 			})
 		}
 	}
+
+
 	sortTasksByCreatedAt(type){
 		console.log("Sorting tasks by = ",type)
-		
+
 		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
+			console.log("Sorting track =()()() ",track.title);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 		});
 
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 		console.log("sorting======>",custom_sort);
-	}
-
-	getTitle(name){
-		if(name){
-			var str = name.split(' ');
-			return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
-		}else{
-			return '';
-		}
-	}
-
-	getInitialsOfName(name){
-		if(name){
-			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-			return str.toUpperCase();
-		}else{
-			return '';
-		}
+		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 	sortTasksByPriority(type){
 
@@ -274,238 +259,293 @@ export class MainTableViewComponent implements OnInit {
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =====> ",track.tasks);
 		});
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
 		console.log("nthi avtu=======>",custom_sort1);
+		$(".priority_sorting_btn i.fas").toggleClass("hide");
 	}
 
-
-	openModel(task){
-		console.log(task);
-		this.task = task;
-		$('#fullHeightModalRight').modal('show');
-	}
-	editTask(task){
-		this.task = task;
-		this.modalTitle = 'Edit Item';
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader=false;
-	}
-
-	updateTask(task){
-		task.assignTo = this.editTaskForm.value.assignTo;
-		console.log("update =====>",task);
-		this._projectService.updateTask(task._id, task).subscribe((res:any)=>{
-			console.log("res ===>" , res);
-		},(err:any)=>{
-			console.log("err ===>" , err);
-		})
-		
-	}
-
-	addItem(option){
-		this.loader=true;
-		setTimeout(()=>{
-			this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
-			this.modalTitle = 'Add '+option;
-			$('.datepicker').pickadate();
-			$('#editModel').modal('show');
-			this.loader=false;
-		},1000);
-	}
-
-	saveTheData(task){
-		task['projectId']= this.projectId; 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
-		task.dueDate = $("#dueDate").val();
-		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
-		this._projectService.addTask(task).subscribe((res:any)=>{
-			$('#editModel').modal('hide');
-		},err=>{
-			console.log(err);
-		})
-	}
 	
-	filterTracks(projectId, developerId){
-		this.selectedDeveloperId = developerId;
-		this.selectedProjectId = projectId;
-		console.log(projectId, developerId);
-		this.getEmptyTracks();
-		if(projectId!='all' && developerId == 'all'){
-			_.forEach(this.tasks, (project)=>{
-				if(project.projectId._id == projectId){
-					_.forEach(this.tracks, (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-								track.tasks.push(project);
-							}
+	// sortTasksByCreatedAt(type){
+		// 	console.log("Sorting tasks by = ",type)
+		
+		// 	_.forEach(this.tracks,function(track){
+			// 		console.log("Sorting track = ",track.title);
+			// 		track.tasks.sort(custom_sort);
+			// 		if(type == 'desc'){
+				// 			track.tasks.reverse();
+				// 		}
+				// 		console.log("sorted output = ",track.tasks);
+				// 	});
+
+				// 	function custom_sort(a, b) {
+					// 		return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+					// 	}
+					// 	console.log("sorting======>",custom_sort);
+					// }
+
+					getTitle(name){
+						if(name){
+							var str = name.split(' ');
+							return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
 						}else{
-							if(project.status == track.id){
-								track.tasks.push(project);
-							}
-						}
-					})
-				}	
-			})
-		}else if(projectId=='all' && developerId != 'all'){
-			_.forEach(this.tasks, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
-						track.tasks.push(project);
-					}
-				})
-			})
-		}else if(projectId!='all' && developerId != 'all'){
-			_.forEach(this.tasks, (project)=>{
-				console.log("trackfilter()__+++",this.tasks);
-				if(project.projectId._id == projectId){
-					_.forEach(this.tracks, (track)=>{
-						if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
-							track.tasks.push(project);
-						}
-					})
-				}
-			})
-		}else{
-			_.forEach(this.tasks, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-							track.tasks.push(project);
-						}
-					}else{
-						if(project.status == track.id){
-							track.tasks.push(project);
+							return '';
 						}
 					}
-				})
-			})
-		}
-		console.log("task()()()()()++_+_+_+",this.tracks);
-	}
-	public Editor = DecoupledEditor;
 
-	public onReady( editor ) {
-		editor.ui.getEditableElement().parentElement.insertBefore(
-			editor.ui.view.toolbar.element,
-			editor.ui.getEditableElement()
-			);
-	}
-
-	public onChange( { editor }: ChangeEvent ) {
-		const data = editor.getData();
-		this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-	}
-
-	sendComment(){
-		console.log(this.comment);
-	}
-	searchTask(){
-		console.log("btn tapped");
-	}
-
-// 	developerId;
-// 	onKey(event: any){
-// 		console.log(event, this.tasks);
-
-	// onKey(event: any){
-	// 	console.log(event, this.tasks);
-	// 	var dataToBeFiltered = [this.tasks];
-	// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-	// 	console.log("In Component",task);
-	// 	this.getEmptyTracks();
-	// 	_.forEach(task, (content)=>{
-	// 		_.forEach(this.tracks, (track)=>{
-	// 			if(content.status == track.id){
-	// 				track.tasks.push(content);
-	// 			}
-	// 		})
-	// 	})
-	// }
-	onKey(searchText){
-		console.log(this.tasks);
-
-		var dataToBeFiltered = [this.tasks];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-
-		if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
-			_.forEach(task, (project)=>{
-				if(project.projectId._id == this.selectedProjectId){
-					_.forEach(this.tracks, (track)=>{
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-								track.tasks.push(project);
-							}
+					getInitialsOfName(name){
+						if(name){
+							var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+							return str.toUpperCase();
 						}else{
-							if(project.status == track.id){
-								track.tasks.push(project);
-							}
-						}
-					})
-				}	
-			})
-		}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
-			_.forEach(task, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-						track.tasks.push(project);
-					}
-				})
-			})
-		}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
-			_.forEach(task, (project)=>{
-				console.log(project);
-				if(project.projectId._id == this.selectedProjectId){
-					_.forEach(this.tracks, (track)=>{
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-							track.tasks.push(project);
-						}
-					})
-
-		// _.forEach(task, (content)=>{	
-		// 	_.forEach(this.tracks, (track)=>{
-		// 		if(content.status == track.id){
-		// 			track.tasks.push(content);
-
-				}
-			})
-		}else{
-			_.forEach(task, (project)=>{
-				console.log(project);
-				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-							track.tasks.push(project);
-						}
-					}else{
-						if(project.status == track.id){
-							track.tasks.push(project);
+							return '';
 						}
 					}
-				})
-			})
-		}
-	}
-	projects;
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-}
+					// sortTasksByPriority(type){
+
+						// 	console.log("hdgfhd=>>>>..");
+						// 	_.forEach(this.tracks,function(track){
+							// 		console.log("Sorting track = ",track.title);
+							// 		track.tasks.sort(custom_sort1);
+							// 		if(type == 'desc'){
+								// 			track.tasks.reverse();
+								// 		}
+								// 		console.log("sorted output = ",track.tasks);
+								// 	});
+
+								// 	function custom_sort1(a, b) {
+									// 		return a.priority - b.priority;
+									// 	}
+									// 	console.log("nthi avtu=======>",custom_sort1);
+									// }
+
+
+									openModel(task){
+										console.log(task);
+										this.task = task;
+										$('#fullHeightModalRight').modal('show');
+									}
+									editTask(task){
+										this.task = task;
+										this.modalTitle = 'Edit Item';
+										$('.datepicker').pickadate();
+										$('#editModel').modal('show');
+										this.loader=false;
+									}
+
+									updateTask(task){
+										task.assignTo = this.editTaskForm.value.assignTo;
+										console.log("update =====>",task);
+										this._projectService.updateTask(task._id, task).subscribe((res:any)=>{
+											console.log("res ===>" , res);
+										},(err:any)=>{
+											console.log("err ===>" , err);
+										})
+										
+									}
+
+									addItem(option){
+										this.loader=true;
+										setTimeout(()=>{
+											this.task = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' };
+											this.modalTitle = 'Add '+option;
+											$('.datepicker').pickadate();
+											$('#editModel').modal('show');
+											this.loader=false;
+										},1000);
+									}
+
+									saveTheData(task){
+										task['projectId']= this.projectId; 
+										task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+										task.startDate = $("#startDate").val();
+										task.dueDate = $("#dueDate").val();
+										task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+										console.log(task);
+										this._projectService.addTask(task).subscribe((res:any)=>{
+											$('#editModel').modal('hide');
+										},err=>{
+											console.log(err);
+										})
+									}
+									
+									filterTracks(projectId, developerId){
+										this.selectedDeveloperId = developerId;
+										this.selectedProjectId = projectId;
+										console.log(projectId, developerId);
+										this.getEmptyTracks();
+										if(projectId!='all' && developerId == 'all'){
+											_.forEach(this.tasks, (project)=>{
+												if(project.projectId._id == projectId){
+													_.forEach(this.tracks, (track)=>{
+														if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+															if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+																track.tasks.push(project);
+															}
+														}else{
+															if(project.status == track.id){
+																track.tasks.push(project);
+															}
+														}
+													})
+												}	
+											})
+										}else if(projectId=='all' && developerId != 'all'){
+											_.forEach(this.tasks, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
+														track.tasks.push(project);
+													}
+												})
+											})
+										}else if(projectId!='all' && developerId != 'all'){
+											_.forEach(this.tasks, (project)=>{
+												console.log("trackfilter()__+++",this.tasks);
+												if(project.projectId._id == projectId){
+													_.forEach(this.tracks, (track)=>{
+														if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
+															track.tasks.push(project);
+														}
+													})
+												}
+											})
+										}else{
+											_.forEach(this.tasks, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+														if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+															track.tasks.push(project);
+														}
+													}else{
+														if(project.status == track.id){
+															track.tasks.push(project);
+														}
+													}
+												})
+											})
+										}
+										console.log("task()()()()()++_+_+_+",this.tracks);
+									}
+									public Editor = DecoupledEditor;
+
+									public onReady( editor ) {
+										editor.ui.getEditableElement().parentElement.insertBefore(
+											editor.ui.view.toolbar.element,
+											editor.ui.getEditableElement()
+											);
+									}
+
+									public onChange( { editor }: ChangeEvent ) {
+										const data = editor.getData();
+										this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
+									}
+
+									sendComment(){
+										console.log(this.comment);
+									}
+									searchTask(){
+										console.log("btn tapped");
+									}
+
+									// 	developerId;
+									// 	onKey(event: any){
+										// 		console.log(event, this.tasks);
+
+										// onKey(event: any){
+											// 	console.log(event, this.tasks);
+											// 	var dataToBeFiltered = [this.tasks];
+											// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
+											// 	console.log("In Component",task);
+											// 	this.getEmptyTracks();
+											// 	_.forEach(task, (content)=>{
+												// 		_.forEach(this.tracks, (track)=>{
+													// 			if(content.status == track.id){
+														// 				track.tasks.push(content);
+														// 			}
+														// 		})
+														// 	})
+														// }
+														onKey(searchText){
+															console.log(this.tasks);
+
+															var dataToBeFiltered = [this.tasks];
+															var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+															console.log("In Component",task);
+															this.getEmptyTracks();
+
+															if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
+																_.forEach(task, (project)=>{
+																	if(project.projectId._id == this.selectedProjectId){
+																		_.forEach(this.tracks, (track)=>{
+																			if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+																				if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+																					track.tasks.push(project);
+																				}
+																			}else{
+																				if(project.status == track.id){
+																					track.tasks.push(project);
+																				}
+																			}
+																		})
+																	}	
+																})
+															}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
+																_.forEach(task, (project)=>{
+																	console.log(project);
+																	_.forEach(this.tracks, (track)=>{
+																		if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+																			track.tasks.push(project);
+																		}
+																	})
+																})
+															}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
+																_.forEach(task, (project)=>{
+																	console.log(project);
+																	if(project.projectId._id == this.selectedProjectId){
+																		_.forEach(this.tracks, (track)=>{
+																			if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+																				track.tasks.push(project);
+																			}
+																		})
+
+																		// _.forEach(task, (content)=>{	
+																			// 	_.forEach(this.tracks, (track)=>{
+																				// 		if(content.status == track.id){
+																					// 			track.tasks.push(content);
+
+																				}
+																			})
+															}else{
+																_.forEach(task, (project)=>{
+																	console.log(project);
+																	_.forEach(this.tracks, (track)=>{
+																		if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+																			if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+																				track.tasks.push(project);
+																			}
+																		}else{
+																			if(project.status == track.id){
+																				track.tasks.push(project);
+																			}
+																		}
+																	})
+																})
+															}
+														}
+														projects;
+														getAllProjects(){
+															this._projectService.getProjects().subscribe(res=>{
+																this.projects = res;
+															},err=>{
+																this._alertService.error(err);
+																console.log(err);
+															})
+														}
+													}
 

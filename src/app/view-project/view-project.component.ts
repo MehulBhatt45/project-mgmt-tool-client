@@ -213,6 +213,13 @@ getTechName(tech){
     this.addForm.value['avatar'] = '';
     this.files = [];
   }
+
+  // getTaskCount(status){
+
+  //  return _.filter(function(o) { if (o.status == status) return o }).length;
+
+
+  // }
 }
 
 
