@@ -33,8 +33,14 @@ export class ViewProjectComponent implements OnInit {
   objectsArray:any;
   optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
+    // this.projects=res;
+    // for(var i=0;i<res.length;i++){
+    //   this.projects = res[i]._id;
+    //   console.log("this.projects========------=-=-=-=",this.projects);
+    // }
 
-    // this.getProject();
+    // this.projects = this.projects._id;
+    // console.log("this.projects========================--",this.projects);
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
@@ -53,6 +59,9 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
+
     setTimeout(()=>{
 
       $('[data-toggle="popover-hover"]').popover({
@@ -92,35 +101,36 @@ export class ViewProjectComponent implements OnInit {
       if(this.currentUser.userRole == 'projectManager'){
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
-        this.projects = res;
-        console.log("this.projects========------=-=-=-=",this.projects);
-        for(var i=0;i<res.length;i++){
-          this.projects = res[i]._id;
-          console.log("this.projects========------=-=-=-=",this.projects);
+        // this.projects = res;
+        // console.log("this.projects========------=-=-=-=",this.projects);
+        // for(var i=0;i<res.length;i++){
+        //     this.projects = res[i]._id;
+        //     // console.log("this.projects========------=-=-=-=",this.projects);
+        //   }
+        //   this.getProject(this.projects);
         }
-      }
-      else{
-        this.projects = [];
-        _.forEach(res, (p)=>{
-          _.forEach(p.Teams, (user)=>{
-            if(user._id == this.currentUser._id)
-              this.projects.push(p);
-          })
-        });
-        console.log("IN Else=========================================",this.projects);
-      }
-      this.loader=false;
-      setTimeout(()=>{
-        console.log('view project -------------------------------------');
-        $("a.view_more_detail").on("click", function(){
-          $(this).parents(".card.testimonial-card").toggleClass("open");
-          // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
-        });
-      }, 100);
-    },err=>{
-      this._alertService.error(err);
-      this.loader=false;
-    })
+        else{
+          this.projects = [];
+          _.forEach(res, (p)=>{
+            _.forEach(p.Teams, (user)=>{
+              if(user._id == this.currentUser._id)
+                this.projects.push(p);
+            })
+          });
+          console.log("IN Else=========================================",this.projects);
+        }
+        this.loader=false;
+        setTimeout(()=>{
+          console.log('view project -------------------------------------');
+          $("a.view_more_detail").on("click", function(){
+            $(this).parents(".card.testimonial-card").toggleClass("open");
+            // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
+          });
+        }, 100);
+      },err=>{
+        this._alertService.error(err);
+        this.loader=false;
+      })
   }
 
   getTitle(name){
@@ -228,75 +238,49 @@ removeAvatar(){
   this.files = [];
 }
 
-getProject(){
+getProject(id){
+
+  this.getProjects();
+  console.log("id======-=-=",id);
   this.loader = true;
   setTimeout(()=>{
-    // this._projectService.getProjectById(id).subscribe((res:any)=>{
-
-      //   console.log("id-=-=-=-()()()",id);
-      //   this.pro=res;
-      //   console.log("title{}{}{}{}",this.pro);
-      //   // this.pro = res.pmanagerId;
-      //   // console.log("project detail===>>>>",this.pro);
-      //   this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-        //     // this.projectTeam = res.team;
-        //     res.Teams.push(this.pro); 
-        //     console.log("response of team============>"  ,res.Teams);
-        //     this.projectTeam = res.Teams;
-        //     console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-        //     this.projectTeam.sort(function(a, b){
-          //       var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          //       if (nameA < nameB) //sort string ascending
-          //         return -1 
-          //       if (nameA > nameB)
-          //         return 1
-          //       return 0 //default return value (no sorting)
-          //       this.projectTeam.push
-
-          //     })
-
-          //   },(err:any)=>{
-            //     console.log("err of team============>"  ,err);
-            //   });
-            // },(err:any)=>{
-              //   console.log("err of project============>"  ,err);
-              // });
 
 
-              this._projectService.getTaskById(id).subscribe((res:any)=>{123412
-                console.log("id{}{}{}===",id);
-                console.log("all response()()() ======>",res);
-                // this.getEmptyTracks();
-                this.project = res;
-                console.log("()()()() ======>",this.project);
-                this.project.sort(custom_sort);
-                this.project.reverse();
-                console.log("PROJECT=================>", this.project);
-                _.forEach(this.project , (task)=>{
-                  // console.log("task ======>()" , task);
-                  _.forEach(this.tracks , (track)=>{
-                    // console.log("track ======>()" , track);
-                    if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-                      if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-                        console.log("sorttask==()()()",task);
-                        track.tasks.push(task);
-                      }
-                    }else{
-                      if(task.status == track.id){
-                        track.tasks.push(task);
-                      }
-                    }
-                  })
-                })
-                this.loader = false;
 
-              },err=>{
-                console.log(err);
-                this.loader = false;
-              });
+    this._projectService.getTaskById(id).subscribe((res:any)=>{123412
+      console.log("id{}{}{}===",id);
+      console.log("all response()()() ======>",res);
+      // this.getEmptyTracks();
+      this.project = res;
+      console.log("()()()() ======>",this.project);
+      this.project.sort(custom_sort);
+      this.project.reverse();
+      console.log("PROJECT=================>", this.project);
+      _.forEach(this.project , (task)=>{
+        // console.log("task ======>()" , task);
+        _.forEach(this.tracks , (track)=>{
+          // console.log("track ======>()" , track);
+          if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+            if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+              console.log("sorttask==()()()",task);
+              track.tasks.push(task);
+            }
+          }else{
+            if(task.status == track.id){
+              track.tasks.push(task);
+            }
+          }
+        })
+      })
+      this.loader = false;
+
+    },err=>{
+      console.log(err);
+      this.loader = false;
+    });
 
 
-            },1000);
+  },1000);
   function custom_sort(a, b) {
     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   }
@@ -304,12 +288,12 @@ getProject(){
 
 
 
-// getTaskCount(status){
+getTaskCount(status){
 
-  //  return _.filter(function(o) { if (o.status == status) return o }).length;
+   return _.filter(function(o) { if (o.status == status) return o }).length;
 
 
-  // }
+  }
 }
 
 
