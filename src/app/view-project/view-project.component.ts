@@ -22,6 +22,8 @@ export class ViewProjectComponent implements OnInit {
   files:Array<File>;
   url = '';
   pro;
+  idet:any;
+  pmt:any;
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
@@ -30,17 +32,11 @@ export class ViewProjectComponent implements OnInit {
   tracks;
   projectId;
   project;
+  idpmt:any;
   objectsArray:any;
   optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
-    // this.projects=res;
-    // for(var i=0;i<res.length;i++){
-    //   this.projects = res[i]._id;
-    //   console.log("this.projects========------=-=-=-=",this.projects);
-    // }
 
-    // this.projects = this.projects._id;
-    // console.log("this.projects========================--",this.projects);
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
       desc: new FormControl(''),
@@ -59,8 +55,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    
 
     setTimeout(()=>{
 
@@ -101,36 +95,36 @@ export class ViewProjectComponent implements OnInit {
       if(this.currentUser.userRole == 'projectManager'){
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
-        // this.projects = res;
-        // console.log("this.projects========------=-=-=-=",this.projects);
-        // for(var i=0;i<res.length;i++){
-        //     this.projects = res[i]._id;
-        //     // console.log("this.projects========------=-=-=-=",this.projects);
-        //   }
-        //   this.getProject(this.projects);
+        this.projects = res;
+        console.log("this.projects========------=-=-=-=",this.projects);
+        for(var i=0;i<res.length;i++){
+          this.idet =res[i]._id;
+          console.log("this.projects[][][][][]",this.idet);
+          this.getProject(this.idet);
         }
-        else{
-          this.projects = [];
-          _.forEach(res, (p)=>{
-            _.forEach(p.Teams, (user)=>{
-              if(user._id == this.currentUser._id)
-                this.projects.push(p);
-            })
-          });
-          console.log("IN Else=========================================",this.projects);
-        }
-        this.loader=false;
-        setTimeout(()=>{
-          console.log('view project -------------------------------------');
-          $("a.view_more_detail").on("click", function(){
-            $(this).parents(".card.testimonial-card").toggleClass("open");
-            // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
-          });
-        }, 100);
-      },err=>{
-        this._alertService.error(err);
-        this.loader=false;
-      })
+      }
+      else{
+        this.projects = [];
+        _.forEach(res, (p)=>{
+          _.forEach(p.Teams, (user)=>{
+            if(user._id == this.currentUser._id)
+              this.projects.push(p);
+          })
+        });
+        console.log("IN Else=========================================",this.projects);
+      }
+      this.loader=false;
+      setTimeout(()=>{
+        console.log('view project -------------------------------------');
+        $("a.view_more_detail").on("click", function(){
+          $(this).parents(".card.testimonial-card").toggleClass("open");
+          // $(this).parent(".project_header").next(".project_detail").toggleClass("open");
+        });
+      }, 100);
+    },err=>{
+      this._alertService.error(err);
+      this.loader=false;
+    })
   }
 
   getTitle(name){
@@ -240,7 +234,6 @@ removeAvatar(){
 
 getProject(id){
 
-  this.getProjects();
   console.log("id======-=-=",id);
   this.loader = true;
   setTimeout(()=>{
@@ -249,6 +242,8 @@ getProject(id){
 
     this._projectService.getTaskById(id).subscribe((res:any)=>{123412
       console.log("id{}{}{}===",id);
+      this.idpmt=id;
+      console.log("this.idpmt=-=()()()",this.idpmt);
       console.log("all response()()() ======>",res);
       // this.getEmptyTracks();
       this.project = res;
@@ -290,10 +285,18 @@ getProject(id){
 
 getTaskCount(status){
 
-   return _.filter(function(o) { if (o.status == status) return o }).length;
 
+  // for(var i=0; i<=length;i++){
+    //   var id = this.idpmt;
 
+    //   if(id == this.projects[i]._id){
+      //     return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
+
+      //   }
+
+      // }
+      return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
+    }
   }
-}
 
 
