@@ -18,7 +18,7 @@ import * as moment from 'moment';
 export class NoticeboardComponent implements OnInit {
 
   constructor(public router:Router, public _projectservice:ProjectService) { }
-  allNotice;
+  allNotice:any;
   newNotice;
   path:any;
   editNoticeForm;
@@ -30,13 +30,21 @@ export class NoticeboardComponent implements OnInit {
   ngOnInit() {
   	this.getAllNotice();
     this.createEditNoticeForm();
+    $(document).ready(function(){
+      setTimeout(function () {
+        $('.grid').masonry({
+          itemSelector: '.grid-item'
+        });
+      }, 1000);
+    });
   }
 
   getAllNotice(){
 
     this._projectservice.getNotice().subscribe((res:any)=>{
-      console.log(res);
+      console.log("response====>>>",res);
       this.allNotice=res;
+      console.log("all notice===>>>",this.allNotice);
       this.path = config.baseMediaUrl;
       console.log("base",this.path); 
     },err=>{
