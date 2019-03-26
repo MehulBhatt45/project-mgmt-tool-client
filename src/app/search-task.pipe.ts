@@ -33,4 +33,32 @@ export class SearchTaskPipe implements PipeTransform {
 			return task;
 		}
 
-	}
+		transform1(items: any[], searchText: string) : any[] {
+			console.log("items==>",items);
+			console.log("searchtext===>",searchText);
+			// return null;
+			var developer:any = [];
+			if(!items) return [];
+			if(!searchText) return items[0];
+			searchText = searchText.toLowerCase();
+			console.log("Search pipe items = ",items);
+			developer = items[0].filter( it => {
+
+				// console.log(it.assignTo);
+				if(it.name){
+
+					if(it.name.toLowerCase().includes(searchText))
+					{
+						console.log("it ==>" , it.name);
+
+						return it;
+					}
+				}
+			});
+			// for(var i=0;i<items.length;i++){
+				// }
+				return developer;
+			}
+
+
+		}

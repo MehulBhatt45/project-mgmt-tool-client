@@ -26,7 +26,7 @@ export class AllEmployeeComponent implements OnInit {
 	userId;
 	projectId;
 	searchText;
-	teamArray = [];
+	allDeve = [];
 	loader:boolean=false;
 	path = config.baseMediaUrl;
 	addEmployeeForm;
@@ -58,8 +58,7 @@ export class AllEmployeeComponent implements OnInit {
 			return "";
 		}
 	}
-	
-	getAllDevelopers(){
+		getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			console.log("dev()()",this.developers);
@@ -84,7 +83,6 @@ export class AllEmployeeComponent implements OnInit {
 			});
 		},2000);
 	}
-
 	deleteEmployee(developerid){
 		console.log("msgggg--=--",developerid);
 
@@ -106,37 +104,59 @@ export class AllEmployeeComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	// onKey(searchText){
+		// 	console.log("searchText",searchText);
+		// 	console.log("all employee",this.developers);
+		// 	var dataToBeFiltered = [this.developers];
+		// 	var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+		// 	console.log('developer =======>', developer);
+		// 	// this.getAllDevelopers();
+		// 	// this.developers = [];
+		// 	var count = [];
+		// 	// this.getAllDevelopers();
+		// 	_.forEach(developer, (content)=>{
+			// 		console.log("content is =====>",content);
+			// 		// _.filter(this.developers) == content;
+			// 		count.push(content);
+			// 	});
+			// }
 
-	onKey(searchText){
-		console.log("searchText",searchText);
-		console.log("all employee",this.developers);
-		var dataToBeFiltered = [this.developers];
-		var developer = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log('developer =======>', developer);
-		this.developers =[];
-		console.log("new filter=====>",this.developers);
-		_.forEach(developer, (content)=>{
-			this.developers.push(content);
-		});
-	}
-	getDeveloper(projectId){
-		this.selectedProjectId = projectId;
-		console.log(" project id is===========>",projectId);
-		console.log(" project id is===========>",this.developers);
-		if (projectId !='all') {
-			this.developers =[];
-			console.log(this.developers);
-			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
-				this.Teams = res.Teams;
-				console.log("response of developer============>"  ,this.Teams);
-				_.forEach(this.Teams, (content)=>{
+			getDeveloper(projectId){
+				this.selectedProjectId = projectId;
+				console.log(" project id is===========>",projectId);
+				console.log(" project id is===========>",this.developers);
+				if (projectId !='all') {
+					this.developers =[];
+					console.log(this.developers);
+					this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+						this.Teams = res.Teams;
+						console.log("response of developer============>"  ,this.Teams);
+						_.forEach(this.Teams, (content)=>{
+							console.log("content is =====>",content);
+							this.developers.push(content);
+							console.log(this.developers);
+						});
+					})
+				} else{
+					this.getAllDevelopers();
+				}
+			}
+
+			onKey(searchText){
+				console.log("searchText",searchText);
+				console.log("all employee",this.developers);
+				var dataToBeFiltered = [this.developers];
+				var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+				console.log('developer =======>', developer);
+				this.developers = [];
+				// this.getAllDevelopers();
+				_.forEach(developer, (content)=>{
 					console.log("content is =====>",content);
 					this.developers.push(content);
-					console.log(this.developers);
+
 				});
-			})
-		}
-	}
+			}
+
 }
 
 
