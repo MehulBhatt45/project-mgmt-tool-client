@@ -1,9 +1,56 @@
 <div style="background-image: linear-gradient(#FED1FB,#FDA3A5)">
 	<div class="container-fluid">
 		<h1 class="text-center font-weight-bold text-white">Notice Board</h1>
-		<div class="row">
-			<div class="col-md-3">
-				<div class="card margin-20">
+		<div class="row grid">
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
+				<div class="card mb-3">
+					<div class="view"  *ngFor="let image of notice.images">
+						<img src="{{path}}{{image}}" class="card-img-top" alt="photo">
+						<a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+					<div class="card-body">
+						<div class="btn-group dropleft float-right">
+							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
+							</div>
+						</div>
+						<h3>{{notice.title}}</h3>
+						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+				<div class="card mb-3">
+					<div class="view">
+						<img src="../assets/cover_img.jpg" class="card-img-top"
+						alt="photo">
+						<a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+					<div class="card-body">
+						<div class="btn-group dropleft float-right">
+							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
+							</div>
+						</div>
+						<h3>Notice Title</h3>
+						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+				<div class="card mb-3">
 					<div class="view">
 						<img src="../assets/v1.jpg" class="card-img-top"
 						alt="photo">
@@ -26,8 +73,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="card margin-20">
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+				<div class="card mb-3">
 					<div class="view">
 						<img src="../assets/cover_img.jpg" class="card-img-top"
 						alt="photo">
@@ -49,10 +96,58 @@
 						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
 					</div>
 				</div>
-		</div>
+			</div>
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+				<div class="card mb-3">
+					<div class="view">
+						<img src="../assets/v1.jpg" class="card-img-top"
+						alt="photo">
+						<a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+					<div class="card-body">
+						<div class="btn-group dropleft float-right">
+							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
+							</div>
+						</div>
+						<h3>Notice Title</h3>
+						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item">
+				<div class="card mb-3">
+					<div class="view">
+						<img src="../assets/cover_img.jpg" class="card-img-top"
+						alt="photo">
+						<a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+					<div class="card-body">
+						<div class="btn-group dropleft float-right">
+							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
+							</div>
+						</div>
+						<h3>Notice Title</h3>
+						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
+					</div>
+				</div>
+			</div> -->
 		
 	</div>
-	<div class="container">
+	<!-- <div class="container">
 		<section class="my-5">
 			<div class="row border border-radius-2 margin-bottom-30 padding-20 height-200" style="background-image: linear-gradient(#eee,#ddd)"  *ngFor="let notice of notice">
 				<div class="col-lg-5">
@@ -81,9 +176,9 @@
 		</section>
 	</div>
 
-</div>
+</div> -->
 <!-- Modal edit Start Here -->
-<div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -123,7 +218,7 @@
 		</div>
 	</div>
 </div>
-
+ -->
 <!-- Modal End Here -->
 
 <!-- Modal read more -->
@@ -161,7 +256,7 @@ aria-hidden="true">
 			<i class="far fa-calendar-plus margin-right-5"></i> <span>Feb,12 2019</span>
 			<div class="row desc padding-top-10">
 				<div class="col-md-12">
-					<p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>
+					<p style="text-align: justify;">{{notice.desc}}</p>
 				</div>
 			</div>
 		</div>
