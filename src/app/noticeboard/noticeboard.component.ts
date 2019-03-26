@@ -23,6 +23,7 @@ export class NoticeboardComponent implements OnInit {
   path:any;
   editNoticeForm;
   swal:any;
+  expireon;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   files;
 
