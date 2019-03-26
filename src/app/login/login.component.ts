@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
+import Swal from 'sweetalert2';
+declare var $:any;
+
 
 @Component({
   selector: 'app-login',
@@ -15,6 +18,8 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  forgotPasswordForm: FormGroup;
+  loader = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +38,10 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
+    });
+
+    this.forgotPasswordForm = this.formBuilder.group({
+      email: ['']
     });
 
     // get return url from route parameters or default to '/'
@@ -62,6 +71,26 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       });
   }
-    
 
+  updatePassword(){
+    // console.log(this.forgotPasswordForm.value);
+    this.loader = true;
+    this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
+      console.log("res-=-=",res);
+      this.loader = false;
+      // alert("Reset password link sent on your email");
+      Swal.fire("","Reset password link sent on your email","success");
+      $('#modalForgotPasswordForm').modal('hide');
+    },err=>{
+      console.log("res-=-=",err);
+      this.loader = false;
+      // alert("email not found");
+      Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Email not found!',
+        footer: ''
+      })
+    })    
+  }  
 }
