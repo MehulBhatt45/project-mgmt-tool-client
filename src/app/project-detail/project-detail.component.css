@@ -222,11 +222,14 @@ table {
     opacity: 0.75;
     display: block;
 }
-.due_date_sorting_btn i.fas.hide,
+/*.due_date_sorting_btn i.fas.hide,
 .priority_sorting_btn i.fas.hide{
   opacity: 1;
   pointer-events: none;
-}
+}*/
+/*.fa-angle-up ,.fa-angle-down{
+  font-size: 15px;
+}*/
 
 .details {
   border: 1px solid lightgray;
