@@ -22,8 +22,7 @@ export class ViewProjectComponent implements OnInit {
   files:Array<File>;
   url = '';
   pro;
-  getId:any;
-  idet:any;
+  idet;
   pmt:any;
   developers: any;
   path = config.baseMediaUrl;
@@ -34,8 +33,9 @@ export class ViewProjectComponent implements OnInit {
   projectId;
   project;
   idpmt:any;
-  id:any;
   objectsArray:any;
+  
+  ary:any;
   optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
 
@@ -57,6 +57,8 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
 
     setTimeout(()=>{
 
@@ -100,12 +102,13 @@ export class ViewProjectComponent implements OnInit {
         this.projects = res;
         console.log("this.projects========------=-=-=-=",this.projects);
         for(var i=0;i<res.length;i++){
+          this.idet = [];
           this.idet =res[i]._id;
-          console.log("this.projects[][][][][]",this.idet);
 
-          this.getProject(this.idet);
+          console.log("this.projects[][][][][]",this.idet);
         }
-        
+
+        this.getProject(this.idet);
       }
       else{
         this.projects = [];
@@ -289,10 +292,20 @@ getProject(id){
 
 getTaskCount(status){
 
-  var id = this.idpmt;
-  // console.log("id--=-=-=-",id);
-  return _.filter(this.project,function(o) { if (o.projectId == id && o.status == status) return o }).length;
-}
-}
+
+  // for(var i=0; i<=length;i++){
+    //   var id = this.idpmt;
+
+    //   if(id == this.projects[i]._id){
+      //     return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
+
+      //   }
+
+      // }
+      var id = this.idpmt;
+      return _.filter(this.project,function(o) { if (o.projectId == id && o.status == status) return o }).length;
+    }
+  }
 
 
+  
