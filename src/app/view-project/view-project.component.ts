@@ -45,6 +45,8 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    
     setTimeout(()=>{
       
     $('[data-toggle="popover-hover"]').popover({
