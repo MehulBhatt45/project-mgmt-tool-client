@@ -29,7 +29,7 @@
 							<div class=" row form-group col-6">
 								<button class="btn btn-default" (click)="fileUpload.click()">
 									<i class="fa fa-paperclip mr-1"></i> Add Files
-									<input type="file" formControlName="images" name="uploadedFiles" #fileUpload multiple id="fileUpload" hidden  (change)="changeFile($event)">
+									<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)">
 								</button>
 							</div>
 							<div class="form-group col-6">

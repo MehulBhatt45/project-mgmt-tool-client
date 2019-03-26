@@ -1,5 +1,15 @@
+.cont{
+
+    background-color: #fff;
+}
+
 .table-bordered {
     border: 2px solid darkgrey;
+}
+.top{
+
+    margin-top: 30px;
+    font-size: 25px;
 }
 .min-chart {
     margin-top: 0px;
@@ -12,7 +22,7 @@
 .for_title{
     background-color: #f1ffef;
     text-align: center;
-   
+
 }
 .number_of_task{
     margin-top: 25px;

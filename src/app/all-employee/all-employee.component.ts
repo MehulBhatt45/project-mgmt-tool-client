@@ -7,6 +7,10 @@ import { config } from '../config';
 declare var $ : any;
 import { LoginService } from '../services/login.service';
 import Swal from 'sweetalert2';
+import {SearchTaskPipe} from '../search-task.pipe';
+import * as _ from 'lodash';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
 	selector: 'app-all-employee',
@@ -14,20 +18,29 @@ import Swal from 'sweetalert2';
 	styleUrls: ['./all-employee.component.css']
 })
 export class AllEmployeeComponent implements OnInit {
+	tracks:any;
+	Teams;
+	tasks;
 	developers;
 	developer;
 	userId;
+	projectId;
+	searchText;
+	teamArray = [];
 	loader:boolean=false;
 	path = config.baseMediaUrl;
 	addEmployeeForm;
 	files: Array<File> = [];
+	selectedProjectId: 'all';
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	
 	constructor(private formBuilder: FormBuilder, private _loginService: LoginService,private route: ActivatedRoute,public _alertService: AlertService,
-		private router: Router, public _projectService: ProjectService) { }
+		private router: Router, public _projectService: ProjectService,  public searchTextFilter: SearchTaskPipe) { }
 
 	ngOnInit() {
 		this.getAllDevelopers();
+		this.getAllProjects();
+		// this.getDeveloper(projectId);
 		this.loader=true;
 		$('.datepicker').pickadate();
 		// this.getAllUser();
@@ -84,5 +97,50 @@ export class AllEmployeeComponent implements OnInit {
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
+	projects;
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+	}
 
+	onKey(searchText){
+		console.log("searchText",searchText);
+		console.log("all employee",this.developers);
+		var dataToBeFiltered = [this.developers];
+		var developer = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+		console.log('developer =======>', developer);
+		this.developers =[];
+		console.log("new filter=====>",this.developers);
+		_.forEach(developer, (content)=>{
+			this.developers.push(content);
+		});
+	}
+	getDeveloper(projectId){
+		this.selectedProjectId = projectId;
+		console.log(" project id is===========>",projectId);
+		console.log(" project id is===========>",this.developers);
+		if (projectId !='all') {
+			this.developers =[];
+			console.log(this.developers);
+			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+				this.Teams = res.Teams;
+				console.log("response of developer============>"  ,this.Teams);
+				_.forEach(this.Teams, (content)=>{
+					console.log("content is =====>",content);
+					this.developers.push(content);
+					console.log(this.developers);
+				});
+			})
+		}
+	}
 }
+
+
+
+
+
+

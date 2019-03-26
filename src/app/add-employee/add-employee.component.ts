@@ -26,15 +26,21 @@ export class AddEmployeeComponent implements OnInit {
 			date:new FormControl('',[Validators.required]),
 			mobile:new FormControl('',[Validators.required]),
 			userRole:new FormControl('',[Validators.required]),
-			experience:new FormControl('',[Validators.required]),
+			experience:new FormControl('',[Validators.required]),	
 			profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
 	}
 
 	ngOnInit() {
-		$('.datepicker').pickadate();
-		
+		$('.datepicker').pickadate({
+			onSet: function(context) {
+				change();
+			}
+		});
+		var change:any = ()=>{
+			this.addEmployeeForm.controls.date.setValue($('.datepicker').val());
+		}
 	}
 
 	addEmployee(addEmployeeForm){

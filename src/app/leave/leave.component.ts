@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
-
-import {ProjectService} from '../services/project.service';
+import{LeaveService} from '../services/leave.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -29,7 +29,7 @@ export class LeaveComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 
-	constructor(public router:Router, public _projectservice:ProjectService) {
+	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
 			email: new FormControl (''),
 			name: new FormControl (''),
@@ -110,11 +110,15 @@ export class LeaveComponent implements OnInit {
 			form['leaveDuration'] = daysDuration;
 			console.log("form data======>",form);
 		}
-		this._projectservice.addLeave(this.addForm.value).subscribe((res:any)=>{
-
+		this._leaveService.addLeave(this.addForm.value).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Leave Apply Successfully',showConfirmButton:false,timer: 2000})
+			this.router.navigate(['./view-projects']);
 			console.log("ressssssssssssss",res);
+
+
 		},err=>{
 			console.log(err);
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
 	showOneDay(){

@@ -1,5 +1,5 @@
 .notice-image .view{
-	border: 1px solid red;
+	border: 2px solid white;
 	height: 280px;
 	width: 100%;
 	/*overflow: hidden;*/
@@ -10,5 +10,11 @@
 	max-width: 100%;
 	/*object-fit: cover;*/
 }
-
-
+.text-center{
+	border: 3px solid gray;
+	border-radius: 8px;
+	width: 30%;
+	text-align: center;
+	margin: 0px auto;
+	padding: 20px;
+}
