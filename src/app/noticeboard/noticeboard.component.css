@@ -25,9 +25,6 @@
 	column-count: 5;
 	column-gap: 2;
 }
-.desc{
-	background-color: #eee;
-}
 .dropdown-menu{
     background-color: transparent;
     box-shadow: none; 
