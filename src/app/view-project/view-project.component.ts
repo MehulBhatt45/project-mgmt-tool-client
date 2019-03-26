@@ -22,6 +22,7 @@ export class ViewProjectComponent implements OnInit {
   files:Array<File>;
   url = '';
   pro;
+  getId:any;
   idet:any;
   pmt:any;
   developers: any;
@@ -33,6 +34,7 @@ export class ViewProjectComponent implements OnInit {
   projectId;
   project;
   idpmt:any;
+  id:any;
   objectsArray:any;
   optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
@@ -100,8 +102,10 @@ export class ViewProjectComponent implements OnInit {
         for(var i=0;i<res.length;i++){
           this.idet =res[i]._id;
           console.log("this.projects[][][][][]",this.idet);
+
           this.getProject(this.idet);
         }
+        
       }
       else{
         this.projects = [];
@@ -285,18 +289,10 @@ getProject(id){
 
 getTaskCount(status){
 
-
-  // for(var i=0; i<=length;i++){
-    //   var id = this.idpmt;
-
-    //   if(id == this.projects[i]._id){
-      //     return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
-
-      //   }
-
-      // }
-      return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
-    }
-  }
+  var id = this.idpmt;
+  // console.log("id--=-=-=-",id);
+  return _.filter(this.project,function(o) { if (o.projectId == id && o.status == status) return o }).length;
+}
+}
 
 
