@@ -281,6 +281,11 @@ export class ProjectService {
 			return this.http.get(config.baseApiUrl+"notice/allnotice");
 		}
 
+		getNoticeById(noticeid){
+			return this.http.get(config.baseApiUrl+"notice/noticebyid/"+noticeid);
+		}
+
+
 		deleteProjectById(data){
 			var projectId = data._id;
 			const httpOptions = {
