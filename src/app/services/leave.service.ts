@@ -11,15 +11,32 @@ export class LeaveService {
 	constructor(private http:HttpClient) { }
 
 
-	addLeave(form){
+	addLeave(form,files:any){
+		console.log("fikeeeeeeeeeeeeeeesssss",files);
 		console.log("formmmmmmmmmmmmmmmmmm",form);
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/json',
-				'x-access-token': JSON.parse(localStorage.getItem('token'))
-			})
-		};
-		return this.http.post(config.baseApiUrl+"leave/add-leave",form);
+		let formData = new FormData();
+		formData.append('endingDate',form.endingDate);
+
+		formData.append('leaveDuration',form.leaveDuration);
+
+		formData.append('noOfDays',form.noOfDays);
+
+		formData.append('reasonForLeave',form.reasonForLeave);
+
+		formData.append('singleDate',form.singleDate);
+
+		formData.append('startingDate',form.startingDate);
+
+		formData.append('typeOfLeave',form.typeOfLeave);
+
+		formData.append('attechment',files[0]);
+		// const httpOptions = {
+		// 	headers: new HttpHeaders({
+		// 		'Content-Type': 'application/json',
+		// 		'x-access-token': JSON.parse(localStorage.getItem('token'))
+		// 	})
+		// };
+		return this.http.post(config.baseApiUrl+"leave/add-leave",formData);
 	}
 
 
