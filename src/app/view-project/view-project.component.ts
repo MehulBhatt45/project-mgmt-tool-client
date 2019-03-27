@@ -102,17 +102,10 @@ export class ViewProjectComponent implements OnInit {
         this.projects = res;
         console.log("this.projects========------=-=-=-=",this.projects);
         for(var i=0;i<res.length;i++){
-
           this.idet =res[i]._id;
-<<<<<<< HEAD
-          //console.log("this.projects[][][][][]",this.idet);
-=======
-
           console.log("this.projects[][][][][]",this.idet);
-          
           this.getProject(this.idet);
           
->>>>>>> 67b69eb520d5bead14abf97899a482ba03865cad
         }
 
       }
