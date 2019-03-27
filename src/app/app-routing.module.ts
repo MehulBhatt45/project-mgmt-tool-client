@@ -28,6 +28,7 @@ import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import {SummaryComponent} from './summary/summary.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { UserSummaryComponent} from './user-summary/user-summary.component';
+import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 
 
 
@@ -44,6 +45,10 @@ const routes: Routes = [
 	{
 		path:'register',
 		component:RegisterComponent
+	},
+	{
+		path:'forgotpwd/:token',
+		component:ForgotpwdComponent
 	},
 
 	{
@@ -168,7 +173,7 @@ const routes: Routes = [
 			path:'user-summary/:userId/:projectId',
 			pathMatch: "full",
 			component:UserSummaryComponent
-		}
+		},
 		]
 
 	}];

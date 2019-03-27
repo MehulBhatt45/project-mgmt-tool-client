@@ -17,10 +17,16 @@
 		<div class="container">
 			<div class="row" style="margin-top: 30px;">
 				<div class="col-sm-6">
-					<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
-					<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
-					<p>Our Completed Project: <b>{{round}}%</b></p>
-				</div>
+					<h2 style="margin-top: 70px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
+					<div class="row">
+						<div class="col-sm-6">
+							<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
+						</div>
+						<div class="col-sm-6">
+							<p style="margin-top: 33px;">Our Completed Project: <b>{{round}}%</b></p>
+						</div>
+					</div>
+
 				<!-- <div class="col-sm-3">
 					<div class="progress blue">
 						<span class="progress-left">
@@ -33,11 +39,11 @@
 						
 					</div>
 				</div> -->
-				<div class="col-sm-6">
+				
 
-					<canvas id="pieChart5"></canvas>
+				<canvas id="pieChart5"></canvas>
 
-				</div>
+			</div>
 				<!-- <div class="row">
 					<div class="progress yellow" >
 						<span class="progress-left">
@@ -70,26 +76,16 @@
 			</span>
 			<div class="progress-value" *ngIf="project">{{project.length}}</div>
 		</div> -->
-	</div>
-	<div class="row" style="margin-top: 25px;">
-		<table class="table table-borderless">
-			
-			<tbody>
-				<tr>
 
-					<td><h3 style="margin-top: 20px;"><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3></td>
-					<td><canvas id="myChart" style="width: 50%;"></canvas></td>
 
-				</tr>
-			</tbody>
-		</table>
-	</div>
-		<!-- <div class="col-sm-6" style="margin-top: 70px;">
-			
+		<div class="col-sm-6" style="margin-top: 70px;">
+			<h2><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h2>
+
+			<canvas id="myChart" style="width: 50%;margin-top: 80px;"></canvas>
+
 		</div>
-		<div class="col-sm-6" style="margin-top: 50px;">
-			
-		</div> -->
+	</div>
+
 
 		<!-- <table class="table table-bordered table-responsive">
 			<thead>
@@ -136,7 +132,8 @@
 			<h3><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
 			<div class="col-sm-6" style="padding-left: 0px;">
 				<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-				<canvas id="pieChart1" class="border1"></canvas>
+				<!-- <canvas id="pieChart1" class="border1"></canvas> -->
+				<canvas id="lineChart"></canvas>
 
 			<!-- 	<table class="table table-bordered table-responsive">
 					<thead>
@@ -156,7 +153,8 @@
 			</div>
 			<div class="col-sm-6" style="padding-right: 0px;">
 				<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
-				<canvas id="pieChart2" class="border2"></canvas>
+				<!-- <canvas id="pieChart2" class="border2"></canvas> -->
+				<canvas id="lineChart1"></canvas>
 				<!-- <table class="table table-bordered table-responsive" >
 					<thead>
 						<tr>
@@ -172,9 +170,10 @@
 					</tbody>
 				</table> -->
 			</div><hr/>
-			<div class="col-sm-6" style="padding-left: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">Midium Priority</h3>
-				<canvas id="pieChart3" class="border3"></canvas>
+			<!-- <div class="col-sm-6" style="padding-left: 0px;">
+				<h3 style="text-align:center;margin-top: 30px;">Midium Priority</h3> -->
+				<!-- <canvas id="pieChart3" class="border3"></canvas> -->
+				<!-- <canvas id="lineChart2"></canvas> -->
 				<!-- <table class="table table-bordered table-responsive">
 					<thead>
 						<tr>
@@ -189,10 +188,11 @@
 						</tr>
 					</tbody>
 				</table> -->
-			</div>
-			<div class="col-sm-6" style="padding-right: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">Low Priority</h3>
-				<canvas id="pieChart4" class="border4"></canvas>
+				<!-- </div> -->
+			<!-- <div class="col-sm-6" style="padding-right: 0px;">
+				<h3 style="text-align:center;margin-top: 30px;">Low Priority</h3> -->
+				<!-- <canvas id="pieChart4" class="border4"></canvas> -->
+				<!-- <canvas id="lineChart3"></canvas> -->
 				<!-- <table class="table table-bordered table-responsive">
 					<thead>
 						<tr>
@@ -207,11 +207,11 @@
 						</tr>
 					</tbody>
 				</table> -->
-			</div>
+				<!-- </div> -->
 
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import{LeaveService} from '../services/leave.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -23,6 +23,7 @@ export class LeaveComponent implements OnInit {
 	// stratDate;
 	// endDate; 
 	// durationDays;
+	files: Array<File> = [];
 	showOneDays;
 	showMoreDayss;
 	leaveDuration;
@@ -39,7 +40,8 @@ export class LeaveComponent implements OnInit {
 			startingDate: new FormControl (''),
 			noOfDays: new FormControl(''),
 			endingDate: new FormControl (''),
-			singleDate: new FormControl('')
+			singleDate: new FormControl(''),
+			attechment: new FormControl('')
 		})
 	}
 
@@ -76,6 +78,10 @@ export class LeaveComponent implements OnInit {
 			}
 		})*/
 	}
+
+	addFile(event){
+		this.files = event.target.files;
+	}
 	addLeave(form){
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
@@ -110,11 +116,15 @@ export class LeaveComponent implements OnInit {
 			form['leaveDuration'] = daysDuration;
 			console.log("form data======>",form);
 		}
-		this._leaveService.addLeave(this.addForm.value).subscribe((res:any)=>{
-
+		this._leaveService.addLeave(this.addForm.value, this.files).subscribe((res:any)=>{
+			Swal.fire({type: 'success',title: 'Leave Apply Successfully',showConfirmButton:false,timer: 2000})
+			this.router.navigate(['./view-projects']);
 			console.log("ressssssssssssss",res);
+
+
 		},err=>{
 			console.log(err);
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
 	showOneDay(){

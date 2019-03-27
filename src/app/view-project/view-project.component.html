@@ -9,7 +9,7 @@
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
               <div class="view view-cascade overlay" style="background-color: #ddd">
-                <img  routerLink="/project-details/{{project._id}}" class="img-responsive title_image margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
+                <img  routerLink="/project-details/{{project._id}}" class="img-fluid title_image margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
                 <div class="margin-top-10 margin-bottom-10 text-center">
                     <h4  routerLink="/project-details/{{project._id}}" class="font-weight-bold card-title">{{project.title}}</h4>
 
@@ -49,30 +49,32 @@
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
     </h5>
     <span class="font-weight-bold">Project Manager</span>
-    <p>24-01-2019</p>
+
+    
+    <p><i class="far fa-calendar-plus margin-right-5"></i> <span>Feb,12 2019</span></p>
     <p class="card-text">{{project.desc}}</p>
     <button class="btn btn-default progress_summary">Progress</button>
-    <div class="summary">
+    <div class="summary card z-depth-3">
         <h4>{{project.title}}</h4>
         <h4 class="margin-top-10">Project Progress</h4>
         <div class="row padding-20">
             <div class="col-md-6">
-                <button class="btn btn-warning"></button>
+                <button class="btn btn-warning">{{getTaskCount('to do')}}</button>
                 <p>To Do</p>
                 <!-- <p>{{getTaskCount('to do')}}</p> -->
             </div>
             <div class="col-md-6">
-                <button class="btn btn-info"></button>
+                <button class="btn btn-info">{{getTaskCount('in progress')}}</button>
                 <p>In Progress</p>
                 <!-- <p>{{getTaskCount('in progress')}}</p> -->
             </div>
             <div class="col-md-6">
-                <button class="btn btn-indigo"></button>
+                <button class="btn btn-indigo">{{getTaskCount('testing')}}</button>
                 <p>Testing</p>
                 <!-- <p>{{getTaskCount('testing')}}</p> -->
             </div>
             <div class="col-md-6">
-                <button class="btn btn-success"></button>
+                <button class="btn btn-success">{{getTaskCount('comlete')}}</button>
                 <p>Complete</p>
                 <!-- <p>{{getTaskCount('comlete')}}</p> -->
             </div>
@@ -273,28 +275,5 @@ aria-hidden="true">
             </div>
         </div>
     </div>
-</div>
-
-<!-- id start -->
-<div id="#progress">
-    <div class="row border">
-        <div class="col-md-6">
-            <button class="btn btn-warning"></button>
-            <p>To Do</p>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-info"></button>
-            <p>In Progress</p>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-indigo"></button>
-            <p>Testing</p>
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-success"></button>
-            <p>To Do</p>
-        </div>
-    </div>
-    
 </div>
 

@@ -63,6 +63,7 @@ import {EditprofileComponent} from './editprofile/editprofile.component'
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UserSummaryComponent } from './user-summary/user-summary.component';
+import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 
 
 @NgModule({
@@ -99,6 +100,7 @@ import { UserSummaryComponent } from './user-summary/user-summary.component';
     SummaryComponent,
     EditprofileComponent,
     UserSummaryComponent,
+    ForgotpwdComponent,
    ],
 
     imports: [

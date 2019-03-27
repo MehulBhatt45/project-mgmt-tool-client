@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		if(!this.currentUser){
-			this.router.navigate(['/login'])
+			// this.router.navigate(['/login'])
 		}
 		$("#dropdown").click(function(e){
   e.stopPropagation();

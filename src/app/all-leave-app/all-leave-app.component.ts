@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
+import { config } from '../config';
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -32,8 +34,9 @@ export class AllLeaveAppComponent implements OnInit {
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
-  // apps;
 
+  path = config.baseMediaUrl;
+  // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute) { 
 
@@ -139,6 +142,7 @@ export class AllLeaveAppComponent implements OnInit {
           return 0 
         })
 
+
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
             if(leave.email == dev.email){
@@ -146,7 +150,7 @@ export class AllLeaveAppComponent implements OnInit {
             }
           })
         })
-        console.log("Developers",this.developers);
+        console.log("Developers",this.leaveApp);
       },err=>{
         console.log("Couldn't get all developers ",err);
         this._alertService.error(err);
@@ -188,8 +192,11 @@ export class AllLeaveAppComponent implements OnInit {
           _.forEach(this.leaveApp, (apply)=>{
             if(apply._id == req){
               body = apply;
+              body.status = "approved";
             }
           })
+          console.log("req ========>" , req);
+          console.log("bodyy ========>" , body);
           this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
             Swal.fire(
               'Approve!',
@@ -211,93 +218,107 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
 
-
-
-
-   
-          
-
     leaveRejected(req){
-      var body;
-      console.log("rejected",this.leaveApp);
-      console.log("gtgt",req);
-      _.forEach(this.leaveApp, (apply)=>{
-        if(apply._id == req){
-          body = apply;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Reject it!'
+      }).then((result) => {
+        if (result.value) {
+          var body;
+          console.log("rejected",this.leaveApp);
+          console.log("reeeeeeee",req);
+          _.forEach(this.leaveApp, (apply)=>{
+            if(apply._id == req){
+              body = apply;
+              body.status = "rejected";
+            }
+          })
+          console.log("req ========>" , req);
+          console.log("bodyy ========>" , body);
+          this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+            Swal.fire(
+              'Rejected!',
+              'Your Leave has been Rejected.',
+              'success'
+              )
+            body.status = "rejected";
+            console.log("bodyyyyyyyyyyyyyyy",body);
+            console.log("respondsssssss",res);
+            this.rejectedLeave = res;
+            console.log("rejected===========>",this.rejectedLeave);
+            this.getLeaves();
+          },(err:any)=>{
+            console.log(err);
+            Swal.fire('Oops...', 'Something went wrong!', 'error')
+          })
         }
       })
-      body.status = "rejected";
-      console.log("body",body);
-      this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-
-        console.log("response",res);
-        this.rejectedLeave = res;
-        console.log("rejected===========>",this.rejectedLeave);
-      },(err:any)=>{
-        console.log(err);
-      })
     }
 
-
-    leavesByUserId(){
-      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-      console.log("email of login user",obj);
-      this._leaveService.leavesById(obj).subscribe((res:any)=>{
-        console.log("resppppppondssss",res);
-        this.leaves = res;
-        _.forEach(this.leaves , (leave)=>{
-          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-        })
-        console.log("statussssssss",this.leaves);
-      },err=>{
-        console.log(err);
+  leavesByUserId(){
+    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+    console.log("email of login user",obj);
+    this._leaveService.leavesById(obj).subscribe((res:any)=>{
+      console.log("resppppppondssss",res);
+      this.leaves = res;
+      _.forEach(this.leaves , (leave)=>{
+        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
       })
-    }
+      console.log("statussssssss",this.leaves);
+    },err=>{
+      console.log(err);
+    })
+  }
 
-    filterTracks(developerId){
-      this.getEmptytracks();
-      var obj ={ email : developerId};
-      console.log("email of login user",obj);
-      this._leaveService.leavesById(obj).subscribe((res:any)=>{
-        console.log("resppppppondssss",res);
-        this.leaves = res;
+  filterTracks(developerId){
+    this.getEmptytracks();
+    var obj ={ email : developerId};
+    console.log("email of login user",obj);
+    this._leaveService.leavesById(obj).subscribe((res:any)=>{
+      console.log("resppppppondssss",res);
+      this.leaves = res;
+      _.forEach(this.leaves , (leave)=>{
+        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+      })
+      console.log("statussssssss",this.leaves);
+      if( developerId!='all'){
+        this.leaveApp = [];
+        $('.unselected').css('display','block');
+        $('.selected').css('display','none');
+        console.log("sucess");
         _.forEach(this.leaves , (leave)=>{
-          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-        })
-        console.log("statussssssss",this.leaves);
-        if( developerId!='all'){
-          this.leaveApp = [];
-          $('.unselected').css('display','block');
-          $('.selected').css('display','none');
-          console.log("sucess");
-          _.forEach(this.leaves , (leave)=>{
-            console.log("dsfbbdsf",leave);
-            if(developerId == leave.email ){
-              console.log(leave);
-              $('.unselected').css('display','none');
-              $('.selected').css('display','block');
-              this.leaveApp.push(leave);
+          console.log("dsfbbdsf",leave);
+          if(developerId == leave.email ){
+            console.log(leave);
+            $('.unselected').css('display','none');
+            $('.selected').css('display','block');
+            this.leaveApp.push(leave);
+          }
+        });
+        _.forEach(this.leaves , (leave)=>{
+          _.forEach(this.leavescount , (count)=>{
+            if(count.typeOfLeave == leave.typeOfLeave){
+              count.leavesTaken = count.leavesTaken + 1;
             }
 
           });
-          _.forEach(this.leaves , (leave)=>{
-            _.forEach(this.leavescount , (count)=>{
-              if(count.typeOfLeave == leave.typeOfLeave){
-                count.leavesTaken = count.leavesTaken + 1;
-              }
-            });
-          });
-          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-          console.log("leaves count ====>" , this.leavescount);
-        }else{
-          console.log("not found");
-        }
-      },err=>{
-        console.log(err);
-      })
-    }
-
+        });
+        console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+        console.log("leaves count ====>" , this.leavescount);
+      }else{
+        console.log("not found");
+      }
+    },err=>{
+      console.log(err);
+    })
   }
+
+}
 

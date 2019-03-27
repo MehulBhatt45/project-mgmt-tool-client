@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 declare var $ : any;
 import { config } from '../config';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-userprofile',
@@ -96,17 +97,17 @@ export class UserprofileComponent implements OnInit {
 			this.developers = res;
 			console.log("Developers",this.developers);
 			// this.developers.sort(function(a, b){
-			// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-			// 	if (nameA < nameB) //sort string ascending
-			// 		return -1 
-			// 	if (nameA > nameB)
-			// 		return 1
-			// 	return 0 //default return value (no sorting)
-			// })
-		},err=>{
-			console.log("Couldn't get all developers ",err);
-			this._alertService.error(err);
-		})
+				// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+				// 	if (nameA < nameB) //sort string ascending
+				// 		return -1 
+				// 	if (nameA > nameB)
+				// 		return 1
+				// 	return 0 //default return value (no sorting)
+				// })
+			},err=>{
+				console.log("Couldn't get all developers ",err);
+				this._alertService.error(err);
+			})
 	}
 
 	openModel(task){
@@ -121,12 +122,15 @@ export class UserprofileComponent implements OnInit {
 		console.log("files===============>",this.files);
 		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
 			console.log("resss=======>",res);
+			Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
+
 			setTimeout(()=>{
 				this.currentUser = res;
 				localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 			},1000);
 		},error=>{
 			console.log("errrorrrrrr====>",error);
+			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		});  
 	}
 

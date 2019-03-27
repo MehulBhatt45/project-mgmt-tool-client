@@ -73,3 +73,8 @@ li a{
 }
 
 
+.nav-link {
+    display: block;
+     padding: 0 !important; 
+     cursor: pointer;
+}
