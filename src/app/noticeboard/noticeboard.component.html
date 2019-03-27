@@ -12,7 +12,7 @@
 					</div>
 					<div class="card-body">
 						<div class="btn-group dropleft float-right">
-							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
 							</button>
 							<div class="dropdown-menu">
 								<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i></a>
