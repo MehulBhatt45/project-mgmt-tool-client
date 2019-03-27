@@ -104,7 +104,7 @@
                 <span>Leave-Reason</span>
               </th>
               <th>
-                <span>Attechment</span>
+                <span>Attachment</span>
               </th>
               <th>
                 <span>Leave-Status</span>
@@ -133,7 +133,7 @@
               <td>{{leaves.endingDate}}</td>
               <td>{{leaves.typeOfLeave}}</td>
               <td class="description">{{leaves.reasonForLeave}}</td>
-              <td><a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechments</a></td>
+              <td><a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attachment</a></td>
               <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
               <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
             </tr>
