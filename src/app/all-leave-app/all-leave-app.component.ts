@@ -28,6 +28,7 @@ export class AllLeaveAppComponent implements OnInit {
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
+  attechment: true;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
