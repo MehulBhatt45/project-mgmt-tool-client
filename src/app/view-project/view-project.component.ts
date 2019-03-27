@@ -104,11 +104,15 @@ export class ViewProjectComponent implements OnInit {
         for(var i=0;i<res.length;i++){
 
           this.idet =res[i]._id;
+<<<<<<< HEAD
+          //console.log("this.projects[][][][][]",this.idet);
+=======
 
           console.log("this.projects[][][][][]",this.idet);
           
           this.getProject(this.idet);
           
+>>>>>>> 67b69eb520d5bead14abf97899a482ba03865cad
         }
 
       }
@@ -124,7 +128,6 @@ export class ViewProjectComponent implements OnInit {
       }
       this.loader=false;
       setTimeout(()=>{
-        console.log('view project -------------------------------------');
         $("a.view_more_detail").on("click", function(){
           $(this).parents(".card.testimonial-card").toggleClass("open");
           // $(this).parent(".project_header").next(".project_detail").toggleClass("open");

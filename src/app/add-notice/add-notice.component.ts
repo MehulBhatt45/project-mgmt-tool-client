@@ -25,14 +25,11 @@ export class AddNoticeComponent implements OnInit {
 			expireon:new FormControl('',Validators.required)
 
 		});
-
 	}
-
+	
 	ngOnInit() {
 		this.getAllNotice();
 	}
-
-
 
 	addNotice(addForm){
 		console.log(addForm);
