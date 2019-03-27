@@ -18,15 +18,20 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 	styleUrls: ['./all-employee.component.css']
 })
 export class AllEmployeeComponent implements OnInit {
+	searchFlag = false; 
+	filteredTeams;
+	filteredDevelopers;
 	tracks:any;
 	Teams;
 	tasks;
 	developers;
-	developer;
+	// developer;
 	userId;
+	filter;
 	projectId;
 	searchText;
-	allDeve = [];
+	mergeArr = [];
+	finalArray = [];
 	loader:boolean=false;
 	path = config.baseMediaUrl;
 	addEmployeeForm;
@@ -38,10 +43,13 @@ export class AllEmployeeComponent implements OnInit {
 		private router: Router, public _projectService: ProjectService,  public searchTextFilter: SearchTaskPipe) { }
 
 	ngOnInit() {
+
+		// this.mergeArr = this.developers.concat(this.Teams);
 		this.getAllDevelopers();
 		this.getAllProjects();
 		// this.getDeveloper(projectId);
 		this.loader=true;
+		this.searchFlag = false;
 		$('.datepicker').pickadate();
 		// this.getAllUser();
 	}
@@ -58,9 +66,10 @@ export class AllEmployeeComponent implements OnInit {
 			return "";
 		}
 	}
-		getAllDevelopers(){
+	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
+			this.filteredDevelopers = res;
 			console.log("dev()()",this.developers);
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
@@ -104,60 +113,78 @@ export class AllEmployeeComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	// onKey(searchText){
-		// 	console.log("searchText",searchText);
-		// 	console.log("all employee",this.developers);
-		// 	var dataToBeFiltered = [this.developers];
-		// 	var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-		// 	console.log('developer =======>', developer);
-		// 	// this.getAllDevelopers();
-		// 	// this.developers = [];
-		// 	var count = [];
-		// 	// this.getAllDevelopers();
-		// 	_.forEach(developer, (content)=>{
-			// 		console.log("content is =====>",content);
-			// 		// _.filter(this.developers) == content;
-			// 		count.push(content);
-			// 	});
-			// }
-
-			getDeveloper(projectId){
-				this.selectedProjectId = projectId;
-				console.log(" project id is===========>",projectId);
-				console.log(" project id is===========>",this.developers);
-				if (projectId !='all') {
-					this.developers =[];
-					console.log(this.developers);
-					this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
-						this.Teams = res.Teams;
-						console.log("response of developer============>"  ,this.Teams);
-						_.forEach(this.Teams, (content)=>{
-							console.log("content is =====>",content);
-							this.developers.push(content);
-							console.log(this.developers);
-						});
-					})
-				} else{
-					this.getAllDevelopers();
-				}
-			}
-
-			onKey(searchText){
-				console.log("searchText",searchText);
-				console.log("all employee",this.developers);
-				var dataToBeFiltered = [this.developers];
-				var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-				console.log('developer =======>', developer);
-				this.developers = [];
-				// this.getAllDevelopers();
-				_.forEach(developer, (content)=>{
-					console.log("content is =====>",content);
+	getDeveloper(projectId){
+		this.selectedProjectId = projectId;
+		console.log(" project id is===========>",projectId);
+		console.log(" developer of projerct===========>",this.developers);
+		if (projectId !='all') {
+			this.developers =[];
+			console.log(this.developers);
+			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+				this.Teams = res.Teams;
+				console.log("response of developer============>"  ,this.Teams);
+				_.forEach(this.Teams, (content)=>{
 					this.developers.push(content);
+					console.log(this.developers);
 
 				});
-			}
+				this.filteredTeams = this.developers;
+			})
+			this.searchFlag = true;
+		} else{
+			this.getAllDevelopers();
+		}
+	}	
+	onKey(searchText){
+		console.log("searchText",searchText);
+		if(this.searchFlag == true){
+			var dataToBeFiltered = [this.filteredTeams];
+		}
+		else{
+			var dataToBeFiltered = [this.filteredDevelopers];
+		}
+		var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+		console.log("developer =======>", developer);
+		this.developers = [];
+		if(this.selectedProjectId !='all'){
+			_.forEach(developer, (content)=>{
+				this.developers.push(content);
+			});
+		}
+		else {
+			_.forEach(developer, (content)=>{
+				this.developers.push(content);
+			});
+		}
 
+	}
 }
+// onKey(searchText){
+	// 	console.log("searchText",searchText);
+	// 	var dataToBeFiltered = [this.filteredDevelopers,];
+	// 	var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+	// 	console.log("developer =======>", developer);
+	// 	this.developers = [];
+	// 	var dataToBeFiltered1 = [this.Teams ];
+	// 	var team = this.searchTextFilter.transform1(dataToBeFiltered1, searchText);
+	// 	console.log("team =======>", team);
+	// 	if(this.selectedProjectId !='all'){
+		// 		_.forEach(team, (content)=>{
+			// 			this.developers.push(content);
+			// 		});
+			// 	}
+			// 	else if (this.selectedProjectId =='all'){
+				// 		_.forEach(developer, (content)=>{
+					// 			this.developers.push(content);
+					// 		});
+					// 	}
+					// 	else{
+						// 		_.forEach(developer, (content)=>{
+							// 			this.developers.push(content);
+							// 		});
+							// 	}
+							// }
+
 
 
 

@@ -453,99 +453,84 @@ export class MainTableViewComponent implements OnInit {
 										console.log("btn tapped");
 									}
 
-									// 	developerId;
-									// 	onKey(event: any){
-										// 		console.log(event, this.tasks);
+									
+									onKey(searchText){
+										console.log(this.tasks);
+										console.log("sds",this.tracks);
+										var dataToBeFiltered = [this.tasks];
 
-										// onKey(event: any){
-											// 	console.log(event, this.tasks);
-											// 	var dataToBeFiltered = [this.tasks];
-											// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-											// 	console.log("In Component",task);
-											// 	this.getEmptyTracks();
-											// 	_.forEach(task, (content)=>{
-												// 		_.forEach(this.tracks, (track)=>{
-													// 			if(content.status == track.id){
-														// 				track.tasks.push(content);
-														// 			}
-														// 		})
-														// 	})
-														// }
-														onKey(searchText){
-															console.log(this.tasks);
+										var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+										console.log("In Component",task);
+										this.getEmptyTracks();
 
-															var dataToBeFiltered = [this.tasks];
-															var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-															console.log("In Component",task);
-															this.getEmptyTracks();
-
-															if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
-																_.forEach(task, (project)=>{
-																	if(project.projectId._id == this.selectedProjectId){
-																		_.forEach(this.tracks, (track)=>{
-																			if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-																				if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-																					track.tasks.push(project);
-																				}
-																			}else{
-																				if(project.status == track.id){
-																					track.tasks.push(project);
-																				}
-																			}
-																		})
-																	}	
-																})
-															}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
-																_.forEach(task, (project)=>{
-																	console.log(project);
-																	_.forEach(this.tracks, (track)=>{
-																		if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-																			track.tasks.push(project);
-																		}
-																	})
-																})
-															}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
-																_.forEach(task, (project)=>{
-																	console.log(project);
-																	if(project.projectId._id == this.selectedProjectId){
-																		_.forEach(this.tracks, (track)=>{
-																			if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-																				track.tasks.push(project);
-																			}
-																		})
-
-																		// _.forEach(task, (content)=>{	
-																			// 	_.forEach(this.tracks, (track)=>{
-																				// 		if(content.status == track.id){
-																					// 			track.tasks.push(content);
-
-																				}
-																			})
-															}else{
-																_.forEach(task, (project)=>{
-																	console.log(project);
-																	_.forEach(this.tracks, (track)=>{
-																		if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-																			if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-																				track.tasks.push(project);
-																			}
-																		}else{
-																			if(project.status == track.id){
-																				track.tasks.push(project);
-																			}
-																		}
-																	})
-																})
+										if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
+											_.forEach(task, (project)=>{
+												if(project.projectId._id == this.selectedProjectId){
+													_.forEach(this.tracks, (track)=>{
+														console.log("trabfghkknj===",this.tracks);
+														if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+															if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+																track.tasks.push(project);
+															}
+														}else{
+															if(project.status == track.id){
+																track.tasks.push(project);
 															}
 														}
-														projects;
-														getAllProjects(){
-															this._projectService.getProjects().subscribe(res=>{
-																this.projects = res;
-															},err=>{
-																this._alertService.error(err);
-																console.log(err);
-															})
+													})
+												}	
+											})
+										}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
+											_.forEach(task, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+														track.tasks.push(project);
+													}
+												})
+											})
+										}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
+											_.forEach(task, (project)=>{
+												console.log(project);
+												if(project.projectId._id == this.selectedProjectId){
+													_.forEach(this.tracks, (track)=>{
+														if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+															track.tasks.push(project);
+														}
+													})
+
+													// _.forEach(task, (content)=>{	
+														// 	_.forEach(this.tracks, (track)=>{
+															// 		if(content.status == track.id){
+																// 			track.tasks.push(content);
+
+															}
+														})
+										}else{
+											_.forEach(task, (project)=>{
+												console.log(project);
+												_.forEach(this.tracks, (track)=>{
+													if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+														if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+															track.tasks.push(project);
+														}
+													}else{
+														if(project.status == track.id){
+															track.tasks.push(project);
 														}
 													}
+												})
+											})
+										}
+									}
+									projects;
+									getAllProjects(){
+										this._projectService.getProjects().subscribe(res=>{
+											this.projects = res;
+										},err=>{
+											this._alertService.error(err);
+											console.log(err);
+										})
+									}
+								}
 

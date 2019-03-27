@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 export class SearchTaskPipe implements PipeTransform {
 
 	transform(items: any[], searchText: string): any[] {
+
 		console.log("items==>",items);
 		console.log("searchtext===>",searchText);
 		// return null;
@@ -36,7 +37,6 @@ export class SearchTaskPipe implements PipeTransform {
 		transform1(items: any[], searchText: string) : any[] {
 			console.log("items==>",items);
 			console.log("searchtext===>",searchText);
-			// return null;
 			var developer:any = [];
 			if(!items) return [];
 			if(!searchText) return items[0];
@@ -44,10 +44,9 @@ export class SearchTaskPipe implements PipeTransform {
 			console.log("Search pipe items = ",items);
 			developer = items[0].filter( it => {
 
-				// console.log(it.assignTo);
 				if(it.name){
 
-					if(it.name.toLowerCase().includes(searchText))
+					if(it.name.toLowerCase().includes(searchText)  || it.email.toLowerCase().includes(searchText) || it.userRole.toLowerCase().includes(searchText))
 					{
 						console.log("it ==>" , it.name);
 
@@ -55,10 +54,7 @@ export class SearchTaskPipe implements PipeTransform {
 					}
 				}
 			});
-			// for(var i=0;i<items.length;i++){
-				// }
-				return developer;
-			}
-
-
+			return developer;
 		}
+		
+	}
