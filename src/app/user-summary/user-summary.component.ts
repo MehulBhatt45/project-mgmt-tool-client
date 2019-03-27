@@ -304,119 +304,205 @@ export class UserSummaryComponent implements OnInit {
 						});
 
 
-						var ctxP = document.getElementById("pieChart1");
-						var myPieChart = new Chart(ctxP, {
-							type: 'pie',
+						var ctxL = document.getElementById("lineChart")
+						var myLineChart = new Chart(ctxL, {
+							type: 'line',
 							data: {
 								labels: ["To Do", "In Progress", "Testing", "Complete"],
 								datasets: [{
-									// data:[10,20,30,40],
+									label: "Highest Priority",
 									data: this.getTaskPriority(1,this.tracks),
-									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								}]
+
+									borderColor: [
+									'#DC143C',
+									],
+									borderWidth: 2
+								}
+
+								]
 							},
 							options: {
-								responsive: true,
-								legend:{
-									position:"bottom"
-								}
+								responsive: true
 							}
 						});
+						// var ctxP = document.getElementById("pieChart1");
+						// var myPieChart = new Chart(ctxP, {
+							// 	type: 'pie',
+							// 	data: {
+								// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+								// 		datasets: [{
+									// 			// data:[10,20,30,40],
+									// 			data: this.getTaskPriority(1,this.tracks),
+									// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+									// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+									// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+									// 		}]
+									// 	},
+									// 	options: {
+										// 		responsive: true,
+										// 		legend:{
+											// 			position:"bottom"
+											// 		}
+											// 	}
+											// });
 
 
 
-						var ctxP = document.getElementById("pieChart2");
-						var myPieChart = new Chart(ctxP, {
-							type: 'pie',
-							data: {
-								labels: ["To Do", "In Progress", "Testing", "Complete"],
-								datasets: [{
-									data: this.getTaskPriority(2,this.tracks),
-									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								}]
-							},
-							options: {
-								responsive: true,
-								legend:{
-									position:"bottom"
-								}
-							}
-						});
+											// var ctxP = document.getElementById("pieChart2");
+											// var myPieChart = new Chart(ctxP, {
+												// 	type: 'pie',
+												// 	data: {
+													// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+													// 		datasets: [{
+														// 			data: this.getTaskPriority(2,this.tracks),
+														// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+														// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+														// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+														// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+														// 		}]
+														// 	},
+														// 	options: {
+															// 		responsive: true,
+															// 		legend:{
+																// 			position:"bottom"
+																// 		}
+																// 	}
+																// });
 
 
-						var ctxP = document.getElementById("pieChart3");
-						var myPieChart = new Chart(ctxP, {
-							type: 'pie',
-							data: {
-								labels: ["To Do", "In Progress", "Testing", "Complete"],
-								datasets: [{
-									data: this.getTaskPriority(3,this.tracks),
-									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								}]
-							},
-							options: {
-								responsive: true,
-								legend:{
-									position:"bottom"
-								}
-							}
-						});
+																// var ctxP = document.getElementById("pieChart3");
+																// var myPieChart = new Chart(ctxP, {
+																	// 	type: 'pie',
+																	// 	data: {
+																		// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+																		// 		datasets: [{
+																			// 			data: this.getTaskPriority(3,this.tracks),
+																			// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+																			// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+																			// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+																			// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+																			// 		}]
+																			// 	},
+																			// 	options: {
+																				// 		responsive: true,
+																				// 		legend:{
+																					// 			position:"bottom"
+																					// 		}
+																					// 	}
+																					// });
 
 
-						var ctxP = document.getElementById("pieChart4");
-						var myPieChart = new Chart(ctxP, {
-							type: 'pie',
-							data: {
-								labels: ["To Do", "In Progress", "Testing", "Complete"],
-								datasets: [{
-									data: this.getTaskPriority(4,this.tracks),
-									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								}]
-							},
-							options: {
-								responsive: true,
-								legend:{
-									position:"bottom",
+																					// var ctxP = document.getElementById("pieChart4");
+																					// var myPieChart = new Chart(ctxP, {
+																						// 	type: 'pie',
+																						// 	data: {
+																							// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+																							// 		datasets: [{
+																								// 			data: this.getTaskPriority(4,this.tracks),
+																								// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+																								// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+																								// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+																								// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+																								// 		}]
+																								// 	},
+																								// 	options: {
+																									// 		responsive: true,
+																									// 		legend:{
+																										// 			position:"bottom",
 
 
-								}
-							}
-						});
+																										// 		}
+																										// 	}
+																										// });
+																										var ctxL = document.getElementById("lineChart1")
+																										var myLineChart = new Chart(ctxL, {
+																											type: 'line',
+																											data: {
+																												labels: ["To Do", "In Progress", "Testing", "Complete"],
+																												datasets: [{
+																													label: "High Priority",
+																													data: this.getTaskPriority(2,this.tracks),
 
-						var ctxP = document.getElementById("pieChart5");
-						var myPieChart = new Chart(ctxP, {
-							type: 'pie',
-							data: {
-								labels: ["To Do", "In Progress", "Testing", "Complete"],
-								datasets: [{
-									data: this.getTaskCountEachTrack(this.tracks),
-									// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-									// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-									backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-									hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								}]
-							},
-							options: {
-								responsive: true,
-								legend:{
-									position:"bottom",
+																													borderColor: [
+																													'#ff8100',
+																													],
+																													borderWidth: 2
+																												}
+
+																												]
+																											},
+																											options: {
+																												responsive: true
+																											}
+																										});
+
+																										var ctxL = document.getElementById("lineChart2")
+																										var myLineChart = new Chart(ctxL, {
+																											type: 'line',
+																											data: {
+																												labels: ["To Do", "In Progress", "Testing", "Complete"],
+																												datasets: [{
+																													label: "Medium Priority",
+																													data: this.getTaskPriority(3,this.tracks),
+
+																													borderColor: [
+																													'#ffee21',
+																													],
+																													borderWidth: 2
+																												}
+
+																												]
+																											},
+																											options: {
+																												responsive: true
+																											}
+																										});
+
+																										var ctxL = document.getElementById("lineChart3")
+																										var myLineChart = new Chart(ctxL, {
+																											type: 'line',
+																											data: {
+																												labels: ["To Do", "In Progress", "Testing", "Complete"],
+																												datasets: [{
+																													label: "Low Priority",
+																													data: this.getTaskPriority(4,this.tracks),
+
+																													borderColor: [
+																													'#0087ff',
+																													],
+																													borderWidth: 2
+																												}
+
+																												]
+																											},
+																											options: {
+																												responsive: true
+																											}
+																										});
+
+																										var ctxP = document.getElementById("pieChart5");
+																										var myPieChart = new Chart(ctxP, {
+																											type: 'pie',
+																											data: {
+																												labels: ["To Do", "In Progress", "Testing", "Complete"],
+																												datasets: [{
+																													data: this.getTaskCountEachTrack(this.tracks),
+																													// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
+																													// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
+																													backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+																													hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+																												}]
+																											},
+																											options: {
+																												responsive: true,
+																												legend:{
+																													position:"bottom",
 
 
-								}
-							}
-						});
-					},1000);
+																												}
+																											}
+																										});
+																									},1000);
 
 
 

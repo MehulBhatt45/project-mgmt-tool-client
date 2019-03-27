@@ -33,9 +33,9 @@ export class AllLeaveAppComponent implements OnInit {
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
-  // apps;
-  path = config.baseMediaUrl;
 
+  path = config.baseMediaUrl;
+  // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute) { 
 

@@ -163,7 +163,14 @@
 								<label for="exampleFormControlTextarea4"><b>Reason For Leave:-</b></label>
 								<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
 							</div>
-
+							<div class="file-field" >
+								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="attechment.click()">Choose files
+									<input type="file" #attechment formControlName="attechment" class="form-control" (change)="addFile($event)" accept=".pdf,image/png, image/jpeg, image/jpg" hidden>
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text" placeholder="Attech Any Document">
+								</div>
+							</div>
 
 							<div>
 								<button type="button" class="btn btn-deep-purple waves-effect btn-default" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
