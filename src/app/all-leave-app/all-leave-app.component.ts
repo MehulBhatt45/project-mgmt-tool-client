@@ -7,7 +7,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
-import {config} from '../config'
+import { config } from '../config';
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -35,7 +36,6 @@ export class AllLeaveAppComponent implements OnInit {
 
   path = config.baseMediaUrl;
   // apps;
-
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute) { 
 
@@ -130,14 +130,14 @@ export class AllLeaveAppComponent implements OnInit {
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
-        this.developers.sort(function(a, b){
-          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          if (nameA < nameB) //sort string ascending
-            return -1 
-          if (nameA > nameB)
-            return 1
-          return 0 
-        })
+        // this.developers.sort(function(a, b){
+        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //   if (nameA < nameB) //sort string ascending
+        //     return -1 
+        //   if (nameA > nameB)
+        //     return 1
+        //   return 0 
+        // })
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
             if(leave.email == dev.email){
@@ -145,7 +145,7 @@ export class AllLeaveAppComponent implements OnInit {
             }
           })
         })
-        console.log("Developers",this.developers);
+        console.log("Developers",this.leaveApp);
       },err=>{
         console.log("Couldn't get all developers ",err);
         this._alertService.error(err);
