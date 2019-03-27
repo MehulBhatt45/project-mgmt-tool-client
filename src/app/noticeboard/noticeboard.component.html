@@ -6,7 +6,7 @@
 				<div class="card mb-3">
 					<div class="view" *ngFor="let image of notice.images">
 						<img onerror="this.src='../assets/man.png'" src="{{path}}{{image}}">
-						<a href="#">
+						<a>
 							<div class="mask rgba-white-slight"></div>
 						</a>
 					</div>
@@ -20,7 +20,7 @@
 								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
 							</div>
 						</div>
-						<h3>{{notice.title}}</h3>
+						<h5>{{notice.title}}</h5>
 						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 					</div>
 				</div>
@@ -61,8 +61,9 @@
 	</section>
 </div> -->
 
-<!-- Modal edit Start Here -->
 
+
+<!-- Modal edit Start Here -->
 <div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -111,19 +112,16 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Notice for ....</h5>
+				<h5 class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>	
 			</div>
 			<div class="modal-body">
-				<div class="main-img">
+				<div class="main-img" *ngIf="singlenotice">
 					<img src="{{path}}{{singlenotice.images}}" class="img-fluid" alt="images">
 				</div>
 				<div class="title">
-					<div class="float-left">
-						<h2 class="margin-top-10 ">{{singlenotice.title}}</h2>
-					</div>
 					<div class="float-right">
 						<div class="btn-group dropleft float-right">
 							<!-- <button type="button" style="border-radius: 50%; top:10px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
@@ -136,9 +134,10 @@
 						</div>
 					</div>
 				</div>
-				<i class="far fa-calendar-plus margin-right-5"></i> <span>Feb,12 2019</span>
+				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
 				<div class="desc pt-1">
-					<p style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
+					<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
 				</div>
 			</div>
 			<div class="modal-footer">
