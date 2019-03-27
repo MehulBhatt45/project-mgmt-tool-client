@@ -22,7 +22,6 @@ export class MainTableViewComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	comments:any;
-
 	public model = {
 		editorData: ''
 	};
@@ -132,6 +131,7 @@ export class MainTableViewComponent implements OnInit {
 	ngOnInit() {
 		this.getAllDevelopers();
 		this.getAllProjects();
+		// this.getAllCommentOfTask(this.taskId);
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		})
@@ -141,18 +141,18 @@ export class MainTableViewComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+				})
+				console.log("Developers",this.developers);
+			},err=>{
+				console.log("Couldn't get all developers ",err);
+				this._alertService.error(err);
 			})
-			console.log("Developers",this.developers);
-		},err=>{
-			console.log("Couldn't get all developers ",err);
-			this._alertService.error(err);
-		})
 	}
 
 	getTasks(){
@@ -234,28 +234,47 @@ export class MainTableViewComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
 			},(err:any)=>{
 				console.log(err);
 			})
 		}
 	}
+
 	sortTasksByCreatedAt(type){
 		console.log("Sorting tasks by = ",type)
-		
+
 		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
+			console.log("Sorting track =()()() ",track.title);
 			track.tasks.sort(custom_sort);
 			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output = ",track.tasks);
+			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 		});
 
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 		console.log("sorting======>",custom_sort);
+		$(".due_date_sorting_btn i.fas").toggleClass("hide");
+	}
+	sortTasksByPriority(type){
+
+		console.log("hdgfhd=>>>>..");
+		_.forEach(this.tracks,function(track){
+			console.log("Sorting track = ",track.title);
+			track.tasks.sort(custom_sort1);
+			if(type == 'desc'){
+				track.tasks.reverse();
+			}
+			console.log("sorted output =====> ",track.tasks);
+		});
+
+		function custom_sort1(a, b) {
+			return a.priority - b.priority;
+		}
+		console.log("nthi avtu=======>",custom_sort1);
+		$(".priority_sorting_btn i.fas").toggleClass("hide");
 	}
 
 	getTitle(name){
@@ -274,48 +293,6 @@ export class MainTableViewComponent implements OnInit {
 		}else{
 			return '';
 		}
-	}
-	sortTasksByPriority(type){
-
-		console.log("hdgfhd=>>>>..");
-		_.forEach(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
-			track.tasks.sort(custom_sort1);
-			if(type == 'desc'){
-				track.tasks.reverse();
-			}
-			console.log("sorted output = ",track.tasks);
-		});
-
-		function custom_sort1(a, b) {
-			return a.priority - b.priority;
-		}
-		console.log("nthi avtu=======>",custom_sort1);
-	}
-
-
-	openModel(task){
-		console.log(task);
-		this.task = task;
-		$('#fullHeightModalRight').modal('show');
-	}
-	editTask(task){
-		this.task = task;
-		this.modalTitle = 'Edit Item';
-		$('.datepicker').pickadate();
-		$('#editModel').modal('show');
-		this.loader=false;
-	}
-
-	updateTask(task){
-		task.assignTo = this.editTaskForm.value.assignTo;
-		console.log("update =====>",task);
-		this._projectService.updateTask(task._id, task).subscribe((res:any)=>{
-			console.log("res ===>" , res);
-		},(err:any)=>{
-			console.log("err ===>" , err);
-		})
-		
 	}
 
 	addItem(option){
@@ -342,7 +319,7 @@ export class MainTableViewComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	
+
 	filterTracks(projectId, developerId){
 		this.selectedDeveloperId = developerId;
 		this.selectedProjectId = projectId;
@@ -364,6 +341,7 @@ export class MainTableViewComponent implements OnInit {
 					})
 				}	
 			})
+
 		}else if(projectId=='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
@@ -373,6 +351,7 @@ export class MainTableViewComponent implements OnInit {
 					}
 				})
 			})
+
 		}else if(projectId!='all' && developerId != 'all'){
 			_.forEach(this.tasks, (project)=>{
 				console.log("trackfilter()__+++",this.tasks);
@@ -400,192 +379,16 @@ export class MainTableViewComponent implements OnInit {
 				})
 			})
 		}
-		console.log("task()()()()()++_+_+_+",this.tracks);
+	}
+	projects;
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
 	}
 
-	// public onReady( editor ) {
-		// 	editor.ui.getEditableElement().parentElement.insertBefore(
-		// 		editor.ui.view.toolbar.element,
-		// 		editor.ui.getEditableElement()
-		// 		);
-		// }
-
-		// public onChange( { editor }: ChangeEvent ) {
-			// 	const data = editor.getData();
-			// 	this.comment = data.replace(/<\/?[^>]+(>|$)/g, "")
-			// }
-
-			// sendComment(){
-				// 	console.log(this.comment);
-				// }
-				public Editor = DecoupledEditor;
-				public configuration = { placeholder: 'Enter Comment Text...'};
-				public onReady( editor ) {
-					editor.ui.getEditableElement().parentElement.insertBefore(
-						editor.ui.view.toolbar.element,
-						editor.ui.getEditableElement()
-						);
-				}
-
-
-				public onChange( { editor }: ChangeEvent ) {
-					const data = editor.getData();
-					// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-					this.comment = data;
-				}
-				sendComment(taskId){
-					console.log(this.comment);
-					var data : any;
-					if(this.files.length>0){
-						data = new FormData();
-						data.append("content",this.comment?this.comment:"");
-						data.append("userId",this.currentUser._id);
-						data.append("projectId",this.projectId);
-						data.append("taskId",taskId);
-						// data.append("Images",this.images);
-						for(var i = 0; i < this.files.length; i++)
-							data.append("fileUpload",this.files[i]);
-					}else{
-						data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-					}
-					console.log(data);
-					this._commentService.addComment(data).subscribe((res:any)=>{
-						console.log(res);
-						this.comment = "";
-						this.model.editorData = 'Enter comments here';
-						this.files = [];
-						this.getAllCommentOfTask(res.taskId);
-					},err=>{
-						console.error(err);
-					});
-				}
-				searchTask(){
-					console.log("btn tapped");
-				}
-				getAllCommentOfTask(taskId){
-					this._commentService.getAllComments(taskId).subscribe(res=>{
-						this.comments = res;
-					}, err=>{
-						console.error(err);
-					})
-				}
-				onSelectFile(event, option){
-					_.forEach(event.target.files, (file:any)=>{
-						this.files.push(file);
-						var reader = new FileReader();
-						reader.readAsDataURL(file);
-						reader.onload = (e:any) => {
-							if(option == 'item')
-								this.url.push(e.target.result);
-							if(option == 'comment')
-								this.commentUrl.push(e.target.result);
-						}
-					})
-				}
-				removeCommentImage(file, index){
-					console.log(file, index);
-					this.commentUrl.splice(index, 1);
-					if(this.files && this.files.length)
-						this.files.splice(index,1);
-					console.log(this.files);	
-				}
-				removeAlreadyUplodedFile(option){
-					this.newTask.images.splice(option,1);
-				}
-				// 	developerId;
-				// 	onKey(event: any){
-					// 		console.log(event, this.tasks);
-
-					// onKey(event: any){
-						// 	console.log(event, this.tasks);
-						// 	var dataToBeFiltered = [this.tasks];
-						// 	var task = this.searchTextFilter.transform(dataToBeFiltered, event);
-						// 	console.log("In Component",task);
-						// 	this.getEmptyTracks();
-						// 	_.forEach(task, (content)=>{
-							// 		_.forEach(this.tracks, (track)=>{
-								// 			if(content.status == track.id){
-									// 				track.tasks.push(content);
-									// 			}
-									// 		})
-									// 	})
-									// }
-									onKey(searchText){
-										console.log(this.tasks);
-
-										var dataToBeFiltered = [this.tasks];
-										var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-										console.log("In Component",task);
-										this.getEmptyTracks();
-
-										if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
-											_.forEach(task, (project)=>{
-												if(project.projectId._id == this.selectedProjectId){
-													_.forEach(this.tracks, (track)=>{
-														if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-															if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-																track.tasks.push(project);
-															}
-														}else{
-															if(project.status == track.id){
-																track.tasks.push(project);
-															}
-														}
-													})
-												}	
-											})
-										}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
-											_.forEach(task, (project)=>{
-												console.log(project);
-												_.forEach(this.tracks, (track)=>{
-													if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-														track.tasks.push(project);
-													}
-												})
-											})
-										}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
-											_.forEach(task, (project)=>{
-												console.log(project);
-												if(project.projectId._id == this.selectedProjectId){
-													_.forEach(this.tracks, (track)=>{
-														if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
-															track.tasks.push(project);
-														}
-													})
-
-													// _.forEach(task, (content)=>{	
-														// 	_.forEach(this.tracks, (track)=>{
-															// 		if(content.status == track.id){
-																// 			track.tasks.push(content);
-
-															}
-														})
-										}else{
-											_.forEach(task, (project)=>{
-												console.log(project);
-												_.forEach(this.tracks, (track)=>{
-													if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-														if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
-															track.tasks.push(project);
-														}
-													}else{
-														if(project.status == track.id){
-															track.tasks.push(project);
-														}
-													}
-												})
-											})
-										}
-									}
-									projects;
-									getAllProjects(){
-										this._projectService.getProjects().subscribe(res=>{
-											this.projects = res;
-										},err=>{
-											this._alertService.error(err);
-											console.log(err);
-										})
-									}
-
-								}
+}
 

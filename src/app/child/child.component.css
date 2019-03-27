@@ -12,3 +12,21 @@
     cursor: pointer;
 
 }
+
+/*.refresh{
+    margin: 0;
+    padding: 5px;
+    font-size: 20px;
+    -webkit-animation: rotation 2s infinite linear;
+  }
+  .fa-refresh[_ngcontent-c2] {
+    float: right;
+    margin: 0 !important; 
+  }
+ 
+ #refresh_icon{
+    display: none;
+  }
+  #myDIV{
+    display: none;
+  }*/

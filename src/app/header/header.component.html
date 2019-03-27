@@ -40,7 +40,6 @@
           <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
           <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Employee</a></li>
           <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-<<<<<<< HEAD
             <a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
             <li *ngIf="currentUser.userRole=='admin'">
               <a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
@@ -94,7 +93,7 @@
                       <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a></li>
                     </ul>
                   </div>
-=======
+
             <a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a>
           </li>
           <li *ngIf="currentUser.userRole=='admin'">
@@ -104,7 +103,6 @@
               <ul>
                 <li *ngFor="let project of projects">
                   <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a>
->>>>>>> 7e66e2b05bad2bdaef4a95e9a687828d8d8e2afb
                 </li>
               </ul>
             </div>

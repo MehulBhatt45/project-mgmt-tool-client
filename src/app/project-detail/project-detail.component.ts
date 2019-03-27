@@ -17,7 +17,6 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
-
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -27,7 +26,6 @@ export class ProjectDetailComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	comments:any;
-
 	public model = {
 		editorData: ''
 	};
@@ -53,6 +51,7 @@ export class ProjectDetailComponent implements OnInit {
 	pro;
 	asc;
 	desc;
+	id;
 	projectTeam;
 	Teams;
 	files:Array<File> = [];
@@ -180,6 +179,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getProject(this.id);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
@@ -215,7 +215,6 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
-
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
@@ -223,6 +222,8 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("title=={}{}{}{}{}",res);
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
+				this.projectId=this.pro._id;
+				console.log("iddddd====>",this.projectId);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					//this.projectTeam = res.team;
 
@@ -324,7 +325,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				// this.getProject(res.projectId);
+				this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -371,7 +372,6 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
-
 	getTitle(name){
 		if(name){
 			var str = name.split(' ');
@@ -380,7 +380,6 @@ export class ProjectDetailComponent implements OnInit {
 			return '';
 		}
 	}
-
 
 	getInitialsOfName(name){
 		if(name){
@@ -400,13 +399,7 @@ export class ProjectDetailComponent implements OnInit {
 		}
 
 	}
-	openModel(task){
-		console.log(task);
-		this.task = task;
-		this.getAllCommentOfTask(task._id);
-		$('#fullHeightModalRight').modal('show');
-	}
-
+	
 	editTask(task){
 		this.newTask = task;
 		this.modalTitle = 'Edit Item';
@@ -415,76 +408,32 @@ export class ProjectDetailComponent implements OnInit {
 		$('#itemManipulationModel').modal('show');
 	}
 
-	
-	updateTask(task){
-		task.assignTo = this.editTaskForm.value.assignTo;
-		let data = new FormData();
-
-		data.append('projectId', task.projectId);
-		data.append('title', task.title);
-		data.append('desc', task.desc);
-		data.append('assignTo', task.assignTo);
-		data.append('priority', task.priority);
-		data.append('dueDate', task.dueDate);
-		data.append('estimatedTime', task.estimatedTime);
-		data.append('images', task.images);
-		if(this.files.length>0){
-			for(var i=0;i<this.files.length;i++){
-				data.append('fileUpload', this.files[i]);	
-			}
-		}
-		console.log("update =====>",task);
-		this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-			Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
-			$('#save_changes').attr("disabled", false);
-			$('#refresh_icon').css('display','none');
-			$('#itemManipulationModel').modal('hide');
-			this.newTask = this.getEmptyTask();
-			this.files = this.url = [];
-			this.editTaskForm.reset();
-			this.loader = false;
-		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			console.log(err);
-			this.loader = false;
-			//$('#alert').css('display','block');
-		})
-
-			}
-
-
-
-
 	getEmptyTask(){
 		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 	}
 
 	addItem(option){
+		console.log("jnhiijioji",option);
 		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 		this.modalTitle = 'Add '+option;
+		console.log(this.modalTitle);
 		$('#itemManipulationModel').modal('show');
 	}
 
-
-
-		
-
-
 	saveTheData(task){
-
 		this.loader = true;
-
-		task['projectId']= this.projectId;
-		console.log("projectId=========>",this.projectId);
+		console.log("projectId=========>",this.pro._id);
+		console.log(task);
+		task['projectId']= this.pro._id;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		// task.startDate = $("#startDate").val();
-		// task.estimatedTime = $("#estimatedTime").val();
+		task.startDate = $("#startDate").val();
+		task.estimatedTime = $("#estimatedTime").val();
 		console.log("estimated time=====>",task.estimatedTime);
 		task.images = $("#images").val();
 		console.log("images====>",task.images);
 		console.log(task.dueDate);
-		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		task.dueDate = moment().add(task.dueDate,'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
 		let data = new FormData();
@@ -516,56 +465,9 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	
-	public Editor = DecoupledEditor;
-	public configuration = { placeholder: 'Enter Comment Text...'};
-
-
-
-		public onReady( editor ) {
-			editor.ui.getEditableElement().parentElement.insertBefore(
-				editor.ui.view.toolbar.element,
-				editor.ui.getEditableElement()
-				);
-		}
-
-
-		public onChange( { editor }: ChangeEvent ) {
-			const data = editor.getData();
-			// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-			this.comment = data;
-		}
-
-
-		sendComment(taskId){
-			console.log(this.comment);
-			var data : any;
-			if(this.files.length>0){
-				data = new FormData();
-				data.append("content",this.comment?this.comment:"");
-				data.append("userId",this.currentUser._id);
-				data.append("projectId",this.projectId);
-				data.append("taskId",taskId);
-				// data.append("Images",this.images);
-				for(var i = 0; i < this.files.length; i++)
-					data.append("fileUpload",this.files[i]);
-			}else{
-				data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-			}
-			console.log(data);
-			this._commentService.addComment(data).subscribe((res:any)=>{
-				console.log(res);
-				this.comment = "";
-				this.model.editorData = 'Enter comments here';
-				this.files = [];
-				this.getAllCommentOfTask(res.taskId);
-			},err=>{
-				console.error(err);
-			});
-		}
 	searchTask(){
 		console.log("btn tapped");
 	}
-
 
 		onKey(searchText){
 			console.log("searchText",searchText);
@@ -600,14 +502,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log(err);
 		})
 	}
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		})
-	}
-
+	
 
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
@@ -642,16 +537,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.files.splice(index,1);
 		console.log(this.files);
 	}
-	removeCommentImage(file, index){
-		console.log(file, index);
-		this.commentUrl.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);	
-	}
-
-	removeAlreadyUplodedFile(option){
-		this.newTask.images.splice(option,1);
-	}
+	
 }
 

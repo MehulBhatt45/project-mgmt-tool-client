@@ -49,6 +49,19 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id);
 	}
 
+	getDeveloperOfProject(id){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
+		return this.http.get(config.baseApiUrl+"project/get-developer-of-project"+id);
+	}
+
+
 	// addProject_With_image(body,files:FileList){
 
 		// 	console.log("addproject is calling");
@@ -82,6 +95,18 @@ export class ProjectService {
 
 
 
+
+		leavesById(email){
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+					'x-access-token': JSON.parse(localStorage.getItem('token'))
+				})
+			};
+			// var email = JSON.parse(localStorage.getItem('currentUser')).email;
+			return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
+		}
+
 		// pendingLeaves(){
 		// 	const httpOptions = {
 		// 		headers: new HttpHeaders({
@@ -91,6 +116,7 @@ export class ProjectService {
 		// 	};
 		// 	return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
 		// }
+
 
 		// 	leavesById(email){
 		// 	const httpOptions = {

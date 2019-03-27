@@ -64,6 +64,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UserSummaryComponent } from './user-summary/user-summary.component';
 
+
 @NgModule({
     declarations: [
     AppComponent,
