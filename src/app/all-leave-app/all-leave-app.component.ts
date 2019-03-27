@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
+import {config} from '../config'
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -31,6 +32,8 @@ export class AllLeaveAppComponent implements OnInit {
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
+
+  path = config.baseMediaUrl;
   // apps;
 
   constructor(public router:Router, public _leaveService:LeaveService,
