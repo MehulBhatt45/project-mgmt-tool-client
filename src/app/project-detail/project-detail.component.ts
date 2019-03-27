@@ -449,7 +449,7 @@ export class ProjectDetailComponent implements OnInit {
 			//$('#alert').css('display','block');
 		})
 
-			}
+	}
 
 
 
@@ -465,7 +465,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
-		
+
 
 
 	saveTheData(task){
@@ -519,76 +519,76 @@ export class ProjectDetailComponent implements OnInit {
 
 
 
-		public onReady( editor ) {
-			editor.ui.getEditableElement().parentElement.insertBefore(
-				editor.ui.view.toolbar.element,
-				editor.ui.getEditableElement()
-				);
+	public onReady( editor ) {
+		editor.ui.getEditableElement().parentElement.insertBefore(
+			editor.ui.view.toolbar.element,
+			editor.ui.getEditableElement()
+			);
+	}
+
+
+	public onChange( { editor }: ChangeEvent ) {
+		const data = editor.getData();
+		// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+		this.comment = data;
+	}
+
+
+	sendComment(taskId){
+		console.log(this.comment);
+		var data : any;
+		if(this.files.length>0){
+			data = new FormData();
+			data.append("content",this.comment?this.comment:"");
+			data.append("userId",this.currentUser._id);
+			data.append("projectId",this.projectId);
+			data.append("taskId",taskId);
+			// data.append("Images",this.images);
+			for(var i = 0; i < this.files.length; i++)
+				data.append("fileUpload",this.files[i]);
+		}else{
+			data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
 		}
-
-
-		public onChange( { editor }: ChangeEvent ) {
-			const data = editor.getData();
-			// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-			this.comment = data;
-		}
-
-
-		sendComment(taskId){
-			console.log(this.comment);
-			var data : any;
-			if(this.files.length>0){
-				data = new FormData();
-				data.append("content",this.comment?this.comment:"");
-				data.append("userId",this.currentUser._id);
-				data.append("projectId",this.projectId);
-				data.append("taskId",taskId);
-				// data.append("Images",this.images);
-				for(var i = 0; i < this.files.length; i++)
-					data.append("fileUpload",this.files[i]);
-			}else{
-				data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-			}
-			console.log(data);
-			this._commentService.addComment(data).subscribe((res:any)=>{
-				console.log(res);
-				this.comment = "";
-				this.model.editorData = 'Enter comments here';
-				this.files = [];
-				this.getAllCommentOfTask(res.taskId);
-			},err=>{
-				console.error(err);
-			});
-		}
+		console.log(data);
+		this._commentService.addComment(data).subscribe((res:any)=>{
+			console.log(res);
+			this.comment = "";
+			this.model.editorData = 'Enter comments here';
+			this.files = [];
+			this.getAllCommentOfTask(res.taskId);
+		},err=>{
+			console.error(err);
+		});
+	}
 	searchTask(){
 		console.log("btn tapped");
 	}
 
 
-		onKey(searchText){
-			console.log("searchText",searchText);
-			console.log(this.project);
-			var dataToBeFiltered = [this.project];
-			var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-			console.log("In Component",task);
-			this.getEmptyTracks();
-			_.forEach(task, (content)=>{
-				_.forEach(this.tracks, (track)=>{
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-							// if(content.status == track.id){
-								track.tasks.push(content);
-							}
+	onKey(searchText){
+		console.log("searchText",searchText);
+		console.log(this.project);
+		var dataToBeFiltered = [this.project];
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+		console.log("In Component",task);
+		this.getEmptyTracks();
+		_.forEach(task, (content)=>{
+			_.forEach(this.tracks, (track)=>{
+				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+						// if(content.status == track.id){
+							track.tasks.push(content);
+						}
 
+					}
+					else{
+						if(content.status == track.id){
+							track.tasks.push(content);
 						}
-						else{
-							if(content.status == track.id){
-								track.tasks.push(content);
-							}
-						}
-					});
-			});
-		}
+					}
+				});
+		});
+	}
 
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
@@ -621,16 +621,35 @@ export class ProjectDetailComponent implements OnInit {
 		})
 	}
 	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			$('#exampleModalPreview').modal('hide');
-			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			console.log("error in delete Task=====>" , err);
-		});
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.value) {
+				console.log(taskId);
+				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+					Swal.fire(
+						'Deleted!',
+						'Your file has been deleted.',
+						'success'
+						)
+					$('#itemManipulationModel').modal('hide');
+					$('#exampleModalPreview').modal('hide');
+					$('#fullHeightModalRight').modal('hide');
+					this.getProject(this.projectId);
+			
+				},err=>{
+					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+
+			}
+		})
 	}
 
 	removeAvatar(file, index){

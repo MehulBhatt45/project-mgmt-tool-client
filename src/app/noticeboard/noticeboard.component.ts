@@ -18,7 +18,8 @@ import * as moment from 'moment';
 export class NoticeboardComponent implements OnInit {
 
   constructor(public router:Router, public _projectservice:ProjectService) { }
-  allNotice;
+  allNotice:any;
+  singlenotice:any;
   newNotice;
   path:any;
   editNoticeForm;
@@ -30,13 +31,21 @@ export class NoticeboardComponent implements OnInit {
   ngOnInit() {
   	this.getAllNotice();
     this.createEditNoticeForm();
+    $(document).ready(function(){
+      setTimeout(function () {
+        $('.grid').masonry({
+          itemSelector: '.grid-item'
+        });
+      }, 1000);
+    });
   }
 
   getAllNotice(){
 
     this._projectservice.getNotice().subscribe((res:any)=>{
-      console.log(res);
+      console.log("response====>>>",res);
       this.allNotice=res;
+      console.log("all notice===>>>",this.allNotice);
       this.path = config.baseMediaUrl;
       console.log("base",this.path); 
     },err=>{
@@ -74,13 +83,7 @@ export class NoticeboardComponent implements OnInit {
       }
     })
   }
-
-
-
-  // this._projectservice.deleteNotice(id).subscribe((res:any)=>{
-    //   Swal.fire({type: 'success',title: 'Notice Deleted Successfully',showConfirmButton:false,timer: 2000})
-
-
+  
     createEditNoticeForm(){
       this.editNoticeForm = new FormGroup({
         title : new FormControl('', Validators.required),
@@ -93,7 +96,7 @@ export class NoticeboardComponent implements OnInit {
     updateNotice(notice){
       console.log("update Notice =====>",notice);
       this._projectservice.updateNotice(notice).subscribe((res:any)=>{
-        $('#exampleModalPreview').modal('hide');
+        $('#editmodel').modal('hide');
         Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
       },err=>{
         console.log(err);
@@ -117,4 +120,21 @@ export class NoticeboardComponent implements OnInit {
       });  
     }
 
+    noticeById(noticeid){
+
+    this._projectservice.getNoticeById(noticeid).subscribe((res:any)=>{
+      console.log("response====>>>",res);
+      this.singlenotice=res;
+      console.log("all notice===>>>", this.singlenotice);
+       this.path = config.baseMediaUrl;
+      console.log("base",this.path); 
+    },err=>{
+      console.log(err);    
+    })
   }
+}
+
+
+
+
+  
