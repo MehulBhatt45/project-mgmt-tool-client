@@ -7,13 +7,15 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
-import {config} from '../config'
+import { config } from '../config';
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
+
   allLeaves;
   leaves;
   leaveApp;
@@ -36,7 +38,6 @@ export class AllLeaveAppComponent implements OnInit {
 
   path = config.baseMediaUrl;
   // apps;
-
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute) { 
 
@@ -78,6 +79,7 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
 
+
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -92,6 +94,7 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
+
 
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
@@ -139,6 +142,8 @@ export class AllLeaveAppComponent implements OnInit {
             return 1
           return 0 
         })
+
+
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
             if(leave.email == dev.email){
@@ -146,7 +151,7 @@ export class AllLeaveAppComponent implements OnInit {
             }
           })
         })
-        console.log("Developers",this.developers);
+        console.log("Developers",this.leaveApp);
       },err=>{
         console.log("Couldn't get all developers ",err);
         this._alertService.error(err);
@@ -154,6 +159,24 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
     leaveAccepted(req){
+      var body;
+      console.log("dsfdsbgfdf",this.leaveApp);
+      console.log("reeeeeeee",req);
+      _.forEach(this.leaveApp, (apply)=>{
+        if(apply._id == req){
+          body = apply;
+        }
+      })
+      body.status = "approved";
+      console.log("bodyyyyyyyyyyyyyyy",body);
+      this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+
+        console.log("respondsssssss",res);
+        this.acceptedLeave = res;
+        console.log("acceptedd===========>",this.acceptedLeave);
+      },(err:any)=>{
+        console.log(err);
+      })
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -194,6 +217,7 @@ export class AllLeaveAppComponent implements OnInit {
         }
       })
     }
+
 
     leaveRejected(req){
       Swal.fire({
@@ -284,6 +308,7 @@ export class AllLeaveAppComponent implements OnInit {
             if(count.typeOfLeave == leave.typeOfLeave){
               count.leavesTaken = count.leavesTaken + 1;
             }
+
           });
         });
         console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));

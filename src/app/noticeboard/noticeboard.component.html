@@ -1,6 +1,10 @@
-<div style="background-image: linear-gradient(#FED1FB,#FDA3A5)">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8ac5dbb8cd4f8efd72fdd2956b91e15e1054e7ea
+<div style="background-image: linear-gradient(#8bc34ab0,#85cc32)">
 	<div class="container-fluid">
-		<h1 class="text-center font-weight-bold text-white">Notice Board</h1>
+		<h1 class="text-center font-weight-bold text-black">Notice Board</h1>
 		<div class="row grid">
 			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
 				<div class="card mb-3">
@@ -12,16 +16,17 @@
 					</div>
 					<div class="card-body">
 						<div class="btn-group dropleft float-right">
-							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
 							</button>
 							<div class="dropdown-menu">
+								<input #noticeFile type="file" name="fileUpload" (change)="uploadFile($event,notice._id)" accept=".jpg, .png, .jpeg" hidden>
 								<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i></a>
-								<a href="javascript:void(0);" class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" (click)="noticeFile.click()"><i class="fas fa-images"></i></a>
 								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
 							</div>
 						</div>
 						<h5>{{notice.title}}</h5>
-						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
+						<a href="#" class="btn btn-default margin-0  btn-sm"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 					</div>
 				</div>
 			</div>
@@ -68,7 +73,9 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalPreviewLabel">Edit Notice</h5>
+				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
+				color: purple;
+				"><i class="fas fa-edit"></i> Edit Notice</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -84,12 +91,15 @@
 							<label for="desc">Discription</label>
 							<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
 						</div>
+
 						<div class="form-group col-12">
-							<label for="published">published</label>
-							<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
-								<option value="true">True</option>
-								<option value="false">False</option>
-							</select>
+							<div class="switch">
+								<label>
+									Publish False
+									<input type="checkbox" formControlName="published" [(ngModel)]="newNotice.published">
+									<span class="lever"></span>Publish True
+								</label>
+							</div>
 						</div>
 						<div class="form-group col-12">
 							<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
@@ -112,7 +122,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
+				<h5 style="color: purple;" class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>	
