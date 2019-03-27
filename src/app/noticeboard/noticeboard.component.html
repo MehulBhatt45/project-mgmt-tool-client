@@ -1,13 +1,12 @@
 <div style="background-image: linear-gradient(#FED1FB,#FDA3A5)">
 	<div class="container-fluid">
 		<h1 class="text-center font-weight-bold text-white">Notice Board</h1>
-		<div class="row">
-			<div class="col-md-3">
-				<div class="card margin-20">
-					<div class="view">
-						<img src="../assets/v1.jpg" class="card-img-top"
-						alt="photo">
-						<a href="#">
+		<div class="row grid">
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
+				<div class="card mb-3">
+					<div class="view" *ngFor="let image of notice.images">
+						<img onerror="this.src='../assets/man.png'" src="{{path}}{{image}}">
+						<a>
 							<div class="mask rgba-white-slight"></div>
 						</a>
 					</div>
@@ -16,51 +15,31 @@
 							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
 							</button>
 							<div class="dropdown-menu">
-								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
-								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
+								<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i></a>
+								<a href="javascript:void(0);" class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-images"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
 							</div>
 						</div>
-						<h3>Notice Title</h3>
-						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card margin-20">
-					<div class="view">
-						<img src="../assets/cover_img.jpg" class="card-img-top"
-						alt="photo">
-						<a href="#">
-							<div class="mask rgba-white-slight"></div>
-						</a>
-					</div>
-					<div class="card-body">
-						<div class="btn-group dropleft float-right">
-							<button type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
-							</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Notice" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Images" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"  ><i class="fas fa-images"></i></a>
-								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" routerLink="/summary/{{project._id}}"><i class="far fa-trash-alt"></i></a>
-							</div>
-						</div>
-						<h3>Notice Title</h3>
-						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal"  >Read More</a>
+						<h5>{{notice.title}}</h5>
+						<a href="#" class="btn btn-default margin-0"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<section class="my-5">
-				<div class="row border border-radius-2 margin-bottom-30 padding-20 height-200" style="background-image: linear-gradient(#eee,#ddd)"  *ngFor="let notice of notice">
-					<div class="col-lg-5">
-						<div class="notice-image" *ngFor="let image of notice.images">
-							<div class="profile_image_box ng-star-inserted" title="Profile Image" touranchor="change-profile" ng-reflect-tour-anchor="change-profile">
-								<div  class="image_box_profile_image">
-									<img onerror="this.src='../assets/man.png'" src="{{path}}{{image}}">
-								</div>
-							</div>
+	</div>
+</div>
+
+
+
+
+<!-- <div class="container">
+	<section class="my-5">
+		<div class="row border border-radius-2 margin-bottom-30 padding-20 height-200" style="background-image: linear-gradient(#eee,#ddd)"  *ngFor="let notice of allNotice">
+			<div class="col-lg-5">
+				<div class="notice-image" *ngFor="let image of notice.images">
+					<div class="profile_image_box ng-star-inserted" title="Profile Image" touranchor="change-profile" ng-reflect-tour-anchor="change-profile">
+						<div  class="image_box_profile_image">
+							<img onerror="this.src='../assets/man.png'" src="{{path}}{{image}}">
 						</div>
 					</div>
 				</div>
@@ -77,99 +56,98 @@
 						<a class="btn btn-indigo border-radius-10" data-toggle="modal" data-target="#exampleModalPreview" (click)="newNotice = notice"><i class="fas fa-edit"></i></a>
 					</div>
 				</div>
-			</section>
+			</div>
 		</div>
+	</section>
+</div> -->
 
-	</div>
-	<!-- Modal edit Start Here -->
-	<div class="modal fade" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalPreviewLabel">Edit Notice</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+
+
+<!-- Modal edit Start Here -->
+<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalPreviewLabel">Edit Notice</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" *ngIf="newNotice">
+				<div class="row">
+					<form style="width: 100%;" [formGroup]="editNoticeForm">
+						<div class="form-group col-12">
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newNotice.title">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
+						</div>
+						<div class="form-group col-12">
+							<label for="published">published</label>
+							<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
+								<option value="true">True</option>
+								<option value="false">False</option>
+							</select>
+						</div>
+						<div class="form-group col-12">
+							<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
+						</div>
+					</form>
 				</div>
-				<div class="modal-body" *ngIf="newNotice">
-					<div class="row">
-						<form style="width: 100%;" [formGroup]="editNoticeForm">
-							<div class="form-group col-12">
-								<label for="title">Title</label>
-								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newNotice.title">
-							</div>
-							<div class="form-group col-12">
-								<label for="desc">Discription</label>
-								<input type ="text" id="desc" formControlName="desc" class="form-control md-textarea" [(ngModel)]="newNotice.desc">
-							</div>
-							<div class="form-group col-12">
-								<label for="published">published</label>
-								<select class="browser-default custom-select custom-select-lg mb-3" id="published" formControlName="published" [(ngModel)]="newNotice.published">
-									<option value="true">True</option>
-									<option value="false">False</option>
-								</select>
-							</div>
-							<div class="form-group col-12">
-								<input placeholder="Selected days" id="expireon" type="date" formControlName="expireon" [(ngModel)]="newNotice.expireon" class="form-control">
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-					<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice)">Save changes</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice)">Save changes</button>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- Modal End Here -->
 
-	<!-- Modal read more -->
-	<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+
+<!-- modal start here -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Notice for ....</h5>
-
+				<h5 class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>	
 			</div>
 			<div class="modal-body">
-				<div class="main-img">
-					<img src="../assets/v1.jpg" class="img-fluid" alt="images">
+				<div class="main-img" *ngIf="singlenotice">
+					<img src="{{path}}{{singlenotice.images}}" class="img-fluid" alt="images">
 				</div>
 				<div class="title">
-					<div class="float-left">
-						<h2 class="margin-top-10 ">Notice Title</h2>
-					</div>
 					<div class="float-right">
 						<div class="btn-group dropleft float-right">
-							<button type="button" style="border-radius: 50%; top:10px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+							<!-- <button type="button" style="border-radius: 50%; top:10px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
 							</button>
 							<div class="dropdown-menu">
-								<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-users"></i></a>
-								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-							</div>
+								<a href="javascript:void(0);" class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project"><i class="far fa-edit padding-top-1"></i></a>
+								<a href="javascript:void(0);" class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-img="https://mdbootstrap.com/img/logo/mdb192x192.jpg"><i class="fas fa-users"></i></a>
+								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" href="javascript:void(0);"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+							</div> -->
 						</div>
 					</div>
 				</div>
-				<i class="far fa-calendar-plus margin-right-5"></i> <span>Feb,12 2019</span>
-				<div class="row desc padding-top-10">
-					<div class="col-md-12">
-						<p style="text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>
-					</div>
+				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
+				<div class="desc pt-1">
+					<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<div class="btn-group dropleft float-right">
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- modal end here -->
+
+
 
