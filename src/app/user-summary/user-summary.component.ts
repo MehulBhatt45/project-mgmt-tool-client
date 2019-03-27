@@ -305,7 +305,7 @@ export class UserSummaryComponent implements OnInit {
 
 
 						var ctxL = document.getElementById("lineChart")
-						var myLineChart = new Chart(ctxL, {
+						var myLineChart = new Chart(ctxL, {														
 							type: 'line',
 							data: {
 								labels: ["To Do", "In Progress", "Testing", "Complete"],
@@ -436,49 +436,8 @@ export class UserSummaryComponent implements OnInit {
 																											}
 																										});
 
-																										var ctxL = document.getElementById("lineChart2")
-																										var myLineChart = new Chart(ctxL, {
-																											type: 'line',
-																											data: {
-																												labels: ["To Do", "In Progress", "Testing", "Complete"],
-																												datasets: [{
-																													label: "Medium Priority",
-																													data: this.getTaskPriority(3,this.tracks),
+																										
 
-																													borderColor: [
-																													'#ffee21',
-																													],
-																													borderWidth: 2
-																												}
-
-																												]
-																											},
-																											options: {
-																												responsive: true
-																											}
-																										});
-
-																										var ctxL = document.getElementById("lineChart3")
-																										var myLineChart = new Chart(ctxL, {
-																											type: 'line',
-																											data: {
-																												labels: ["To Do", "In Progress", "Testing", "Complete"],
-																												datasets: [{
-																													label: "Low Priority",
-																													data: this.getTaskPriority(4,this.tracks),
-
-																													borderColor: [
-																													'#0087ff',
-																													],
-																													borderWidth: 2
-																												}
-
-																												]
-																											},
-																											options: {
-																												responsive: true
-																											}
-																										});
 
 																										var ctxP = document.getElementById("pieChart5");
 																										var myPieChart = new Chart(ctxP, {
@@ -496,7 +455,7 @@ export class UserSummaryComponent implements OnInit {
 																											options: {
 																												responsive: true,
 																												legend:{
-																													position:"bottom",
+																													position:"left",
 
 
 																												}
