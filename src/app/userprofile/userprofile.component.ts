@@ -28,7 +28,7 @@ export class UserprofileComponent implements OnInit {
 	finalArr = [];
 	editTEmail;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	//baseMediaUrl = config.baseMediaUrl;
+	baseMediaUrl = config.baseMediaUrl;
 	
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectservice: ProjectService, public _loginService: LoginService) { 

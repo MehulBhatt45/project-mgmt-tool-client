@@ -7,33 +7,47 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-
-			<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
-
-		</div>
+		
 		<div class="row">
 			<div class="col-sm-6 top">
-				<p>Total Task In Project : <b>{{getTaskCount()}}</b></p>
+				<div class="card">
+
+
+					<div class="card-body">
+
+
+						<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
+						<p>Total Task In Project : <b>{{getTaskCount()}}</b></p>
+
+						<canvas id="pieChart5"></canvas>
+					</div>
+
+				</div>
+
 			</div>
-
-			<div class="col-sm-6">
-
-				<canvas id="pieChart5"></canvas>
-
-			</div>
-		</div>
-
-		<div class="row" style="margin-top: 25px;">
-			<div class="col-sm-6" style="margin-top: 70px;">
-				<h3><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
-			</div>
+			
 
 			<div class="col-sm-6" style="margin-top: 50px;">
-				<canvas id="myChart" style="width: 50%;"></canvas>
+				<div class="card" style="margin-top: -20px;">
+
+
+					<div class="card-body">
+
+
+						<h3 style="margin-top: 78px;"><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h3>
+					</div>
+
+
+					<canvas id="myChart" style="width: 50%;"></canvas>
+
+				</div>
 
 			</div>
+
 		</div>
+
+
+
 
 			<!-- <table class="table table-bordered task_table">
 				<thead>
@@ -49,82 +63,67 @@
 					</tr>
 				</tbody>
 			</table> -->
-			<div class="row priority_base_task">
-				<h3><i class="fas fa-tasks"></i> Total Number of tasks base on Priority in to do, in progress,testing and complete:</h3>
-				<div class="col-sm-6">
-					<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-					<canvas id="pieChart1" class="border1"></canvas>
-			<!-- <table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col"  style="background-color: #ff0000;color: #fff;"><i class="fas fa-tasks"></i> Highest Priority</th>
-						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let track of tracks">
-						<th scope="row">{{track.title}}</th>
-						<td style="text-align:center;">{{getTaskPriority(1, track.id)}}</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</div>
-		<div class="col-sm-6">
-			<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
-			<canvas id="pieChart2" class="border2"></canvas>
-			<!-- <table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col" style="background-color: #c5c502;color: #fff;"><i class="fas fa-tasks"></i> High Priority</th>
-						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let track of tracks">
-						<th scope="row">{{track.title}}</th>
-						<td style="text-align:center;">{{getTaskPriority(2, track.id)}}</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</div><hr/>
-		<div class="col-sm-6">
-			<h3 style="text-align:center;margin-top: 30px;">Medium Priority</h3>
-			<canvas id="pieChart3" class="border3"></canvas>
-			<!-- <table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col" style="background-color: green;color: #fff;"><i class="fas fa-tasks"></i> Medium Priority</th>
-						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let track of tracks">
-						<th scope="row">{{track.title}}</th>
-						<td style="text-align:center;">{{getTaskPriority(3, track.id)}}</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</div>
-		<div class="col-sm-6">
-			<h3 style="text-align:center;margin-top: 30px;">Low Priority</h3>
-			<canvas id="pieChart4" class="border4"></canvas>
-			<!-- <table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col" style="background-color: #4e4eff;color: #fff;"><i class="fas fa-tasks"></i> Low Priority</th>
-						<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-					</tr>
-				</thead>
+			<div class="row" style="margin-top: 25px;">
+				<h3><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
+				<div class="col-sm-6" style="padding-left: 0px;">
+					<div class="card">
+
+						<div class="card-body">
+
+							<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+							<!-- <canvas id="pieChart1" class="border1"></canvas> -->
+							<canvas id="lineChart"></canvas>
+
+						</div>
+
+					</div>
+
+
+			<!-- 	<table class="table table-bordered table-responsive">
+					<thead>
+						<tr>
+							<th scope="col"  style="background-color: #ff0000;color: #fff;"><i class="fas fa-tasks"></i> Highest Priority</th>
+							<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let track of tracks">
+							<th scope="row">{{track.title}}</th>
+							<td style="text-align:center;">{{getTaskPriority(1, track.id)}}</td>
+						</tr>
+					</tbody>
+				</table> -->
+			</div>
+			<div class="col-sm-6" style="padding-right: 0px;">
+				<div class="card">
+
+
+					<div class="card-body">
+
+						<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
+						<!-- <canvas id="pieChart2" class="border2"></canvas> -->
+						<canvas id="lineChart1"></canvas>
+
+					</div>
+
+				</div>
 				
-				<tbody>
-					<tr *ngFor="let track of tracks">
-						<th scope="row">{{track.title}}</th>
-						<td style="text-align:center;">{{getTaskPriority(4, track.id)}}</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</div>
-	</div>
+				<!-- <table class="table table-bordered table-responsive" >
+					<thead>
+						<tr>
+							<th scope="col" style="background-color: #c5c502;color: #fff;"><i class="fas fa-tasks"></i> High Priority</th>
+							<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let track of tracks">
+							<th scope="row">{{track.title}}</th>
+							<td style="text-align:center;">{{getTaskPriority(2, track.id)}}</td>
+						</tr>
+					</tbody>
+				</table> -->
+			</div><hr/>
 	<!-- <div class="row" style="margin-top: 25px;">
 		<h3><i class="fas fa-list-alt"></i> List of team members who working in project with all tracks :</h3>
 		<table class="table table-bordered" style="text-align: center;">
@@ -148,6 +147,7 @@
 			</tbody>
 		</table>
 	</div> -->
+</div>
 </div>
 </div>
 
