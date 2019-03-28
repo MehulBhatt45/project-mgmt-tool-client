@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="col-12 col-md-6 text-right">
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
 					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
