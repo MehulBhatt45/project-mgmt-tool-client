@@ -1,32 +1,19 @@
 
-<<<<<<< HEAD
-const baseUrl = "http://206.189.231.135:4000/";
+// const baseUrl = "http://206.189.231.135:4000/";
  // const baseUrl = "http://132.140.160.63:4000/";
-// const baseUrl = "http://localhost:4000/";
+const baseUrl = "http://localhost:4000/";
 
  // const baseMediaUrl = "http://132.140.160.63/project_mgmt_tool/server/uploads/";
- const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
- // const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
+ // const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
+ const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 // 
- export const config = {
-=======
 
-const baseUrl = "http://206.189.231.135:4000/";
-// const baseUrl = "http://132.140.160.69:4000/";
-
-// const baseUrl = "http://localhost:4000/";
-
-
-const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
-// const baseMediaUrl = "http://132.140.160.69/project_mgmt_tool/server/uploads/";
-// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/";
 
 
 
 
 
 export const config = {
->>>>>>> 59192854c38154111dca936ff00624dc1ccd48b0
       baseApiUrl: baseUrl,
       baseMediaUrl: baseMediaUrl,
       "priorityList": [

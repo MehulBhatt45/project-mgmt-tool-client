@@ -318,7 +318,7 @@
 				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<div *ngIf="currentUser.userRole=='developer' && modalTitle == 'Edit Item'">
+				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
 				</div>
 				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
