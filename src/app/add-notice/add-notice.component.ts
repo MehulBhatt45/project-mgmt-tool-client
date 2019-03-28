@@ -29,9 +29,13 @@ export class AddNoticeComponent implements OnInit {
 	
 	ngOnInit() {
 		this.getAllNotice();
+		$('.datepicker').pickadate({ min: new Date(),
+		})
+
 	}
 
 	addNotice(addForm){
+		addForm.expireon = $('#expireon').val();
 		console.log(addForm);
 		var data = new FormData();
 		_.forOwn(addForm, function(value, key) {
