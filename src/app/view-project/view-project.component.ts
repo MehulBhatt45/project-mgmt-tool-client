@@ -105,7 +105,7 @@ export class ViewProjectComponent implements OnInit {
           this.idet =res[i]._id;
           console.log("this.projects[][][][][]",this.idet);
           this.getProject(this.idet);
-
+        }
       }
       else{
         this.projects = [];
@@ -281,28 +281,28 @@ getProject(id){
       this.loader = false;
     });
 
-// teamByProjectId
-     this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-          //this.projectTeam = res.team;
+    // teamByProjectId
+    this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+      //this.projectTeam = res.team;
 
-          // res.Teams.push(this.pro.pmanagerId); 
-          console.log("response of team============>"  ,res.Teams);
-          this.projectTeam = res.Teams;
-          this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sort============>"  ,this.projectTeam);
-          })
+      // res.Teams.push(this.pro.pmanagerId); 
+      console.log("response of team============>"  ,res.Teams);
+      this.projectTeam = res.Teams;
+      this.projectTeam.sort(function(a, b){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 //default return value (no sorting)
+        this.projectTeam.push
+        console.log("sort============>"  ,this.projectTeam);
+      })
 
 
-        },(err:any)=>{
-          console.log("err of team============>"  ,err);
-        });
+    },(err:any)=>{
+      console.log("err of team============>"  ,err);
+    });
 
 
   },1000);
