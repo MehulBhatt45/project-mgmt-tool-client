@@ -17,15 +17,28 @@
 		<div class="container">
 			<div class="row" style="margin-top: 30px;">
 				<div class="col-sm-6">
-					<h2 style="margin-top: 70px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
-					<div class="row">
-						<div class="col-sm-6">
-							<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
+					<div class="card">
+
+
+						<div class="card-body">
+
+							<h2 style="margin-top: 70px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
+							<div class="row">
+								<div class="col-sm-6">
+									<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
+								</div>
+								<div class="col-sm-6">
+									<p style="margin-top: 33px;">Our Completed Project: <b>{{round}}%</b></p>
+								</div>
+							</div>
+							<div>
+								<canvas id="pieChart5"></canvas>
+							</div>
+
 						</div>
-						<div class="col-sm-6">
-							<p style="margin-top: 33px;">Our Completed Project: <b>{{round}}%</b></p>
-						</div>
+
 					</div>
+					
 
 				<!-- <div class="col-sm-3">
 					<div class="progress blue">
@@ -41,7 +54,6 @@
 				</div> -->
 				
 
-				<canvas id="pieChart5"></canvas>
 
 			</div>
 				<!-- <div class="row">
@@ -79,10 +91,19 @@
 
 
 		<div class="col-sm-6" style="margin-top: 70px;">
-			<h2><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h2>
+			<div class="card" style="margin-top: -70px;">
 
-			<canvas id="myChart" style="width: 50%;margin-top: 80px;"></canvas>
 
+				<div class="card-body">
+
+					<h2 style="margin-top: 36px;"><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h2>
+
+					<canvas id="myChart" style="width: 50%;margin-top: 80px;"></canvas>
+
+				</div>
+
+			</div>
+			
 		</div>
 	</div>
 
@@ -131,9 +152,18 @@
 		<div class="row" style="margin-top: 25px;">
 			<h3><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
 			<div class="col-sm-6" style="padding-left: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-				<!-- <canvas id="pieChart1" class="border1"></canvas> -->
-				<canvas id="lineChart"></canvas>
+				<div class="card">
+
+					<div class="card-body">
+
+						<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+						<!-- <canvas id="pieChart1" class="border1"></canvas> -->
+						<canvas id="lineChart"></canvas>
+
+					</div>
+
+				</div>
+				
 
 			<!-- 	<table class="table table-bordered table-responsive">
 					<thead>
@@ -152,9 +182,19 @@
 				</table> -->
 			</div>
 			<div class="col-sm-6" style="padding-right: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
-				<!-- <canvas id="pieChart2" class="border2"></canvas> -->
-				<canvas id="lineChart1"></canvas>
+				<div class="card">
+
+
+					<div class="card-body">
+
+						<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
+						<!-- <canvas id="pieChart2" class="border2"></canvas> -->
+						<canvas id="lineChart1"></canvas>
+
+					</div>
+
+				</div>
+				
 				<!-- <table class="table table-bordered table-responsive" >
 					<thead>
 						<tr>

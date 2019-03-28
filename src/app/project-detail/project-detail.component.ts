@@ -186,14 +186,10 @@ export class ProjectDetailComponent implements OnInit {
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
-		// var refresh;
-		// alert('Button clicked. Disabling...');
 		$('#save_changes').on('click', function(){
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
 		});
-
-		
 	}
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -409,6 +405,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
+
 	
 	// updateTask(task){
 	// 	task.assignTo = this.editTaskForm.value.assignTo;
@@ -449,6 +446,7 @@ export class ProjectDetailComponent implements OnInit {
 
 
 
+
 	getEmptyTask(){
 		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 	}
@@ -460,6 +458,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(this.modalTitle);
 		$('#itemManipulationModel').modal('show');
 	}
+
 
 
 	saveTheData(task){
@@ -508,6 +507,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	
 
+
 	// public Editor = DecoupledEditor;
 	// public configuration = { placeholder: 'Enter Comment Text...'};
 
@@ -554,6 +554,7 @@ export class ProjectDetailComponent implements OnInit {
 	// 		console.error(err);
 	// 	});
 	// }
+
 	searchTask(){
 		console.log("btn tapped");
 	}
@@ -565,12 +566,17 @@ export class ProjectDetailComponent implements OnInit {
 		var dataToBeFiltered = [this.project];
 		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 		console.log("In Component",task);
+
+		console.log("sdjhfdhfj====>",this.tracks.tasks);
+
+
 		this.getEmptyTracks();
 		_.forEach(task, (content)=>{
 			_.forEach(this.tracks, (track)=>{
 				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
 						// if(content.status == track.id){
+
 							track.tasks.push(content);
 						}
 

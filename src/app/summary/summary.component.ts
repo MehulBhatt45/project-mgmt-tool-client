@@ -513,7 +513,7 @@ export class SummaryComponent implements OnInit {
 																																		options: {
 																																			responsive: true,
 																																			legend:{
-																																				position:"bottom",
+																																				position:"left",
 
 
 																																			}
