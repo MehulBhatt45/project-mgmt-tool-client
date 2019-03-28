@@ -1,27 +1,12 @@
   
 //const baseUrl = "http://206.189.231.135:4000/";
 // const baseUrl = "http://132.140.160.63:4000/";
-       const baseUrl = "http://localhost:4000/";
-
-<<<<<<< HEAD
-// const baseUrl = "http://206.189.231.135:4000/";
- // const baseUrl = "http://132.140.160.63:4000/";
 const baseUrl = "http://localhost:4000/";
 
- // const baseMediaUrl = "http://132.140.160.63/project_mgmt_tool/server/uploads/";
- // const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
- const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
-// 
-
-
-
-
-
-=======
 // const baseMediaUrl = "http://132.140.160.63/project_mgmt_tool/server/uploads/";
 //const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
- const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
->>>>>>> ac9c0529001977f37a12ea093f5603ed4fd40220
+const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
+
 
 export const config = {
       baseApiUrl: baseUrl,
