@@ -186,14 +186,10 @@ export class ProjectDetailComponent implements OnInit {
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
-		// var refresh;
-		// alert('Button clicked. Disabling...');
 		$('#save_changes').on('click', function(){
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
 		});
-
-		
 	}
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
