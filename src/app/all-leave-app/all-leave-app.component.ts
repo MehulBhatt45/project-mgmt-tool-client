@@ -9,6 +9,7 @@ declare var $ : any;
 import Swal from 'sweetalert2';
 import { config } from '../config';
 
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -30,6 +31,7 @@ export class AllLeaveAppComponent implements OnInit {
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
+  fileUrl;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -75,10 +77,8 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
-    }
 
-
-
+    }    
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -93,8 +93,6 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-
-
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
@@ -260,65 +258,65 @@ export class AllLeaveAppComponent implements OnInit {
       })
     }
 
-  leavesByUserId(){
-    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-    console.log("email of login user",obj);
-    this._leaveService.leavesById(obj).subscribe((res:any)=>{
-      console.log("resppppppondssss",res);
-      this.leaves = res;
-      _.forEach(this.leaves , (leave)=>{
-        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+    leavesByUserId(){
+      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
+        _.forEach(this.leaves , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+      },err=>{
+        console.log(err);
       })
-      console.log("statussssssss",this.leaves);
-    },err=>{
-      console.log(err);
-    })
-  }
+    }
 
-  filterTracks(developerId){
-    this.getEmptytracks();
-    var obj ={ email : developerId};
-    console.log("email of login user",obj);
-    this._leaveService.leavesById(obj).subscribe((res:any)=>{
-      console.log("resppppppondssss",res);
-      this.leaves = res;
-      _.forEach(this.leaves , (leave)=>{
-        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-      })
-      console.log("statussssssss",this.leaves);
-      if( developerId!='all'){
-        this.leaveApp = [];
-        $('.unselected').css('display','block');
-        $('.selected').css('display','none');
-        console.log("sucess");
+    filterTracks(developerId){
+      this.getEmptytracks();
+      var obj ={ email : developerId};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
         _.forEach(this.leaves , (leave)=>{
-          console.log("dsfbbdsf",leave);
-          if(developerId == leave.email ){
-            console.log(leave);
-            $('.unselected').css('display','none');
-            $('.selected').css('display','block');
-            this.leaveApp.push(leave);
-          }
-        });
-        _.forEach(this.leaves , (leave)=>{
-          _.forEach(this.leavescount , (count)=>{
-            if(count.typeOfLeave == leave.typeOfLeave){
-              count.leavesTaken = count.leavesTaken + 1;
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+        if( developerId!='all'){
+          this.leaveApp = [];
+          $('.unselected').css('display','block');
+          $('.selected').css('display','none');
+          console.log("sucess");
+          _.forEach(this.leaves , (leave)=>{
+            console.log("dsfbbdsf",leave);
+            if(developerId == leave.email ){
+              console.log(leave);
+              $('.unselected').css('display','none');
+              $('.selected').css('display','block');
+              this.leaveApp.push(leave);
             }
-
           });
-        });
-        console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-        console.log("leaves count ====>" , this.leavescount);
-      }else{
-        console.log("not found");
-      }
-    },err=>{
-      console.log(err);
-    })
-  }
+          _.forEach(this.leaves , (leave)=>{
+            _.forEach(this.leavescount , (count)=>{
+              if(count.typeOfLeave == leave.typeOfLeave){
+                count.leavesTaken = count.leavesTaken + 1;
+              }
 
-}
+            });
+          });
+          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+          console.log("leaves count ====>" , this.leavescount);
+        }else{
+          console.log("not found");
+        }
+      },err=>{
+        console.log(err);
+      })
+    }
+
+  }
 
