@@ -22,7 +22,7 @@ export class ViewProjectComponent implements OnInit {
   files:Array<File>;
   url = '';
   pro;
-  idet;
+  idet = [];
   pmt:any;
   developers: any;
   path = config.baseMediaUrl;
@@ -101,12 +101,17 @@ export class ViewProjectComponent implements OnInit {
         console.log("IN If=========================================",this.projects);
         this.projects = res;
         console.log("this.projects========------=-=-=-=",this.projects);
+
         for(var i=0;i<res.length;i++){
+
           this.idet =res[i]._id;
-          console.log("this.projects[][][][][]",this.idet);
-          this.getProject(this.idet);
-          
+          // this.idet.push(res[i]._id);
+
         }
+        console.log("this.projects[][][][][]",this.idet);
+
+        this.getProject(this.idet);
+        
 
       }
       else{
@@ -272,6 +277,7 @@ getProject(id){
           }
         })
       })
+      
       this.loader = false;
 
     },err=>{

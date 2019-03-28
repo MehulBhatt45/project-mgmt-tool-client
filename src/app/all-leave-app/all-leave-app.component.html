@@ -19,17 +19,17 @@
   <li class="nav-item">
     <a class="nav-link" id="developer-leave" data-toggle="tab" href="#developer-just"  role="tab" (click)="leavesToDisplay=false" aria-controls="developer-just"
     aria-selected="true">
-   <div>
-    <select class="browser-default custom-select custom-select-lg  text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(
-    trackChangeDeveloperWise = $event.target.value)
+    <div>
+      <select class="browser-default custom-select custom-select-lg  text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(
+      trackChangeDeveloperWise = $event.target.value)
 
-    ">
-    <option value="all" selected>All Developer</option>
-    <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
-  </select>
-</div>
-  </a>
-  </li>
+      ">
+      <option value="all" selected>All Developer</option>
+      <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
+    </select>
+  </div>
+</a>
+</li>
 </ul>
 
 
@@ -42,9 +42,9 @@
    <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
     <div class="row justify-content-center">
-<div class="col-12 col-md-12">
-  <!-- Table with panel -->
-  <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
+      <div class="col-12 col-md-12">
+        <!-- Table with panel -->
+        <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
           <!--Card image-->
           <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
@@ -139,8 +139,6 @@
 
 </div>
 </div>
-
-
 
 <!-- Accepted Leave Table -->
 
@@ -270,7 +268,7 @@
 
 
 
-    
+
     <!-- Rejected Leave Table -->
 
     <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
@@ -448,100 +446,100 @@
 <!-- All Developers Leaves Table -->
 
 
-  <div class="tab-pane fade show " id="developer-just" role="tabpanel" aria-labelledby="developer-just">
-   <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
+<div class="tab-pane fade show " id="developer-just" role="tabpanel" aria-labelledby="developer-just">
+ <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
-    <div class="row justify-content-center">
+  <div class="row justify-content-center">
     <!-- <div>
     <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
       <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
     </select>
   </div> -->
- 
-<div class="col-12 col-md-12">
-  <!-- Table with panel -->
-  <div class="card card-cascade narrower">
 
-    <!--Card image-->
-    <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-      <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
-    </div>
-    <!--/Card image-->
+  <div class="col-12 col-md-12">
+    <!-- Table with panel -->
+    <div class="card card-cascade narrower">
 
-    <div class="px-4">
-      <div class="table-responsive">
-        <!--Table-->
-        <table class="table table-hover">
+      <!--Card image-->
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+        <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+      </div>
+      <!--/Card image-->
 
-          <!--Table head-->
-          <thead>
-            <tr>
-              <th>
-                Avtar
-              </th>
-              <th>
-                <span>Name
-                </span>
-              </th> 
-              <th>
-                <span>Leave-Duration
-                </span>
-              </th>
-              <th>
-                <span>From Date
-                </span>
-              </th>
-              <th>
-                <span>To Date
-                </span>
-              </th>
+      <div class="px-4">
+        <div class="table-responsive">
+          <!--Table-->
+          <table class="table table-hover">
 
-              <th>
-                <span>Types Of Leave</span>
-              </th>
-              <th>
-                <span>Leave-Reason</span>
-              </th>
-              <th>
-                <span>Leave-Status</span>
-                <i class="fas fa-sort ml-1"></i>
-              </th>
-            </tr>
-          </thead>
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>
+                  Avtar
+                </th>
+                <th>
+                  <span>Name
+                  </span>
+                </th> 
+                <th>
+                  <span>Leave-Duration
+                  </span>
+                </th>
+                <th>
+                  <span>From Date
+                  </span>
+                </th>
+                <th>
+                  <span>To Date
+                  </span>
+                </th>
 
-          <!--Table body-->
-          <tbody>
-            <tr *ngFor="let leaves of leaveApp">
-              <td style="width: 56px;">
-                <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                  <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                    <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                  </a>
-                </div>
-              </td>
-              <!-- <td>{{leaves.email}}</td> -->
-              <td>{{leaves.name}}</td>
-              <td >{{leaves.leaveDuration}}</td>
-              <td>{{leaves.startingDate}}</td>
-              <td>{{leaves.endingDate}}</td>
-              <td>{{leaves.typeOfLeave}}</td>
-              <td class="description">{{leaves.reasonForLeave}}</td>
-              <td>
-                <strong *ngIf="leaves.status=='pending'"style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                <th>
+                  <span>Types Of Leave</span>
+                </th>
+                <th>
+                  <span>Leave-Reason</span>
+                </th>
+                <th>
+                  <span>Leave-Status</span>
+                  <i class="fas fa-sort ml-1"></i>
+                </th>
+              </tr>
+            </thead>
 
-                <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+            <!--Table body-->
+            <tbody>
+              <tr *ngFor="let leaves of leaveApp">
+                <td style="width: 56px;">
+                  <div class="avatar mx-auto" *ngIf= "leaves.dev">
+                    <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
+                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
+                    </a>
+                  </div>
+                </td>
+                <!-- <td>{{leaves.email}}</td> -->
+                <td>{{leaves.name}}</td>
+                <td >{{leaves.leaveDuration}}</td>
+                <td>{{leaves.startingDate}}</td>
+                <td>{{leaves.endingDate}}</td>
+                <td>{{leaves.typeOfLeave}}</td>
+                <td class="description">{{leaves.reasonForLeave}}</td>
+                <td>
+                  <strong *ngIf="leaves.status=='pending'"style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
 
-                <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
-              </td>
-            </tr>
-          </tbody>
-          <!--Table body-->
-        </table>
-        <!--Table-->
+                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                </td>
+              </tr>
+            </tbody>
+            <!--Table body-->
+          </table>
+          <!--Table-->
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 </div>
@@ -568,86 +566,86 @@
 <div class="container" *ngIf="currentUser.userRole=='user'">
   <div class="row justify-content-center">
     <div class="col-12 col-md-12">
-       Table with panel -->
-      <div class="card card-cascade narrower">
+     Table with panel -->
+     <div class="card card-cascade narrower">
 
-        <!--Card image-->
-        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+      <!--Card image-->
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
 
-          <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
+        <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
 
-        </div>
-        <!--/Card image-->
+      </div>
+      <!--/Card image-->
 
-        <div class="px-4">
-          <div class="table-wrapper">
-            <!--Table-->
-            <table class="table table-hover mb-0 css-serial">
+      <div class="px-4">
+        <div class="table-wrapper">
+          <!--Table-->
+          <table class="table table-hover mb-0 css-serial">
 
-              <!--Table head-->
-              <thead>
-                <tr>
-                  <th>
-                    <span>Sr No.
-                    </span>
-                  </th>
-                  <th>
-                    <span>E-mail
-                    </span>
-                  </th>
-                  <th>
-                    <span>Name
-                    </span>
-                  </th> 
-                  <th>
-                    <span>Leave-Duration
-                    </span>
-                  </th>
-                  <th>
-                    <span>From Date
-                    </span>
-                  </th>
-                  <th>
-                    <span>To Date
-                    </span>
-                  </th>
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>
+                  <span>Sr No.
+                  </span>
+                </th>
+                <th>
+                  <span>E-mail
+                  </span>
+                </th>
+                <th>
+                  <span>Name
+                  </span>
+                </th> 
+                <th>
+                  <span>Leave-Duration
+                  </span>
+                </th>
+                <th>
+                  <span>From Date
+                  </span>
+                </th>
+                <th>
+                  <span>To Date
+                  </span>
+                </th>
 
-                  <th>
-                    <span>Types Of Leave</span>
-                  </th>
-                  <th>
-                    <span>Leave-Reason</span>
-                  </th>
-                  <th>
-                    <span>Leave-Status</span>
-                  </th>
-                </tr>
-              </thead>
-              <!--Table head-->
+                <th>
+                  <span>Types Of Leave</span>
+                </th>
+                <th>
+                  <span>Leave-Reason</span>
+                </th>
+                <th>
+                  <span>Leave-Status</span>
+                </th>
+              </tr>
+            </thead>
+            <!--Table head-->
 
-              <!--Table body-->
-              <tbody *ngFor="let leave of leaves">
-                <tr *ngIf="leave.status !=='pending'">
-                  <td></td>
-                  <td>{{leave.email}}</td>
-                  <td>{{leave.name}}</td>
-                  <td >{{leave.leaveDuration}}</td>
-                  <td>{{leave.startingDate}}</td>
-                  <td>{{leave.endingDate}}</td>
-                  <td>{{leave.typeOfLeave}}</td>
-                  <td class="description">{{leave.reasonForLeave}}</td>
-                  <td>{{leave.status}}</td>
+            <!--Table body-->
+            <tbody *ngFor="let leave of leaves">
+              <tr *ngIf="leave.status !=='pending'">
+                <td></td>
+                <td>{{leave.email}}</td>
+                <td>{{leave.name}}</td>
+                <td >{{leave.leaveDuration}}</td>
+                <td>{{leave.startingDate}}</td>
+                <td>{{leave.endingDate}}</td>
+                <td>{{leave.typeOfLeave}}</td>
+                <td class="description">{{leave.reasonForLeave}}</td>
+                <td>{{leave.status}}</td>
 
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>
+
     </div>
   </div>
+</div>
 
 </div> 
 

@@ -66,6 +66,7 @@ export class AllLeaveAppComponent implements OnInit {
       "leavesLeft" : 18 
     }  
     ]
+    console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
     this.getLeaves();
@@ -123,7 +124,7 @@ export class AllLeaveAppComponent implements OnInit {
 
         //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
         this.allLeaves = this.leaveApp; 
-        console.log("applicationsss==>",this.leaveApp);
+        console.log("applicationsss==>",this.allLeaves);
       },err=>{
         console.log(err);
       })
