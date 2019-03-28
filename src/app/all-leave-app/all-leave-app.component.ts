@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
 import { config } from '../config';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-all-leave-app',
@@ -30,7 +31,6 @@ export class AllLeaveAppComponent implements OnInit {
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
-  attechment: true;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -134,15 +134,14 @@ export class AllLeaveAppComponent implements OnInit {
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
-        this.developers.sort(function(a, b){
-          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          if (nameA < nameB) //sort string ascending
-            return -1 
-          if (nameA > nameB)
-            return 1
-          return 0 
-        })
-
+        // this.developers.sort(function(a, b){
+        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //   if (nameA < nameB) //sort string ascending
+        //     return -1 
+        //   if (nameA > nameB)
+        //     return 1
+        //   return 0 
+        // })
 
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -179,7 +178,7 @@ export class AllLeaveAppComponent implements OnInit {
       })
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "Leaves Left: "+this.leavescount[4].leavesLeft,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -261,65 +260,84 @@ export class AllLeaveAppComponent implements OnInit {
       })
     }
 
-  leavesByUserId(){
-    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-    console.log("email of login user",obj);
-    this._leaveService.leavesById(obj).subscribe((res:any)=>{
-      console.log("resppppppondssss",res);
-      this.leaves = res;
-      _.forEach(this.leaves , (leave)=>{
-        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+    leavesByUserId(){
+      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
+        _.forEach(this.leaves , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+      },err=>{
+        console.log(err);
       })
-      console.log("statussssssss",this.leaves);
-    },err=>{
-      console.log(err);
-    })
-  }
+    }
 
-  filterTracks(developerId){
-    this.getEmptytracks();
-    var obj ={ email : developerId};
-    console.log("email of login user",obj);
-    this._leaveService.leavesById(obj).subscribe((res:any)=>{
-      console.log("resppppppondssss",res);
-      this.leaves = res;
-      _.forEach(this.leaves , (leave)=>{
-        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-      })
-      console.log("statussssssss",this.leaves);
-      if( developerId!='all'){
-        this.leaveApp = [];
-        $('.unselected').css('display','block');
-        $('.selected').css('display','none');
-        console.log("sucess");
+    filterTracks(developerId){
+      this.getEmptytracks();
+      var obj ={ email : developerId};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
         _.forEach(this.leaves , (leave)=>{
-          console.log("dsfbbdsf",leave);
-          if(developerId == leave.email ){
-            console.log(leave);
-            $('.unselected').css('display','none');
-            $('.selected').css('display','block');
-            this.leaveApp.push(leave);
-          }
-        });
-        _.forEach(this.leaves , (leave)=>{
-          _.forEach(this.leavescount , (count)=>{
-            if(count.typeOfLeave == leave.typeOfLeave){
-              count.leavesTaken = count.leavesTaken + 1;
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+        if( developerId!='all'){
+          this.leaveApp = [];
+          $('.unselected').css('display','block');
+          $('.selected').css('display','none');
+          console.log("sucess");
+          _.forEach(this.leaves , (leave)=>{
+            console.log("dsfbbdsf",leave);
+            if(developerId == leave.email ){
+              console.log(leave);
+              $('.unselected').css('display','none');
+              $('.selected').css('display','block');
+              this.leaveApp.push(leave);
             }
-
           });
-        });
-        console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-        console.log("leaves count ====>" , this.leavescount);
-      }else{
-        console.log("not found");
-      }
-    },err=>{
-      console.log(err);
-    })
-  }
+          _.forEach(this.leaves , (leave)=>{
+            _.forEach(this.leavescount , (count)=>{
+              if(count.typeOfLeave == leave.typeOfLeave){
+                count.leavesTaken = count.leavesTaken + 1;
+              }
 
-}
+            });
+          });
+          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+          console.log("leaves count ====>" , this.leavescount);
+
+          var ctxP = document.getElementById("pieChart");
+          var myPieChart = new Chart(ctxP, {
+            type: 'pie',
+            data: {
+              labels: ["sickleave", "personalleave", "leavewithoutpay", "emergencyleave"],
+              datasets: [{
+                data: [this.leavescount[0].leavesTaken, this.leavescount[1].leavesTaken, this.leavescount[2].leavesTaken,this.leavescount[3].leavesTaken],
+                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
+                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"]
+              }]
+            },
+            options: {
+              responsive: true,
+              legend:{
+                position:"right",
+              }
+            }
+          });
+        }else{
+          console.log("not found");
+        }
+      },err=>{
+        console.log(err);
+      })
+    }
+
+  }
 
