@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist">
+<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just"  role="tab" (click)="leavesToDisplay=false" aria-controls="home-just"
     aria-selected="true">Pending Leaves</a>
@@ -51,78 +51,74 @@
                     <th>
                       Avtar
                     </th>
-            <!--   <th>
-                <span>E-mail
-                </span>
-              </th> -->
-              <th>
-                <span>Name
-                </span>
-              </th> 
-              <th>
-                <span>Leave-Duration
-                </span>
-              </th>
-              <th>
-                <span>From Date
-                </span>
-              </th>
-              <th>
-                <span>To Date
-                </span>
-              </th>
-              <th>
-                <span>Types Of Leave</span>
-              </th>
-              <th>
-                <span>Leave-Reason</span>
-              </th>
-              <th>
-                <span>Attachment</span>
-              </th>
-              <th>
-                <span>Leave-Status</span>
-                <i class="fas fa-sort ml-1"></i>
-              </th>
-              <th>
-                <span>Action</span>
-              </th>
-            </tr>
-          </thead>
-          <!--Table body-->
-          <tbody>
-            <tr *ngFor="let leaves of leaveApp">
-              <td style="width: 56px;">
-                <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                  <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                    <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                  </a>
-                </div>
-              </td>
-              <!-- <td>{{leaves.email}}</td> -->
-              <td>{{leaves.name}}</td>
-              <td >{{leaves.leaveDuration}}</td>
-              <td>{{leaves.startingDate}}</td>
-              <td>{{leaves.endingDate}}</td>
-              <td>{{leaves.typeOfLeave}}</td>
-              <td class="description">{{leaves.reasonForLeave}}</td>
-              <td >
-                <a data-lightbox="comment_image" *ngIf="leaves.attechment" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
-              </td>
-              <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
-              <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
-            </tr>
-          </tbody>
-          <!--Table body-->
-        </table>
-        <!--Table-->
+                    <th>
+                      <span>Name
+                      </span>
+                    </th> 
+                    <th>
+                      <span>Leave-Duration
+                      </span>
+                    </th>
+                    <th>
+                      <span>From Date
+                      </span>
+                    </th>
+                    <th>
+                      <span>To Date
+                      </span>
+                    </th>
+                    <th>
+                      <span>Types Of Leave</span>
+                    </th>
+                    <th>
+                      <span>Leave-Reason</span>
+                    </th>
+                    <th>
+                      <span>Attachment</span>
+                    </th>
+                    <th>
+                      <span>Leave-Status</span>
+                      <i class="fas fa-sort ml-1"></i>
+                    </th>
+                    <th>
+                      <span>Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <!--Table body-->
+                <tbody>
+                  <tr *ngFor="let leaves of leaveApp">
+                    <td style="width: 56px;">
+                      <div class="avatar mx-auto" *ngIf= "leaves.dev">
+                        <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
+                          <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
+                        </a>
+                      </div>
+                    </td>
+                    <!-- <td>{{leaves.email}}</td> -->
+                    <td>{{leaves.name}}</td>
+                    <td >{{leaves.leaveDuration}}</td>
+                    <td>{{leaves.startingDate}}</td>
+                    <td>{{leaves.endingDate}}</td>
+                    <td>{{leaves.typeOfLeave}}</td>
+                    <td class="description">{{leaves.reasonForLeave}}</td>
+                    <td >
+                      <a data-lightbox="comment_image" *ngIf="leaves.attechment" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                      <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
+                    </td>
+                    <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
+                    <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                  </tr>
+                </tbody>
+                <!--Table body-->
+              </table>
+              <!--Table-->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
 </div>
 <!-- Accepted Leave Table -->
 <!--Card image-->
@@ -315,14 +311,14 @@
       <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
     </select>
   </div> -->
-  <div>
+ <!--  <div>
     <select class="browser-default custom-select custom-select-lg mb-3 text-left" *ngIf="developers && currentUser.userRole=='user'" (change)="filterTracks(
     trackChangeDeveloperWise = $event.target.value)
     ">
     <option value="all" selected>All Developer</option>
     <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
   </select>
-</div>
+</div> -->
 <div class="col-12 col-md-12">
   <!-- Table with panel -->
   <div class="card card-cascade narrower">
@@ -375,7 +371,7 @@
               <th>
                 <span>Name
                 </span>
-              </th> 
+              </th>   
               <th>
                 <span>Leave-Duration
                 </span>
