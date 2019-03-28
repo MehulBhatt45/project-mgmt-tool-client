@@ -233,9 +233,9 @@
 		<div class="modal-content">
 
 			<div class="card card-cascade narrower modal-header view view-cascade "> 
-				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}bhgbbh</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button>
+				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				</button> -->
 				
 			</div>
 			<div class="modal-body view view-cascade">
@@ -318,7 +318,7 @@
 				<div id="refresh_icon" style="display: none;"> 
 					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 				</div>
-				<div *ngIf="currentUser.userRole=='developer' && modalTitle == 'Edit Item'">
+				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
 				</div>
 				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>

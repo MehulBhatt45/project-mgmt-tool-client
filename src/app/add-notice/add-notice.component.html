@@ -24,7 +24,7 @@
 							<input autocomplete= 'false | random-string' placeholder="Selected date" type="date" formControlName="expireon">
 						</div>
 						
-						<!-- Material switch -->
+						
 						<div class="row">
 							<div class=" row form-group col-6">
 								<button class="btn btn-default" (click)="fileUpload.click()">
@@ -32,6 +32,7 @@
 									<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)">
 								</button>
 							</div>
+							<!-- Material switch Start -->
 							<div class="form-group col-6">
 								<div class="switch">
 									<label>
@@ -40,6 +41,13 @@
 										<span class="lever"></span>Publish True
 									</label>
 								</div>
+							</div>
+							<!-- Material switch End -->
+						</div>
+						<div class="text-center selected-avatar" *ngIf="url">
+							<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
 							</div>
 						</div>
 						<div class="row justify-content-center">
