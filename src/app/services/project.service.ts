@@ -60,42 +60,6 @@ export class ProjectService {
 		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-developer-of-project"+id);
 	}
-
-
-	// addProject_With_image(body,files:FileList){
-
-		// 	console.log("addproject is calling");
-		// 	let formdata = new FormData();
-		// 	formdata.append('title',body.title);
-		// 	formdata.append('desc',body.desc);
-		// 	formdata.append('avatar',body.avatar);
-		// 	formdata.append('pmanagerId',body.pmanagerId);
-		// 	formdata.append("clientEmail",body.clientEmail);
-		// 	formdata.append("clientFullName",body.clientFullName);
-		// 	formdata.append("clientContactNo",body.clientContactNo);
-		// 	formdata.append("clientDesignation",body.clientDesignation);
-		// 	formdata.append("uploadfile",files[0]);
-		// 	console.log("body===>>>",body);
-
-
-		// 	return this.http.post(config.baseApiUrl+"project/add-project/file",formdata);
-		// 	// return this.http.post(config.baseApiUrl+"project/addProject",body,httpOptions);
-
-		// }
-		// addLeave(form){
-		// 	console.log("formmmmmmmmmmmmmmmmmm",form);
-		// 	const httpOptions = {
-		// 		headers: new HttpHeaders({
-		// 			'Content-Type': 'application/json',
-		// 			'x-access-token': JSON.parse(localStorage.getItem('token'))
-		// 		})
-		// 	};
-		// 	return this.http.post(config.baseApiUrl+"leave/add-leave",form);
-		// }
-
-
-
-
 		leavesById(email){
 			const httpOptions = {
 				headers: new HttpHeaders({

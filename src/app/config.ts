@@ -19,4 +19,4 @@
       { id: "3", value: 'testing', colorCode: 'warning' },
       { id: "4", value: 'complete', colorCode: 'success' }
       ],
- }
+}
