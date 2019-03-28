@@ -2,7 +2,7 @@
 	<div class="col-12 col-md-6 ">
 		<div class=" md-form form-group w-100 ">
 			<i class="fas fa-search prefix"></i>
-			<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText"  (keyup)="onKey(searchText)" autocomplete="off" >
+			<input type="text"  id="exampleForm2" class="form-control" [(ngModel)]="searchText"  (keyup)="onKey(searchText)" autocomplete="off" >
 			<label for="exampleForm2">search text goes here</label>
 		</div>
 	</div>
@@ -74,7 +74,7 @@
 	</section> -->
 	<section class="section pb-3 text-center">
 		<div class="row">
-			<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let developer of developers">
+			<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let developer of developers ">
 				<div class="card-wrapper">
 					<div class="card-rotating effect__click text-center h-100 w-100">
 						<div class="face front">
