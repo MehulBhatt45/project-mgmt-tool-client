@@ -2,7 +2,8 @@
 
 
 
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
+
+<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist">
   <li class="nav-item">
     <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just"  role="tab" (click)="leavesToDisplay=false;" aria-controls="home-just"
     aria-selected="true">Pending Leaves</a>
@@ -38,43 +39,38 @@
 
 <div class="tab-content pt-5" id="myTabContentJust">
   <div class="tab-pane fade show " id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-   <div>
+   <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
     <div class="row justify-content-center">
-    <!-- <div>
-    <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-      <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-    </select>
-  </div> -->
- <!--  <div>
-    <select class="browser-default custom-select custom-select-lg mb-3 text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(
-    trackChangeDeveloperWise = $event.target.value)
+      <div class="col-12 col-md-12">
+        <!-- Table with panel -->
+        <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
 
-    ">
-    <option value="all" selected>All Developer</option>
-    <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
-  </select>
-</div> -->
-<div class="col-12 col-md-12">
-  <!-- Table with panel -->
-  <div class="card card-cascade narrower">
+          <!--Card image-->
+          <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+            <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+          </div>
+          <!--/Card image-->
 
-    <!--Card image-->
-    <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-      <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
-    </div>
-    <!--/Card image-->
+          <div class="px-4">
+            <div class="table-responsive">
+              <!--Table-->
+              <table class="table table-hover">
 
-    <div class="px-4">
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th class="th-sm">
-                Avtar
-              </th>
-              <th class="th-sm">
-                <span>Name</span>
+                <!--Table head-->
+                <thead>
+                  <tr>
+                    <th>
+                      Avtar
+                    </th>
+            <!--   <th>
+                <span>E-mail
+                </span>
+              </th> -->
+              <th>
+                <span>Name
+                </span>
+
               </th> 
               <th >
                 <span>Leave-Duration
@@ -92,7 +88,11 @@
               <th class="th-sm">
                 <span>Leave-Reason</span>
               </th>
+
               <th class="th-sm">
+                <span>Attachment</span>
+              </th>
+              <th class="th-sm"> 
                 <span>Leave-Status</span>
               </th>
               <th class="th-sm">
@@ -115,6 +115,10 @@
               <td>{{leaves.endingDate}}</td>
               <td>{{leaves.typeOfLeave}}</td>
               <td class="description">{{leaves.reasonForLeave}}</td>
+              <td >
+                <a data-lightbox="comment_image" *ngIf="leaves.attechment" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
+              </td>
               <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
               <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
             </tr>
@@ -136,7 +140,7 @@
 
 <!--Card image-->
 <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-  <div>
+  <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
     <div class="row justify-content-center">
       <div class="col-12 col-md-12">
         <!-- Table with panel -->
@@ -224,7 +228,6 @@
       </div>
 
     </div>
-
   </div>
 </div>
 </div>
@@ -232,38 +235,66 @@
 </div>
 </div>
 
+</div>
+<!-- </div>
+</div>
+
+</div> -->
 
 
 
-<!-- Rejected Leave Table -->
 
-<div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
- <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-12">
-      <!-- Table with panel -->
-      <div class="card card-cascade narrower">
 
-        <!--Card image-->
-        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+<div class="row justify-content-center">
+    <!-- <div>
+    <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+      <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+    </select>
+  </div> -->
+  <div>
+    <select class="browser-default custom-select custom-select-lg mb-3 text-left" *ngIf="developers && currentUser.userRole=='user'" (change)="filterTracks(
+    trackChangeDeveloperWise = $event.target.value)
+    ">
+    <option value="all" selected>All Developer</option>
+    <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
+  </select>
+</div>
+<div class="col-12 col-md-12">
+  <!-- Table with panel -->
+  <div class="card card-cascade narrower">
 
-          <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
 
-        </div>
-        <!--/Card image-->
 
-        <div class="px-4">
-          <div class="table-responsive">
-            <!--Table-->
-            <table class="table table-hover">
+    
+    <!-- Rejected Leave Table -->
 
-              <!--Table head-->
-              <thead>
-                <tr>
-                  <th>
-                    <span>Avtar
-                    </span>
-                  </th>
+    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+     <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-12">
+          <!-- Table with panel -->
+          <div class="card card-cascade narrower">
+
+            <!--Card image-->
+            <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+
+              <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+
+            </div>
+            <!--/Card image-->
+
+            <div class="px-4">
+              <div class="table-responsive">
+                <!--Table-->
+                <table class="table table-hover">
+
+                  <!--Table head-->
+                  <thead>
+                    <tr>
+                      <th>
+                        <span>Avtar
+                        </span>
+                      </th>
            <!--    <th>
                 <span>E-mail
                 </span>
@@ -324,15 +355,89 @@
         </table>
         <!--Table-->
       </div>
+      <!--/Card image-->
 
-    </div>
+      <div class="px-4">
+        <div class="table-wrapper table-responsive">
+          <!--Table-->
+          <table class="table table-hover table-responsive mb-0 css-serial">
 
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th class="th-lg text-left">
+                  <span class="text-left">Sr No.
+                  </span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">E-mail
+                  </span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">Name
+                  </span>
+                </th> 
+                <th class="th-lg text-left">
+                  <span class="text-left">Leave-Duration
+                  </span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">From Date
+                  </span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">To Date
+                  </span>
+                </th>
+
+                <th class="th-lg text-left">
+                  <span class="text-left">Types Of Leave</span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">Leave-Reason</span>
+                </th>
+                <th class="th-lg text-left">
+                  <span class="text-left">Leave-Status</span>
+                  <i class="fas fa-sort ml-1"></i>
+                </th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+              <tr *ngFor="let leaves of leaveApp">
+          <!-- <th scope="row">
+            <input class="form-check-input" type="checkbox" id="checkbox1">
+            <label class="form-check-label" for="checkbox1" class="label-table"></label>
+
+          </th> -->
+          <td ></td>
+          <td  class="text-left">{{leaves.email}}</td>
+          <td class="text-left">{{leaves.name}}</td>
+          <td >{{leaves.leaveDuration}}</td>
+          <td class="text-left">{{leaves.startingDate}}</td>
+          <td class="text-left">{{leaves.endingDate}}</td>
+          <td class="text-left">{{leaves.typeOfLeave}}</td>
+          <td class="text-left description">{{leaves.reasonForLeave}}</td>
+          <td class="text-left">{{leaves.status}}</td>
+          
+        </tr>
+      </tbody>
+      <!--Table body-->
+    </table>
+    <!--Table-->
   </div>
+
+</div>
+
+</div>
 </div>
 </div>
 
 </div>
 </div>
+
 
 
 <!-- All Developers Leaves Table -->
@@ -447,311 +552,98 @@
     <img src="../assets/leave1.png" style="height: 600px; width: 100%;">
   </div>
 </div>
+
+
+
+
+
 <!-- for employee leaves List -->
 
 <!-- 
 <div class="container" *ngIf="currentUser.userRole=='user'">
   <div class="row justify-content-center">
     <div class="col-12 col-md-12">
-      <div class="card card-cascade narrower">
+     Table with panel -->
+     <div class="card card-cascade narrower">
 
-        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+      <!--Card image-->
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
 
-          <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
+        <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
 
-        </div>
+      </div>
+      <!--/Card image-->
 
-        <div class="px-4">
-          <div class="table-wrapper">
-            <table class="table table-hover mb-0 css-serial">
-              <thead>
-                <tr>
-                  <th>
-                    <span>Sr No.
-                    </span>
-                  </th>
-                  <th>
-                    <span>E-mail
-                    </span>
-                  </th>
-                  <th>
-                    <span>Name
-                    </span>
-                  </th> 
-                  <th>
-                    <span>Leave-Duration
-                    </span>
-                  </th>
-                  <th>
-                    <span>From Date
-                    </span>
-                  </th>
-                  <th>
-                    <span>To Date
-                    </span>
-                  </th>
+      <div class="px-4">
+        <div class="table-wrapper">
+          <!--Table-->
+          <table class="table table-hover mb-0 css-serial">
 
-                  <th>
-                    <span>Types Of Leave</span>
-                  </th>
-                  <th>
-                    <span>Leave-Reason</span>
-                  </th>
-                  <th>
-                    <span>Leave-Status</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let leave of leaves">
-                <tr *ngIf="leave.status !=='pending'">
-                  <td></td>
-                  <td>{{leave.email}}</td>
-                  <td>{{leave.name}}</td>
-                  <td >{{leave.leaveDuration}}</td>
-                  <td>{{leave.startingDate}}</td>
-                  <td>{{leave.endingDate}}</td>
-                  <td>{{leave.typeOfLeave}}</td>
-                  <td class="description">{{leave.reasonForLeave}}</td>
-                  <td>{{leave.status}}</td>
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>
+                  <span>Sr No.
+                  </span>
+                </th>
+                <th>
+                  <span>E-mail
+                  </span>
+                </th>
+                <th>
+                  <span>Name
+                  </span>
+                </th> 
+                <th>
+                  <span>Leave-Duration
+                  </span>
+                </th>
+                <th>
+                  <span>From Date
+                  </span>
+                </th>
+                <th>
+                  <span>To Date
+                  </span>
+                </th>
 
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <th>
+                  <span>Types Of Leave</span>
+                </th>
+                <th>
+                  <span>Leave-Reason</span>
+                </th>
+                <th>
+                  <span>Leave-Status</span>
+                </th>
+              </tr>
+            </thead>
+            <!--Table head-->
 
+            <!--Table body-->
+            <tbody *ngFor="let leave of leaves">
+              <tr *ngIf="leave.status !=='pending'">
+                <td></td>
+                <td>{{leave.email}}</td>
+                <td>{{leave.name}}</td>
+                <td >{{leave.leaveDuration}}</td>
+                <td>{{leave.startingDate}}</td>
+                <td>{{leave.endingDate}}</td>
+                <td>{{leave.typeOfLeave}}</td>
+                <td class="description">{{leave.reasonForLeave}}</td>
+                <td>{{leave.status}}</td>
+
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>
+
     </div>
   </div>
+</div>
 
-</div> -->
-<!-- <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">Name
-      </th>
-      <th class="th-sm">Position
-      </th>
-      <th class="th-sm">Office
-      </th>
-      <th class="th-sm">Age
-      </th>
-      <th class="th-sm">Start date
-      </th>
-      <th class="th-sm">Salary
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Tiger Nixon</td>
-      <td>System Architect</td>
-      <td>Edinburgh</td>
-      <td>61</td>
-      <td>2011/04/25</td>
-      <td>$320,800</td>
-    </tr>
-    <tr>
-      <td>Garrett Winters</td>
-      <td>Accountant</td>
-      <td>Tokyo</td>
-      <td>63</td>
-      <td>2011/07/25</td>
-      <td>$170,750</td>
-    </tr>
-   
-    <tr>
-      <td>Unity Butler</td>
-      <td>Marketing Designer</td>
-      <td>San Francisco</td>
-      <td>47</td>
-      <td>2009/12/09</td>
-      <td>$85,675</td>
-    </tr>
-    <tr>
-      <td>Howard Hatfield</td>
-      <td>Office Manager</td>
-      <td>San Francisco</td>
-      <td>51</td>
-      <td>2008/12/16</td>
-      <td>$164,500</td>
-    </tr>
-    <tr>
-      <td>Hope Fuentes</td>
-      <td>Secretary</td>
-      <td>San Francisco</td>
-      <td>41</td>
-      <td>2010/02/12</td>
-      <td>$109,850</td>
-    </tr>
-    <tr>
-      <td>Vivian Harrell</td>
-      <td>Financial Controller</td>
-      <td>San Francisco</td>
-      <td>62</td>
-      <td>2009/02/14</td>
-      <td>$452,500</td>
-    </tr>
-    <tr>
-      <td>Timothy Mooney</td>
-      <td>Office Manager</td>
-      <td>London</td>
-      <td>37</td>
-      <td>2008/12/11</td>
-      <td>$136,200</td>
-    </tr>
-    <tr>
-      <td>Jackson Bradshaw</td>
-      <td>Director</td>
-      <td>New York</td>
-      <td>65</td>
-      <td>2008/09/26</td>
-      <td>$645,750</td>
-    </tr>
-    <tr>
-      <td>Olivia Liang</td>
-      <td>Support Engineer</td>
-      <td>Singapore</td>
-      <td>64</td>
-      <td>2011/02/03</td>
-      <td>$234,500</td>
-    </tr>
-    <tr>
-      <td>Bruno Nash</td>
-      <td>Software Engineer</td>
-      <td>London</td>
-      <td>38</td>
-      <td>2011/05/03</td>
-      <td>$163,500</td>
-    </tr>
-    <tr>
-      <td>Sakura Yamamoto</td>
-      <td>Support Engineer</td>
-      <td>Tokyo</td>
-      <td>37</td>
-      <td>2009/08/19</td>
-      <td>$139,575</td>
-    </tr>
-    <tr>
-      <td>Thor Walton</td>
-      <td>Developer</td>
-      <td>New York</td>
-      <td>61</td>
-      <td>2013/08/11</td>
-      <td>$98,540</td>
-    </tr>
-    <tr>
-      <td>Finn Camacho</td>
-      <td>Support Engineer</td>
-      <td>San Francisco</td>
-      <td>47</td>
-      <td>2009/07/07</td>
-      <td>$87,500</td>
-    </tr>
-    <tr>
-      <td>Serge Baldwin</td>
-      <td>Data Coordinator</td>
-      <td>Singapore</td>
-      <td>64</td>
-      <td>2012/04/09</td>
-      <td>$138,575</td>
-    </tr>
-    <tr>
-      <td>Zenaida Frank</td>
-      <td>Software Engineer</td>
-      <td>New York</td>
-      <td>63</td>
-      <td>2010/01/04</td>
-      <td>$125,250</td>
-    </tr>
-    <tr>
-      <td>Zorita Serrano</td>
-      <td>Software Engineer</td>
-      <td>San Francisco</td>
-      <td>56</td>
-      <td>2012/06/01</td>
-      <td>$115,000</td>
-    </tr>
-    <tr>
-      <td>Jennifer Acosta</td>
-      <td>Junior Javascript Developer</td>
-      <td>Edinburgh</td>
-      <td>43</td>
-      <td>2013/02/01</td>
-      <td>$75,650</td>
-    </tr>
-    <tr>
-      <td>Cara Stevens</td>
-      <td>Sales Assistant</td>
-      <td>New York</td>
-      <td>46</td>
-      <td>2011/12/06</td>
-      <td>$145,600</td>
-    </tr>
-    <tr>
-      <td>Hermione Butler</td>
-      <td>Regional Director</td>
-      <td>London</td>
-      <td>47</td>
-      <td>2011/03/21</td>
-      <td>$356,250</td>
-    </tr>
-    <tr>
-      <td>Lael Greer</td>
-      <td>Systems Administrator</td>
-      <td>London</td>
-      <td>21</td>
-      <td>2009/02/27</td>
-      <td>$103,500</td>
-    </tr>
-    <tr>
-      <td>Jonas Alexander</td>
-      <td>Developer</td>
-      <td>San Francisco</td>
-      <td>30</td>
-      <td>2010/07/14</td>
-      <td>$86,500</td>
-    </tr>
-    <tr>
-      <td>Shad Decker</td>
-      <td>Regional Director</td>
-      <td>Edinburgh</td>
-      <td>51</td>
-      <td>2008/11/13</td>
-      <td>$183,000</td>
-    </tr>
-    <tr>
-      <td>Michael Bruce</td>
-      <td>Javascript Developer</td>
-      <td>Singapore</td>
-      <td>29</td>
-      <td>2011/06/27</td>
-      <td>$183,000</td>
-    </tr>
-    <tr>
-      <td>Donna Snider</td>
-      <td>Customer Support</td>
-      <td>New York</td>
-      <td>27</td>
-      <td>2011/01/25</td>
-      <td>$112,000</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>Name
-      </th>
-      <th>Position
-      </th>
-      <th>Office
-      </th>
-      <th>Age
-      </th>
-      <th>Start date
-      </th>
-      <th>Salary
-      </th>
-    </tr>
-  </tfoot>
-</table> -->
+
+</div> 
+

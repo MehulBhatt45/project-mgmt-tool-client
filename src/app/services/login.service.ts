@@ -97,6 +97,15 @@ export class LoginService {
         localStorage.removeItem('token');
         this.currentUserSubject.next(null);
     }
+
+    resetPwd(user){
+        // console.log("res-=-=",user);
+        return this.http.put(config.baseApiUrl+"user/forgot-password",user);
+    }
+
+    updatepwd(user){
+        return this.http.put(config.baseApiUrl+"user/update-password",user);
+    }
 }
 
 

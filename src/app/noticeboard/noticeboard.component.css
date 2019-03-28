@@ -11,10 +11,43 @@
 	/*object-fit: cover;*/
 }
 .text-center{
-	border: 3px solid gray;
 	border-radius: 8px;
 	width: 30%;
 	text-align: center;
 	margin: 0px auto;
 	padding: 20px;
 }
+.notice-card{
+	width: 100%;
+	padding: 30px;
+}
+.masonary{
+	column-count: 5;
+	column-gap: 2;
+}
+.dropdown-menu{
+    background-color: transparent;
+    box-shadow: none; 
+    padding: 10px;
+    float: right;
+    top: -10px!important;
+    left: 15px!important;
+}
+.dropdown-item{
+    border-radius: 50%;
+}
+.dropdown-item i{
+    font-size: 17px;
+    padding-top: 0px;
+    transition: all 10s;
+}
+.title{
+	display: inline-block;
+	width: 100%;
+}
+.btn-floating i {
+	font-size: 15px!important;
+}
+/*.btn{
+	margin: 0px;
+}*/

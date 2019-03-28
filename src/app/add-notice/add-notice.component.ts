@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class AddNoticeComponent implements OnInit {
 	files:FileList;
 	addForm:FormGroup;
-
+	url = '';
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
 		this.addForm = new FormGroup({
@@ -25,14 +25,11 @@ export class AddNoticeComponent implements OnInit {
 			expireon:new FormControl('',Validators.required)
 
 		});
-
 	}
-
+	
 	ngOnInit() {
 		this.getAllNotice();
 	}
-
-
 
 	addNotice(addForm){
 		console.log(addForm);
@@ -66,10 +63,25 @@ export class AddNoticeComponent implements OnInit {
 		})
 	}
 
-	changeFile(e){
-		console.log("response from changefile",e.target.files);
-		this.files = e.target.files;
+	changeFile(event){
+		console.log("response from changefile",event.target.files);
+		this.files = event.target.files;
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event:any) => { // called once readAsDataURL is completed
+				this.url = event.target.result;
+
+			}
+		}
 	}
+
+	removeAvatar(){
+		this.url = "";
+		if(this.files && this.files.length)
+			this.files = null;
+	}
+
 }
 
 
