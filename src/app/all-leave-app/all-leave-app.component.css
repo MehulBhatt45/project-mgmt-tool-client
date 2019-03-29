@@ -78,3 +78,37 @@ li a{
      padding: 0 !important; 
      cursor: pointer;
 }
+h6{
+	font-size: 16px;
+	color: purple;
+	font-weight: bolder;
+}
+.modal-header{
+	margin: -25px 16px 0px 16px;
+	color: white;
+}
+.card{
+	border: 4px solid #b670df;
+}
+.footer_1{
+	background-color: lightblue;
+	padding: 0px;
+}
+
+.leaveInfo{
+	text-align: center;
+}
+
+.leaveInfo p{
+	margin: 0;
+}
+
+.leaveHeading{
+	margin: 20px;
+	font-weight: bolder;
+}
+
+.leaveCount{
+	padding: 0px;	
+}
+

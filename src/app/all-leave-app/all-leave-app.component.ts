@@ -8,8 +8,6 @@ import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
 import { config } from '../config';
-import { Chart } from 'chart.js';
-
 
 @Component({
   selector: 'app-all-leave-app',
@@ -82,7 +80,7 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
-    }    
+    }
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -311,24 +309,6 @@ export class AllLeaveAppComponent implements OnInit {
           });
           console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
           console.log("leaves count ====>" , this.leavescount);
-          var ctxP = document.getElementById("pieChart");
-          var myPieChart = new Chart(ctxP, {
-            type: 'pie',
-            data: {
-              labels: ["sickleave", "personalleave", "leavewithoutpay", "emergencyleave"],
-              datasets: [{
-                data: [this.leavescount[0].leavesTaken, this.leavescount[1].leavesTaken, this.leavescount[2].leavesTaken,this.leavescount[3].leavesTaken],
-                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1"],
-                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"]
-              }]
-            },
-            options: {
-              responsive: true,
-              legend:{
-                position:"right",
-              }
-            }
-          });
         }else{
           console.log("not found");
         }
@@ -336,7 +316,6 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-
 
     addComment(comment){
       console.log("data=====>>",comment);
