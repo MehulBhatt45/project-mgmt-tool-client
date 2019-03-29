@@ -29,6 +29,8 @@ import {SummaryComponent} from './summary/summary.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { UserSummaryComponent} from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
+import {MyleaveComponent} from './myleave/myleave.component';
+
 
 
 
@@ -64,6 +66,10 @@ const routes: Routes = [
 		{
 			path:'noticeboard',
 			component:NoticeboardComponent
+		},
+		{
+			path:'myleave',
+			component:MyleaveComponent
 		},
 		{
 			path:'add-notice',
