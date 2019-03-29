@@ -357,10 +357,5 @@ export class AllLeaveAppComponent implements OnInit {
         Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> b290de85616d89f59cd45297fe224d41fe134e86
-
   }
 

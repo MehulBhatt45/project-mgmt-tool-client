@@ -25,6 +25,9 @@
 </a>
 </li>
 </ul>
+
+
+
 <!-- Pending Leaves Table -->
 <div class="tab-content pt-5" id="myTabContentJust">
   <div class="tab-pane fade show " id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
@@ -51,7 +54,6 @@
                     <th>
                       Avtar
                     </th>
-<<<<<<< HEAD
             <!--   <th>
                 <span>E-mail
                 </span>
@@ -130,86 +132,15 @@
           <!--Table body-->
         </table>
         <!--Table-->
-=======
-                    <th>
-                      <span>Name
-                      </span>
-                    </th> 
-                    <th>
-                      <span>Leave-Duration
-                      </span>
-                    </th>
-                    <th>
-                      <span>From Date
-                      </span>
-                    </th>
-                    <th>
-                      <span>To Date
-                      </span>
-                    </th>
-                    <th>
-                      <span>Types Of Leave</span>
-                    </th>
-                    <th>
-                      <span>Leave-Reason</span>
-                    </th>
-                    <th>
-                      <span>Attachment</span>
-                    </th>
-                    <th>
-                      <span>Leave-Status</span>
-                      <i class="fas fa-sort ml-1"></i>
-                    </th>
-                    <th>
-                      <span>Action</span>
-                    </th>
-                  </tr>
-                </thead>
-                <!--Table body-->
-                <tbody>
-                  <tr *ngFor="let leaves of leaveApp">
-                    <td style="width: 56px;">
-                      <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                        <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                          <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                        </a>
-                      </div>
-                    </td>
-                    <!-- <td>{{leaves.email}}</td> -->
-                    <td>{{leaves.name}}</td>
-                    <td >{{leaves.leaveDuration}}</td>
-                    <td>{{leaves.startingDate}}</td>
-                    <td>{{leaves.endingDate}}</td>
-                    <td>{{leaves.typeOfLeave}}</td>
-                    <td class="description">{{leaves.reasonForLeave}}</td>
-                    <td >
-                      <span  *ngIf="leaves.attechment && leaves.attechment.length">
-                        <span *ngFor="let att of leaves.attechment">
-                          <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}">View Attechment</a>
-                          <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}">View Attechment</a>
-                        </span>
-                      </span>
-                      <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                        <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                      </span>
-                  
-                      <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
-                    </td>
-                    <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
-                    <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
-                  </tr>
-                </tbody>
-                <!--Table body-->
-              </table>
-              <!--Table-->
-            </div>
-          </div>
-        </div>
->>>>>>> b290de85616d89f59cd45297fe224d41fe134e86
       </div>
     </div>
   </div>
 </div>
+</div>
+</div>
+</div>
+
+
 <!-- Accepted Leave Table -->
 <!--Card image-->
 <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
@@ -255,6 +186,7 @@
                 <span>To Date
                 </span>
               </th>
+
               <th>
                 <span>Types Of Leave</span>
               </th>
@@ -300,6 +232,11 @@
 </div>
 </div>
 </div>
+
+
+
+
+
 <!-- Rejected Leave Table -->
 <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
  <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
@@ -392,7 +329,6 @@
 </div>
 <!-- </div>
 </div>
-
 </div> -->
 <div class="row justify-content-center">
     <!-- <div>
@@ -429,6 +365,9 @@
     <img src="../assets/leave1.png" style="height: 600px; width: 1110px;">
   </div>
 </div>
+
+
+
 <!-- for employee leaves List -->
 <!-- 
 <div class="container" *ngIf="currentUser.userRole=='user'">
@@ -436,17 +375,12 @@
     <div class="col-12 col-md-12">
      Table with panel -->
      <!-- <div class="card card-cascade narrower">
-
        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-
         <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
-
       </div>
-
       <div class="px-4">
         <div class="table-wrapper">
          <table class="table table-hover mb-0 css-serial">
-
           <thead>
             <tr>
               <th>
@@ -473,7 +407,6 @@
                 <span>To Date
                 </span>
               </th>
-
               <th>
                 <span>Types Of Leave</span>
               </th>
@@ -485,7 +418,6 @@
               </th>
             </tr>
           </thead>
-
           <tbody *ngFor="let leave of leaves">
             <tr *ngIf="leave.status !=='pending'">
               <td></td>
@@ -497,16 +429,108 @@
               <td>{{leave.typeOfLeave}}</td>
               <td class="description">{{leave.reasonForLeave}}</td>
               <td>{{leave.status}}</td>
-
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
-
   </div> -->
 </div>
 </div>
 </div> 
 
+
+
+
+<!-- Comment Model -->
+
+<div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content">
+    <!--Header-->
+    <div class="modal-header">
+      <p class="heading lead">Modal Info</p>
+<!-- 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button> -->
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <p *ngIf="singleleave">Previous Comment:{{singleleave.comment}}</p>
+        <form style="width: 100%;">
+          <div class="text-center">
+            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+            <div class="form-group" style="text-align: left">
+              <label for="exampleFormControlTextarea3"><strong style="font-size: 24px;">Add Comment</strong></label>
+              <textarea name="comment" [(ngModel)]="comment" class="form-control" id="exampleFormControlTextarea3" rows="7" ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <input type="submit" class="btn btn-primary" (click)="submitComment(singleleave._id,comment)">
+            <br>
+            <a class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+          </div>
+        </form>
+      </div>
+
+      <!--Footer-->
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+
+<!-- Comment Model -->
+
+<div class="modal fade" id="viewmore" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content" *ngIf="singleleave">
+    <!--Header-->
+    <div class="modal-header">
+      <p class="heading lead">Modal Info</p>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body">
+      <div class="container">
+        <div class="col-12">
+          <p *ngIf="singleleave"><strong>Name:</strong>{{singleleave.name}}</p>
+        </div>
+        <div class="col-12">
+          <p *ngIf="singleleave"><strong>Email:</strong>{{singleleave.email}}</p> 
+        </div>
+        <div class="row border padding-top-20">
+          <div class="col-md-6">
+            <p *ngIf="singleleave"><i class="far fa-calendar-alt"></i>StartingDate:{{singleleave.startingDate | date:'mediumDate'}}</p>
+
+          </div>
+          <div class="col-md-6">
+            <p *ngIf="singleleave"><i class="fas fa-calendar-alt"></i>EndingDate:{{singleleave.endingDate | date:'mediumDate'}}</p> 
+          </div>
+        </div>
+          <div class="col-12">
+            <p *ngIf="singleleave"><strong>LeaveDuration:</strong>{{singleleave.leaveDuration}}</p> 
+          </div>
+
+          <div class="col-12">
+            <p *ngIf="singleleave"><strong>LeaveType:</strong>{{singleleave.typeOfLeave}}</p> 
+          </div>
+          <div class="col-12">
+            <p *ngIf="singleleave"><strong>LeaveReason:</strong>{{singleleave.reasonForLeave}}</p>
+          </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+  </div>
+</div>
+<!--/.Content-->
+</div>
