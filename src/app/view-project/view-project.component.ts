@@ -22,7 +22,7 @@ export class ViewProjectComponent implements OnInit {
   files:Array<File>;
   url = '';
   pro;
-  idet;
+  idet = [];
   pmt:any;
   developers: any;
   path = config.baseMediaUrl;
@@ -34,7 +34,7 @@ export class ViewProjectComponent implements OnInit {
   project;
   idpmt:any;
   objectsArray:any;
-  
+  hoveredProject: any;
   ary:any;
   optionsSelect: Array<any>;
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
@@ -101,12 +101,8 @@ export class ViewProjectComponent implements OnInit {
         console.log("IN If=========================================",this.projects);
         this.projects = res;
         console.log("this.projects========------=-=-=-=",this.projects);
-        for(var i=0;i<res.length;i++){
-          this.idet =res[i]._id;
-          console.log("this.projects[][][][][]",this.idet);
-          this.getProject(this.idet);
-          
-        }
+        
+
 
       }
       else{
@@ -129,7 +125,11 @@ export class ViewProjectComponent implements OnInit {
     },err=>{
       this._alertService.error(err);
       this.loader=false;
-    })
+    });
+
+
+
+
   }
 
   getTitle(name){
@@ -272,11 +272,35 @@ getProject(id){
           }
         })
       })
+      
       this.loader = false;
 
     },err=>{
       console.log(err);
       this.loader = false;
+    });
+
+    // teamByProjectId
+    this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+      //this.projectTeam = res.team;
+
+      // res.Teams.push(this.pro.pmanagerId); 
+      console.log("response of team============>"  ,res.Teams);
+      this.projectTeam = res.Teams;
+      this.projectTeam.sort(function(a, b){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 //default return value (no sorting)
+        this.projectTeam.push
+        console.log("sort============>"  ,this.projectTeam);
+      })
+
+
+    },(err:any)=>{
+      console.log("err of team============>"  ,err);
     });
 
 
@@ -290,20 +314,14 @@ getProject(id){
 
 getTaskCount(status){
 
+  return _.filter(this.hoveredProject.tasks,function(o) { if (o.status == status) return o }).length;
+}
 
-  // for(var i=0; i<=length;i++){
-    //   var id = this.idpmt;
+mouseOver(project){
+  console.log("MOUSE OVERED");
+  this.hoveredProject = project;
+}
 
-    //   if(id == this.projects[i]._id){
-      //     return _.filter(this.project,function(o) { if (o.status == status) return o }).length;
-
-      //   }
-
-      // }
-      var id = this.idpmt;
-      return _.filter(this.project,function(o) { if (o.projectId == id && o.status == status) return o }).length;
-    }
-  }
+}
 
 
-  

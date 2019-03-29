@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { config } from '../config';
 import { Chart } from 'chart.js';
 
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -31,6 +32,7 @@ export class AllLeaveAppComponent implements OnInit {
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
+  fileUrl;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -66,6 +68,7 @@ export class AllLeaveAppComponent implements OnInit {
       "leavesLeft" : 18 
     }  
     ]
+    console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
     this.getLeaves();
@@ -76,10 +79,8 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
-    }
 
-
-
+    }    
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -94,8 +95,6 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-
-
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
@@ -123,7 +122,7 @@ export class AllLeaveAppComponent implements OnInit {
 
         //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
         this.allLeaves = this.leaveApp; 
-        console.log("applicationsss==>",this.leaveApp);
+        console.log("applicationsss==>",this.allLeaves);
       },err=>{
         console.log(err);
       })
@@ -135,26 +134,26 @@ export class AllLeaveAppComponent implements OnInit {
         console.log("function calling===>")
         this.developers = res;
         // this.developers.sort(function(a, b){
-        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        //   if (nameA < nameB) //sort string ascending
-        //     return -1 
-        //   if (nameA > nameB)
-        //     return 1
-        //   return 0 
-        // })
+          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          //   if (nameA < nameB) //sort string ascending
+          //     return -1 
+          //   if (nameA > nameB)
+          //     return 1
+          //   return 0 
+          // })
 
-        _.map(this.leaveApp, leave=>{
-          _.forEach(this.developers, dev=>{
-            if(leave.email == dev.email){
-              leave['dev']= dev;
-            }
+          _.map(this.leaveApp, leave=>{
+            _.forEach(this.developers, dev=>{
+              if(leave.email == dev.email){
+                leave['dev']= dev;
+              }
+            })
           })
+          console.log("Developers",this.leaveApp);
+        },err=>{
+          console.log("Couldn't get all developers ",err);
+          this._alertService.error(err);
         })
-        console.log("Developers",this.leaveApp);
-      },err=>{
-        console.log("Couldn't get all developers ",err);
-        this._alertService.error(err);
-      })
     }
 
     leaveAccepted(req){
@@ -312,7 +311,6 @@ export class AllLeaveAppComponent implements OnInit {
           });
           console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
           console.log("leaves count ====>" , this.leavescount);
-
           var ctxP = document.getElementById("pieChart");
           var myPieChart = new Chart(ctxP, {
             type: 'pie',
@@ -338,6 +336,5 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-
   }
 
