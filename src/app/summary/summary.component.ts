@@ -352,6 +352,16 @@ export class SummaryComponent implements OnInit {
 													'#DC143C',
 													],
 													borderWidth: 2
+												}, {
+													label: "Date Task",
+													data: this.getDateTask(1,this.project),
+													backgroundColor: [
+													'rgba(0, 137, 132, .2)',
+													],
+													borderColor: [
+													'rgba(0, 10, 130, .7)',
+													],
+													borderWidth: 2
 												}
 												]
 											},
@@ -371,6 +381,16 @@ export class SummaryComponent implements OnInit {
 													
 													borderColor: [
 													'#ff8100',
+													],
+													borderWidth: 2
+												}, {
+													label: "Date Task",
+													data: this.getDateTask(2,this.project),
+													backgroundColor: [
+													'rgba(0, 137, 132, .2)',
+													],
+													borderColor: [
+													'rgba(0, 10, 130, .7)',
 													],
 													borderWidth: 2
 												}
@@ -535,6 +555,7 @@ function custom_sort(a, b) {
 
 
 getTaskCount(userId, status){
+
 	// console.log("userId===-=-={}{}{}{}{}",userId);
 	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 }
@@ -544,12 +565,12 @@ getCompletedTask(status){
 	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 }
 
-// getDateTask(project){
-// 	console.log("proj[][][][]",project);
-	
 
-// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
-// }
+getDateTask(priority,project){
+	console.log("proj[][][][]",priority,project);
+
+	return  _.filter(this.project,function(o){ if (o.createdAt == project.createdAt && o.priority == project.priority) return o});
+}
 
 
 getTaskPriority(priority, tracks){
