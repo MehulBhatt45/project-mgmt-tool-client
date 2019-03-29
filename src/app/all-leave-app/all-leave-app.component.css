@@ -79,6 +79,7 @@ li a{
      padding: 0 !important; 
      cursor: pointer;
 }
+
 .nav-tabs {
     border: 0;
     padding: 0.7rem;
@@ -90,4 +91,19 @@ li a{
 }
 .deep-purple img{
 	color: white !important;
+}
+h6{
+	font-size: 16px;
+	color: purple;
+	font-weight: bolder;
+}
+.modal-header{
+	margin: -25px 16px 0px 16px;
+	color: white;
+}
+.card{
+	border: 4px solid #b670df;
+}
+.footer_1{
+	background-color: lightgray;
 }

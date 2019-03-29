@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+<ul class="nav nav-tabs nav-justified md-tabs morpheus-den-gradient " id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <!-- <img src="assets/icons/pending.png"> -->
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
@@ -44,21 +44,7 @@
                 <th>
                   <span>Leave-Duration
                   </span>
-                </th><!-- 
-                <th>
-                  <span>From Date
-                  </span>
                 </th>
-                <th>
-                  <span>To Date
-                  </span>
-                </th>
-                <th>
-                  <span>Types Of Leave</span>
-                </th>
-                <th>
-                  <span>Leave-Reason</span>
-                </th> -->
                 <th>
                   <span>Attachment</span>
                 </th>
@@ -88,10 +74,6 @@
                 </td>
                 <td><strong>{{leaves.name}}</strong></td>
                 <td >{{leaves.leaveDuration}}</td>
-                <!-- <td>{{leaves.startingDate}}</td> -->
-                <!-- <td>{{leaves.endingDate}}</td> -->
-                <!-- <td>{{leaves.typeOfLeave}}</td> -->
-                <!-- <td class="description">{{leaves.reasonForLeave}}</td> -->
                 <td >
                   <span *ngIf="leaves.attechment && leaves.attechment.length">
                     <span *ngFor="let att of leaves.attechment">
@@ -185,44 +167,64 @@ aria-hidden="true">
   <!--Content-->
   <div class="modal-content" *ngIf="singleleave">
     <!--Header-->
-    <div class="modal-header">
-      <p class="heading lead">Modal Info</p>
+    <div class="modal-header purple-gradient-2 ">
+      <p class="heading lead text-center">Modal Info</p>
+         <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <!--Body-->
     <div class="modal-body">
-      <div class="container">
-        <div class="col-12">
-          <p *ngIf="singleleave"><strong>Name:</strong>{{singleleave.name}}</p>
-        </div>
-        <div class="col-12">
-          <p *ngIf="singleleave"><strong>Email:</strong>{{singleleave.email}}</p> 
-        </div>
-        <div class="row border padding-top-20">
-          <div class="col-md-6">
-            <p *ngIf="singleleave"><i class="far fa-calendar-alt"></i>StartingDate:{{singleleave.startingDate | date:'mediumDate'}}</p>
-
+      <div class="card padding-10 z-depth-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 border padding-top-5 ">
+              <h6><i class="far fa-user"></i> Name:</h6>
+              <p *ngIf="singleleave">{{singleleave.name}}</p>  
+            </div>
+            <div class="col-md-6 border padding-top-5 ">
+             <h6><i class="far fa-envelope"></i> Email:</h6>
+             <p *ngIf="singleleave">{{singleleave.email}}</p> 
+           </div>
+         </div>
+         <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-calendar-alt"></i> StartingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.startingDate | date:'mediumDate'}}</p>
           </div>
-          <div class="col-md-6">
-            <p *ngIf="singleleave"><i class="fas fa-calendar-alt"></i>EndingDate:{{singleleave.endingDate | date:'mediumDate'}}</p> 
+          <div class="col-md-6 border padding-top-5 ">
+            <h6> <i class="fas fa-calendar-alt"></i> EndingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.endingDate | date:'mediumDate'}}</p>
           </div>
         </div>
-        <div class="col-12">
-          <p *ngIf="singleleave"><strong>LeaveDuration:</strong>{{singleleave.leaveDuration}}</p> 
+        <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-clock"></i> LeaveDuration:</h6>
+            <p *ngIf="singleleave">{{singleleave.leaveDuration}}</p>  
+          </div>
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-dot-circle"></i> LeaveType:</h6>
+            <p *ngIf="singleleave">{{singleleave.typeOfLeave}}</p>  
+          </div>
         </div>
-
-        <div class="col-12">
-          <p *ngIf="singleleave"><strong>LeaveType:</strong>{{singleleave.typeOfLeave}}</p> 
+        <div class="row border">
+          <div class="col-md-12 padding-top-5 ">
+            <h6><i class="fas fa-pen-square"></i> LeaveReason:</h6>
+            <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
+          </div>
         </div>
-        <div class="col-12">
-          <p *ngIf="singleleave"><strong>LeaveReason:</strong>{{singleleave.reasonForLeave}}</p>
+        <div class="footer_1">
+          
         </div>
+      <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
+    <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a>
       </div>
     </div>
-
-    <!--Footer-->
-    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
   </div>
+
+  
+</div>
 </div>
 <!--/.Content-->
 </div>
