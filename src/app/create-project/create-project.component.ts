@@ -55,6 +55,7 @@ export class CreateProjectComponent implements OnInit {
   ngOnInit() {
     this.getAllDevelopers();
     $('.datepicker').pickadate({
+      min: new Date(),
       onSet: function(context) {
         console.log('Just set stuff:', context);
         setDate(context);

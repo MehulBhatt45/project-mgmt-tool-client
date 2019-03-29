@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist">
+<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just"  role="tab" (click)="leavesToDisplay=false" aria-controls="home-just"
     aria-selected="true">Pending Leaves</a>
@@ -51,6 +51,7 @@
                     <th>
                       Avtar
                     </th>
+<<<<<<< HEAD
             <!--   <th>
                 <span>E-mail
                 </span>
@@ -136,9 +137,6 @@
 </div>
 </div>
 </div>
-
-
-
 
 
 <!-- Accepted Leave Table -->
@@ -329,7 +327,6 @@
 </div>
 <!-- </div>
 </div>
-
 </div> -->
 <div class="row justify-content-center">
     <!-- <div>
@@ -337,14 +334,14 @@
       <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
     </select>
   </div> -->
-  <div>
+ <!--  <div>
     <select class="browser-default custom-select custom-select-lg mb-3 text-left" *ngIf="developers && currentUser.userRole=='user'" (change)="filterTracks(
     trackChangeDeveloperWise = $event.target.value)
     ">
     <option value="all" selected>All Developer</option>
     <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
   </select>
-</div>
+</div> -->
 <div class="col-12 col-md-12">
   <!-- Table with panel -->
   <div class="card card-cascade narrower">
@@ -376,17 +373,12 @@
     <div class="col-12 col-md-12">
      Table with panel -->
      <!-- <div class="card card-cascade narrower">
-
        <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-
         <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
-
       </div>
-
       <div class="px-4">
         <div class="table-wrapper">
          <table class="table table-hover mb-0 css-serial">
-
           <thead>
             <tr>
               <th>
@@ -400,7 +392,7 @@
               <th>
                 <span>Name
                 </span>
-              </th> 
+              </th>   
               <th>
                 <span>Leave-Duration
                 </span>
@@ -413,7 +405,6 @@
                 <span>To Date
                 </span>
               </th>
-
               <th>
                 <span>Types Of Leave</span>
               </th>
@@ -425,7 +416,6 @@
               </th>
             </tr>
           </thead>
-
           <tbody *ngFor="let leave of leaves">
             <tr *ngIf="leave.status !=='pending'">
               <td></td>
@@ -437,14 +427,11 @@
               <td>{{leave.typeOfLeave}}</td>
               <td class="description">{{leave.reasonForLeave}}</td>
               <td>{{leave.status}}</td>
-
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
-
   </div> -->
 </div>
 </div>

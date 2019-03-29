@@ -9,6 +9,7 @@ declare var $ : any;
 import Swal from 'sweetalert2';
 import { config } from '../config';
 
+
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -32,7 +33,7 @@ export class AllLeaveAppComponent implements OnInit {
   comments;
   singleleave:any;
   flag;
-
+  fileUrl;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -69,6 +70,7 @@ export class AllLeaveAppComponent implements OnInit {
       "leavesLeft" : 18 
     }  
     ]
+    console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
     this.getLeaves();
@@ -79,12 +81,13 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
-    }
+
+<<<<<<< HEAD
 
 
-
-
-
+=======
+    }    
+>>>>>>> a719d350ff886049e2eec3763f42cb255449af0e
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -99,8 +102,6 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-
-
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
@@ -128,7 +129,7 @@ export class AllLeaveAppComponent implements OnInit {
 
         //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
         this.allLeaves = this.leaveApp; 
-        console.log("applicationsss==>",this.leaveApp);
+        console.log("applicationsss==>",this.allLeaves);
       },err=>{
         console.log(err);
       })
@@ -325,6 +326,7 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
+<<<<<<< HEAD
 
 
     addComment(comment){
@@ -360,6 +362,8 @@ export class AllLeaveAppComponent implements OnInit {
         Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
     }
+=======
+>>>>>>> a719d350ff886049e2eec3763f42cb255449af0e
 
   }
 

@@ -7,10 +7,10 @@
 <div class="container" [hidden]="loader">
 	<form class="md-form" [formGroup]='updateForm' style="color: #757575;">
 		<div class="card">
-			<h5 class="card-header white-text text-center py-4" style="margin-top: -35px;background-color: darkslateblue;">
-				<strong>Edit Project</strong>
-				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -10px;background-color: #01c0d8;">Delete Project</button>
+			<h5 class="card-header white-text" style="margin: -35px 30px 0px 30px;background-color: #372e5f; height: 69px; font-size: 26px; padding: 20px 0px; text-align: center;">
+				Edit Project
 			</h5>
+				<button class="btn btn-default btn-rounded z-depth-1 deletebtn" (click)="deleteProject(availData)" style="margin-top: -25px; margin-right:50px; background-color: #dc3545;">Delete Project</button>
 			<div class="card-body px-lg-5 pt-1">
 				<div class="md-form form-group" *ngIf="availData">
 					<img src="{{baseMediaUrl}}{{availData.avatar}}" onerror="this.src='assets/4.jpeg'" height="100" width="100">
@@ -33,31 +33,32 @@
 				<hr>
 				<div class="md-form form-group" *ngIf="availData">
 					<input mdbInput type="email" id="clientemail" class="form-control" formControlName="clientEmail" [(ngModel)]="availData.clientEmail">
-					<label for="clientemail">Email</label>
+					<label for="clientemail" class="active">Email</label>
 				</div>
 				<div class="md-form form-group" *ngIf="availData">
 					<input mdbInput type="text" id="clientfullname" class="form-control" formControlName="clientFullName" [(ngModel)]="availData.clientFullName">
-					<label for="clientfullname">Full Name</label>
+					<label for="clientfullname" class="active">Full Name</label>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="md-form form-group" *ngIf="availData">
-							<label for="clientcontactno">Contact No.</label>
+							<label for="clientcontactno" class="active">Contact No.</label>
 							<input mdbInput type="tel" id="clientcontactno" formControlName="clientContactNo" [(ngModel)]="availData.clientContactNo" class="form-control">
 						</div>	
 					</div>
 					<div class="col-md-6">
 						<div class="md-form form-group" *ngIf="availData">
 							<input mdbInput type="text" id="clientdesignation" class="form-control" formControlName="clientDesignation" [(ngModel)]="availData.clientDesignation">
-							<label for="clientdesignation">Designation</label>
+							<label for="clientdesignation" class="active">Designation</label>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="card mt-1 p-1">
-			<h3 class="card-title text-center">Project Teams:</h3>
+			<h3 class="card-title text-center pt-3">Project Teams:</h3>
 			<div class="card-body">
+		<div class="container">
 				<div class="form-group">
 					<ng-select placeholder="Select Developers" [items]="availableDevelopers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)">
 						<ng-template ng-label-tmp let-item="item" let-clear="clear">
@@ -99,6 +100,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
 	</form>
 </div>
