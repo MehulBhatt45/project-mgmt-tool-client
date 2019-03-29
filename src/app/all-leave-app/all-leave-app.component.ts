@@ -97,6 +97,7 @@ export class AllLeaveAppComponent implements OnInit {
       // this.filterTracks(developerId);
 
 
+
       // $('.dataTables_length').addClass('bs-select');
       // this.route.params.subscribe(param=>{
         //   this.developerId = param.id;
@@ -106,6 +107,8 @@ export class AllLeaveAppComponent implements OnInit {
       }
 
         
+
+
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -312,6 +315,7 @@ export class AllLeaveAppComponent implements OnInit {
                 this.leaveApp.push(leave);
               }
             });
+
             _.forEach(this.leaves , (leave)=>{
               _.forEach(this.leavescount , (count)=>{
                 if(count.typeOfLeave == leave.typeOfLeave){
@@ -329,6 +333,7 @@ export class AllLeaveAppComponent implements OnInit {
         })
       }
       sortLeavesByFromDate(type){
+
 
 
         console.log("Sorting tasks by = ",type)
@@ -391,6 +396,9 @@ export class AllLeaveAppComponent implements OnInit {
         Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
     }
+
+
+
 
   }
 
