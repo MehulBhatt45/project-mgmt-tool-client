@@ -129,10 +129,10 @@
                 <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
               </td>
               <td>
-                <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
               </td>
               <td>
-                <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
               </td>
               <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
               <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>

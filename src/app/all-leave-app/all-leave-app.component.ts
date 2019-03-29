@@ -81,6 +81,8 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
+    
+    }
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -94,7 +96,7 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
-    }
+    
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
@@ -353,4 +355,3 @@ export class AllLeaveAppComponent implements OnInit {
       })
     }
   }
-
