@@ -36,97 +36,110 @@ export class LeaveService {
 	}
 
 
-			pendingLeaves(){
-				// console.log("apppppppppssssssssssss",apps);
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token' : JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
-			}
+	pendingLeaves(){
+		// console.log("apppppppppssssssssssss",apps);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token' : JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/get-pendingLeave");
+	}
 
-			leavesById(email){
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token': JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				// var email = JSON.parse(localStorage.getItem('currentUser')).email;
-				return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
-			}
+	leavesById(email){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"leave/leavesByEmail",email);
+	}
 
+	leaveByUserId(useremail){
 
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/leavesByUserId/"+useremail);
 
-			leaveApproval(req, body){
-				var body = body;
-				var id = req;
-				console.log("req=============",req);
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token': JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
-			}
-
-
-			approvedLeaves(){
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token': JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.get(config.baseApiUrl+"leave/approvedLeaves");
-
-			}
-			rejectedLeaves(){
-				const httoOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token': JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.get(config.baseApiUrl+"leave/rejectedLeaves");
-			}
+	}
 
 
 
-			getAllDevelopers(){
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type':  'application/json',
-						'x-access-token':  JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.get(config.baseApiUrl+"user/get-all-developers");	
-			}
-
-			addComments(data){
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type': 'application/json',
-						'x-access-token': JSON.parse(localStorage.getItem('token'))
-					})
-
-				}	
-				return this.http.put(config.baseApiUrl+"leave/addComments",data);	
-
-			}
-
-			getbyId(leaveid){
-				const httpOptions = {
-					headers: new HttpHeaders({
-						'Content-Type':  'application/json',
-						'x-access-token':  JSON.parse(localStorage.getItem('token'))
-					})
-				};
-				return this.http.get(config.baseApiUrl+"leave/leaveid"+leaveid);	
-			}
 
 
-		}
+	leaveApproval(req, body){
+		var body = body;
+		var id = req;
+		console.log("req=============",req);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.put(config.baseApiUrl+"leave/update-status-by-id/"+id,body);
+	}
+
+
+	approvedLeaves(){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/approvedLeaves");
+
+	}
+	rejectedLeaves(){
+		const httoOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/rejectedLeaves");
+	}
+
+
+
+	getAllDevelopers(){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"user/get-all-developers");	
+	}
+
+	addComments(data){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+
+		}	
+		return this.http.put(config.baseApiUrl+"leave/addComments",data);	
+
+	}
+
+	getbyId(leaveid){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/leaveid"+leaveid);	
+	}
+
+
+}

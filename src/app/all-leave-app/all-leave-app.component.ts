@@ -374,7 +374,6 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log("errrrrrrrrrrrrr",err);
       })
-
     }
 
     submitComment(leaveid,comment){

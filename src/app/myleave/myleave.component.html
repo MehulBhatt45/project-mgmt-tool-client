@@ -1,3 +1,145 @@
-<p>
-  myleave works!
-</p>
+
+<div class="row justify-content-center">
+  <div class="col-12 col-md-12">
+    <div class="card card-cascade narrower">
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+        <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+      </div>
+      <div class="px-4" style="text-align: center;">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <span>Leave-Duration
+                  </span>
+                </th>
+                <th>
+                  <span>Attachment</span>
+                </th>
+                <th>
+                  <span>Comment</span>
+                </th>
+                <th>
+                  <span>ViewMore</span>
+                </th>
+                <th>
+                  <span>Leave-Status</span>
+                  <i class="fas fa-sort ml-1"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leaves of leaveApp">
+                <td >{{leaves.leaveDuration}}</td>
+                <td >
+                  <span *ngIf="leaves.attechment && leaves.attechment.length">
+                    <span *ngFor="let att of leaves.attechment">
+                      <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                    </span>
+                  </span>
+                  <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                    <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                  </span>
+
+                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
+                </td>
+                <td>
+                	<p *ngIf="!leaves.comment">No Comments</p>
+                	<p *ngIf="leaves.comment">{{leaves.comment}}</p>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                </td>
+                <td>
+                  <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                 </td>
+                <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="leavesToDisplay">
+  <div class="leaveImage text-center">
+    <img src="../assets/leave1.png" style="height: 600px; width: 1110px;">
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="viewmore" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content" *ngIf="singleleave">
+    <!--Header-->
+    <div class="modal-header purple-gradient-2 ">
+      <p class="heading lead text-center">Modal Info</p>
+         <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body">
+      <div class="card padding-10 z-depth-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 border padding-top-5 ">
+              <h6><i class="far fa-user"></i> Name:</h6>
+              <p *ngIf="singleleave">{{singleleave.name}}</p>  
+            </div>
+            <div class="col-md-6 border padding-top-5 ">
+             <h6><i class="far fa-envelope"></i> Email:</h6>
+             <p *ngIf="singleleave">{{singleleave.email}}</p> 
+           </div>
+         </div>
+         <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-calendar-alt"></i> StartingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.startingDate | date:'mediumDate'}}</p>
+          </div>
+          <div class="col-md-6 border padding-top-5 ">
+            <h6> <i class="fas fa-calendar-alt"></i> EndingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.endingDate | date:'mediumDate'}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-clock"></i> LeaveDuration:</h6>
+            <p *ngIf="singleleave">{{singleleave.leaveDuration}}</p>  
+          </div>
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-dot-circle"></i> LeaveType:</h6>
+            <p *ngIf="singleleave">{{singleleave.typeOfLeave}}</p>  
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-md-12 padding-top-5 ">
+            <h6><i class="fas fa-pen-square"></i> LeaveReason:</h6>
+            <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
+          </div>
+        </div>
+        <div class="footer_1">
+          
+        </div>
+      <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
+    <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+</div>
+<!--/.Content-->
+</div>
+
+
