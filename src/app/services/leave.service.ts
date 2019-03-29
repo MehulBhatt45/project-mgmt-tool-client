@@ -29,16 +29,11 @@ export class LeaveService {
 		formData.append('startingDate',form.startingDate);
 
 		formData.append('typeOfLeave',form.typeOfLeave);
-
-		formData.append('attechment',files[0]);
-		// const httpOptions = {
-			// 	headers: new HttpHeaders({
-				// 		'Content-Type': 'application/json',
-				// 		'x-access-token': JSON.parse(localStorage.getItem('token'))
-				// 	})
-				// };
-				return this.http.post(config.baseApiUrl+"leave/add-leave",formData);
-			}
+		for(var i=0;i<files.length;i++){
+			formData.append('attechment',files[i]);
+		}
+		return this.http.post(config.baseApiUrl+"leave/add-leave",formData);
+	}
 
 
 			pendingLeaves(){
