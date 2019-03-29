@@ -397,8 +397,5 @@ export class AllLeaveAppComponent implements OnInit {
       })
     }
 
-
-
-
   }
 
