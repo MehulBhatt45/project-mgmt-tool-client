@@ -56,5 +56,28 @@ export class SearchTaskPipe implements PipeTransform {
 			});
 			return developer;
 		}
+		transform2(items: any[], searchText: string) : any[] {
+			console.log("items==>",items);
+			console.log("searchtext===>",searchText);
+			var leave:any = [];
+			if(!items) return [];
+			if(!searchText) return items[0];
+			searchText = searchText.toLowerCase();
+			console.log("Search pipe items = ",items);
+			leave = items[0].filter( it => {
+
+				// if(it.name){
+
+					if(it.name.toLowerCase().includes(searchText) ||  it.startingDate.toLowerCase().includes(searchText) ||
+						it.typeOfLeave.toLowerCase().includes(searchText) )
+					{
+						console.log("it ==>" , it.name);
+
+						return it;
+					}
+				// }
+			});
+			return leave;
+		}
 		
 	}
