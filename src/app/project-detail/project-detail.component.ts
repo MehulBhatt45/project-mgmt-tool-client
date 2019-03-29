@@ -225,8 +225,6 @@ export class ProjectDetailComponent implements OnInit {
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					//this.projectTeam = res.team;
-
 					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -257,9 +255,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
-						// console.log("tracks==-=-=-=-",this.tracks);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
@@ -307,7 +303,6 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
-		// console.log(event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
@@ -408,47 +403,6 @@ export class ProjectDetailComponent implements OnInit {
 		$('#itemManipulationModel').modal('show');
 	}
 
-
-	
-	// updateTask(task){
-	// 	task.assignTo = this.editTaskForm.value.assignTo;
-	// 	let data = new FormData();
-
-	// 	data.append('projectId', task.projectId);
-	// 	data.append('title', task.title);
-	// 	data.append('desc', task.desc);
-	// 	data.append('assignTo', task.assignTo);
-	// 	data.append('priority', task.priority);
-	// 	data.append('dueDate', task.dueDate);
-	// 	data.append('estimatedTime', task.estimatedTime);
-	// 	data.append('images', task.images);
-	// 	if(this.files.length>0){
-	// 		for(var i=0;i<this.files.length;i++){
-	// 			data.append('fileUpload', this.files[i]);	
-	// 		}
-	// 	}
-	// 	console.log("update =====>",task);
-	// 	this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-	// 		Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
-	// 		$('#save_changes').attr("disabled", false);
-	// 		$('#refresh_icon').css('display','none');
-	// 		$('#itemManipulationModel').modal('hide');
-	// 		this.newTask = this.getEmptyTask();
-	// 		this.files = this.url = [];
-	// 		this.editTaskForm.reset();
-	// 		this.loader = false;
-	// 	},err=>{
-	// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
-	// 		console.log(err);
-	// 		this.loader = false;
-	// 		//$('#alert').css('display','block');
-	// 	})
-
-	// }
-
-
-
-
 	getEmptyTask(){
 		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 	}
@@ -506,58 +460,9 @@ export class ProjectDetailComponent implements OnInit {
 		});
 	}
 
-	
-
-	// public Editor = DecoupledEditor;
-	// public configuration = { placeholder: 'Enter Comment Text...'};
-
-
-
-	// public onReady( editor ) {
-	// 	editor.ui.getEditableElement().parentElement.insertBefore(
-	// 		editor.ui.view.toolbar.element,
-	// 		editor.ui.getEditableElement()
-	// 		);
-	// }
-
-
-	// public onChange( { editor }: ChangeEvent ) {
-	// 	const data = editor.getData();
-	// 	// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-	// 	this.comment = data;
-	// }
-
-
-	// sendComment(taskId){
-	// 	console.log(this.comment);
-	// 	var data : any;
-	// 	if(this.files.length>0){
-	// 		data = new FormData();
-	// 		data.append("content",this.comment?this.comment:"");
-	// 		data.append("userId",this.currentUser._id);
-	// 		data.append("projectId",this.projectId);
-	// 		data.append("taskId",taskId);
-	// 		// data.append("Images",this.images);
-	// 		for(var i = 0; i < this.files.length; i++)
-	// 			data.append("fileUpload",this.files[i]);
-	// 	}else{
-	// 		data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-	// 	}
-	// 	console.log(data);
-	// 	this._commentService.addComment(data).subscribe((res:any)=>{
-	// 		console.log(res);
-	// 		this.comment = "";
-	// 		this.model.editorData = 'Enter comments here';
-	// 		this.files = [];
-	// 		this.getAllCommentOfTask(res.taskId);
-	// 	},err=>{
-	// 		console.error(err);
-	// 	});
-	// }
 	searchTask(){
 		console.log("btn tapped");
 	}
-
 
 	onKey(searchText){
 		console.log("searchText",searchText);

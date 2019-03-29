@@ -22,13 +22,11 @@ export class ChildComponent  implements OnInit{
   name;  
   @Input()developers;
   @Input() tracks;
-  // @Output()modalTitle;
-  // @Input()getProject;
   @Output() task : EventEmitter<any> = new EventEmitter();
   @Output() trackDrop : EventEmitter<any> = new EventEmitter();
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  // modalTitle;
+  
   public model = {
     editorData: ''
   };
