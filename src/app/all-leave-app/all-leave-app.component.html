@@ -1,3 +1,4 @@
+
 <ul class="nav nav-tabs nav-justified md-tabs morpheus-den-gradient " id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <!-- <img src="assets/icons/pending.png"> -->
@@ -132,7 +133,19 @@
 </div>
 <div class="container" *ngIf="leavesToDisplay">
   <div class="leaveImage text-center">
-    <img src="../assets/leave1.png" style="height: 600px; width: 1110px;">
+    <!-- <img src="../assets/leave1.png" style="height: 600px; width: 1110px;"> -->
+    <div class="row">
+          <div class="col-sm-6">
+            <h2>Type Of Leave</h2>
+            <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+            <canvas id="pieChart"></canvas>
+          </div>            
+          <div class="col-sm-6">
+            <h2>Duration</h2>
+            <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+            <canvas id="pieChart1"></canvas></div>
+
+          </div>
   </div>
 </div>
 

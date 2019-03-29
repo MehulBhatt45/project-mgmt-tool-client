@@ -7,7 +7,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
-
+import { config } from '../config';
+import { Chart } from 'chart.js';
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
@@ -19,6 +20,7 @@ import { config } from '../config';
 })
 export class AllLeaveAppComponent implements OnInit {
   allLeaves;
+  leave;
   leaves;
   leaveApp;
   acceptedLeave;
@@ -26,12 +28,13 @@ export class AllLeaveAppComponent implements OnInit {
   developers;
   developer;
   developerId;
-  leavescount:any;
+  leavescount;
   leavesToDisplay: boolean = true;
   approvedLeaves;
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
+
   comments;
   singleleave:any;
   flag;
@@ -81,12 +84,14 @@ export class AllLeaveAppComponent implements OnInit {
       "leavesLeft" : 18 
     }  
     ]
+
     console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
     // this.getLeaves();
     this.leavesByUserId();
     this.getAllDevelopers();
+
 
     // $('#dtBasicExample').DataTable({
       //   paging: false,
@@ -147,10 +152,82 @@ export class AllLeaveAppComponent implements OnInit {
     }
 
 
+
+
     getLeaves(){
+
       this._leaveService.pendingLeaves().subscribe(res=>{
-        console.log("data avo joye==========>",res);
         this.leaveApp = res;
+        console.log("data avo joye==========>",this.leaveApp);
+        _.forEach(this.leaveApp , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+          // this.leaveApp = leave;
+        });
+        // console.log("leavee====>",this.leaveApp);
+        // console.log("type====>",this.leave);
+        // this.leave.typeOfLeave = (this.leave.typeOfLeave).length;
+
+        //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
+        this.allLeaves = this.leaveApp; 
+        console.log("applicationsss==>",this.leaveApp);
+        var leaveLength=this.leaveApp.length;
+        console.log("leaveLength========>>>",leaveLength);
+        // var typeOfLeave = this.leaveApp.typeOfLeave;
+        // console.log("typeee====>",typeOfLeave);
+        this.getEmptytracks();
+        var ctxP = document.getElementById("pieChart");
+        var myPieChart = new Chart(ctxP, {
+          type: 'pie',
+          data: {
+            labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
+            datasets: [{
+              data:this.getLeaveCount(this.leaveApp),
+              backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
+              hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+            }]
+          },
+          options: {
+            responsive: true,
+            legend:{
+              position:"right",
+              labels:{
+                boxWidth:12,
+                // usePointStyle:true,
+              }
+
+
+            }
+          }
+        });
+
+        var ctxP = document.getElementById("pieChart1");
+        var myPieChart = new Chart(ctxP, {
+          type: 'pie',
+          data: {
+            labels: ["Half Day", "Full Day", "More Day"],
+            datasets: [{
+              data:this.getLeaveDuration(this.leaveApp),
+              backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
+              hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+            }]
+          },
+
+          options: {
+            responsive: true,
+            legend:{
+              position:"right",
+               labels:{
+                boxWidth:12,
+                // usePointStyle:true,
+              }
+
+
+            }
+          }
+        });
+
+
         $('#statusAction').show();
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -169,6 +246,54 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
+    getLeaveCount(leaves){
+      console.log(leaves);
+      var Personal_Leave = [];
+      var Sick_Leave = [];
+      var Emergency_Leave = [];
+      var Leave_WithoutPay = [];
+      _.forEach(leaves,(leave)=>{
+        switch (leave.typeOfLeave) {
+          case "Personal_Leave":
+            Personal_Leave.push(leave);
+          break;
+          case "Sick_Leave":
+            Sick_Leave.push(leave);
+          break;
+          case "Emergency_Leave":
+            Emergency_Leave.push(leave);
+          break;
+          case "Leave_WithoutPay":
+            Leave_WithoutPay.push(leave);
+          break;
+        }
+      });
+   
+      return [ Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length ];
+    }
+
+    getLeaveDuration(leaves){
+      console.log(leaves);
+      var Half_Day = [];
+      var Full_Day = [];
+      var More_Day = [];
+      _.forEach(leaves,(leave)=>{
+        switch (leave.leaveDuration) {
+          case "0.5":
+             Half_Day.push(leave);
+            break;
+           case "1":
+             Full_Day.push(leave);
+            break;
+           default :
+             More_Day.push(leave);
+            break; 
+        }
+      })
+      return [Half_Day.length,Full_Day.length,More_Day.length];
+    }
+
+
 
     getFilteredLeaves(){
       switch (this.selectedStatus) {
@@ -191,25 +316,24 @@ export class AllLeaveAppComponent implements OnInit {
 
     getAllDevelopers(){
       this._leaveService.getAllDevelopers().subscribe(res=>{
-        console.log("function calling===>")
+        console.log("function calling===>");
         this.developers = res;
-        // this.developers.sort(function(a, b){
-        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        //   if (nameA < nameB) //sort string ascending
-        //     return -1 
-        //   if (nameA > nameB)
-        //     return 1
-        //   return 0 
-        // })
+        this.developers.sort(function(a, b){
+          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          if (nameA < nameB) //sort string ascending
+            return -1 
+          if (nameA > nameB)
+            return 1
+          return 0 
+        })
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
+          })
+        })
 
-
-        // _.map(this.leaveApp, leave=>{
-        //   _.forEach(this.developers, dev=>{
-        //     if(leave.email == dev.email){
-        //       leave['dev']= dev;
-        //     }
-        //   })
-        // })
         console.log("Developers",this.leaveApp);
       },err=>{
         console.log("Couldn't get all developers ",err);
@@ -397,6 +521,64 @@ export class AllLeaveAppComponent implements OnInit {
     addComment(comment){
       console.log("data=====>>",comment);
     }
+
+    leavesByUserId(){
+      var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
+        _.forEach(this.leaves , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+      },err=>{
+        console.log(err);
+      })
+    }
+
+    filterTracks(developerId){
+      this.getEmptytracks();
+      var obj ={ email : developerId};
+      console.log("email of login user",obj);
+      this._leaveService.leavesById(obj).subscribe((res:any)=>{
+        console.log("resppppppondssss",res);
+        this.leaves = res;
+        _.forEach(this.leaves , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+        })
+        console.log("statussssssss",this.leaves);
+        if( developerId!='all'){
+          this.leaveApp = [];
+          $('.unselected').css('display','block');
+          $('.selected').css('display','none');
+          console.log("sucess");
+          _.forEach(this.leaves , (leave)=>{
+            console.log("dsfbbdsf",leave);
+            if(developerId == leave.email ){
+              console.log(leave);
+              $('.unselected').css('display','none');
+              $('.selected').css('display','block');
+              this.leaveApp.push(leave);
+            }
+          });
+          _.forEach(this.leaves , (leave)=>{
+            _.forEach(this.leavescount , (count)=>{
+              if(count.typeOfLeave == leave.typeOfLeave){
+                count.leavesTaken = count.leavesTaken + 1;
+              }
+
+            });
+          });
+          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+          console.log("leaves count ====>" , this.leavescount);
+        }else{
+          console.log("not found");
+        }
+      },err=>{
+        console.log(err);
 
     leaveById(leaveid){
       console.log("leave id=======>>",leaveid);
