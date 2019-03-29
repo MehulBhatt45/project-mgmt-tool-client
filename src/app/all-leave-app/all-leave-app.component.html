@@ -116,7 +116,16 @@
               <td>{{leaves.typeOfLeave}}</td>
               <td class="description">{{leaves.reasonForLeave}}</td>
               <td >
-                <a data-lightbox="comment_image" *ngIf="leaves.attechment" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                <span *ngIf="leaves.attechment && leaves.attechment.length">
+                  <span *ngFor="let att of leaves.attechment">
+                    <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                    <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                  </span>
+                </span>
+                <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                  <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                </span>
+
                 <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
               </td>
               <td>
