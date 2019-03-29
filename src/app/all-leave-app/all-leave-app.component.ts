@@ -7,8 +7,11 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 declare var $ : any;
 import Swal from 'sweetalert2';
+
 import {SearchTaskPipe} from '../search-task.pipe';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+
+import { config } from '../config';
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -29,13 +32,20 @@ export class AllLeaveAppComponent implements OnInit {
   rejectedLeaves;
   appLeaves;
   rejeLeaves;
+  comments;
+  singleleave:any;
+  flag;
+  fileUrl;
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
+
   pendingLeaves:any = [];
   searchText;
-  // dataObject:any={};
+
+  comment;
+  path = config.baseMediaUrl;
   // apps;
 
   constructor(public router:Router, public _leaveService:LeaveService,
@@ -67,6 +77,7 @@ export class AllLeaveAppComponent implements OnInit {
       "leavesLeft" : 18 
     }  
     ]
+    console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
     this.getLeaves();
@@ -79,6 +90,12 @@ export class AllLeaveAppComponent implements OnInit {
       //   "data": this.dataObject.data,
       //   "columns": this.dataObject.columns
       // });
+    // this.route.params.subscribe(param=>{
+      //   this.developerId = param.id;
+      //   this.leavesByUserId(this.developerId);
+      // })
+      // this.filterTracks(developerId);
+
 
       // $('.dataTables_length').addClass('bs-select');
       // this.route.params.subscribe(param=>{
@@ -88,22 +105,21 @@ export class AllLeaveAppComponent implements OnInit {
         // this.filterTracks(developerId);
       }
 
-
-
-      getApprovedLeaves(){
-        this._leaveService.approvedLeaves().subscribe(res=>{
-          console.log("approved leaves",res);
-          this.approvedLeaves = res;
-          _.forEach(this.approvedLeaves, (approved)=>{
-            approved.startingDate = moment(approved.startingDate).format('YYYY-MM-DD');
-            approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
-          })
-          this.appLeaves = this.approvedLeaves;
-          console.log("approved leaves",this.approvedLeaves);
-        },err=>{
-          console.log(err);
+        
+    getApprovedLeaves(){
+      this._leaveService.approvedLeaves().subscribe(res=>{
+        console.log("approved leaves",res);
+        this.approvedLeaves = res;
+        _.forEach(this.approvedLeaves, (approved)=>{
+          approved.startingDate = moment(approved.startingDate).format('YYYY-MM-DD');
+          approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
         })
-      }
+        this.appLeaves = this.approvedLeaves;
+        console.log("approved leaves",this.approvedLeaves);
+      },err=>{
+        console.log(err);
+      })
+    }
 
       getRejectedLeaves(){
         this._leaveService.rejectedLeaves().subscribe(res=>{
@@ -119,6 +135,7 @@ export class AllLeaveAppComponent implements OnInit {
           console.log(err);
         })
       }
+
 
 
       getLeaves(){
@@ -313,6 +330,7 @@ export class AllLeaveAppComponent implements OnInit {
       }
       sortLeavesByFromDate(type){
 
+
         console.log("Sorting tasks by = ",type)
         console.log(this.pendingLeaves);
         console.log('leave===============================>',this.pendingLeaves);
@@ -337,27 +355,42 @@ export class AllLeaveAppComponent implements OnInit {
        this.leaveApp = [];
         _.forEach(leave, (content)=>{
               this.leaveApp.push(content);
-
-          });
-        // this.getEmptyTracks();
-        // _.forEach(task, (content)=>{
-        //   _.forEach(this.tracks, (track)=>{
-        //     if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-        //       if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-        //         // if(content.status == track.id){
-        //           track.tasks.push(content);
-        //         }
-
-        //       }
-        //       else{
-        //         if(content.status == track.id){
-        //           track.tasks.push(content);
-        //         }
-        //       }
-        //     });
-        // });
+            });
       }
+      
+    addComment(comment){
+      console.log("data=====>>",comment);
+    }
+
+    leaveById(leaveid){
+      console.log("leave id=======>>",leaveid);
+      this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+        this.singleleave = res[0];
+        console.log("single leave",this.singleleave);
+      },err=>{
+        console.log("errrrrrrrrrrrrr",err);
+      })
 
     }
 
+    submitComment(leaveid,comment){
+      console.log("leave id==>>>>>",leaveid);
+      console.log("====>",comment);
+      var data={
+        leaveId:leaveid,
+        comment:comment
+      }
+      console.log("data==========>>",data);
+      this._leaveService.addComments(data).subscribe((res:any)=>{
+        res['comment'] = true; 
+        console.log("response",res);
+        Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
+         $('#centralModalInfo').modal('hide');
+      },err=>{
+        console.log("errrrrrrrrrrrrr",err);
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+      })
+    }
+
+  }
 

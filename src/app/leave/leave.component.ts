@@ -49,7 +49,11 @@ export class LeaveComponent implements OnInit {
 	
 
 	ngOnInit() {
-		$('.datepicker').pickadate();
+		// $('.datepicker').pickadate();
+
+		$('.datepicker').pickadate({ min: new Date(),
+		})
+
 
 		this.showMoreDayss = false;
 		localStorage.setItem("showMoreDayss" , JSON.stringify(false));
@@ -154,4 +158,5 @@ export class LeaveComponent implements OnInit {
 			localStorage.setItem("showMoreDayss" , JSON.stringify(false));
 		}
 	}
+
 }

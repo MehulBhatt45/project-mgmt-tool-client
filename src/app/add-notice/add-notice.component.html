@@ -20,44 +20,49 @@
 							<label for="desc" style="margin: 0; padding: 0;">Notice Content</label>
 							<textarea style="margin: 0; padding: 0;" id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
 						</div>
-						<div class="md-form form-group">
+						<!-- <div class="md-form form-group">
 							<input autocomplete= 'false | random-string' placeholder="Selected date" type="date" formControlName="expireon">
 						</div>
-						
-						
-						<div class="row">
-							<div class=" row form-group col-6">
-								<button class="btn btn-default" (click)="fileUpload.click()">
-									<i class="fa fa-paperclip mr-1"></i> Add Files
-									<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)">
-								</button>
-							</div>
-							<!-- Material switch Start -->
-							<div class="form-group col-6">
-								<div class="switch">
-									<label>
-										Publish False
-										<input type="checkbox" formControlName="published">
-										<span class="lever"></span>Publish True
-									</label>
-								</div>
-							</div>
-							<!-- Material switch End -->
-						</div>
-						<div class="text-center selected-avatar" *ngIf="url">
-							<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
-							<div class="delete-team-member">
-								<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
-							</div>
-						</div>
-						<div class="row justify-content-center">
+					-->
 
-							<button type="submit" class="btn btn-default " (click)="addNotice(addForm.value)">Create Notice</button>
+					<div class="md-form">
+						<i class="far fa-calendar-alt prefix"></i>
+						<input placeholder="Notice date" formControlName="expireon" type="text" id="expireon" class="form-control datepicker" style="margin-bottom: 30px;">
+					</div>
+
+					<div class="row">
+						<div class=" row form-group col-6">
+							<button class="btn btn-default" (click)="fileUpload.click()">
+								<i class="fa fa-paperclip mr-1"></i> Add Files
+								<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)">
+							</button>
 						</div>
-					</form>
-				</div>
+						<!-- Material switch Start -->
+						<div class="form-group col-6">
+							<div class="switch">
+								<label>
+									Publish False
+									<input type="checkbox" formControlName="published">
+									<span class="lever"></span>Publish True
+								</label>
+							</div>
+						</div>
+						<!-- Material switch End -->
+					</div>
+					<div class="text-center selected-avatar" *ngIf="url">
+						<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
+						<div class="delete-team-member">
+							<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+
+						<button type="submit" class="btn btn-default " (click)="addNotice(addForm.value)">Create Notice</button>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
 
 
 
