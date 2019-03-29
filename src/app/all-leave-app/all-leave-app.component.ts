@@ -82,12 +82,7 @@ export class AllLeaveAppComponent implements OnInit {
       // })
       // this.filterTracks(developerId);
 
-<<<<<<< HEAD
-
-
-=======
-    }    
->>>>>>> a719d350ff886049e2eec3763f42cb255449af0e
+}
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -326,8 +321,6 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
-<<<<<<< HEAD
-
 
     addComment(comment){
       console.log("data=====>>",comment);
@@ -362,8 +355,5 @@ export class AllLeaveAppComponent implements OnInit {
         Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
     }
-=======
->>>>>>> a719d350ff886049e2eec3763f42cb255449af0e
-
   }
 
