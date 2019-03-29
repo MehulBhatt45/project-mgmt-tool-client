@@ -12,7 +12,6 @@
 	vertical-align: middle;
 	white-space: nowrap;
 }
-
 .a_icon{
 	font-size: 28px;
 	color:green;
@@ -30,18 +29,11 @@
 .table td.description{
 	white-space: normal;
 }
-
-
-
 .sign{
 	float: right;
 }
 .dropdown{
 	margin-bottom: 10px;
-	
-}
-.dropdown-toggle{
-	/*background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%) !important;*/
 }
 .card{
 	max-width: 100%;
@@ -56,29 +48,69 @@ h3{
 	display: block;
 }
 .table a{
-    display: table;
-    margin: 0;
+	display: table;
+	margin: 0;
 }
-/*.avatar{
-  position: relative;
-}*/
-/*.img-fluid {
-    
-    height: 40px !important;
-    object-fit: cover;
-}
-*/
 li a{
 	font-size: 24px;
 	color: white !important;
 }
-
-
 .nav-link {
-    display: block;
-     padding: 0 !important; 
-     cursor: pointer;
+	display: block;
+	padding: 0 !important; 
+	cursor: pointer;
 }
+.fa-caret-up,
+.fa-caret-down{
+	font-size: 20px;
+}
+button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
+    height: 35px;
+    width: 35px;
+    padding: 6px;
+}
+.md-form .prefix {
+    font-size: 24px !important;
+    margin-top: 24px;   
+}
+.md-form i{
+	color: white;
+}
+.fa-search{
+	color: white !important;
+	font-size: 13px;
+    padding: 2px;
+}
+
+#exampleForm2 {
+	color: #fff!important;
+}
+#exampleForm2 + label{
+	color: #fff!important;
+	top: 22px !important;
+}
+.md-form {
+	position: relative;
+	margin-bottom: auto;
+	margin-right: -22px;
+	margin-left: -84px;
+	/*margin-left: auto;*/
+	/*margin-right: 15px;*/
+	margin-top: auto;
+}
+
+.dropdown-menu{
+    background-color: transparent;
+    box-shadow: none; 
+    padding: 10px;
+    float: right;
+    top: -30px!important;
+    left: -24px!important;
+}
+
+
+
+
 
 .nav-tabs {
     border: 0;

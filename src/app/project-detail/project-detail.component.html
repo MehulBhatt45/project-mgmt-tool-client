@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="col-12 col-md-6 text-right">
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
 					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -27,20 +27,20 @@
 					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 				</div>
 			</div>
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
 				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
 					Due Date
 					<span class="sorting_arrows">
-						<i class="fas fa-angle-up hide" (click)="sortTasksByCreatedAt('desc')"></i>
-						<i class="fas fa-angle-down" (click)="sortTasksByCreatedAt('asc')"></i>
+						<i class="fas fa-angle-up" (click)="sortTasksByDueDate('asc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByDueDate('desc')"></i>
 					</span>
 				</button>
 
 				<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
 					Priority 
 					<span class="sorting_arrows">
-						<i class="fas fa-angle-up hide" (click)="sortTasksByPriority('desc')"></i>
-						<i class="fas fa-angle-down" (click)="sortTasksByPriority('asc')"></i>
+						<i class="fas fa-angle-up " (click)="sortTasksByPriority('asc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByPriority('desc')"></i>
 					</span>
 				</button>
 			</div>
