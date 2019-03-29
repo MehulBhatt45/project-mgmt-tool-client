@@ -352,17 +352,6 @@ export class SummaryComponent implements OnInit {
 													'#DC143C',
 													],
 													borderWidth: 2
-												}, {
-													label: "Date Task",
-													data:[20,30,15,18],
-													// data: this.getDateTask(1,this.tracks),
-													backgroundColor: [
-													'rgba(0, 137, 132, .2)',
-													],
-													borderColor: [
-													'rgba(0, 10, 130, .7)',
-													],
-													borderWidth: 2
 												}
 												]
 											},
@@ -382,17 +371,6 @@ export class SummaryComponent implements OnInit {
 													
 													borderColor: [
 													'#ff8100',
-													],
-													borderWidth: 2
-												}, {
-													label: "Date Task",
-													data:[10,20,8,19],
-													// data: this.getDateTask(2,this.tracks),
-													backgroundColor: [
-													'rgba(0, 137, 132, .2)',
-													],
-													borderColor: [
-													'rgba(0, 10, 130, .7)',
 													],
 													borderWidth: 2
 												}
@@ -568,20 +546,20 @@ getCompletedTask(status){
 }
 
 
-// getDateTask(priority,tracks){
+getDateTask(priority,tracks){
 
-// 	console.log("proj[][][][]",priority,tracks);
+	console.log("proj[][][][]",priority,tracks);
 
-// 	_.forEach(tracks, track=>{
+	_.forEach(tracks, track=>{
 
-// 		for(var i=0;i<=this.tracks.length;i++){
+		for(var i=0;i<=this.tracks.length;i++){
 
 
-// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-// 		}
-// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-// 	});
-// }
+			console.log("date=-=-=-",tracks[i].task[0].createdAt);
+		}
+		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+	});
+}
 
 
 getTaskPriority(priority, tracks){
