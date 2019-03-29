@@ -27,6 +27,8 @@
 										<td colspan="2">
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
+											<!-- <div>{{task.createdAt}}</div> -->
+											<div>{{task.dueDate}}</div>
 											<!-- <div>{{task.createdAt | timeAgo }}</div> -->
 										</td>
 									</tr>
@@ -75,7 +77,7 @@
 				</button>
 			</div>
 			<div class="modal-body" *ngIf="task">
-				<div class="container-fluid">
+				<div class="container">
 					<table class="table-responsive" style="width: 100%;">
 						<tr>
 							<td style="width: 20px;">
@@ -154,7 +156,7 @@
 					</div>
 					<div class="row justify-content-between">
 						<div>
-							<button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="margin: 20px;">Remove Assignment</button>
+							<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Remove Assignment</button>
 							<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
@@ -195,23 +197,23 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div *ngIf="comments && comments.length<=0">
-					<p>No comments on this be the first one to comments on...</p>
-				</div>
-				<div>
-					<ckeditor class="ckeditor" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-					<div class="btn btn-default" (click)="commentImg.click()">
-						<span>Upload image with comment</span>
-						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+					<div *ngIf="comments && comments.length<=0">
+						<p>No comments on this be the first one to comments on...</p>
 					</div>
-					<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
-				</div>
-				<div *ngIf="commentUrl && commentUrl.length">
-					<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
-						<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
-						<div class="delete-team-member">
-							<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
+					<div class="row">
+						<ckeditor class="ckeditor margin-left-15" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+						<div class="btn btn-default" (click)="commentImg.click()">
+							<span>Upload image with comment</span>
+							<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+						</div>
+						<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
+					</div>
+					<div *ngIf="commentUrl && commentUrl.length">
+						<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
+							<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
+							<div class="delete-team-member">
+								<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -223,7 +225,7 @@
 
 
 
-<!-- Edit Moadl -->
+<!-- Edit Modal -->
 
 
 
@@ -236,6 +238,7 @@
 				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				</button>
+
 				
 			</div>
 			<div class="modal-body view view-cascade">

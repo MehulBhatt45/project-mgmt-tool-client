@@ -347,7 +347,6 @@ export class SummaryComponent implements OnInit {
 													],
 													borderWidth: 2
 												}
-
 												]
 											},
 											options: {
@@ -507,7 +506,7 @@ export class SummaryComponent implements OnInit {
 																																		options: {
 																																			responsive: true,
 																																			legend:{
-																																				position:"bottom",
+																																				position:"left",
 
 
 																																			}
@@ -538,6 +537,13 @@ getCompletedTask(status){
 	// console.log("userId===-=-={}{}{}{}{}",userId);
 	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 }
+
+// getDateTask(project){
+// 	console.log("proj[][][][]",project);
+	
+
+// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
+// }
 
 
 getTaskPriority(priority, tracks){

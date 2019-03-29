@@ -1,481 +1,61 @@
 
-
-
-
-
-<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist">
+<ul class="nav nav-tabs nav-justified md-tabs morpheus-den-gradient " id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
-    <a class="nav-link" id="home-tab-just" data-toggle="tab" href="#home-just"  role="tab" (click)="leavesToDisplay=false" aria-controls="home-just"
-    aria-selected="true">Pending Leaves</a>
+    <!-- <img src="assets/icons/pending.png"> -->
+    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" (click)="leavesToDisplay=false" aria-controls="profile-just" (click)="getApprovedLeaves()"
-    aria-selected="false">Accepted Leaves</a>
+    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" (click)="leavesToDisplay=false" aria-controls="contact-just" (click)="getRejectedLeaves()"
-    aria-selected="false">Rejected Leaves</a>
+    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">Rejected Leaves</a>
   </li>
- <!--  <li class="nav-item">
-    <a class="nav-link" id="leave-tab-just" data-toggle="tab" href="#leave-just" role="tab" (click)="leavesToDisplay=false" aria-controls="leave-just" (click)="getLeaves()"
-    aria-selected="false">Summary</a>
-  </li> -->
   <li class="nav-item">
-    <a class="nav-link" id="developer-leave" data-toggle="tab" href="#developer-just"  role="tab" (click)="leavesToDisplay=false" aria-controls="developer-just"
-    aria-selected="true">
-    <div>
-      <select class="browser-default custom-select custom-select-lg  text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(
-      trackChangeDeveloperWise = $event.target.value)
-
-      ">
-      <option value="all" selected>All Developer</option>
-      <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
-    </select>
-  </div>
-</a>
-</li>
-
+    <a class="nav-link" (click)="leavesToDisplay=false">
+      <div>
+        <select class="browser-default custom-select custom-select-lg  text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
+          <option value="all" selected>All Developer</option>
+          <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
+        </select>
+      </div>
+    </a>
+  </li>
 </ul>
 
 
 
-
-<!-- Pending Leaves Table -->
-
-<div class="tab-content pt-5" id="myTabContentJust">
-  <div class="tab-pane fade show " id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-   <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-12">
-        <!-- Table with panel -->
-        <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-
-          <!--Card image-->
-          <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-            <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
-          </div>
-          <!--/Card image-->
-
-          <div class="px-4">
-            <div class="table-responsive">
-              <!--Table-->
-              <table class="table table-hover">
-
-                <!--Table head-->
-                <thead>
-                  <tr>
-                    <th>
-                      Avtar
-                    </th>
-            <!--   <th>
-                <span>E-mail
-                </span>
-              </th> -->
-              <th>
-                <span>Name
-                </span>
-              </th> 
-              <th>
-                <span>Leave-Duration
-                </span>
-              </th>
-              <th>
-                <span>From Date
-                </span>
-              </th>
-              <th>
-                <span>To Date
-                </span>
-              </th>
-
-              <th>
-                <span>Types Of Leave</span>
-              </th>
-              <th>
-                <span>Leave-Reason</span>
-              </th>
-              <th>
-                <span>Attachment</span>
-              </th>
-              <th>
-                <span>Leave-Status</span>
-                <i class="fas fa-sort ml-1"></i>
-              </th>
-              <th>
-                <span>Action</span>
-              </th>
-            </tr>
-          </thead>
-
-          <!--Table body-->
-          <tbody>
-            <tr *ngFor="let leaves of leaveApp">
-              <td style="width: 56px;">
-                <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                  <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                    <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                  </a>
+<div class="row justify-content-center" *ngIf="!leavesToDisplay">
+  <div class="col-12 col-md-12">
+    <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
+        <h2 class="white-text mx-3" style=" margin: 0; padding: 10px 0;
+            max-width: calc(100% - 130px)
+            ;">Leave Applications</h2>
+         <div>
+              <div class="btn-group dropleft  px-2 py-2 ">
+                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="dropdown" style="border-radius: 48%;" >
+                  <i class="fas fa-search mt-0"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <div class="md-form form-group active">
+                  <i class="fas fa-search prefix"></i>
+                  <input type="text" id="exampleForm2" class="form-control " [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
+                  <label for="exampleForm2" >Search</label>
                 </div>
-              </td>
-              <!-- <td>{{leaves.email}}</td> -->
-              <td>{{leaves.name}}</td>
-              <td >{{leaves.leaveDuration}}</td>
-              <td>{{leaves.startingDate}}</td>
-              <td>{{leaves.endingDate}}</td>
-              <td>{{leaves.typeOfLeave}}</td>
-              <td class="description">{{leaves.reasonForLeave}}</td>
-              <td><a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attachment</a></td>
-              <td><strong style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong></td>
-              <td><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
-            </tr>
-          </tbody>
-          <!--Table body-->
-        </table>
-        <!--Table-->
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-</div>
-</div>
-
-
-
-<!-- Accepted Leave Table -->
-
-<!--Card image-->
-<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-  <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-12">
-        <!-- Table with panel -->
-        <div class="card card-cascade narrower">
-
-          <!--Card image-->
-          <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-
-            <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
-
-          </div>
-          <!--/Card image-->
-
-          <div class="px-4">
-            <div class="table-responsive">
-              <!--Table-->
-              <table class="table table-hover">
-
-                <!--Table head-->
-                <thead>
-                  <tr>
-                    <th>
-                      <span>Avtar
-                      </span>
-                    </th>
-           <!--    <th>
-                <span>E-mail
-                </span>
-              </th> -->
-              <th>
-                <span>Name
-                </span>
-              </th> 
-              <th>
-                <span>Leave-Duration
-                </span>
-              </th>
-              <th>
-                <span>From Date
-                </span>
-              </th>
-              <th>
-                <span>To Date
-                </span>
-              </th>
-
-              <th>
-                <span>Types Of Leave</span>
-              </th>
-              <th>
-                <span>Leave-Reason</span>
-              </th>
-              <th>
-                <span>Leave-Status</span>
-                <i class="fas fa-sort ml-1"></i>
-              </th>
-            </tr>
-          </thead>
-          <!--Table head-->
-
-          <!--Table body-->
-          <tbody>
-            <tr *ngFor="let leaves of approvedLeaves">
-              <td style="width: 56px;">
-                <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                  <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                    <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                  </a>
-                </div>
-              </td>
-              <!-- <td >{{leaves.email}}</td> -->
-              <td>{{leaves.name}}</td>
-              <td >{{leaves.leaveDuration}}</td>
-              <td>{{leaves.startingDate}}</td>
-              <td>{{leaves.endingDate}}</td>
-              <td>{{leaves.typeOfLeave}}</td>
-              <td class="description">{{leaves.reasonForLeave}}</td>
-              <td><strong style="color: darkgreen; text-transform: uppercase;">{{leaves.status}}</strong></td>
-
-            </tr>
-          </tbody>
-          <!--Table body-->
-        </table>
-        <!--Table-->
-      </div>
-
-    </div>
-  </div>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<!-- </div>
-</div>
-
-</div> -->
-
-
-
-
-<div class="row justify-content-center">
-    <!-- <div>
-    <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-      <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-    </select>
-  </div> -->
-  <div>
-    <select class="browser-default custom-select custom-select-lg mb-3 text-left" *ngIf="developers && currentUser.userRole=='user'" (change)="filterTracks(
-    trackChangeDeveloperWise = $event.target.value)
-    ">
-    <option value="all" selected>All Developer</option>
-    <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
-  </select>
-</div>
-<div class="col-12 col-md-12">
-  <!-- Table with panel -->
-  <div class="card card-cascade narrower">
-
-
-
-
-    <!-- Rejected Leave Table -->
-
-    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-     <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-12">
-          <!-- Table with panel -->
-          <div class="card card-cascade narrower">
-
-            <!--Card image-->
-            <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-
-              <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+              </div>
 
             </div>
-            <!--/Card image-->
-
-            <div class="px-4">
-              <div class="table-responsive">
-                <!--Table-->
-                <table class="table table-hover">
-
-                  <!--Table head-->
-                  <thead>
-                    <tr>
-                      <th>
-                        <span>Avtar
-                        </span>
-                      </th>
-           <!--    <th>
-                <span>E-mail
-                </span>
-              </th> -->
-              <th>
-                <span>Name
-                </span>
-              </th> 
-              <th>
-                <span>Leave-Duration
-                </span>
-              </th>
-              <th>
-                <span>From Date
-                </span>
-              </th>
-              <th>
-                <span>To Date
-                </span>
-              </th>
-
-              <th>
-                <span>Types Of Leave</span>
-              </th>
-              <th>
-                <span>Leave-Reason</span>
-              </th>
-              <th>
-                <span>Leave-Status</span>
-                <i class="fas fa-sort ml-1"></i>
-              </th>
-            </tr>
-          </thead>
-          <!--Table head-->
-
-          <!--Table body-->
-          <tbody>
-            <tr *ngFor="let leaves of rejectedLeaves">
-              <td style="width: 56px;">
-                <div class="avatar mx-auto" *ngIf= "leaves.dev">
-                  <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                    <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-                  </a>
-                </div>
-              </td>
-              <!-- <td >{{leaves.email}}</td> -->
-              <td>{{leaves.name}}</td>
-              <td >{{leaves.leaveDuration}}</td>
-              <td>{{leaves.startingDate}}</td>
-              <td>{{leaves.endingDate}}</td>
-              <td>{{leaves.typeOfLeave}}</td>
-              <td class="description">{{leaves.reasonForLeave}}</td>
-              <td><strong style="color: red;text-transform: uppercase;">{{leaves.status}}</strong></td>
-
-            </tr>
-          </tbody>
-          <!--Table body-->
-        </table>
-        <!--Table-->
+             <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" (click)="sortLeavesByFromDate('asc')">
+              <i class="fas fa-caret-up mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" (click)="sortLeavesByFromDate('desc')">
+              <i class="fas fa-caret-down mt-0"></i>
+            </button>
+          </div>
       </div>
-      <!--/Card image-->
-
-      <div class="px-4">
-        <div class="table-wrapper table-responsive">
-          <!--Table-->
-          <table class="table table-hover table-responsive mb-0 css-serial">
-
-            <!--Table head-->
-            <thead>
-              <tr>
-                <th class="th-lg text-left">
-                  <span class="text-left">Sr No.
-                  </span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">E-mail
-                  </span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">Name
-                  </span>
-                </th> 
-                <th class="th-lg text-left">
-                  <span class="text-left">Leave-Duration
-                  </span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">From Date
-                  </span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">To Date
-                  </span>
-                </th>
-
-                <th class="th-lg text-left">
-                  <span class="text-left">Types Of Leave</span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">Leave-Reason</span>
-                </th>
-                <th class="th-lg text-left">
-                  <span class="text-left">Leave-Status</span>
-                  <i class="fas fa-sort ml-1"></i>
-                </th>
-              </tr>
-            </thead>
-            <!--Table head-->
-
-            <!--Table body-->
-            <tbody>
-              <tr *ngFor="let leaves of leaveApp">
-          <!-- <th scope="row">
-            <input class="form-check-input" type="checkbox" id="checkbox1">
-            <label class="form-check-label" for="checkbox1" class="label-table"></label>
-
-          </th> -->
-          <td ></td>
-          <td  class="text-left">{{leaves.email}}</td>
-          <td class="text-left">{{leaves.name}}</td>
-          <td >{{leaves.leaveDuration}}</td>
-          <td class="text-left">{{leaves.startingDate}}</td>
-          <td class="text-left">{{leaves.endingDate}}</td>
-          <td class="text-left">{{leaves.typeOfLeave}}</td>
-          <td class="text-left description">{{leaves.reasonForLeave}}</td>
-          <td class="text-left">{{leaves.status}}</td>
-          
-        </tr>
-      </tbody>
-      <!--Table body-->
-    </table>
-    <!--Table-->
-  </div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-
-
-<!-- All Developers Leaves Table -->
-
-
-<div class="tab-pane fade show " id="developer-just" role="tabpanel" aria-labelledby="developer-just">
- <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-
-  <div class="row justify-content-center">
-    <!-- <div>
-    <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-      <option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-    </select>
-  </div> -->
-
-  <div class="col-12 col-md-12">
-    <!-- Table with panel -->
-    <div class="card card-cascade narrower">
-
-      <!--Card image-->
-      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-        <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
-      </div>
-      <!--/Card image-->
-
-      <div class="px-4">
+      <div class="px-4" style="text-align: center;">
         <div class="table-responsive">
-          <!--Table-->
           <table class="table table-hover">
-
-            <!--Table head-->
             <thead>
               <tr>
                 <th>
@@ -490,28 +70,23 @@
                   </span>
                 </th>
                 <th>
-                  <span>From Date
-                  </span>
+                  <span>Attachment</span>
                 </th>
                 <th>
-                  <span>To Date
-                  </span>
-                </th>
-
-                <th>
-                  <span>Types Of Leave</span>
+                  <span>Comment</span>
                 </th>
                 <th>
-                  <span>Leave-Reason</span>
+                  <span>ViewMore</span>
                 </th>
                 <th>
                   <span>Leave-Status</span>
                   <i class="fas fa-sort ml-1"></i>
                 </th>
+                <th id="statusAction">
+                  <span>Action</span>
+                </th>
               </tr>
             </thead>
-
-            <!--Table body-->
             <tbody>
               <tr *ngFor="let leaves of leaveApp">
                 <td style="width: 56px;">
@@ -521,43 +96,45 @@
                     </a>
                   </div>
                 </td>
-                <!-- <td>{{leaves.email}}</td> -->
-                <td>{{leaves.name}}</td>
+                <td><strong>{{leaves.name}}</strong></td>
                 <td >{{leaves.leaveDuration}}</td>
-                <td>{{leaves.startingDate}}</td>
-                <td>{{leaves.endingDate}}</td>
-                <td>{{leaves.typeOfLeave}}</td>
-                <td class="description">{{leaves.reasonForLeave}}</td>
-                <td>
-                  <strong *ngIf="leaves.status=='pending'"style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                <td >
+                  <span *ngIf="leaves.attechment && leaves.attechment.length">
+                    <span *ngFor="let att of leaves.attechment">
+                      <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                    </span>
+                  </span>
+                  <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                    <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                  </span>
 
-                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
-
-                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
                 </td>
+                <td>
+                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                </td>
+                <td>
+                  <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                 </td>
+                <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
               </tr>
             </tbody>
-            <!--Table body-->
           </table>
-          <!--Table-->
         </div>
       </div>
     </div>
   </div>
 </div>
-
-</div>
-</div>
-
-
-
-</div>
-
-
-<div class="container">
-  <div class="leaveImage text-center" *ngIf="leavesToDisplay">
-   <!--  <img src="../assets/leave1.png" style="height: 600px; width: 1200px;"> -->
-   <div class="row">
+<div class="container" *ngIf="leavesToDisplay">
+  <div class="leaveImage text-center">
+    <!-- <img src="../assets/leave1.png" style="height: 600px; width: 1110px;"> -->
+    <div class="row">
           <div class="col-sm-6">
             <h2>Type Of Leave</h2>
             <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
@@ -575,115 +152,115 @@
 
 
 
+<!-- Comment Model -->
 
-<!-- for employee leaves List -->
-
+<div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content">
+    <!--Header-->
+    <div class="modal-header">
+      <p class="heading lead">Modal Info</p>
 <!-- 
-<div class="container" *ngIf="currentUser.userRole=='user'">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-12">
-     Table with panel -->
-     <div class="card card-cascade narrower">
-
-      <!--Card image-->
-      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-
-        <h3 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0;">Leave Applications</h3>
-
-      </div>
-      <!--/Card image-->
-
-      <div class="px-4">
-        <div class="table-wrapper">
-          <!--Table-->
-          <table class="table table-hover mb-0 css-serial">
-
-            <!--Table head-->
-            <thead>
-              <tr>
-                <th>
-                  <span>Sr No.
-                  </span>
-                </th>
-                <th>
-                  <span>E-mail
-                  </span>
-                </th>
-                <th>
-                  <span>Name
-                  </span>
-                </th> 
-                <th>
-                  <span>Leave-Duration
-                  </span>
-                </th>
-                <th>
-                  <span>From Date
-                  </span>
-                </th>
-                <th>
-                  <span>To Date
-                  </span>
-                </th>
-
-                <th>
-                  <span>Types Of Leave</span>
-                </th>
-                <th>
-                  <span>Leave-Reason</span>
-                </th>
-                <th>
-                  <span>Leave-Status</span>
-                </th>
-              </tr>
-            </thead>
-            <!--Table head-->
-
-            <!--Table body-->
-            <tbody *ngFor="let leave of leaves">
-              <tr *ngIf="leave.status !=='pending'">
-                <td></td>
-                <td>{{leave.email}}</td>
-                <td>{{leave.name}}</td>
-                <td >{{leave.leaveDuration}}</td>
-                <td>{{leave.startingDate}}</td>
-                <td>{{leave.endingDate}}</td>
-                <td>{{leave.typeOfLeave}}</td>
-                <td class="description">{{leave.reasonForLeave}}</td>
-                <td>{{leave.status}}</td>
-
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button> -->
       </div>
 
-    </div>
-
-    <!-- leave Summary -->
-   <!--  <div class="tab-content pt-5" id="myTabContentJust">
-      <div class="tab-pane fade show " id="leave-just" role="tabpanel" aria-labelledby="leave-tab-just">
-       <div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-        <div class="row">
-          <div class="col-sm-6">
-            <h2>Type Of Leave</h2>
-            <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-            <canvas id="pieChart"></canvas>
-          </div>            
-          <div class="col-sm-6">
-            <h2>Duration</h2>
-            <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-            <canvas id="pieChart1"></canvas></div>
-
+      <!--Body-->
+      <div class="modal-body">
+        <p *ngIf="singleleave">Previous Comment:{{singleleave.comment}}</p>
+        <form style="width: 100%;">
+          <div class="text-center">
+            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+            <div class="form-group" style="text-align: left">
+              <label for="exampleFormControlTextarea3"><strong style="font-size: 24px;">Add Comment</strong></label>
+              <textarea name="comment" [(ngModel)]="comment" class="form-control" id="exampleFormControlTextarea3" rows="7" ></textarea>
+            </div>
           </div>
-        </div>
+          <div class="modal-footer justify-content-center">
+            <input type="submit" class="btn btn-primary" (click)="submitComment(singleleave._id,comment)">
+            <br>
+            <a class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+          </div>
+        </form>
       </div>
-    </div>
- -->
 
+      <!--Footer-->
+    </div>
+    <!--/.Content-->
   </div>
 </div>
 
-</div> 
 
+
+<!-- Comment Model -->
+
+<div class="modal fade" id="viewmore" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content" *ngIf="singleleave">
+    <!--Header-->
+    <div class="modal-header purple-gradient-2 ">
+      <p class="heading lead text-center">Modal Info</p>
+         <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body">
+      <div class="card padding-10 z-depth-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 border padding-top-5 ">
+              <h6><i class="far fa-user"></i> Name:</h6>
+              <p *ngIf="singleleave">{{singleleave.name}}</p>  
+            </div>
+            <div class="col-md-6 border padding-top-5 ">
+             <h6><i class="far fa-envelope"></i> Email:</h6>
+             <p *ngIf="singleleave">{{singleleave.email}}</p> 
+           </div>
+         </div>
+         <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-calendar-alt"></i> StartingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.startingDate | date:'mediumDate'}}</p>
+          </div>
+          <div class="col-md-6 border padding-top-5 ">
+            <h6> <i class="fas fa-calendar-alt"></i> EndingDate:</h6>
+            <p *ngIf="singleleave">{{singleleave.endingDate | date:'mediumDate'}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-clock"></i> LeaveDuration:</h6>
+            <p *ngIf="singleleave">{{singleleave.leaveDuration}}</p>  
+          </div>
+          <div class="col-md-6 border padding-top-5 ">
+            <h6><i class="far fa-dot-circle"></i> LeaveType:</h6>
+            <p *ngIf="singleleave">{{singleleave.typeOfLeave}}</p>  
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-md-12 padding-top-5 ">
+            <h6><i class="fas fa-pen-square"></i> LeaveReason:</h6>
+            <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
+          </div>
+        </div>
+        <div class="footer_1">
+          
+        </div>
+      <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
+    <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+</div>
+<!--/.Content-->
+</div>

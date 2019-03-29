@@ -376,6 +376,7 @@ export class MainTableViewComponent implements OnInit {
 							track.tasks.push(project);
 						}
 					}
+
 				})
 			})
 		}
@@ -391,4 +392,5 @@ export class MainTableViewComponent implements OnInit {
 	}
 
 }
+
 

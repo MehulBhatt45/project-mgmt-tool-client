@@ -118,7 +118,7 @@
 								<p style="text-align: left; margin-bottom: 10px;"><b>Duration:-</b></p>
 								<div class="form-group">
 									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="0.5"WWW>
+										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="0.5">
 										<label class="form-check-label" for="leaveDuration1" value="1-day">Half Day</label>	
 									</div>
 								<!-- 	<div class="form-check" style="text-align: left; padding: 0;">
@@ -165,7 +165,7 @@
 							</div>
 							<div class="file-field" >
 								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="attechment.click()">Choose files
-									<input type="file" #attechment formControlName="attechment" class="form-control" (change)="addFile($event)" accept=".pdf,image/png, image/jpeg, image/jpg" hidden>
+									<input type="file" #attechment formControlName="attechment" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg, .pdf" hidden multiple>
 								</div>
 								<div class="file-path-wrapper">
 									<input class="file-path validate" type="text" placeholder="Attech Any Document">

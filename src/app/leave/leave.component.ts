@@ -4,10 +4,6 @@ import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
 import{LeaveService} from '../services/leave.service';
 import Swal from 'sweetalert2';
-
-
-
-
 declare var $ : any;
 
 
@@ -45,11 +41,12 @@ export class LeaveComponent implements OnInit {
 		})
 	}
 
-
-	
-
 	ngOnInit() {
-		$('.datepicker').pickadate();
+		// $('.datepicker').pickadate();
+
+		$('.datepicker').pickadate({ min: new Date(),
+		})
+
 
 		this.showMoreDayss = false;
 		localStorage.setItem("showMoreDayss" , JSON.stringify(false));
@@ -147,11 +144,12 @@ export class LeaveComponent implements OnInit {
 		this.showOneDays = false;
 		if(this.showMoreDayss == false){
 			this.showMoreDayss = true;
-			localStorage.setItem("showMoreDayss" , JSON.stringify(true));
+		localStorage.setItem("showMoreDayss" , JSON.stringify(true));
 		}
 		else{
 			this.showMoreDayss = false;
 			localStorage.setItem("showMoreDayss" , JSON.stringify(false));
 		}
 	}
+
 }

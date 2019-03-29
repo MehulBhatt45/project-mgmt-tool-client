@@ -56,6 +56,7 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   
+  
 
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,public _commentService: CommentService) { 
     this.route.params.subscribe(param=>{
@@ -165,179 +166,180 @@ export class ChildComponent  implements OnInit{
     }
   }
 
-    get trackIds(): string[] {
-      return this.tracks.map(track => track.id);
-    }
+  get trackIds(): string[] {
+    return this.tracks.map(track => track.id);
+  }
 
-    onTrackDrop(event){
-      this.trackDrop.emit(event);
-    }
-    onTalkDrop(event){
-      this.talkDrop.emit(event);
-    }
+  onTrackDrop(event){
+    this.trackDrop.emit(event);
+  }
+  onTalkDrop(event){
+    this.talkDrop.emit(event);
+  }
 
-    ondrag(task){
-      console.log(task);
-    }
+  ondrag(task){
+    console.log(task);
+  }
 
-    public Editor = DecoupledEditor;
-    public configuration = { placeholder: 'Enter Comment Text...'};
+  public Editor = DecoupledEditor;
+  public configuration = { placeholder: 'Enter Comment Text...'};
 
-    public onReady( editor ) {
-      editor.ui.getEditableElement().parentElement.insertBefore(
-        editor.ui.view.toolbar.element,
-        editor.ui.getEditableElement()
-        );
+  public onReady( editor ) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+      );
+  }
+  public onChange( { editor }: ChangeEvent ) {
+    const data = editor.getData();
+    this.comment = data;
+  }
+  sendComment(taskId){
+    console.log(this.comment);
+    var data : any;
+    if(this.files.length>0){
+      data = new FormData();
+      data.append("content",this.comment?this.comment:"");
+      data.append("userId",this.currentUser._id);
+      data.append("projectId",this.projectId);
+      data.append("taskId",taskId);
+      // data.append("Images",this.images);
+      for(var i = 0; i < this.files.length; i++)
+        data.append("fileUpload",this.files[i]);
+    }else{
+      data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
     }
-    public onChange( { editor }: ChangeEvent ) {
-      const data = editor.getData();
-      this.comment = data;
-    }
-    sendComment(taskId){
-      console.log(this.comment);
-      var data : any;
-      if(this.files.length>0){
-        data = new FormData();
-        data.append("content",this.comment?this.comment:"");
-        data.append("userId",this.currentUser._id);
-        data.append("projectId",this.projectId);
-        data.append("taskId",taskId);
-        // data.append("Images",this.images);
-        for(var i = 0; i < this.files.length; i++)
-          data.append("fileUpload",this.files[i]);
-      }else{
-        data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+    console.log(data);
+    this._commentService.addComment(data).subscribe((res:any)=>{
+      console.log(res);
+      this.comment = "";
+      this.model.editorData = 'Enter comments here';
+      this.files = [];
+      this.getAllCommentOfTask(res.taskId);
+    },err=>{
+      console.error(err);
+    });
+  }
+
+  getAllCommentOfTask(taskId){
+    this._commentService.getAllComments(taskId).subscribe(res=>{
+      this.comments = res;
+    }, err=>{
+      console.error(err);
+    })
+  }
+  onSelectFile(event, option){
+    _.forEach(event.target.files, (file:any)=>{
+      this.files.push(file);
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e:any) => {
+        if(option == 'item')
+          this.url.push(e.target.result);
+        if(option == 'comment')
+          this.commentUrl.push(e.target.result);
       }
-      console.log(data);
-      this._commentService.addComment(data).subscribe((res:any)=>{
+    })
+  }
+  removeCommentImage(file, index){
+    console.log(file, index);
+    this.commentUrl.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);  
+  }
+  removeAlreadyUplodedFile(option){
+    this.newTask.images.splice(option,1);
+  }
+
+  openModel(task){
+    console.log(task);
+    this.task = task;
+    this.getAllCommentOfTask(task._id);
+    $('#fullHeightModalRight').modal('show');
+  }
+
+
+  editTask(task){
+    this.newTask = task;
+    console.log("newTask",this.newTask);
+    console.log("title===>",this.newTask.title);
+    console.log("title2===>",this.newTask.assignTo);
+    this.modalTitle = 'Edit Item';
+    $('#itemManipulationModel1').modal('show');
+    this.getProject(task.projectId._id);
+  }
+
+
+  updateTask(task){
+    task.assignTo = this.editTaskForm.value.assignTo;
+    console.log("assignTo",task.assignTo);
+    let data = new FormData();
+    data.append('projectId', task.projectId);
+    data.append('title', task.title);
+    data.append('desc', task.desc);
+    data.append('assignTo', task.assignTo);
+    data.append('priority', task.priority);
+    data.append('dueDate', task.dueDate);
+    data.append('estimatedTime', task.estimatedTime);
+    data.append('images', task.images);
+    if(this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('fileUpload', this.files[i]);  
+      }
+    }
+    console.log("update =====>",task);
+    this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
+      Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
+      $('#save_changes').attr("disabled", false);
+      $('#refresh_icon').css('display','none');
+      $('#itemManipulationModel1').modal('hide');
+      this.newTask = this.getEmptyTask();
+      this.files = this.url = [];
+      this.editTaskForm.reset();
+      this.loader = false;
+    },err=>{
+      Swal.fire('Oops...', 'Something went wrong!', 'error')
+      console.log(err);
+      this.loader = false;
+      //$('#alert').css('display','block');
+    })
+
+  }
+  getEmptyTask(){
+    return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+  }
+
+  updateStatus(newStatus, data){
+    if(newStatus=='complete'){
+      data.status = newStatus;
+      this._projectService.completeItem(data).subscribe((res:any)=>{
         console.log(res);
-        this.comment = "";
-        this.model.editorData = 'Enter comments here';
-        this.files = [];
-        this.getAllCommentOfTask(res.taskId);
-      },err=>{
-        console.error(err);
-      });
-    }
-    searchTask(){
-      console.log("btn tapped");
-    }
-    getAllCommentOfTask(taskId){
-      this._commentService.getAllComments(taskId).subscribe(res=>{
-        this.comments = res;
-      }, err=>{
-        console.error(err);
-      })
-    }
-    onSelectFile(event, option){
-      _.forEach(event.target.files, (file:any)=>{
-        this.files.push(file);
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e:any) => {
-          if(option == 'item')
-            this.url.push(e.target.result);
-          if(option == 'comment')
-            this.commentUrl.push(e.target.result);
-        }
-      })
-    }
-    removeCommentImage(file, index){
-      console.log(file, index);
-      this.commentUrl.splice(index, 1);
-      if(this.files && this.files.length)
-        this.files.splice(index,1);
-      console.log(this.files);  
-    }
-    removeAlreadyUplodedFile(option){
-      this.newTask.images.splice(option,1);
-    }
 
-    openModel(task){
-      console.log(task);
-      this.task = task;
-      this.getAllCommentOfTask(task._id);
-      $('#fullHeightModalRight').modal('show');
-    }
-   
-    
-    editTask(task){
-      this.newTask = task;
-      console.log("newTask",this.newTask);
-      console.log("title===>",this.newTask.title);
-      console.log("title2===>",this.newTask.assignTo);
-      this.modalTitle = 'Edit Item';
-      $('#itemManipulationModel1').modal('show');
-      this.getProject(task.projectId._id);
-    }
-
-    
-    updateTask(task){
-      task.assignTo = this.editTaskForm.value.assignTo;
-      console.log("assignTo",task.assignTo);
-      let data = new FormData();
-      data.append('projectId', task.projectId);
-      data.append('title', task.title);
-      data.append('desc', task.desc);
-      data.append('assignTo', task.assignTo);
-      data.append('priority', task.priority);
-      data.append('dueDate', task.dueDate);
-      data.append('estimatedTime', task.estimatedTime);
-      data.append('images', task.images);
-      if(this.files.length>0){
-        for(var i=0;i<this.files.length;i++){
-          data.append('fileUpload', this.files[i]);  
-        }
-      }
-      console.log("update =====>",task);
-      this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-        Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
-        $('#save_changes').attr("disabled", false);
-        $('#refresh_icon').css('display','none');
-        $('#itemManipulationModel1').modal('hide');
-        this.newTask = this.getEmptyTask();
-        this.files = this.url = [];
-        this.editTaskForm.reset();
-        this.loader = false;
       },err=>{
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log(err);
-        this.loader = false;
-        //$('#alert').css('display','block');
+      });
+    }else{
+      data.status = newStatus;
+      console.log("UniqueId", data.uniqueId);
+      this._projectService.updateStatus(data).subscribe((res:any)=>{
+        console.log(res);
+        this.getProject(res.projectId);
+      },(err:any)=>{
+
+        console.log(err);
       })
 
     }
-    getEmptyTask(){
-      return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-    }
- 
-    updateStatus(newStatus, data){
-      if(newStatus=='complete'){
-        data.status = newStatus;
-        this._projectService.completeItem(data).subscribe((res:any)=>{
-          console.log(res);
-
-        },err=>{
-          console.log(err);
-        });
-      }else{
-        data.status = newStatus;
-        console.log("UniqueId", data.uniqueId);
-        this._projectService.updateStatus(data).subscribe((res:any)=>{
-          console.log(res);
-          this.getProject(res.projectId);
-        },(err:any)=>{
-
-          console.log(err);
-        })
-
-      }
-    }
+  }
 
   deleteTask(taskId){
     console.log(taskId);
     this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
       $('#exampleModalPreview').modal('hide');
+      $('#itemManipulationModel1').modal('hide');
+      $('#fullHeightModalRight').modal('hide');
+      this.getProject(this.projectId);
       Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
       console.log("Delete Task======>" , res);
       this.task = res;
@@ -386,8 +388,8 @@ export class ChildComponent  implements OnInit{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
-        this.project.sort(custom_sort);
-        this.project.reverse();
+        // this.project.sort(custom_sort);
+        // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
           console.log("task ======>" , task);
@@ -404,16 +406,16 @@ export class ChildComponent  implements OnInit{
             }
           })
         })
-        
+
         this.loader = false;
       },err=>{
         console.log(err);
         this.loader = false;
       })
     },1000);
-    function custom_sort(a, b) {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    }
+    // function custom_sort(a, b) {
+    //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    // }
   }
   saveTheData(task){
     this.loader = true;
@@ -459,5 +461,7 @@ export class ChildComponent  implements OnInit{
     });
   }
 
+ 
 
-  }
+
+}

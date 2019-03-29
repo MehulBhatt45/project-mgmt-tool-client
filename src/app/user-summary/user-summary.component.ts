@@ -64,7 +64,7 @@ export class UserSummaryComponent implements OnInit {
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		
-
+		
 		// this.activatedRoute.queryParams.subscribe(params => {
 			// 	this.uid = params['key1'];
 			// 	console.log("uid============>",this.uid);
@@ -218,17 +218,6 @@ export class UserSummaryComponent implements OnInit {
 						console.log("response of team============>"  ,res.Teams);
 						this.projectTeam = res.Teams;
 						console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-						this.projectTeam.sort(function(a, b){
-							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-							if (nameA < nameB) //sort string ascending
-								return -1 
-							if (nameA > nameB)
-								return 1
-							return 0 //default return value (no sorting)
-							this.projectTeam.push
-
-						})
-
 					},(err:any)=>{
 						console.log("err of team============>"  ,err);
 					});
@@ -305,7 +294,7 @@ export class UserSummaryComponent implements OnInit {
 
 
 						var ctxL = document.getElementById("lineChart")
-						var myLineChart = new Chart(ctxL, {
+						var myLineChart = new Chart(ctxL, {														
 							type: 'line',
 							data: {
 								labels: ["To Do", "In Progress", "Testing", "Complete"],
@@ -436,49 +425,8 @@ export class UserSummaryComponent implements OnInit {
 																											}
 																										});
 
-																										var ctxL = document.getElementById("lineChart2")
-																										var myLineChart = new Chart(ctxL, {
-																											type: 'line',
-																											data: {
-																												labels: ["To Do", "In Progress", "Testing", "Complete"],
-																												datasets: [{
-																													label: "Medium Priority",
-																													data: this.getTaskPriority(3,this.tracks),
+																										
 
-																													borderColor: [
-																													'#ffee21',
-																													],
-																													borderWidth: 2
-																												}
-
-																												]
-																											},
-																											options: {
-																												responsive: true
-																											}
-																										});
-
-																										var ctxL = document.getElementById("lineChart3")
-																										var myLineChart = new Chart(ctxL, {
-																											type: 'line',
-																											data: {
-																												labels: ["To Do", "In Progress", "Testing", "Complete"],
-																												datasets: [{
-																													label: "Low Priority",
-																													data: this.getTaskPriority(4,this.tracks),
-
-																													borderColor: [
-																													'#0087ff',
-																													],
-																													borderWidth: 2
-																												}
-
-																												]
-																											},
-																											options: {
-																												responsive: true
-																											}
-																										});
 
 																										var ctxP = document.getElementById("pieChart5");
 																										var myPieChart = new Chart(ctxP, {
@@ -496,7 +444,7 @@ export class UserSummaryComponent implements OnInit {
 																											options: {
 																												responsive: true,
 																												legend:{
-																													position:"bottom",
+																													position:"left",
 
 
 																												}
