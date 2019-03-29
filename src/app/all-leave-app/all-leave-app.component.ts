@@ -36,14 +36,18 @@ export class AllLeaveAppComponent implements OnInit {
   singleleave:any;
   flag;
   fileUrl;
+  filteredLeaves = [];
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
 
+
   pendingLeaves:any = [];
   searchText;
 
+
+  selectedStatus:any;
   comment;
   path = config.baseMediaUrl;
   // apps;
@@ -80,7 +84,7 @@ export class AllLeaveAppComponent implements OnInit {
     console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
-    this.getLeaves();
+    // this.getLeaves();
     this.leavesByUserId();
     this.getAllDevelopers();
 
@@ -96,98 +100,125 @@ export class AllLeaveAppComponent implements OnInit {
       // })
       // this.filterTracks(developerId);
 
-
-
-      // $('.dataTables_length').addClass('bs-select');
-      // this.route.params.subscribe(param=>{
-        //   this.developerId = param.id;
-        //   this.leavesByUserId(this.developerId);
-        // })
-        // this.filterTracks(developerId);
-      }
-
-        
-
+    }
 
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
-        this.approvedLeaves = res;
-        _.forEach(this.approvedLeaves, (approved)=>{
+        this.leaveApp = res;
+        $('#statusAction').hide();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
+          })
+        })
+        _.forEach(this.leaveApp, (approved)=>{
           approved.startingDate = moment(approved.startingDate).format('YYYY-MM-DD');
           approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
         })
-        this.appLeaves = this.approvedLeaves;
-        console.log("approved leaves",this.approvedLeaves);
+        this.appLeaves = this.leaveApp;
+        console.log("approved leaves",this.leaveApp);
       },err=>{
         console.log(err);
       })
     }
 
-      getRejectedLeaves(){
-        this._leaveService.rejectedLeaves().subscribe(res=>{
-          console.log("rejected leaves",res);
-          this.rejectedLeaves = res;
-          _.forEach(this.rejectedLeaves, (rejected)=>{
-            rejected.startingDate = moment(rejected.startingDate).format('YYYY-MM-DD');
-            rejected.endingDate = moment(rejected.endingDate).format('YYYY-MM-DD');
+    getRejectedLeaves(){
+      this._leaveService.rejectedLeaves().subscribe(res=>{
+        console.log("rejected leaves",res);
+        this.leaveApp = res;
+        $('#statusAction').hide();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
           })
-          this.rejeLeaves = this.rejectedLeaves;
-          console.log("rejected leaves",this.rejectedLeaves);
-        },err=>{
-          console.log(err);
         })
-      }
+        _.forEach(this.leaveApp, (rejected)=>{
+          rejected.startingDate = moment(rejected.startingDate).format('YYYY-MM-DD');
+          rejected.endingDate = moment(rejected.endingDate).format('YYYY-MM-DD');
+        })
+        this.rejeLeaves = this.leaveApp;
+        console.log("rejected leaves",this.leaveApp);
+      },err=>{
+        console.log(err);
+      })
+    }
 
 
-
-      getLeaves(){
-        this._leaveService.pendingLeaves().subscribe(res=>{
-          console.log("data avo joye==========>",res);
-          this.leaveApp = res;
-          console.log("pending leaves========>",this.leaveApp);
-          _.forEach(this.leaveApp , (leave)=>{
-            leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-            leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+    getLeaves(){
+      this._leaveService.pendingLeaves().subscribe(res=>{
+        console.log("data avo joye==========>",res);
+        this.leaveApp = res;
+        $('#statusAction').show();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
           })
-
-          //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
-          this.allLeaves = this.leaveApp; 
-          console.log("applicationsss==>",this.leaveApp);
-          this.pendingLeaves = this.leaveApp;
-          // console.log(this.pendingLeaves);
-        },err=>{
-          console.log(err);
         })
-      }
-
-
-      getAllDevelopers(){
-        this._leaveService.getAllDevelopers().subscribe(res=>{
-          console.log("function calling===>")
-          this.developers = res;
-          // this.developers.sort(function(a, b){
-          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          //   if (nameA < nameB) //sort string ascending
-          //     return -1 
-          //   if (nameA > nameB)
-          //     return 1
-          //   return 0 
-          // })
-          _.map(this.leaveApp, leave=>{
-            _.forEach(this.developers, dev=>{
-              if(leave.email == dev.email){
-                leave['dev']= dev;
-              }
-            })
-          })
-          console.log("Developers",this.leaveApp);
-          // this.getDataForTable();
-        },err=>{
-          console.log("Couldn't get all developers ",err);
-          this._alertService.error(err);
+        _.forEach(this.leaveApp , (leave)=>{
+          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
         })
+        this.allLeaves = this.leaveApp; 
+        console.log("applicationsss==>",this.allLeaves);
+      },err=>{
+        console.log(err);
+      })
+    }
+
+    getFilteredLeaves(){
+      switch (this.selectedStatus) {
+        case "pending":
+          this.getLeaves();
+          break;
+        case "approved":
+          this.getApprovedLeaves();
+          break;
+        case "rejected":
+          this.getRejectedLeaves();
+          break;        
+        default:
+          console.log("DEFAULT CASE");
+          break;
       }
+    }
+
+
+
+    getAllDevelopers(){
+      this._leaveService.getAllDevelopers().subscribe(res=>{
+        console.log("function calling===>")
+        this.developers = res;
+        // this.developers.sort(function(a, b){
+        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //   if (nameA < nameB) //sort string ascending
+        //     return -1 
+        //   if (nameA > nameB)
+        //     return 1
+        //   return 0 
+        // })
+
+
+        // _.map(this.leaveApp, leave=>{
+        //   _.forEach(this.developers, dev=>{
+        //     if(leave.email == dev.email){
+        //       leave['dev']= dev;
+        //     }
+        //   })
+        // })
+        console.log("Developers",this.leaveApp);
+      },err=>{
+        console.log("Couldn't get all developers ",err);
+        this._alertService.error(err);
+      })
+    }
+
 
       leaveAccepted(req){
         Swal.fire({
@@ -323,6 +354,7 @@ export class AllLeaveAppComponent implements OnInit {
                 }
               });
             });
+
             console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
             console.log("leaves count ====>" , this.leavescount);
           }else{
@@ -352,8 +384,8 @@ export class AllLeaveAppComponent implements OnInit {
       }
       onKey(searchText){
         console.log("searchText",searchText);
-        console.log(this.pendingLeaves);
-        var dataToBeFiltered = [this.pendingLeaves];
+        console.log(this.allLeaves);
+        var dataToBeFiltered = [this.allLeaves];
         console.log('dataToBeFiltered===================>',dataToBeFiltered);
         var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
         console.log("In Component",leave);
@@ -363,6 +395,7 @@ export class AllLeaveAppComponent implements OnInit {
             });
       }
       
+
     addComment(comment){
       console.log("data=====>>",comment);
     }
@@ -390,7 +423,7 @@ export class AllLeaveAppComponent implements OnInit {
         res['comment'] = true; 
         console.log("response",res);
         Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-         $('#centralModalInfo').modal('hide');
+        $('#centralModalInfo').modal('hide');
       },err=>{
         console.log("errrrrrrrrrrrrr",err);
         Swal.fire('Oops...', 'Something went wrong!', 'error')

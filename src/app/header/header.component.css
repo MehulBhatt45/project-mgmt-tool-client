@@ -188,6 +188,7 @@ ol.breadcrumb.hidden-lg-down li a {
   .modal-header {
     background-color: #372e5f;
     color: white;
+        margin: -25px 20px 0px 20px;
   }
   
 

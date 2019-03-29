@@ -12,6 +12,7 @@ import {AlertService} from './alert.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class MessagingService {
 
   currentMessage = new BehaviorSubject(null);
@@ -40,38 +41,38 @@ export class MessagingService {
   }
 
   requestPermission(userId) {
-    
-      if ('Notification' in window) {
-  console.log('supported'); } else {
- console.log(' not supported'); }
-    this.angularFireMessaging.requestToken.subscribe(
-      (token) => {
-        console.log(token);
-        console.log(userId);
-        const udata={
-          userId:userId,
-          token:token
-        }
-        this.addEntry(udata);
 
-        //this.updateToken(userId, token);
-      },
-      (err) => {
-        console.error('Unable to get permission to notify.', err);
-      });
-  }
+    if ('Notification' in window) {
+      console.log('supported'); } else {
+        console.log(' not supported'); }
+        this.angularFireMessaging.requestToken.subscribe(
+          (token) => {
+            console.log(token);
+            console.log(userId);
+            const udata={
+              userId:userId,
+              token:token
+            }
+            this.addEntry(udata);
 
-  receiveMessage() {
-    this.angularFireMessaging.messages.subscribe(
-      (payload) => {
-        console.log("new message received. ", payload);
-        this.currentMessage.next(payload);
-      })
-  }
+            //this.updateToken(userId, token);
+          },
+          (err) => {
+            console.error('Unable to get permission to notify.', err);
+          });
+      }
 
-  addEntry(udata){
-    console.log("notification data",udata);
-    this.http.post(config.baseApiUrl+"notification/addUser",udata).subscribe((success) => {
-    });
-  }
-}
+      receiveMessage() {
+        this.angularFireMessaging.messages.subscribe(
+          (payload) => {
+            console.log("new message received. ", payload);
+            this.currentMessage.next(payload);
+          })
+      }
+
+      addEntry(udata){
+        console.log("notification data",udata);
+        this.http.post(config.baseApiUrl+"notification/addUser",udata).subscribe((success) => {
+        });
+      }
+    }
