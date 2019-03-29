@@ -354,7 +354,7 @@ export class SummaryComponent implements OnInit {
 													borderWidth: 2
 												}, {
 													label: "Date Task",
-													data: this.getDateTask(1,this.project),
+													data: this.getDateTask(1,this.tracks),
 													backgroundColor: [
 													'rgba(0, 137, 132, .2)',
 													],
@@ -385,7 +385,7 @@ export class SummaryComponent implements OnInit {
 													borderWidth: 2
 												}, {
 													label: "Date Task",
-													data: this.getDateTask(2,this.project),
+													data: this.getDateTask(2,this.tracks),
 													backgroundColor: [
 													'rgba(0, 137, 132, .2)',
 													],
@@ -566,10 +566,17 @@ getCompletedTask(status){
 }
 
 
-getDateTask(priority,project){
-	console.log("proj[][][][]",priority,project);
+getDateTask(priority,tracks){
+	console.log("proj[][][][]",priority,tracks);
 
-	return  _.filter(this.project,function(o){ if (o.createdAt == project.createdAt && o.priority == project.priority) return o});
+	_.forEach(tracks, track=>{
+		for(var i=0;i<=this.tracks.length;i++){
+
+
+			console.log("date=-=-=-",tracks[i].tasks[i].createdAt);
+		}
+		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+	});
 }
 
 
@@ -577,7 +584,7 @@ getTaskPriority(priority, tracks){
 	// console.log(priority, status);
 	var count = [];
 	_.forEach(tracks, track=>{
-		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
+		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
 	});
 	console.log(count);
 	return count;
