@@ -58,6 +58,7 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   
+  
 
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,public _commentService: CommentService) { 
     this.route.params.subscribe(param=>{
@@ -221,9 +222,7 @@ export class ChildComponent  implements OnInit{
       console.error(err);
     });
   }
-  searchTask(){
-    console.log("btn tapped");
-  }
+
   getAllCommentOfTask(taskId){
     this._commentService.getAllComments(taskId).subscribe(res=>{
       this.comments = res;
@@ -391,8 +390,8 @@ export class ChildComponent  implements OnInit{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
-        this.project.sort(custom_sort);
-        this.project.reverse();
+        // this.project.sort(custom_sort);
+        // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
           console.log("task ======>" , task);
@@ -416,9 +415,9 @@ export class ChildComponent  implements OnInit{
         this.loader = false;
       })
     },1000);
-    function custom_sort(a, b) {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    }
+    // function custom_sort(a, b) {
+    //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    // }
   }
   saveTheData(task){
     this.loader = true;
@@ -463,6 +462,8 @@ export class ChildComponent  implements OnInit{
       console.log("error========>",err);
     });
   }
+
+ 
 
 
 }

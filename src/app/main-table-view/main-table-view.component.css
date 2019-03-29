@@ -215,11 +215,11 @@ label{
  opacity: 0.75;
  display: block;
 }
-.due_date_sorting_btn i.fas.hide,
+/*.due_date_sorting_btn i.fas.hide,
 .priority_sorting_btn i.fas.hide{
   opacity: 1;
   pointer-events: none;
-}
+}*/
 
 .due_date_sorting_btn{
   margin-left: 900px;
