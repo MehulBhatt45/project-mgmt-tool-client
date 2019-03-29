@@ -77,8 +77,6 @@ export class SummaryComponent implements OnInit {
 			
 		});
 		this.createEditTaskForm();	
-		
-		
 	}
 	ngOnInit() {
 		this.getEmptyTracks();
@@ -197,10 +195,6 @@ export class SummaryComponent implements OnInit {
 			status : new FormControl({value: '', disabled: true}, Validators.required)
 		})
 	}
-
-	
-
-	
 
 	getProject(id){
 		this.loader = true;
