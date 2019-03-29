@@ -34,11 +34,12 @@ export class AllLeaveAppComponent implements OnInit {
   singleleave:any;
   flag;
   fileUrl;
+  filteredLeaves = [];
   // projectTeam;
   // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
-
+  selectedStatus:any;
   comment;
   path = config.baseMediaUrl;
   // apps;
@@ -73,7 +74,7 @@ export class AllLeaveAppComponent implements OnInit {
     console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
-    this.getLeaves();
+    // this.getLeaves();
     this.leavesByUserId();
     this.getAllDevelopers();
     // this.route.params.subscribe(param=>{
@@ -87,13 +88,21 @@ export class AllLeaveAppComponent implements OnInit {
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
-        this.approvedLeaves = res;
-        _.forEach(this.approvedLeaves, (approved)=>{
+        this.leaveApp = res;
+        $('#statusAction').hide();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
+          })
+        })
+        _.forEach(this.leaveApp, (approved)=>{
           approved.startingDate = moment(approved.startingDate).format('YYYY-MM-DD');
           approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
         })
-        this.appLeaves = this.approvedLeaves;
-        console.log("approved leaves",this.approvedLeaves);
+        this.appLeaves = this.leaveApp;
+        console.log("approved leaves",this.leaveApp);
       },err=>{
         console.log(err);
       })
@@ -101,13 +110,21 @@ export class AllLeaveAppComponent implements OnInit {
     getRejectedLeaves(){
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
-        this.rejectedLeaves = res;
-        _.forEach(this.rejectedLeaves, (rejected)=>{
+        this.leaveApp = res;
+        $('#statusAction').hide();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
+          })
+        })
+        _.forEach(this.leaveApp, (rejected)=>{
           rejected.startingDate = moment(rejected.startingDate).format('YYYY-MM-DD');
           rejected.endingDate = moment(rejected.endingDate).format('YYYY-MM-DD');
         })
-        this.rejeLeaves = this.rejectedLeaves;
-        console.log("rejected leaves",this.rejectedLeaves);
+        this.rejeLeaves = this.leaveApp;
+        console.log("rejected leaves",this.leaveApp);
       },err=>{
         console.log(err);
       })
@@ -118,6 +135,14 @@ export class AllLeaveAppComponent implements OnInit {
       this._leaveService.pendingLeaves().subscribe(res=>{
         console.log("data avo joye==========>",res);
         this.leaveApp = res;
+        $('#statusAction').show();
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
+          })
+        })
         _.forEach(this.leaveApp , (leave)=>{
           leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
           leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
@@ -131,28 +156,45 @@ export class AllLeaveAppComponent implements OnInit {
       })
     }
 
+    getFilteredLeaves(){
+      switch (this.selectedStatus) {
+        case "pending":
+          this.getLeaves();
+          break;
+        case "approved":
+          this.getApprovedLeaves();
+          break;
+        case "rejected":
+          this.getRejectedLeaves();
+          break;        
+        default:
+          console.log("DEFAULT CASE");
+          break;
+      }
+    }
+
 
     getAllDevelopers(){
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
-        this.developers.sort(function(a, b){
-          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          if (nameA < nameB) //sort string ascending
-            return -1 
-          if (nameA > nameB)
-            return 1
-          return 0 
-        })
+        // this.developers.sort(function(a, b){
+        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //   if (nameA < nameB) //sort string ascending
+        //     return -1 
+        //   if (nameA > nameB)
+        //     return 1
+        //   return 0 
+        // })
 
 
-        _.map(this.leaveApp, leave=>{
-          _.forEach(this.developers, dev=>{
-            if(leave.email == dev.email){
-              leave['dev']= dev;
-            }
-          })
-        })
+        // _.map(this.leaveApp, leave=>{
+        //   _.forEach(this.developers, dev=>{
+        //     if(leave.email == dev.email){
+        //       leave['dev']= dev;
+        //     }
+        //   })
+        // })
         console.log("Developers",this.leaveApp);
       },err=>{
         console.log("Couldn't get all developers ",err);
