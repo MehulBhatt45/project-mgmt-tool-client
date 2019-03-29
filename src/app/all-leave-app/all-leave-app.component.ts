@@ -316,11 +316,8 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
+    
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a1a62cfaa38e57f4935a4368a4e0f3eba35298e
 
     addComment(comment){
       console.log("data=====>>",comment);
