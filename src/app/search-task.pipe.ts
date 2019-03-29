@@ -66,7 +66,7 @@ export class SearchTaskPipe implements PipeTransform {
 			console.log("Search pipe items = ",items);
 			leave = items[0].filter( it => {
 
-				// if(it.name){
+				if(it.name){
 
 					if(it.name.toLowerCase().includes(searchText) ||  it.startingDate.toLowerCase().includes(searchText) ||
 						it.typeOfLeave.toLowerCase().includes(searchText) )
@@ -75,7 +75,7 @@ export class SearchTaskPipe implements PipeTransform {
 
 						return it;
 					}
-				// }
+				}
 			});
 			return leave;
 		}

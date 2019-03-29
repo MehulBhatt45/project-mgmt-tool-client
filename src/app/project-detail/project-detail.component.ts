@@ -281,9 +281,9 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
-		function custom_sort(a, b) {
-			return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-		}
+		// function custom_sort(a, b) {
+		// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
+		// }
 		
 
 	}
@@ -361,19 +361,18 @@ export class ProjectDetailComponent implements OnInit {
 		}
 
 		function custom_sort(a, b) {
-			var   Aarr = a.dueDate.split(" ");
-			a.dueDate = Aarr[0];
-			var   Barr = b.dueDate.split(" ");
-			b.dueDate = Barr[0];
+			// var   Aarr = a.dueDate.split(" ");
+			// a.dueDate = Aarr[0];
+			// var   Barr = b.dueDate.split(" ");
+			// b.dueDate = Barr[0];
 			return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
 		}
 		function custom_sort1(a, b) {
-			return b.priority - a.priority;
+			return a.priority - b.priority;
 		}
 
 		console.log("sorting======>",custom_sort);
 		$(".due_date_sorting_btn i.fas").toggleClass("hide");
-
 	}
 
 	sortTasksByPriority(type){
@@ -383,16 +382,16 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("Sorting track = ",track.title);
 			// console.log("Sorting track = ",track);
 			track.tasks.sort(custom_sort1);
-			if(type == 'asc'){
+			if(type == 'desc'){
 				track.tasks.reverse();
 			}
-			console.log("sorted output =====> ",track.tasks);
 		});
+		console.log("sorted output =====> ",this.tracks);
 		function custom_sort1(a, b) {
 			return a .priority - b.priority;
 		}
 
-		console.log("nthi avtu=======>",custom_sort1);
+		//console.log("nthi avtu=======>",custom_sort1);
 		$(".priority_sorting_btn i.fas").toggleClass("hide");
 		// this.priority = false;
 
