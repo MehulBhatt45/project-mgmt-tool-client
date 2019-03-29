@@ -27,6 +27,8 @@
 										<td colspan="2">
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
+											<!-- <div>{{task.createdAt}}</div> -->
+											<div>{{task.dueDate}}</div>
 											<!-- <div>{{task.createdAt | timeAgo }}</div> -->
 										</td>
 									</tr>
@@ -234,8 +236,9 @@
 
 			<div class="card card-cascade narrower modal-header view view-cascade "> 
 				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				</button> -->
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				</button>
+
 				
 			</div>
 			<div class="modal-body view view-cascade">
