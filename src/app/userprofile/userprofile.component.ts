@@ -24,6 +24,7 @@ export class UserprofileComponent implements OnInit {
 	url = '';
 	user;
 	files;
+	projectId;
 	projectArr = [];
 	finalArr = [];
 	editTEmail;
@@ -46,7 +47,9 @@ export class UserprofileComponent implements OnInit {
 		// this.getAllProjects();
 		this.route.params.subscribe(param=>{
 			this.userId = param.id;
+			this.projectId = param.id;
 			this.getDeveloperById(this.userId);
+			// this.getAllProjects(this.projectId);
 		});
 		this.createEditEmail();
 		this.getAllDevelopers();
