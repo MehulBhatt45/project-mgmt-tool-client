@@ -64,7 +64,7 @@ export class UserSummaryComponent implements OnInit {
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		
-
+		
 		// this.activatedRoute.queryParams.subscribe(params => {
 			// 	this.uid = params['key1'];
 			// 	console.log("uid============>",this.uid);
@@ -218,17 +218,6 @@ export class UserSummaryComponent implements OnInit {
 						console.log("response of team============>"  ,res.Teams);
 						this.projectTeam = res.Teams;
 						console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-						this.projectTeam.sort(function(a, b){
-							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-							if (nameA < nameB) //sort string ascending
-								return -1 
-							if (nameA > nameB)
-								return 1
-							return 0 //default return value (no sorting)
-							this.projectTeam.push
-
-						})
-
 					},(err:any)=>{
 						console.log("err of team============>"  ,err);
 					});

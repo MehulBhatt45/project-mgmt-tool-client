@@ -1,6 +1,5 @@
 <div class="container">
 	<div class="row ">
-		
 		<div class="col-12 profile_image">
 			
 					<!-- <img  src="{{path}}{{currentUser.profilePhoto}}" class="img-fluid" onerror ="this.src ='assets/man.png'">
@@ -16,20 +15,17 @@
 						</div>
 					</div>
 				</div>	
-				
-				<!-- </div> -->
-				<!-- <div class="row" style="margin-top:10px;"> -->
-					<!-- <div class="col-12 profile_content"> -->
-						<div class="tabbar">
-							<ul class="nav nav-tabs" id="myTab" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about"
-									aria-selected="true">About</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
-									aria-selected="false">Projects</a>
-								</li>
+
+				<div class="tabbar">
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about"
+							aria-selected="true">About</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
+							aria-selected="false">Projects</a>
+						</li>
 								<!-- <li class="nav-item">
 									<a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress"
 									aria-selected="false">Progress</a>
@@ -38,15 +34,10 @@
 							<div class="tab-content" id="myTabContent">
 								<div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
 									<div class="card about_detail" style="border-radius: 5px;">
-										<!-- <button type="button" class="btn btn-default" style="margin-top: 30px;" routerLink="/editprofile/{{currentUser._id}}"><i class="far fa-edit"></i>Edit profile</button> -->
 										<h5 class="text-bold">{{currentUser.name | uppercase}}</h5>
-										<!-- <span class="span_label">Email:</span> -->
 										<span><i class="fas fa-envelope"></i> <label class="txt_label">{{currentUser.email}}</label></span>
-										<!-- <span class="span_label">UserRole:</span> -->
 										<span><i class="fas fa-user-alt"></i><label class="txt_label">{{currentUser.userRole}}</label></span>
-
 										<span><label class="txt_label"> Other details </label></span>
-										<!-- <span><i class="far fa-edit"></i><a routerLink="/editprofile/{{currentUser._id}}">Edit profile</a></span> -->
 										<button type="button" class="btn btn-default" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="far fa-edit"></i> Edit profile</button>
 									</div>
 							<!-- <div *ngIf="currentUser.userRole == 'admin'">
@@ -61,23 +52,18 @@
 									<ul>
 										<li  *ngFor = "let project of finalArr" style="cursor: pointer;"> 
 											<div class="row" style="margin-top: 5px;">
-												<div class="col col-1">
+												<div class="col col-1" *ngIf="project">
 													<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='assets/4.jpeg'" >
 												</div>
-												<div class="col col-11"> 
+												<div class="col col-11" *ngIf="project"> 
 													<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
 												</div>
-												
 											</div>
 										</li>
-										
 									</ul>
 								</div>
 							</div>
-
-							
 						</div>
-						
 					</div>
 				</div>
 					<!-- <div class="user_detail">

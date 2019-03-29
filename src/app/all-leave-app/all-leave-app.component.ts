@@ -81,8 +81,6 @@ export class AllLeaveAppComponent implements OnInit {
       //   this.leavesByUserId(this.developerId);
       // })
       // this.filterTracks(developerId);
-
-}
     getApprovedLeaves(){
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
@@ -121,8 +119,6 @@ export class AllLeaveAppComponent implements OnInit {
           leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
           leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
         })
-
-        //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
         this.allLeaves = this.leaveApp; 
         console.log("applicationsss==>",this.allLeaves);
       },err=>{
@@ -321,6 +317,10 @@ export class AllLeaveAppComponent implements OnInit {
         console.log(err);
       })
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a1a62cfaa38e57f4935a4368a4e0f3eba35298e
 
     addComment(comment){
       console.log("data=====>>",comment);
@@ -349,7 +349,7 @@ export class AllLeaveAppComponent implements OnInit {
         res['comment'] = true; 
         console.log("response",res);
         Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-         $('#centralModalInfo').modal('hide');
+        $('#centralModalInfo').modal('hide');
       },err=>{
         console.log("errrrrrrrrrrrrr",err);
         Swal.fire('Oops...', 'Something went wrong!', 'error')

@@ -143,17 +143,19 @@
               <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
             </div>
           </div>  
-
-    </div> 
-  </div>
-<div class="modal fade right" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg container" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title w-100 text-center" id="myModalLabel">{{modalTitle}}</h4>
-        <button type="button" class="close text-white mr-3" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <div class="second_icon dropdown">
+            <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+            <ul class="team-members">
+              <li id="login_details">
+                <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
+                <div class="dropdown-menu"> 
+                  <a class="dropdown-item" (click)="logout()">Log Out</a>
+                  <a  class="dropdown-item" routerLink="/userprofile/{{currentUser._id}}">My Profile</a>
+                </div>
+              </li>   
+            </ul>
+          </div> 
+        </div>
       </div>
       <div class="bottom_icon">
         <div class="second_icon">
