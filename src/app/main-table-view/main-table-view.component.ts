@@ -141,12 +141,14 @@ export class MainTableViewComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
+if (name){
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
 					if (nameA > nameB)
 						return 1
 					return 0 //default return value (no sorting)
+				}
 				})
 				console.log("Developers",this.developers);
 			},err=>{

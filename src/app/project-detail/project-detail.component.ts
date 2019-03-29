@@ -195,12 +195,14 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
+				if (name){
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0
+				}
 			})
 			console.log("Developers",this.developers);
 		},err=>{
@@ -408,250 +410,250 @@ export class ProjectDetailComponent implements OnInit {
 
 	
 	// updateTask(task){
-	// 	task.assignTo = this.editTaskForm.value.assignTo;
-	// 	let data = new FormData();
+		// 	task.assignTo = this.editTaskForm.value.assignTo;
+		// 	let data = new FormData();
 
-	// 	data.append('projectId', task.projectId);
-	// 	data.append('title', task.title);
-	// 	data.append('desc', task.desc);
-	// 	data.append('assignTo', task.assignTo);
-	// 	data.append('priority', task.priority);
-	// 	data.append('dueDate', task.dueDate);
-	// 	data.append('estimatedTime', task.estimatedTime);
-	// 	data.append('images', task.images);
-	// 	if(this.files.length>0){
-	// 		for(var i=0;i<this.files.length;i++){
-	// 			data.append('fileUpload', this.files[i]);	
-	// 		}
-	// 	}
-	// 	console.log("update =====>",task);
-	// 	this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-	// 		Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
-	// 		$('#save_changes').attr("disabled", false);
-	// 		$('#refresh_icon').css('display','none');
-	// 		$('#itemManipulationModel').modal('hide');
-	// 		this.newTask = this.getEmptyTask();
-	// 		this.files = this.url = [];
-	// 		this.editTaskForm.reset();
-	// 		this.loader = false;
-	// 	},err=>{
-	// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
-	// 		console.log(err);
-	// 		this.loader = false;
-	// 		//$('#alert').css('display','block');
-	// 	})
+		// 	data.append('projectId', task.projectId);
+		// 	data.append('title', task.title);
+		// 	data.append('desc', task.desc);
+		// 	data.append('assignTo', task.assignTo);
+		// 	data.append('priority', task.priority);
+		// 	data.append('dueDate', task.dueDate);
+		// 	data.append('estimatedTime', task.estimatedTime);
+		// 	data.append('images', task.images);
+		// 	if(this.files.length>0){
+			// 		for(var i=0;i<this.files.length;i++){
+				// 			data.append('fileUpload', this.files[i]);	
+				// 		}
+				// 	}
+				// 	console.log("update =====>",task);
+				// 	this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
+					// 		Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
+					// 		$('#save_changes').attr("disabled", false);
+					// 		$('#refresh_icon').css('display','none');
+					// 		$('#itemManipulationModel').modal('hide');
+					// 		this.newTask = this.getEmptyTask();
+					// 		this.files = this.url = [];
+					// 		this.editTaskForm.reset();
+					// 		this.loader = false;
+					// 	},err=>{
+						// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
+						// 		console.log(err);
+						// 		this.loader = false;
+						// 		//$('#alert').css('display','block');
+						// 	})
 
-	// }
-
-
+						// }
 
 
 
-	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-	}
-
-	addItem(option){
-		console.log("jnhiijioji",option);
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-		this.modalTitle = 'Add '+option;
-		console.log(this.modalTitle);
-		$('#itemManipulationModel').modal('show');
-	}
 
 
-
-	saveTheData(task){
-		this.loader = true;
-		console.log("projectId=========>",this.pro._id);
-		console.log(task);
-		task['projectId']= this.pro._id;
-		task.priority = Number(task.priority); 
-		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.startDate = $("#startDate").val();
-		task.estimatedTime = $("#estimatedTime").val();
-		console.log("estimated time=====>",task.estimatedTime);
-		task.images = $("#images").val();
-		console.log("images====>",task.images);
-		console.log(task.dueDate);
-		task.dueDate = moment().add(task.dueDate,'days').toString();
-		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
-		let data = new FormData();
-		_.forOwn(task, function(value, key) {
-			data.append(key, value)
-		});
-		if(this.files.length>0){
-			for(var i=0;i<this.files.length;i++){
-				data.append('fileUpload', this.files[i]);	
-			}
-		}
-		this._projectService.addTask(data).subscribe((res:any)=>{
-			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
-			$('#save_changes').attr("disabled", false);
-			$('#refresh_icon').css('display','none');
-			$('#itemManipulationModel').modal('hide');
-			this.newTask = this.getEmptyTask();
-			this.editTaskForm.reset();
-			this.files = this.url = [];
-			// this.assignTo.reset();
-			this.loader = false;
-		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			//$('#alert').css('display','block');
-			console.log("error========>",err);
-		});
-	}
-
-	
-
-
-	// public Editor = DecoupledEditor;
-	// public configuration = { placeholder: 'Enter Comment Text...'};
-
-
-
-	// public onReady( editor ) {
-	// 	editor.ui.getEditableElement().parentElement.insertBefore(
-	// 		editor.ui.view.toolbar.element,
-	// 		editor.ui.getEditableElement()
-	// 		);
-	// }
-
-
-	// public onChange( { editor }: ChangeEvent ) {
-	// 	const data = editor.getData();
-	// 	// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
-	// 	this.comment = data;
-	// }
-
-
-	// sendComment(taskId){
-	// 	console.log(this.comment);
-	// 	var data : any;
-	// 	if(this.files.length>0){
-	// 		data = new FormData();
-	// 		data.append("content",this.comment?this.comment:"");
-	// 		data.append("userId",this.currentUser._id);
-	// 		data.append("projectId",this.projectId);
-	// 		data.append("taskId",taskId);
-	// 		// data.append("Images",this.images);
-	// 		for(var i = 0; i < this.files.length; i++)
-	// 			data.append("fileUpload",this.files[i]);
-	// 	}else{
-	// 		data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-	// 	}
-	// 	console.log(data);
-	// 	this._commentService.addComment(data).subscribe((res:any)=>{
-	// 		console.log(res);
-	// 		this.comment = "";
-	// 		this.model.editorData = 'Enter comments here';
-	// 		this.files = [];
-	// 		this.getAllCommentOfTask(res.taskId);
-	// 	},err=>{
-	// 		console.error(err);
-	// 	});
-	// }
-
-	searchTask(){
-		console.log("btn tapped");
-	}
-
-
-	onKey(searchText){
-		console.log("searchText",searchText);
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-
-		console.log("sdjhfdhfj====>",this.tracks.tasks);
-
-
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-						// if(content.status == track.id){
-
-							track.tasks.push(content);
+						getEmptyTask(){
+							return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 						}
 
-					}
-					else{
-						if(content.status == track.id){
-							track.tasks.push(content);
+						addItem(option){
+							console.log("jnhiijioji",option);
+							this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+							this.modalTitle = 'Add '+option;
+							console.log(this.modalTitle);
+							$('#itemManipulationModel').modal('show');
 						}
-					}
-				});
-		});
-	}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-	
 
-	onSelectFile(event, option){
-		_.forEach(event.target.files, (file:any)=>{
-			this.files.push(file);
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'comment')
-					this.commentUrl.push(e.target.result);
-			}
-		})
-	}
-	deleteTask(taskId){
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-			if (result.value) {
-				console.log(taskId);
-				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-					Swal.fire(
-						'Deleted!',
-						'Your file has been deleted.',
-						'success'
-						)
-					$('#itemManipulationModel').modal('hide');
-					$('#exampleModalPreview').modal('hide');
-					$('#fullHeightModalRight').modal('hide');
-					this.getProject(this.projectId);
-			
-				},err=>{
-					console.log(err);
-					Swal.fire('Oops...', 'Something went wrong!', 'error')
-				})
 
-			}
-		})
-	}
+						saveTheData(task){
+							this.loader = true;
+							console.log("projectId=========>",this.pro._id);
+							console.log(task);
+							task['projectId']= this.pro._id;
+							task.priority = Number(task.priority); 
+							task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+							task.startDate = $("#startDate").val();
+							task.estimatedTime = $("#estimatedTime").val();
+							console.log("estimated time=====>",task.estimatedTime);
+							task.images = $("#images").val();
+							console.log("images====>",task.images);
+							console.log(task.dueDate);
+							task.dueDate = moment().add(task.dueDate,'days').toString();
+							task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+							console.log(task);
+							let data = new FormData();
+							_.forOwn(task, function(value, key) {
+								data.append(key, value)
+							});
+							if(this.files.length>0){
+								for(var i=0;i<this.files.length;i++){
+									data.append('fileUpload', this.files[i]);	
+								}
+							}
+							this._projectService.addTask(data).subscribe((res:any)=>{
+								console.log("response task***++",res);
+								Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+								this.getProject(res.projectId);
+								$('#save_changes').attr("disabled", false);
+								$('#refresh_icon').css('display','none');
+								$('#itemManipulationModel').modal('hide');
+								this.newTask = this.getEmptyTask();
+								this.editTaskForm.reset();
+								this.files = this.url = [];
+								// this.assignTo.reset();
+								this.loader = false;
+							},err=>{
+								Swal.fire('Oops...', 'Something went wrong!', 'error')
+								//$('#alert').css('display','block');
+								console.log("error========>",err);
+							});
+						}
 
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
-	
-}
+						
+
+
+						// public Editor = DecoupledEditor;
+						// public configuration = { placeholder: 'Enter Comment Text...'};
+
+
+
+						// public onReady( editor ) {
+							// 	editor.ui.getEditableElement().parentElement.insertBefore(
+							// 		editor.ui.view.toolbar.element,
+							// 		editor.ui.getEditableElement()
+							// 		);
+							// }
+
+
+							// public onChange( { editor }: ChangeEvent ) {
+								// 	const data = editor.getData();
+								// 	// this.comment = data.replace(/<\/?[^>]+(>|$)/g, "");
+								// 	this.comment = data;
+								// }
+
+
+								// sendComment(taskId){
+									// 	console.log(this.comment);
+									// 	var data : any;
+									// 	if(this.files.length>0){
+										// 		data = new FormData();
+										// 		data.append("content",this.comment?this.comment:"");
+										// 		data.append("userId",this.currentUser._id);
+										// 		data.append("projectId",this.projectId);
+										// 		data.append("taskId",taskId);
+										// 		// data.append("Images",this.images);
+										// 		for(var i = 0; i < this.files.length; i++)
+										// 			data.append("fileUpload",this.files[i]);
+										// 	}else{
+											// 		data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+											// 	}
+											// 	console.log(data);
+											// 	this._commentService.addComment(data).subscribe((res:any)=>{
+												// 		console.log(res);
+												// 		this.comment = "";
+												// 		this.model.editorData = 'Enter comments here';
+												// 		this.files = [];
+												// 		this.getAllCommentOfTask(res.taskId);
+												// 	},err=>{
+													// 		console.error(err);
+													// 	});
+													// }
+
+													searchTask(){
+														console.log("btn tapped");
+													}
+
+
+													onKey(searchText){
+														console.log("searchText",searchText);
+														console.log(this.project);
+														var dataToBeFiltered = [this.project];
+														var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+														console.log("In Component",task);
+
+														console.log("sdjhfdhfj====>",this.tracks.tasks);
+
+
+														this.getEmptyTracks();
+														_.forEach(task, (content)=>{
+															_.forEach(this.tracks, (track)=>{
+																if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+																	if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+																		// if(content.status == track.id){
+
+																			track.tasks.push(content);
+																		}
+
+																	}
+																	else{
+																		if(content.status == track.id){
+																			track.tasks.push(content);
+																		}
+																	}
+																});
+														});
+													}
+
+													getAllProjects(){
+														this._projectService.getProjects().subscribe(res=>{
+															this.projects = res;
+														},err=>{
+															this._alertService.error(err);
+															console.log(err);
+														})
+													}
+													
+
+													onSelectFile(event, option){
+														_.forEach(event.target.files, (file:any)=>{
+															this.files.push(file);
+															var reader = new FileReader();
+															reader.readAsDataURL(file);
+															reader.onload = (e:any) => {
+																if(option == 'item')
+																	this.url.push(e.target.result);
+																if(option == 'comment')
+																	this.commentUrl.push(e.target.result);
+															}
+														})
+													}
+													deleteTask(taskId){
+														Swal.fire({
+															title: 'Are you sure?',
+															text: "You won't be able to revert this!",
+															type: 'warning',
+															showCancelButton: true,
+															confirmButtonColor: '#3085d6',
+															cancelButtonColor: '#d33',
+															confirmButtonText: 'Yes, delete it!'
+														}).then((result) => {
+															if (result.value) {
+																console.log(taskId);
+																this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+																	Swal.fire(
+																		'Deleted!',
+																		'Your file has been deleted.',
+																		'success'
+																		)
+																	$('#itemManipulationModel').modal('hide');
+																	$('#exampleModalPreview').modal('hide');
+																	$('#fullHeightModalRight').modal('hide');
+																	this.getProject(this.projectId);
+																	
+																},err=>{
+																	console.log(err);
+																	Swal.fire('Oops...', 'Something went wrong!', 'error')
+																})
+
+															}
+														})
+													}
+
+													removeAvatar(file, index){
+														console.log(file, index);
+														this.url.splice(index, 1);
+														if(this.files && this.files.length)
+															this.files.splice(index,1);
+														console.log(this.files);
+													}
+													
+												}
 
