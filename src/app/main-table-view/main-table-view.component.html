@@ -29,27 +29,28 @@
 				</select>
 			</div>
 		</div>
-		<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
-			<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
-				Due Date
-				<span class="sorting_arrows">
-					<i class="fas fa-angle-up hide" (click)="sortTasksByCreatedAt('desc')"></i>
-					<i class="fas fa-angle-down" (click)="sortTasksByCreatedAt('asc')"></i>
-				</span>
-			</button>
+		<div class="col-md-3">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
+					Due Date
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up hide" (click)="sortTasksByCreatedAt('asc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByCreatedAt('desc')"></i>
+					</span>
+				</button>
 
-			<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
-				Priority 
-				<span class="sorting_arrows">
-					<i class="fas fa-angle-up hide" (click)="sortTasksByPriority('desc')"></i>
-					<i class="fas fa-angle-down" (click)="sortTasksByPriority('asc')"></i>
-				</span>
-			</button>
+				<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
+					Priority 
+					<span class="sorting_arrows">
+						<i class="fas fa-angle-up " (click)="sortTasksByPriority('asc')"></i>
+						<i class="fas fa-angle-down" (click)="sortTasksByPriority('desc')"></i>
+					</span>
+				</button>
+			</div>
 		</div>
-
 	</div>
 </div>
-	<div>
-		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
-	</div>
+<div>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
+</div>
 

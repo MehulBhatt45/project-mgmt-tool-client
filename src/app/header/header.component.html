@@ -1,5 +1,3 @@
-
-
 <header>
   <a href="#" data-activates="slide-out" class="btn btn-primary p-3 button-collapse"><i class="fas fa-bars"></i></a>
   <div id="slide-out" class="side-nav">
@@ -78,7 +76,9 @@
             </div>
           </li>
           <li><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
+          <li><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">MyLeave</a></li>
           <li *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user'"><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='developer' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
         </ul>
       </li>
     </ul>
@@ -117,23 +117,23 @@
       </ul>
     </div> --> 
   </div>
-<div class="bottom_icon">
-  <div class="second_icon">
-    <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
-  </div>  
-  <div class="second_icon dropdown">
-    <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
-    <ul class="team-members">
-      <li id="login_details">
-        <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
-        <div class="dropdown-menu"> 
-          <a class="dropdown-item" (click)="logout()">Log Out</a>
-          <a  class="dropdown-item" routerLink="/userprofile">My Profile</a>
-        </div>
-      </li>   
-    </ul>
-  </div> 
-</div>     
+  <div class="bottom_icon">
+    <div class="second_icon">
+      <a href="" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell" aria-hidden="true" ></i></a>
+    </div>  
+    <div class="second_icon dropdown">
+      <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+      <ul class="team-members">
+        <li id="login_details">
+          <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
+          <div class="dropdown-menu"> 
+            <a class="dropdown-item" (click)="logout()">Log Out</a>
+            <a  class="dropdown-item" routerLink="/userprofile">My Profile</a>
+          </div>
+        </li>   
+      </ul>
+    </div> 
+  </div>     
 </div>
 <div class="modal fade right" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg container" role="document">

@@ -23,6 +23,7 @@ export class LeaveComponent implements OnInit {
 	showOneDays;
 	showMoreDayss;
 	leaveDuration;
+	startDate;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 
@@ -43,9 +44,18 @@ export class LeaveComponent implements OnInit {
 
 	ngOnInit() {
 		// $('.datepicker').pickadate();
+		var objFromDate = document.getElementById("fromdate").value;
 
-		$('.datepicker').pickadate({ min: new Date(),
+		$('.datepicker').pickadate({ 
+			min: new Date(),
 		})
+
+		$('.datepicker').pickadate({ min: new Date($('#startDate').val()),
+			
+		})
+
+
+		  
 
 
 		this.showMoreDayss = false;
