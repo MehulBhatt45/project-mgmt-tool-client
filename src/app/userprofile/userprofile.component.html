@@ -61,10 +61,10 @@
 									<ul>
 										<li  *ngFor = "let project of finalArr" style="cursor: pointer;"> 
 											<div class="row" style="margin-top: 5px;">
-												<div class="col col-1">
+												<div class="col col-1" *ngIf="project">
 													<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='assets/4.jpeg'" >
 												</div>
-												<div class="col col-11"> 
+												<div class="col col-11" *ngIf="project"> 
 													<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
 												</div>
 												

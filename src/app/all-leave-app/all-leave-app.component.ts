@@ -120,8 +120,6 @@ export class AllLeaveAppComponent implements OnInit {
           leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
           leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
         })
-
-        //this.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS');
         this.allLeaves = this.leaveApp; 
         console.log("applicationsss==>",this.allLeaves);
       },err=>{
@@ -319,8 +317,8 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
-
     }
+
 
     addComment(comment){
       console.log("data=====>>",comment);
