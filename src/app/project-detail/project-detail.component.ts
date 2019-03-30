@@ -329,7 +329,6 @@ export class ProjectDetailComponent implements OnInit {
 
 		}
 	}
-	
 	sortTasksByCreatedAt(type){
 		console.log("Sorting tasks by = ",type)
 
