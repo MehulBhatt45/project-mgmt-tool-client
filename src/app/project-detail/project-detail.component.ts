@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
@@ -57,12 +57,13 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	sorting: any;
+	// sorting: any;
+	sorting = [];
 
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
-		public _commentService: CommentService) {
+		public _commentService: CommentService, public _change: ChangeDetectorRef) {
 		$('.datepicker').pickadate();
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -70,6 +71,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
+
 	}
 
 	getEmptyTracks(){
@@ -322,7 +324,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
-				this.getProject(res.projectId);
+				// this.getProject(res.projectId);
 			},(err:any)=>{
 
 				console.log(err);
@@ -333,19 +335,19 @@ export class ProjectDetailComponent implements OnInit {
 
 	sortTasksByDueDate(type){
 		if(this.priority == true){
-			console.log("Sorting tasks by = ",type)
-			console.log("fjkgfhjkhfk");
-			_.forEach(this.tracks,function(track){
+			console.log("sorting Array=============>",this.sorting);
+			console.log("Sorting tasks by dueDate = ",type)
+			_.forEach(this.sorting,function(track){
 				console.log("Sorting track = ",track.title);
 				track.tasks.sort(custom_sort);
-				track.tasks.sort(custom_sort1);
+				// track.tasks.sort(custom_sort1);
 				if(type == 'desc'){
 					track.tasks.reverse();
 				}
 				console.log("sorted output======== =====> ",track.tasks);
 			});
 		}else{
-			console.log("Sorting tasks by = ",type)
+			console.log("Sorting tasks byDueDate = ",type)
 
 			_.forEach(this.tracks,function(track){
 				console.log("Sorting track =()()() ",track.title);
@@ -375,24 +377,26 @@ export class ProjectDetailComponent implements OnInit {
 
 	sortTasksByPriority(type){
 		this.priority = true;
-		console.log("hdgfhd=>>>>..",type);
-		_.forEach(this.tracks,function(track){
+		console.log("sorting task by priority=>>>>..",type);
+		_.map(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
-			// console.log("Sorting track = ",track);
-			track.tasks.sort(custom_sort1);
+			track.tasks = track.tasks.sort(custom_sort1);
 			if(type == 'desc'){
-				track.tasks.reverse();
+				track.tasks = track.tasks.reverse();
 			}
+		var sort = track.tasks;
+		console.log('sorting===========>',sort);
 		});
-		console.log("sorted output =====> ",this.tracks);
+		this.sorting = this.tracks;
+		console.log('jkfdhdfjkghd============================>',this.sorting);
+
 		function custom_sort1(a, b) {
-			return a .priority - b.priority;
+			return a.priority - b.priority;
 		}
-
-		//console.log("nthi avtu=======>",custom_sort1);
+		this._change.detectChanges();
+		console.log("sorted output =====> ",this.tracks);
+		// console.log("nthi avtu=======>",custom_sort1);
 		$(".priority_sorting_btn i.fas").toggleClass("hide");
-		// this.priority = false;
-
 	}
 
 	getTitle(name){

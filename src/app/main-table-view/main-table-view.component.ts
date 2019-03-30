@@ -48,6 +48,7 @@ export class MainTableViewComponent implements OnInit {
 	Teams;
 	selectedProjectId = "all";
 	selectedDeveloperId = "all";
+	 priority: boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,public _commentService: CommentService) {
 		this.route.params.subscribe(param=>{
@@ -142,6 +143,7 @@ export class MainTableViewComponent implements OnInit {
 			this.developers = res;
 			this.developers.sort(function(a, b){
 				if (a.name && b.name) {
+
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
@@ -242,26 +244,49 @@ export class MainTableViewComponent implements OnInit {
 		}
 	}
 
-	sortTasksByCreatedAt(type){
-		console.log("Sorting tasks by = ",type)
+	sortTasksByDueDate(type){
+		if(this.priority == true){
+			
+			console.log("Sorting tasks by dueDate = ",type)
+			_.forEach(this.tracks,function(track){
+				console.log("Sorting track = ",track.title);
+				track.tasks.sort(custom_sort);
+				// track.tasks.sort(custom_sort1);
+				if(type == 'desc'){
+					track.tasks.reverse();
+				}
+				console.log("sorted output======== =====> ",track.tasks);
+			});
+		}else{
+			console.log("Sorting tasks byDueDate = ",type)
 
-		_.forEach(this.tracks,function(track){
-			console.log("Sorting track =()()() ",track.title);
-			track.tasks.sort(custom_sort);
-			if(type == 'desc'){
-				track.tasks.reverse();
-			}
-			console.log("sorted output =><>?????)_)_)_ ",track.tasks);
-		});
+			_.forEach(this.tracks,function(track){
+				console.log("Sorting track =()()() ",track.title);
+				track.tasks.sort(custom_sort);
+				if(type == 'desc'){
+					track.tasks.reverse();
+				}
+				console.log("sorted output =><>?????)_)_)_ ",track.tasks);
+			});
+			// }
+		}
 
 		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+			// var   Aarr = a.dueDate.split(" ");
+			// a.dueDate = Aarr[0];
+			// var   Barr = b.dueDate.split(" ");
+			// b.dueDate = Barr[0];
+			return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
 		}
+		function custom_sort1(a, b) {
+			return a.priority - b.priority;
+		}
+
 		console.log("sorting======>",custom_sort);
 		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 	sortTasksByPriority(type){
-
+		this.priority = true;
 		console.log("hdgfhd=>>>>..");
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
@@ -379,6 +404,77 @@ export class MainTableViewComponent implements OnInit {
 						}
 					}
 
+				})
+			})
+		}
+	}
+	onKey(searchText){
+
+
+		console.log(this.tasks);
+		console.log("sds",this.tracks);
+		var dataToBeFiltered = [this.tasks];
+
+		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+		console.log("In Component",task);
+		this.getEmptyTracks();
+
+		if(this.selectedProjectId!='all' && this.selectedDeveloperId == 'all'){
+			_.forEach(task, (project)=>{
+				if(project.projectId._id == this.selectedProjectId){
+					_.forEach(this.tracks, (track)=>{
+						console.log("trabfghkknj===",this.tracks);
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+								track.tasks.push(project);
+							}
+						}else{
+							if(project.status == track.id){
+								track.tasks.push(project);
+							}
+						}
+					})
+				}	
+			})
+		}else if(this.selectedProjectId=='all' && this.selectedDeveloperId != 'all'){
+			_.forEach(task, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+						track.tasks.push(project);
+					}
+				})
+			})
+		}else if(this.selectedProjectId!='all' && this.selectedDeveloperId != 'all'){
+			_.forEach(task, (project)=>{
+				console.log(project);
+				if(project.projectId._id == this.selectedProjectId){
+					_.forEach(this.tracks, (track)=>{
+						if(project.status == track.id && project.assignTo && project.assignTo._id == this.selectedDeveloperId){
+							track.tasks.push(project);
+						}
+					})
+
+					// _.forEach(task, (content)=>{	
+						// 	_.forEach(this.tracks, (track)=>{
+							// 		if(content.status == track.id){
+								// 			track.tasks.push(content);
+
+							}
+						})
+		}else{
+			_.forEach(task, (project)=>{
+				console.log(project);
+				_.forEach(this.tracks, (track)=>{
+					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+						if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
+							track.tasks.push(project);
+						}
+					}else{
+						if(project.status == track.id){
+							track.tasks.push(project);
+						}
+					}
 				})
 			})
 		}

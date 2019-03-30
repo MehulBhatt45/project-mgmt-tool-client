@@ -62,6 +62,7 @@ export class SummaryComponent implements OnInit {
 	projectLength;
 	total:any;
 	round:any;
+	path = config.baseMediaUrl;
 	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -219,12 +220,12 @@ export class SummaryComponent implements OnInit {
 								return -1 
 							if (nameA > nameB)
 								return 1
-							return 0 
+							return 0 //default return value (no sorting)
 							this.projectTeam.push
 						}
-						
+
 					})
-					
+
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});
@@ -378,6 +379,7 @@ export class SummaryComponent implements OnInit {
 											}
 										});
 
+
 										// var ctxL = document.getElementById("lineChart2")
 										// var myLineChart = new Chart(ctxL, {
 											// 	type: 'line',
@@ -509,6 +511,10 @@ export class SummaryComponent implements OnInit {
 																																			responsive: true,
 																																			legend:{
 																																				position:"left",
+																																				labels:{
+
+																																					boxwidth:12
+																																				}
 
 
 																																			}
@@ -531,6 +537,7 @@ function custom_sort(a, b) {
 
 
 getTaskCount(userId, status){
+
 	// console.log("userId===-=-={}{}{}{}{}",userId);
 	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 }
@@ -540,6 +547,7 @@ getCompletedTask(status){
 	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 }
 
+
 // getDateTask(project){
 	// 	console.log("proj[][][][]",project);
 	
@@ -548,15 +556,27 @@ getCompletedTask(status){
 	// }
 
 
-	getTaskPriority(priority, tracks){
-		// console.log(priority, status);
-		var count = [];
-		_.forEach(tracks, track=>{
-			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
-		});
-		console.log(count);
-		return count;
+	// 	console.log("proj[][][][]",priority,tracks);
+
+	// 		for(var i=0;i<=this.tracks.length;i++){
+
+
+		// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
+		// 		}
+		// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+		// 	});
+		// }
+
+
+		getTaskPriority(priority, tracks){
+			// console.log(priority, status);
+			var count = [];
+			_.forEach(tracks, track=>{
+				count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+			});
+			console.log(count);
+			return count;
+		}
+
+
 	}
-
-
-}
