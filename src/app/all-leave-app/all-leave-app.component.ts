@@ -9,7 +9,6 @@ declare var $ : any;
 import Swal from 'sweetalert2';
 import { config } from '../config';
 
-
 @Component({
   selector: 'app-all-leave-app',
   templateUrl: './all-leave-app.component.html',
@@ -175,27 +174,26 @@ export class AllLeaveAppComponent implements OnInit {
         console.log("function calling===>")
         this.developers = res;
         // this.developers.sort(function(a, b){
-        //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        //   if (nameA < nameB) //sort string ascending
-        //     return -1 
-        //   if (nameA > nameB)
-        //     return 1
-        //   return 0 
-        // })
+          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          //   if (nameA < nameB) //sort string ascending
+          //     return -1 
+          //   if (nameA > nameB)
+          //     return 1
+          //   return 0 
+          // })
 
-
-        // _.map(this.leaveApp, leave=>{
-        //   _.forEach(this.developers, dev=>{
-        //     if(leave.email == dev.email){
-        //       leave['dev']= dev;
-        //     }
-        //   })
-        // })
-        console.log("Developers",this.leaveApp);
-      },err=>{
-        console.log("Couldn't get all developers ",err);
-        this._alertService.error(err);
-      })
+          _.map(this.leaveApp, leave=>{
+            _.forEach(this.developers, dev=>{
+              if(leave.email == dev.email){
+                leave['dev']= dev;
+              }
+            })
+          })
+          console.log("Developers",this.leaveApp);
+        },err=>{
+          console.log("Couldn't get all developers ",err);
+          this._alertService.error(err);
+        })
     }
 
     leaveAccepted(req){
@@ -219,7 +217,7 @@ export class AllLeaveAppComponent implements OnInit {
       })
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "Leaves Left: "+this.leavescount[4].leavesLeft,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
