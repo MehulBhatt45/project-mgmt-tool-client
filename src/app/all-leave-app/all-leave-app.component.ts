@@ -19,6 +19,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 })
 export class AllLeaveAppComponent implements OnInit {
   allLeaves;
+  allAproveLeaves;
   leaves;
   leaveApp;
   acceptedLeave;
@@ -44,8 +45,11 @@ export class AllLeaveAppComponent implements OnInit {
   selectedStatus:any;
   comment;
   leaveid;
-
+ 
   path = config.baseMediaUrl;
+  pLeave:boolean = false;
+  aLeave:boolean = false;
+  rLeave:boolean = false;
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -78,9 +82,13 @@ export class AllLeaveAppComponent implements OnInit {
     console.log("leaves+++++++++++++++=",this.leavescount);
   }
   ngOnInit() {
-    this.getLeaves();
+    // this.getLeaves();
+    // this.getApprovedLeaves();
     this.leavesByUserId();
     this.getAllDevelopers();
+    this.getAllLeaves();
+    // this.getRejectedLeaves();
+   
     // this.route.params.subscribe(param=>{
       //   this.developerId = param.id;
       //   this.leavesByUserId(this.developerId);
@@ -103,6 +111,7 @@ export class AllLeaveAppComponent implements OnInit {
       // this.filterTracks(developerId);
     }
     getApprovedLeaves(){
+      
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
         this.leaveApp = res;
@@ -118,10 +127,19 @@ export class AllLeaveAppComponent implements OnInit {
           approved.startingDate = moment(approved.startingDate).format('YYYY-MM-DD');
           approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
         })
-      })
+     this.allAproveLeaves = this.leaveApp; 
+     console.log('kjcfffffffffffffffffffffffffffffffffffffffffffffffgd',this.allAproveLeaves);
+      console.log("applicationsss==>",this.allAproveLeaves);
+      console.log("applicationsss==>",this.leaveApp);
+      this.aLeave = true;
+      this.pLeave = false;
+      this.rLeave = false;
+       // this.aLeave = false;
 
+      })
     }
     getRejectedLeaves(){
+      
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
         this.leaveApp = res;
@@ -139,15 +157,20 @@ export class AllLeaveAppComponent implements OnInit {
       })
       this.rejeLeaves = this.leaveApp;
       console.log("rejected leaves",this.leaveApp);
+      this.rLeave = true;
+      this.aLeave = false;
+      this.pLeave = false;
     },err=>{
       console.log(err);
     })
+       // this.aLeave = false;
   }
 
 
 
 
   getLeaves(){
+   
     this._leaveService.pendingLeaves().subscribe(res=>{
       this.leaveApp = res;
       console.log("data avo joye==========>",this.leaveApp);
@@ -157,6 +180,7 @@ export class AllLeaveAppComponent implements OnInit {
           if(leave.email == dev.email){
             leave['dev']= dev;
           }
+
         })
       })
       _.forEach(this.leaveApp , (leave)=>{
@@ -166,7 +190,30 @@ export class AllLeaveAppComponent implements OnInit {
 
       this.allLeaves = this.leaveApp; 
       console.log("applicationsss==>",this.leaveApp);
+      this.pLeave = true;
+      this.aLeave = false;
+      this.rLeave = false;
+       },err=>{
+      console.log(err);
+    });
+}
+getAllLeaves(){
+  this._leaveService.pendingLeaves().subscribe(res=>{
+      this.leaveApp = res;
+      console.log("data avo joye==========>",this.leaveApp);
+      $('#statusAction').show();
+      _.map(this.leaveApp, leave=>{
+        _.forEach(this.developers, dev=>{
+          if(leave.email == dev.email){
+            leave['dev']= dev;
+          }
 
+        })
+      })
+      _.forEach(this.leaveApp , (leave)=>{
+        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+      });
       this.getEmptytracks();
       var ctxP = document.getElementById("pieChart");
       var myPieChart = new Chart(ctxP, {
@@ -213,12 +260,16 @@ export class AllLeaveAppComponent implements OnInit {
           }
         }
       });
-    },err=>{
+       },err=>{
       console.log(err);
     });
-
+      // this.pLeave = false;
+   
+    // this.pLeave = false;
     
   }
+
+
 
   getLeaveCount(leaves){
     console.log(leaves);
@@ -293,14 +344,16 @@ export class AllLeaveAppComponent implements OnInit {
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
-        // this.developers.sort(function(a, b){
-          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          //   if (nameA < nameB) //sort string ascending
-          //     return -1 
-          //   if (nameA > nameB)
-          //     return 1
-          //   return 0 
-          // })
+        this.developers.sort(function(a, b){
+          if (a.name && b.name){
+            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+            if (nameA < nameB) //sort string ascending
+              return -1 
+            if (nameA > nameB)
+              return 1
+            return 0 
+          }
+          })
 
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -378,6 +431,7 @@ export class AllLeaveAppComponent implements OnInit {
 
 
 
+
     leaveRejected(req){
       Swal.fire({
         title: 'Are you sure?',
@@ -447,11 +501,13 @@ export class AllLeaveAppComponent implements OnInit {
           }
         });
 
+
           _.forEach(this.leaves , (leave)=>{
             _.forEach(this.leavescount , (count)=>{
               if(count.typeOfLeave == leave.typeOfLeave){
                 count.leavesTaken = count.leavesTaken + 1;
               }
+
 
             });
           });
@@ -498,24 +554,34 @@ export class AllLeaveAppComponent implements OnInit {
       this.leaveApp.reverse();
     }
     console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
-function custom_sort(a, b) {
+    function custom_sort(a, b) {
 
-  return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
-}
-console.log("nthi avtu=======>",custom_sort);
-}
-onKey(searchText){
-  console.log("searchText",searchText);
-  console.log(this.allLeaves);
-  var dataToBeFiltered = [this.allLeaves];
-  console.log('dataToBeFiltered===================>',dataToBeFiltered);
-  var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-  console.log("In Component",leave);
-  this.leaveApp = [];
-  _.forEach(leave, (content)=>{
-    this.leaveApp.push(content);
-  });
-}
+      return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
+    }
+    console.log("nthi avtu=======>",custom_sort);
+  }
+  onKey(searchText){
+    console.log("p leaves ====>" , this.pLeave);
+    console.log("r leaves ====>" , this.rLeave);
+    console.log("a leaves ====>" , this.aLeave);
+    if(this.pLeave == true){
+      console.log('pending leaves',this.allLeaves);
+      var dataToBeFiltered = [this.allLeaves];
+    }else if(this.aLeave == true){
+      console.log('approved leaves',this.allAproveLeaves);
+      var dataToBeFiltered = [this.allAproveLeaves];
+    }else if(this.rLeave == true){
+      console.log('rejected leaves',this.rejeLeaves);
+      var dataToBeFiltered = [this.rejeLeaves];
+    }
+     var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
+      console.log("In Component",leave);
+      this.leaveApp = [];
+      _.forEach(leave, (content)=>{
+        this.leaveApp.push(content);
+      });
+    
+  }
 
 
 
@@ -571,5 +637,3 @@ submitComment(leaveid,comment){
 }
 
 }
-
-

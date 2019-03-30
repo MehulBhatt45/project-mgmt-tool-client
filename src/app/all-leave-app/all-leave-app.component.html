@@ -4,7 +4,7 @@
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
+    <a class="nav-link" (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">Rejected Leaves</a>
@@ -130,6 +130,7 @@
     </div>
   </div>
 </div>
+
 <div class="container">
  <div class="row" *ngIf="leavesToDisplay">
   <div class="col-sm-6 z-depth-5 card">
@@ -147,7 +148,9 @@
 
 
 
+
 <!-- Comment Model -->
+
 
 <div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 aria-hidden="true">
@@ -200,9 +203,23 @@ aria-hidden="true">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
       <p class="heading lead text-center">Leave Details</p>
+<<<<<<< HEAD
          <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+=======
+
+      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+     <!--  <p class="heading lead text-center">Modal Info</p>
+      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+
+      </button> -->
+
+>>>>>>> e1b4bb7d850eb416bc4aec96437238120540a736
     </div>
 
     <!--Body-->

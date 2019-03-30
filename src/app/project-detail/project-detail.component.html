@@ -46,10 +46,9 @@
 			</div>
 		</div>
 	</div>
-
-	<div *ngIf="developers">
-		<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
-	</div>
+</div>
+<div>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
 </div>
 
 <!-- Modal Start Here -->
