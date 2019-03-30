@@ -158,7 +158,7 @@ const routes: Routes = [
 		},
 		
 		{
-			path:'userprofile/:id',
+			path:'userprofile',
 			pathMatch: "full",
 			component:UserprofileComponent
 		},

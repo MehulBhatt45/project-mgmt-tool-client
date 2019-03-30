@@ -209,12 +209,14 @@ getAllDevelopers(){
   this._projectService.getAllDevelopers().subscribe(res=>{
     this.developers = res;
     this.developers.sort(function(a, b){
-      var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-      if (nameA < nameB) //sort string ascending
-        return -1 
-      if (nameA > nameB)
-        return 1
-      return 0 //default return value (no sorting)
+      if (name){
+        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        if (nameA < nameB) //sort string ascending
+          return -1 
+        if (nameA > nameB)
+          return 1
+        return 0 
+      }
     })
     console.log("Developers",this.developers);
   },err=>{

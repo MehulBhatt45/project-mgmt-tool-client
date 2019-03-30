@@ -221,6 +221,7 @@ export class SummaryComponent implements OnInit {
 						// 		return 1
 						// 	return 0 //default return value (no sorting)
 						// 	this.projectTeam.push
+
 						
 						// })
 
@@ -542,31 +543,35 @@ getCompletedTask(status){
 }
 
 
-// getDateTask(priority,tracks){
+// getDateTask(project){
+	// 	console.log("proj[][][][]",project);
+	
+
+	// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
+	// }
+
 
 	// 	console.log("proj[][][][]",priority,tracks);
 
-	// 	_.forEach(tracks, track=>{
-
-		// 		for(var i=0;i<=this.tracks.length;i++){
+	// 		for(var i=0;i<=this.tracks.length;i++){
 
 
-			// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-			// 		}
-			// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-			// 	});
-			// }
+		// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
+		// 		}
+		// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+		// 	});
+		// }
 
 
-			getTaskPriority(priority, tracks){
-				// console.log(priority, status);
-				var count = [];
-				_.forEach(tracks, track=>{
-					count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
-				});
-				console.log(count);
-				return count;
-			}
-
-
+		getTaskPriority(priority, tracks){
+			// console.log(priority, status);
+			var count = [];
+			_.forEach(tracks, track=>{
+				count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+			});
+			console.log(count);
+			return count;
 		}
+
+
+	}

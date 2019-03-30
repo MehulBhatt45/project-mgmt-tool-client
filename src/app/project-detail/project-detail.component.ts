@@ -198,12 +198,15 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
+				if (name) {
+					
 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 				if (nameA < nameB) //sort string ascending
 					return -1 
 				if (nameA > nameB)
 					return 1
 				return 0 //default return value (no sorting)
+			}
 			})
 			console.log("Developers",this.developers);
 		},err=>{
@@ -327,7 +330,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		}
 	}
-	s:[] ;
+
 	sortTasksByDueDate(type){
 		if(this.priority == true){
 			console.log("Sorting tasks by = ",type)
@@ -619,5 +622,3 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask.images.splice(option,1);
 	}
 }
-
-
