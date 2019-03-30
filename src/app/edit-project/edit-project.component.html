@@ -101,56 +101,55 @@
 				</div>
 			</div>
 		</div>
+	
 
-	</div>
-
-	<div class="card mt-1 p-1">
-		<h3 class="card-title text-center pt-3">ProjectManager:</h3>
-		<div class="card-body">
-			<div class="container">
-				<div class="form-group">
-					<ng-select placeholder="Select ProjectManager" [items]="availableProjectMngr" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addProjectManager($event)" (remove)="removeProjectManager($event.value)" (clear)="clearSelection($event)">
-						<ng-template ng-label-tmp let-item="item" let-clear="clear">
-							<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-							<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-						</ng-template>
-						<div class="row">
-							<ng-template ng-option-tmp let-item="item">
-								<div class="card testimonial-card">
-									<div class="card-up deep-purple lighten-2"></div>
-									<div class="avatar white img_section">
-										<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-									</div>
-									<div class="card-body">
-										<h5 class="card-title mt-1">{{item.name}}</h5>
-										<h6 class="card-title">{{item.userRole}}</h6>
-									</div>
+<div class="card mt-1 p-1">
+	<h3 class="card-title text-center pt-3">ProjectManager:</h3>
+	<div class="card-body">
+		<div class="container">
+			<div class="form-group">
+				<ng-select placeholder="Select ProjectManager" [items]="availableProjectMngr" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addProjectManager($event)" (remove)="removeProjectManager($event.value)" (clear)="clearSelection($event)">
+					<ng-template ng-label-tmp let-item="item" let-clear="clear">
+						<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+						<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+					</ng-template>
+					<div class="row">
+						<ng-template ng-option-tmp let-item="item">
+							<div class="card testimonial-card">
+								<div class="card-up deep-purple lighten-2"></div>
+								<div class="avatar white img_section">
+									<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
 								</div>
-							</ng-template>
+								<div class="card-body">
+									<h5 class="card-title mt-1">{{item.name}}</h5>
+									<h6 class="card-title">{{item.userRole}}</h6>
+								</div>
+							</div>
+						</ng-template>
+					</div>
+				</ng-select>
+			</div>
+			<div class="row">
+				<div class="col-12 col-md-3 mb-2" *ngFor="let item of projectMngrTeam">
+					<div class="card" style="padding: 10px 0; text-align: center;">
+						<div class="card-up deep-purple lighten-2"></div>
+						<div class="avatar white img_section">
+							<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
 						</div>
-					</ng-select>
-				</div>
-				<div class="row">
-					<div class="col-12 col-md-3 mb-2" *ngFor="let item of projectMngrTeam">
-						<div class="card" style="padding: 10px 0; text-align: center;">
-							<div class="card-up deep-purple lighten-2"></div>
-							<div class="avatar white img_section">
-								<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title mt-1">{{item.name}}</h5>
-								<h6 class="card-title">{{item.userRole}}</h6>
-							</div>
-							<div class="delete-team-member">
-								<a href="javascript:void(0);" (click)="removeProjectManager(item)"><i class="fas fa-trash fa-3x"></i></a>
-							</div>
+						<div class="card-body">
+							<h5 class="card-title mt-1">{{item.name}}</h5>
+							<h6 class="card-title">{{item.userRole}}</h6>
+						</div>
+						<div class="delete-team-member">
+							<a href="javascript:void(0);" (click)="removeProjectManager(item)"><i class="fas fa-trash fa-3x"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
+<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
 </form>
 </div>
