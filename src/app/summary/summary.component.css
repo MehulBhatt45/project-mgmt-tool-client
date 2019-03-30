@@ -16,6 +16,11 @@
     height: 270px;
     border: 1px solid #ff0000;
 }
+.btn-group, .btn-group-vertical {
+    position: relative;
+   
+    vertical-align: middle;
+}
 .border2{
 
     display: block;
@@ -37,12 +42,20 @@
     height: 270px;
     border: 1px solid #0087ff;
 }
+
 .table-responsive {
- display: inline-table; 
- width: 100%;
- overflow-x: auto;
- -webkit-overflow-scrolling: touch;
- -ms-overflow-style: -ms-autohiding-scrollbar;
+   display: inline-table; 
+   width: 100%;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.img-fluid, .section img, .section .view, .card img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+   /* margin-left: 20px;
+    margin-top: 10px;*/
 }
 /*.card{
 
@@ -240,12 +253,12 @@
         position: relative;
     }
     .blue {
-       background-color: #fff !important; 
-   }
-   .yellow {
-       background-color: #fff !important; 
-   }
-   .progress:after{
+     background-color: #fff !important; 
+ }
+ .yellow {
+     background-color: #fff !important; 
+ }
+ .progress:after{
     content: "";
     width: 100%;
     height: 100%;
@@ -268,7 +281,7 @@
 }
 
 .progress.blue[_ngcontent-c4] .progress-bar[_ngcontent-c4] {
-     border-color: #fff; 
+   border-color: #fff; 
 }
 .progress .progress-bar{
     width: 100%;

@@ -37,6 +37,17 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"user/get-all-developers");	
 	}
 
+
+	getAllProjectMngr(){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"user/get-all-project-manager");	
+	}
+
 	getProjectById(id){
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -370,6 +381,12 @@ export class ProjectService {
 			getUsersNotInProject(id){
 				return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
 			}
+
+			getAllProjectManagerNotInProject(id){
+				return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
+			}
+
+
 
 			deleteEmployeeById(developerid){
 				console.log("devloperId{}{}{}-===",developerid);
