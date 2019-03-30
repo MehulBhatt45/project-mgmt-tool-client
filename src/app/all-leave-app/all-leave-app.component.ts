@@ -144,9 +144,6 @@ export class AllLeaveAppComponent implements OnInit {
     })
   }
 
-
-
-
   getLeaves(){
     this._leaveService.pendingLeaves().subscribe(res=>{
       this.leaveApp = res;
@@ -215,13 +212,12 @@ export class AllLeaveAppComponent implements OnInit {
       });
     },err=>{
       console.log(err);
-    });
-
-    
+    });  
   }
 
   getLeaveCount(leaves){
-    console.log(leaves);
+    console.log("all p_leave=====",leaves);
+    // console.log("attt====>",leaves[0].attechment);
     var Personal_Leave :any= [];
     var Sick_Leave :any= [];
     var Emergency_Leave :any= [];
@@ -268,8 +264,6 @@ export class AllLeaveAppComponent implements OnInit {
     return [Half_Day.length,Full_Day.length,More_Day.length];
   }
 
-
-
   getFilteredLeaves(){
     switch (this.selectedStatus) {
       case "pending":
@@ -287,20 +281,18 @@ export class AllLeaveAppComponent implements OnInit {
     }
   }
 
-
-
     getAllDevelopers(){
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
         // this.developers.sort(function(a, b){
-          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          //   if (nameA < nameB) //sort string ascending
-          //     return -1 
-          //   if (nameA > nameB)
-          //     return 1
-          //   return 0 
-          // })
+        //     var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //     if (nameA < nameB) //sort string ascending
+        //       return -1 
+        //     if (nameA > nameB)
+        //       return 1
+        //     return 0 
+        //   })
 
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -346,7 +338,6 @@ export class AllLeaveAppComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           var body;
-          console.log("dsfdsbgfdf",this.leaveApp);
           console.log("reeeeeeee",req);
           _.forEach(this.leaveApp, (apply)=>{
             if(apply._id == req){
@@ -375,8 +366,6 @@ export class AllLeaveAppComponent implements OnInit {
         }
       })
   }
-
-
 
     leaveRejected(req){
       Swal.fire({
@@ -446,7 +435,6 @@ export class AllLeaveAppComponent implements OnInit {
             this.leaveApp.push(leave);
           }
         });
-
           _.forEach(this.leaves , (leave)=>{
             _.forEach(this.leavescount , (count)=>{
               if(count.typeOfLeave == leave.typeOfLeave){
@@ -463,7 +451,6 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
-      
     }
 
     addComment(comment){
@@ -489,7 +476,6 @@ export class AllLeaveAppComponent implements OnInit {
   //   })
   // }
   sortLeavesByFromDate(type){
-
     console.log("Sorting tasks by = ",type)
     // console.log(this.pendingLeaves);
     // console.log('leave===============================>',this.pendingLeaves);
@@ -498,7 +484,7 @@ export class AllLeaveAppComponent implements OnInit {
       this.leaveApp.reverse();
     }
     console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
-function custom_sort(a, b) {
+    function custom_sort(a, b) {
 
   return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
 }
@@ -516,8 +502,6 @@ onKey(searchText){
     this.leaveApp.push(content);
   });
 }
-
-
 
 leavesByUserId(){
   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
@@ -556,7 +540,6 @@ submitComment(leaveid,comment){
   var data={
     leaveId:leaveid,
     comment:comment
-
   }
   console.log("data==========>>",data);
   this._leaveService.addComments(data).subscribe((res:any)=>{

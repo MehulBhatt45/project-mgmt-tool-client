@@ -158,3 +158,6 @@ h6{
 	padding: 0px;	
 }
 
+/*.modal.and.carousel {
+  position: fixed; // Needed because the carousel overrides the position property
+}*/
