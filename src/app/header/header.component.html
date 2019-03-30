@@ -127,7 +127,7 @@
           <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
           <div class="dropdown-menu"> 
             <a class="dropdown-item" (click)="logout()">Log Out</a>
-              <a  class="dropdown-item" routerLink="/userprofile/{{currentUser._id}}">My Profile</a>
+            <a  class="dropdown-item" routerLink="/userprofile">My Profile</a>
           </div>
         </li>   
       </ul>
