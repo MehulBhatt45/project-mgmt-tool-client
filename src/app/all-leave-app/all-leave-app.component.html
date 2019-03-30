@@ -1,5 +1,4 @@
-
-<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+<ul class="nav nav-tabs nav-justified md-tabs purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <!-- <img src="assets/icons/pending.png"> -->
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
@@ -133,14 +132,13 @@
 </div>
 <div class="container">
  <div class="row" *ngIf="leavesToDisplay">
-  <div class="col-sm-6">
-    <h2>Type Of Leave</h2>
-    <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-    <canvas id="pieChart"></canvas>
+  <div class="col-sm-6 z-depth-5 card">
+    <h2 class="text-center pt-2">Total Leaves</h2>
+    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
   </div>            
-  <div class="col-sm-6">
-    <h2>Duration</h2>
-     <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+  <div class="col-sm-6 card z-depth-5">
+    <h2 class="text-center pt-2">Duration</h2>
+     <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
     <canvas id="pieChart1"></canvas>
   </div>
 </div>
@@ -201,22 +199,15 @@ aria-hidden="true">
   <div class="modal-content" *ngIf="singleleave">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
-<<<<<<< HEAD
       <p class="heading lead text-center">Leave Details</p>
          <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-=======
-      <p class="heading lead text-center">Modal Info</p>
-      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
->>>>>>> 6060af5799c3feb74213c091a81db4a6161bf822
     </div>
 
     <!--Body-->
     <div class="modal-body">
-      <div class="card padding-10 z-depth-5">
+      <div class="card card_border padding-10 z-depth-5">
         <div class="container">
           <div class="row">
             <div class="col-md-6 border padding-top-5 ">
@@ -259,7 +250,7 @@ aria-hidden="true">
 
         </div> 
         <div class="leaveHeading">
-          <div class="row">
+          <div class="row padding-10">
             <div class="col-md-6 leaveCount">
               <h6>Total Leave: <span *ngFor="let leave of leavescount" style="color: black">{{leave.leavesPerYear}}</span></h6>
             </div>
