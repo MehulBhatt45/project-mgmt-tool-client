@@ -218,7 +218,7 @@ export class SummaryComponent implements OnInit {
 							return -1 
 						if (nameA > nameB)
 							return 1
-						return 0 //default return value (no sorting)
+						return 0 
 						this.projectTeam.push
 						
 					})
@@ -539,22 +539,22 @@ getCompletedTask(status){
 }
 
 // getDateTask(project){
-// 	console.log("proj[][][][]",project);
+	// 	console.log("proj[][][][]",project);
 	
 
-// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
-// }
+	// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
+	// }
 
 
-getTaskPriority(priority, tracks){
-	// console.log(priority, status);
-	var count = [];
-	_.forEach(tracks, track=>{
-		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
-	});
-	console.log(count);
-	return count;
-}
+	getTaskPriority(priority, tracks){
+		// console.log(priority, status);
+		var count = [];
+		_.forEach(tracks, track=>{
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id) return o }).length);
+		});
+		console.log(count);
+		return count;
+	}
 
 
 }
