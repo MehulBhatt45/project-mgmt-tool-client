@@ -52,10 +52,10 @@
 }
 .img-fluid, .section img, .section .view, .card img {
     display: block;
-    max-width: 10%;
+    max-width: 100%;
     height: auto;
-    margin-left: 20px;
-    margin-top: 10px;
+   /* margin-left: 20px;
+    margin-top: 10px;*/
 }
 /*.card{
 

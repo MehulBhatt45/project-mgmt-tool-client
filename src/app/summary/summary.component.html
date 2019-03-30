@@ -131,19 +131,19 @@
 
 					
 					<div class="card-body">
-						<div class="row">
-							<div class="col-sm-2">
-								<div class="card-up">
-									
-									<img src="{{path}}{{user.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/man.png'">
-									
-									<!-- <img class="card-img-top" src="{{path}}{{user.profilePhoto}}" alt="Image with a photo of clouds."> -->
-								</div>
+
+							<div class="card-up">
+
+
+								<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
+								<!-- <img src="{{path}}{{user.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/man.png'"> -->
+
+								<!-- <img class="card-img-top" src="{{path}}{{user.profilePhoto}}" alt="Image with a photo of clouds."> -->
 							</div>
-							<div class="col-sm-8">
+							
 								
-								<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;"  routerLink="/visit-user-profile/{{user._id}}">{{user.name}}</h5>
-							</div>
+								<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+						
 							<!-- <div class="col-sm-2">
 								<div class="btn-group dropleft float-right">
 									<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
@@ -155,9 +155,9 @@
 									</div>
 								</div>
 							</div> -->
-						</div>
+						
 					</div>
-					<ul class="list-group list-group-flush">
+					<ul class="list-group list-group-flush" style="margin-top: -42px;">
 						<li class="list-group-item">To Do: <b style=" color: #FF5722;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'to do')}}</b></li>
 						<li class="list-group-item">In Progress: <b style="color: #ead634;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'in progress')}}</b></li>
 						<li class="list-group-item">Testing: <b style="color: #FF9800;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'testing')}}</b></li>

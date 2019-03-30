@@ -510,6 +510,10 @@ export class SummaryComponent implements OnInit {
 																																			responsive: true,
 																																			legend:{
 																																				position:"left",
+																																				labels:{
+
+																																					boxwidth:12
+																																				}
 
 
 																																			}
