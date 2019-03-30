@@ -245,9 +245,28 @@ aria-hidden="true">
             <h6><i class="fas fa-pen-square"></i> LeaveReason:</h6>
             <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
           </div>
-        </div>
-        <div class="footer_1">
+       <!--  </div>
+        <div class="footer_1"> -->
 
+
+        </div> 
+        <div class="leaveHeading">
+          <div class="row">
+            <div class="col-md-6 leaveCount">
+              <h6>Total Leave: <span *ngFor="let leave of leavescount" style="color: black">{{leave.leavesPerYear}}</span></h6>
+            </div>
+
+            <div class="col-md-6 leaveCount">
+              <h6>Available Leave: <span *ngFor="let leave of leavescount" style="color: black">{{leave.leavesLeft}}</span></h6>
+            </div>
+          </div>
+          
+        </div> 
+        <div class="row mb-2">
+          <div class="col-md-6 border padding-top-5" *ngFor="let leave of leavescount | slice:0:4">
+            <h6>{{leave.typeOfLeave}}:</h6>
+            <p><span style="background-color: lightblue;color: black;text-shadow: 1px 1px;padding: 5px;">{{leave.leavesTaken}}</span></p>
+          </div>
         </div>
         <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
           <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a>
