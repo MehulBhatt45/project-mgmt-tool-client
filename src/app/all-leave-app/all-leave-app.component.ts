@@ -153,6 +153,7 @@ export class AllLeaveAppComponent implements OnInit {
       this._leaveService.pendingLeaves().subscribe(res=>{
         console.log("data avo joye==========>",res);
         this.leaveApp = res;
+        console.log('all application response=======>',this.leaveApp);
         $('#statusAction').show();
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -364,10 +365,9 @@ export class AllLeaveAppComponent implements OnInit {
           console.log(err);
         })
       }
+
+
       sortLeavesByFromDate(type){
-
-
-
         console.log("Sorting tasks by = ",type)
         console.log(this.pendingLeaves);
         console.log('leave===============================>',this.pendingLeaves);
