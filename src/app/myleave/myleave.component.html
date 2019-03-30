@@ -3,7 +3,7 @@
   <div class="col-12 col-md-12">
     <div class="card card-cascade narrower">
       <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-        <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">Leave Applications</h2>
+        <h2 class="white-text mx-3" style="text-align: center; margin: 0; padding: 10px 0; width: 100%;">My Leave Applications</h2>
       </div>
       <div class="px-4" style="text-align: center;">
         <div class="table-responsive">
@@ -50,14 +50,13 @@
                 	<p *ngIf="leaves.comment">{{leaves.comment}}</p>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                  <button type="button" class="btn btn-primary waves-effect waves-light btn-sm" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
                 </td>
                 <td>
                   <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
                   <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
                   <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
-                 </td>
-                <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -82,9 +81,9 @@ aria-hidden="true">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
       <p class="heading lead text-center">Modal Info</p>
-         <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
 
     <!--Body-->
@@ -128,15 +127,11 @@ aria-hidden="true">
           </div>
         </div>
         <div class="footer_1">
-          
+
         </div>
-      <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
-    <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a>
       </div>
     </div>
   </div>
-
-  
 </div>
 </div>
 <!--/.Content-->

@@ -16,6 +16,8 @@ import Swal from 'sweetalert2';
 export class EditProjectComponent implements OnInit {
 	availableDevelopers = [];
 	projectTeam:any = [];
+	projectMngrTeam:any = [];
+	availableProjectMngr = [];
 	projects;
 	editAvail;
 	projectId;
@@ -28,6 +30,7 @@ export class EditProjectComponent implements OnInit {
 	showDeveloper:boolean = false;
 	basMediaUrl = config.baseMediaUrl;
 	developers;
+	projectMngr;
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
@@ -44,6 +47,7 @@ export class EditProjectComponent implements OnInit {
 		this.route.params.subscribe(params=>{
 			this.getProjectById(params.id);
 			this.getAllDevelopersNotInProject(params.id);
+			this.getAllProjectManagerNotInProject(params.id);
 		})
 	}
 
@@ -68,7 +72,8 @@ export class EditProjectComponent implements OnInit {
 			this.editProject(this.projectId);		
 		}
 		this.getProjects();
-		this.getAllDevelopers();		
+		this.getAllDevelopers();
+		this.getAllProjectMngr();		
 	}
 	timePicked(){
 		this.updateForm.controls.deadline.setValue($('.datepicker').val())
@@ -90,9 +95,29 @@ export class EditProjectComponent implements OnInit {
 			console.log("Developers",this.developers);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
+		})
+	}
+
+	getAllProjectMngr(){
+		this._projectService.getAllProjectMngr().subscribe(res=>{
+			this.projectMngr = res;
+			this.projectMngr.sort(function(a, b){
+				if (name){
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 
+				}
+			})
+			console.log("project Manager",this.projectMngr);
+		},err=>{
+			console.log("Couldn't get all developers ",err);
 			// this._alertService.error(err);
 		})
 	}
+
 
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
@@ -101,6 +126,16 @@ export class EditProjectComponent implements OnInit {
 			console.log(err);
 		})
 	}
+
+	getAllProjectManagerNotInProject(id){
+		this._projectService.getAllProjectManagerNotInProject(id).subscribe((res:any)=>{
+			console.log("projectManagerNotIn project",res);
+			this.availableProjectMngr = res;
+		},err=>{
+			console.log(err);
+		})
+	}
+
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
@@ -135,7 +170,10 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			console.log("this . avail data ==========>" ,this.availData);
 			this.projectTeam = this.availData.Teams;
+			this.projectMngrTeam = this.availData.pmanagerId;
+			localStorage.setItem('pmanagerteams', JSON.stringify(this.projectMngrTeam)); 
 			localStorage.setItem('teams', JSON.stringify(this.projectTeam)); 
+
 		},err=>{
 			console.log(err);
 			this.loader = false;
@@ -145,6 +183,8 @@ export class EditProjectComponent implements OnInit {
 	updateProject(updateForm){
 		updateForm.Teams = [];
 		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
+		updateForm.pmanagerId = [];
+		_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
@@ -191,6 +231,26 @@ export class EditProjectComponent implements OnInit {
 			console.log("in fi");
 			this.availableDevelopers.push(event);
 		}
+	}
+
+	addProjectManager(event){
+		console.log(event);
+		this.projectMngrTeam.push(event);
+		
+	}
+
+	removeProjectManager(event){
+		console.log(event);
+		this.projectMngrTeam.splice(_.findIndex(this.projectMngrTeam, event), 1);
+		if(_.findIndex(this.availableProjectMngr, function(o) { return o._id == event._id; }) == -1 ){
+			console.log("in fi");
+			this.availableProjectMngr.push(event);
+		}
+	}
+
+	clearManagerSelection(event){
+		console.log(this.availData);
+		this.projectMngrTeam = JSON.parse(localStorage.getItem('pmanagerteams'));
 	}
 
 	clearSelection(event){
