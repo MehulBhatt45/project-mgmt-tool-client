@@ -582,20 +582,20 @@ getCompletedTask(status){
 }
 
 
-getDateTask(priority,tracks){
+// getDateTask(priority,tracks){
 
-	console.log("proj[][][][]",priority,tracks);
+// 	console.log("proj[][][][]",priority,tracks);
 
-	_.forEach(tracks, track=>{
+// 	_.forEach(tracks, track=>{
 
-		for(var i=0;i<=this.tracks.length;i++){
+// 		for(var i=0;i<=this.tracks.length;i++){
 
 
-			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-		}
-		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-	});
-}
+// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
+// 		}
+// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+// 	});
+// }
 
 
 getTaskPriority(priority, tracks){
