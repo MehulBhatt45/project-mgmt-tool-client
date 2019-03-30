@@ -107,7 +107,7 @@ html.lb-disable-scrolling {
   width: 34%;
   left: 0;
   float: left;
-  background: url(../images/prev.png) left 48% no-repeat;
+  background: url(../../prev.png) left 48% no-repeat;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-transition: opacity 0.6s;
@@ -116,16 +116,16 @@ html.lb-disable-scrolling {
   transition: opacity 0.6s;
 }
 
-.lb-nav a.lb-prev:hover {
+.lb-nav a.lb-prev {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
 .lb-nav a.lb-next {
-  width: 64%;
+  width: 34%;
   right: 0;
   float: right;
-  background: url(../images/next.png) right 48% no-repeat;
+  background: url(../../next.png) right 48% no-repeat;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-transition: opacity 0.6s;
@@ -134,7 +134,7 @@ html.lb-disable-scrolling {
   transition: opacity 0.6s;
 }
 
-.lb-nav a.lb-next:hover {
+.lb-nav a.lb-next {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
@@ -177,7 +177,7 @@ html.lb-disable-scrolling {
 }
 
 .lb-data .lb-number {
-  display: block;
+  display: none!important;
   clear: left;
   padding-bottom: 1em;
   font-size: 12px;
