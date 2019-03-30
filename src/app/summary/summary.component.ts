@@ -62,6 +62,7 @@ export class SummaryComponent implements OnInit {
 	projectLength;
 	total:any;
 	round:any;
+	path = config.baseMediaUrl;
 	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -376,47 +377,6 @@ export class SummaryComponent implements OnInit {
 											}
 										});
 
-										var ctxL = document.getElementById("lineChart2")
-										var myLineChart = new Chart(ctxL, {
-											type: 'line',
-											data: {
-												labels: ["January", "February", "March", "April", "May", "June", "July"],
-												datasets: [{
-													label: "Month",
-													// data: this.getTaskPriority(1,this.tracks),
-													data:[65, 59, 80, 81, 56, 55, 40],
-													borderColor: [
-													'#DC143C',
-													],
-													borderWidth: 2
-												}
-												]
-											},
-											options: {
-												responsive: true
-											}
-										});
-
-										var ctxL = document.getElementById("lineChart3")
-										var myLineChart = new Chart(ctxL, {
-											type: 'line',
-											data: {
-												labels: ["January", "February", "March", "April", "May", "June", "July"],
-												datasets: [{
-													label: "Month",
-													// data: this.getTaskPriority(1,this.tracks),
-													data:[65, 59, 80, 81, 56, 55, 40],
-													borderColor: [
-													'#DC143C',
-													],
-													borderWidth: 2
-												}
-												]
-											},
-											options: {
-												responsive: true
-											}
-										});
 
 										// var ctxL = document.getElementById("lineChart2")
 										// var myLineChart = new Chart(ctxL, {
@@ -584,29 +544,29 @@ getCompletedTask(status){
 
 // getDateTask(priority,tracks){
 
-// 	console.log("proj[][][][]",priority,tracks);
+	// 	console.log("proj[][][][]",priority,tracks);
 
-// 	_.forEach(tracks, track=>{
+	// 	_.forEach(tracks, track=>{
 
-// 		for(var i=0;i<=this.tracks.length;i++){
-
-
-// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-// 		}
-// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-// 	});
-// }
+		// 		for(var i=0;i<=this.tracks.length;i++){
 
 
-getTaskPriority(priority, tracks){
-	// console.log(priority, status);
-	var count = [];
-	_.forEach(tracks, track=>{
-		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
-	});
-	console.log(count);
-	return count;
-}
+			// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
+			// 		}
+			// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
+			// 	});
+			// }
 
 
-}
+			getTaskPriority(priority, tracks){
+				// console.log(priority, status);
+				var count = [];
+				_.forEach(tracks, track=>{
+					count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+				});
+				console.log(count);
+				return count;
+			}
+
+
+		}
