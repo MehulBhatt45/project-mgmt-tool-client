@@ -348,6 +348,7 @@ getAllLeaves(){
         //     return 0 
         //   })
 
+
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
             if(leave.email == dev.email){
@@ -567,40 +568,7 @@ getAllLeaves(){
       _.forEach(leave, (content)=>{
         this.leaveApp.push(content);
       });
-    // if(this.pLeave == true){
-    //   console.log("searchText",searchText);
-    //   console.log(this.allLeaves);
-    //   var dataToBeFiltered = [this.allLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.aLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.allAproveLeaves);
-    //   var dataToBeFiltered = [this.allAproveLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.rLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.rejeLeaves);
-    //   var dataToBeFiltered = [this.rejeLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }
+    
   }
 
 leavesByUserId(){
@@ -654,5 +622,3 @@ submitComment(leaveid,comment){
 }
 
 }
-
-
