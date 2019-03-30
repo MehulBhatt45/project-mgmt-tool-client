@@ -23,6 +23,7 @@ export class LeaveComponent implements OnInit {
 	showOneDays;
 	showMoreDayss;
 	leaveDuration;
+	startDate;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 
@@ -43,8 +44,44 @@ export class LeaveComponent implements OnInit {
 
 	ngOnInit() {
 		// $('.datepicker').pickadate();
+		// var objFromDate = document.getElementById("fromdate").value;
 
-		$('.datepicker').pickadate({ min: new Date(),
+
+
+		$('.datepicker').pickadate({ 
+			min: new Date(),
+		})
+
+		var from_input = $('#startDate').pickadate(),
+		from_picker = from_input.pickadate('picker')
+		var to_input = $('#endDate').pickadate(),
+		to_picker = to_input.pickadate('picker')
+
+		// Check if there’s a “from” or “to” date to start with and if so, set their appropriate properties.
+		if ( from_picker.get('value') ) {
+			to_picker.set('min', from_picker.get('select'))
+		}
+		if ( to_picker.get('value') ) {
+			from_picker.set('max', to_picker.get('select'))
+		}
+
+		// Apply event listeners in case of setting new “from” / “to” limits to have them update on the other end. If
+		// ‘clear’ button is pressed, reset the value.
+		from_picker.on('set', function(event) {
+			if ( event.select ) {
+				to_picker.set('min', from_picker.get('select'))
+			}
+			else if ( 'clear' in event ) {
+				to_picker.set('min', false)
+			}
+		})
+		to_picker.on('set', function(event) {
+			if ( event.select ) {
+				from_picker.set('max', to_picker.get('select'))
+			}
+			else if ( 'clear' in event ) {
+				from_picker.set('max', false)
+			}
 		})
 
 
@@ -144,7 +181,7 @@ export class LeaveComponent implements OnInit {
 		this.showOneDays = false;
 		if(this.showMoreDayss == false){
 			this.showMoreDayss = true;
-		localStorage.setItem("showMoreDayss" , JSON.stringify(true));
+			localStorage.setItem("showMoreDayss" , JSON.stringify(true));
 		}
 		else{
 			this.showMoreDayss = false;

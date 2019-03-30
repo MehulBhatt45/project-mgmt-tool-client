@@ -63,8 +63,6 @@ export class UserSummaryComponent implements OnInit {
 
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
-		
-		
 		// this.activatedRoute.queryParams.subscribe(params => {
 			// 	this.uid = params['key1'];
 			// 	console.log("uid============>",this.uid);
@@ -82,14 +80,10 @@ export class UserSummaryComponent implements OnInit {
 				this.getProject(this.projectId);
 			});
 			this.createEditTaskForm();	
-
-
 		}
 
 		ngOnInit() {
-
 			this.getEmptyTracks();
-
 		}
 
 		getEmptyTracks(){
