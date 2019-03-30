@@ -43,6 +43,11 @@ export class LeaveComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		// $('.datepicker').pickadate();
+		// var objFromDate = document.getElementById("fromdate").value;
+
+
+
 		$('.datepicker').pickadate({ 
 			min: new Date(),
 		})

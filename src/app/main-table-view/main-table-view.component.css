@@ -249,6 +249,12 @@ label{
     height: 80px; 
     width: 100px;
     padding:10px;*/
-select.browser-default {
-    width: 282px!important;
+select.browser-default {    
+  width: 178px!important;
+    margin-right: 10px;
 }
+/*@media (max-width: 1199px) { 
+    select.browser-default {
+    width: 168px!important;
+}
+   }*/
