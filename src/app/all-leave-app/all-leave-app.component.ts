@@ -154,17 +154,17 @@ export class AllLeaveAppComponent implements OnInit {
     getFilteredLeaves(){
       switch (this.selectedStatus) {
         case "pending":
-          this.getLeaves();
-          break;
+        this.getLeaves();
+        break;
         case "approved":
-          this.getApprovedLeaves();
-          break;
+        this.getApprovedLeaves();
+        break;
         case "rejected":
-          this.getRejectedLeaves();
-          break;        
+        this.getRejectedLeaves();
+        break;        
         default:
-          console.log("DEFAULT CASE");
-          break;
+        console.log("DEFAULT CASE");
+        break;
       }
     }
 
@@ -182,18 +182,18 @@ export class AllLeaveAppComponent implements OnInit {
           //   return 0 
           // })
 
-          _.map(this.leaveApp, leave=>{
-            _.forEach(this.developers, dev=>{
-              if(leave.email == dev.email){
-                leave['dev']= dev;
-              }
-            })
+        _.map(this.leaveApp, leave=>{
+          _.forEach(this.developers, dev=>{
+            if(leave.email == dev.email){
+              leave['dev']= dev;
+            }
           })
-          console.log("Developers",this.leaveApp);
-        },err=>{
-          console.log("Couldn't get all developers ",err);
-          this._alertService.error(err);
         })
+        console.log("Developers",this.leaveApp);
+      },err=>{
+        console.log("Couldn't get all developers ",err);
+        this._alertService.error(err);
+      })
     }
 
     leaveAccepted(req){
@@ -357,7 +357,7 @@ export class AllLeaveAppComponent implements OnInit {
       },err=>{
         console.log(err);
       })
-    
+      
     }
 
     addComment(comment){

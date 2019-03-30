@@ -137,5 +137,24 @@ h6{
 	border: 4px solid #b670df;
 }
 .footer_1{
-	background-color: lightgray;
+	background-color: lightblue;
+	padding: 0px;
 }
+
+.leaveInfo{
+	text-align: center;
+}
+
+.leaveInfo p{
+	margin: 0;
+}
+
+.leaveHeading{
+	margin: 20px;
+	font-weight: bolder;
+}
+
+.leaveCount{
+	padding: 0px;	
+}
+
