@@ -205,9 +205,9 @@ label{
 .due_date_sorting_btn, 
 .priority_sorting_btn{
   padding: 10.9px 28px!important;
-  margin-top: -194px;
   height: 47px;
   border-radius: 3px;
+      margin: 0px 5px;
 }
 .due_date_sorting_btn i.fas,
 .priority_sorting_btn i.fas {
@@ -215,16 +215,11 @@ label{
  opacity: 0.75;
  display: block;
 }
-.due_date_sorting_btn i.fas.hide,
+/*.due_date_sorting_btn i.fas.hide,
 .priority_sorting_btn i.fas.hide{
   opacity: 1;
   pointer-events: none;
-}
-
-.due_date_sorting_btn{
-  margin-left: 900px;
-
-}
+}*/
 
 .all_developer_drpdown{
   margin-left: -19px;
@@ -254,3 +249,12 @@ label{
     height: 80px; 
     width: 100px;
     padding:10px;*/
+select.browser-default {    
+  width: 178px!important;
+    margin-right: 10px;
+}
+/*@media (max-width: 1199px) { 
+    select.browser-default {
+    width: 168px!important;
+}
+   }*/
