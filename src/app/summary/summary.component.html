@@ -125,6 +125,57 @@
 		</table> -->
 		<div class="row" style="margin-top: 25px;">
 			<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
+			<div class="col-sm-4 mb-2" *ngFor="let user of projectTeam">
+
+				<div class="card" style="width: 20rem;" >
+
+					
+					<div class="card-body">
+
+						<div class="card-up">
+
+
+							<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
+							<!-- <img src="{{path}}{{user.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/man.png'"> -->
+
+							<!-- <img class="card-img-top" src="{{path}}{{user.profilePhoto}}" alt="Image with a photo of clouds."> -->
+						</div>
+
+
+						<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+
+						<div style="text-align: center;margin-top: -25px;">
+							<p><b>{{user.userRole}}</b></p>
+						</div>
+						
+							<!-- <div class="col-sm-2">
+								<div class="btn-group dropleft float-right">
+									<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+									</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+										<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-content="<ul><li>123</li></ul>"><i class="fas fa-users"></i></a>
+										<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/user-summary"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+									</div>
+								</div>
+							</div> -->
+
+						</div>
+						<ul class="list-group list-group-flush" style="margin-top: -15px;">
+							<li class="list-group-item">To Do: <b style=" color: #FF5722;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'to do')}}</b></li>
+							<li class="list-group-item">In Progress: <b style="color: #ead634;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'in progress')}}</b></li>
+							<li class="list-group-item">Testing: <b style="color: #FF9800;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'testing')}}</b></li>
+							<li class="list-group-item">Complete: <b style="color: #639828;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'complete')}}</b></li>
+						</ul>
+
+
+
+
+					</div>
+
+				</div>
+		<!-- <div class="row" style="margin-top: 25px;">
+			<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
 			<table class="table table-bordered table-responsive" style="text-align: center;">
 				<thead>
 					<tr>
@@ -148,7 +199,7 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
+		</div> -->
 		<div class="row" style="margin-top: 25px;">
 			<h3><i class="fas fa-tasks"></i> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
 			<div class="col-sm-6" style="padding-left: 0px;">
@@ -210,6 +261,40 @@
 					</tbody>
 				</table> -->
 			</div><hr/>
+
+			<!-- <div class="col-sm-6">
+
+				<div class="card" style="margin-top: 40px;">
+
+
+					<div class="card-body">
+
+						<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
+						<canvas id="pieChart2" class="border2"></canvas>
+						<canvas id="lineChart2"></canvas>
+
+					</div>
+
+				</div>
+				
+			</div>
+
+			<div class="col-sm-6">
+
+				<div class="card" style="margin-top: 40px;">
+
+
+					<div class="card-body">
+
+						<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
+						<canvas id="pieChart2" class="border2"></canvas>
+						<canvas id="lineChart3"></canvas>
+
+					</div>
+
+				</div>
+				
+			</div> -->
 			<!-- <div class="col-sm-6" style="padding-left: 0px;">
 				<h3 style="text-align:center;margin-top: 30px;">Midium Priority</h3> -->
 				<!-- <canvas id="pieChart3" class="border3"></canvas> -->
