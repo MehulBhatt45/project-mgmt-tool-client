@@ -153,7 +153,6 @@ export class ChildComponent  implements OnInit{
     })
   }
 
-
   getTitle(name){
     if(name){
       var str = name.split(' ');
@@ -183,7 +182,6 @@ export class ChildComponent  implements OnInit{
   onTalkDrop(event){
     this.talkDrop.emit(event);
   }
-
   ondrag(task){
     console.log(task);
   }

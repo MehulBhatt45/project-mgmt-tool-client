@@ -22,7 +22,6 @@
 </ul>
 
 
-
 <div class="row justify-content-center" *ngIf="!leavesToDisplay">
   <div class="col-12 col-md-12">
     <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
@@ -42,7 +41,6 @@
                 <label for="exampleForm2" >Search</label>
               </div>
             </div>
-
           </div>
           <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" (click)="sortLeavesByFromDate('asc')">
             <i class="fas fa-caret-up mt-0"></i>
@@ -96,19 +94,18 @@
                   </div>
                 </td>
                 <td><strong>{{leaves.name}}</strong></td>
-                <td >{{leaves.leaveDuration}}</td>
-                <td >
+                <td>{{leaves.leaveDuration}}</td>
+                <td>
                   <span *ngIf="leaves.attechment && leaves.attechment.length">
-                    <span *ngFor="let att of leaves.attechment">
-                      <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
-                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                    <span *ngFor="let att of leaves.attechment;  let i =index">
+                      <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a>
+                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span>View Pdf</span></a>
                     </span>
                   </span>
                   <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                    <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                    <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
                   </span>
-
-                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
+                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</p>
                 </td>
                 <td>
                   <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
@@ -203,23 +200,10 @@ aria-hidden="true">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
       <p class="heading lead text-center">Leave Details</p>
-<<<<<<< HEAD
          <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-=======
 
-      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-
-     <!--  <p class="heading lead text-center">Modal Info</p>
-      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-
-      </button> -->
-
->>>>>>> e1b4bb7d850eb416bc4aec96437238120540a736
     </div>
 
     <!--Body-->
@@ -263,20 +247,16 @@ aria-hidden="true">
           </div>
        <!--  </div>
         <div class="footer_1"> -->
-
-
         </div> 
         <div class="leaveHeading">
           <div class="row padding-10">
             <div class="col-md-6 leaveCount">
               <h6>Total Leave: <span *ngFor="let leave of leavescount" style="color: black">{{leave.leavesPerYear}}</span></h6>
             </div>
-
             <div class="col-md-6 leaveCount">
               <h6>Available Leave: <span *ngFor="let leave of leavescount" style="color: black">{{leave.leavesLeft}}</span></h6>
             </div>
-          </div>
-          
+          </div>  
         </div> 
         <div class="row mb-2">
           <div class="col-md-6 border padding-top-5" *ngFor="let leave of leavescount | slice:0:4">
@@ -289,8 +269,6 @@ aria-hidden="true">
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
 <!--/.Content-->
