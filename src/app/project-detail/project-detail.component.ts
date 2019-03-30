@@ -330,7 +330,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		}
 	}
-	s:[] ;
+
 	sortTasksByDueDate(type){
 		if(this.priority == true){
 			console.log("Sorting tasks by = ",type)
