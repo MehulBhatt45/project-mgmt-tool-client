@@ -376,6 +376,48 @@ export class SummaryComponent implements OnInit {
 											}
 										});
 
+										var ctxL = document.getElementById("lineChart2")
+										var myLineChart = new Chart(ctxL, {
+											type: 'line',
+											data: {
+												labels: ["January", "February", "March", "April", "May", "June", "July"],
+												datasets: [{
+													label: "Month",
+													// data: this.getTaskPriority(1,this.tracks),
+													data:[65, 59, 80, 81, 56, 55, 40],
+													borderColor: [
+													'#DC143C',
+													],
+													borderWidth: 2
+												}
+												]
+											},
+											options: {
+												responsive: true
+											}
+										});
+
+										var ctxL = document.getElementById("lineChart3")
+										var myLineChart = new Chart(ctxL, {
+											type: 'line',
+											data: {
+												labels: ["January", "February", "March", "April", "May", "June", "July"],
+												datasets: [{
+													label: "Month",
+													// data: this.getTaskPriority(1,this.tracks),
+													data:[65, 59, 80, 81, 56, 55, 40],
+													borderColor: [
+													'#DC143C',
+													],
+													borderWidth: 2
+												}
+												]
+											},
+											options: {
+												responsive: true
+											}
+										});
+
 										// var ctxL = document.getElementById("lineChart2")
 										// var myLineChart = new Chart(ctxL, {
 											// 	type: 'line',
