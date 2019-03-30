@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
@@ -58,18 +58,25 @@ export class ChildComponent  implements OnInit{
   
   
 
-  constructor( private route: ActivatedRoute,public _projectService: ProjectService,public _commentService: CommentService) { 
+  constructor( private route: ActivatedRoute,public _projectService: ProjectService,
+    public _commentService: CommentService, public _change: ChangeDetectorRef) { 
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
     this.getProject(this.projectId);
-
+    // console.log(this.tracks);
   }
 
   ngOnInit(){
     console.log(this.tracks, this.developers);
   }
+  
+  ngOnChanges() {
+    this._change.detectChanges();
+    console.log("ngOnChanges()  ===============================",this.tracks);
+  }
+
   
   getEmptyTracks(){
     this.tracks = [
@@ -324,7 +331,7 @@ export class ChildComponent  implements OnInit{
       console.log("UniqueId", data.uniqueId);
       this._projectService.updateStatus(data).subscribe((res:any)=>{
         console.log(res);
-        this.getProject(res.projectId);
+        // this.getProject(res.projectId);
       },(err:any)=>{
 
         console.log(err);

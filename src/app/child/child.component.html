@@ -1,6 +1,5 @@
+
 <!-- Task Details Card -->
-
-
 
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
@@ -28,7 +27,7 @@
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
 											<!-- <div>{{task.createdAt}}</div> -->
-											<div>{{task.dueDate}}</div>
+											<!-- <div>{{task.dueDate}}</div> -->
 											<!-- <div>{{task.createdAt | timeAgo }}</div> -->
 										</td>
 									</tr>
