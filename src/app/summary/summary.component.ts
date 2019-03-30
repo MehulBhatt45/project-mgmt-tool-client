@@ -213,13 +213,15 @@ export class SummaryComponent implements OnInit {
 					this.projectTeam = res.Teams;
 					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
 					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 
-						this.projectTeam.push
+						if (a.name && b.name) {
+							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+							if (nameA < nameB) //sort string ascending
+								return -1 
+							if (nameA > nameB)
+								return 1
+							return 0 
+							this.projectTeam.push
+						}
 						
 					})
 					

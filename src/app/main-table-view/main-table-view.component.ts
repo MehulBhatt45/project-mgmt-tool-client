@@ -141,7 +141,7 @@ export class MainTableViewComponent implements OnInit {
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
-if (name){
+				if (a.name && b.name) {
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
@@ -149,12 +149,12 @@ if (name){
 						return 1
 					return 0 //default return value (no sorting)
 				}
-				})
-				console.log("Developers",this.developers);
-			},err=>{
-				console.log("Couldn't get all developers ",err);
-				this._alertService.error(err);
 			})
+			console.log("Developers",this.developers);
+		},err=>{
+			console.log("Couldn't get all developers ",err);
+			this._alertService.error(err);
+		})
 	}
 
 	getTasks(){

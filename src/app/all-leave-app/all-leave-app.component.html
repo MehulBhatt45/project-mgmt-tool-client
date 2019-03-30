@@ -1,4 +1,5 @@
-<ul class="nav nav-tabs nav-justified md-tabs morpheus-den-gradient " id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+
+<ul class="nav nav-tabs nav-justified md-tabs deep-purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
   <li class="nav-item">
     <!-- <img src="assets/icons/pending.png"> -->
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
@@ -79,7 +80,7 @@
                 </th>
                 <th>
                   <span>Leave-Status</span>
-                  <i class="fas fa-sort ml-1"></i>
+                  <!-- <i class="fas fa-sort ml-1"></i> -->
                 </th>
                 <th id="statusAction">
                   <span>Action</span>
@@ -111,10 +112,10 @@
                   <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
                 </td>
                 <td>
                   <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
@@ -130,37 +131,37 @@
     </div>
   </div>
 </div>
-<div class="container" *ngIf="leavesToDisplay">
-  <div class="leaveImage text-center">
-    <!-- <img src="../assets/leave1.png" style="height: 600px; width: 1110px;"> -->
-    <div class="row">
-      <div class="col-sm-6">
-        <h2>Type Of Leave</h2>
-        <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-        <canvas id="pieChart"></canvas>
-      </div>            
-      <div class="col-sm-6">
-        <h2>Duration</h2>
-        <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-        <canvas id="pieChart1"></canvas></div>
 
-      </div>
-    </div>
+<div class="container">
+ <div class="row" *ngIf="leavesToDisplay">
+  <div class="col-sm-6">
+    <h2>Type Of Leave</h2>
+    <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+    <canvas id="pieChart"></canvas>
+  </div>            
+  <div class="col-sm-6">
+    <h2>Duration</h2>
+    <p *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+    <canvas id="pieChart1"></canvas>
   </div>
+</div>
+</div>
 
 
 
 
-  <!-- Comment Model -->
 
-  <div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-notify modal-info" role="document">
-    <!--Content-->
-    <div class="modal-content">
-      <!--Header-->
-      <div class="modal-header">
-        <p class="heading lead">Modal Info</p>
+<!-- Comment Model -->
+
+
+<div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-notify modal-info" role="document">
+  <!--Content-->
+  <div class="modal-content">
+    <!--Header-->
+    <div class="modal-header purple-gradient-2 ">
+      <p class="heading lead">Leave Comment</p>
 <!-- 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" class="white-text">&times;</span>
@@ -179,9 +180,9 @@
             </div>
           </div>
           <div class="modal-footer justify-content-center">
-            <input type="submit" class="btn btn-primary" (click)="submitComment(singleleave._id,comment)">
+            <input type="submit" class="btn btn-default" (click)="submitComment(singleleave._id,comment)">
             <br>
-            <a class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+            <a class="btn btn-outlinn-default waves-effect" data-dismiss="modal">Cancel</a>
           </div>
         </form>
       </div>
@@ -203,10 +204,16 @@ aria-hidden="true">
   <div class="modal-content" *ngIf="singleleave">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
-      <p class="heading lead text-center">Modal Info</p>
+      <p class="heading lead text-center">Leave Details</p>
       <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
+
+     <!--  <p class="heading lead text-center">Modal Info</p>
+      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+
     </div>
 
     <!--Body-->
@@ -248,6 +255,10 @@ aria-hidden="true">
             <h6><i class="fas fa-pen-square"></i> LeaveReason:</h6>
             <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
           </div>
+       <!--  </div>
+        <div class="footer_1"> -->
+
+
         </div> 
         <div class="leaveHeading">
           <div class="row">
