@@ -166,9 +166,6 @@ export class AllLeaveAppComponent implements OnInit {
        // this.aLeave = false;
   }
 
-
-
-
   getLeaves(){
    
     this._leaveService.pendingLeaves().subscribe(res=>{
@@ -262,6 +259,7 @@ getAllLeaves(){
       });
        },err=>{
       console.log(err);
+
     });
       // this.pLeave = false;
    
@@ -272,7 +270,8 @@ getAllLeaves(){
 
 
   getLeaveCount(leaves){
-    console.log(leaves);
+    console.log("all p_leave=====",leaves);
+    // console.log("attt====>",leaves[0].attechment);
     var Personal_Leave :any= [];
     var Sick_Leave :any= [];
     var Emergency_Leave :any= [];
@@ -319,8 +318,6 @@ getAllLeaves(){
     return [Half_Day.length,Full_Day.length,More_Day.length];
   }
 
-
-
   getFilteredLeaves(){
     switch (this.selectedStatus) {
       case "pending":
@@ -338,20 +335,19 @@ getAllLeaves(){
     }
   }
 
-
-
     getAllDevelopers(){
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
         // this.developers.sort(function(a, b){
-          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-          //   if (nameA < nameB) //sort string ascending
-          //     return -1 
-          //   if (nameA > nameB)
-          //     return 1
-          //   return 0 
-          // })
+        //     var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+        //     if (nameA < nameB) //sort string ascending
+        //       return -1 
+        //     if (nameA > nameB)
+        //       return 1
+        //     return 0 
+        //   })
+
 
         _.map(this.leaveApp, leave=>{
           _.forEach(this.developers, dev=>{
@@ -397,7 +393,6 @@ getAllLeaves(){
       }).then((result) => {
         if (result.value) {
           var body;
-          console.log("dsfdsbgfdf",this.leaveApp);
           console.log("reeeeeeee",req);
           _.forEach(this.leaveApp, (apply)=>{
             if(apply._id == req){
@@ -426,8 +421,6 @@ getAllLeaves(){
         }
       })
   }
-
-
 
 
     leaveRejected(req){
@@ -499,7 +492,6 @@ getAllLeaves(){
           }
         });
 
-
           _.forEach(this.leaves , (leave)=>{
             _.forEach(this.leavescount , (count)=>{
               if(count.typeOfLeave == leave.typeOfLeave){
@@ -517,7 +509,6 @@ getAllLeaves(){
       },err=>{
         console.log(err);
       })
-      
     }
 
     addComment(comment){
@@ -543,7 +534,6 @@ getAllLeaves(){
   //   })
   // }
   sortLeavesByFromDate(type){
-
     console.log("Sorting tasks by = ",type)
     // console.log(this.pendingLeaves);
     // console.log('leave===============================>',this.pendingLeaves);
@@ -578,43 +568,8 @@ getAllLeaves(){
       _.forEach(leave, (content)=>{
         this.leaveApp.push(content);
       });
-    // if(this.pLeave == true){
-    //   console.log("searchText",searchText);
-    //   console.log(this.allLeaves);
-    //   var dataToBeFiltered = [this.allLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.aLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.allAproveLeaves);
-    //   var dataToBeFiltered = [this.allAproveLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.rLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.rejeLeaves);
-    //   var dataToBeFiltered = [this.rejeLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }
+    
   }
-
-
 
 leavesByUserId(){
   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
@@ -653,7 +608,6 @@ submitComment(leaveid,comment){
   var data={
     leaveId:leaveid,
     comment:comment
-
   }
   console.log("data==========>>",data);
   this._leaveService.addComments(data).subscribe((res:any)=>{
@@ -668,5 +622,3 @@ submitComment(leaveid,comment){
 }
 
 }
-
-
