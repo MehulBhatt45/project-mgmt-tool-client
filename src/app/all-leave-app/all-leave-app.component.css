@@ -50,7 +50,7 @@ h3{
 }
 .table a{
 	display: table;
-	margin: 0;
+	margin: auto;
 }
 li a{
 	font-size: 24px;
@@ -175,11 +175,13 @@ h6{
 	select.browser-default {
 		display: block;
 		margin: 25px 0px;
+		background-color: #9a6bda;
+		color: white;
 	}
 	.card_custom{
 		width: 20%;
 		border-radius: 3px;
-		background-image: linear-gradient(#00dbc7,#238388);
+		    background-image: linear-gradient(#b280f5,#330867);
 		padding: 10px;
 		margin-right: 117px;
 		margin-left: 23px;

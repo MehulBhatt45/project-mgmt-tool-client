@@ -40,9 +40,9 @@
   <div class="col-12 col-md-12">
     <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
       <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-        <h2 class="white-text mx-3" style=" margin: 0; padding: 10px 0;
+        <h2 class="white-text margin-auto text-center" style=" margin: 0; padding: 10px 0;
         max-width: calc(100% - 130px)
-        ;">Leave Applications</h2>
+        ;"><img src="assets/icons/leave.png" height="40px" width="40px" style="margin-left: 80px;">Leave Applications</h2>
         <div>
           <div class="btn-group dropleft  px-2 py-2 ">
             <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="dropdown" style="border-radius: 48%;" >
@@ -103,7 +103,7 @@
                 <td style="width: 56px;">
                   <div class="avatar mx-auto" *ngIf= "leaves.dev">
                     <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
+                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" style="border-radius: 10px;" class=" img-fluid img_content">
                     </a>
                   </div>
                 </td>
@@ -122,17 +122,18 @@
                   <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</p>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                  <button type="button" class="btn btn-outline-secondary waves-effect" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                  <button type="button" class="btn btn-outline-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">Viewmore</button>
                 </td>
                 <td>
-                  <strong *ngIf="leaves.status=='pending'" style="color: orange; background-color: #ffc10754; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='pending'" style="color: orange; background-color: #ffc1074d; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
                   <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;background-color: #28a74578; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #e4050573; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #efc3c3cc; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
                 </td>
-                <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                <!-- <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td> -->
+                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
               </tr>
             </tbody>
           </table>
