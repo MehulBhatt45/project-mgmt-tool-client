@@ -149,6 +149,63 @@
 			</div>
 		</div>
 
+		<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1"  title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i>Create Sprint</button>
+
+		<!-- Modal edit Start Here -->
+		<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
+						color: purple;
+						"><i class="fas fa-edit"></i>Create Sprint</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body px-10">
+						<div class="container">
+							<div class="row">
+								<form style="width: 100%;">
+									<div class="form-group col-12">
+										<label for="title">Sprint Name</label>
+										<input type="text" id="title" formControlName="title" class="form-control">
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="md-form">
+												<i class="far fa-calendar-alt prefix"></i>
+												<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+											</div>	
+										</div>
+										<div class="col">
+											<div class="md-form">
+												<i class="far fa-calendar-alt prefix"></i>
+												<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+											</div>	
+										</div>
+									</div>
+									<div class="form-group col-12">
+										<label for="desc">Sprint Goal</label>
+										<input type ="text" id="desc" formControlName="goal" class="form-control md-textarea">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+						<button type="submit" id="my_button" class="btn btn-default btn-lg">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
 		<button type="submit" class="btn btn-default btn-rounded z-depth-1 mt-1" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
 	</form>
 </div>
