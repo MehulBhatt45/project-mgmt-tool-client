@@ -73,7 +73,7 @@ export class AllEmployeeComponent implements OnInit {
 			console.log("dev()()",this.developers);
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
-				if (name) {
+				if (a.name && b.name) {
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
