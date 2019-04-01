@@ -128,9 +128,9 @@
                   <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
                 </td>
                 <td>
-                  <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='pending'" style="color: orange; background-color: #ffc10754; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;background-color: #28a74578; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #e4050573; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
                 </td>
                 <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
               </tr>
