@@ -87,6 +87,7 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavesByUserId();
     this.getAllDevelopers();
     this.getAllLeaves();
+
     // this.getRejectedLeaves();
    
     // this.route.params.subscribe(param=>{
