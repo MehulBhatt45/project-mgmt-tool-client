@@ -28,12 +28,13 @@
               "src/styles.css",
               "./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
               "./node_modules/froala-editor/css/froala_style.min.css",
-
+              "./node_modules/ng2-image-viewer/imageviewer.scss",
               "./node_modules/ngx-select-dropdown/dist/assets/style.css",
               "./node_modules/@ng-select/ng-select/themes/material.theme.css"
             ],
             "scripts": [
-              "./node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+              "./node_modules/froala-editor/js/froala_editor.pkgd.min.js",
+              "./node_modules/ng2-image-viewer/imageviewer.js"
             ],
             "es5BrowserSupport": true
           },
