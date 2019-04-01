@@ -65,6 +65,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { UserSummaryComponent } from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
@@ -103,6 +104,7 @@ import { MyleaveComponent } from './myleave/myleave.component';
     UserSummaryComponent,
     ForgotpwdComponent,
     MyleaveComponent,
+    NotificationComponent,
    ],
 
     imports: [
