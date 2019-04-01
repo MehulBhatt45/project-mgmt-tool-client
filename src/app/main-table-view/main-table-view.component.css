@@ -250,11 +250,11 @@ label{
     width: 100px;
     padding:10px;*/
 select.browser-default {    
-  width: 178px!important;
+  width: 100%!important;
     margin-right: 10px;
 }
-/*@media (max-width: 1199px) { 
+/*@media (min-width: 1255px) { 
     select.browser-default {
-    width: 168px!important;
+    width: 100%!important;
 }
    }*/

@@ -54,6 +54,7 @@ h3{
 li a{
 	font-size: 24px;
 	color: white !important;
+	    line-height: 48px;
 }
 .nav-link {
 	display: block;
@@ -133,7 +134,7 @@ h6{
 	margin: -25px 16px 0px 16px;
 	color: white;
 }
-.card{
+.card_border{
 	border: 4px solid #b670df;
 }
 .footer_1{
@@ -154,10 +155,12 @@ h6{
 
 .leaveHeading{
 	margin: 20px;
-	font-weight: bolder;
+	font-weight: bold;
+	padding: 10px;
 }
-
 .leaveCount{
 	padding: 0px;	
 }
-
+.purple{
+	background-image: linear-gradient(#4440bf,#61d2d8fc);
+}
