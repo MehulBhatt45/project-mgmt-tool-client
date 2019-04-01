@@ -45,7 +45,7 @@ export class AllLeaveAppComponent implements OnInit {
   selectedStatus:any;
   comment;
   leaveid;
- 
+
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
@@ -578,40 +578,7 @@ getAllLeaves(){
       _.forEach(leave, (content)=>{
         this.leaveApp.push(content);
       });
-    // if(this.pLeave == true){
-    //   console.log("searchText",searchText);
-    //   console.log(this.allLeaves);
-    //   var dataToBeFiltered = [this.allLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.aLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.allAproveLeaves);
-    //   var dataToBeFiltered = [this.allAproveLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }else if(this.rLeave == true){
-    //    console.log("searchText",searchText);
-    //   console.log(this.rejeLeaves);
-    //   var dataToBeFiltered = [this.rejeLeaves];
-    //   console.log('dataToBeFiltered===================>',dataToBeFiltered);
-    //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-    //   console.log("In Component",leave);
-    //   this.leaveApp = [];
-    //   _.forEach(leave, (content)=>{
-    //     this.leaveApp.push(content);
-    //   });
-    // }
+    
   }
 
 

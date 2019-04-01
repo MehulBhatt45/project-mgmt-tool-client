@@ -48,7 +48,8 @@ export class MainTableViewComponent implements OnInit {
 	Teams;
 	selectedProjectId = "all";
 	selectedDeveloperId = "all";
-	 priority: boolean = false;
+	priority: boolean = false;
+	sorting;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,public _commentService: CommentService) {
 		this.route.params.subscribe(param=>{
@@ -245,9 +246,9 @@ export class MainTableViewComponent implements OnInit {
 
 	sortTasksByDueDate(type){
 		if(this.priority == true){
-			
+			console.log('Sorting array======================>',this.sorting);
 			console.log("Sorting tasks by dueDate = ",type)
-			_.forEach(this.tracks,function(track){
+			_.forEach(this.sorting,function(track){
 				console.log("Sorting track = ",track.title);
 				track.tasks.sort(custom_sort);
 				// track.tasks.sort(custom_sort1);
@@ -286,7 +287,7 @@ export class MainTableViewComponent implements OnInit {
 	}
 	sortTasksByPriority(type){
 		this.priority = true;
-		console.log("hdgfhd=>>>>..");
+		console.log("sort by priority",type);
 		_.forEach(this.tracks,function(track){
 			console.log("Sorting track = ",track.title);
 			track.tasks.sort(custom_sort1);
@@ -295,6 +296,8 @@ export class MainTableViewComponent implements OnInit {
 			}
 			console.log("sorted output =====> ",track.tasks);
 		});
+		this.sorting = this.tracks;
+		console.log('jkfdhdfjkghd============================>',this.sorting);
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
