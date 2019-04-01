@@ -57,9 +57,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-
     setTimeout(()=>{
 
       $('[data-toggle="popover-hover"]').popover({
@@ -101,9 +98,6 @@ export class ViewProjectComponent implements OnInit {
         console.log("IN If=========================================",this.projects);
         this.projects = res;
         console.log("this.projects========------=-=-=-=",this.projects);
-        
-
-
       }
       else{
         this.projects = [];
@@ -123,13 +117,9 @@ export class ViewProjectComponent implements OnInit {
         });
       }, 100);
     },err=>{
-      this._alertService.error(err);
-      this.loader=false;
-    });
-
-
-
-
+     Swal.fire('Oops...', 'Something went wrong!', 'error')  
+     this.loader=false;
+   });
   }
 
   getTitle(name){
@@ -221,7 +211,7 @@ getAllDevelopers(){
     console.log("Developers",this.developers);
   },err=>{
     console.log("Couldn't get all developers ",err);
-    this._alertService.error(err);
+    Swal.fire('Oops...', 'Something went wrong!', 'error')
   })
 }
 
@@ -244,9 +234,6 @@ getProject(id){
   console.log("id======-=-=",id);
   this.loader = true;
   setTimeout(()=>{
-
-
-
     this._projectService.getTaskById(id).subscribe((res:any)=>{123412
       console.log("id{}{}{}===",id);
       this.idpmt=id;
@@ -311,8 +298,6 @@ getProject(id){
     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
   }
 }
-
-
 
 getTaskCount(status){
 
