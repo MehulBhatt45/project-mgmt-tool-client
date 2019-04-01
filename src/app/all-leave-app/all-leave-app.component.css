@@ -37,6 +37,7 @@
 }
 .card{
 	max-width: 100%;
+	width: 100%;
 }
 h3{
 	text-align: center;
@@ -54,7 +55,7 @@ h3{
 li a{
 	font-size: 24px;
 	color: white !important;
-	    line-height: 48px;
+	line-height: 48px;
 }
 .nav-link {
 	display: block;
@@ -66,13 +67,13 @@ li a{
 	font-size: 20px;
 }
 button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
-    height: 35px;
-    width: 35px;
-    padding: 6px;
+	height: 35px;
+	width: 35px;
+	padding: 6px;
 }
 .md-form .prefix {
-    font-size: 24px !important;
-    margin-top: 24px;   
+	font-size: 24px !important;
+	margin-top: 24px;   
 }
 .md-form i{
 	color: white;
@@ -80,7 +81,7 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 .fa-search{
 	color: white !important;
 	font-size: 13px;
-    padding: 2px;
+	padding: 2px;
 }
 
 #exampleForm2 {
@@ -101,12 +102,12 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 }
 
 .dropdown-menu{
-    background-color: transparent;
-    box-shadow: none; 
-    padding: 10px;
-    float: right;
-    top: -30px!important;
-    left: -24px!important;
+	background-color: transparent;
+	box-shadow: none; 
+	padding: 10px;
+	float: right;
+	top: -30px!important;
+	left: -24px!important;
 }
 
 
@@ -114,13 +115,13 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 
 
 .nav-tabs {
-    border: 0;
-    padding: 0.7rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 30px;
-    z-index: 2;
-    position: relative;
+	border: 0;
+	padding: 0.7rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	margin-bottom: 30px;
+	z-index: 2;
+	position: relative;
 }
 .deep-purple img{
 	color: white !important;
@@ -158,10 +159,29 @@ h6{
 	font-weight: bold;
 	padding: 10px;
 }
-
 .leaveCount{
 	padding: 0px;	
 }
-.purple{
+/*.purple{
 	background-image: linear-gradient(#4440bf,#61d2d8fc);
-}
+	}*/
+	.nav-item{
+		padding: 0px 0px;
+	}
+	.leave_icon img{
+		height: 30px;
+		width: 30px;
+	}
+	select.browser-default {
+		display: block;
+		margin: 25px 0px;
+	}
+	.card_custom{
+		width: 20%;
+		border-radius: 3px;
+		background-image: linear-gradient(#00dbc7,#238388);
+		padding: 10px;
+		margin-right: 117px;
+		margin-left: 23px;
+		text-align: center;
+	}

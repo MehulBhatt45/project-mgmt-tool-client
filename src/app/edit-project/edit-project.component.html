@@ -24,7 +24,7 @@
 					<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
 					<label for="desc" class="active" >Project Discription</label>
 				</div>
-				<div class="md-form form-group" [hidden]="!availData && !availData.deadline" *ngIf="availData">
+				<div class="md-form form-group"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
 					<label for="date-picker-example">Deadline</label>
 					<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
 				</div>
@@ -102,7 +102,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="card mt-1 p-1">
 			<h3 class="card-title text-center pt-3">ProjectManager:</h3>
 			<div class="card-body">
