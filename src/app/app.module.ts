@@ -47,6 +47,8 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PushNotificationService } from 'ngx-push-notifications';
+import { ImageViewerModule } from 'ng2-image-viewer';
+
 
 
 
@@ -126,6 +128,7 @@ import { NotificationComponent } from './notification/notification.component';
     AngularFireModule.initializeApp(environment.firebase),
     SelectDropDownModule,
      NgSelectModule,
+     ImageViewerModule
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],

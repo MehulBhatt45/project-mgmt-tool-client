@@ -112,9 +112,14 @@
                 <td>
                   <span *ngIf="leaves.attechment && leaves.attechment.length">
                     <span *ngFor="let att of leaves.attechment;  let i =index">
-                      <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment text-center" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a>
-                      <a *ngIf="att.includes('.pdf')" class="image_attachment text-center" href="{{path}}{{att}}" target="_blank"><span>View Pdf</span></a>
+                      <!-- <app-image-viewer  [images]="leaves.attechment"
+                      [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
+                      ></app-image-viewer> -->
+                      <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
+                        <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
+                      </span>
                     </span>
+<<<<<<< HEAD
                   </span>
                   <span  *ngIf="leaves.attechment && !leaves.attechment.length">
                     <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
@@ -137,10 +142,35 @@
               </tr>
             </tbody>
           </table>
+=======
+                    <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                      <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                    </span>
+                    <span *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</span>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                  </td>
+                  <td>
+                    <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                    <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+                    <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                  </td>
+                  <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+>>>>>>> f45f4efcc767501fb9279925e06e9bb2d1100370
         </div>
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </div>
 <div class="total_leave">
   <div class="container">
@@ -157,16 +187,27 @@
       <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
       <canvas id="pieChart1"></canvas>
     </div>
+=======
+
+
+<div class="container">
+ <div class="row" *ngIf="leavesToDisplay">
+  <div class="col-sm-5 z-depth-5">
+    <h2 class="text-center pt-2">Total Leaves</h2>
+    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+     <canvas id="pieChart"></canvas>
+  </div>            
+  <div class="col-md-1">
+  </div>
+  <div class="col-sm-5 z-depth-5">
+    <h2 class="text-center pt-2">Duration</h2>
+    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+    <canvas id="pieChart1"></canvas>
+>>>>>>> f45f4efcc767501fb9279925e06e9bb2d1100370
   </div>
 </div>
-</div>
-
-
-
-
 
 <!-- Comment Model -->
-
 
 <div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 aria-hidden="true">
@@ -291,4 +332,19 @@ aria-hidden="true">
   </div>
 </div>
 <!--/.Content-->
+</div>
+
+<div class="modal fade top" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
+  <div  id="attachmentModelLabel" role="document">
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header purple-gradient-2 "> -->
+        <!-- <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      <!-- </div> -->
+      <div  *ngIf="gotAttachment && gotAttachment.length">
+        <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
+      </div>
+    <!-- </div> -->
+  </div>
 </div>
