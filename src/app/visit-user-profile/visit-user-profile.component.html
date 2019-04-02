@@ -222,14 +222,15 @@
 										<div class="row">
 											<div class="col-sm-5 z-depth-5">
 												<h2 class="text-center pt-2">Leaves Type</h2>
-												<p class="text-center" *ngIf="leaveApp">{{leaveApp.length}} responses</p>
+												<p class="text-center" *ngIf="approvedLeaves">
+												{{approvedLeaves.length}} responses</p>
 												<canvas id="pieChart"></canvas>
 											</div>            
 											<div class="col-md-1">
 											</div>
 											<div class="col-sm-5 z-depth-5">
 												<h2 class="text-center pt-2">Duration</h2>
-												<p class="text-center" *ngIf="leaveApp">{{leaveApp.length}} responses</p>
+												<p class="text-center" *ngIf="leaveApp">{{approvedLeaves.length}} responses</p>
 												<canvas id="pieChart1"></canvas>
 											</div>
 										</div>

@@ -37,6 +37,7 @@ export class VisitUserProfileComponent implements OnInit {
 	leaveApp:any;
 	leaves:any;
 	leavescount:any;
+	approvedLeaves:any = [];
 
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService,
@@ -138,6 +139,15 @@ export class VisitUserProfileComponent implements OnInit {
 				console.log("======>>>",res);
 				this.leaveApp = res;
 				console.log("single leave",this.leaveApp);
+				// var approvedLeaves:any = [];
+				_.forEach(this.leaveApp,(leave)=>{
+					// console.log('leaves==========>',leave);
+					if(leave.status == "approved"){
+						// console.log('leavessssssssssss==========>',leave);
+						this.approvedLeaves.push(leave)
+					}
+				});
+					console.log('approvedLeaves',this.approvedLeaves);
 				this.getEmptytracks();
 				var ctxP = document.getElementById("pieChart");
 				var myPieChart = new Chart(ctxP, {
@@ -145,7 +155,7 @@ export class VisitUserProfileComponent implements OnInit {
 					data: {
 						labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
 						datasets: [{
-							data: this.getLeaveCount(this.leaveApp),
+							data: this.getLeaveCount(this.approvedLeaves),
 							backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
 							hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 						}]
@@ -167,7 +177,7 @@ export class VisitUserProfileComponent implements OnInit {
 					data: {
 						labels: ["Half Day", "Full Day", "More Day"],
 						datasets: [{
-							data:this.getLeaveDuration(this.leaveApp),
+							data:this.getLeaveDuration(this.approvedLeaves),
 							backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
 							hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
 						}]
