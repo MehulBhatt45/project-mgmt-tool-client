@@ -68,6 +68,7 @@ import { UserSummaryComponent } from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
+import { AttendenceComponent } from './attendence/attendence.component';
 
 
 @NgModule({
@@ -107,6 +108,7 @@ import { NotificationComponent } from './notification/notification.component';
     ForgotpwdComponent,
     MyleaveComponent,
     NotificationComponent,
+    AttendenceComponent,
    ],
 
     imports: [
