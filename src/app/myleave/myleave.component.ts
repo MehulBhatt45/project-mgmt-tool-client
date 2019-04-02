@@ -19,7 +19,7 @@ export class MyleaveComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	singleleave:any;
 	leaveApp:any;
-
+	leavesToDisplay:boolean = false;
 	constructor(public router:Router, public _leaveService:LeaveService,
 		public _alertService: AlertService,private route: ActivatedRoute) { }
 

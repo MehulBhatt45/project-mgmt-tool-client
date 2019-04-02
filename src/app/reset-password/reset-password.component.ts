@@ -25,7 +25,7 @@ export class ResetPasswordComponent implements OnInit {
 	resetPasswordForm: FormGroup;
 	submitted = false;
 	returnUrl: string;
-	
+	loader: boolean = false;
 	match: boolean = false;
 
 	constructor(

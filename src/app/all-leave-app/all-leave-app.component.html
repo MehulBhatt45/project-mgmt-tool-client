@@ -1,24 +1,41 @@
-<ul class="nav nav-tabs nav-justified md-tabs purple" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'|| currentUser.userRole=='developer'">
-  <li class="nav-item">
-    <!-- <img src="assets/icons/pending.png"> -->
+
+
+<ul class="nav nav-tabs  md-tabs black-text gray" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+  <div class="card_custom z-depth-3">
+   <li class="nav-item active">
+    <div class="leave_icon">
+      <img src="assets/icons/pending.png">
+    </div>
+
     <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">Rejected Leaves</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" (click)="leavesToDisplay=false">
-      <div>
-        <select class="browser-default custom-select custom-select-lg  text-left" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
-          <option value="all" selected>All Developer</option>
-          <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
-        </select>
-      </div>
-    </a>
-  </li>
+</div>
+<div class="card_custom z-depth-3">
+<li class="nav-item">
+  <div class="leave_icon">
+    <img src="assets/icons/approv.png">
+  </div>
+  <a class="nav-link" (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
+</li>
+</div>
+<div class="card_custom z-depth-3">
+<li class="nav-item">
+  <div class="leave_icon">
+    <img src="assets/icons/rejected.png">
+  </div>
+  <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">Rejected Leaves</a>
+</li>
+</div>
+<li class="nav-item">
+  <a class="nav-link" (click)="leavesToDisplay=false">
+    <div>
+      <select class="browser-default custom-select custom-select-lg  text-left z-depth-3" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
+        <option value="all" selected>All Developer</option>
+        <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
+      </select>
+    </div>
+  </a>
+</li>
 </ul>
 
 
@@ -56,27 +73,27 @@
             <thead>
               <tr>
                 <th>
-                  Avtar
+                  <i class="fas fa-user-circle deep-purple-text"></i> Avtar
                 </th>
                 <th>
-                  <span>Name
+                  <span><i class="fas fa-pen deep-purple-text"></i> Name
                   </span>
                 </th> 
                 <th>
-                  <span>Leave-Duration
+                  <span><i class="fas fa-stopwatch deep-purple-text"></i> Leave-Duration
                   </span>
                 </th>
                 <th>
-                  <span>Attachment</span>
+                  <span><i class="fas fa-paperclip deep-purple-text"></i> Attachment</span>
                 </th>
                 <th>
-                  <span>Comment</span>
+                  <span><i class="fas fa-comment-dots deep-purple-text"></i> Comment</span>
                 </th>
                 <th>
-                  <span>ViewMore</span>
+                  <span><i class="fas fa-info deep-purple-text"></i> ViewMore</span>
                 </th>
                 <th>
-                  <span>Leave-Status</span>
+                  <span><i class="fas fa-adjust deep-purple-text"></i> Leave-Status</span>
                   <!-- <i class="fas fa-sort ml-1"></i> -->
                 </th>
                 <th id="statusAction">
@@ -98,57 +115,58 @@
                 <td>
                   <span *ngIf="leaves.attechment && leaves.attechment.length">
                     <span *ngFor="let att of leaves.attechment;  let i =index">
-                      <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a>
-                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span>View Pdf</span></a>
+                      <!-- <app-image-viewer  [images]="leaves.attechment"
+                      [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
+                      ></app-image-viewer> -->
+                      <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
+                        <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
+                      </span>
                     </span>
-                  </span>
-                  <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                    <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                  </span>
-                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</p>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
-                </td>
-                <td>
-                  <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
-                </td>
-                <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
-              </tr>
-            </tbody>
-          </table>
+                    <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                      <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                    </span>
+                    <span *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</span>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
+                  </td>
+                  <td>
+                    <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
+                    <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
+                    <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
+                  </td>
+                  <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-</div>
+
 
 <div class="container">
  <div class="row" *ngIf="leavesToDisplay">
-  <div class="col-sm-6 z-depth-5 card">
+  <div class="col-sm-5 z-depth-5">
     <h2 class="text-center pt-2">Total Leaves</h2>
     <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
      <canvas id="pieChart"></canvas>
   </div>            
-  <div class="col-sm-6 card z-depth-5">
+  <div class="col-md-1">
+  </div>
+  <div class="col-sm-5 z-depth-5">
     <h2 class="text-center pt-2">Duration</h2>
-     <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
+    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
     <canvas id="pieChart1"></canvas>
   </div>
 </div>
-</div>
-
-
-
-
 
 <!-- Comment Model -->
-
 
 <div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 aria-hidden="true">
@@ -178,7 +196,7 @@ aria-hidden="true">
           <div class="modal-footer justify-content-center">
             <input type="submit" class="btn btn-default" (click)="submitComment(singleleave._id,comment)">
             <br>
-            <a class="btn btn-outlinn-default waves-effect" data-dismiss="modal">Cancel</a>
+            <a class="btn btn-outline-default waves-effect" data-dismiss="modal">Cancel</a>
           </div>
         </form>
       </div>
@@ -201,9 +219,9 @@ aria-hidden="true">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
       <p class="heading lead text-center">Leave Details</p>
-         <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
 
     </div>
 
@@ -275,3 +293,17 @@ aria-hidden="true">
 <!--/.Content-->
 </div>
 
+<div class="modal fade top" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
+  <div  id="attachmentModelLabel" role="document">
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header purple-gradient-2 "> -->
+        <!-- <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      <!-- </div> -->
+      <div  *ngIf="gotAttachment && gotAttachment.length">
+        <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
+      </div>
+    <!-- </div> -->
+  </div>
+</div>
