@@ -59,7 +59,7 @@ export class LeaveService {
 	}
 
 	leaveByUserId(useremail){
-
+		console.log('useremail============>',useremail);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
