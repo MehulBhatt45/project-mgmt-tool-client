@@ -42,17 +42,21 @@
       <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center" [id]="title">
         <h2 class="white-text margin-auto text-center ml-10" style=" margin: 0; padding: 10px;
         max-width: calc(100% - 130px);">
-        <img src="assets/icons/leave.png" height="40px" width="40px" style="margin-left: 80px;">{{title}} Leaves</h2>
+        <img src="assets/icons/leave.png" height="40px" width="40px">{{title}} Leaves</h2>
         <div style="padding: 10px;">
           <div class="btn-group dropleft  px-2 py-2 ">
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="dropdown" style="border-radius: 48%;" >
-              <i class="fas fa-search mt-0"></i>
-            </button>
+            <div class="search">
+              <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+              <button type="button" class="btn btn-sm px-2" (click)="openSearch()">
+                <i class="fas fa-search mt-0"></i>
+              </button>
+            </div>
+
             <div class="dropdown-menu">
               <div class="md-form form-group active">
-                <i class="fas fa-search prefix"></i>
-                <input type="text" id="exampleForm2" class="form-control " [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
-                <label for="exampleForm2" >Search</label>
+                <!-- <i class="fas fa-search prefix"></i> -->
+                <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+                <!-- <label for="exampleForm2" >Search</label> -->
               </div>
             </div>
           </div>
@@ -103,7 +107,7 @@
                 <td style="width: 56px;">
                   <div class="avatar mx-auto" *ngIf= "leaves.dev">
                     <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" style="border-radius: 10px;" class=" img-fluid img_content">
+                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class=" img-fluid img_content">
                     </a>
                   </div>
                 </td>

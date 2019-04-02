@@ -112,7 +112,20 @@ export class AllLeaveAppComponent implements OnInit {
   //         }
 
       // this.filterTracks(developerId);
+      $("body").click((event)=>{
+        event.stopPropagation();
+        $(".search").removeClass("open");
+      });
     }
+
+
+    openSearch(){
+      $(".search .btn").parent(".search").toggleClass("open");
+      $('.search').click((evt)=>{
+        evt.stopPropagation();
+      });
+    }
+      
     getApprovedLeaves(option){
 
       this.title=option;
