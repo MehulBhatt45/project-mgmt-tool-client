@@ -24,11 +24,11 @@
 .nav-link{
 	color: black
 }
-.user_activity{
+/*.user_activity{
 	margin-top: 30px;
 	margin-left: -17px;
-}
-.upload_or_edit_profile{
+}*/
+/*.upload_or_edit_profile{
 	font-size: 20px;
     position: absolute;
     bottom: 0;
@@ -41,7 +41,7 @@
     background-color: rgba(66, 57, 109, 0.8);
     color: #fff;
     border-radius: 10px 0px 0px 0px;
-}
+}*/
 .profile_image{
 	max-width: 250px;
     

@@ -58,7 +58,7 @@ export class ProjectDetailComponent implements OnInit {
 	path = config.baseMediaUrl;
 	priority: boolean = false;
 	// sorting: any;
-	sorting = [];
+	sorting:any;
 
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
@@ -179,7 +179,7 @@ export class ProjectDetailComponent implements OnInit {
 			dueDate : new FormControl('',Validators.required),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
-			files : new FormControl()
+			// files : new FormControl()
 		})
 	}
 
@@ -284,8 +284,7 @@ export class ProjectDetailComponent implements OnInit {
 		},1000);
 		// function custom_sort(a, b) {
 		// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-		// }
-		
+		// }	
 
 	}
 
@@ -357,6 +356,7 @@ export class ProjectDetailComponent implements OnInit {
 				}
 				console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 			});
+
 			// }
 		}
 
@@ -371,7 +371,7 @@ export class ProjectDetailComponent implements OnInit {
 			return a.priority - b.priority;
 		}
 
-		console.log("sorting======>",custom_sort);
+		// console.log("sorting======>",custom_sort);
 		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 
@@ -388,7 +388,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log('sorting===========>',sort);
 		});
 		this.sorting = this.tracks;
-		console.log('jkfdhdfjkghd============================>',this.sorting);
+		console.log('Sorting Array============================>',this.sorting);
 
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
@@ -501,7 +501,7 @@ export class ProjectDetailComponent implements OnInit {
 		// task.startDate = $("#startDate").val();
 		// task.estimatedTime = $("#estimatedTime").val();
 		console.log("estimated time=====>",task.estimatedTime);
-		task.images = $("#images").val();
+		// task.images = $("#images").val();
 		console.log("images====>",task.images);
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
