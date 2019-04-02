@@ -347,7 +347,6 @@ getAllLeaves(){
   getFilteredLeaves(){
     switch (this.selectedStatus) {
       case "pending":
-
       this.getLeaves('Pending');
       break;
       case "approved":
@@ -494,6 +493,7 @@ getAllLeaves(){
     }
 
   filterTracks(developerId){
+    this.title='Application';
     this.getEmptytracks();
     var obj ={ email : developerId};
     console.log("email of login user",obj);
