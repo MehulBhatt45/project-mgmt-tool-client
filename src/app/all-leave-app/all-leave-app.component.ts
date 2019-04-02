@@ -46,7 +46,7 @@ export class AllLeaveAppComponent implements OnInit {
   selectedStatus:any;
   comment;
   leaveid;
- 
+
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
