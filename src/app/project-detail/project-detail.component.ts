@@ -179,7 +179,7 @@ export class ProjectDetailComponent implements OnInit {
 			dueDate : new FormControl('',Validators.required),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
-			files : new FormControl()
+			// files : new FormControl()
 		})
 	}
 
@@ -501,7 +501,7 @@ export class ProjectDetailComponent implements OnInit {
 		// task.startDate = $("#startDate").val();
 		// task.estimatedTime = $("#estimatedTime").val();
 		console.log("estimated time=====>",task.estimatedTime);
-		task.images = $("#images").val();
+		// task.images = $("#images").val();
 		console.log("images====>",task.images);
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
