@@ -1,0 +1,145 @@
+<div class="row">
+	<div class="col-6">
+		<h1 *ngIf="project">{{project.title}}</h1>
+	</div>
+	<div class="col-6 ">
+		<button type="submit" class="btn btn-default float-right z-depth-1 mt-1"  title="Edit Notice" data-toggle="modal" data-target="#addsprint" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i>Create Sprint</button>
+	</div>
+</div>
+
+<!-- Modal Create Sprint Start Here -->
+<div class="modal fade" id="addsprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
+				color: purple;
+				"><i class="fas fa-edit"></i>Create Sprint</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body px-10">
+				<div class="container">
+					<div class="row">
+						<form style="width: 100%;"  [formGroup]='addForm'>
+							<div class="md-form form-group">
+								<label for="title">Sprint Name</label>
+								<input type="text" id="title" formControlName="title" class="form-control">
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="md-form form-group">
+										<i class="far fa-calendar-alt prefix"></i>
+										<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+									</div>	
+								</div>
+								<div class="col">
+									<div class="md-form form-group">
+										<i class="far fa-calendar-alt prefix"></i>
+										<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+									</div>	
+								</div>
+							</div>
+							<div class="md-form">
+								<label for="desc">Sprint Goal</label>
+								<textarea type ="text" id="desc" formControlName="goal" class="md-textarea form-control" rows="4"></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="addSprint(addForm.value)">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Create Sprint End Here -->
+
+<div class="project_bord">
+	<div class="row">
+		<div class="col-md-3 margin-tb-20" *ngFor="let sprint of sprints" >
+			<div class="card card-cascade narrower">
+				<div class="view view-cascade overlay" style="background-color: #ddd">
+					<div class="margin-top-10 margin-bottom-10 text-center">
+						<h4  routerLink="/proj ect-details/{{project._id}}" class="font-weight-bold card-title">{{sprint.title}}</h4>
+					</div>
+				</div>
+				<div class="btn-group dropleft float-right">
+					<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><i class="far fa-edit padding-top-1"></i></a>
+						<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteSprint(sprint._id)"><i class="far fa-trash-alt"></i></a>
+					</div>
+				</div>
+				<div class="card-body card-body-cascade margin-bottom-0 text-center">
+					<p><i class="far fa-calendar-plus margin-right-5"></i>Start:<span>{{sprint.startDate | date:'mediumDate'}}</span></p>
+					<p><i class="far fa-calendar-plus margin-right-5"></i>End:<span>{{sprint.endDate | date:'mediumDate'}}</span></p>
+					<p class="card-text">{{sprint.goal}}</p>
+					<button class="btn btn-default progress_summary">Progress</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal edit Sprint Start Here -->
+<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
+				color: purple;
+				"><i class="fas fa-edit"></i> Edit Sprint</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body px-10" *ngIf="newsprint">
+				<div class="container">
+					<div class="row">
+						<form style="width: 100%;"  [formGroup]="editSprintForm">
+							<div class="md-form form-group">
+								<label for="title">Sprint Name</label>
+								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newsprint.title">
+							</div>
+							<div class="md-form form-group">
+								<i class="far fa-calendar-alt prefix"></i>
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.startDate">
+							</div>
+							<div class="md-form form-group">
+								<i class="far fa-calendar-alt prefix"></i>
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
+							</div>	
+							<div class="md-form form-group">
+								<label for="desc">Sprint Goal</label>
+								<input type ="text" id="desc" formControlName="goal" class="form-control md-textarea" [(ngModel)]="newsprint.goal">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateSprint(newsprint)">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal edit Sprint End Here -->
+
+
+
+

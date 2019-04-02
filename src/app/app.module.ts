@@ -47,6 +47,9 @@ import { AllLeaveAppComponent } from './all-leave-app/all-leave-app.component';
 import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PushNotificationService } from 'ngx-push-notifications';
+import { ImageViewerModule } from 'ng2-image-viewer';
+
+
 
 
 
@@ -66,6 +69,7 @@ import { UserSummaryComponent } from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
+import { BacklogComponent } from './backlog/backlog.component';
 
 
 @NgModule({
@@ -105,6 +109,7 @@ import { NotificationComponent } from './notification/notification.component';
     ForgotpwdComponent,
     MyleaveComponent,
     NotificationComponent,
+    BacklogComponent,
    ],
 
     imports: [
@@ -126,6 +131,7 @@ import { NotificationComponent } from './notification/notification.component';
     AngularFireModule.initializeApp(environment.firebase),
     SelectDropDownModule,
      NgSelectModule,
+     ImageViewerModule
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],

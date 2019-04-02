@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router,ActivatedRoute} from '@angular/router';
 // import {ProjectService} from '../services/project.service';
 import{LeaveService} from '../services/leave.service';
+import { ImageViewerModule } from 'ng2-image-viewer';
 import { AlertService } from '../services/alert.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -129,7 +130,6 @@ export class AllLeaveAppComponent implements OnInit {
           approved.endingDate = moment(approved.endingDate).format('YYYY-MM-DD');
         })
      this.allAproveLeaves = this.leaveApp; 
-     console.log('kjcfffffffffffffffffffffffffffffffffffffffffffffffgd',this.allAproveLeaves);
       console.log("applicationsss==>",this.allAproveLeaves);
       console.log("applicationsss==>",this.leaveApp);
       this.aLeave = true;
@@ -181,6 +181,14 @@ export class AllLeaveAppComponent implements OnInit {
 
         })
       })
+      _.map(this.leaveApp,leave=>{
+        var attach = [];
+        _.map(leave.attechment,att=>{
+          attach.push(this.path + att);
+        })
+        leave.attechment = attach;
+      })
+      console.log("leaveApp===>",this.leaveApp);
       _.forEach(this.leaveApp , (leave)=>{
         leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
         leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
@@ -300,6 +308,7 @@ getAllLeaves(){
 
   getLeaveDuration(leaves){
     console.log(leaves);
+    console.log(leaves[1].attechment);
     var Half_Day = [];
     var Full_Day = [];
     var More_Day = [];
@@ -492,14 +501,11 @@ getAllLeaves(){
             this.leaveApp.push(leave);
           }
         });
-
           _.forEach(this.leaves , (leave)=>{
             _.forEach(this.leavescount , (count)=>{
               if(count.typeOfLeave == leave.typeOfLeave){
                 count.leavesTaken = count.leavesTaken + 1;
               }
-
-
             });
           });
           console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
@@ -620,6 +626,10 @@ submitComment(leaveid,comment){
     console.log("errrrrrrrrrrrrr",err);
     Swal.fire('Oops...', 'Something went wrong!', 'error')
   })
+}
+gotAttachment = [];
+sendAttachment(attechment){
+  this.gotAttachment = attechment;
 }
 
 }
