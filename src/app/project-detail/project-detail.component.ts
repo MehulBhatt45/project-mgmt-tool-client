@@ -32,7 +32,7 @@ export class ProjectDetailComponent implements OnInit {
 	url = [];
 	commentUrl = [];
 	searchText;
-	newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task;
 	tasks;
 	taskId;
@@ -53,6 +53,7 @@ export class ProjectDetailComponent implements OnInit {
 	desc;
 	id;
 	projectTeam;
+	sprints;
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
@@ -175,6 +176,7 @@ export class ProjectDetailComponent implements OnInit {
 			title : new FormControl('', Validators.required),
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
+			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
 			estimatedTime: new FormControl('',[Validators.required]),
@@ -195,6 +197,8 @@ export class ProjectDetailComponent implements OnInit {
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
 		});
+
+		this.getSprint(this.projectId);
 	}
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -441,50 +445,12 @@ export class ProjectDetailComponent implements OnInit {
 		$('#itemManipulationModel').modal('show');
 	}
 
-
-
-	// updateTask(task){
-	// 	task.assignTo = this.editTaskForm.value.assignTo;
-	// 	let data = new FormData();
-
-	// 	data.append('projectId', task.projectId);
-	// 	data.append('title', task.title);
-	// 	data.append('desc', task.desc);
-	// 	data.append('assignTo', task.assignTo);
-	// 	data.append('priority', task.priority);
-	// 	data.append('dueDate', task.dueDate);
-	// 	data.append('estimatedTime', task.estimatedTime);
-	// 	data.append('images', task.images);
-	// 	if(this.files.length>0){
-	// 		for(var i=0;i<this.files.length;i++){
-	// 			data.append('fileUpload', this.files[i]);	
-	// 		}
-	// 	}
-	// 	console.log("update =====>",task);
-	// 	this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-	// 		Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
-	// 		$('#save_changes').attr("disabled", false);
-	// 		$('#refresh_icon').css('display','none');
-	// 		$('#itemManipulationModel').modal('hide');
-	// 		this.newTask = this.getEmptyTask();
-	// 		this.files = this.url = [];
-	// 		this.editTaskForm.reset();
-	// 		this.loader = false;
-	// 	},err=>{
-	// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
-	// 		console.log(err);
-	// 		this.loader = false;
-	// 		//$('#alert').css('display','block');
-	// 	})
-
-	// }
-
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+		return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 	}
 
 	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+		this.newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
 		this.modalTitle = 'Add '+option;
 		$('#itemManipulationModel').modal('show');
 	}
@@ -624,5 +590,15 @@ export class ProjectDetailComponent implements OnInit {
 
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
+	}
+
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+		},(err:any)=>{
+			console.log(err);
+		});
+
 	}
 }

@@ -351,3 +351,7 @@ a.btn-floating.btn-action i{
 .progress_summary:hover + .summary{
     display: block;
 }
+.dropdown-menu.show {
+    display: block !important;
+    width: 205px !important;
+}

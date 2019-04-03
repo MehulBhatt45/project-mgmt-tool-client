@@ -31,9 +31,7 @@ import { UserSummaryComponent} from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
-
-
-
+import {BacklogComponent} from './backlog/backlog.component';
 
 
 const routes: Routes = [
@@ -68,6 +66,10 @@ const routes: Routes = [
 		{
 			path:'noticeboard',
 			component:NoticeboardComponent
+		},
+		{
+			path:'backlog/:id',
+			component:BacklogComponent
 		},
 		{
 			path:'myleave',
