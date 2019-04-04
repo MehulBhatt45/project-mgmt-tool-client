@@ -143,4 +143,21 @@ export class LeaveService {
 	}
 
 
+
+
+// Attendence service
+
+
+checkIn(Data){
+	var obj = {userId:Data};
+	console.log("data of checkin student service",Data);
+	const httpOptions = {
+		headers: new HttpHeaders({
+			'content-Type':'application/json',
+			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		})
+	};
+	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+}
+
 }
