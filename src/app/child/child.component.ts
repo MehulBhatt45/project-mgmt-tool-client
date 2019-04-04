@@ -70,7 +70,6 @@ export class ChildComponent  implements OnInit{
   }
 
   ngOnInit(){
-    console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
   }
   
@@ -378,14 +377,16 @@ export class ChildComponent  implements OnInit{
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
+            if (a.name && b.name) {
+              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+              if (nameA < nameB) //sort string ascending
+                return -1 
+              if (nameA > nameB)
+                return 1
+              return 0 //default return value (no sorting)
+              this.projectTeam.push
+              console.log("sorting============>"  ,this.projectTeam);
+            }
           })
 
 
