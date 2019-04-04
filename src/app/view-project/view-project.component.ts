@@ -37,6 +37,7 @@ export class ViewProjectComponent implements OnInit {
   hoveredProject: any;
   ary:any;
   optionsSelect: Array<any>;
+  pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
 
     this.addForm = new FormGroup({

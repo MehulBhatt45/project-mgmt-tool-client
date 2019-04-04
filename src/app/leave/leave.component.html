@@ -1,36 +1,32 @@
 <div class="container-fluid ">
 	<div class="row justify-content-center">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="card card-cascade narrower">
-				<!-- Card image -->
 				<div class="view view-cascade gradient-card-header " style="background-color: #372e5f">
-					<!-- Title -->
 					<h2 class="card-header-title white-text text-center py-4" align="center" style="margin: 0;">Apply Leave</h2>
 				</div>
-				<!-- Card content -->
 				<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
-					<!-- Text -->
 					<div class="container-fluid">
 						<form [formGroup]='addForm' autocomplete="off">
 
 							<div class="btn-group btn-group-toggle d-flex flex-column flex-md-row" data-toggle="buttons">
 
-								<label class="btn btn-primary btn_bgcolor" (click)="showOneDay()">
+								<label class="btn btn-default" (click)="showOneDay()">
 									<button  value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i>For One Day</button> 
 								</label>
-								<label class="btn btn-primary btn_bgcolor" (click)="showMoreDays()">
+								<label class="btn btn-default" (click)="showMoreDays()">
 									<button  value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i>For More Days</button>
 								</label>
 							</div>
 							<span [hidden]="!showMoreDayss">
-								<div class="row">
-									<div class="col">
+								<div class="row border">
+									<div class="col-md-6">
 										<div class="md-form">
 											<i class="far fa-calendar-alt prefix"></i>
-											<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+											<input placeholder="Starting date" formControlName="startingDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">	
 										</div>	
 									</div>
-									<div class="col">
+									<div class="col-md-6">
 										<div class="md-form">
 											<i class="far fa-calendar-alt prefix"></i>
 											<input placeholder="Ending date" formControlName="endingDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
@@ -39,59 +35,68 @@
 								</div>
 							</span>
 							<div [hidden]="!showOneDays">
-								<div class="col">
+								<div class="col-md-12 border">
 									<div class="md-form">
 										<i class="far fa-calendar-alt prefix"></i>
-										<input placeholder="SINGLE date" formControlName="singleDate" type="text" id="startDateFor1" class="form-control datepicker" style="margin-bottom: 30px;">
+										<input placeholder="Single date" formControlName="singleDate" type="text" id="startDateFor1" class="form-control datepicker" style="margin-bottom: 30px;">
 									</div>	
 								</div>
-								<p style="text-align: left; margin-bottom: 10px;"><b>Duration:-</b></p>
-								<div class="form-group">
-									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="0.5">
-										<label class="form-check-label" for="leaveDuration1" value="1-day">Half Day</label>	
-									</div>
-									<div class="form-check" style="text-align: left; padding: 0;">
-										<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="1">
-										<label class="form-check-label" for="leaveDuration3" value="1-day">Full Day</label>
+								<div class="col-md-6">
+									<p style="text-align: left; margin-bottom: 10px;color: #372e5f;"><b>Duration:-</b></p>
+									<div class="form-group">
+										<div class="form-check" style="text-align: left; padding: 0;">
+											<input type="radio" class="form-check-input" id="leaveDuration1" formControlName="leaveDuration" value="0.5">
+											<label class="form-check-label" for="leaveDuration1" value="1-day">Half Day</label>	
+										</div>
+										<div class="form-check" style="text-align: left; padding: 0;">
+											<input type="radio" class="form-check-input" id="leaveDuration3" formControlName="leaveDuration" value="1">
+											<label class="form-check-label" for="leaveDuration3" value="1-day">Full Day</label>
+										</div>
 									</div>
 								</div>
 							</div> 
-
-							<p style="text-align: left; margin-bottom: 10px;"><b>Reason:-</b></p>
-							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="SickLeave" formControlName="typeOfLeave" value="Sick_Leave">
-								<label class="custom-control-label" for="SickLeave">Sick Leave</label>
+							<div class="col-md-6">
+								<p style="text-align: left; margin-bottom: 10px; color: #372e5f;"><b>Reason:-</b></p>
+								<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+									<input type="radio" class="custom-control-input" id="SickLeave" formControlName="typeOfLeave" value="Sick_Leave">
+									<label class="custom-control-label" for="SickLeave">Sick Leave</label>
+								</div>
+								<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+									<input type="radio" class="custom-control-input" id="Emergencyleave" formControlName="typeOfLeave" value="Emergency_Leave" checked>
+									<label class="custom-control-label" for="Emergencyleave">Emergency leave</label>
+								</div>
+								<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+									<input type="radio" class="custom-control-input" id="withoutpay" formControlName="typeOfLeave" value="Leave_WithoutPay">
+									<label class="custom-control-label" for="withoutpay">without pay</label>
+								</div>
+								<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
+									<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="Personal_Leave">
+									<label class="custom-control-label" for="PersonalLeave" style="margin-bottom: 30px;">Personal Leave</label>
+								</div>
 							</div>
-							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="Emergencyleave" formControlName="typeOfLeave" value="Emergency_Leave" checked>
-								<label class="custom-control-label" for="Emergencyleave">Emergency leave</label>
-							</div>
-							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="withoutpay" formControlName="typeOfLeave" value="Leave_WithoutPay">
-								<label class="custom-control-label" for="withoutpay">without pay</label>
-							</div>
-							<div class="custom-control custom-radio" style="text-align: left; padding: 0;">
-								<input type="radio" class="custom-control-input" id="PersonalLeave" formControlName="typeOfLeave" value="Personal_Leave">
-								<label class="custom-control-label" for="PersonalLeave" style="margin-bottom: 30px;">Personal Leave</label>
-							</div>
-
-
-							<div class="form-group purple-border " style="text-align: left; padding: 0;width:100%;">
-								<label for="exampleFormControlTextarea4"><b>Reason For Leave:-</b></label>
-								<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
+							<div class="col-md-12 area">
+								<div class="form-group purple-border " style="text-align: left; padding: 0;width:100%;">
+									<label for="exampleFormControlTextarea4" style="color: #372e5f;"><b>Reason For Leave:-</b></label>
+									<textarea class="form-control" formControlName="reasonForLeave" id="exampleFormControlTextarea4" rows="4"></textarea>
+								</div>
 							</div>
 							<div class="file-field" >
-								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="attechment.click()">Choose files
-									<input type="file" #attechment formControlName="attechment" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg, .pdf" hidden multiple>
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Attech Any Document">
+								<div class="row padding-0">
+									<div class="col-md-4">
+										<div class="btn btn-outline-default btn-sm float-left waves-effect waves-light" (click)="attechment.click()">Choose files
+											<input type="file" #attechment formControlName="attechment" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg, .pdf" hidden multiple>
+										</div>
+									</div>
+									<div class="col-md-8 padding-top-20">
+										<div class="file-path-wrapper">
+											<input class="file-path validate" type="text" placeholder="Attech Any Document">
+										</div>
+									</div>
 								</div>
 							</div>
 
-							<div>
-								<button type="button" class="btn btn-deep-purple waves-effect btn-default" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
+							<div class="col-md-12 float-right">
+								<button type="button" class="btn btn-outline-deep-purple waves-effect btn-default" (click)="addLeave(addForm.value)" [disabled]="addForm.invalid">Submit</button>
 							</div>
 						</form>
 					</div>
