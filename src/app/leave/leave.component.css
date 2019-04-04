@@ -7,137 +7,115 @@
     border: 1px solid;
     margin-top: 80px;
     border: 1px solid black;
-    }*/
-   .custom-day {
-      text-align: center;
-      padding: 0.185rem 0.25rem;
-      display: inline-block;
-      height: 2rem;
-      width: 2rem;
-  }
-  .custom-day.focused {
-      background-color: #e6e6e6;
-  }
-  .custom-day.range, .custom-day:hover {
-      background-color: rgb(2, 117, 216);
-      color: white;
-  }
-  .custom-day.faded {
-      background-color: rgba(2, 117, 216, 0.5);
-  }
-  h5{ 
-    font-size: 30px;
-    color: #000000;
-    /*background-color: #ae79ff;     */
+    }
+*/
+
+.custom-day {
+  text-align: center; 
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+h5{ 
+  font-size: 30px;
+  color: #000000;
+  /*background-color: #ae79ff;     */
 }
 .card.panels-card{
-    width: 700px;
-    margin: 0 auto;
-    max-width: 100%;
+  width: 700px;
+  margin: 0 auto;
+  max-width: 100%;
 }
 .form-group .form-control{
-    padding: 10px 15px;
-    box-sizing: border-box;
-    height: 80px;
-    border: 1px solid #4b405a;
-    box-shadow: none!important;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  height: 80px;
+  border: 1px solid #4b405a;
+  box-shadow: none!important;
 }
 .form-check{
-   padding: 0;
+ padding: 0;
 }
 label{
-   font-size: 18px;
-   margin-bottom: 0;
-   font-weight: 5px;
-}
-.btn-default{
-   /*background-color: #4285F4 !important;*/
-   border-radius: 5px;
-   font-size: 16px;
-   width:15%;
-   margin-top:45px;
+ font-size: 18px;
+ margin-bottom: 0;
+ font-weight: 5px;
 }
 .purple-border textarea {
-    border: 2px solid #ba68c8;
-}
-.purple-border .form-control:focus {
-    border: 1px solid #ba68c8;
-    box-shadow: 0 0 15px rgba(186, 104, 200, .25) !important;
+  border: 2px solid #ba68c8;
 }
 .md-form .prefix{
-    left: 0px;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    height: 32px;
+  left: 0px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 32px;
+  color:  #372e5f;
 
 }
 .btn-group .btn {
-   margin: 30px 0px!important; 
-   border-radius: 5px;
-   background-color: #372e5f;
-   width: 20px;
+ margin: 30px 0px!important; 
+ border-radius: 5px;
+ background-color: #372e5f;
+ width: 20px;
 }
 .btn-group .btn:first-child {
-    margin-right: 15px!important;
+  margin-right: 15px!important;
 }
 .btn-group .btn:last-child {
-    margin-left: 15px!important;
-}
-.btn .fas {
-    /*left: -3px;*/
-    margin-right: 15px;
-    font-size: 25px;
-    /*padding: auto;*/
-    /* padding-top: 9px; */
-}
-.btn_bgcolor{
-
-
+  margin-left: 15px!important;
 }
 .btn_style{
-    border-radius: 5px;
-    border:none;
-    outline: none;
-    background-color: transparent !important;
-    cursor: pointer;
-    color:white;
+  border-radius: 5px;
+  border:none;
+  outline: none;
+  background-color: transparent !important;
+  cursor: pointer;
+  color:white;
 }
 .btn_style:hover{
-    background-color: #d6778c ;
+  background-color: #d6778c ;
 }
 .deep-purple-skin .btn-primary:hover, .deep-purple-skin .btn-primary:focus {
-    background-color: #d6778c !important;
+  background-color: #d6778c !important;
 }
 b{
-    font-size: 20px;
+  font-size: 20px;
 }
-.deep-purple-skin .md-form .prefix.active {
-
-    color: #000 !important;
+.btnbgcolor {
+  background-color: #372e5f !important;
 }
-/*.forOneDay{
-    display: none;
+.btn_style{
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: #372e5f;
+  color: white;
 }
-.forMoreDays{
-    display: none;
+.file-field .btn{
+  width: 90%;
+  font-size: 15px;
+  margin-left: 14px;
 }
-.hide{
-    display: none;
-    }*/
-    .btnbgcolor {
-        background-color: #372e5f !important;
-    }
-    .btn_style{
-        border: none;
-        outline: none;
-        border-radius: 5px;
-        background-color: #372e5f;
-        color: white;
-    }
-/*.btnbgcolor .btn-primary.active{
-    background-color: #372e4f !important;
+.file-field input.file-path {
+ height: 1.1rem;
 }
-.deep-purple-skin .btn-primary.active {
-    background-color: #372e4f !important;
-}*/
+textarea{
+  resize: none;
+  height: 130px!important;
+}
+.btn-default:focus {
+    background-color: #fff;
+    border-color: #ccc;
+}

@@ -83,9 +83,6 @@
     color: white;
     text-transform: uppercase;
   }
-
-
-
   @media (max-width: 767px){
     .btn-designation {
       padding: 0.4rem 0.5rem;
@@ -117,7 +114,6 @@
   color: white;
   font-size: 14px;
   padding: 10px 20px;
-  font-weight: 600;
 }
 .card-wrapper .card-up {
   height: 45% !important;
