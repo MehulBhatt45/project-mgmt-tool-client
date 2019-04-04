@@ -114,10 +114,8 @@ export class EditProjectComponent implements OnInit {
 			console.log("project Manager",this.projectMngr);
 		},err=>{
 			console.log("Couldn't get all developers ",err);
-			// this._alertService.error(err);
 		})
 	}
-
 
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{

@@ -71,6 +71,7 @@ export class AllEmployeeComponent implements OnInit {
 			this.developers = res;
 			this.filteredDevelopers = res;
 			console.log("dev()()",this.developers);
+			
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
 				if (a.name && b.name) {

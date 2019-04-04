@@ -3,6 +3,7 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
 import{LeaveService} from '../services/leave.service';
+// import { ImageViewerModule } from 'ng2-image-viewer';
 import Swal from 'sweetalert2';
 declare var $ : any;
 
