@@ -403,4 +403,10 @@ export class ProjectService {
 				console.log("file is===>>>",files[0]);
 				return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 			}
+
+			getProjectByPmanagerId(pmanagerId){
+				console.log("pmanagerId=====>",pmanagerId);
+	          return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+
+			}
 		}

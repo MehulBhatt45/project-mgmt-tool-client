@@ -28,6 +28,9 @@ export class UserprofileComponent implements OnInit {
 	projectArr = [];
 	finalArr = [];
 	editTEmail;
+	projectTeam;
+	Teams;
+	teams;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	
@@ -65,9 +68,15 @@ export class UserprofileComponent implements OnInit {
 			// console.log("project detail===>>>>",this.pro);
 			this.projects = res;
 			console.log(this.projects);
+			console.log(this.projects[0].pmanagerId._id);
+			// if (projects[0].) {
+				
+			// }
+			// console.log("team===>",this.projects[0].Teams);
 			_.forEach(this.projects , (task)=>{
 				_.forEach(task.Teams , (project)=>{
 					if(project._id == userId){
+
 						this.projectArr.push(task);
 					}
 				})
@@ -108,33 +117,69 @@ export class UserprofileComponent implements OnInit {
 							this._alertService.error(err);
 						})
 				}
-
 				openModel(task){
 					$('#editEmailModel').modal('show');
+					this.getProjectByPmanagerId();
+					// this.getProject(projectId);
 				}
-
-				uploadFile(e){
-					console.log("file============>",e.target.files);
-					var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-					console.log("userId===============>",userId);
-					this.files = e.target.files;
-					console.log("files===============>",this.files);
-					this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
-						console.log("resss=======>",res);
-						Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
-
+				projectSelected(item){
+					if(item && item._id){
+						console.log(item);
+						console.log(item.Teams);
+						this.teams =item.Teams;
+						console.log(this.teams);
+						// _.forEach(item.Teams[0],(team)=>{
+						// 	this.teams.push(team);
+						// 	console.log(team[0].name);
+						// 	// console.log(item);
+						// })
+						// this.teams = item.Teams[0].name;
+						// console.log(this.teams);
+						// this.loader = true;
+						$(".progress").addClass("abc");
+						// $(".progress .progress-bar").css({"width": '100%'});
 						setTimeout(()=>{
-							this.currentUser = res;
-							localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-						},1000);
-					},error=>{
-						console.log("errrorrrrrr====>",error);
-						Swal.fire('Oops...', 'Something went wrong!', 'error')
-					});  
+							// this.loader = false;
+							$(".progress").removeClass("abc");
+							this.task.projectId = item._id;	
+							this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
+							console.log(this.developers);
+						},3000);
+					}else{
+						this.editTaskForm.reset();
+						this.task = this.getEmptyTask();
+					}
 				}
+				getProjectByPmanagerId(){
+                	this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
+                		this.currentUser = res;
+                		console.log("current====>",this.currentUser);
 
-				
-			}
+                	})
+                }
+			
+					uploadFile(e){
+						console.log("file============>",e.target.files);
+						var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+						console.log("userId===============>",userId);
+						this.files = e.target.files;
+						console.log("files===============>",this.files);
+						this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+							console.log("resss=======>",res);
+							Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
+
+							setTimeout(()=>{
+								this.currentUser = res;
+								localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+							},1000);
+						},error=>{
+							console.log("errrorrrrrr====>",error);
+							Swal.fire('Oops...', 'Something went wrong!', 'error')
+						});  
+					}
+
+
+				}
 
 
 
