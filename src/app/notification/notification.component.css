@@ -1,0 +1,187 @@
+.btn-primary{
+	background-color: green !important
+}
+.table th{
+	font-size: 20px;
+	vertical-align: middle;
+	padding:8px;
+	margin: 0;
+	white-space: nowrap;
+}
+.table td{
+	vertical-align: middle;
+	white-space: nowrap;
+}
+.a_icon{
+	font-size: 28px;
+	color:green;
+	margin-right: 5px;
+}
+.r_icon{
+	font-size: 30px;
+	color:red;
+	margin-left: 27px;
+}
+.view{
+	height: 87px;
+	margin-bottom: 20px;
+}
+.table td.description{
+	white-space: normal;
+}
+.sign{
+	float: right;
+}
+.dropdown{
+	margin-bottom: 10px;
+}
+.card{
+	max-width: 100%;
+	width: 100%;
+}
+h3{
+	text-align: center;
+}
+.selected{
+	display: none;
+}
+.unselected{
+	display: block;
+}
+.table a{
+	display: table;
+	margin: 0;
+}
+li a{
+	font-size: 24px;
+	color: white !important;
+	line-height: 48px;
+}
+.nav-link {
+	display: block;
+	padding: 0 !important; 
+	cursor: pointer;
+}
+.fa-caret-up,
+.fa-caret-down{
+	font-size: 20px;
+}
+button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
+	height: 35px;
+	width: 35px;
+	padding: 6px;
+}
+.md-form .prefix {
+	font-size: 24px !important;
+	margin-top: 24px;   
+}
+.md-form i{
+	color: white;
+}
+.fa-search{
+	color: white !important;
+	font-size: 13px;
+	padding: 2px;
+}
+
+#exampleForm2 {
+	color: #fff!important;
+}
+#exampleForm2 + label{
+	color: #fff!important;
+	top: 22px !important;
+}
+.md-form {
+	position: relative;
+	margin-bottom: auto;
+	margin-right: -22px;
+	margin-left: -84px;
+	/*margin-left: auto;*/
+	/*margin-right: 15px;*/
+	margin-top: auto;
+}
+
+.dropdown-menu{
+	background-color: transparent;
+	box-shadow: none; 
+	padding: 10px;
+	float: right;
+	top: -30px!important;
+	left: -24px!important;
+}
+
+
+
+
+
+.nav-tabs {
+	border: 0;
+	padding: 0.7rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	margin-bottom: 30px;
+	z-index: 2;
+	position: relative;
+}
+.deep-purple img{
+	color: white !important;
+}
+h6{
+	font-size: 16px;
+	color: purple;
+	font-weight: bolder;
+}
+.modal-header{
+	margin: -25px 16px 0px 16px;
+	color: white;
+}
+.card_border{
+	border: 4px solid #b670df;
+}
+.footer_1{
+	background-color: lightblue;
+	padding: 0px;
+}
+
+.leaveInfo{
+	text-align: center;
+}
+.btn-primary{
+	background-color: 
+}
+
+.leaveInfo p{
+	margin: 0;
+}
+
+.leaveHeading{
+	margin: 20px;
+	font-weight: bold;
+	padding: 10px;
+}
+.leaveCount{
+	padding: 0px;	
+}
+/*.purple{
+	background-image: linear-gradient(#4440bf,#61d2d8fc);
+	}*/
+	.nav-item{
+		padding: 0px 0px;
+	}
+	.leave_icon img{
+		height: 30px;
+		width: 30px;
+	}
+	select.browser-default {
+		display: block;
+		margin: 25px 0px;
+	}
+	.card_custom{
+		width: 20%;
+		border-radius: 3px;
+		background-image: linear-gradient(#00dbc7,#238388);
+		padding: 10px;
+		margin-right: 117px;
+		margin-left: 23px;
+		text-align: center;
+	}
