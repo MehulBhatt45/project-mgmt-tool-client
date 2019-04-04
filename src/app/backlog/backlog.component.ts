@@ -25,6 +25,10 @@ export class BacklogComponent implements OnInit {
 	addForm:FormGroup;
 	editSprintForm:FormGroup;
 	singlesprint:any;
+	newsprint;
+	newNotice;
+	notice;
+	// newsprint;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
 		this.route.params.subscribe(param=>{

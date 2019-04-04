@@ -373,7 +373,7 @@ table {
     display: inline-block;
   
     float: left;
-    box-shadow: 0 0 20px 0 rgba(171,171,171,.8);
+    /*box-shadow: 0 0 20px 0 rgba(171,171,171,.8);*/
     position: relative;
     cursor: pointer;
 

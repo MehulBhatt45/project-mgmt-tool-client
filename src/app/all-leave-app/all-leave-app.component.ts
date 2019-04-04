@@ -616,11 +616,12 @@ leavesByUserId(){
 //   console.log("data=====>>",comment);
 // }
 
-leaveById(leaveid){
+leaveById(leaveid, option){
   console.log("leave id=======>>",leaveid);
   this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
     this.singleleave = res[0];
     console.log("single leave",this.singleleave);
+    option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
   },err=>{
     console.log("errrrrrrrrrrrrr",err);
   })
