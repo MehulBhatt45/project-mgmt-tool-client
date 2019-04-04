@@ -1,3 +1,4 @@
+
 .btn-primary{
 	background-color: green !important
 }
@@ -185,3 +186,27 @@ h6{
 		margin-left: 23px;
 		text-align: center;
 	}
+
+.task li{
+	padding: 20px 10px;
+	border-bottom: 1px solid blue;
+	border-left: 5px solid lightblue;
+}
+.leave li{
+	padding: 20px 10px;
+	border-bottom: 2px solid green;
+	border-left: 5px solid lightgreen;	
+}
+.other li{
+	padding: 20px 10px;
+	border-bottom: 2px solid purple;
+	border-left: 5px solid #d272d2;
+}
+.btn-floating i {
+	font-size: 14px!important;
+}
+p.btn-floating {
+    margin-top: -20px;
+    margin-left: -2px;
+}
+
