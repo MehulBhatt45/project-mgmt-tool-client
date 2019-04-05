@@ -56,6 +56,8 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   sprints;
+  timeLog;
+  logs;
   
   
 
@@ -70,7 +72,6 @@ export class ChildComponent  implements OnInit{
   }
 
   ngOnInit(){
-    console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
   }
   
@@ -378,14 +379,16 @@ export class ChildComponent  implements OnInit{
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
+            if (a.name && b.name) {
+              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+              if (nameA < nameB) //sort string ascending
+                return -1 
+              if (nameA > nameB)
+                return 1
+              return 0 //default return value (no sorting)
+              this.projectTeam.push
+              console.log("sorting============>"  ,this.projectTeam);
+            }
           })
 
 
@@ -481,6 +484,42 @@ export class ChildComponent  implements OnInit{
         console.log(err);
       });
 
+    }
+
+    timeLogOfTask(data){
+      console.log('data==========================>',data);
+      console.log('unique id=======================>', data.uniqueId);
+      this._projectService.addTimeLog(data).subscribe((res:any)=>{
+        console.log(res);
+        this.timeLog = res;
+        console.log('this.timeLog',this.timeLog.difference);
+        this.logs = this.timeLog.difference;
+        var x = this.logs;
+        var d = moment.duration(x, 'milliseconds');
+        var hours = Math.floor(d.asHours());
+        var mins = Math.floor(d.asMinutes()) - hours * 60;
+        // var secs = Math.floor(d.asMinutes()) - 
+        console.log("hours:" + hours + " mins:" + mins );
+        // this.logs = this.timeLog.log;
+        // console.log('this.logs',this.logs);
+        // _.map(this.logs,function(log) {
+          // //   if(log.endTime!=null){
+            //     var diff = Number(new Date(log.startTime))-Number(new Date(log.endTime));
+            //     var hours = Math.floor(diff /1000/60/60);
+            //     var min = Math.floor(diff/60/60%60);
+            //     var sec = (Math.floor((diff/1000) % 60)? Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) %60));
+            //     log['diff'] =hours + ':' + min +':' + sec;
+            //   }   
+            // });
+            console.log('difference=================>',this.logs);
+            // var time = this.timeLog.difference.toLocaleTimeString();
+            // var time = moment(this.timeLog.difference).format(" h:mm:ss ");
+            // var timee = time[1];
+            // console.log('fjgkhfj',timee);
+            // console.log('timeeeeeeeeeeeeeeeeeee==>',time);
+          },(err:any)=>{
+            console.log(err);
+          });
     }
 
 

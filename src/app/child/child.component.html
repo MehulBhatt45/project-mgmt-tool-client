@@ -1,6 +1,9 @@
 
 <!-- Task Details Card -->
-
+<!-- <div *ngFor="let time of timeLog">
+	<p>{{time.difference}}</p>
+	
+</div> -->
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
@@ -24,6 +27,9 @@
 								<table class="table-responsive">
 									<tr>
 										<td colspan="2">
+										<!-- 	<a href="javascript:void(0);"> -->
+											<i class="fas fa-stopwatch" (click)="timeLogOfTask(task)" style="cursor: pointer;"></i>
+										<!-- </a> -->
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
 											<!-- <div>{{task.createdAt}}</div> -->
@@ -146,6 +152,11 @@
 								<p *ngIf="task.sprint">
 									<label><strong>Sprint: &nbsp;</strong></label>
 									<span>{{task.sprint.title}}</span>
+								</p>
+								<p>
+									<!-- <label>Time: &nbsp;</label>
+									<span>{{timeLog.difference}}</span> -->
+									
 								</p>
 							</div>
 

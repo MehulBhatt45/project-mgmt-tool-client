@@ -47,6 +47,19 @@ export class ProjectService {
 		};
 		return this.http.get(config.baseApiUrl+"user/get-all-project-manager");	
 	}
+	getAllTeamOfManagerId(id){
+		console.log("manager id",id);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("user ID ====>" , userId);
+		return this.http.get(config.baseApiUrl+"project/projectByManagerId/"+id);
+	}
+
 
 	getProjectById(id){
 		const httpOptions = {
@@ -61,6 +74,7 @@ export class ProjectService {
 	}
 
 	getDeveloperOfProject(id){
+		console.log("project ID ====>" , id);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -81,6 +95,7 @@ export class ProjectService {
 		// var email = JSON.parse(localStorage.getItem('currentUser')).email;
 		return this.http.post(config.baseApiUrl+"leave/leavesByEmail", email);
 	}
+
 
 	addProject(body){
 		console.log("addproject2 is calling");
@@ -395,4 +410,9 @@ export class ProjectService {
 			console.log("sprint in service",sprintId);
 			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
 		}
+		addTimeLog(data){
+			console.log('data=====++++++>',data);
+			return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
+		}
+
 	}
