@@ -10,8 +10,8 @@ const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 
 // const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
 
-
-
+// 
+// 
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,
