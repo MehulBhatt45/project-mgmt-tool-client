@@ -1,3 +1,10 @@
+<div class="loader" *ngIf="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
 <div class="row">
   <div class="col-md-2 ml-auto mb-3">
     <a class="nav-link" (click)="leavesToDisplay=false">
@@ -39,9 +46,9 @@
 <div class="row justify-content-center" *ngIf="!leavesToDisplay">
   <div class="col-12 col-md-12">
     <div class="card card-cascade narrower mt-11" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center" [id]="title">
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center" [id]="title" *ngIf="!loader">
         <h2 class="white-text margin-auto text-center ml-10" style=" margin: 0; padding: 10px;
-        max-width: calc(100% - 130px);">
+        max-width: calc(100% - 130px);" >
         <img src="assets/icons/leave.png" height="40px" width="40px">{{title}} Leaves</h2>
         <div style="padding: 10px;">
           <div class="btn-group dropleft  px-2 py-2 ">
@@ -68,7 +75,7 @@
           </button>
         </div>
       </div>
-      <div class="px-4" style="text-align: center;">
+      <div class="px-4" style="text-align: center;"  *ngIf="!loader">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
@@ -120,7 +127,7 @@
                       [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
                       ></app-image-viewer> -->
                       <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
-                      <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
+                      <a class="image_attachment" data-toggle="modal" data-target="#centralModalInfo" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                     </span>
                   </span>
                   <!-- <span  *ngIf="leaves.attechment && !leaves.attechment.length">
@@ -294,8 +301,14 @@ aria-hidden="true">
 </div>
 <!--/.Content-->
 </div>
+<div  *ngIf="gotAttachment && gotAttachment.length">
+  <app-image-viewer  [images]="gotAttachment" 
+  [idContainer]="'idOnHTML'" 
+  [loadOnInit]="true">
+</app-image-viewer>
+</div>
 
-<div class="modal fade top" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
   <div  id="attachmentModelLabel" role="document">
     <div class="modal-content">
       <div class="modal-header purple-gradient-2 ">
@@ -304,12 +317,22 @@ aria-hidden="true">
         </button>
 
       </div>
-     <!--  <div  *ngIf="gotAttachment && gotAttachment.length">
+      <div  *ngIf="gotAttachment && gotAttachment.length">
         <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
       </div>
- -->
     <div  *ngIf="gotAttachment && gotAttachment.length">
       <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
     </div>
+    <div  *ngIf="gotAttachment && gotAttachment.length">
+      <app-image-viewer  [images]="gotAttachment"
+      [idContainer]="'idOnHTML'" 
+      [loadOnInit]="true">
+    </app-image-viewer>
   </div>
 </div>
+</div> -->
+
+
+
+
+
