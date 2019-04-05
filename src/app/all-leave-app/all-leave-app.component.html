@@ -302,6 +302,7 @@ aria-hidden="true">
 <!--/.Content-->
 </div>
 
+
 <div class="modal fade" id="veiwAttach" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
@@ -313,17 +314,15 @@ aria-hidden="true">
     </button>
   </div>
   <div class="modal-body">
+
     <div  *ngIf="gotAttachment && gotAttachment.length">
-      <app-image-viewer  [images]="gotAttachment"
-      [idContainer]="'idOnHTML'" 
-      [loadOnInit]="true">
-    </app-image-viewer>
+      <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
+    </div>
+
+    </div>
   </div>
 </div>
 </div>
-</div>
-</div>
-
 
 
 
