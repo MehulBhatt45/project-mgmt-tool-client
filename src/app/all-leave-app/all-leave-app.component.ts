@@ -46,11 +46,12 @@ export class AllLeaveAppComponent implements OnInit {
   selectedStatus:any;
   comment;
   leaveid;
- 
+
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
   rLeave:boolean = false;
+  title;
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -86,7 +87,7 @@ export class AllLeaveAppComponent implements OnInit {
     // this.getLeaves();
     // this.getApprovedLeaves();
     this.leavesByUserId();
-    this.getAllDevelopers();
+    this.getAllDevelopers(Option);
     this.getAllLeaves();
 
     // this.getRejectedLeaves();
@@ -111,9 +112,23 @@ export class AllLeaveAppComponent implements OnInit {
   //         }
 
       // this.filterTracks(developerId);
+      $("body").click((event)=>{
+        event.stopPropagation();
+        $(".search").removeClass("open");
+      });
     }
-    getApprovedLeaves(){
+
+
+    openSearch(){
+      $(".search .btn").parent(".search").toggleClass("open");
+      $('.search').click((evt)=>{
+        evt.stopPropagation();
+      });
+    }
       
+    getApprovedLeaves(option){
+
+      this.title=option;
       this._leaveService.approvedLeaves().subscribe(res=>{
         console.log("approved leaves",res);
         this.leaveApp = res;
@@ -139,8 +154,8 @@ export class AllLeaveAppComponent implements OnInit {
 
       })
     }
-    getRejectedLeaves(){
-      
+    getRejectedLeaves(option){
+      this.title=option;
       this._leaveService.rejectedLeaves().subscribe(res=>{
         console.log("rejected leaves",res);
         this.leaveApp = res;
@@ -167,10 +182,11 @@ export class AllLeaveAppComponent implements OnInit {
        // this.aLeave = false;
   }
 
-  getLeaves(){
-   
+  getLeaves(option){
+   this.title=option;
     this._leaveService.pendingLeaves().subscribe(res=>{
       this.leaveApp = res;
+      $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
       console.log("data avo joye==========>",this.leaveApp);
       $('#statusAction').show();
       _.map(this.leaveApp, leave=>{
@@ -331,13 +347,13 @@ getAllLeaves(){
   getFilteredLeaves(){
     switch (this.selectedStatus) {
       case "pending":
-      this.getLeaves();
+      this.getLeaves('Pending');
       break;
       case "approved":
-      this.getApprovedLeaves();
+      this.getApprovedLeaves('Approved');
       break;
       case "rejected":
-      this.getRejectedLeaves();
+      this.getRejectedLeaves('Rejected');
       break;        
       default:
       console.log("DEFAULT CASE");
@@ -345,7 +361,8 @@ getAllLeaves(){
     }
   }
 
-    getAllDevelopers(){
+    getAllDevelopers(option){
+    // this.title='Application';
       this._leaveService.getAllDevelopers().subscribe(res=>{
         console.log("function calling===>")
         this.developers = res;
@@ -423,7 +440,7 @@ getAllLeaves(){
             console.log("respondsssssss",res);
             this.acceptedLeave = res;
             console.log("acceptedd===========>",this.acceptedLeave);
-            this.getLeaves();
+            this.getLeaves(Option);
           },(err:any)=>{
             console.log(err);
             Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -466,7 +483,7 @@ getAllLeaves(){
             console.log("respondsssssss",res);
             this.rejectedLeave = res;
             console.log("rejected===========>",this.rejectedLeave);
-            this.getLeaves();
+            this.getLeaves(Option);
           },(err:any)=>{
             console.log(err);
             Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -476,6 +493,7 @@ getAllLeaves(){
     }
 
   filterTracks(developerId){
+    this.title='Application';
     this.getEmptytracks();
     var obj ={ email : developerId};
     console.log("email of login user",obj);
@@ -598,11 +616,12 @@ leavesByUserId(){
 //   console.log("data=====>>",comment);
 // }
 
-leaveById(leaveid){
+leaveById(leaveid, option){
   console.log("leave id=======>>",leaveid);
   this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
     this.singleleave = res[0];
     console.log("single leave",this.singleleave);
+    option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
   },err=>{
     console.log("errrrrrrrrrrrrr",err);
   })
@@ -629,6 +648,7 @@ submitComment(leaveid,comment){
 }
 gotAttachment = [];
 sendAttachment(attechment){
+  console.log("bghuhuh");
   this.gotAttachment = attechment;
 }
 

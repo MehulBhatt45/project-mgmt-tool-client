@@ -1,59 +1,62 @@
-
-<ul class="nav nav-tabs  md-tabs black-text gray" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-  <div class="card_custom z-depth-3">
-   <li class="nav-item active">
-    <div class="leave_icon">
-      <img src="assets/icons/pending.png">
-    </div>
-    <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">Pending Leaves</a>
-  </li>
-</div>
-<div class="card_custom z-depth-3">
-<li class="nav-item">
-  <div class="leave_icon">
-    <img src="assets/icons/approv.png">
-  </div>
-  <a class="nav-link" (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">Accepted Leaves</a>
-</li>
-</div>
-<div class="card_custom z-depth-3">
-<li class="nav-item">
-  <div class="leave_icon">
-    <img src="assets/icons/rejected.png">
-  </div>
-  <a class="nav-link" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">Rejected Leaves</a>
-</li>
-</div>
-<li class="nav-item">
-  <a class="nav-link" (click)="leavesToDisplay=false">
-    <div>
-      <select class="browser-default custom-select custom-select-lg  text-left z-depth-3" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
+<div class="row">
+  <div class="col-md-2 ml-auto mb-3">
+    <a class="nav-link" (click)="leavesToDisplay=false">
+      <select class="browser-default custom-select custom-select-lg  text-left z-depth-3 float-right" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
         <option value="all" selected>All Developer</option>
         <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
       </select>
-    </div>
-  </a>
-</li>
-</ul>
-
-
+    </a>
+  </div>
+</div>
+<div class="row">
+  <ul class="nav md-tabs white-text nav-justified gray" style="width: 100%;" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+    <li class="nav-item col-md-4">
+      <a class="card_custom card_custom_1 z-depth-3" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">
+        <div class="leave_icon">
+          <img src="assets/icons/pending.png">
+        </div>
+        <span class="nav-link">Pending Leaves</span>
+      </a>
+    </li>
+    <li class="nav-item col-md-4">
+      <a class="card_custom card_custom_2 z-depth-3"  (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">
+        <div class="leave_icon">
+          <img src="assets/icons/approv.png">
+        </div>
+        <span class="nav-link">Approved Leaves</span>
+      </a>
+    </li>
+    <li class="nav-item col-md-4">
+      <a class="card_custom card_custom_3 z-depth-3" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">
+        <div class="leave_icon">
+          <img src="assets/icons/rejected.png">
+        </div>
+        <span class="nav-link">Rejected Leaves</span>
+      </a>
+    </li>
+  </ul>
+</div>
 <div class="row justify-content-center" *ngIf="!leavesToDisplay">
   <div class="col-12 col-md-12">
-    <div class="card card-cascade narrower" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
-      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center">
-        <h2 class="white-text mx-3" style=" margin: 0; padding: 10px 0;
-        max-width: calc(100% - 130px)
-        ;">Leave Applications</h2>
-        <div>
+    <div class="card card-cascade narrower mt-11" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
+      <div class="view view-cascade purple-gradient-2 color-block narrower  d-flex justify-content-between align-items-center" [id]="title">
+        <h2 class="white-text margin-auto text-center ml-10" style=" margin: 0; padding: 10px;
+        max-width: calc(100% - 130px);">
+        <img src="assets/icons/leave.png" height="40px" width="40px">{{title}} Leaves</h2>
+        <div style="padding: 10px;">
           <div class="btn-group dropleft  px-2 py-2 ">
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" data-toggle="dropdown" style="border-radius: 48%;" >
-              <i class="fas fa-search mt-0"></i>
-            </button>
+            <div class="search">
+              <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+              <button type="button" class="btn btn-sm px-2" (click)="openSearch()">
+                <i class="fas fa-search mt-0"></i>
+              </button>
+            </div>
+
             <div class="dropdown-menu">
               <div class="md-form form-group active">
-                <i class="fas fa-search prefix"></i>
-                <input type="text" id="exampleForm2" class="form-control " [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
-                <label for="exampleForm2" >Search</label>
+                <!-- <i class="fas fa-search prefix"></i> -->
+                <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+                <!-- <label for="exampleForm2" >Search</label> -->
               </div>
             </div>
           </div>
@@ -104,7 +107,7 @@
                 <td style="width: 56px;">
                   <div class="avatar mx-auto" *ngIf= "leaves.dev">
                     <a routerLink = "/visit-user-profile/{{leaves.dev._id}}">
-                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
+                      <img src="{{path}}{{leaves.dev.profilePhoto}}" onerror="this.src='../assets/man.png'" class=" img-fluid img_content">
                     </a>
                   </div>
                 </td>
@@ -117,51 +120,52 @@
                       [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
                       ></app-image-viewer> -->
                       <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
-                        <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
-                      </span>
+                      <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                     </span>
-                    <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                      <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                    </span>
-                    <span *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</span>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id)">Comment</button>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="modal" data-target="#viewmore" (click)="leaveById(leaves._id)">ViewMore</button>
-                  </td>
-                  <td>
-                    <strong *ngIf="leaves.status=='pending'" style="color: orange;text-transform: uppercase;">{{leaves.status}}</strong>
-                    <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;text-transform: uppercase;">{{leaves.status}}</strong>
-                    <strong *ngIf="leaves.status=='rejected'" style="color: red;text-transform: uppercase;">{{leaves.status}}</strong>
-                  </td>
-                  <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+                  </span>
+                  <!-- <span  *ngIf="leaves.attechment && !leaves.attechment.length">
+                    <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
+                  </span> -->
+                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</p>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-secondary waves-effect" data-toggle="modal" data-target="#centralModalInfo" (click)="leaveById(leaves._id, 'comment')">Comment</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-default waves-effect " data-toggle="modal" data-target="#viewMore" (click)="leaveById(leaves._id, 'view')">Viewmore</button>
+                </td>
+                <td>
+                  <strong *ngIf="leaves.status=='pending'" style="color: orange; background-color: #ffc1074d; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;background-color: #28a74578; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                  <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #efc3c3cc; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
+                </td>
+                <!-- <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td> -->
+                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-
-
-<div class="container">
- <div class="row" *ngIf="leavesToDisplay">
-  <div class="col-sm-5 z-depth-5">
-    <h2 class="text-center pt-2">Total Leaves</h2>
-    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-     <canvas id="pieChart"></canvas>
-  </div>            
-  <div class="col-md-1">
+</div>
+<div class="total_leave">
+  <div class="container">
+   <div class="row" *ngIf="leavesToDisplay">
+    <div class="col-sm-5 z-depth-5">
+      <h2 class="text-center pt-2">Total Leaves</h2>
+      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <canvas id="pieChart"></canvas>
+    </div>            
+    <div class="col-md-1">
+    </div>
+    <div class="col-sm-5 z-depth-5">
+      <h2 class="text-center pt-2">Duration</h2>
+      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <canvas id="pieChart1"></canvas>
+    </div>
   </div>
-  <div class="col-sm-5 z-depth-5">
-    <h2 class="text-center pt-2">Duration</h2>
-    <p class="text-center" *ngIf="leaveApp" style="margin-top: 35px;">{{leaveApp.length}} responses</p>
-    <canvas id="pieChart1"></canvas>
-  </div>
+</div>
 </div>
 
 <!-- Comment Model -->
@@ -198,7 +202,6 @@ aria-hidden="true">
           </div>
         </form>
       </div>
-
       <!--Footer-->
     </div>
     <!--/.Content-->
@@ -207,13 +210,14 @@ aria-hidden="true">
 
 
 
+<!-- View Model -->
 <!-- Comment Model -->
 
-<div class="modal fade" id="viewmore" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="viewMore" tabindex="-1" role="dialog" aria-labelledby="myModalViewMore"
 aria-hidden="true">
-<div class="modal-dialog modal-notify modal-info" role="document">
+<div class="modal-dialog modal-lg" role="document">
   <!--Content-->
-  <div class="modal-content" *ngIf="singleleave">
+  <div class="modal-content" id="myModalViewMore">
     <!--Header-->
     <div class="modal-header purple-gradient-2 ">
       <p class="heading lead text-center">Leave Details</p>
@@ -224,7 +228,7 @@ aria-hidden="true">
     </div>
 
     <!--Body-->
-    <div class="modal-body">
+    <div class="modal-body" *ngIf="singleleave">
       <div class="card card_border padding-10 z-depth-5">
         <div class="container">
           <div class="row">
@@ -300,9 +304,12 @@ aria-hidden="true">
         </button>
 
       </div>
-      <div  *ngIf="gotAttachment && gotAttachment.length">
+     <!--  <div  *ngIf="gotAttachment && gotAttachment.length">
         <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
       </div>
+ -->
+    <div  *ngIf="gotAttachment && gotAttachment.length">
+      <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
     </div>
   </div>
 </div>

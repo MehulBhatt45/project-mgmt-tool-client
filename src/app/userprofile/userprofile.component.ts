@@ -31,6 +31,10 @@ export class UserprofileComponent implements OnInit {
 	projectTeam;
 	Teams;
 	teams;
+	all;
+	item;
+	total:any =[]; 
+	task;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	
@@ -42,7 +46,7 @@ export class UserprofileComponent implements OnInit {
 		this.editTEmail = new FormGroup({
 			subject : new FormControl('', Validators.required),
 			content : new FormControl('', Validators.required),
-			sendTo : new FormControl('', Validators.required),
+			sendTo : new FormControl(['']),
 		})
 	}
 
@@ -55,6 +59,7 @@ export class UserprofileComponent implements OnInit {
 			// this.getAllProjects(this.projectId);
 		});
 		this.createEditEmail();
+		// this.projectSelected(this.item);
 		// this.getAllDevelopers();
 		this.getAllProjects();
 		
@@ -104,14 +109,6 @@ export class UserprofileComponent implements OnInit {
 					this._projectservice.getAllDevelopers().subscribe(res=>{
 						this.developers = res;
 						console.log("Developers",this.developers);
-						// this.developers.sort(function(a, b){
-							// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-							// 	if (nameA < nameB) //sort string ascending
-							// 		return -1 
-							// 	if (nameA > nameB)
-							// 		return 1
-							// 	return 0 //default return value (no sorting)
-							// })
 						},err=>{
 							console.log("Couldn't get all developers ",err);
 							this._alertService.error(err);
@@ -120,44 +117,40 @@ export class UserprofileComponent implements OnInit {
 				openModel(task){
 					$('#editEmailModel').modal('show');
 					this.getProjectByPmanagerId();
-					// this.getProject(projectId);
 				}
 				projectSelected(item){
 					if(item && item._id){
-						console.log(item);
-						console.log(item.Teams);
+						_.forEach(item.Teams,(all)=>{
+							console.log("all",all._id);
+							this.total.push(all._id);
+						})
 						this.teams =item.Teams;
 						console.log(this.teams);
-						// _.forEach(item.Teams[0],(team)=>{
-						// 	this.teams.push(team);
-						// 	console.log(team[0].name);
-						// 	// console.log(item);
-						// })
-						// this.teams = item.Teams[0].name;
-						// console.log(this.teams);
-						// this.loader = true;
+						
 						$(".progress").addClass("abc");
-						// $(".progress .progress-bar").css({"width": '100%'});
 						setTimeout(()=>{
 							// this.loader = false;
 							$(".progress").removeClass("abc");
 							this.task.projectId = item._id;	
 							this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
-							console.log(this.developers);
+							// console.log(this.developers);
 						},3000);
 					}else{
-						this.editTaskForm.reset();
-						this.task = this.getEmptyTask();
+						this.editTEmail.reset();
 					}
 				}
 				getProjectByPmanagerId(){
                 	this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
                 		this.currentUser = res;
                 		console.log("current====>",this.currentUser);
-
                 	})
                 }
 			
+				addNotification(editTEmail){
+					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
+						console.log(res);
+					})
+				}
 					uploadFile(e){
 						console.log("file============>",e.target.files);
 						var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -177,7 +170,6 @@ export class UserprofileComponent implements OnInit {
 							Swal.fire('Oops...', 'Something went wrong!', 'error')
 						});  
 					}
-
 
 				}
 

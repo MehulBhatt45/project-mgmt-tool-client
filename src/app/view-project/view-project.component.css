@@ -336,7 +336,7 @@ a.btn-floating.btn-action i{
     display: none;
      z-index: 999;
      /*background-image: linear-gradient(gray,#31c8cc);*/
-     background-color: #DCDCDC;
+    background-color: #fff;
     height: 300px;
     width: 300px;
     top: 85px;
@@ -350,4 +350,8 @@ a.btn-floating.btn-action i{
 }
 .progress_summary:hover + .summary{
     display: block;
+}
+.dropdown-menu.show {
+    display: block !important;
+    width: 205px !important;
 }
