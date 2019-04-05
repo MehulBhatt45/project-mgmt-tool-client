@@ -524,6 +524,7 @@ export class ProjectDetailComponent implements OnInit {
 				}
 			}
 			this._projectService.addTask(data).subscribe((res:any)=>{
+				console.log("data is======>",data);
 				console.log("response task***++",res);
 				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 				this.getProject(res.projectId);
