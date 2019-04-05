@@ -52,6 +52,7 @@ import { ImageViewerModule } from 'ng2-image-viewer';
 
 
 
+
 //All component for firebase notification
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -68,8 +69,8 @@ import { UserSummaryComponent } from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
-
-
+import { AttendenceComponent } from './attendence/attendence.component';
+import { BacklogComponent } from './backlog/backlog.component';
 @NgModule({
     declarations: [
     AppComponent,
@@ -107,6 +108,8 @@ import { NotificationComponent } from './notification/notification.component';
     ForgotpwdComponent,
     MyleaveComponent,
     NotificationComponent,
+    AttendenceComponent,
+    BacklogComponent,
    ],
 
     imports: [
