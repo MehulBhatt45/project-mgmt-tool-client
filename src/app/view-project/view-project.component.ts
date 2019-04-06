@@ -83,7 +83,7 @@ export class ViewProjectComponent implements OnInit {
     const currentUserId = JSON.parse(localStorage.getItem('currentUser'))._id;
     console.log("currentUser",currentUserId);
     this.messagingService.requestPermission(currentUserId)
-    this.messagingService.receiveMessage()
+    this.messagingService.receiveMessage();
     this.message = this.messagingService.currentMessage
   }
 

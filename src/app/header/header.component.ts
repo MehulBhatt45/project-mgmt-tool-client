@@ -128,7 +128,7 @@ export class HeaderComponent implements OnInit {
 	}
 	projectSelected(item){
 		if(item && item._id){
-			console.log(item);
+			console.log("res-=-=",item);
 			this.loader = true;
 			$(".progress").addClass("abc");
 			// $(".progress .progress-bar").css({"width": '100%'});
@@ -152,7 +152,9 @@ export class HeaderComponent implements OnInit {
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
 			if(this.currentUser.userRole == 'projectManager'){
-				this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+				// console.log("res-=-=",res.pmanagerId._id);
+				// this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id; });
+				this.projects = res;
 				console.log("IN If=========================================",this.projects);
 			}
 			else{
