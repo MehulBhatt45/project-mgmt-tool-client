@@ -70,8 +70,9 @@ export class MessagingService {
         this.angularFireMessaging.messages.subscribe(
           (payload) => {
             console.log("new message received. ", payload);
-            this.currentMessage.next(payload);
-            this.toastr.info('Hello world!', 'Toastr fun!', {
+            // console.log(payload.from);
+            // this.currentMessage.next(payload);
+            this.toastr.info('New Notification', 'payload', {
               disableTimeOut: true,
               closeButton: true
             });
