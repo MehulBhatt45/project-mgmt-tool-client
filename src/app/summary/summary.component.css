@@ -52,7 +52,7 @@
 }
 .img-fluid, .section img, .section .view, .card img {
     display: block;
-    max-width: 45%;
+    max-width: 100%;
     height: auto;
     margin: auto;
    /* margin-left: 20px;
