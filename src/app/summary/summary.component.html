@@ -101,9 +101,9 @@
 					</div> -->
 					<div class="developer_slider row">
 						<div class="single_slide" *ngFor="let user of projectTeam">
-							<div class="card">
+							<!-- <div class="card">
 								<div class="card-body">
-									<!-- <img src="../assets/v_dev.jpg" > -->
+									<img src="../assets/v_dev.jpg" >
 									<div class="card_content">
 										<div class="profile" routerLink="/visit-user-profile/{{user._id}}" style="cursor: pointer;">
 											<img src="../assets/3.png">
@@ -112,9 +112,32 @@
 										<p>Developer</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
+							<article>
+								<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
+									<aside class="four-right two-right three-bottom"></aside>
+									<header>
+										<div class="title">
+											<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+											<p style="margin: 0px;">Developer</p>
+										</div>
+										<div class="blurb">
+											<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+											<p style="margin: 0px;">Developer</p>
+										</div>
+									</header>
+									<div class="content">
+										<div class="image">
+											<div class="profile" routerLink="/visit-user-profile/{{user._id}}" style="cursor: pointer;">
+											<img src="../assets/5.jpg">
+										</div>
+										</div>
+									</div>
+								</a>
+							</article>
 						</div>
 					</div>
+
 					<!-- carousel ends -->
 
 
