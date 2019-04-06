@@ -55,7 +55,7 @@ export class ChildComponent  implements OnInit{
   Teams;
   selectedProjectId = "all";
   selectedDeveloperId = "all";
-  sprints;
+  // sprints;
   
   
 
@@ -71,7 +71,7 @@ export class ChildComponent  implements OnInit{
 
   ngOnInit(){
     console.log(this.tracks, this.developers);
-    this.getSprint(this.projectId);
+    // this.getSprint(this.projectId);
   }
   
   ngOnChanges() {
@@ -473,15 +473,15 @@ export class ChildComponent  implements OnInit{
       });
     }
 
-    getSprint(projectId){
-      this._projectService.getSprint(projectId).subscribe((res:any)=>{
-        console.log("sprints in project detail=====>>>>",res);
-        this.sprints = res;
-      },(err:any)=>{
-        console.log(err);
-      });
+    // getSprint(projectId){
+    //   this._projectService.getSprint(projectId).subscribe((res:any)=>{
+    //     console.log("sprints in project detail=====>>>>",res);
+    //     this.sprints = res;
+    //   },(err:any)=>{
+    //     console.log(err);
+    //   });
 
-    }
+    // }
 
 
 

@@ -53,7 +53,7 @@ export class ProjectDetailComponent implements OnInit {
 	desc;
 	id;
 	projectTeam;
-	sprints;
+	// sprints;
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
@@ -186,7 +186,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getProject(this.id);
+		// this.getProject(this.id);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
@@ -198,7 +198,7 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 		});
 
-		this.getSprint(this.projectId);
+		// this.getSprint(this.projectId);
 	}
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -226,26 +226,26 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
+			this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
 				console.log("title=={}{}{}{}{}",res);
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				this._projectService.getTeamByProjectId(this.projectId).subscribe((res:any)=>{
 					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-						this.projectTeam.push
-						console.log("sort============>"  ,this.projectTeam);
-					})
+					// this.projectTeam.sort(function(a, b){
+					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					// 	if (nameA < nameB) //sort string ascending
+					// 		return -1 
+					// 	if (nameA > nameB)
+					// 		return 1
+					// 	return 0 //default return value (no sorting)
+					// 	this.projectTeam.push
+					// 	console.log("sort============>"  ,this.projectTeam);
+					// })
 
 
 				},(err:any)=>{
@@ -592,13 +592,13 @@ export class ProjectDetailComponent implements OnInit {
 		this.newTask.images.splice(option,1);
 	}
 
-	getSprint(projectId){
-		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			console.log("sprints in project detail=====>>>>",res);
-			this.sprints = res;
-		},(err:any)=>{
-			console.log(err);
-		});
+	// getSprint(projectId){
+	// 	this._projectService.getSprint(projectId).subscribe((res:any)=>{
+	// 		console.log("sprints in project detail=====>>>>",res);
+	// 		this.sprints = res;
+	// 	},(err:any)=>{
+	// 		console.log(err);
+	// 	});
 
-	}
+	// }
 }
