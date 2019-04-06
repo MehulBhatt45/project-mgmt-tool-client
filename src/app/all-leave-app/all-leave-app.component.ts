@@ -62,19 +62,19 @@ export class AllLeaveAppComponent implements OnInit {
 
     this.leavescount = [
     {
-      "typeOfLeave" : "sickleave",
+      "typeOfLeave" : "Sick_Leave",
       "leavesTaken" : Number()
     },
     {
-      "typeOfLeave" : "personalleave",
+      "typeOfLeave" : "Personal_Leave",
       "leavesTaken" : Number()
     },
     {
-      "typeOfLeave" : "leavewithoutpay",
+      "typeOfLeave" : "Leave_WithoutPay",
       "leavesTaken" : Number()
     },
     {
-      "typeOfLeave" : "emergencyleave",
+      "typeOfLeave" : "Emergency_Leave",
       "leavesTaken" : Number()
     },
     {
@@ -149,6 +149,7 @@ export class AllLeaveAppComponent implements OnInit {
                     this.allAproveLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.allAproveLeaves);
                     console.log("applicationsss==>",this.leaveApp);
+
                     this.aLeave = true;
                     this.pLeave = false;
                     this.rLeave = false;
@@ -222,6 +223,23 @@ export class AllLeaveAppComponent implements OnInit {
 
                     this.allLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.leaveApp);
+
+
+                    // var obj = this.singleleave.email;
+                    // this._leaveService.leavesById(obj).subscribe((res:any)=>{
+                    //   console.log("resppppppondssss",res);
+                    //   this.leaves = res;
+                      _.forEach(this.leaveApp , (leave)=>{
+                        _.forEach(this.leavescount , (count)=>{
+                          if(count.typeOfLeave == leave.typeOfLeave){
+                            count.leavesTaken = count.leavesTaken + 1;
+                          }
+                        });
+                      });
+                    // })
+                    
+                    console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                    console.log("leaves count ====>" , this.leavescount);
                     this.pLeave = true;
                     this.aLeave = false;
                     this.rLeave = false;
@@ -402,6 +420,7 @@ export class AllLeaveAppComponent implements OnInit {
                   })
               }
 
+
               leaveAccepted(req){
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
@@ -510,9 +529,9 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title='Application';
                   this.getEmptytracks();
                   var obj ={ email : developerId};
-                  console.log("email of login user",obj);
+                  console.log("email of selected user",obj);
                   this._leaveService.leavesById(obj).subscribe((res:any)=>{
-                    console.log("resppppppondssss",res);
+                    console.log("resppppppondssss from leaves by id",res);
                     this.leaves = res;
                     _.forEach(this.leaves , (leave)=>{
                       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
@@ -534,12 +553,14 @@ export class AllLeaveAppComponent implements OnInit {
                         }
                       });
                       _.forEach(this.leaves , (leave)=>{
+                        console.log("leavess====",leave);
                         _.forEach(this.leavescount , (count)=>{
-                          if(count.typeOfLeave == leave.typeOfLeave){
+                          if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
                             count.leavesTaken = count.leavesTaken + 1;
                           }
                         });
                       });
+
                       console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
                       console.log("leaves count ====>" , this.leavescount);
                     }else{
@@ -636,7 +657,6 @@ export class AllLeaveAppComponent implements OnInit {
                             console.log("leave id=======>>",leaveid);
                             this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
                               this.singleleave = res[0];
-                              console.log("single leave",this.singleleave);
                               option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
                             },err=>{
                               console.log("errrrrrrrrrrrrr",err);
@@ -667,6 +687,7 @@ export class AllLeaveAppComponent implements OnInit {
                           sendAttachment(attechment){
                             console.log("attachment is====>",attechment);
                             this.gotAttachment = attechment;
+                            $('#veiwAttach').modal('show')
                             console.log("gotattechment array ====>",this.gotAttachment);
                           }
 
