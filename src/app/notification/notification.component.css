@@ -1,22 +1,143 @@
-.task li{
-	padding: 20px 10px;
-	border-bottom: 1px solid blue;
-	border-left: 5px solid lightblue;
+/*.task li{
+	border-bottom: 1px solid #2196F3;
+	border-left: 5px solid #8bc1f1;
 }
 .leave li{
-	padding: 20px 10px;
-	border-bottom: 2px solid green;
-	border-left: 5px solid lightgreen;	
+	border-bottom: 1px solid #4CAF50;
+	border-left: 5px solid #9ecea1;	
 }
 .other li{
-	padding: 20px 10px;
-	border-bottom: 2px solid purple;
-	border-left: 5px solid #d272d2;
+	border-bottom: 1px solid #9c27b0;
+	border-left: 5px solid #c58fd0;
 }
 .btn-floating i {
 	font-size: 14px!important;
 }
+.md-pills.pills-info .nav-item .nav-link {
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 36px;
+	background-color: darkgrey;
+	color: #fff;
+}
 p.btn-floating {
-    margin-top: -20px;
-    margin-left: -2px;
+	margin-top: -20px;
+}
+.content p{
+	margin: 0;
+}
+.md-pills.pills-info .nav-item .nav-link.active{
+	text-shadow: 1px 1px 2px #333;
+}
+.md-pills.pills-info .nav-item .nav-link.blue_active.active{
+	background-color: #8bc1f1;
+}
+.md-pills.pills-info .nav-item .nav-link.green_active.active{
+	background-color: #9ecea1;
+}
+.md-pills.pills-info .nav-item .nav-link.purple_active.active{
+	background-color: #c58fd0;
+}
+.tab-pane ul li {
+	margin-top: 10px;
+	background-color: #fff;
+}*/
+.header_top{
+	background-color: lightgray;
+	width: 100%;
+}
+.profile{
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile img{
+	min-width: 100%;
+	min-height: 100%;
+	max-height:100%;
+	max-width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+.profile_dp{
+	border-radius: 50%;
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile_dp img{
+	object-fit: cover;
+}
+.notification ul li{
+	padding: 10px 2px;
+}
+.notification span{
+	font-size: 16px;
+	padding: 3px 6px;
+	border-radius: 4px;
+}
+.notification i{
+	font-size: 25px;
+}
+.content p{
+	margin: 0;
+}
+.content label{
+	color: #b7b2b2;
+	font-size: 14px;
+	margin: 0;
+}
+.task li{
+	border-bottom: 1px solid #2196F3;
+	border-left: 5px solid #8bc1f1;
+}
+.leave li{
+	border-bottom: 1px solid #4CAF50;
+	border-left: 5px solid #9ecea1;	
+}
+.other li{
+	border-bottom: 1px solid #9c27b0;
+	border-left: 5px solid #c58fd0;
+}
+.task span{
+	background-color: #cde8f1;
+	color: #256dde;/*
+	background-color: #0d7fa5;
+    color: #ffffff;*/
+}
+.leave span{
+	background-color: #daf7d0;
+	color: #008a00;
+}
+.other span{
+	background-color: #eecdf7;
+	color: #76008a;
+}
+.task_priority_highest i{
+	color: red;
+}
+.task_priority_high i{
+	color: #ea740a;
+}
+.task_priority_medium i{
+	color: #efbd2c;
+	/*color: #efe900;*/
+}
+.task_priority_low i{
+	color: #9c9cf9;
+}
+.leave_approved i{
+	color: green;
+}
+.leave_rejected i{
+	color: red;	
+}
+.other i{
+	color: purple;
+}
+.task a{
+	background-color: red;
+}
+.task a:visited{
+	background-color: transparent;
 }
