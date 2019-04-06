@@ -28,6 +28,13 @@ export class UserprofileComponent implements OnInit {
 	projectArr = [];
 	finalArr = [];
 	editTEmail;
+	projectTeam;
+	Teams;
+	teams;
+	all;
+	item;
+	total:any =[]; 
+	task;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	
@@ -39,7 +46,7 @@ export class UserprofileComponent implements OnInit {
 		this.editTEmail = new FormGroup({
 			subject : new FormControl('', Validators.required),
 			content : new FormControl('', Validators.required),
-			sendTo : new FormControl('', Validators.required),
+			sendTo : new FormControl(['']),
 		})
 	}
 
@@ -48,14 +55,14 @@ export class UserprofileComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.userId = param.id;
 			this.projectId = param.id;
-			this.getDeveloperById(this.userId);
+			// this.getDeveloperById(this.userId);
 			// this.getAllProjects(this.projectId);
 		});
 		this.createEditEmail();
-		this.getAllDevelopers();
+		// this.projectSelected(this.item);
+		// this.getAllDevelopers();
 		this.getAllProjects();
 		
-
 	}
 	getAllProjects(){
 		this._projectservice.getProjects().subscribe(res=>{
@@ -66,9 +73,15 @@ export class UserprofileComponent implements OnInit {
 			// console.log("project detail===>>>>",this.pro);
 			this.projects = res;
 			console.log(this.projects);
+			console.log(this.projects[0].pmanagerId._id);
+			// if (projects[0].) {
+				
+			// }
+			// console.log("team===>",this.projects[0].Teams);
 			_.forEach(this.projects , (task)=>{
 				_.forEach(task.Teams , (project)=>{
 					if(project._id == userId){
+
 						this.projectArr.push(task);
 					}
 				})
@@ -82,63 +95,83 @@ export class UserprofileComponent implements OnInit {
 			console.log(err);
 		})
 	}
+	// getDeveloperById(id){
+		// 	this._loginService.getUserById(id).subscribe((res:any)=>{
+			// 		this.currentUser = res;
+			// 		console.log("current user =============>",res);
+			// 		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			// 		console.log(" currentUser  ====>" , userId);
+			// 	},(err:any)=>{
+				// 	})
+				// }
 
-	getDeveloperById(id){
-		console.log("id=>>>",id);
-		this._loginService.getUserById(id).subscribe((res:any)=>{
-			this.currentUser = res;
-			console.log("current user =============>",res);
-			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			// console.log(" currentUser  ====>" , userId);
-		},(err:any)=>{
-			console.log("eroooooor=========>",err);
-		})
-	}
+				getAllDevelopers(){
+					this._projectservice.getAllDevelopers().subscribe(res=>{
+						this.developers = res;
+						console.log("Developers",this.developers);
+						},err=>{
+							console.log("Couldn't get all developers ",err);
+							this._alertService.error(err);
+						})
+				}
+				openModel(task){
+					$('#editEmailModel').modal('show');
+					this.getProjectByPmanagerId();
+				}
+				projectSelected(item){
+					if(item && item._id){
+						_.forEach(item.Teams,(all)=>{
+							console.log("all",all._id);
+							this.total.push(all._id);
+						})
+						this.teams =item.Teams;
+						console.log(this.teams);
+						
+						$(".progress").addClass("abc");
+						setTimeout(()=>{
+							// this.loader = false;
+							$(".progress").removeClass("abc");
+							this.task.projectId = item._id;	
+							this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
+							// console.log(this.developers);
+						},3000);
+					}else{
+						this.editTEmail.reset();
+					}
+				}
+				getProjectByPmanagerId(){
+                	this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
+                		this.currentUser = res;
+                		console.log("current====>",this.currentUser);
+                	})
+                }
+			
+				addNotification(editTEmail){
+					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
+						console.log(res);
+					})
+				}
+					uploadFile(e){
+						console.log("file============>",e.target.files);
+						var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+						console.log("userId===============>",userId);
+						this.files = e.target.files;
+						console.log("files===============>",this.files);
+						this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+							console.log("resss=======>",res);
+							Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
 
-	getAllDevelopers(){
-		this._projectservice.getAllDevelopers().subscribe(res=>{
-			this.developers = res;
-			console.log("Developers",this.developers);
-			// this.developers.sort(function(a, b){
-				// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				// 	if (nameA < nameB) //sort string ascending
-				// 		return -1 
-				// 	if (nameA > nameB)
-				// 		return 1
-				// 	return 0 //default return value (no sorting)
-				// })
-			},err=>{
-				console.log("Couldn't get all developers ",err);
-				this._alertService.error(err);
-			})
-	}
+							setTimeout(()=>{
+								this.currentUser = res;
+								localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+							},1000);
+						},error=>{
+							console.log("errrorrrrrr====>",error);
+							Swal.fire('Oops...', 'Something went wrong!', 'error')
+						});  
+					}
 
-	openModel(task){
-		$('#editEmailModel').modal('show');
-	}
-
-	uploadFile(e){
-		console.log("file============>",e.target.files);
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("userId===============>",userId);
-		this.files = e.target.files;
-		console.log("files===============>",this.files);
-		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
-			console.log("resss=======>",res);
-			Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
-
-			setTimeout(()=>{
-				this.currentUser = res;
-				localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-			},1000);
-		},error=>{
-			console.log("errrorrrrrr====>",error);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		});  
-	}
-
-	
-}
+				}
 
 
 

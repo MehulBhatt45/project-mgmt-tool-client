@@ -29,8 +29,10 @@ import {SummaryComponent} from './summary/summary.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { UserSummaryComponent} from './user-summary/user-summary.component';
 import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
-import {MyleaveComponent} from './myleave/myleave.component';
-
+import { MyleaveComponent } from './myleave/myleave.component';
+import { NotificationComponent } from './notification/notification.component';
+import {BacklogComponent} from './backlog/backlog.component';
+import { AttendenceComponent } from './attendence/attendence.component';
 
 
 
@@ -66,6 +68,10 @@ const routes: Routes = [
 		{
 			path:'noticeboard',
 			component:NoticeboardComponent
+		},
+		{
+			path:'backlog/:id',
+			component:BacklogComponent
 		},
 		{
 			path:'myleave',
@@ -180,6 +186,14 @@ const routes: Routes = [
 			pathMatch: "full",
 			component:UserSummaryComponent
 		},
+		{
+			path:'notification',
+			component:NotificationComponent
+		},
+		{
+			path:'attendence',
+			component:AttendenceComponent
+		}
 		]
 
 	}];

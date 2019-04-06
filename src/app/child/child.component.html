@@ -1,6 +1,5 @@
+
 <!-- Task Details Card -->
-
-
 
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
@@ -28,7 +27,7 @@
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
 											<!-- <div>{{task.createdAt}}</div> -->
-											<div>{{task.dueDate}}</div>
+											<!-- <div>{{task.dueDate}}</div> -->
 											<!-- <div>{{task.createdAt | timeAgo }}</div> -->
 										</td>
 									</tr>
@@ -143,6 +142,10 @@
 								<p *ngIf="task.dueDate">
 									<label><strong>DueDay: &nbsp;</strong></label>
 									<span>{{task.dueDate | date:'short'}}</span>
+								</p>
+								<p *ngIf="task.sprint">
+									<label><strong>Sprint: &nbsp;</strong></label>
+									<span>{{task.sprint.title}}</span>
 								</p>
 							</div>
 
@@ -291,6 +294,15 @@
 									<option value="3">Medium</option>
 									<option value="2">High</option>
 									<option value="1">Highest</option>
+								</select>
+							</div>
+							<div class="form-group col-12">
+								<label for="assignTo">Sprint</label>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
 								</select>
 							</div>
 							<div class="form-group col-6">

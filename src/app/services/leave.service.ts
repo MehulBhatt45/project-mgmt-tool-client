@@ -59,7 +59,7 @@ export class LeaveService {
 	}
 
 	leaveByUserId(useremail){
-
+		console.log('useremail============>',useremail);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
@@ -143,4 +143,39 @@ export class LeaveService {
 	}
 
 
+
+
+// Attendence service
+
+
+checkIn(Data){
+	var obj = {userId:Data};
+	console.log("data of checkin student service",Data);
+	const httpOptions = {
+		headers: new HttpHeaders({
+			'content-Type':'application/json',
+			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		})
+	};
+	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+}
+checkOut(Data){
+	var obj = {userId:Data};
+	console.log("data of checkout ",Data);
+	const httpOption = {
+		headers: new HttpHeaders({
+			'content-type': 'application/json',
+			'x-access-token': JSON.parse(localStorage.getItem('token'))
+		})
+	};
+	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+}
+
+empAttendence(date){
+	var obj = {date: date,
+		user_Id : JSON.parse(localStorage.getItem("currentUser"))._id,
+	};
+	console.log("event of emp service",obj);
+	return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
+}
 }

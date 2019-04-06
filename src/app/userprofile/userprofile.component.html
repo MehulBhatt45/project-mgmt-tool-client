@@ -26,20 +26,20 @@
 							<a class="nav-link" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
 							aria-selected="false">Projects</a>
 						</li>
-								<!-- <li class="nav-item">
-									<a class="nav-link" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress"
-									aria-selected="false">Progress</a>
-								</li> -->
-							</ul>
-							<div class="tab-content" id="myTabContent">
-								<div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
-									<div class="card about_detail" style="border-radius: 5px;">
-										<h5 class="text-bold">{{currentUser.name | uppercase}}</h5>
-										<span><i class="fas fa-envelope"></i> <label class="txt_label">{{currentUser.email}}</label></span>
-										<span><i class="fas fa-user-alt"></i><label class="txt_label">{{currentUser.userRole}}</label></span>
-										<span><label class="txt_label"> Other details </label></span>
-										<button type="button" class="btn btn-default" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="far fa-edit"></i> Edit profile</button>
-									</div>
+						<li class="nav-item">
+							<a class="nav-link" id="notify-tab" data-toggle="tab" href="#myModalLabel" role="tab" aria-controls="notify" (click)="openModel('task')"
+							aria-selected="false">Notify</a>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+							<div class="card about_detail" style="border-radius: 5px;">
+								<h5 class="text-bold">{{currentUser.name | uppercase}}</h5>
+								<span><i class="fas fa-envelope"></i> <label class="txt_label">{{currentUser.email}}</label></span>
+								<span><i class="fas fa-user-alt"></i><label class="txt_label">{{currentUser.userRole}}</label></span>
+								<span><label class="txt_label"> Other details </label></span>
+								<button type="button" class="btn btn-default" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="far fa-edit"></i> Edit profile</button>
+							</div>
 							<!-- <div *ngIf="currentUser.userRole == 'admin'">
 								<button class="btn btn-default" (click)="openModel($event)">Notify</button>	
 							</div> -->
@@ -116,33 +116,63 @@
 			<div class="modal-body">
 				<div class="row">
 					<form style="width: 100%;" [formGroup]="editTEmail">
+						<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+							<ng-template ng-label-tmp let-item="item" let-clear="clear">
+								<span class="ng-value-label">{{item.title}}</span>
+								<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+							</ng-template>
+							<div class="row">
+								<ng-template ng-option-tmp let-item="item">
+									<div class="card testimonial-card">
+										<div class="card-up deep-purple lighten-2"></div>
+										<!-- <div class="avatar white img_section">
+											<img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+										</div> -->
+										<div class="card-body">
+											<h5 class="card-title mt-1">{{item.title}}</h5>
+											<h6 class="card-title">{{item.uniqueId}}</h6>
+										</div>
+									</div>
+								</ng-template>
+							</div>
+						</ng-select>
 						<div class="form-group col-12">
 							<div class="form-group">
 								<div class="md-form">
-									<input type="text" id="inputMDEx" class="form-control">
 									<label for="inputMDEx">Subject</label>
+									<input type="text" id="inputMDEx" class="form-control"formControlName="subject">
 								</div>
 							</div>
 						</div>
 						<div class="form-group col-12">
 							<div class="form-group">
 								<div class="md-form">
-									<input type="text" id="inputMDEx" class="form-control">
 									<label for="inputMDEx">Content</label>
+									<input type="text" id="inputMDEx" class="form-control"formControlName="content">
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-12 ">
+						<div class="form-group col-12">
 							<label for="inputMDEx">Send To</label>
-							<select class="browser-default custom-select custom-select-lg mb-3" id="sendTo" formControlName="sendTo" >
-								<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+							<select class="browser-default custom-select custom-select-lg mb-3"  *ngIf="teams"  id="sendTo" formControlName="sendTo" >
+								<option value="{{this.total}}" selected>All Team</option>
+								<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
 							</select>
+							<!-- <div class="form-group col-12 col-lg-6 pt-1">
+								<label for="assignTo">Assign To</label>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+								</select>
+							</div> -->
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default btn-lg">Send</button>
+				<button type="button" class="btn btn-default btn-lg" (click)="addNotification(editTEmail)">Send</button>
 			</div>
 		</div>
 	</div>

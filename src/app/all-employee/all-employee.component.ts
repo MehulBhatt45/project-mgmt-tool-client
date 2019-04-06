@@ -71,14 +71,17 @@ export class AllEmployeeComponent implements OnInit {
 			this.developers = res;
 			this.filteredDevelopers = res;
 			console.log("dev()()",this.developers);
+			
 			// this.addEmployeeForm = res;
 			this.developers.sort(function(a, b){
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
+				if (a.name && b.name) {
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+				}
 			})
 			console.log("Developers",this.developers);
 		},err=>{
@@ -129,6 +132,12 @@ export class AllEmployeeComponent implements OnInit {
 
 				});
 				this.filteredTeams = this.developers;
+				setTimeout(()=>{
+					console.log("rotate js--------------------")
+					$('a.rotate-btn').click(function () {
+						$(this).parents(".card-rotating").toggleClass('flipped');
+					});
+				},2000);
 			})
 			this.searchFlag = true;
 		} else{

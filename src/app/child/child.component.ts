@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
@@ -33,7 +33,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+  newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
   modalTitle;3
   project;
   tasks;
@@ -55,21 +55,29 @@ export class ChildComponent  implements OnInit{
   Teams;
   selectedProjectId = "all";
   selectedDeveloperId = "all";
+  sprints;
   
   
 
-  constructor( private route: ActivatedRoute,public _projectService: ProjectService,public _commentService: CommentService) { 
+  constructor( private route: ActivatedRoute,public _projectService: ProjectService,
+    public _commentService: CommentService, public _change: ChangeDetectorRef) { 
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
     this.getProject(this.projectId);
-
+    // console.log(this.tracks);
   }
 
   ngOnInit(){
-    console.log(this.tracks, this.developers);
+    this.getSprint(this.projectId);
   }
+  
+  ngOnChanges() {
+    this._change.detectChanges();
+    console.log("ngOnChanges()  ===============================",this.tracks);
+  }
+
   
   getEmptyTracks(){
     this.tracks = [
@@ -137,6 +145,7 @@ export class ChildComponent  implements OnInit{
       title : new FormControl('', Validators.required),
       desc : new FormControl('', Validators.required),
       assignTo : new FormControl('', Validators.required),
+      sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
       startDate : new FormControl('', Validators.required),
       dueDate : new FormControl('', Validators.required),
@@ -145,7 +154,6 @@ export class ChildComponent  implements OnInit{
       estimatedTime : new FormControl()
     })
   }
-
 
   getTitle(name){
     if(name){
@@ -176,7 +184,6 @@ export class ChildComponent  implements OnInit{
   onTalkDrop(event){
     this.talkDrop.emit(event);
   }
-
   ondrag(task){
     console.log(task);
   }
@@ -265,6 +272,8 @@ export class ChildComponent  implements OnInit{
     console.log("newTask",this.newTask);
     console.log("title===>",this.newTask.title);
     console.log("title2===>",this.newTask.assignTo);
+    console.log("title3===>",this.newTask.sprint);
+
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
@@ -273,12 +282,14 @@ export class ChildComponent  implements OnInit{
 
   updateTask(task){
     task.assignTo = this.editTaskForm.value.assignTo;
+    task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
     let data = new FormData();
     data.append('projectId', task.projectId);
     data.append('title', task.title);
     data.append('desc', task.desc);
     data.append('assignTo', task.assignTo);
+    data.append('sprint' , task.sprint);
     data.append('priority', task.priority);
     data.append('dueDate', task.dueDate);
     data.append('estimatedTime', task.estimatedTime);
@@ -307,7 +318,7 @@ export class ChildComponent  implements OnInit{
 
   }
   getEmptyTask(){
-    return { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+    return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
 
   updateStatus(newStatus, data){
@@ -324,7 +335,7 @@ export class ChildComponent  implements OnInit{
       console.log("UniqueId", data.uniqueId);
       this._projectService.updateStatus(data).subscribe((res:any)=>{
         console.log(res);
-        this.getProject(res.projectId);
+        // this.getProject(res.projectId);
       },(err:any)=>{
 
         console.log(err);
@@ -366,14 +377,16 @@ export class ChildComponent  implements OnInit{
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
+            if (a.name && b.name) {
+              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+              if (nameA < nameB) //sort string ascending
+                return -1 
+              if (nameA > nameB)
+                return 1
+              return 0 //default return value (no sorting)
+              this.projectTeam.push
+              console.log("sorting============>"  ,this.projectTeam);
+            }
           })
 
 
@@ -414,54 +427,64 @@ export class ChildComponent  implements OnInit{
       })
     },1000);
     // function custom_sort(a, b) {
-    //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    // }
-  }
-  saveTheData(task){
-    this.loader = true;
-    console.log("projectId=========>",this.pro._id);
-    console.log(task);
-    task['projectId']= this.pro._id;
-    task.priority = Number(task.priority); 
-    task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-    task.startDate = $("#startDate").val();
-    task.estimatedTime = $("#estimatedTime").val();
-    console.log("estimated time=====>",task.estimatedTime);
-    task.images = $("#images").val();
-    console.log("images====>",task.images);
-    console.log(task.dueDate);
-    task.dueDate = moment().add(task.dueDate,'days').toString();
-    task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-    console.log(task);
-    let data = new FormData();
-    _.forOwn(task, function(value, key) {
-      data.append(key, value)
-    });
-    if(this.files.length>0){
-      for(var i=0;i<this.files.length;i++){
-        data.append('fileUpload', this.files[i]);  
-      }
+      //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      // }
     }
-    this._projectService.addTask(data).subscribe((res:any)=>{
-      console.log("response task***++",res);
-      Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-      this.getProject(res.projectId);
-      $('#save_changes').attr("disabled", false);
-      $('#refresh_icon').css('display','none');
-      $('#itemManipulationModel').modal('hide');
-      this.newTask = this.getEmptyTask();
-      this.editTaskForm.reset();
-      this.files = this.url = [];
-      // this.assignTo.reset();
-      this.loader = false;
-    },err=>{
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-      //$('#alert').css('display','block');
-      console.log("error========>",err);
-    });
+    saveTheData(task){
+      this.loader = true;
+      console.log("projectId=========>",this.pro._id);
+      console.log(task);
+      task['projectId']= this.pro._id;
+      task.priority = Number(task.priority); 
+      task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+      task.startDate = $("#startDate").val();
+      task.estimatedTime = $("#estimatedTime").val();
+      console.log("estimated time=====>",task.estimatedTime);
+      task.images = $("#images").val();
+      console.log("images====>",task.images);
+      console.log(task.dueDate);
+      task.dueDate = moment().add(task.dueDate,'days').toString();
+      task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+      console.log(task);
+      let data = new FormData();
+      _.forOwn(task, function(value, key) {
+        data.append(key, value)
+      });
+      if(this.files.length>0){
+        for(var i=0;i<this.files.length;i++){
+          data.append('fileUpload', this.files[i]);  
+        }
+      }
+      this._projectService.addTask(data).subscribe((res:any)=>{
+        console.log("response task***++",res);
+        Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+        this.getProject(res.projectId);
+        $('#save_changes').attr("disabled", false);
+        $('#refresh_icon').css('display','none');
+        $('#itemManipulationModel').modal('hide');
+        this.newTask = this.getEmptyTask();
+        this.editTaskForm.reset();
+        this.files = this.url = [];
+        // this.assignTo.reset();
+        this.loader = false;
+      },err=>{
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+        //$('#alert').css('display','block');
+        console.log("error========>",err);
+      });
+    }
+
+    getSprint(projectId){
+      this._projectService.getSprint(projectId).subscribe((res:any)=>{
+        console.log("sprints in project detail=====>>>>",res);
+        this.sprints = res;
+      },(err:any)=>{
+        console.log(err);
+      });
+
+    }
+
+
+
+
   }
-
- 
-
-
-}
