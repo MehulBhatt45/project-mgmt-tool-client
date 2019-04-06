@@ -183,3 +183,6 @@ select.browser-default {
 .task a:visited{
 	background-color: transparent;
 }
+.unread{
+	background-color: #f1eaff;
+}
