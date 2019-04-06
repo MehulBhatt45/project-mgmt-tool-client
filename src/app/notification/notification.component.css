@@ -1,47 +1,89 @@
-/*.task li{
-	border-bottom: 1px solid #2196F3;
-	border-left: 5px solid #8bc1f1;
+.dropdown-menu{
+	background-color: transparent;
+	box-shadow: none; 
+	padding: 10px;
+	float: right;
+	top: -30px!important;
+	left: -24px!important;
 }
-.leave li{
-	border-bottom: 1px solid #4CAF50;
-	border-left: 5px solid #9ecea1;	
+.nav-tabs {
+	border: 0;
+	padding: 0.7rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	margin-bottom: 30px;
+	z-index: 2;
+	position: relative;
 }
-.other li{
-	border-bottom: 1px solid #9c27b0;
-	border-left: 5px solid #c58fd0;
+.deep-purple img{
+	color: white !important;
 }
-.btn-floating i {
-	font-size: 14px!important;
+h6{
+	font-size: 16px;
+	color: purple;
+	font-weight: bolder;
 }
-.md-pills.pills-info .nav-item .nav-link {
-	font-size: 24px;
-	font-weight: 600;
-	line-height: 36px;
-	background-color: darkgrey;
-	color: #fff;
+.modal-header{
+	margin: -25px 16px 0px 16px;
+	color: white;
 }
-p.btn-floating {
-	margin-top: -20px;
+.card_border{
+	border: 4px solid #b670df;
 }
-.content p{
+.footer_1{
+	background-color: lightblue;
+	padding: 0px;
+}
+
+.leaveInfo{
+	text-align: center;
+}
+.btn-primary{
+	background-color: 
+}
+
+.leaveInfo p{
 	margin: 0;
 }
-.md-pills.pills-info .nav-item .nav-link.active{
-	text-shadow: 1px 1px 2px #333;
+
+.leaveHeading{
+	margin: 20px;
+	font-weight: bold;
+	padding: 10px;
 }
-.md-pills.pills-info .nav-item .nav-link.blue_active.active{
-	background-color: #8bc1f1;
+.leaveCount{
+	padding: 0px;	
 }
-.md-pills.pills-info .nav-item .nav-link.green_active.active{
-	background-color: #9ecea1;
+.nav-item{
+	padding: 0px 0px;
 }
-.md-pills.pills-info .nav-item .nav-link.purple_active.active{
-	background-color: #c58fd0;
+.leave_icon img{
+	height: 30px;
+	width: 30px;
+}
+select.browser-default {
+	display: block;
+	margin: 25px 0px;
+}
+.card_custom{
+	width: 20%;
+	border-radius: 3px;
+	background-image: linear-gradient(#00dbc7,#238388);
+	padding: 10px;
+	margin-right: 117px;
+	margin-left: 23px;
+	text-align: center;
+}
+
+.task li{
+	padding: 20px 10px;
+	border-bottom: 1px solid blue;
+	border-left: 5px solid lightblue;
 }
 .tab-pane ul li {
 	margin-top: 10px;
 	background-color: #fff;
-}*/
+}
 .header_top{
 	background-color: lightgray;
 	width: 100%;
@@ -103,7 +145,7 @@ p.btn-floating {
 	background-color: #cde8f1;
 	color: #256dde;/*
 	background-color: #0d7fa5;
-    color: #ffffff;*/
+	color: #ffffff;*/
 }
 .leave span{
 	background-color: #daf7d0;
