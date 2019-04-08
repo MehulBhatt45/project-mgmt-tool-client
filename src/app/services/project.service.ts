@@ -284,7 +284,12 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"tasks/add-task", data);
 	}
 	getTaskById(id){
+
+		var id = id;
+
+		console.log("idddd=====>",id);
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+
 	}
 
 	getTeamByProjectId(id){
@@ -405,119 +410,119 @@ export class ProjectService {
 		}
 
 		// getTeamByProjectId(id){
-		// 	var projectId = id;
-		// 	return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
-		// }	
-		// addUser_with_file(body,files:any){
-		// 	console.log("fhvg=>",files);
-		// 	console.log("bodyyyyyyyyy===>",body);
-		// 	let formdata = new FormData();
-		// 	formdata.append('fname',body.fname);
-		// 	formdata.append('lname',body.lname);
-		// 	formdata.append('email',body.email);
-		// 	formdata.append('userRole',body.userRole);
-		// 	formdata.append('password',body.password);
-		// 	formdata.append('joiningDate',body.date);
-		// 	formdata.append('phone',body.mobile);
-		// 	formdata.append('experience',body.experience);
-		// 	formdata.append('profilePhoto',files[0]);
-		// 	formdata.append("profilePhoto",files[1]);
-		// 	// for(var i =0; i < files.length; i++){
-		// 		// 	formdata.append("uploadFile",files[i]);
-		// 		// }
-		// 		console.log("body===>>>",body);
+			// 	var projectId = id;
+			// 	return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
+			// }	
+			// addUser_with_file(body,files:any){
+				// 	console.log("fhvg=>",files);
+				// 	console.log("bodyyyyyyyyy===>",body);
+				// 	let formdata = new FormData();
+				// 	formdata.append('fname',body.fname);
+				// 	formdata.append('lname',body.lname);
+				// 	formdata.append('email',body.email);
+				// 	formdata.append('userRole',body.userRole);
+				// 	formdata.append('password',body.password);
+				// 	formdata.append('joiningDate',body.date);
+				// 	formdata.append('phone',body.mobile);
+				// 	formdata.append('experience',body.experience);
+				// 	formdata.append('profilePhoto',files[0]);
+				// 	formdata.append("profilePhoto",files[1]);
+				// 	// for(var i =0; i < files.length; i++){
+					// 		// 	formdata.append("uploadFile",files[i]);
+					// 		// }
+					// 		console.log("body===>>>",body);
 
 
 
-		// 		return this.http.post(config.baseApiUrl+"user/signup",formdata);
+					// 		return this.http.post(config.baseApiUrl+"user/signup",formdata);
 
-		// 	}
-		// 	addProject_Without_file(body){
-		// 		console.log("addproject2 is calling");
-		// 		console.log("body====>>",body);
-		// 		const httpOptions = {
-		// 			headers: new HttpHeaders({
-		// 				'Content-Type':  'application/json',
-		// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-		// 			})
-		// 		};
-		// 		return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
+					// 	}
+					// 	addProject_Without_file(body){
+						// 		console.log("addproject2 is calling");
+						// 		console.log("body====>>",body);
+						// 		const httpOptions = {
+							// 			headers: new HttpHeaders({
+								// 				'Content-Type':  'application/json',
+								// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+								// 			})
+								// 		};
+								// 		return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
 
-		// 	}
-		// 	deleteTaskById(data){
-		// 		var taskId = data._id;
-		// 		const httpOptions = {
-		// 			headers: new HttpHeaders({
-		// 				'Content-Type':  'application/json',
-		// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-		// 			})
-		// 		};
-		// 		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
-		// 	}
-		// 	uploadFilesToFolder(data, file: FileList){
-		// 		console.log(data);
-		// 		let formData = new FormData();
-		// 		formData.append("userId",data);
-		// 		formData.append("uploadFile",file[0]);
-		// 		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
-		// 	}
-		// 	//update employee profile (allemployee.component.ts) -adminSide
-		// 	updateUserById(data){
-		// 		var id = data._id;
-		// 		const httpOptions = {
-		// 			headers: new HttpHeaders({
-		// 				'Content-Type':  'application/json',
-		// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-		// 			})
-		// 		};
-		// 		return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
-		// 	}
+								// 	}
+								// 	deleteTaskById(data){
+									// 		var taskId = data._id;
+									// 		const httpOptions = {
+										// 			headers: new HttpHeaders({
+											// 				'Content-Type':  'application/json',
+											// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+											// 			})
+											// 		};
+											// 		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
+											// 	}
+											// 	uploadFilesToFolder(data, file: FileList){
+												// 		console.log(data);
+												// 		let formData = new FormData();
+												// 		formData.append("userId",data);
+												// 		formData.append("uploadFile",file[0]);
+												// 		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
+												// 	}
+												// 	//update employee profile (allemployee.component.ts) -adminSide
+												// 	updateUserById(data){
+													// 		var id = data._id;
+													// 		const httpOptions = {
+														// 			headers: new HttpHeaders({
+															// 				'Content-Type':  'application/json',
+															// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+															// 			})
+															// 		};
+															// 		return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+															// 	}
 
-		// 	getUsersNotInProject(id){
-		// 		return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
-		// 	}
+															// 	getUsersNotInProject(id){
+																// 		return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
+																// 	}
 
-		// 	getAllProjectManagerNotInProject(id){
-		// 		return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
-		// 	}
-
-
-
-		// 	deleteEmployeeById(developerid){
-		// 		console.log("devloperId{}{}{}-===",developerid);
-		// 		return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
-		// 	}
+																// 	getAllProjectManagerNotInProject(id){
+																	// 		return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
+																	// 	}
 
 
-		// 	changeNoticePicture(files: any, data){
-		// 		console.log("file is=================>",files);
-		// 		console.log("data is ============>",data);
-		// 		let formdata = new FormData();
-		// 		formdata.append("noticeid",data);
-		// 		formdata.append("profilePhoto",files[0]);
-		// 		console.log("file is===>>>",files[0]);
-		// 		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-		// 	}
 
-			getProjectByPmanagerId(pmanagerId){
-				console.log("pmanagerId=====>",pmanagerId);
-	          return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+																	// 	deleteEmployeeById(developerid){
+																		// 		console.log("devloperId{}{}{}-===",developerid);
+																		// 		return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
+																		// 	}
 
-			}
 
-			addNotification(body){
-				
+																		// 	changeNoticePicture(files: any, data){
+																			// 		console.log("file is=================>",files);
+																			// 		console.log("data is ============>",data);
+																			// 		let formdata = new FormData();
+																			// 		formdata.append("noticeid",data);
+																			// 		formdata.append("profilePhoto",files[0]);
+																			// 		console.log("file is===>>>",files[0]);
+																			// 		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
+																			// 	}
 
-				let formdata = new FormData();
-		         formdata.append('subject',body.subject);
-		         formdata.append('content',body.content);
-		         formdata.append('sendTo',body.sendTo);
-		         return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
+																			getProjectByPmanagerId(pmanagerId){
+																				console.log("pmanagerId=====>",pmanagerId);
+																				return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
 
-			}
+																			}
 
-		deleteSprint(sprintId){
-			console.log("sprint in service",sprintId);
-			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-		}
-	}
+																			addNotification(body){
+																				
+
+																				let formdata = new FormData();
+																				formdata.append('subject',body.subject);
+																				formdata.append('content',body.content);
+																				formdata.append('sendTo',body.sendTo);
+																				return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
+
+																			}
+
+																			deleteSprint(sprintId){
+																				console.log("sprint in service",sprintId);
+																				return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
+																			}
+																		}
