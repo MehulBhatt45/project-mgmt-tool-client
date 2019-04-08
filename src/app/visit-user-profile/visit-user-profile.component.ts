@@ -103,6 +103,7 @@ export class VisitUserProfileComponent implements OnInit {
 			)},(err:any)=>{
 				console.log("eroooooor=========>",err);
 			})
+		
 	}
 	leaveByUserId(id){
 		this._loginService.getUserById(id).subscribe((res:any)=>{
