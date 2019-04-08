@@ -56,6 +56,7 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   sprints;
+  assignTo;
   
   
 
@@ -66,13 +67,11 @@ export class ChildComponent  implements OnInit{
     });
     this.createEditTaskForm();      
     this.getProject(this.projectId);
-    this.getTasks();
     // console.log(this.tracks);
   }
-  
 
   ngOnInit(){
-    this.getSprint(this.projectId);
+    // this.getSprint(this.projectId);
   }
   
   ngOnChanges() {
@@ -147,7 +146,7 @@ export class ChildComponent  implements OnInit{
       title : new FormControl('', Validators.required),
       desc : new FormControl('', Validators.required),
       assignTo : new FormControl('', Validators.required),
-      sprint :new FormControl('',Validators.required),
+      // sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
       startDate : new FormControl('', Validators.required),
       dueDate : new FormControl('', Validators.required),
@@ -399,7 +398,8 @@ export class ChildComponent  implements OnInit{
         console.log("err of project============>"  ,err);
       });
 
-      this._projectService.getTaskById(id).subscribe((res:any)=>{
+      console.log("current user ===>" , this.projectId);
+      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
@@ -448,6 +448,9 @@ export class ChildComponent  implements OnInit{
       task.dueDate = moment().add(task.dueDate,'days').toString();
       task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
       console.log(task);
+      if(task.sprint){
+        delete task['sprint'];
+      }
       let data = new FormData();
       _.forOwn(task, function(value, key) {
         data.append(key, value)
@@ -476,91 +479,17 @@ export class ChildComponent  implements OnInit{
       });
     }
 
-    getSprint(projectId){
-      this._projectService.getSprint(projectId).subscribe((res:any)=>{
-        console.log("sprints in project detail=====>>>>",res);
-        this.sprints = res;
-      },(err:any)=>{
-        console.log(err);
-      });
+    // getSprint(projectId){
+    //   this._projectService.getSprint(projectId).subscribe((res:any)=>{
+    //     console.log("sprints in project detail=====>>>>",res);
+    //     this.sprints = res;
+    //   },(err:any)=>{
+    //     console.log(err);
+    //   });
 
-    }
-    // getTasks(id){
-      //   this.loader = true;
-      //   setTimeout(()=>{
-        //     this._projectService.getTaskById(id).subscribe((res:any)=>{
-          //       console.log("huhfdfdbbhfef");
-          //       console.log("all response ======>" , res);
-          //       this.getEmptyTracks();
-          //       this.project = res;
-          //       console.log("PROJECT=================>", this.project);
-          //       _.forEach(this.project , (task)=>{
-            //         _.forEach(this.tracks , (track)=>{
-              //           if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-                //             if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-                  //               track.tasks.push(task);
-                  //             }
-                  //           }else{
-                    //             if(task.status == track.id){
-                      //               track.tasks.push(task);
-                      //             }
-                      //           }
-                      //         })
-                      //       })
-
-                      //       this.loader = false;
-                      //     },err=>{
-                        //       console.log(err);
-                        //       this.loader = false;
-                        //     })
-                        //   },1000);
-
-                        //   function custom_sort(a, b) {
-                          //     return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-                          //   }
-                          // }
-
-                          getTasks(){
-                            this.loader = true;
-                            setTimeout(()=>{
-                              this._projectService.getAllTasks().subscribe((res:any)=>{
-                                console.log("all response ======>" , res);
-                                this.getEmptyTracks();
-                                // this.tracks.tasks.reverse();
-                                this.tasks = res;
-                                this.tasks.sort(custom_sort);
-                                this.tasks.reverse();
-                                // this.tracks.tasks.reverse();
-                                console.log("PROJECT=================>", this.tasks);
-                                _.forEach(this.tasks , (task)=>{
-                                  // _.forEach(task.tasks, (tsk)=>{
-                                    // console.log("===================>th",tsk);
-                                    _.forEach(this.tracks , (track)=>{
-                                      if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-                                        if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-                                          track.tasks.push(task);
-                                        }
-                                      }else{
-                                        if(task.status == track.id){
-                                          track.tasks.push(task);
-                                        }
-                                      }
-                                    })
-                                    // })
-                                  });
-                                console.log("PROJECT=================>", this.tracks);
-                                this.loader = false;
-                              },err=>{
-                                console.log(err);
-                                this.loader = false;
-                              })
-                            },1000);
-
-                            function custom_sort(a, b) {
-                              return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-                            }
-                          }
+    // }
 
 
 
-                        }
+
+  }

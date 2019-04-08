@@ -74,7 +74,7 @@ export class UserSummaryComponent implements OnInit {
 			this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();	
-		this.getTasks();
+		
 	}
 
 	ngOnInit() {
@@ -189,19 +189,44 @@ export class UserSummaryComponent implements OnInit {
 		})
 	}
 
-	getTasks(){
+	
+
+	getProject(id){
+		console.log("id{}{}---",id);
 		this.loader = true;
+
 		setTimeout(()=>{
-			this._projectService.getAllTasks().subscribe((res:any)=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+
+				console.log("id-=-=-=-()()()",id);
+				this.pro=res;
+				console.log("title{}{}{}{}",this.pro);
+				// this.pro = res.pmanagerId;
+				// console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					this.projectTeam = res.team;
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
-
-				this.tasks = res;
-				this.tasks.sort(custom_sort);
-				this.tasks.reverse();
-				console.log("PROJECT=================>", this.tasks);
-				_.forEach(this.tasks , (task)=>{
+				this.project = res;
+				// this.project.sort(custom_sort);
+				// this.project.reverse();
+				console.log("PROJECT=================>", this.project);
+				_.forEach(this.project , (task)=>{
+					console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
+						console.log("tracks==-=-=-=-",this.tracks);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
@@ -212,9 +237,8 @@ export class UserSummaryComponent implements OnInit {
 							}
 						}
 					})
-				});
-				console.log("PROJECT=================>", this.tracks);
-				this.loader = false;
+				})
+
 
 				var ctx = document.getElementById("myChart");
 				var myChart = new Chart(ctx, {
@@ -321,44 +345,12 @@ export class UserSummaryComponent implements OnInit {
 					}
 				});
 
+				this.loader = false;
+
 			},err=>{
 				console.log(err);
 				this.loader = false;
 			});
-		},1000);
-
-		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		}
-	}
-
-
-	getProject(id){
-		console.log("id{}{}---",id);
-		this.loader = true;
-
-		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-
-				console.log("id-=-=-=-()()()",id);
-				this.pro=res;
-				console.log("title{}{}{}{}",this.pro);
-				// this.pro = res.pmanagerId;
-				// console.log("project detail===>>>>",this.pro);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					this.projectTeam = res.team;
-					res.Teams.push(this.pro); 
-					console.log("response of team============>"  ,res.Teams);
-					this.projectTeam = res.Teams;
-					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-				},(err:any)=>{
-					console.log("err of team============>"  ,err);
-				});
-			},(err:any)=>{
-				console.log("err of project============>"  ,err);
-			});
-
-			
 
 		},1000);
 
@@ -371,22 +363,23 @@ export class UserSummaryComponent implements OnInit {
 		var count1 = [];
 		_.forEach(tracks,track=>{
 
-			count1.push(_.filter(this.tasks, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
+			count1.push(_.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
 		});
 		console.log("count1---------==========",count1);
 		return count1;
 
 
 	}
-	getTaskCount(){
+	getTask(){
 
 		var userId = this.userId;
-		return _.filter(this.tasks, function(o) { if (o.assignTo._id == userId) return o }).length;
+
+		return _.filter(this.project,function(o) { if (o.assignTo._id == userId) return o }).length;
 	}
 
 	getCompletedTask(status){
 
-		return _.filter(this.tasks, function(o) { if (o.status == status) return o }).length;
+		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 	}
 
 
@@ -395,7 +388,7 @@ export class UserSummaryComponent implements OnInit {
 		var userId = this.userId;
 		var count = [];
 		_.forEach(tracks, track=>{
-			count.push(_.filter(this.tasks, function(o) { if (o.priority == priority && o.status == track.id && o.assignTo._id == userId) return o }).length);
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.assignTo._id == userId) return o }).length);
 		});
 		console.log("cnt=-=-===============",count);
 		return count;

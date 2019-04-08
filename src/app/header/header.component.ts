@@ -180,6 +180,7 @@ export class HeaderComponent implements OnInit {
 		this._projectService.getProjects().subscribe((res:any)=>{
 			if(this.currentUser.userRole == 'projectManager'){
 				this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+				// this.projects =res;
 				console.log("IN If=========================================",this.projects);
 			}
 			else{
