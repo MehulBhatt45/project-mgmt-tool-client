@@ -361,7 +361,7 @@ export class UserSummaryComponent implements OnInit {
 		var userId = this.userId;
 
 		var count1 = [];
-		_.forEach(tracks,track=>{
+		_.forEach(tracks,(track)=>{
 
 			count1.push(_.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == track.id) return o }).length);
 		});
@@ -370,6 +370,7 @@ export class UserSummaryComponent implements OnInit {
 
 
 	}
+
 	getTask(){
 
 		var userId = this.userId;
@@ -377,10 +378,6 @@ export class UserSummaryComponent implements OnInit {
 		return _.filter(this.project,function(o) { if (o.assignTo._id == userId) return o }).length;
 	}
 
-	getCompletedTask(status){
-
-		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
-	}
 
 
 
