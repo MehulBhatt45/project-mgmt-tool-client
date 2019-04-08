@@ -398,7 +398,7 @@ export class SummaryComponent implements OnInit {
 				console.log("err of project============>"  ,err);
 			});
 
-			
+
 
 
 		},1000);
@@ -406,9 +406,6 @@ export class SummaryComponent implements OnInit {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
 	}
-
-
-
 
 	getTaskCount(userId, status){
 

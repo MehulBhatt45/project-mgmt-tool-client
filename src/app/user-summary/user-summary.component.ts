@@ -358,7 +358,7 @@ export class UserSummaryComponent implements OnInit {
 				console.log("err of project============>"  ,err);
 			});
 
-			
+
 
 		},1000);
 
@@ -381,7 +381,9 @@ export class UserSummaryComponent implements OnInit {
 	getTaskCount(){
 
 		var userId = this.userId;
-		return _.filter(this.tasks, function(o) { if (o.assignTo._id == userId) return o }).length;
+
+
+		return _.filter(this.tasks,function(o) { if (o.assignTo._id == userId) return o }).length;
 	}
 
 	getCompletedTask(status){
