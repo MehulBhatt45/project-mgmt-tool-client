@@ -78,7 +78,7 @@ export class SummaryComponent implements OnInit {
 			
 		});
 		this.createEditTaskForm();	
-		this.getTasks();
+		// this.getTasks();
 	}
 	ngOnInit() {
 		this.getEmptyTracks();
@@ -195,19 +195,84 @@ export class SummaryComponent implements OnInit {
 		})
 	}
 
-	getTasks(){
+	
+
+	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getAllTasks().subscribe((res:any)=>{
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
+
+				console.log("id-=-=-=-()()()",id);
+				this.pro=res;
+				console.log("title{}{}{}{}",this.pro);
+				// this.pro = res.pmanagerId;
+				// console.log("project detail===>>>>",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					// this.projectTeam = res.team;
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					// console.log("arrey of teams",this.projectTeam[0]);
+					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
+					this.projectTeam.sort(function(a, b){
+						if (a.name && b.name) {
+							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+							if (nameA < nameB) //sort string ascending
+								return -1 
+							if (nameA > nameB)
+								return 1
+							return 0 //default return value (no sorting)
+							this.projectTeam.push
+						}
+
+					})
+					setTimeout(()=>{
+						$('.developer_slider').slick({
+							infinite: false,
+							speed: 300,
+							slidesToShow: 4,
+							slidesToScroll: 1,
+							prevArrow: '<button type="button" class="btn btn-default slick-prev" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;left: -30px;padding:10px;"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>',
+							nextArrow: '<button type="button" class="btn btn-default slick-next" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;right: -30px;padding:10px;"><i class="fa fa-chevron-right" aria-hidden="true"></i></button',
+							responsive: [
+							{
+								breakpoint: 1200,
+								settings: {
+									slidesToShow: 3
+								}
+							},
+							{
+								breakpoint: 768,
+								settings: {
+									slidesToShow: 2
+								}
+							},
+							{
+								breakpoint: 480,
+								settings: {
+									slidesToShow: 1
+								}
+							}
+							]
+						});
+					}, 200);
+
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
+
+			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
-
-				this.tasks = res;
-				this.tasks.sort(custom_sort);
-				this.tasks.reverse();
-				console.log("PROJECT=================>", this.tasks);
-				_.forEach(this.tasks , (task)=>{
+				this.project = res;
+				console.log("PROJECT=================>", this.project);
+				_.forEach(this.project , (task)=>{
+					// console.log("task ======>" , task);
 					_.forEach(this.tracks , (track)=>{
+						// console.log("tracks==-=-=-=-",this.tracks);
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
 								track.tasks.push(task);
@@ -218,14 +283,15 @@ export class SummaryComponent implements OnInit {
 							}
 						}
 					})
-				});
-				console.log("PROJECT=================>", this.tracks);
+				})
+
+				console.log("tracks=================>", this.tracks);
 				this.loader = false;
 				console.log("==================================TimeOUT===========================================");
 				var completedTask=this.getCompletedTask("complete");
 				console.log("completed{{}}___+++",completedTask);
 
-				var projectLength=this.tasks.length;
+				var projectLength=this.project.length;
 				console.log("plength==-=-=-=",projectLength);
 
 				var allcompleteproject = completedTask*100/projectLength;
@@ -351,106 +417,31 @@ export class SummaryComponent implements OnInit {
 				this.loader = false;
 			});
 
-		},1000);
-
-		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		}
-	}
-
-
-	getProject(id){
-		this.loader = true;
-		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-
-				console.log("id-=-=-=-()()()",id);
-				this.pro=res;
-				console.log("title{}{}{}{}",this.pro);
-				// this.pro = res.pmanagerId;
-				// console.log("project detail===>>>>",this.pro);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					// this.projectTeam = res.team;
-					res.Teams.push(this.pro); 
-					console.log("response of team============>"  ,res.Teams);
-					this.projectTeam = res.Teams;
-					// console.log("arrey of teams",this.projectTeam[0]);
-					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-					this.projectTeam.sort(function(a, b){
-						if (a.name && b.name) {
-							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-							if (nameA < nameB) //sort string ascending
-								return -1 
-							if (nameA > nameB)
-								return 1
-							return 0 //default return value (no sorting)
-							this.projectTeam.push
-						}
-
-					})
-					setTimeout(()=>{
-						$('.developer_slider').slick({
-							infinite: false,
-							speed: 300,
-							slidesToShow: 4,
-							slidesToScroll: 1,
-							prevArrow: '<button type="button" class="btn btn-default slick-prev" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;left: -30px;padding:10px;"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>',
-							nextArrow: '<button type="button" class="btn btn-default slick-next" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;right: -30px;padding:10px;"><i class="fa fa-chevron-right" aria-hidden="true"></i></button',
-							responsive: [
-							{
-								breakpoint: 1200,
-								settings: {
-									slidesToShow: 3
-								}
-							},
-							{
-								breakpoint: 768,
-								settings: {
-									slidesToShow: 2
-								}
-							},
-							{
-								breakpoint: 480,
-								settings: {
-									slidesToShow: 1
-								}
-							}
-							]
-						});
-					}, 200);
-
-				},(err:any)=>{
-					console.log("err of team============>"  ,err);
-				});
-			},(err:any)=>{
-				console.log("err of project============>"  ,err);
-			});
-
 
 
 
 		},1000);
-		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		}
-	}
+// function custom_sort(a, b) {
+	// 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+	// }
+}
 
-	getTaskCount(userId, status){
+// getTaskCount(userId, status){
 
-		
-		return _.filter(this.tasks, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
-	}
+
+	// 	return _.filter(this.tasks, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	// }
 
 	getCompletedTask(status){
 
-		return _.filter(this.tasks, function(o) { if (o.status == status) return o }).length;
+		return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 	}
 
 	getTaskPriority(priority, tracks){
 
 		var count = [];
 		_.forEach(tracks, track=>{
-			count.push(_.filter(this.tasks, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
 		});
 		console.log(count);
 		return count;
