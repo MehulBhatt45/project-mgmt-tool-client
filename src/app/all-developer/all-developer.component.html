@@ -104,8 +104,8 @@
 					<!-- all developer profile -->
 					<section class="section pb-3 text-center">
 						<p class="h5 mb-1 text-left">Project Manager</p>
-						<div class="row">
-							<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4">
+						<div class="row" *ngIf = "pro">
+							<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let pManager of pro.pmanagerId">
 								<div class="card-wrapper">
 									<div class="card-rotating effect__click text-center h-100 w-100">
 										<!-- <div class="card-up deep-purple lighten-2"></div> -->
@@ -124,13 +124,13 @@
 							</div>
 							<div class="avatar mx-auto white" *ngIf="pro">
 
-								<a routerLink = "/visit-user-profile/{{pro.pmanagerId._id}}">
-									<img src="{{path}}{{pro.pmanagerId.profilePhoto}}" onerror="this.src='../assets/3.png'" class="rounded-circle img-fluid" style="height: 100px;">
+								<a routerLink = "/visit-user-profile/{{pManager._id}}">
+									<img src="{{path}}{{pManager.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid" style="height: 100px;">
 								</a>
 							</div>
 							<div class="card-body" *ngIf="pro">
-								<h4 class="font-weight-bold mb-3" >{{pro.pmanagerId.name}}</h4>
-								<p class="font-weight-bold deep-purple-text" style="text-transform: uppercase;font-size: 14px;">{{pro.pmanagerId.userRole}}</p>
+								<h4 class="font-weight-bold mb-3" >{{pManager.name}}</h4>
+								<p class="font-weight-bold deep-purple-text" style="text-transform: uppercase;font-size: 14px;">{{pManager.userRole}}</p>
 								<a href="javascript:void(0);" class="rotate-btn btn-default">
 									<i class="fas fa-redo-alt"></i> Click here to rotate
 								</a>

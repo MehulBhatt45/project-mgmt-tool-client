@@ -269,13 +269,13 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
+			this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
 				console.log("title=={}{}{}{}{}",res);
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				this._projectService.getTeamByProjectId(this.projectId).subscribe((res:any)=>{
 					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
