@@ -1,47 +1,205 @@
-
 <div class="container">
-	<ul class="nav md-pills pills-info">
-		<li class="col-md-4 nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#panel11" role="tab">Task Notification<p class="btn-floating btn-sm blue-gradient">0</p></a>
-		</li>
-		<li class="col-md-4 nav-item">
-			<a class="nav-link" data-toggle="tab" href="#panel12" role="tab">Leave Notification</a>
-		</li>
-		<li class="col-md-4 nav-item">
-			<a class="nav-link" data-toggle="tab" href="#panel13" role="tab"> Other Notification</a>
-		</li>
-	</ul>
-	<div class="tab-content pt-0">
-		<div class="tab-pane fade in show active" id="panel11" role="tabpanel">
-			<div class="card">
+			<!-- <div class="header_top">
+				<button class="btn btn-outline-default">
+					filter
+				</button>
+			</div> -->
+			<div class="notification">
 				<ul class="task">
-					<li>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.
-					</li>
-					<li> A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.
-					</li>
-					<li> A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.
-					</li><li> A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.
-					</li>
-				</ul>
-			</div>
+					<li class="card mt-1 unread unread">
+						<table>
+							<tr>
+								<td class="padding-5">
+									<div class="task_priority_highest">
+										<i class="far fa-circle"></i>
+									</div>
+								</td>
+								<td class="padding-5">
+									<div class="task"> 	
+										<span>Task</span>
+									</div>
+								</td>
+								<td class="padding-5">
+									<div class="content">
+										<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+										<label>April-05 at 3:25 pm</label>
+									</div>
+								</td>
+								<td>
+									<div class="profile mr-2 z-depth-1"> 	
+										<img src="../assets/avatar/bookshelf.png">
+									</div>
+								</td>
+							<!-- <td class="padding-5">
+								<div class="task_priority_highest">
+									<i class="far fa-circle warning"></i>
+								</div>
+							</td> -->
+							
+						</tr>
+					</table>
+				</li>
+				<li class="card mt-1 unread">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="task_priority_high">
+									<i class="far fa-circle"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="task"> 	
+									<span>Task</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+							<td>
+								<div class="profile mr-2 z-depth-1"> 	
+									<img src="../assets/avatar/medicine.png">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li class="card mt-1 unread">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="task_priority_medium">
+									<i class="far fa-circle"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="task"> 	
+									<span>Task</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+							<td>
+								<div class="profile mr-2 z-depth-1"> 	
+									<img src="../assets/avatar/police-car.png">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li class="card mt-1">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="task_priority_low">
+									<i class="far fa-circle"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="task"> 	
+									<span>Task</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+							<td>
+								<div class="profile mr-2 z-depth-1"> 	
+									<img src="../assets/avatar/project-management.png">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+			<ul class="leave">
+				<li class="card mt-1 unread">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="leave_approved">
+									<i class="far fa-thumbs-up"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="leave"> 	
+									<span>Leave</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+							<td>
+								<div class="profile_dp mr-2 z-depth-1"> 	
+									<img src="../assets/5.jpg">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+				<li class="card mt-1">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="leave_rejected">
+									<i class="far fa-thumbs-down"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="leave"> 	
+									<span>Leave</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+							<td>
+								<div class="profile_dp mr-2 z-depth-1"> 	
+									<img src="../assets/5.jpg">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
+			<ul class="other">
+				<li class="card mt-1 unread">
+					<table>
+						<tr>
+							<td class="padding-5">
+								<div class="other">
+									<i class="far fa-bell"></i>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="other"> 	
+									<span>Other</span>
+								</div>
+							</td>
+							<td class="padding-5">
+								<div class="content">
+									<p>A new issue in (project name) <b>PMT</b> is been created by (Project manager name) <b>Vivek B.</b> and assigned to you.</p>
+									<label>April-05 at 3:25 pm</label>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</li>
+			</ul>
 		</div>
-		<div class="tab-pane fade" id="panel12" role="tabpanel">
-			<div class="card">
-				<ul class="leave">
-					<li>Sorry <b>Neel</b>, your leave application for (leave date/s) is rejected.</li>
-					<li>Hey <b>Neel</b>, your leave application for (leave date/s) is approved!</li>
-				</ul>
-			</div>
-		</div>
-		<div class="tab-pane fade" id="panel13" role="tabpanel">
-			<div class="card">
-				<ul class="other">
-					<li>For the notes,<b>Pushpraj C.</b> is added to PMT team as tester.</li>
-					<li>Hey <b>Neel</b>, your leave application for (leave date/s) is approved!</li>
-				</ul>
-			</div>
-		</div>
-
 	</div>
-</div>
-
