@@ -284,6 +284,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"tasks/add-task", data);
 	}
 	getTaskById(id){
+		console.log("getTaskById(id) ============>" , id);
 		var id = id;
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
