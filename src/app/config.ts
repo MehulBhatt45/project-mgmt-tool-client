@@ -3,7 +3,7 @@
 // const baseUrl = "http://132.140.160.113:4000/";
 const baseUrl = "http://localhost:4000/";
 
-// const baseMediaUrl = "http://132.140.160.61/project_mgmt_tool/server/uploads/";
+// const baseMediaUrl = "http://132.140.160.113/project_mgmt_tool/server/uploads/";
 
 
 // const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
