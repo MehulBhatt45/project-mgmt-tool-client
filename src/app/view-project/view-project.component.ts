@@ -306,7 +306,7 @@ getTaskCount(status){
 }
 
 mouseOver(project){
-  console.log("MOUSE OVERED");
+ 
   this.hoveredProject = project;
 }
 

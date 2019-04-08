@@ -3,25 +3,15 @@
 		<div class="row" style="margin-top: -48px;">
 			<div class="card" style="background-color: #372e5f;">
 				<div class="card-body" *ngIf="pro">
-
 					<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">{{pro.title}}</a></h2>
-
-
-
 				</div>
-
 			</div>
-
 		</div>
-
 		<div class="container">
 			<div class="row" style="margin-top: 30px;">
 				<div class="col-sm-6">
 					<div class="card">
-
-
 						<div class="card-body">
-
 							<h2 style="margin-top: 70px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
 							<div class="row">
 								<div class="col-sm-6">
@@ -39,126 +29,48 @@
 
 					</div>
 					
-
-				<!-- <div class="col-sm-3">
-					<div class="progress blue">
-						<span class="progress-left">
-							<span class="progress-bar"></span>
-						</span>
-						<span class="progress-right">
-							<span class="progress-bar"></span>
-						</span>
-						<div class="progress-value"><b>{{round}}%</b></div>
-						
-					</div>
-				</div> -->
-				
-
-
-			</div>
-				<!-- <div class="row">
-					<div class="progress yellow" >
-						<span class="progress-left">
-							<span class="progress-bar"></span>
-						</span>
-						<span class="progress-right">
-							<span class="progress-bar"></span>
-						</span>
-						<div class="progress-value" *ngFor="let track of tracks">{{track.tasks.length}}</div>
-					</div>
-				</div>
-			-->
-				<!-- <div class="progress md-progress" style="height: 20px;">
-					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 40%;height: 20px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-				</div>
-				<div class="pull-right">
-					<div class="row">
-						<h5 style="margin-top: 13px;margin-left: 16px;"><span class="label green badge" style="height: 30px;">Total Number Of Tasks: <i class="fas fa-arrow-circle-right"></i></span></h5>
-						<span class="min-chart" id="chart-sales" data-percent="56" *ngIf="project"><b style="font-size: 40px;">{{project.length}}</b></span>
-
-					</div>
-				</div> -->
-				<!-- <div *ngIf="project">Total Number Of Tasks:<b></b></div> -->
-		<!-- <div class="progress blue">
-			<span class="progress-left">
-				<span class="progress-bar"></span>
-			</span>
-			<span class="progress-right">
-				<span class="progress-bar"></span>
-			</span>
-			<div class="progress-value" *ngIf="project">{{project.length}}</div>
-		</div> -->
-
-
-		<div class="col-sm-6" style="margin-top: 70px;">
-			<div class="card" style="margin-top: -70px;">
-
-
-				<div class="card-body">
-
-					<h2 style="margin-top: 36px;"><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h2>
-
-					<canvas id="myChart" style="width: 50%;margin-top: 80px;"></canvas>
-
 				</div>
 
-			</div>
-			
-		</div>
-	</div>
+
+				<div class="col-sm-6" style="margin-top: 70px;">
+					<div class="card" style="margin-top: -70px;">
 
 
-		<!-- <table class="table table-bordered table-responsive">
-			<thead>
-				<tr>
-					<th scope="col"><i class="fas fa-signature"></i> Track-Name</th>
-					<th scope="col"style="text-align: center;"><i class="fas fa-tasks"></i> Number Of Tasks</th>
+						<div class="card-body">
 
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let track of tracks">
-					<th scope="row">{{track.id}}</th>
-					<td style="text-align: center;">{{track.tasks.length}}</td>
-				</tr>
-			</tbody>
-		</table> -->
-		<div class="row" style="margin-top: 25px;">
-			<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
-			<div class="col-sm-4 mb-2" *ngFor="let user of projectTeam">
+							<h2 style="margin-top: 36px;"><i class="fas fa-tasks"></i> Number of tasks in each tracks:</h2>
 
-				<div class="card" style="width: 20rem;" >
+							<canvas id="myChart" style="width: 50%;margin-top: 80px;"></canvas>
 
-					
-					<div class="card-body">
-
-						<div class="card-up">
-
-
-							<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
-							<!-- <img src="{{path}}{{user.profilePhoto}}" class="img-rounded" onerror="this.src='../assets/man.png'"> -->
-
-							<!-- <img class="card-img-top" src="{{path}}{{user.profilePhoto}}" alt="Image with a photo of clouds."> -->
 						</div>
 
+					</div>
 
-						<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+				</div>
+			</div>
 
-						<div style="text-align: center;margin-top: -25px;">
-							<p><b>{{user.userRole}}</b></p>
-						</div>
-						
-							<!-- <div class="col-sm-2">
-								<div class="btn-group dropleft float-right">
-									<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
-									</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-										<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover" data-content="<ul><li>123</li></ul>"><i class="fas fa-users"></i></a>
-										<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/user-summary"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-									</div>
-								</div>
-							</div> -->
+			<!-- <div class="row" style="margin-top: 25px;">
+				<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
+				<div class="col-sm-4 mb-2" *ngFor="let user of projectTeam">
+
+					<div class="card" style="width: 20rem;" >
+
+
+						<div class="card-body">
+
+							<div class="card-up">
+
+
+								<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
+
+							</div>
+
+
+							<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+
+							<div style="text-align: center;margin-top: -25px;">
+								<p><b>{{user.userRole}}</b></p>
+							</div>
 
 						</div>
 						<ul class="list-group list-group-flush" style="margin-top: -15px;">
@@ -167,13 +79,72 @@
 							<li class="list-group-item">Testing: <b style="color: #FF9800;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'testing')}}</b></li>
 							<li class="list-group-item">Complete: <b style="color: #639828;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'complete')}}</b></li>
 						</ul>
+					</div>
+				</div> -->
 
 
-
-
+				<!-- carousel start -->
+				<h3 style="margin-top: 40px;"><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
+					<!-- <div class="carousel-inner" role="listbox">
+						<div class="carousel-item active">
+							<div class="row" >
+								<div *ngFor="let user of projectTeam , let i = index " >
+									<div class="card mb-2" style="width: 15em; margin-right: 5px;">
+										<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
+										<div class="card-body">
+											<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+					<div class="developer_slider row">
+						<div class="single_slide" *ngFor="let user of projectTeam">
+							<!-- <div class="card">
+								<div class="card-body">
+									<img src="../assets/v_dev.jpg" >
+									<div class="card_content">
+										<div class="profile" routerLink="/visit-user-profile/{{user._id}}" style="cursor: pointer;">
+											<img src="../assets/3.png">
+										</div>
+										<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+										<p>Developer</p>
+									</div>
+								</div>
+							</div> -->
+							<article>
+								<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
+									<aside class="four-right two-right three-bottom"></aside>
+									<header>
+										<div class="title">
+											<h5 class="font-weight-bold" style="margin:0; color: #372E5F;">{{user.name}}</h5>
+											<p style="margin: 0px; color: #372E5F;">Developer</p>
+										</div>
+										<div class="blurb">
+											<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+											<p style="margin: 0px;">Developer</p>
+										</div>
+									</header>
+									<div class="content">
+										<div class="image"  >
+											<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
+											<img src="../assets/5.jpg">
+										</div>
+										</div>
+									</div>
+								</a>
+							</article>
+						</div>
 					</div>
 
-				</div>
+					<!-- carousel ends -->
+
+
+
+
+
+
 		<!-- <div class="row" style="margin-top: 25px;">
 			<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
 			<table class="table table-bordered table-responsive" style="text-align: center;">
@@ -208,29 +179,13 @@
 					<div class="card-body">
 
 						<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-						<!-- <canvas id="pieChart1" class="border1"></canvas> -->
+						
 						<canvas id="lineChart"></canvas>
 
 					</div>
 
 				</div>
 				
-
-			<!-- 	<table class="table table-bordered table-responsive">
-					<thead>
-						<tr>
-							<th scope="col"  style="background-color: #ff0000;color: #fff;"><i class="fas fa-tasks"></i> Highest Priority</th>
-							<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let track of tracks">
-							<th scope="row">{{track.title}}</th>
-							<td style="text-align:center;">{{getTaskPriority(1, track.id)}}</td>
-						</tr>
-					</tbody>
-				</table> -->
 			</div>
 			<div class="col-sm-6" style="padding-right: 0px;">
 				<div class="card">
@@ -239,7 +194,7 @@
 					<div class="card-body">
 
 						<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
-						<!-- <canvas id="pieChart2" class="border2"></canvas> -->
+						
 						<canvas id="lineChart1"></canvas>
 
 					</div>
@@ -262,81 +217,10 @@
 				</table> -->
 			</div><hr/>
 
-			<!-- <div class="col-sm-6">
-
-				<div class="card" style="margin-top: 40px;">
-
-
-					<div class="card-body">
-
-						<h3 style="text-align:center;margin-top: 30px;">Highest Priority</h3>
-						<canvas id="pieChart2" class="border2"></canvas>
-						<canvas id="lineChart2"></canvas>
-
-					</div>
-
-				</div>
-				
-			</div>
-
-			<div class="col-sm-6">
-
-				<div class="card" style="margin-top: 40px;">
-
-
-					<div class="card-body">
-
-						<h3 style="text-align:center;margin-top: 30px;">High Priority</h3>
-						<canvas id="pieChart2" class="border2"></canvas>
-						<canvas id="lineChart3"></canvas>
-
-					</div>
-
-				</div>
-				
-			</div> -->
-			<!-- <div class="col-sm-6" style="padding-left: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">Midium Priority</h3> -->
-				<!-- <canvas id="pieChart3" class="border3"></canvas> -->
-				<!-- <canvas id="lineChart2"></canvas> -->
-				<!-- <table class="table table-bordered table-responsive">
-					<thead>
-						<tr>
-							<th scope="col" style="background-color: green;color: #fff;"><i class="fas fa-tasks"></i> Midium Priority</th>
-							<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let track of tracks">
-							<th scope="row">{{track.title}}</th>
-							<td style="text-align:center;">{{getTaskPriority(3, track.id)}}</td>
-						</tr>
-					</tbody>
-				</table> -->
-				<!-- </div> -->
-			<!-- <div class="col-sm-6" style="padding-right: 0px;">
-				<h3 style="text-align:center;margin-top: 30px;">Low Priority</h3> -->
-				<!-- <canvas id="pieChart4" class="border4"></canvas> -->
-				<!-- <canvas id="lineChart3"></canvas> -->
-				<!-- <table class="table table-bordered table-responsive">
-					<thead>
-						<tr>
-							<th scope="col" style="background-color: #4e4eff;color: #fff;"><i class="fas fa-tasks"></i> Low Priority</th>
-							<th scope="col" style="text-align:center;"><i class="fas fa-calendar-plus"></i> Total Count</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let track of tracks">
-							<th scope="row">{{track.title}}</th>
-							<td style="text-align:center;">{{getTaskPriority(4, track.id)}}</td>
-						</tr>
-					</tbody>
-				</table> -->
-				<!-- </div> -->
-
-			</div>
+			
 		</div>
 	</div>
+</div>
 </div>
 
 
