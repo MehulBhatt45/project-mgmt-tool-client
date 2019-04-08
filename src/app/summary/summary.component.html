@@ -3,29 +3,19 @@
 		<div class="row" style="margin-top: -48px;">
 			<div class="card" style="background-color: #372e5f;">
 				<div class="card-body" *ngIf="pro">
-
 					<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">{{pro.title}}</a></h2>
-
-
-
 				</div>
-
 			</div>
-
 		</div>
-
 		<div class="container">
 			<div class="row" style="margin-top: 30px;">
 				<div class="col-sm-6">
 					<div class="card">
-
-
 						<div class="card-body">
-
 							<h2 style="margin-top: 70px;"><i class="fas fa-tasks"></i>     Total Completed Project: </h2>
 							<div class="row">
 								<div class="col-sm-6">
-									<p *ngIf="tasks" style="margin-top: 35px;">Total Task In Project:  <b>{{tasks.length}}</b></p>
+									<p *ngIf="project" style="margin-top: 35px;">Total Task In Project:  <b>{{project.length}}</b></p>
 								</div>
 								<div class="col-sm-6">
 									<p style="margin-top: 33px;">Our Completed Project: <b>{{round}}%</b></p>
@@ -59,7 +49,7 @@
 				</div>
 			</div>
 
-			<div class="row" style="margin-top: 25px;">
+			<!-- <div class="row" style="margin-top: 25px;">
 				<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
 				<div class="col-sm-4 mb-2" *ngFor="let user of projectTeam">
 
@@ -89,13 +79,72 @@
 							<li class="list-group-item">Testing: <b style="color: #FF9800;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'testing')}}</b></li>
 							<li class="list-group-item">Complete: <b style="color: #639828;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(user._id, 'complete')}}</b></li>
 						</ul>
+					</div>
+				</div> -->
 
 
-
-
+				<!-- carousel start -->
+				<h3 style="margin-top: 40px;"><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
+					<!-- <div class="carousel-inner" role="listbox">
+						<div class="carousel-item active">
+							<div class="row" >
+								<div *ngFor="let user of projectTeam , let i = index " >
+									<div class="card mb-2" style="width: 15em; margin-right: 5px;">
+										<img class="card-img-top" src="../assets/cover_img.jpg" alt="Image with a photo of clouds.">
+										<div class="card-body">
+											<h5 class="font-weight-bold mb-3" style="text-align: center;cursor: pointer;margin-top: 30px;"  routerLink="/visit-user-profile/{{user._id}}"><i class="fas fa-user"></i>  {{user.name}}</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> -->
+					<div class="developer_slider row">
+						<div class="single_slide" *ngFor="let user of projectTeam">
+							<!-- <div class="card">
+								<div class="card-body">
+									<img src="../assets/v_dev.jpg" >
+									<div class="card_content">
+										<div class="profile" routerLink="/visit-user-profile/{{user._id}}" style="cursor: pointer;">
+											<img src="../assets/3.png">
+										</div>
+										<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+										<p>Developer</p>
+									</div>
+								</div>
+							</div> -->
+							<article>
+								<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
+									<aside class="four-right two-right three-bottom"></aside>
+									<header>
+										<div class="title">
+											<h5 class="font-weight-bold" style="margin:0; color: #372E5F;">{{user.name}}</h5>
+											<p style="margin: 0px; color: #372E5F;">Developer</p>
+										</div>
+										<div class="blurb">
+											<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+											<p style="margin: 0px;">Developer</p>
+										</div>
+									</header>
+									<div class="content">
+										<div class="image"  >
+											<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
+											<img src="../assets/5.jpg">
+										</div>
+										</div>
+									</div>
+								</a>
+							</article>
+						</div>
 					</div>
 
-				</div>
+					<!-- carousel ends -->
+
+
+
+
+
+
 		<!-- <div class="row" style="margin-top: 25px;">
 			<h3><i class="fas fa-list-alt"></i> List of team members along with the number of task in each track:</h3>
 			<table class="table table-bordered table-responsive" style="text-align: center;">

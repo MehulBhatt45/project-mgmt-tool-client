@@ -51,6 +51,7 @@ export class AllDeveloperComponent implements OnInit {
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
+				console.log("project detail===>>>>",this.pro.pmanagerId);
 				setTimeout(()=>{
 					console.log("PM rotate js-------------------------------------------------------------------")
 					$('a.rotate-btn').click(function () {
