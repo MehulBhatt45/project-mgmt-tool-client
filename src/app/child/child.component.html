@@ -38,7 +38,7 @@
 									</li>
 									<li>
 										<ul class="team-members">	
-											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)" >
 												<a href="javascript:void(0);">
 													<div class="user_profile_pic"><img src="{{path}}{{task.assignTo	.profilePhoto}}" class="img-rounded" routerLink = "/visit-user-profile/{{task.assignTo._id}}" onerror="this.src='assets/4.jpeg'" ></div>
 												</a>

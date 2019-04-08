@@ -149,6 +149,15 @@ export class HeaderComponent implements OnInit {
 		console.log(event);
 	}
 
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			this.projects = res;
+		},err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+	}
+
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
 			if(this.currentUser.userRole == 'projectManager'){

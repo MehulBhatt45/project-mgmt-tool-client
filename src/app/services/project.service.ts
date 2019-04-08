@@ -285,7 +285,8 @@ export class ProjectService {
 	}
 	getTaskById(id){
 		var id = id;
-		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+		console.log("idddd=====>",id);
+		return this.http.get(config.baseApiUrl+"project/get-task-of-project/"+id);		
 	}
 
 	getTeamByProjectId(id){

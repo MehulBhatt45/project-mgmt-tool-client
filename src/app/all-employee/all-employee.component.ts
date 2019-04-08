@@ -101,7 +101,7 @@ export class AllEmployeeComponent implements OnInit {
 		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
 			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("delete{}{}{}{}",res);
-			this.getAllDevelopers();
+			this.getDeveloper(this.projectId);
 		},err=>{
 			console.log("errr=-=-=-= ",err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
