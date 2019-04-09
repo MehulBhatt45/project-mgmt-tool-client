@@ -464,7 +464,7 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.acceptedLeave = res;
                       console.log("acceptedd===========>",this.acceptedLeave);
-                      this.getLeaves(Option);
+                      this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -507,7 +507,7 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.rejectedLeave = res;
                       console.log("rejected===========>",this.rejectedLeave);
-                      this.getLeaves(Option);
+                      this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
