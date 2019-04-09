@@ -401,7 +401,9 @@ table {
   position: relative;
   width: 150px;
   height: 150px;
-  margin: 0 auto 5px;
+  display: inline-block;
+  margin: 5px;
+  /*margin: 0 auto 5px;*/
 }
 .selected-avatar:hover .delete-team-member{
   display: block;

@@ -60,19 +60,18 @@ export class EditprofileComponent implements OnInit {
 
 		this._loginService.editUserProfileWithFile(data).subscribe((res:any)=>{
 			console.log("res",res);
-			  Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+			Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 		},err=>{
 			console.log("error",err); 
-			  Swal.fire('Oops...', 'Something went wrong!', 'error')   
+			Swal.fire('Oops...', 'Something went wrong!', 'error')   
 		})
 
 	}
 	getDetails(id){
 		this.loader = true;
 		// var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("user Di ======++>" , id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
-			console.log(res);
+			console.log("user Di ======++>" , id);
 			this.userDetails = res;
 			this.loader = false;
 			console.log("this user dateailsls ==>" , this.userDetails);
