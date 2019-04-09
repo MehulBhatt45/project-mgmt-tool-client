@@ -56,6 +56,7 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   sprints;
+  currentsprintId;
   
   
 
@@ -65,7 +66,7 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     // console.log(this.tracks);
   }
 
@@ -141,6 +142,7 @@ export class ChildComponent  implements OnInit{
       break;
     }
   }
+  
   createEditTaskForm(){
     this.editTaskForm = new FormGroup({
       title : new FormControl('', Validators.required),
@@ -212,6 +214,7 @@ export class ChildComponent  implements OnInit{
       data.append("projectId",this.projectId);
       data.append("taskId",taskId);
       // data.append("Images",this.images);
+      //this.ngOnChanges();
       for(var i = 0; i < this.files.length; i++)
         data.append("fileUpload",this.files[i]);
     }else{
@@ -306,6 +309,7 @@ export class ChildComponent  implements OnInit{
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
+       // this.getProject(this.projectId);
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
@@ -314,7 +318,6 @@ export class ChildComponent  implements OnInit{
       Swal.fire('Oops...', 'Something went wrong!', 'error')
       console.log(err);
       this.loader = false;
-      //$('#alert').css('display','block');
     })
 
   }
@@ -412,7 +415,7 @@ export class ChildComponent  implements OnInit{
                 track.tasks.push(task);
               }
             }else{
-              if(task.status == track.id){
+              if(task.status == track.id ){
                 track.tasks.push(task);
               }
             }
@@ -482,8 +485,5 @@ export class ChildComponent  implements OnInit{
       });
 
     }
-
-
-
 
   }

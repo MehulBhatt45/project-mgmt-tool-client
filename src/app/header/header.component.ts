@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	files: Array<File> = [];
 	loader: boolean = false;
+	sprints;
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -50,10 +51,11 @@ export class HeaderComponent implements OnInit {
 			title : new FormControl('', Validators.required),
 			desc : new FormControl('', Validators.required),
 			assignTo : new FormControl('', Validators.required),
+			sprint :new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
-			estimatedTime: new FormControl('',[Validators.required]),
+			estimatedTime: new FormControl(),
 			status : new FormControl({value: ''}, Validators.required)
 		})
 	}
@@ -129,6 +131,7 @@ export class HeaderComponent implements OnInit {
 	projectSelected(item){
 		if(item && item._id){
 			console.log(item);
+			this.getSprint(item._id);
 			this.loader = true;
 			$(".progress").addClass("abc");
 			// $(".progress .progress-bar").css({"width": '100%'});
@@ -152,7 +155,8 @@ export class HeaderComponent implements OnInit {
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
 			if(this.currentUser.userRole == 'projectManager'){
-				this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+				//this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
+				this.projects = res; 
 				console.log("IN If=========================================",this.projects);
 			}
 			else{
@@ -280,7 +284,7 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
+		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
 	}
 
 	reloadProjects(){
@@ -307,5 +311,13 @@ export class HeaderComponent implements OnInit {
 
 	onSelectFile(event){
 		this.files = event.target.files;
+	}
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+		},(err:any)=>{
+			console.log(err);
+		});
 	}
 }

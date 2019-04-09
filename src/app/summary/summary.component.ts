@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
+ import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
@@ -83,8 +83,6 @@ export class SummaryComponent implements OnInit {
 		this.getEmptyTracks();
 		// var i1=this.tracks;
 		// console.log("i1-=-=-{}{}",i1);
-
-
 		
 	}	
 
@@ -537,7 +535,6 @@ function custom_sort(a, b) {
 
 
 getTaskCount(userId, status){
-
 	// console.log("userId===-=-={}{}{}{}{}",userId);
 	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 }

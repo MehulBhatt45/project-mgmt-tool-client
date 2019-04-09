@@ -197,6 +197,15 @@
                     <option value="1">Highest</option>
                   </select>
                 </div>
+                <div class="form-group col-12">
+                  <label for="assignTo">Sprint</label>
+                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
+                    <option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                  </select>
+                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
+                    <option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                  </select>
+                </div>
                 <div class="form-group col-6">
                   <label for="dueDate">Due Days</label>
                   <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
@@ -205,7 +214,7 @@
                 <div class="form-group col-6">
                   <label for="estimatedTime">Estimated Time</label>
                   <div class="md-form form-group">
-                    <input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime">
+                    <input placeholder="Estimated Time" type="text" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime">
                   </div>
                 </div>
               </div>

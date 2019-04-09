@@ -48,6 +48,7 @@ export class ProjectDetailComponent implements OnInit {
 	loader : boolean = false;
 	currentDate = new Date();
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	currentsprintId;
 	pro;
 	asc;
 	desc;
@@ -60,7 +61,9 @@ export class ProjectDetailComponent implements OnInit {
 	priority: boolean = false;
 	// sorting: any;
 	sorting:any;
-
+	temp:any;
+	activeSprint:any;
+	sprintInfo:any;
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -186,7 +189,16 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getProject(this.id);
+		setTimeout(()=>{
+
+			$('[data-toggle="popover-hover"]').popover({
+				html: true,
+				trigger: 'hover',
+				placement: 'bottom',
+				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+			});
+		},2000);
+		// this.getProject(this.id);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
@@ -198,21 +210,37 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 		});
 
+		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 	}
-	getAllDevelopers(){
+
+	filterTracks(sprintId){
+		console.log("tem ====>" , this.temp);
+		this.getEmptyTracks();
+		this.currentsprintId = sprintId;
+		console.log("sprintId",this.currentsprintId);
+		_.forEach(this.project, (task)=>{
+			_.forEach(this.tracks , (track)=>{
+				if(task.sprint._id == sprintId && track.id == task.status){
+					track.tasks.push(task);
+				}
+			})
+		})
+	}
+
+	getAllDevelopers(){	
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.developers.sort(function(a, b){
 				if (name) {
 					
-				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-				if (nameA < nameB) //sort string ascending
-					return -1 
-				if (nameA > nameB)
-					return 1
-				return 0 //default return value (no sorting)
-			}
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+				}
 			})
 			console.log("Developers",this.developers);
 		},err=>{
@@ -228,6 +256,7 @@ export class ProjectDetailComponent implements OnInit {
 		setTimeout(()=>{
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				console.log("title=={}{}{}{}{}",res);
+				this.temp = res;
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this.projectId=this.pro._id;
@@ -264,32 +293,28 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					_.forEach(this.tracks , (track)=>{
+						console.log("track in foreach",task.sprint.status);
+
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
 								track.tasks.push(task);
-
-
 							}
 						}else{
-							if(task.status == track.id){
+							if(task.status == track.id && task.sprint.status == 'Active'){
 								track.tasks.push(task);
-
-
 							}
 						}
 					})
 				})
-				
+				console.log("This Tracks=========>>>>>",this.tracks);
+				this.temp =  this.tracks; 
 				this.loader = false;
+
 			},err=>{
 				console.log(err);
 				this.loader = false;
 			})
 		},1000);
-		// function custom_sort(a, b) {
-		// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-		// }	
-
 	}
 
 	get trackIds(): string[] {
@@ -361,7 +386,6 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("sorted output =><>?????)_)_)_ ",track.tasks);
 			});
 
-			// }
 		}
 
 		function custom_sort(a, b) {
@@ -388,8 +412,8 @@ export class ProjectDetailComponent implements OnInit {
 			if(type == 'desc'){
 				track.tasks = track.tasks.reverse();
 			}
-		var sort = track.tasks;
-		console.log('sorting===========>',sort);
+			var sort = track.tasks;
+			console.log('sorting===========>',sort);
 		});
 		this.sorting = this.tracks;
 		console.log('Sorting Array============================>',this.sorting);
@@ -596,9 +620,55 @@ export class ProjectDetailComponent implements OnInit {
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				if(sprint.status == 'Active'){
+					this.activeSprint = sprint;
+					this.sprintInfo = sprint;
+					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
+					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+				}
+				console.log("Active Sprint=========>>>>",this.activeSprint);
+			})
+			console.log("ActiveSprint startdate",this.activeSprint.endDate);
+			var currendate = moment(); 
+			var sprintEndDate = this.activeSprint.endDate; 
+			var date3 = moment(sprintEndDate);
+			var duration = date3.diff(currendate,'days');
+			this.activeSprint.remainingDays = duration;
+			console.log("currendate=======>>>",currendate);
+			console.log("sprint end date=======>>>",sprintEndDate);
+			console.log("remaining Days",duration);
 		},(err:any)=>{
 			console.log(err);
 		});
-
 	}
+
+	completeSprint(sprintId){
+		console.log("Sprint ID=====>>>",sprintId);
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,complete it!'
+		}).then((result) => {
+			if (result.value) {
+
+				this._projectService.completeSprint(sprintId).subscribe((res:any)=>{
+					Swal.fire(
+						'Complete!',
+						'Your Sprint has been Completed.',
+						'success'
+						)
+				},err=>{
+					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+
+			}
+		})
+
+	}	
 }

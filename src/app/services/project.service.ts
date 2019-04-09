@@ -395,4 +395,12 @@ export class ProjectService {
 			console.log("sprint in service",sprintId);
 			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
 		}
+		completeSprint(sprintId){
+			console.log("sprint In service",sprintId);
+			return this.http.get(config.baseApiUrl+"sprint/sprint-complete/"+sprintId);
+		}
+		startSprint(sprintdata){
+			console.log("sprintData in service",sprintdata);
+			return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
+		}
 	}
