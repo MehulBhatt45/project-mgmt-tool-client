@@ -34,6 +34,7 @@ export class VisitUserProfileComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	singleleave:any;
+	loader : boolean = false;
 	leaveApp:any;
 	leaves:any;
 	leavescount:any;
@@ -81,6 +82,8 @@ export class VisitUserProfileComponent implements OnInit {
 		this.getLeave(this.developerId);
 	}
 	getDeveloperById(id){
+
+		this.loader = true;
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
@@ -99,10 +102,13 @@ export class VisitUserProfileComponent implements OnInit {
 					this.finalArr.push(this.projectArr[i]);
 					console.log("response======>",this.finalArr);
 				}	
+				this.loader = false;
 			}
+
 			)},(err:any)=>{
 				console.log("eroooooor=========>",err);
 			})
+		
 	}
 	leaveByUserId(id){
 		this._loginService.getUserById(id).subscribe((res:any)=>{
