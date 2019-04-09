@@ -156,30 +156,33 @@ export class HeaderComponent implements OnInit {
 						console.log(event);
 					}
 
-					getAllProjects(){
-						this._projectService.getProjects().subscribe(res=>{
-							console.log("all projects =====>" , res);
-							var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-							console.log("current user ====>" , userId);
-							this.projects = res;
-							console.log(this.projects);
-							_.forEach(this.projects , (task)=>{
-								_.forEach(task.pmanagerId , (project)=>{
-									if(project._id == userId){
-
-										this.projectArr.push(task);
-									}
-								})
-							})
-							for(var i=0;i<this.projectArr.length;i++){
-								this.finalArr.push(this.projectArr[i]);
-								console.log("response======>",this.finalArr);
-							}	
-						},err=>{
-							this._alertService.error(err);
-							console.log(err);
-						})
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			console.log("all projects =====>" , res);
+			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("current user ====>" , pmanagerId);
+			this.projects = res;
+			console.log(this.projects);
+			_.forEach(this.projects , (task)=>{
+				_.forEach(task.pmanagerId , (project)=>{
+					if(project._id == pmanagerId){
+						this.projectArr.push(task);
 					}
+				})
+			})
+			for(var i=0;i<this.projectArr.length;i++){
+				this.finalArr.push(this.projectArr[i]);
+				console.log("response======>",this.finalArr);
+			}
+		},
+		err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+		this.projectArr = [];
+		this.finalArr = [];
+	}
+
 
 					getProjects(){
 						this._projectService.getProjects().subscribe((res:any)=>{
