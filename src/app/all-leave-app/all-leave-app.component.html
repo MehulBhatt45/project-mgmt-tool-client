@@ -127,7 +127,7 @@
                       [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
                       ></app-image-viewer> -->
                       <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
-                      <a class="image_attachment" data-toggle="modal" data-target="#attachmentModal" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
+                      <a class="image_attachment" data-toggle="modal" data-target="#centralModalInfo" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                     </span>
                   </span>
                   <!-- <span  *ngIf="leaves.attechment && !leaves.attechment.length">
@@ -301,33 +301,27 @@ aria-hidden="true">
 </div>
 <!--/.Content-->
 </div>
-<!-- <div  *ngIf="gotAttachment && gotAttachment.length">
+<div  *ngIf="gotAttachment && gotAttachment.length">
   <app-image-viewer  [images]="gotAttachment" 
   [idContainer]="'idOnHTML'" 
   [loadOnInit]="true">
 </app-image-viewer>
-</div> -->
+</div>
 
 <!-- <div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
-  <div class="modal-dialog" role="do  cument">
-    <div class="modal-content" id="attachmentModelLabel">
-      <div *ngIf="gotAttachment && gotAttachment.length">
-        <app-image-viewer  [images]="gotAttachment" 
-        [idContainer]="'idOnHTML'" 
-        [loadOnInit]="true">
-      </app-image-viewer>
-    </div>
-  </div>
-</div>
-</div> -->
-
-<div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModelLabel" aria-hidden="true">
   <div  id="attachmentModelLabel" role="document">
     <div class="modal-content">
       <div class="modal-header purple-gradient-2 ">
        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true" class="white-text">&times;</span>
-      </button>
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+
+      </div>
+      <div  *ngIf="gotAttachment && gotAttachment.length">
+        <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
+      </div>
+    <div  *ngIf="gotAttachment && gotAttachment.length">
+      <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
     </div>
     <div  *ngIf="gotAttachment && gotAttachment.length">
       <app-image-viewer  [images]="gotAttachment"
@@ -336,7 +330,7 @@ aria-hidden="true">
     </app-image-viewer>
   </div>
 </div>
-</div>
+</div> -->
 
 
 

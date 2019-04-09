@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { config } from '../config';
 import {AlertService} from './alert.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class MessagingService {
   constructor(public alert:AlertService,public http:HttpClient,
     private angularFireDB: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth,
-    private angularFireMessaging: AngularFireMessaging) {
+    private angularFireMessaging: AngularFireMessaging,
+    private toastr: ToastrService) {
     this.angularFireMessaging.messaging.subscribe(
       (_messaging) => {
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -53,7 +55,9 @@ export class MessagingService {
               userId:userId,
               token:token
             }
+             
             this.addEntry(udata);
+            // this.addNotification(udata);
 
             //this.updateToken(userId, token);
           },
@@ -67,6 +71,10 @@ export class MessagingService {
           (payload) => {
             console.log("new message received. ", payload);
             this.currentMessage.next(payload);
+            this.toastr.info('Hello world!', 'Toastr fun!', {
+              disableTimeOut: true,
+              closeButton: true
+            });
           })
       }
 
@@ -75,4 +83,15 @@ export class MessagingService {
         this.http.post(config.baseApiUrl+"notification/addUser",udata).subscribe((success) => {
         });
       }
+
+
+      // addNotification(udata){
+      //   console.log("new notice",udata);
+       
+      //       this.http.post(config.baseApiUrl+"sendNotification/addNotification",udata).subscribe((sucess)=>{
+
+      //       });
+
+      // }
+
     }

@@ -58,6 +58,10 @@
           </li>
            <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Attendence</a>
           </li>
+           <li><a routerLink="/time-log" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Time Log</a>
+          </li>
+           <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r">  Log</a>
+          </li>
 
          <!--  <li *ngIf="currentUser.userRole=='admin'">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
@@ -79,11 +83,8 @@
           </li> -->
 
           <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
-
           <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">MyLeave</a></li>
-
-          <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
-
+          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
         </ul>
       </li>
     </ul>

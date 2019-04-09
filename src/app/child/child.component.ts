@@ -13,12 +13,14 @@ import Swal from 'sweetalert2';
 
 
 declare var $ : any;
+
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
   styleUrls: ['../project-detail/project-detail.component.css']
 })
 export class ChildComponent  implements OnInit{
+  
   name;  
   @Input()developers;
   @Input() tracks;
@@ -58,6 +60,12 @@ export class ChildComponent  implements OnInit{
   sprints;
   timeLog;
   logs;
+  diff;
+  counter: number;
+  timerRef;
+  running: boolean = false;
+  startText = 'Start';
+  time:any;
   
   
 
@@ -72,7 +80,10 @@ export class ChildComponent  implements OnInit{
   }
 
   ngOnInit(){
+   
     this.getSprint(this.projectId);
+    this.getTasks();
+
   }
   
   ngOnChanges() {
@@ -116,6 +127,7 @@ export class ChildComponent  implements OnInit{
       ]
     }
     ];
+    console.log("this tracks in child component =====>" , this.tracks);
   }
 
   getPriorityClass(priority){
@@ -264,6 +276,7 @@ export class ChildComponent  implements OnInit{
   openModel(task){
     console.log(task);
     this.task = task;
+    console.log(task.status);
     this.getAllCommentOfTask(task._id);
     $('#fullHeightModalRight').modal('show');
   }
@@ -345,6 +358,89 @@ export class ChildComponent  implements OnInit{
 
     }
   }
+  getTasks(){
+    this.loader = true;
+    setTimeout(()=>{
+      this._projectService.getAllTasks().subscribe((res:any)=>{
+        console.log("all in child response ======++++++++++++++++>" , res);
+        this.getEmptyTracks();
+        // this.tracks.tasks.reverse();
+        this.tasks = res;
+        this.tasks.sort(custom_sort);
+        this.tasks.reverse();
+        // this.tracks.tasks.reverse();
+        console.log("PROJECT=================>", this.tasks);
+
+        _.forEach(this.tasks , (task)=>{
+          // _.forEach(task.tasks, (tsk)=>{
+            // console.log("===================>th",tsk);
+            _.forEach(this.tracks , (track)=>{
+              if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+                if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+                  track.tasks.push(task);
+                }
+              }else{
+                if(task.status == track.id){
+                  track.tasks.push(task);
+                }
+              }
+            })
+            // })
+          });
+        console.log("PROJECT=================>", this.tracks);
+        _.forEach(this.tracks,(track)=>{
+          console.log('trackkkkkk===========>',track.tasks);
+          _.forEach(track.tasks, (t)=>{
+            console.log('trackkkkkkkkkkkkkkkkkkkkkkkk===========>',t.timelog1.difference);
+            this.logs = t.timelog1.difference;
+            console.log('this.logs.difference==========>',this.logs);
+            // var x = this.logs;
+            // var d = moment.duration(x, 'milliseconds');
+            // var hours = Math.floor(d.asHours());
+            // var mins = Math.floor(d.asMinutes()) - hours * 60;
+            // // var secs = Math.floor(d.asMinutes()) - 
+            // console.log( + hours + " : " + mins );
+            // this.difference = + hours + " : " + mins;
+            // console.log('difference=================>',this.difference);
+
+          })
+        })
+        console.log('this.tasks.timelog1=======>',this.tracks.tasks);
+        this.loader = false;
+      },err=>{
+        console.log(err);
+        this.loader = false;
+      })
+    },1000);
+
+    function custom_sort(a, b) {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    }
+  }
+
+  getHHMMTime(difference){
+    var milliseconds = ((difference % 1000) / 100),
+    seconds = Math.floor((difference / 1000) % 60),
+    minutes = Math.floor((difference / (1000 * 60)) % 60),
+    hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+
+    // hours = (hours < 10) ? "0" + hours : hours;
+    // minutes = (minutes < 10) ? "0" + minutes : minutes;
+    // seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds ;
+    // this.logs = difference;
+    //    var x = this.logs;
+    //    var d = moment.duration(x, 'milliseconds');
+    //    var hours = Math.floor(d.asHours());
+    //    var mins = Math.floor(d.asMinutes()) - hours * 60;
+    //    this.diff = + hours + " : " + mins;
+    //    return this.diff;
+    // var secs = Math.floor(d.asMinutes()) - 
+    // console.log( + hours + " : " + mins );
+    // console.log('difference=================>',this.diff);
+    // return new Date(difference).getHours()+":" +new Date(difference).getMinutes()+ ":"+ new Date(difference).getSeconds();
+  }
 
   deleteTask(taskId){
     console.log(taskId);
@@ -407,9 +503,9 @@ export class ChildComponent  implements OnInit{
         // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
-          console.log("task ======>" , task);
+          // console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            console.log("tracks==-=-=-=-",this.tracks);
+            // console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
               if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
@@ -487,10 +583,11 @@ export class ChildComponent  implements OnInit{
     }
 
     timeLogOfTask(data){
+      this.time = Date.now(); 
       console.log('data==========================>',data);
       console.log('unique id=======================>', data.uniqueId);
       this._projectService.addTimeLog(data).subscribe((res:any)=>{
-        console.log(res);
+        console.log(res);        
         this.timeLog = res;
         console.log('this.timeLog',this.timeLog.difference);
         this.logs = this.timeLog.difference;
@@ -499,29 +596,39 @@ export class ChildComponent  implements OnInit{
         var hours = Math.floor(d.asHours());
         var mins = Math.floor(d.asMinutes()) - hours * 60;
         // var secs = Math.floor(d.asMinutes()) - 
-        console.log("hours:" + hours + " mins:" + mins );
-        // this.logs = this.timeLog.log;
-        // console.log('this.logs',this.logs);
-        // _.map(this.logs,function(log) {
-          // //   if(log.endTime!=null){
-            //     var diff = Number(new Date(log.startTime))-Number(new Date(log.endTime));
-            //     var hours = Math.floor(diff /1000/60/60);
-            //     var min = Math.floor(diff/60/60%60);
-            //     var sec = (Math.floor((diff/1000) % 60)? Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) %60));
-            //     log['diff'] =hours + ':' + min +':' + sec;
-            //   }   
-            // });
-            console.log('difference=================>',this.logs);
-            // var time = this.timeLog.difference.toLocaleTimeString();
-            // var time = moment(this.timeLog.difference).format(" h:mm:ss ");
-            // var timee = time[1];
-            // console.log('fjgkhfj',timee);
-            // console.log('timeeeeeeeeeeeeeeeeeee==>',time);
-          },(err:any)=>{
-            console.log(err);
-          });
+        console.log( + hours + " : " + mins );
+        this.diff = + hours + " : " + mins;
+        console.log('difference=================>',this.diff);
+        
+      },(err:any)=>{
+        console.log(err);
+      });
     }
 
+
+    startTimer(data) {
+      console.log('task data================>',data);
+      this.running = !this.running;
+      if (this.running) {
+        this.startText = 'Stop';
+        var startTime = Date.now() - (this.counter || 0);
+        this.timerRef = setInterval(() => {
+        this.counter = Date.now() - startTime;
+        var milliseconds = (( this.counter % 1000) / 100),
+        seconds = Math.floor(( this.counter / 1000) % 60),
+        minutes = Math.floor(( this.counter / (1000 * 60)) % 60),
+        hours = Math.floor(( this.counter / (1000 * 60 * 60)) % 24);
+        console.log('hours + ":" + minutes + ":" + seconds',hours + ":" + minutes + ":" + seconds);
+        this.time = hours + ":" + minutes + ":" + seconds;
+        // data['time'] = this.time;
+        });
+      } else {
+        this.startText = 'Resume';
+        clearInterval(this.timerRef);
+      }
+    }
+
+    
 
 
 

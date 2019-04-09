@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-
+import { ToastrModule } from 'ngx-toastr';
 //import { FlexLayoutModule } from "@angular/flex-layout";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -71,6 +71,7 @@ import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { BacklogComponent } from './backlog/backlog.component';
+import { TimeLogComponent } from './time-log/time-log.component';
 @NgModule({
     declarations: [
     AppComponent,
@@ -110,7 +111,8 @@ import { BacklogComponent } from './backlog/backlog.component';
     NotificationComponent,
     AttendenceComponent,
     BacklogComponent,
-   ],
+    TimeLogComponent,
+    ],
 
     imports: [
     BrowserModule,
@@ -130,8 +132,9 @@ import { BacklogComponent } from './backlog/backlog.component';
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
     SelectDropDownModule,
-     NgSelectModule,
-     ImageViewerModule
+    NgSelectModule,
+    ImageViewerModule,
+    ToastrModule.forRoot()
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],

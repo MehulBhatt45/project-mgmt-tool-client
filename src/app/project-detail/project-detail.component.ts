@@ -227,7 +227,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.loader = true;
 		setTimeout(()=>{
 			this._projectService.getAllTasks().subscribe((res:any)=>{
-				console.log("all response ======>" , res);
+				console.log("all response ======++++++++++++++++>" , res);
 				this.getEmptyTracks();
 				// this.tracks.tasks.reverse();
 				this.tasks = res;
@@ -299,7 +299,7 @@ export class ProjectDetailComponent implements OnInit {
 
 			this._projectService.getTaskById(id).subscribe((res:any)=>{
 				console.log("huhfdfdbbhfef");
-				console.log("all response ======>" , res);
+				console.log("all response ==========================================>" , res);
 				this.getEmptyTracks();
 				this.project = res;
 				console.log("PROJECT=================>", this.project);
@@ -524,6 +524,7 @@ export class ProjectDetailComponent implements OnInit {
 				}
 			}
 			this._projectService.addTask(data).subscribe((res:any)=>{
+				console.log("data is======>",data);
 				console.log("response task***++",res);
 				Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
 				this.getProject(res.projectId);

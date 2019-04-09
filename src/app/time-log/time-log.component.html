@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let project of finalArr ">
+    <div class="card" >
+      <img class="card-img-top" onerror="this.src='../assets/4.jpeg'" src="{{path}}{{project.avatar}}" (click)="getTeamByProjectId(project)" style="cursor: pointer;"> 
+      <div class="card-body">   
+        <h4 class="card-title"><a>{{project.title}}</a></h4>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <table class="table" *ngIf="projectTeam">
+  <thead>
+    <tr>
+      
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let team of projectTeam ">
+     
+      <td (click)="getTaskOfDeveloper(team)" style="cursor: pointer;">{{team.name}}</td>
+    </tr>
+  </tbody>
+</table> 
+</div>
