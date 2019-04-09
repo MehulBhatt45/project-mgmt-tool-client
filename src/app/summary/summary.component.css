@@ -107,13 +107,10 @@ article {
     display: block;
     max-width: 500px;
 }
-article:before {
-    padding-bottom: 122%;
-}
 article:before, article .content:before {
     content: '';
     display: block;
-    padding-bottom: 100%;
+    padding-bottom: 110%;
     width: 100%;
 }
 article a {
@@ -166,7 +163,7 @@ article .content {
 }
 article .content .image {
     border-radius: 50%;
-    height: 100%;
+    padding-bottom: 100%;
     left: 0;
     overflow: hidden;
     position: absolute;
