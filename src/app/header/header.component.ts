@@ -192,9 +192,9 @@ export class HeaderComponent implements OnInit {
 								this.projects = res;
 								console.log("this.projects",this.projects);
 								_.forEach(this.projects,(project)=>{
-									console.log("project",project);
+									// console.log("project",project);
 									_.forEach(project.pmanagerId,(pid)=>{
-										console.log("pid",pid);
+										// console.log("pid",pid);
 										if(pid._id == this.currentUser._id){
 											this.demoprojects.push(project);
 										}
