@@ -1,3 +1,9 @@
+<div class="loader" *ngIf="loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
 <div class="container">
 	<div class="row ">
 		<div class="col-12 profile_image">
@@ -15,14 +21,14 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="project-tab" data-toggle="tab" href="#project" role="tab" aria-controls="project"
-					aria-selected="false">Projects</a>
+					aria-selected="false" >Projects</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave"
 					aria-selected="false">Leaves</a>
 				</li>
 			</ul>
-			<div class="tab-content" id="myTabContent">
+			<div class="tab-content" id="myTabContent" *ngIf="!loader">
 				<div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
 					<div class="card about_detail" style="border-radius: 5px;">
 						<h5 class="text-bold">{{currentUser.name | uppercase}}</h5>
