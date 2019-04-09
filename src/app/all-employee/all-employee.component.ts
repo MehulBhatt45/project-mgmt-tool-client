@@ -104,7 +104,8 @@ export class AllEmployeeComponent implements OnInit {
 			console.log("devid=-=--{}{}{}{}{}",developerid);
 			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("delete{}{}{}{}",res);
-			this.getDeveloper(this.selectedProjectId );
+			this.getAllDevelopers();
+			// this.getDeveloper(this.selectedProjectId );
 		},err=>{
 			console.log("errr=-=-=-= ",err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
