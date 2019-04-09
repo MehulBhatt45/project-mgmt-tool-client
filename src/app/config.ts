@@ -1,5 +1,6 @@
 
 
+
 // // const baseMediaUrl = "http://132.140.160.113/project_mgmt_tool/server/uploads/";
 // const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
 // const baseMediaUrl = "http://localhost/project_mgmt_tool/server";
@@ -19,7 +20,14 @@ const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 
 // const baseMediaUrl = "http://132.140.160.113/project_mgmt_tool/server/uploads/";
 // const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
-// const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
+// const baseUrl = "https://raoinfotech-conduct.tk:4001/";
+// const baseUrl = "http://132.140.160.114:4001/";
+// const baseUrl = "http://localhost:4000/";
+
+// const baseMediaUrl = "http://132.140.160.114/project_mgmt_tool/server/uploads/";
+
+
+// const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
 // const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 // 
 // 
