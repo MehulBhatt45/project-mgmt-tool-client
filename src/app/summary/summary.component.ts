@@ -42,6 +42,7 @@ export class SummaryComponent implements OnInit {
 	project;
 	comment;
 	projectId;
+	path = config.baseMediaUrl;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
 	editTaskForm;
@@ -62,7 +63,7 @@ export class SummaryComponent implements OnInit {
 	projectLength;
 	total:any;
 	round:any;
-	path = config.baseMediaUrl;
+	// path = config.baseMediaUrl;
 	// myproject=this.project[0];
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -412,6 +413,7 @@ export class SummaryComponent implements OnInit {
 					}
 				});
 
+				this.loader = false;
 			},err=>{
 				console.log(err);
 				this.loader = false;

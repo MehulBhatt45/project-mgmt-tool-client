@@ -1,4 +1,10 @@
-<div class="cont">
+<div class="loader" *ngIf="loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+<div class="cont" *ngIf="!loader">
 	<div class="container">
 		<div class="row" style="margin-top: -48px;">
 			<div class="card" style="background-color: #372e5f;">
@@ -123,7 +129,7 @@
 									<div class="content">
 										<div class="image"  >
 											<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
-											<img src="../assets/5.jpg">
+											<img src="{{path}}{{user.profilePhoto}}">
 										</div>
 										</div>
 									</div>
