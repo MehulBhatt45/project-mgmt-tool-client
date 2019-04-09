@@ -284,9 +284,14 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"tasks/add-task", data);
 	}
 	getTaskById(id){
+
 		console.log("task by id in child ==>" , id);
+
 		var id = id;
+
+		console.log("idddd=====>",id);
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+
 	}
 
 	getTeamByProjectId(id){
@@ -407,6 +412,7 @@ export class ProjectService {
 		}
 
 		// getTeamByProjectId(id){
+
 		// 	var projectId = id;
 		// 	return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
 		// }	
@@ -528,3 +534,4 @@ export class ProjectService {
 		}
 
 	}
+

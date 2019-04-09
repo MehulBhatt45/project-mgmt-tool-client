@@ -1,107 +1,3 @@
-
-.btn-primary{
-	background-color: green !important
-}
-.table th{
-	font-size: 20px;
-	vertical-align: middle;
-	padding:8px;
-	margin: 0;
-	white-space: nowrap;
-}
-.table td{
-	vertical-align: middle;
-	white-space: nowrap;
-}
-.a_icon{
-	font-size: 28px;
-	color:green;
-	margin-right: 5px;
-}
-.r_icon{
-	font-size: 30px;
-	color:red;
-	margin-left: 27px;
-}
-.view{
-	height: 87px;
-	margin-bottom: 20px;
-}
-.table td.description{
-	white-space: normal;
-}
-.sign{
-	float: right;
-}
-.dropdown{
-	margin-bottom: 10px;
-}
-.card{
-	max-width: 100%;
-	width: 100%;
-}
-h3{
-	text-align: center;
-}
-.selected{
-	display: none;
-}
-.unselected{
-	display: block;
-}
-.table a{
-	display: table;
-	margin: 0;
-}
-li a{
-	font-size: 24px;
-	color: white !important;
-	line-height: 48px;
-}
-.nav-link {
-	display: block;
-	padding: 0 !important; 
-	cursor: pointer;
-}
-.fa-caret-up,
-.fa-caret-down{
-	font-size: 20px;
-}
-button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
-	height: 35px;
-	width: 35px;
-	padding: 6px;
-}
-.md-form .prefix {
-	font-size: 24px !important;
-	margin-top: 24px;   
-}
-.md-form i{
-	color: white;
-}
-.fa-search{
-	color: white !important;
-	font-size: 13px;
-	padding: 2px;
-}
-
-#exampleForm2 {
-	color: #fff!important;
-}
-#exampleForm2 + label{
-	color: #fff!important;
-	top: 22px !important;
-}
-.md-form {
-	position: relative;
-	margin-bottom: auto;
-	margin-right: -22px;
-	margin-left: -84px;
-	/*margin-left: auto;*/
-	/*margin-right: 15px;*/
-	margin-top: auto;
-}
-
 .dropdown-menu{
 	background-color: transparent;
 	box-shadow: none; 
@@ -110,11 +6,6 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 	top: -30px!important;
 	left: -24px!important;
 }
-
-
-
-
-
 .nav-tabs {
 	border: 0;
 	padding: 0.7rem;
@@ -163,50 +54,135 @@ h6{
 .leaveCount{
 	padding: 0px;	
 }
-/*.purple{
-	background-image: linear-gradient(#4440bf,#61d2d8fc);
-	}*/
-	.nav-item{
-		padding: 0px 0px;
-	}
-	.leave_icon img{
-		height: 30px;
-		width: 30px;
-	}
-	select.browser-default {
-		display: block;
-		margin: 25px 0px;
-	}
-	.card_custom{
-		width: 20%;
-		border-radius: 3px;
-		background-image: linear-gradient(#00dbc7,#238388);
-		padding: 10px;
-		margin-right: 117px;
-		margin-left: 23px;
-		text-align: center;
-	}
+.nav-item{
+	padding: 0px 0px;
+}
+.leave_icon img{
+	height: 30px;
+	width: 30px;
+}
+select.browser-default {
+	display: block;
+	margin: 25px 0px;
+}
+.card_custom{
+	width: 20%;
+	border-radius: 3px;
+	background-image: linear-gradient(#00dbc7,#238388);
+	padding: 10px;
+	margin-right: 117px;
+	margin-left: 23px;
+	text-align: center;
+}
 
 .task li{
 	padding: 20px 10px;
 	border-bottom: 1px solid blue;
 	border-left: 5px solid lightblue;
 }
+.tab-pane ul li {
+	margin-top: 10px;
+	background-color: #fff;
+}
+.header_top{
+	background-color: lightgray;
+	width: 100%;
+}
+.profile{
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile img{
+	min-width: 100%;
+	min-height: 100%;
+	max-height:100%;
+	max-width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+.profile_dp{
+	border-radius: 50%;
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile_dp img{
+	object-fit: cover;
+}
+.notification ul li{
+	padding: 10px 2px;
+}
+.notification span{
+	font-size: 16px;
+	padding: 3px 6px;
+	border-radius: 4px;
+}
+.notification i{
+	font-size: 25px;
+}
+.content p{
+	margin: 0;
+}
+.content label{
+	color: #b7b2b2;
+	font-size: 14px;
+	margin: 0;
+}
+.task li{
+	border-bottom: 1px solid #2196F3;
+	border-left: 5px solid #8bc1f1;
+}
 .leave li{
-	padding: 20px 10px;
-	border-bottom: 2px solid green;
-	border-left: 5px solid lightgreen;	
+	border-bottom: 1px solid #4CAF50;
+	border-left: 5px solid #9ecea1;	
 }
 .other li{
-	padding: 20px 10px;
-	border-bottom: 2px solid purple;
-	border-left: 5px solid #d272d2;
+	border-bottom: 1px solid #9c27b0;
+	border-left: 5px solid #c58fd0;
 }
-.btn-floating i {
-	font-size: 14px!important;
+.task span{
+	background-color: #cde8f1;
+	color: #256dde;/*
+	background-color: #0d7fa5;
+	color: #ffffff;*/
 }
-p.btn-floating {
-    margin-top: -20px;
-    margin-left: -2px;
+.leave span{
+	background-color: #daf7d0;
+	color: #008a00;
 }
-
+.other span{
+	background-color: #eecdf7;
+	color: #76008a;
+}
+.task_priority_highest i{
+	color: red;
+}
+.task_priority_high i{
+	color: #ea740a;
+}
+.task_priority_medium i{
+	color: #efbd2c;
+	/*color: #efe900;*/
+}
+.task_priority_low i{
+	color: #9c9cf9;
+}
+.leave_approved i{
+	color: green;
+}
+.leave_rejected i{
+	color: red;	
+}
+.other i{
+	color: purple;
+}
+.task a{
+	background-color: red;
+}
+.task a:visited{
+	background-color: transparent;
+}
+.unread{
+	background-color: #f1eaff;
+}

@@ -66,6 +66,8 @@ export class ChildComponent  implements OnInit{
   running: boolean = false;
   startText = 'Start';
   time:any;
+  assignTo;
+
   
   
 
@@ -80,7 +82,9 @@ export class ChildComponent  implements OnInit{
   }
 
   ngOnInit(){
-   
+
+    console.log(this.tracks, this.developers);
+
     this.getSprint(this.projectId);
     this.getTasks();
 
@@ -159,7 +163,7 @@ export class ChildComponent  implements OnInit{
       title : new FormControl('', Validators.required),
       desc : new FormControl('', Validators.required),
       assignTo : new FormControl('', Validators.required),
-      sprint :new FormControl('',Validators.required),
+      // sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
       startDate : new FormControl('', Validators.required),
       dueDate : new FormControl('', Validators.required),
@@ -495,7 +499,8 @@ export class ChildComponent  implements OnInit{
         console.log("err of project============>"  ,err);
       });
 
-      this._projectService.getTaskById(id).subscribe((res:any)=>{
+      console.log("current user ===>" , this.projectId);
+      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
@@ -544,6 +549,9 @@ export class ChildComponent  implements OnInit{
       task.dueDate = moment().add(task.dueDate,'days').toString();
       task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
       console.log(task);
+      if(task.sprint){
+        delete task['sprint'];
+      }
       let data = new FormData();
       _.forOwn(task, function(value, key) {
         data.append(key, value)
@@ -582,6 +590,7 @@ export class ChildComponent  implements OnInit{
 
     }
 
+
     timeLogOfTask(data){
       this.time = Date.now(); 
       console.log('data==========================>',data);
@@ -613,14 +622,14 @@ export class ChildComponent  implements OnInit{
         this.startText = 'Stop';
         var startTime = Date.now() - (this.counter || 0);
         this.timerRef = setInterval(() => {
-        this.counter = Date.now() - startTime;
-        var milliseconds = (( this.counter % 1000) / 100),
-        seconds = Math.floor(( this.counter / 1000) % 60),
-        minutes = Math.floor(( this.counter / (1000 * 60)) % 60),
-        hours = Math.floor(( this.counter / (1000 * 60 * 60)) % 24);
-        console.log('hours + ":" + minutes + ":" + seconds',hours + ":" + minutes + ":" + seconds);
-        this.time = hours + ":" + minutes + ":" + seconds;
-        // data['time'] = this.time;
+          this.counter = Date.now() - startTime;
+          var milliseconds = (( this.counter % 1000) / 100),
+          seconds = Math.floor(( this.counter / 1000) % 60),
+          minutes = Math.floor(( this.counter / (1000 * 60)) % 60),
+          hours = Math.floor(( this.counter / (1000 * 60 * 60)) % 24);
+          console.log('hours + ":" + minutes + ":" + seconds',hours + ":" + minutes + ":" + seconds);
+          this.time = hours + ":" + minutes + ":" + seconds;
+          // data['time'] = this.time;
         });
       } else {
         this.startText = 'Resume';

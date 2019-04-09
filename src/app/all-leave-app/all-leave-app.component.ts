@@ -62,20 +62,20 @@ export class AllLeaveAppComponent implements OnInit {
 
     this.leavescount = [
     {
-      "typeOfLeave" : "sickleave",
-      "leavesTaken" : Number()
+      "typeOfLeave" : "Sick_Leave",
+      "leavesTaken" : 0
     },
     {
-      "typeOfLeave" : "personalleave",
-      "leavesTaken" : Number()
+      "typeOfLeave" : "Personal_Leave",
+      "leavesTaken" : 0
     },
     {
-      "typeOfLeave" : "leavewithoutpay",
-      "leavesTaken" : Number()
+      "typeOfLeave" : "Leave_WithoutPay",
+      "leavesTaken" : 0
     },
     {
-      "typeOfLeave" : "emergencyleave",
-      "leavesTaken" : Number()
+      "typeOfLeave" : "Emergency_Leave",
+      "leavesTaken" : 0
     },
     {
       "leavesPerYear" : 18,
@@ -149,6 +149,7 @@ export class AllLeaveAppComponent implements OnInit {
                     this.allAproveLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.allAproveLeaves);
                     console.log("applicationsss==>",this.leaveApp);
+
                     this.aLeave = true;
                     this.pLeave = false;
                     this.rLeave = false;
@@ -222,12 +223,22 @@ export class AllLeaveAppComponent implements OnInit {
 
                     this.allLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.leaveApp);
-                    this.pLeave = true;
-                    this.aLeave = false;
-                    this.rLeave = false;
-                  },err=>{
-                    console.log(err);
-                  });
+                    // _.forEach(this.leaveApp , (leave)=>{
+                      //   _.forEach(this.leavescount , (count)=>{
+                        //     if(count.typeOfLeave == leave.typeOfLeave){
+                          //       count.leavesTaken = count.leavesTaken + 1;
+                          //     }
+                          //   });
+                          // });
+
+                          // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                          // console.log("leaves count ====>" , this.leavescount);
+                          this.pLeave = true;
+                          this.aLeave = false;
+                          this.rLeave = false;
+                        },err=>{
+                          console.log(err);
+                        });
                   this.loader=false;
                 },1000);
               }
@@ -511,9 +522,9 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title='Application';
                   this.getEmptytracks();
                   var obj ={ email : developerId};
-                  console.log("email of login user",obj);
+                  console.log("email of selected user",obj);
                   this._leaveService.leavesById(obj).subscribe((res:any)=>{
-                    console.log("resppppppondssss",res);
+                    console.log("resppppppondssss from leaves by id",res);
                     this.leaves = res;
                     _.forEach(this.leaves , (leave)=>{
                       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
@@ -534,21 +545,23 @@ export class AllLeaveAppComponent implements OnInit {
                           this.leaveApp.push(leave);
                         }
                       });
-                      _.forEach(this.leaves , (leave)=>{
-                        _.forEach(this.leavescount , (count)=>{
-                          if(count.typeOfLeave == leave.typeOfLeave){
-                            count.leavesTaken = count.leavesTaken + 1;
+                      // _.forEach(this.leaves , (leave)=>{
+                        //   console.log("leavess====",leave);
+                        //   _.forEach(this.leavescount , (count)=>{
+                          //     if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+                            //       count.leavesTaken = count.leavesTaken + 1;
+                            //     }
+                            //   });
+                            // });
+
+                            // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                            // console.log("leaves count ====>" , this.leavescount);
+                          }else{
+                            console.log("not found");
                           }
-                        });
-                      });
-                      console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                      console.log("leaves count ====>" , this.leavescount);
-                    }else{
-                      console.log("not found");
-                    }
-                  },err=>{
-                    console.log(err);
-                  })
+                        },err=>{
+                          console.log(err);
+                        })
                   this.loader=false;
                 },1000);
               }
@@ -637,38 +650,70 @@ export class AllLeaveAppComponent implements OnInit {
                             console.log("leave id=======>>",leaveid);
                             this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
                               this.singleleave = res[0];
-                              console.log("single leave",this.singleleave);
-                              option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
-                            },err=>{
-                              console.log("errrrrrrrrrrrrr",err);
+                              var obj =  this.singleleave.email;
+                              console.log("email of login user",obj);
+                              this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
+                                console.log("resppppppondssss",res);
+                                this.leaves = res;
+                                this.getEmptytracks();
+                                _.forEach(this.leaves , (leave)=>{
+                                  console.log("leavess====",leave);
+                                  _.forEach(this.leavescount , (count)=>{
+                                    if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+                                      console.log("count ====>" , count);  
+                                      count.leavesTaken = count.leavesTaken + 1;
+                                    }
+                                  });
+                                });
+
+                                console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                                console.log("leaves count ====>" , this.leavescount);
+                                option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+                              },err=>{
+                                console.log("errrrrrrrrrrrrr",err);
+                              })
                             })
 
                           }
 
-                          submitComment(leaveid,comment){
-                            console.log("leave id==>>>>>",leaveid);
-                            console.log("====>",comment);
-                            var data={
-                              leaveId:leaveid,
-                              comment:comment
-                            }
-                            console.log("data==========>>",data);
-                            this._leaveService.addComments(data).subscribe((res:any)=>{
-                              res['comment'] = true; 
-                              console.log("response",res);
-                              Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-                              $('#centralModalInfo').modal('hide');
-                            },err=>{
-                              console.log("errrrrrrrrrrrrr",err);
-                              Swal.fire('Oops...', 'Something went wrong!', 'error')
-                            })
-                          }
 
-                          gotAttachment = [];
-                          sendAttachment(attechment){
-                            console.log("attachment is====>",attechment);
-                            this.gotAttachment = attechment;
-                            console.log("gotattechment array ====>",this.gotAttachment);
-                          }
 
-                        }
+                          // leaveById(leaveid, option){
+                            //   console.log("leave id=======>>",leaveid);
+                            //   this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+                              //     this.singleleave = res[0];
+                              //     option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+                              //   },err=>{
+                                //     console.log("errrrrrrrrrrrrr",err);
+                                //   })
+
+                                // }
+
+                                submitComment(leaveid,comment){
+                                  console.log("leave id==>>>>>",leaveid);
+                                  console.log("====>",comment);
+                                  var data={
+                                    leaveId:leaveid,
+                                    comment:comment
+                                  }
+                                  console.log("data==========>>",data);
+                                  this._leaveService.addComments(data).subscribe((res:any)=>{
+                                    res['comment'] = true; 
+                                    console.log("response",res);
+                                    Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
+                                    $('#centralModalInfo').modal('hide');
+                                  },err=>{
+                                    console.log("errrrrrrrrrrrrr",err);
+                                    Swal.fire('Oops...', 'Something went wrong!', 'error')
+                                  })
+                                }
+
+                                gotAttachment = [];
+                                sendAttachment(attechment){
+                                  console.log("attachment is====>",attechment);
+                                  this.gotAttachment = attechment;
+                                  $('#veiwAttach').modal('show')
+                                  console.log("gotattechment array ====>",this.gotAttachment);
+                                }
+
+                              }

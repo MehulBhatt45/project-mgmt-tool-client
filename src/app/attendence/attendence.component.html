@@ -5,7 +5,67 @@
 		</div>
 	</div>
 	<div class="row">
-		<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)">CheckIn</button>
-		<!-- <input type="submit" class="btn btn-default" placeholder="CheckIn"> -->
+		<div class="col-xs-6">
+			<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
+		</div>
+		<div class="col-xs-6">
+			<button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="md-form">
+				<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" >	
+				<label for="date-picker-example"></label>
+			</div>
+		</div>
 	</div>
 </div>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">CheckIn</th>
+			<th scope="col">CheckOut</th>
+			<th scope="col">Diffrence</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let ateendence of logs;let i=index;">
+			<td>{{ateendence.checkIn}}</td>
+
+			<td>{{ateendence.checkOut}}</td>
+
+			<td>{{ateendence.diff}}</td>
+		</tr>
+	</tbody>
+</table>
+
+	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="md-form">
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="md-form">
+            <textarea type="text" id="message-text" class="form-control md-textarea" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div> -->
