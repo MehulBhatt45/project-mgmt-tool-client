@@ -81,7 +81,11 @@ export class EditProjectComponent implements OnInit {
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
+
+
+
 			this.developers = res;
+			console.log("dev{}{}{}",this.developers);
 			this.developers.sort(function(a, b){
 				if (name){
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
@@ -92,7 +96,10 @@ export class EditProjectComponent implements OnInit {
 					return 0 
 				}
 			})
+			
 			console.log("Developers",this.developers);
+
+			
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 		})
@@ -219,7 +226,11 @@ export class EditProjectComponent implements OnInit {
 
 	addDeveloper(event){
 		console.log(event);
+
+		
+
 		this.projectTeam.push(event);
+		
 	}
 
 	removeDeveloper(event){
