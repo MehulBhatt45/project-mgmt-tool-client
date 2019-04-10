@@ -24,6 +24,7 @@ export class ViewProjectComponent implements OnInit {
   pro;
   idet = [];
   pmt:any;
+  managerArr = [];
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
@@ -68,8 +69,8 @@ export class ViewProjectComponent implements OnInit {
         content: function () { console.log("EVENT TIGGERED"); return this.teamproject.name; }
       });
     },100);
-
     this.getProjects();
+
     this.getAllDevelopers();
     $('.datepicker').pickadate({
       onSet: function(context) {
@@ -123,7 +124,10 @@ export class ViewProjectComponent implements OnInit {
       this.loader=false;
     });
 
-
+  }
+  getDate(date){
+    date = date.split("T");
+    return date[0];
   }
 
   getTitle(name){
@@ -140,7 +144,7 @@ export class ViewProjectComponent implements OnInit {
   getTechName(tech){
     if(tech == "fa-react") return "React JS"
   }
-addProject(addForm){
+manageroject(addForm){
   var data = new FormData();
   _.forOwn(addForm, function(value, key) {
     data.append(key, value)
