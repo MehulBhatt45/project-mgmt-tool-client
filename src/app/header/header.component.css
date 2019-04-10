@@ -19,9 +19,11 @@ header{
   fill: rgb(189, 194, 193);
   height: 100%;
 }
+
 ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   background-color: rgba(22, 5, 34, 0.8);
 }
+
 .top_icon{
   -webkit-box-align: center;
   align-items: center;
@@ -271,32 +273,42 @@ ol.breadcrumb.hidden-lg-down li a {
   display: block;
 }
 .delete-team-member{
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    height: 100px;
-    width: 100px;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    border-radius: 50%;
-    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 100px;
+  width: 100px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  border-radius: 50%;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
 }
 .delete-team-member a{
   position: absolute;
-    display: table;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    height: 24px;
-    width: 24px;
+  display: table;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 24px;
+  width: 24px;
 }
 .delete-team-member a i{
-    color: red;
+  color: red;
 }
+/*.close{
+  margin: -12px 12px 0px 0px;
+  background-color: #fff;
+  opacity: 1;
+}*/
+.side-nav {
+    /*background-color: black !important;*/
+    background-image: url('../../assets/bg1.jpg');
+}
+

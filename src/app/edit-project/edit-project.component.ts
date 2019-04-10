@@ -127,6 +127,7 @@ export class EditProjectComponent implements OnInit {
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
+			console.log("adev=-=-=-=-=-",this.availableDevelopers);
 		},err=>{
 			console.log(err);
 		})

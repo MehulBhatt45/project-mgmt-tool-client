@@ -72,11 +72,10 @@ export class UserprofileComponent implements OnInit {
 			console.log("current user ====>" , userId);
 			this.projects = res;
 			console.log(this.projects);
-			console.log(this.projects[0].pmanagerId._id);
+			console.log("pmanagerId ===>",this.projects[0].pmanagerId);
 			_.forEach(this.projects , (task)=>{
 				_.forEach(task.Teams , (project)=>{
 					if(project._id == userId){
-
 						this.projectArr.push(task);
 					}
 				})
@@ -112,7 +111,7 @@ export class UserprofileComponent implements OnInit {
 				openModel(task){
 					$('#editEmailModel').modal('show');
 				}
-				
+
 				projectSelected(item){
 					if(item && item._id){
 						_.forEach(item.Teams,(all)=>{
@@ -135,38 +134,38 @@ export class UserprofileComponent implements OnInit {
 					}
 				}
 				getProjectByPmanagerId(){
-						this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
-								this.currentUser = res;
-								console.log("current====>",this.currentUser);
-							})
-						}
+					this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
+						this.currentUser = res;
+						console.log("current====>",this.currentUser);
+					})
+				}
 
-						addNotification(editTEmail){
-							this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
-								console.log(res);
-							})
-						}
-						uploadFile(e){
-							console.log("file============>",e.target.files);
-							var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-							console.log("userId===============>",userId);
-							this.files = e.target.files;
-							console.log("files===============>",this.files);
-							this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
-								console.log("resss=======>",res);
-								Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
+				addNotification(editTEmail){
+					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
+						console.log(res);
+					})
+				}
+				uploadFile(e){
+					console.log("file============>",e.target.files);
+					var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+					console.log("userId===============>",userId);
+					this.files = e.target.files;
+					console.log("files===============>",this.files);
+					this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+						console.log("resss=======>",res);
+						Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
 
-								setTimeout(()=>{
-									this.currentUser = res;
-									localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-								},1000);
-							},error=>{
-								console.log("errrorrrrrr====>",error);
-								Swal.fire('Oops...', 'Something went wrong!', 'error')
-							});  
-						}
+						setTimeout(()=>{
+							this.currentUser = res;
+							localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+						},1000);
+					},error=>{
+						console.log("errrorrrrrr====>",error);
+						Swal.fire('Oops...', 'Something went wrong!', 'error')
+					});  
+				}
 
-					}
+			}
 
 
 
