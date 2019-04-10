@@ -256,6 +256,7 @@ export class ProjectService {
 
 	updateTask(id, task){
 		console.log("task =========>",task);
+		// console.log("id-=-=",id);
 		// var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
