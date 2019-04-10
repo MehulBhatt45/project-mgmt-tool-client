@@ -17,10 +17,10 @@
 						<p class="animated fadeInRight slower">{{currentUser.userRole}}</p>
 						<h2 class="animated fadeInRight slower delay-2s mb-2">{{currentUser.name | uppercase}}</h2>
 						<p class="animated fadeInUp slower"><i class="fas fa-envelope"></i>{{currentUser.email}}</p>
-						<p class="animated fadeInUp slower"><i class="fab fa-skype"></i>VivekBharda(static)</p>
+						<!-- <p class="animated fadeInUp slower"><i class="fab fa-skype"></i>VivekBharda(static)</p>
 						<p class="animated fadeInUp slower"><i class="fab fa-facebook"></i>VivekBharda(static)</p>
 						<p class="animated fadeInUp slower"><i class="fab fa-instagram"></i>VivekBharda(static)</p>
-						<p class="animated fadeInUp slower"><i class="fas fa-mobile-alt"></i>9876546543 (static)</p>
+						<p class="animated fadeInUp slower"><i class="fas fa-mobile-alt"></i>9876546543 (static)</p> -->
 					</div>
 				</div>
 			</div>
@@ -73,15 +73,17 @@
 						<span style="margin-left: 10px; color: #330867;">Available Leaves:</span><span *ngFor="let leave of leavescount"> {{leave.leavesLeft}}</span></h5>
 						<div class="container">
 							<div class="row">
-								<div class="col-sm-5 z-depth-5">
+								<div class="col-sm-4 z-depth-5">
 									<h2 class="text-center pt-2">Leaves Type</h2>
 									<p class="text-center" *ngIf="approvedLeaves">
 									{{approvedLeaves.length}} responses</p>
 									<canvas id="pieChart"></canvas>
 								</div>            
-								<div class="col-md-1">
+								<div class="col-md-4 z-depth-5">
+									<h2 class="text-center pt-2">Leave</h2>
+									<p class="text-center" *ngFor="let leave of leavescount">{{leave.typeOfLeave}} {{leave.leavesTaken}}</p>
 								</div>
-								<div class="col-sm-5 z-depth-5">
+								<div class="col-sm-4 z-depth-5">
 									<h2 class="text-center pt-2">Duration</h2>
 									<p class="text-center" *ngIf="leaveApp">{{approvedLeaves.length}} responses</p>
 									<canvas id="pieChart1"></canvas>

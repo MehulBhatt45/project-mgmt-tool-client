@@ -35,6 +35,7 @@ export class ViewProjectComponent implements OnInit {
   idpmt:any;
   objectsArray:any;
   hoveredProject: any;
+  teamproject:any;
   ary:any;
   optionsSelect: Array<any>;
   pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
@@ -60,13 +61,13 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() {
     setTimeout(()=>{
 
-      $('[data-toggle="popover-hover"]').popover({
+      $('[data-toggle="popover"]').popover({
         html: true,
         trigger: 'hover',
         placement: 'bottom',
-        content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+        content: function () { console.log("EVENT TIGGERED"); return this.teamproject.name; }
       });
-    },2000);
+    },100);
 
     this.getProjects();
     this.getAllDevelopers();
@@ -94,7 +95,7 @@ export class ViewProjectComponent implements OnInit {
   getProjects(){
     this.loader=true;
     this._projectService.getProjects().subscribe((res:any)=>{
-      if(this.currentUser.userRole == 'projectManager'){
+      if(this.currentUser.userRole == 'projectManager' || this.currentUser.userRole == 'admin'){
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
         this.projects = res;
@@ -118,9 +119,11 @@ export class ViewProjectComponent implements OnInit {
         });
       }, 100);
     },err=>{
-     Swal.fire('Oops...', 'Something went wrong!', 'error')  
-     this.loader=false;
-   });
+      Swal.fire('Oops...', 'Something went wrong!', 'error')  
+      this.loader=false;
+    });
+
+
   }
 
   getTitle(name){
@@ -306,8 +309,14 @@ getTaskCount(status){
 }
 
 mouseOver(project){
- 
+
   this.hoveredProject = project;
+}
+
+mouseOvers(projectTeam){
+
+  this.teamproject = projectTeam;
+
 }
 
 }
