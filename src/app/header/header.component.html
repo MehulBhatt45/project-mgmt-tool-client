@@ -131,9 +131,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title w-100 text-center" id="myModalLabel">{{modalTitle}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
       <div class="modal-body">
         <div class="container">
@@ -199,9 +199,9 @@
               <div class="row no-margin no-padding  border" >
                 <div class="form-group col-12 col-lg-6 pt-1">
                   <label for="assignTo">Assign To</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <!-- <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
+                  </select> -->
                   <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
                   </select>
@@ -243,7 +243,7 @@
         </div>
       </div>
       <div class="modal-footer float-right">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
         <button type="button" class="btn btn-default btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
       </div>
     </div>
