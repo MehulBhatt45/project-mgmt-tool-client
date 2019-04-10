@@ -169,15 +169,15 @@ h6{
 }
 .card_custom_1,
 div#Pending{
-	background-image: linear-gradient(#fadfa2,#f08210)!important;
+    background-image: linear-gradient(#FBB034,#FFDD00)!important;
 }
 .card_custom_2,
 div#Approved{
-	background-image: linear-gradient(#a3e68d,#25a408)!important;
+    background-image: linear-gradient(#04BF00,#015D00)!important;
 }
 .card_custom_3,
 div#Rejected{
-	background-image: linear-gradient(#f79d89,#c13819)!important;
+    background-image: linear-gradient(#DB3445,#F71735)!important;
 }
 .total_leave{
 	display: inline-block;

@@ -119,9 +119,9 @@ export class ViewProjectComponent implements OnInit {
         });
       }, 100);
     },err=>{
-     Swal.fire('Oops...', 'Something went wrong!', 'error')  
-     this.loader=false;
-   });
+      Swal.fire('Oops...', 'Something went wrong!', 'error')  
+      this.loader=false;
+    });
 
 
   }
@@ -309,12 +309,12 @@ getTaskCount(status){
 }
 
 mouseOver(project){
- 
+
   this.hoveredProject = project;
 }
 
 mouseOvers(projectTeam){
-  
+
   this.teamproject = projectTeam;
 
 }
