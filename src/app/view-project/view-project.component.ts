@@ -24,6 +24,7 @@ export class ViewProjectComponent implements OnInit {
   pro;
   idet = [];
   pmt:any;
+  managerArr = [];
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
@@ -32,6 +33,7 @@ export class ViewProjectComponent implements OnInit {
   tracks;
   projectId;
   project;
+  demoprojects = [];
   idpmt:any;
   objectsArray:any;
   hoveredProject: any;
@@ -61,15 +63,23 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() {
     setTimeout(()=>{
 
+
+      // $('[data-toggle="popover"]').popover(); 
       $('[data-toggle="popover-hover"]').popover({
         html: true,
         trigger: 'hover',
         placement: 'bottom',
+        // content: function () { return '<p>hELLO</p>'; }
         content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+      }, ()=>{
+        console.log("Hover");
       });
-    },100);
 
+
+
+    },100);
     this.getProjects();
+
     this.getAllDevelopers();
     // this.getProject();
     $('.datepicker').pickadate({
@@ -100,7 +110,9 @@ export class ViewProjectComponent implements OnInit {
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
         this.projects = res;
-        console.log("this.projects========------=-=-=-=",this.projects);
+        
+        console.log("this.demoprojects========------=-=-=-=",this.projects);
+
       }
       else{
         this.projects = [];
@@ -124,7 +136,10 @@ export class ViewProjectComponent implements OnInit {
       this.loader=false;
     });
 
-
+  }
+  getDate(date){
+    date = date.split("T");
+    return date[0];
   }
 
 
@@ -143,7 +158,7 @@ export class ViewProjectComponent implements OnInit {
   getTechName(tech){
     if(tech == "fa-react") return "React JS"
   }
-addProject(addForm){
+manageroject(addForm){
   var data = new FormData();
   _.forOwn(addForm, function(value, key) {
     data.append(key, value)
@@ -249,12 +264,6 @@ mouseOver(project){
 }
 
 
-
-mouseOvers(projectTeam){
-
-  this.teamproject = projectTeam;
-
-}
 
 }
 

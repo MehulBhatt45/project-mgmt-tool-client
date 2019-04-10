@@ -4,7 +4,7 @@
   <span></span>
   <span></span>
 </div>
-<div class="project_bord" *ngIf="!loader">
+<div class="project_bord">
     <div class="row">
         <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="row text-center margin-20">
                     <div class="col-md-4 indigo-text">
-                     <strong title="task" class="text-center">
+                       <strong title="task" class="text-center">
                         <i class="fas font-project-view-small fa-tasks fa-fw"></i>
                         <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
                     </strong>
@@ -28,7 +28,7 @@
                     </strong>
                 </div>
                 <div class="col-md-4 red-text">
-                 <strong title="Bug" class=" text-center">
+                   <strong title="Bug" class=" text-center">
                     <i class="fas font-project-view-small fa-bug fa-fw"></i>
                     <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
                 </strong>
@@ -40,62 +40,52 @@
       </button>
       <div class="dropdown-menu">
         <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" title="Team Info" data-toggle="popover-hover"  data-content="<ul><li>123</li></ul>"><i class="fas fa-users"></i></a>
+        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><i class="fas fa-users"></i></a>
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+
     </div>
 </div>
 <div class="card-body card-body-cascade margin-bottom-0 text-center">
     <h5 class="deep-purple-text">
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
     </h5>
-    <span class="font-weight-bold">Project Manager</span>
-
-    
-    <p><i class="far fa-calendar-plus margin-right-5"></i> <span>Feb,12 2019</span></p>
-    <p class="card-text">{{project.desc}}</p>
-    <button class="btn btn-default progress_summary" (mouseover)="mouseOver(project)">Progress</button>
-    <div class="summary card z-depth-3" *ngIf="hoveredProject">
-        <h4>{{hoveredProject.title}}</h4>
-        <h4 class="margin-top-10">Project Progress</h4>
-        <div class="row padding-20">
-            <div class="col-md-6">
-                <button class="btn btn-warning">{{getTaskCount('to do')}}</button>
-                <p>To Do</p>
-                <!-- <p>{{getTaskCount('to do')}}</p> -->
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-info">{{getTaskCount('in progress')}}</button>
-                <p>In Progress</p>
-                <!-- <p>{{getTaskCount('in progress')}}</p> -->
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-indigo">{{getTaskCount('testing')}}</button>
-                <p>Testing</p>
-                <!-- <p>{{getTaskCount('testing')}}</p> -->
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-success">{{getTaskCount('comlete')}}</button>
-                <p>Complete</p>
-                <!-- <p>{{getTaskCount('comlete')}}</p> -->
+    <ul *ngFor ="let proj of project.pmanagerId"> 
+        <li class="font-weight-bold">
+            {{proj.name}}
+        </li></ul>
+        <p><i class="far fa-calendar-plus margin-right-5"></i> <span>{{getDate(project.createdAt)}}</span></p>
+        <p class="card-text">{{project.desc}}</p>
+        <button class="btn btn-default progress_summary" (mouseover)="mouseOver(project)">Progress</button>
+        <div class="summary card z-depth-3" *ngIf="hoveredProject">
+            <h4>{{hoveredProject.title}}</h4>
+            <h4 class="margin-top-10">Project Progress</h4>
+            <div class="row padding-20">
+                <div class="col-md-6">
+                    <button class="btn btn-warning">{{getTaskCount('to do')}}</button>
+                    <p>To Do</p>
+                    <!-- <p>{{getTaskCount('to do')}}</p> -->
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-info">{{getTaskCount('in progress')}}</button>
+                    <p>In Progress</p>
+                    <!-- <p>{{getTaskCount('in progress')}}</p> -->
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-indigo">{{getTaskCount('testing')}}</button>
+                    <p>Testing</p>
+                    <!-- <p>{{getTaskCount('testing')}}</p> -->
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success">{{getTaskCount('comlete')}}</button>
+                    <p>Complete</p>
+                    <!-- <p>{{getTaskCount('comlete')}}</p> -->
+                </div>
             </div>
         </div>
     </div>
-    <div class="summary card z-depth-3" *ngIf="teamproject">
-       
-        <h4 class="margin-top-10">Project Team</h4>
-        <div class="row padding-20">
-            <div class="col-md-6">
-                <button class="btn btn-warning">{{getTaskCount('to do')}}</button>
-            </div>
-            
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-<div>
 
+</div>
+</div>
 </div>
 </div>
 
