@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
+import { config } from '../config';
 declare var $:any;
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
@@ -14,7 +15,9 @@ import Swal from 'sweetalert2';
 export class AddNoticeComponent implements OnInit {
 	files:FileList;
 	addForm:FormGroup;
-	url = '';
+	url = [];
+	commentUrl = [];
+	path = config.baseMediaUrl;
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
 		this.addForm = new FormGroup({
@@ -67,23 +70,25 @@ export class AddNoticeComponent implements OnInit {
 		})
 	}
 
-	changeFile(event){
-		console.log("response from changefile",event.target.files);
-		this.files = event.target.files;
-		if (event.target.files && event.target.files[0]) {
+	changeFile(event, option){
+		_.forEach(event.target.files, (file:any)=>{
 			var reader = new FileReader();
-			reader.readAsDataURL(event.target.files[0]); // read file as data url
-			reader.onload = (event:any) => { // called once readAsDataURL is completed
-				this.url = event.target.result;
-
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
+				if(option == 'item')
+					this.url.push(e.target.result);
+				if(option == 'image')
+					this.url.push(e.target.result);
 			}
-		}
+		})
 	}
-
-	removeAvatar(){
-		this.url = "";
+	
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
 		if(this.files && this.files.length)
-			this.files = null;
+			this.url.splice(index,1);
+		console.log(this.files);
 	}
 
 }

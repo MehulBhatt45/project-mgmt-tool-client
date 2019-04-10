@@ -136,6 +136,12 @@ export class HeaderComponent implements OnInit {
 					projectSelected(item){
 						if(item && item._id){
 							console.log("res-=-=",item);
+							// this.editTaskForm.assignTo = null;
+							// item.task.assignTo = null;
+							// console.log("res-=",this.task.assignTo);
+							// this.clearForm();
+							this.task = this.getEmptyTask();
+							// console.log("res-=",this.getEmptyTask());
 							this.loader = true;
 							$(".progress").addClass("abc");
 							// $(".progress .progress-bar").css({"width": '100%'});
@@ -330,7 +336,7 @@ export class HeaderComponent implements OnInit {
 						});
 					}
 					getEmptyTask(){
-						return { title:'', desc:'', assignTo: '', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
+						return { title:'', desc:'', assignTo: '', status: '', priority: '' , dueDate:'', estimatedTime:'', projectId:'' };
 					}
 
 					reloadProjects(){
@@ -388,4 +394,19 @@ export class HeaderComponent implements OnInit {
 					removeAlreadyUplodedFile(option){
 						this.newTask.images.splice(option,1);
 					}
+					close(){
+						this.editTaskForm.reset();
+						this.files = this.url = null;
+						this.task.assignTo = null;
+						// console.log("res-=",this.task.assignTo);
+						this.newTask;
+						// console.log("res-=",this.newTask);
+						this.clearForm();
+					}
+					clearForm() {
+						this.editTaskForm.reset({
+							'assignTo': '',
+						});
+					}
 				}
+				// }
