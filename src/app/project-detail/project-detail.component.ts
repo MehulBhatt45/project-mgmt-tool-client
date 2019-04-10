@@ -536,6 +536,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
 				this.files = this.url = [];
+				
 				// this.assignTo.reset();
 				this.loader = false;
 			},err=>{

@@ -61,7 +61,7 @@
 			<div class="card-body">
 				<div class="container">
 					<div class="form-group">
-						<ng-select placeholder="Select Developers" [items]="availableDevelopers.userRole == 'developer'" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)" >
+						<ng-select placeholder="Select Developers" [items]="dteam" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)" >
 							<ng-template ng-label-tmp let-item="item" let-clear="clear" >
 								<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
 								<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>

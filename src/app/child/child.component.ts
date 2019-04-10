@@ -408,9 +408,9 @@ export class ChildComponent  implements OnInit{
         // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
-          console.log("task ======>" , task);
+          // console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            console.log("tracks==-=-=-=-",this.tracks);
+            // console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
               if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
