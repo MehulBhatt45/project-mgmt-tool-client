@@ -24,6 +24,7 @@ export class ViewProjectComponent implements OnInit {
   pro;
   idet = [];
   pmt:any;
+  managerArr = [];
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
@@ -77,13 +78,8 @@ export class ViewProjectComponent implements OnInit {
 
 
     },100);
-
-    // var newLine = this.projects;
-    // console.log("newLine=-=-=-=-=-",newLine);
-    // var title = $('<a/>').html('Project Team' + newLine ).text();
-    // $("#team").attr("title", title);
-
     this.getProjects();
+
     this.getAllDevelopers();
     // this.getProject();
     $('.datepicker').pickadate({
@@ -140,7 +136,10 @@ export class ViewProjectComponent implements OnInit {
       this.loader=false;
     });
 
-
+  }
+  getDate(date){
+    date = date.split("T");
+    return date[0];
   }
 
 
@@ -159,7 +158,7 @@ export class ViewProjectComponent implements OnInit {
   getTechName(tech){
     if(tech == "fa-react") return "React JS"
   }
-addProject(addForm){
+manageroject(addForm){
   var data = new FormData();
   _.forOwn(addForm, function(value, key) {
     data.append(key, value)
@@ -265,12 +264,6 @@ mouseOver(project){
 }
 
 
-
-mouseOvers(projectTeam){
-
-  this.teamproject = projectTeam;
-
-}
 
 }
 
