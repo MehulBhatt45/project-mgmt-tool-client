@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { config } from '../config';
@@ -60,7 +60,7 @@ export class ChildComponent  implements OnInit{
   
   
 
-  constructor( private route: ActivatedRoute,public _projectService: ProjectService,
+  constructor( private route: ActivatedRoute,public _projectService: ProjectService,public router:Router,
     public _commentService: CommentService, public _change: ChangeDetectorRef) { 
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
@@ -302,11 +302,14 @@ export class ChildComponent  implements OnInit{
       }
     }
     console.log("update =====>",task);
+    console.log("data",data);
     this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
       Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
+      $('#fullHeightModalRight').modal('hide');
+      this.getProject(this.projectId);
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
