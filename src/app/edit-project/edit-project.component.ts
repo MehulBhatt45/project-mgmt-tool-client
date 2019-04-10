@@ -14,13 +14,14 @@ import Swal from 'sweetalert2';
 }) 
 
 export class EditProjectComponent implements OnInit {
-	availableDevelopers = [];
+	availableDevelopers:any;
 	projectTeam:any = [];
 	projectMngrTeam:any = [];
 	availableProjectMngr = [];
 	projects;
 	editAvail;
 	projectId;
+	dteam = [];
 	updateForm:FormGroup;
 	availData;
 	developerShow = false;
@@ -99,6 +100,7 @@ export class EditProjectComponent implements OnInit {
 			
 			console.log("Developers",this.developers);
 
+
 			
 		},err=>{
 			console.log("Couldn't get all developers ",err);
@@ -127,7 +129,16 @@ export class EditProjectComponent implements OnInit {
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
-			console.log("adev=-=-=-=-=-",this.availableDevelopers);
+			this.dteam = [];
+			_.forEach(this.availableDevelopers,(project)=>{
+				console.log("project",project);
+				if(project.userRole == "developer"){
+					this.dteam.push(project);
+				}
+
+				})
+			console.log("dteam=-=-=-=-",this.dteam);
+			// console.log("adev=-=-=-=-=-",this.availableDevelopers);
 		},err=>{
 			console.log(err);
 		})
@@ -237,7 +248,7 @@ export class EditProjectComponent implements OnInit {
 	removeDeveloper(event){
 		console.log(event);
 		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
-		if(_.findIndex(this.availableDevelopers, function(o) { return o._id == event._id; }) == -1 ){
+		if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 			console.log("in fi");
 			this.availableDevelopers.push(event);
 		}

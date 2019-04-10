@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/cor
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
@@ -62,7 +62,7 @@ export class ProjectDetailComponent implements OnInit {
 	sorting:any;
 
 	
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute,public router:Router,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService, public _change: ChangeDetectorRef) {
 		$('.datepicker').pickadate();
@@ -536,8 +536,10 @@ export class ProjectDetailComponent implements OnInit {
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
 				this.files = this.url = [];
+				
 				// this.assignTo.reset();
 				this.loader = false;
+				this.getProject(this.projectId);
 			},err=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				//$('#alert').css('display','block');
