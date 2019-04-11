@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   loader = false;
   show: boolean;
+  pwd: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     if (this._loginService.currentUserValue) { 
       this.router.navigate(['/']);
       this.show = false;
+      this.pwd = false;
     }
   }
 
@@ -49,14 +51,7 @@ export class LoginComponent implements OnInit {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     $(".toggle-password").click(function() {
-
       $(this).toggleClass("fa-eye fa-eye-slash");
-      // var input = $($(this).attr("toggle"));
-      // if (input.attr("type") == "password") {
-      //   input.attr("type", "text");
-      // } else {
-      //   input.attr("type", "password");
-      // }
     });
   }
 
@@ -117,18 +112,9 @@ export class LoginComponent implements OnInit {
       })
     })    
   }
-
-  // showPwd(){
-    //   $(this).toggleClass("fas fa-eye-slash");
-    //   var input = $($(this).attr("toggle"));
-    //   if (input.attr("type") == "password") {
-      //     input.attr("type", "text");
-      //   } else {
-        //     input.attr("type", "password");
-        //   }
-        // }  
-
-        password() {
-          this.show = !this.show;
-        }
-      }
+  
+  password() {
+    this.show = !this.show;
+    this.pwd = !this.pwd;
+  }
+}

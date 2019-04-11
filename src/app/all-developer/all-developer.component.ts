@@ -18,14 +18,16 @@ declare var $ : any;
 	styleUrls: ['./all-developer.component.css']
 })
 export class AllDeveloperComponent implements OnInit {
-	developers;
+	developers: any;
 	userId;
+	availableDevelopers = [];
 	path = config.baseMediaUrl;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	Teams;
+	Teams :any = [];
 	projectId;
 	loader:boolean = false;
 	pro;
+	dteam: any;
 	searchText;
 	developerId;
 
@@ -38,11 +40,7 @@ export class AllDeveloperComponent implements OnInit {
 			this.projectId = param.id;
 			this.getProject(this.projectId);
 		});
-		
-		// this.route.params.subscribe(param=>{
-		// 	this.projectId = param.id;
-		// 	this.getProjectManager(this.projectId);
-		// });
+
 	}
 	getProject(id){
 		this.loader = true;
@@ -59,8 +57,6 @@ export class AllDeveloperComponent implements OnInit {
 					});
 				},2000);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					//this.projectTeam = res.team;
-					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.Teams = res.Teams;
 					this.Teams.sort(function(a, b){
@@ -90,21 +86,7 @@ export class AllDeveloperComponent implements OnInit {
 		},1000);
 		
 	}
-	
-	// getProjectManager(id){
-	// 	this.loader = true;
-	// 	console.log("project id======>",this.projectId);
-	// 	setTimeout(()=>{
-	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
-	// 			this.pro = res;
-	// 			console.log("project detaill===>>>>",this.pro);
-	// 			},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},10000);
-		
-	// }
+
 
 	onKey(searchText){
 		console.log("searchText",searchText);
@@ -120,25 +102,28 @@ export class AllDeveloperComponent implements OnInit {
 			});
 		});
 	}
-	
 
-}
-// getUserById(id){
-	// 	this._projectService.getAllDevelopers().subscribe(res=>{
-		// 		this.developers = res;
-		// 		this.developers.sort(function(a, b){
-			// 			var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-			// 			if (nameA < nameB) //sort string ascending
-			// 				return -1 
-			// 			if (nameA > nameB)
-			// 				return 1
-			// 			return 0 //default return value (no sorting)
-			// 		})
-			// 		console.log("Developers",this.developers);
-			// 	},err=>{
-				// 		console.log("Couldn't get all developers ",err);
-				// 		this._alertService.error(err);
-				// 	})
-					// }
+	
+	deleteDeveloper(event){
+		console.log(event);
+		this.Teams.splice(_.findIndex(this.Teams, event), 1);
+		console.log(this.Teams);
+		console.log("this .. pro ================>" , this.pro);
+
+		this.pro.Teams = this.Teams;	
+		console.log("this .. pro ================>" , this.pro);
+		this._projectService.updateProject(this.pro).subscribe((res:any)=>{
+			console.log("res========+>" , res);
+		},(err:any)=>{
+			console.log("err" , err);
+		});
+
+		// var i = this.Teams.findIndex(e=> e._id == event);
+		// if (i != -1) {
+			// 	this.Teams.splice(i, 1);
+			// }
+		}
+	}
+
 
 

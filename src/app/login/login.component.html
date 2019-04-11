@@ -32,9 +32,8 @@
 					<p (click)="showPassword()"><b>Show Password</b></p> -->
 
 					<input mdbInput type="password" autocomplete="new-password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [type]="show ? 'text' : 'password'" />
-					<!-- <i toggle="#password-field" class="fas fa-eye" id="pwdi" (click)="showPwd()"></i> -->
-					 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password" (click)="password()"></span>
-					<label for="form2">Password</label>
+					<span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
+					<label for="form2">Password</label> 
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 						<div *ngIf="f.password.errors.required">Password is required</div>
 					</div>

@@ -51,4 +51,5 @@ img.loading_img {
   margin: -45px 0 0 0;
   position: relative;
   z-index: 2;
+  cursor: pointer;
 }
