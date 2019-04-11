@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   loader = false;
   show: boolean;
+  pwd: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     if (this._loginService.currentUserValue) { 
       this.router.navigate(['/']);
       this.show = false;
+      this.pwd = false;
     }
   }
 
@@ -113,5 +115,6 @@ export class LoginComponent implements OnInit {
   
   password() {
     this.show = !this.show;
+    this.pwd = !this.pwd;
   }
 }
