@@ -87,79 +87,46 @@ export class SummaryComponent implements OnInit {
 	
 	getEmptyTracks(){
 		console.log("user=====================>",this.currentUser.userRole);
-		if(this.currentUser.userRole == "projectManager"){
 
-			this.tracks = [
+		this.tracks = [
 
-			{
-				"title": "Todo",
-				"id": "to do",
-				"class":"primary",
-				"tasks": [
+		{
+			"title": "Todo",
+			"id": "to do",
+			"class":"primary",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "In Progress",
-				"id": "in progress",
-				"class":"info",
-				"tasks": [
+			]
+		},
+		{
+			"title": "In Progress",
+			"id": "in progress",
+			"class":"info",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "Testing",
-				"id": "testing",
-				"class":"warning",
-				"tasks": [
+			]
+		},
+		{
+			"title": "Testing",
+			"id": "testing",
+			"class":"warning",
+			"tasks": [
 
-				]
-			},
-			{
-				"title": "Done",
-				"id": "complete",
-				"class":"success",
-				"tasks": [
+			]
+		},
+		{
+			"title": "Done",
+			"id": "complete",
+			"class":"success",
+			"tasks": [
 
-				]
-			}
-			];
-
-			console.log("tracks====-=-_+_++",this.tracks);
-
+			]
 		}
-		else{
-			
-			this.tracks = [
-			{
-				"title": "Todo",
-				"id": "to do",
-				"class":"primary",
-				"tasks": [
+		];
 
-				]
-			},
-			{
-				"title": "In Progress",
-				"id": "in progress",
-				"class":"info",
-				"tasks": [
-
-				]
-			},
-			{
-				"title": "Testing",
-				"id": "testing",
-				"class":"warning",
-				"tasks": [
-
-				]
-			}
-			];
+		console.log("tracks====-=-_+_++",this.tracks);
 
 
-
-		}
 	}
 	getPriorityClass(priority){
 		switch (Number(priority)) {
