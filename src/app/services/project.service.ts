@@ -204,6 +204,7 @@ export class ProjectService {
 	updateProject(data){
 		console.log("updated Data in project servie" , data);
 		var projectId = data._id;
+		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',

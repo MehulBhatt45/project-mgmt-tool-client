@@ -130,6 +130,7 @@ export class EditProjectComponent implements OnInit {
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
+			console.log("hfghfjgh===============",this.availableDevelopers);
 			this.dteam = [];
 			_.forEach(this.availableDevelopers,(project)=>{
 				// console.log("project",project);
