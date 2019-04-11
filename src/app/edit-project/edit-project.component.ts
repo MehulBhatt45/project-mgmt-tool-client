@@ -240,8 +240,6 @@ export class EditProjectComponent implements OnInit {
 				if (result.value) {
 					var body;
 					console.log("reeeeeeee",projectId);
-					
-					console.log("req ========>" , projectId);
 					console.log("bodyy ========>" , body);
 					this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
 						console.log("Delete project======>" , res);
@@ -255,10 +253,15 @@ export class EditProjectComponent implements OnInit {
 				}
 			})
 		}else{
-			(err:any)=>{
-				console.log("error in delete project =====>" , err);
-				Swal.fire('Oops...', 'Something went wrong!', 'error')
-			};
+			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
+						console.log("Delete project======>" , res);
+						this.projects = res;
+						Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
+						this.router.navigate(['./view-projects']);
+					},(err:any)=>{
+						console.log("error in delete project =====>" , err);
+						Swal.fire('Oops...', 'Something went wrong!', 'error')
+					})
 		}
 	}
 
