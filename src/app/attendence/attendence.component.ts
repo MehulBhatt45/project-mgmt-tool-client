@@ -103,6 +103,6 @@ export class AttendenceComponent implements OnInit {
       console.log("error",err);
     })
   }
-
+  
 
 }
