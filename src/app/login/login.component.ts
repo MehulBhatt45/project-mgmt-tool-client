@@ -71,7 +71,19 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  showPassword(){
+    // var pass = document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+     var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
+     if(pass == "password"){
+        document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+    }
+    else{
+       document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
+    }
+    // console.log("pass ==>" , pass);
+    
+    
+  }
   updatePassword(){
     // console.log(this.forgotPasswordForm.value);
     this.loader = true;
