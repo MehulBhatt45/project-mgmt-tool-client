@@ -32,6 +32,7 @@ export class ViewProjectComponent implements OnInit {
   tracks;
   projectId;
   project;
+  demoprojects = [];
   idpmt:any;
   objectsArray:any;
   hoveredProject: any;
@@ -61,12 +62,20 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() {
     setTimeout(()=>{
 
+
+      // $('[data-toggle="popover"]').popover(); 
       $('[data-toggle="popover-hover"]').popover({
         html: true,
         trigger: 'hover',
         placement: 'bottom',
+        // content: function () { return '<p>hELLO</p>'; }
         content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+      }, ()=>{
+        console.log("Hover");
       });
+
+
+
     },100);
     this.getProjects();
 
@@ -100,7 +109,9 @@ export class ViewProjectComponent implements OnInit {
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
         this.projects = res;
-        console.log("this.projects========------=-=-=-=",this.projects);
+        
+        console.log("this.demoprojects========------=-=-=-=",this.projects);
+
       }
       else{
         this.projects = [];
@@ -252,12 +263,6 @@ mouseOver(project){
 }
 
 
-
-mouseOvers(projectTeam){
-
-  this.teamproject = projectTeam;
-
-}
 
 }
 

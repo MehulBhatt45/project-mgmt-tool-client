@@ -418,21 +418,6 @@ export class AllLeaveAppComponent implements OnInit {
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
                 console.log("reeeeeeee",req);
-                _.forEach(this.leaveApp, (apply)=>{
-                  if(apply._id == req){
-                    body = apply;
-                  }
-                })
-                body.status = "approved";
-                console.log("bodyyyyyyyyyyyyyyy",body);
-                this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-
-                  console.log("respondsssssss",res);
-                  this.acceptedLeave = res;
-                  console.log("acceptedd===========>",this.acceptedLeave);
-                },(err:any)=>{
-                  console.log(err);
-                })
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
