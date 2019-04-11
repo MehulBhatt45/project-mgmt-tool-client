@@ -39,10 +39,10 @@ export class SearchTaskPipe implements PipeTransform {
 			console.log("searchtext===>",searchText);
 			var developer:any = [];
 			if(!items) return [];
-			if(!searchText) return items[0];
+			if(!searchText) return items;
 			searchText = searchText.toLowerCase();
 			console.log("Search pipe items = ",items);
-			developer = items[0].filter( it => {
+			developer = items.filter( it => {
 
 				if(it.name){
 

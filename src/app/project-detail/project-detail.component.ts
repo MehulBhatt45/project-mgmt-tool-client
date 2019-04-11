@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
+
+
 @Component({
 	selector: 'app-project-detail',
 	templateUrl: './project-detail.component.html',
@@ -47,8 +49,23 @@ export class ProjectDetailComponent implements OnInit {
 	developers: any
 	loader : boolean = false;
 	currentDate = new Date();
-	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	pro;
+	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	currentUser = {
+		"userRole":"projectManager", 
+		"projects":[],
+		"tasks":["5c8902cb07efea54bbd55bc2","5c8903f007efea54bbd55bc3","5c8baa7d7f8c1d3a46d8cb52","5c8baacf2e73613ea207c6dc","5c8bab6d34a5283ef2f1247b","5c8bad90c55b2d4112139f89","5c90dd9c6ad5e96ca7952aeb","5c90dd9c6ad5e96ca7952aeb"],
+		"_id":"5c777ed9c45c94663eb74bb6",
+		"name":"Tirthraj Barot",
+		"email":"tirthrajbarot2394@gmail.com",
+		"password":"$2a$10$cn8G8ON11qGjUk8Kyci7W.Avs..21rtFUNFGFDAaKhv/eW/U6hLSG",
+		"createdAt":"2019-02-28T06:25:29.835Z",
+		"updatedAt":"2019-03-20T06:37:49.737Z",
+		"__v":8,"CV":"5c777ed9c45c94663eb74bb6/Brochure_Rao Infotech.pdf",
+		"profilePhoto":"5c777ed9c45c94663eb74bb6/xYXGm.jpg",
+		"phone":"9979430007",
+		"experience":""
+	}
+	pro:any;
 	asc;
 	desc;
 	id;
@@ -61,7 +78,7 @@ export class ProjectDetailComponent implements OnInit {
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService) {
-		$('.datepicker').pickadate();
+		// $('.datepicker').pickadate();
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
@@ -180,16 +197,16 @@ export class ProjectDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.getProject(this.id);
-		$('.datepicker').pickadate();
+		// $('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
-		$(function () {
+		/*$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 		$('#save_changes').on('click', function(){
 			$('#save_changes').attr("disabled", true);
 			$('#refresh_icon').css('display','block');
-		});
+		});*/
 	}
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
@@ -214,7 +231,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
+			this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
 				console.log("title=={}{}{}{}{}",res);
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
@@ -233,7 +250,7 @@ export class ProjectDetailComponent implements OnInit {
 						if (nameA > nameB)
 							return 1
 						return 0 //default return value (no sorting)
-						this.projectTeam.push
+						// this.projectTeam.push
 						console.log("sort============>"  ,this.projectTeam);
 					})
 

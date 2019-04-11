@@ -58,8 +58,7 @@ export class AllDeveloperComponent implements OnInit {
 					});
 				},2000);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					//this.projectTeam = res.team;
-					// res.Teams.push(this.pro.pmanagerId); 
+					 
 					console.log("response of team============>"  ,res.Teams);
 					this.Teams = res.Teams;
 					this.Teams.sort(function(a, b){

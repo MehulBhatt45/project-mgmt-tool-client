@@ -19,6 +19,11 @@ import { IssueComponent } from './issue/issue.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 // import {ChildComponent}  from './child/child.component';
+// import { Observable , of } from 'rxjs';
+// import { Observable } from 'rxjs-compat/Observable';
+// import { Observable  } from 'rxjs-compat/observable';
+
+
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatCardModule} from '@angular/material/card';
@@ -68,6 +73,7 @@ import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 
 @NgModule({
     declarations: [
+
     AppComponent,
     LoginComponent,
     ViewProjectComponent,
@@ -121,7 +127,8 @@ import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
     SelectDropDownModule,
-     NgSelectModule,
+    NgSelectModule,
+    // Observable,
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],

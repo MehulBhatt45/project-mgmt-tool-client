@@ -12,12 +12,16 @@ import * as _ from 'lodash';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 
+
+
 @Component({
 	selector: 'app-all-employee',
 	templateUrl: './all-employee.component.html',
 	styleUrls: ['./all-employee.component.css']
 })
 export class AllEmployeeComponent implements OnInit {
+	error;
+	projects;
 	searchFlag = false; 
 	filteredTeams;
 	filteredDevelopers;
@@ -50,7 +54,7 @@ export class AllEmployeeComponent implements OnInit {
 		// this.getDeveloper(projectId);
 		this.loader=true;
 		this.searchFlag = false;
-		$('.datepicker').pickadate();
+		//$('.datepicker').pickadate();
 		// this.getAllUser();
 	}
 	addFile(event){
@@ -82,108 +86,86 @@ export class AllEmployeeComponent implements OnInit {
 			})
 			console.log("Developers",this.developers);
 		},err=>{
+			this.error = err;
 			console.log("Couldn't get all developers ",err);
 			this._alertService.error(err);
 		})
-		setTimeout(()=>{
-			console.log("rotate js--------------------")
-			$('a.rotate-btn').click(function () {
-				$(this).parents(".card-rotating").toggleClass('flipped');
-			});
-		},2000);
-	}
-	deleteEmployee(developerid){
-		console.log("msgggg--=--",developerid);
+		/*setTimeout(()=>{
+				console.log("rotate js--------------------")
+				$('a.rotate-btn').click(function () {
+						$(this).parents(".card-rotating").toggleClass('flipped');
+					});
+				},2000);*/
+			}
+			deleteEmployee(developerid){
+				console.log("msgggg--=--",developerid);
 
-		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
-			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
-			console.log("delete{}{}{}{}",res);
-			this.getAllDevelopers();
-		},err=>{
-			console.log("errr=-=-=-= ",err);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		})
-	}
-	projects;
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-	getDeveloper(projectId){
-		this.selectedProjectId = projectId;
-		console.log(" project id is===========>",projectId);
-		console.log(" developer of projerct===========>",this.developers);
-		if (projectId !='all') {
-			this.developers =[];
-			console.log(this.developers);
-			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
-				this.Teams = res.Teams;
-				console.log("response of developer============>"  ,this.Teams);
-				_.forEach(this.Teams, (content)=>{
-					this.developers.push(content);
+				this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
+					Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
+					console.log("delete{}{}{}{}",res);
+					this.getAllDevelopers();
+				},err=>{
+					console.log("errr=-=-=-= ",err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+			}
+			getAllProjects(){
+				this._projectService.getProjects().subscribe(res=>{
+					this.projects = res;
+					console.log("projects ======>" , this.projects);
+				},err=>{
+					this._alertService.error(err);
+					console.log(err);
+				})
+			}
+			getDeveloper(projectId){
+				this.selectedProjectId = projectId;
+				console.log(" project id is===========>",projectId);
+				console.log(" developer of projerct===========>",this.developers);
+				if (projectId !='all') {
+					this.developers =[];
 					console.log(this.developers);
+					this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+						console.log(".getTeamByProjectId(projectId) res==========>" , res[0]);
+						this.Teams = res[0].Teams;
+						console.log("response of developer============>"  ,this.Teams);
+						_.forEach(this.Teams, (content)=>{
+							this.developers.push(content);
+							console.log(this.developers);
 
-				});
-				this.filteredTeams = this.developers;
-			})
-			this.searchFlag = true;
-		} else{
-			this.getAllDevelopers();
-		}
-	}	
-	onKey(searchText){
-		console.log("searchText",searchText);
-		if(this.searchFlag == true){
-			var dataToBeFiltered = [this.filteredTeams];
-		}
-		else{
-			var dataToBeFiltered = [this.filteredDevelopers];
-		}
-		var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-		console.log("developer =======>", developer);
-		this.developers = [];
-		if(this.selectedProjectId !='all'){
-			_.forEach(developer, (content)=>{
-				this.developers.push(content);
-			});
-		}
-		else {
-			_.forEach(developer, (content)=>{
-				this.developers.push(content);
-			});
-		}
+						});
+						this.filteredTeams = this.developers;
+					})
+					this.searchFlag = true;
+				} else{
+					this.getAllDevelopers();
+				}
+			}	
+			onKey(searchText){
+				console.log("searchText",searchText);
+				if(this.searchFlag == true){
+					var dataToBeFiltered = this.filteredTeams;
+				}
+				else{
+					var dataToBeFiltered = this.filteredDevelopers;
+				}
+				var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+				console.log("developer =======>", developer);
+				this.developers = [];
+				if(this.selectedProjectId !='all'){
+					_.forEach(developer, (content)=>{
+						this.developers.push(content);
+					});
+				}
+				else {
+					_.forEach(developer, (content)=>{
+						this.developers.push(content);
+					});
+				}
 
-	}
-}
-// onKey(searchText){
-	// 	console.log("searchText",searchText);
-	// 	var dataToBeFiltered = [this.filteredDevelopers,];
-	// 	var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-	// 	console.log("developer =======>", developer);
-	// 	this.developers = [];
-	// 	var dataToBeFiltered1 = [this.Teams ];
-	// 	var team = this.searchTextFilter.transform1(dataToBeFiltered1, searchText);
-	// 	console.log("team =======>", team);
-	// 	if(this.selectedProjectId !='all'){
-		// 		_.forEach(team, (content)=>{
-			// 			this.developers.push(content);
-			// 		});
-			// 	}
-			// 	else if (this.selectedProjectId =='all'){
-				// 		_.forEach(developer, (content)=>{
-					// 			this.developers.push(content);
-					// 		});
-					// 	}
-					// 	else{
-						// 		_.forEach(developer, (content)=>{
-							// 			this.developers.push(content);
-							// 		});
-							// 	}
-							// }
+			}
+		}
+		
 
 
 
