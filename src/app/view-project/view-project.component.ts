@@ -24,7 +24,6 @@ export class ViewProjectComponent implements OnInit {
   pro;
   idet = [];
   pmt:any;
-  managerArr = [];
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
