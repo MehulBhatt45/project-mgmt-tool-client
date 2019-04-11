@@ -63,7 +63,7 @@ export class SummaryComponent implements OnInit {
 	total:any;
 	round:any;
 	path = config.baseMediaUrl;
-	// myproject=this.project[0];
+
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 
@@ -81,10 +81,6 @@ export class SummaryComponent implements OnInit {
 	}
 	ngOnInit() {
 		this.getEmptyTracks();
-		// var i1=this.tracks;
-		// console.log("i1-=-=-{}{}",i1);
-
-
 		
 	}	
 
@@ -94,6 +90,7 @@ export class SummaryComponent implements OnInit {
 		if(this.currentUser.userRole == "projectManager"){
 
 			this.tracks = [
+
 			{
 				"title": "Todo",
 				"id": "to do",
@@ -127,10 +124,12 @@ export class SummaryComponent implements OnInit {
 				]
 			}
 			];
+
 			console.log("tracks====-=-_+_++",this.tracks);
 
 		}
 		else{
+			
 			this.tracks = [
 			{
 				"title": "Todo",
@@ -157,6 +156,8 @@ export class SummaryComponent implements OnInit {
 				]
 			}
 			];
+
+
 
 		}
 	}
@@ -205,10 +206,8 @@ export class SummaryComponent implements OnInit {
 				console.log("id-=-=-=-()()()",id);
 				this.pro=res;
 				console.log("title{}{}{}{}",this.pro);
-				// this.pro = res.pmanagerId;
-				// console.log("project detail===>>>>",this.pro);
+
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					// this.projectTeam = res.team;
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -216,11 +215,11 @@ export class SummaryComponent implements OnInit {
 					this.projectTeam.sort(function(a, b){
 						if (a.name && b.name) {
 							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-							if (nameA < nameB) //sort string ascending
+							if (nameA < nameB) 
 								return -1 
 							if (nameA > nameB)
 								return 1
-							return 0 //default return value (no sorting)
+							return 0 
 							this.projectTeam.push
 						}
 
@@ -446,35 +445,14 @@ getCompletedTask(status){
 }
 
 
-// getDateTask(project){
-	// 	console.log("proj[][][][]",project);
-	
-
-	// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
-	// }
-
-
-	// 	console.log("proj[][][][]",priority,tracks);
-
-	// 		for(var i=0;i<=this.tracks.length;i++){
+getTaskPriority(priority, tracks){
+	var count = [];
+	_.forEach(tracks, track=>{
+		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+	});
+	console.log(count);
+	return count;
+}
 
 
-		// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-		// 		}
-		// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-		// 	});
-		// }
-
-
-		getTaskPriority(priority, tracks){
-			// console.log(priority, status);
-			var count = [];
-			_.forEach(tracks, track=>{
-				count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
-			});
-			console.log(count);
-			return count;
-		}
-
-
-	}
+}
