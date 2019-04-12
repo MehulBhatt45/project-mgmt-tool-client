@@ -11,6 +11,7 @@ import {config} from '../config';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as _ from 'lodash';
 declare var $ : any;
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-all-developer',
@@ -106,24 +107,33 @@ export class AllDeveloperComponent implements OnInit {
 	
 	deleteDeveloper(event){
 		console.log(event);
-		this.Teams.splice(_.findIndex(this.Teams, event), 1);
-		console.log(this.Teams);
-		console.log("this .. pro ================>" , this.pro);
-
-		this.pro.Teams = this.Teams;	
-		console.log("this .. pro ================>" , this.pro);
-		this._projectService.updateProject(this.pro).subscribe((res:any)=>{
-			console.log("res========+>" , res);
-		},(err:any)=>{
-			console.log("err" , err);
-		});
-
-		// var i = this.Teams.findIndex(e=> e._id == event);
-		// if (i != -1) {
-			// 	this.Teams.splice(i, 1);
-			// }
-		}
+		Swal.fire({
+			title: 'Are you sure to delete?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
+			if (result.value) {
+				var body;
+				this.Teams.splice(_.findIndex(this.Teams, event), 1);
+				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				console.log(this.Teams);
+				console.log("this .. pro ================>" , this.pro);
+				this.pro.Teams = this.Teams;	
+				console.log("this .. pro ================>" , this.pro);
+				this._projectService.updateProject(this.pro).subscribe((res:any)=>{
+					console.log("res========+>" , res);
+				},(err:any)=>{
+					console.log("err" , err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				});
+			}
+		})
 	}
+}
 
 
 
