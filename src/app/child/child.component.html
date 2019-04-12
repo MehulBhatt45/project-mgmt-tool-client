@@ -140,10 +140,10 @@
 									<label><strong>Prority: &nbsp;</strong></label>
 									<span>{{getPriorityClass(task.priority).title}}</span>
 								</p>
-								<p *ngIf="task.dueDate">
+								<!-- <p *ngIf="task.dueDate">
 									<label><strong>DueDay: &nbsp;</strong></label>
 									<span>{{task.dueDate | date:'short'}}</span>
-								</p>
+								</p> -->
 								<p *ngIf="task.sprint">
 									<label><strong>Sprint: &nbsp;</strong></label>
 									<span>{{task.sprint.title}}</span>

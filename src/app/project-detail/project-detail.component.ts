@@ -358,17 +358,22 @@ export class ProjectDetailComponent implements OnInit {
 				data.status = newStatus;
 				this._projectService.completeItem(data).subscribe((res:any)=>{
 					console.log(res);
+							var n = res.timelog.length
+					Swal.fire({
+						type: 'info',
+						title: "Task is shifted to complete from testing" ,
+						showConfirmButton:false,timer: 2000})
 
 				},err=>{
 					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
 				});
 			}else{
 				data.status = newStatus;
 				console.log("UniqueId", data.uniqueId);
 				this._projectService.updateStatus(data).subscribe((res:any)=>{
 					console.log(res);
-					
-				var n = res.timelog.length
+					var n = res.timelog.length
 					Swal.fire({
 						type: 'info',
 						title: "Task is"  + " " +res.timelog[n -1].operation ,

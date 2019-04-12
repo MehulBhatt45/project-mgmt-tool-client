@@ -325,13 +325,13 @@ export class ChildComponent  implements OnInit{
   getEmptyTask(){
     return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
-
   updateStatus(newStatus, data){
+    $('#fullHeightModalRight').modal('hide');
     if(newStatus=='complete'){
       data.status = newStatus;
       this._projectService.completeItem(data).subscribe((res:any)=>{
         console.log(res);
-
+        this.getProject(res.projectId);
       },err=>{
         console.log(err);
       });
@@ -340,12 +340,16 @@ export class ChildComponent  implements OnInit{
       console.log("UniqueId", data.uniqueId);
       this._projectService.updateStatus(data).subscribe((res:any)=>{
         console.log(res);
-        // this.getProject(res.projectId);
+        this.getProject(res.projectId);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is"  + " " +res.timelog[n -1].operation ,
+          showConfirmButton:false,timer: 2000})
       },(err:any)=>{
-
         console.log(err);
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
-
     }
   }
 
