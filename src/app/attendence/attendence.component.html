@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="md-form">
-				<input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker" >	
+				<input placeholder="Selected date" type="text" id="date-picker-example" (click)="dateSelected()" class="form-control datepicker" >	
 				<label for="date-picker-example"></label>
 			</div>
 		</div>
@@ -38,9 +38,6 @@
 			<td>{{ateendence.checkOut}}</td>
 
 			<td>{{ateendence.diff}}</td>
-		</tr>
-		<tr *ngFor="let ateendence of log">
-			
 		</tr>
 	</tbody>
 </table>

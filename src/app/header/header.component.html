@@ -12,14 +12,14 @@
           </div>
         </div>
       </li>
-      <li class="icon">
+     <!--  <li class="icon">
         <ul class="social">
           <li><a href="https://www.facebook.com/raoinformationtechnology/" class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a></li>
           <li><a href="https://www.instagram.com/raoinformationtechnology.insta/" class="icons-sm insta-ic"><i class="fab fa-instagram"></i></a></li>
           <li><a href="https://www.linkedin.com/company/raoinformationtechnology/" class="icons-sm il-ic"><i class="fab fa-linkedin"></i></a></li>
           <li><a href="https://twitter.com/RaoInfotech" class="icons-sm tw-ic"><i class="fab fa-twitter"> </i></a></li>
         </ul>
-      </li>
+      </li> -->
       <li>
         <ul class="collapsible collapsible-accordion">
           <li>
@@ -41,22 +41,23 @@
           <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-edit"></i> Create Project</a>
           </li>
           <li><a routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-sitemap"></i>    Item List</a></li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Notice</a></li>
+          <li><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Notice</a></li>
           <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
           <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Employee</a></li>
-          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
-          <li *ngIf="currentUser.userRole=='admin'">
-            <a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
+          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager'">
+            <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
+            (click) ="getAllProjects()">Visit Team-members
              <i class="fa fa-angle-down rotate-icon"></i></a>
              <div class="collapsible-body">
               <ul>
-                <li *ngFor="let project of projects">
+                <li *ngFor="let project of finalArr">
                   <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a>
                 </li>
               </ul>
             </div>
           </li>
-           <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Attendence</a>
+          <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> Attendence</a>
           </li>
 
          <!--  <li *ngIf="currentUser.userRole=='admin'">
@@ -78,7 +79,7 @@
             </div>
           </li> -->
 
-          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r">All Leave Application</a></li>
           <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">MyLeave</a></li>
           <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r">Leave Form</a></li>
         </ul>
@@ -130,15 +131,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title w-100 text-center" id="myModalLabel">{{modalTitle}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
       <div class="modal-body">
         <div class="container">
           <form style="width: 100%;" [formGroup]="editTaskForm">
             <div class="form-group col-12 col-lg-12 pt-1">
-              <ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+              <ng-select placeholder="Select Project" [items]="demoprojects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
                   <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
                   <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
@@ -176,15 +177,31 @@
               <div class=" row form-group col-12">
                 <button class="btn btn-default" (click)="fileUpload.click()">
                   <i class="fa fa-paperclip mr-1"></i> Add Files
-                  <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event)" hidden multiple accept="image/png, image/jpg, image/jpeg">
+                  <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
                 </button>
+              </div>
+              <div *ngIf="newTask.images && newTask.images.length>0">
+                <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+                  <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+                  <div class="delete-team-member">
+                    <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><i class="fas fa-trash fa-2x"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div  *ngIf="url && url.length">
+                <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
+                  <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+                  <div class="delete-team-member">
+                    <a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><i class="fas fa-trash fa-2x"></i></a>
+                  </div>
+                </div>
               </div>
               <div class="row no-margin no-padding  border" >
                 <div class="form-group col-12 col-lg-6 pt-1">
                   <label for="assignTo">Assign To</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <!-- <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
+                  </select> -->
                   <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
                   </select>
@@ -205,24 +222,28 @@
 
                 <div class="form-group col-6">
                   <label for="estimatedTime">Estimated Time</label>
-                  <div class="md-form form-group">
+                  <!-- <div class="md-form form-group">
                     <input placeholder="Estimated Time" type="text" id="estimatedTime" class="form-control timepicker" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime">
+                  </div> -->
+                  <div class="md-form form-group">
+
+                    <input placeholder="Estimated time in hrs.." type="text" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
                   </div>
                 </div>
               </div>
 
-              <div class="form-group col-12">
+              <!-- <div class="form-group col-12">
                 <label for="status">Status</label>
                 <select class="browser-default custom-select custom-select-lg mb-3" id="status" formControlName="status" [(ngModel)]="task.status">
                   <option *ngFor="let trak of tracks" value="{{trak.id}}">{{trak.title}}</option>
                 </select>
-              </div>
+              </div> -->
             </div>
           </form>
         </div>
       </div>
       <div class="modal-footer float-right">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
         <button type="button" class="btn btn-default btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
       </div>
     </div>

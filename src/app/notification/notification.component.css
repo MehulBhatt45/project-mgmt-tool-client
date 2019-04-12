@@ -217,10 +217,12 @@ select.browser-default {
 .task a:visited{
 	background-color: transparent;
 }
-/*.other1{
-	margin: 10px;
-}*/
+
 .comment i{
 	color: orange;
 	margin-left: 15px;
+}
+
+.unread{
+	background-color: #f1eaff;
 }

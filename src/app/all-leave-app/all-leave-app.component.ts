@@ -65,19 +65,19 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavescount = [
     {
       "typeOfLeave" : "Sick_Leave",
-      "leavesTaken" : Number()
+      "leavesTaken" : 0
     },
     {
       "typeOfLeave" : "Personal_Leave",
-      "leavesTaken" : Number()
+      "leavesTaken" : 0
     },
     {
       "typeOfLeave" : "Leave_WithoutPay",
-      "leavesTaken" : Number()
+      "leavesTaken" : 0
     },
     {
       "typeOfLeave" : "Emergency_Leave",
-      "leavesTaken" : Number()
+      "leavesTaken" : 0
     },
     {
       "leavesPerYear" : 18,
@@ -225,29 +225,22 @@ export class AllLeaveAppComponent implements OnInit {
 
                     this.allLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.leaveApp);
+                    // _.forEach(this.leaveApp , (leave)=>{
+                      //   _.forEach(this.leavescount , (count)=>{
+                        //     if(count.typeOfLeave == leave.typeOfLeave){
+                          //       count.leavesTaken = count.leavesTaken + 1;
+                          //     }
+                          //   });
+                          // });
 
-
-                    // var obj = this.singleleave.email;
-                    // this._leaveService.leavesById(obj).subscribe((res:any)=>{
-                    //   console.log("resppppppondssss",res);
-                    //   this.leaves = res;
-                      _.forEach(this.leaveApp , (leave)=>{
-                        _.forEach(this.leavescount , (count)=>{
-                          if(count.typeOfLeave == leave.typeOfLeave){
-                            count.leavesTaken = count.leavesTaken + 1;
-                          }
+                          // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                          // console.log("leaves count ====>" , this.leavescount);
+                          this.pLeave = true;
+                          this.aLeave = false;
+                          this.rLeave = false;
+                        },err=>{
+                          console.log(err);
                         });
-                      });
-                    // })
-                    
-                    console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                    console.log("leaves count ====>" , this.leavescount);
-                    this.pLeave = true;
-                    this.aLeave = false;
-                    this.rLeave = false;
-                  },err=>{
-                    console.log(err);
-                  });
                   this.loader=false;
                 },1000);
               }
@@ -427,21 +420,6 @@ export class AllLeaveAppComponent implements OnInit {
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
                 console.log("reeeeeeee",req);
-                _.forEach(this.leaveApp, (apply)=>{
-                  if(apply._id == req){
-                    body = apply;
-                  }
-                })
-                body.status = "approved";
-                console.log("bodyyyyyyyyyyyyyyy",body);
-                this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-
-                  console.log("respondsssssss",res);
-                  this.acceptedLeave = res;
-                  console.log("acceptedd===========>",this.acceptedLeave);
-                },(err:any)=>{
-                  console.log(err);
-                })
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
@@ -473,8 +451,9 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.acceptedLeave = res;
                       console.log("acceptedd===========>",this.acceptedLeave);
-                      this.leaveEmit.emit(this.acceptedLeave);
-                      this.getLeaves(Option);
+                      // this.leaveEmit.emit(this.acceptedLeave);
+                      // this.getLeaves(Option);
+                      this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -517,7 +496,7 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.rejectedLeave = res;
                       console.log("rejected===========>",this.rejectedLeave);
-                      this.getLeaves(Option);
+                      this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -555,23 +534,23 @@ export class AllLeaveAppComponent implements OnInit {
                           this.leaveApp.push(leave);
                         }
                       });
-                      _.forEach(this.leaves , (leave)=>{
-                        console.log("leavess====",leave);
-                        _.forEach(this.leavescount , (count)=>{
-                          if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-                            count.leavesTaken = count.leavesTaken + 1;
-                          }
-                        });
-                      });
+                      // _.forEach(this.leaves , (leave)=>{
+                        //   console.log("leavess====",leave);
+                        //   _.forEach(this.leavescount , (count)=>{
+                          //     if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+                            //       count.leavesTaken = count.leavesTaken + 1;
+                            //     }
+                            //   });
+                            // });
 
-                      console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                      console.log("leaves count ====>" , this.leavescount);
-                    }else{
-                      console.log("not found");
-                    }
-                  },err=>{
-                    console.log(err);
-                  })
+                            // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                            // console.log("leaves count ====>" , this.leavescount);
+                          }else{
+                            console.log("not found");
+                          }
+                        },err=>{
+                          console.log(err);
+                        })
                   this.loader=false;
                 },1000);
               }
@@ -660,38 +639,70 @@ export class AllLeaveAppComponent implements OnInit {
                             console.log("leave id=======>>",leaveid);
                             this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
                               this.singleleave = res[0];
-                              option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
-                            },err=>{
-                              console.log("errrrrrrrrrrrrr",err);
+                              var obj =  this.singleleave.email;
+                              console.log("email of login user",obj);
+                              this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
+                                console.log("resppppppondssss",res);
+                                this.leaves = res;
+                                this.getEmptytracks();
+                                _.forEach(this.leaves , (leave)=>{
+                                  console.log("leavess====",leave);
+                                  _.forEach(this.leavescount , (count)=>{
+                                    if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+                                      console.log("count ====>" , count);  
+                                      count.leavesTaken = count.leavesTaken + 1;
+                                    }
+                                  });
+                                });
+
+                                console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                                console.log("leaves count ====>" , this.leavescount);
+                                option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+                              },err=>{
+                                console.log("errrrrrrrrrrrrr",err);
+                              })
                             })
 
                           }
 
-                          submitComment(leaveid,comment){
-                            console.log("leave id==>>>>>",leaveid);
-                            console.log("====>",comment);
-                            var data={
-                              leaveId:leaveid,
-                              comment:comment
-                            }
-                            console.log("data==========>>",data);
-                            this._leaveService.addComments(data).subscribe((res:any)=>{
-                              res['comment'] = true; 
-                              console.log("response",res);
-                              Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-                              $('#centralModalInfo').modal('hide');
-                            },err=>{
-                              console.log("errrrrrrrrrrrrr",err);
-                              Swal.fire('Oops...', 'Something went wrong!', 'error')
-                            })
-                          }
 
-                          gotAttachment = [];
-                          sendAttachment(attechment){
-                            console.log("attachment is====>",attechment);
-                            this.gotAttachment = attechment;
-                            $('#veiwAttach').modal('show')
-                            console.log("gotattechment array ====>",this.gotAttachment);
-                          }
 
-                        }
+                          // leaveById(leaveid, option){
+                            //   console.log("leave id=======>>",leaveid);
+                            //   this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+                              //     this.singleleave = res[0];
+                              //     option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+                              //   },err=>{
+                                //     console.log("errrrrrrrrrrrrr",err);
+                                //   })
+
+                                // }
+
+                                submitComment(leaveid,comment){
+                                  console.log("leave id==>>>>>",leaveid);
+                                  console.log("====>",comment);
+                                  var data={
+                                    leaveId:leaveid,
+                                    comment:comment
+                                  }
+                                  console.log("data==========>>",data);
+                                  this._leaveService.addComments(data).subscribe((res:any)=>{
+                                    res['comment'] = true; 
+                                    console.log("response",res);
+                                    Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
+                                    $('#centralModalInfo').modal('hide');
+                                  },err=>{
+                                    console.log("errrrrrrrrrrrrr",err);
+                                    Swal.fire('Oops...', 'Something went wrong!', 'error')
+                                  })
+                                }
+
+                                gotAttachment = [];
+                                sendAttachment(attechment){
+                                  console.log("attachment is====>",attechment);
+                                  this.gotAttachment = attechment;
+                                  $('#veiwAttach').modal('show')
+                                  console.log("gotattechment array ====>",this.gotAttachment);
+                                }
+
+                              }

@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-6 top">
+			<div class="col-sm-6 top" *ngIf="project">
 				<div class="card">
 
 
@@ -17,7 +17,7 @@
 
 
 						<h2 style="margin-top: 50px;"><i class="fas fa-tasks"></i> Total Number Of Tasks:</h2>
-						<p>Total Task In Project : <b>{{getTaskCount()}}</b></p>
+						<p>Total Task In Project : <b>{{getTask()}}</b></p>
 
 						<canvas id="pieChart5"></canvas>
 					</div>
@@ -61,7 +61,7 @@
 				</div>
 
 
-				
+
 			</div>
 			<div class="col-sm-6" style="padding-right: 0px;">
 				<div class="card">
@@ -78,7 +78,7 @@
 				</div>
 				
 			</div><hr/>
-			
+
 		</div>
 	</div>
 </div>

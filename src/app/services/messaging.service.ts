@@ -81,8 +81,8 @@ export class MessagingService {
 
             });
           }
-          else if (payload.notification.body == "leave") {
-            this.toastr.warning(payload.notification.title, "", {
+          else if (payload.notification.body == "other") {
+            this.toastr.success(payload.notification.title, "", {
               disableTimeOut: true,
               closeButton: true,
               enableHtml: true
@@ -94,7 +94,7 @@ export class MessagingService {
               enableHtml: true
             });
           }else{
-            this.toastr.success(payload.notification.title, "", {
+            this.toastr.warning(payload.notification.title, "", {
               disableTimeOut: true,
               closeButton: true,
               enableHtml: true

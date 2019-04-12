@@ -48,6 +48,12 @@
 .btn-floating i {
 	font-size: 15px!important;
 }
-/*.btn{
-	margin: 0px;
-}*/
+.image_box{
+	display: none;
+}
+.image_box.active{
+	display: block;
+}
+.image_box img.img-fluid {
+    min-width: 100%;
+}

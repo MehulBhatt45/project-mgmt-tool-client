@@ -38,6 +38,8 @@ export class AllEmployeeComponent implements OnInit {
 	files: Array<File> = [];
 	selectedProjectId: 'all';
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	projects;
+	
 	
 	constructor(private formBuilder: FormBuilder, private _loginService: LoginService,private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService,  public searchTextFilter: SearchTaskPipe) { }
@@ -99,15 +101,17 @@ export class AllEmployeeComponent implements OnInit {
 		console.log("msgggg--=--",developerid);
 
 		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
+			console.log("devid=-=--{}{}{}{}{}",developerid);
 			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
 			console.log("delete{}{}{}{}",res);
 			this.getAllDevelopers();
+			// this.getDeveloper(this.selectedProjectId );
 		},err=>{
 			console.log("errr=-=-=-= ",err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
 	}
-	projects;
+	
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			this.projects = res;

@@ -29,14 +29,14 @@ export class NoticeboardComponent implements OnInit {
   files;
 
   ngOnInit() {
-  	this.getAllNotice();
+    this.getAllNotice();
     this.createEditNoticeForm();
     $(document).ready(function(){
       setTimeout(function () {
         $('.grid').masonry({
           itemSelector: '.grid-item'
         });
-      }, 1000);
+      }, 2000);
     });
   }
 
@@ -135,6 +135,3 @@ export class NoticeboardComponent implements OnInit {
 }
 
 
-
-
-  

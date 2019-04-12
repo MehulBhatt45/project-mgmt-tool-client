@@ -204,6 +204,7 @@ export class ProjectService {
 	updateProject(data){
 		console.log("updated Data in project servie" , data);
 		var projectId = data._id;
+		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -256,6 +257,7 @@ export class ProjectService {
 
 	updateTask(id, task){
 		console.log("task =========>",task);
+		// console.log("id-=-=",id);
 		// var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
@@ -284,9 +286,12 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"tasks/add-task", data);
 	}
 	getTaskById(id){
+
 		var id = id;
-		console.log("id---------",id);
+
+		console.log("idddd=====>",id);
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
+
 	}
 
 	getTeamByProjectId(id){
