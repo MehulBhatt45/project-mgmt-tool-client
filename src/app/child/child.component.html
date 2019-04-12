@@ -64,7 +64,6 @@
 </div>
 
 
-
 <!-- Task details Modal -->
 
 <div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -140,10 +139,10 @@
 									<label><strong>Prority: &nbsp;</strong></label>
 									<span>{{getPriorityClass(task.priority).title}}</span>
 								</p>
-								<!-- <p *ngIf="task.dueDate">
+								<p *ngIf="task.dueDate">
 									<label><strong>DueDay: &nbsp;</strong></label>
 									<span>{{task.dueDate | date:'short'}}</span>
-								</p> -->
+								</p>
 								<p *ngIf="task.sprint">
 									<label><strong>Sprint: &nbsp;</strong></label>
 									<span>{{task.sprint.title}}</span>
@@ -164,6 +163,7 @@
 							<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete'" (click)="updateStatus('in progress', task)">Reset progress</button>
 						</div>
 						<div>
 							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">Edit</button>

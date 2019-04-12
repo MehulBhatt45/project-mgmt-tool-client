@@ -327,13 +327,19 @@ export class ChildComponent  implements OnInit{
   }
   updateStatus(newStatus, data){
     $('#fullHeightModalRight').modal('hide');
-    if(newStatus=='complete'){
+    if(newStatus == 'complete'){
       data.status = newStatus;
       this._projectService.completeItem(data).subscribe((res:any)=>{
         console.log(res);
         this.getProject(res.projectId);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is shifted to complete from testing" ,
+          showConfirmButton:false,timer: 2000})
       },err=>{
         console.log(err);
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
       });
     }else{
       data.status = newStatus;
