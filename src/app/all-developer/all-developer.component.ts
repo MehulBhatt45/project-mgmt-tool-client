@@ -51,12 +51,23 @@ export class AllDeveloperComponent implements OnInit {
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				console.log("project detail===>>>>",this.pro.pmanagerId);
-				setTimeout(()=>{
-					console.log("PM rotate js-------------------------------------------------------------------")
-					$('a.rotate-btn').click(function () {
-						$(this).parents(".card-rotating").toggleClass('flipped');
-					});
-				},2000);
+				this.pro.pmanagerId.sort(function(a, b){
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+					// this.projectTeam.push
+					// console.log("response of team============>"  ,this.projectTeam);
+					console.log("project detail===>>>>",this.pro.pmanagerId);
+					setTimeout(()=>{
+						console.log("TM rotate js-------------------------------------------------------------------")
+						$('a.rotate-btn').click(function () {
+							$(this).parents(".card-rotating").toggleClass('flipped');
+						});
+					},2000);
+				})
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 					console.log("response of team============>"  ,res.Teams);
 					this.Teams = res.Teams;
@@ -108,7 +119,7 @@ export class AllDeveloperComponent implements OnInit {
 	deleteDeveloper(event){
 		console.log(event);
 		Swal.fire({
-			title: 'Are you sure to delete?',
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
