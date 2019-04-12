@@ -19,6 +19,7 @@ declare var $ : any;
 export class HeaderComponent implements OnInit {
 	tracks:any;
 	url = [];
+	proId;
 	commentUrl = [];
 	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task = this.getEmptyTask();
@@ -134,6 +135,8 @@ export class HeaderComponent implements OnInit {
 					// 	this.editTaskForm.controls.estimatedTime.setValue($('#estimatedTime').val())
 					// }
 					projectSelected(item){
+						console.log("item is====>",item._id);
+						this.proId = item._id;
 						if(item && item._id){
 							console.log("res-=-=",item);
 							// this.editTaskForm.assignTo = null;
@@ -281,6 +284,7 @@ export class HeaderComponent implements OnInit {
 						
 					}
 					getProject(id){
+						console.log("your id is===>",id);
 						setTimeout(()=>{
 							this._projectService.getProjectById(id).subscribe((res:any)=>{
 								console.log(res);
@@ -322,7 +326,9 @@ export class HeaderComponent implements OnInit {
 						}
 						this._projectService.addTask(data).subscribe((res:any)=>{
 							console.log("response task***++",res);
+
 							Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+							this.router.navigate(['./project-detail']);
 							this.loader = false;
 							$('#editModel').modal('hide');
 							this.task = this.getEmptyTask();

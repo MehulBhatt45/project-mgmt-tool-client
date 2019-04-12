@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const baseUrl = "https://raoinfotech-conduct.tk:4001/";
 // const baseUrl = "http://132.140.160.79:4001/";
 // const baseUrl = "http://localhost:4001/";
@@ -5,12 +6,29 @@ const baseUrl = "https://raoinfotech-conduct.tk:4001/";
 // const baseMediaUrl = "http://132.140.160.79/project_mgmt_tool/server/uploads/";
 const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
 // const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
+=======
+
+// const baseUrl = "https://raoinfotech-conduct.tk:4001/";
+// const baseUrl = "http://132.140.160.61:4001/";
+const baseUrl = "http://localhost:4001/";
+// 
+
+// const baseMediaUrl = "http://132.140.160.61/project_mgmt_tool/server/uploads/";
+
+
+// const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
+
+
+const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
+>>>>>>> 9994ffbd844af40b7448b51ebea8e717f0f20d43
+
+
 
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,
     "priorityList": [
-    { id: "1", value: 'low', colorCode: 'blue' },
+    // { id: "1", value: 'low', colorCode: 'blue' },
     { id: "2", value: 'medium', colorCode: 'yellow' },
     { id: "3", value: 'high', colorCode: 'red' }
     ],
