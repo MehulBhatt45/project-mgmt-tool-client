@@ -1,4 +1,11 @@
-<div class="container-fluid">
+<div class="loader" *ngIf="loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+
+<div class="container-fluid" *ngIf="!loader">
 	<div class="row">
 		<div class="header">
 			<h1>Attendence Table</h1>
@@ -22,25 +29,58 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-md-6">
 
-<table class="table">
-	<thead>
-		<tr>
-			<th scope="col">CheckIn</th>
-			<th scope="col">CheckOut</th>
-			<th scope="col">Diffrence</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let ateendence of logs;let i=index;">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">CheckIn</th>
+					<th scope="col">CheckOut</th>
+					<!-- <th scope="col">Diffrence</th> -->
+
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr *ngFor="let i of attendence">
+					<td>{{i.checkIn}}</td>
+					<td>{{i.checkOut}}</td>
+				</tr>
+
+
+
+		<!-- <tr *ngFor="let ateendence of logs;let i=index;">
 			<td>{{ateendence.checkIn}}</td>
 
 			<td>{{ateendence.checkOut}}</td>
 
 			<td>{{ateendence.diff}}</td>
-		</tr>
+		</tr> -->
 	</tbody>
 </table>
+</div>
+<div class="col-md-6">
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th scope="col" style="text-align: center;"> Total Diffrence</th>
+
+			</tr>
+
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align: center;">{{timediff}}</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+</div>
+
 
 	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">

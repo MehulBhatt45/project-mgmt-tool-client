@@ -150,13 +150,14 @@ export class LeaveService {
 
 checkIn(Data){
 	var obj = {userId:Data};
-	console.log("data of checkin student service",Data);
+	console.log("data of checkin student service",obj);
 	const httpOptions = {
 		headers: new HttpHeaders({
 			'content-Type':'application/json',
 			'x-access-token': JSON.parse(localStorage.getItem('token'))
 		})
 	};
+	
 	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
 }
 checkOut(Data){

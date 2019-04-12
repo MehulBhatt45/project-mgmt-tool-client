@@ -47,7 +47,7 @@ export class ProjectDetailComponent implements OnInit {
 	developers: any
 	loader : boolean = false;
 	currentDate = new Date();
-	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	pro;
 	asc;
 	desc;
