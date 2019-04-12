@@ -78,14 +78,12 @@ export class SummaryComponent implements OnInit {
 			
 		});
 		this.createEditTaskForm();	
+		this.getTasks();
 	}
 	ngOnInit() {
 		this.getEmptyTracks();
 		// var i1=this.tracks;
 		// console.log("i1-=-=-{}{}",i1);
-
-
-		
 	}	
 
 	
@@ -197,6 +195,170 @@ export class SummaryComponent implements OnInit {
 		})
 	}
 
+	getTasks(){
+		this.loader = true;
+		setTimeout(()=>{
+			this._projectService.getAllTasks().subscribe((res:any)=>{
+				console.log("all response ======>" , res);
+				this.getEmptyTracks();
+
+				this.tasks = res;
+				this.tasks.sort(custom_sort);
+				this.tasks.reverse();
+				console.log("PROJECT=================>", this.tasks);
+				_.forEach(this.tasks , (task)=>{
+					_.forEach(this.tracks , (track)=>{
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
+						}
+					})
+				});
+				console.log("PROJECT=================>", this.tracks);
+				this.loader = false;
+				console.log("==================================TimeOUT===========================================");
+				var completedTask=this.getCompletedTask("complete");
+				console.log("completed{{}}___+++",completedTask);
+
+				var projectLength=this.tasks.length;
+				console.log("plength==-=-=-=",projectLength);
+
+				var allcompleteproject = completedTask*100/projectLength;
+				console.log("allcompleteproject=-=-={}{}{}",allcompleteproject);
+
+				this.total=allcompleteproject;
+				console.log("total()()++++++++++++++++",this.total);
+
+				this.round = Math.round(this.total);
+				console.log("round()()+++++++++++++++++",this.round);
+
+
+				var ctx = document.getElementById("myChart");
+				var myChart = new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: ["to do", "In Progress", "testing", "Complete"],
+						datasets: [{
+							label: '# of Tasks',
+							data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
+							backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)'
+
+							],
+							borderColor: [
+							'rgba(255,99,132,1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)'
+
+							],
+							borderWidth: 1
+						}]
+					},
+					options: {
+
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						}
+					}
+				});
+
+
+
+				var ctxL = document.getElementById("lineChart")
+				var myLineChart = new Chart(ctxL, {
+					type: 'line',
+					data: {
+						labels: ["To Do", "In Progress", "Testing", "Complete"],
+						datasets: [{
+							label: "Highest Priority",
+							data: this.getTaskPriority(1,this.tracks),
+
+							borderColor: [
+							'#DC143C',
+							],
+							borderWidth: 2
+						}
+						]
+					},
+					options: {
+						responsive: true
+					}
+				});
+
+				var ctxL = document.getElementById("lineChart1")
+				var myLineChart = new Chart(ctxL, {
+					type: 'line',
+					data: {
+						labels: ["To Do", "In Progress", "Testing", "Complete"],
+						datasets: [{
+							label: "High Priority",
+							data: this.getTaskPriority(2,this.tracks),
+
+							borderColor: [
+							'#ff8100',
+							],
+							borderWidth: 2
+						}
+
+						]
+					},
+					options: {
+						responsive: true
+					}
+				});
+
+				var ctxP = document.getElementById("pieChart5");
+				var myPieChart = new Chart(ctxP, {
+					type: 'pie',
+					data: {
+						labels: ["To Do", "In Progress", "Testing", "Complete"],
+						datasets: [{
+							data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
+
+							backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+							hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+						}]
+					},
+					options: {
+						responsive: true,
+						legend:{
+							position:"left",
+							labels:{
+
+								boxwidth:12
+							}
+
+
+						}
+					}
+				});
+
+			},err=>{
+				console.log(err);
+				this.loader = false;
+			});
+
+		},1000);
+
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
+	}
+
+
 	getProject(id){
 		this.loader = true;
 		setTimeout(()=>{
@@ -212,6 +374,7 @@ export class SummaryComponent implements OnInit {
 					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
+					// console.log("arrey of teams",this.projectTeam[0]);
 					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
 					this.projectTeam.sort(function(a, b){
 						if (a.name && b.name) {
@@ -225,6 +388,36 @@ export class SummaryComponent implements OnInit {
 						}
 
 					})
+					setTimeout(()=>{
+						$('.developer_slider').slick({
+							infinite: false,
+							speed: 300,
+							slidesToShow: 4,
+							slidesToScroll: 1,
+							prevArrow: '<button type="button" class="btn btn-default slick-prev" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;left: -30px;padding:10px;"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>',
+							nextArrow: '<button type="button" class="btn btn-default slick-next" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;right: -30px;padding:10px;"><i class="fa fa-chevron-right" aria-hidden="true"></i></button',
+							responsive: [
+							{
+								breakpoint: 1200,
+								settings: {
+									slidesToShow: 3
+								}
+							},
+							{
+								breakpoint: 768,
+								settings: {
+									slidesToShow: 2
+								}
+							},
+							{
+								breakpoint: 480,
+								settings: {
+									slidesToShow: 1
+								}
+							}
+							]
+						});
+					}, 200);
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
@@ -233,350 +426,38 @@ export class SummaryComponent implements OnInit {
 				console.log("err of project============>"  ,err);
 			});
 
-			this._projectService.getTaskById(id).subscribe((res:any)=>{123412
-				console.log("id{}{}{}===",id);
-				console.log("all response()()() ======>",res);
-				this.getEmptyTracks();
-				this.project = res;
-				console.log("()()()() ======>",this.project);
-				this.project.sort(custom_sort);
-				this.project.reverse();
-				console.log("PROJECT=================>", this.project);
-				_.forEach(this.project , (task)=>{
-					// console.log("task ======>()" , task);
-					_.forEach(this.tracks , (track)=>{
-						// console.log("track ======>()" , track);
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-								console.log("sorttask==()()()",task);
-								track.tasks.push(task);
-							}
-						}else{
-							if(task.status == track.id){
-								track.tasks.push(task);
-							}
-						}
-					})
-				})
-				this.loader = false;
-				setTimeout(()=>{
-					console.log("==================================TimeOUT===========================================");
-					var completedTask=this.getCompletedTask("complete");
-					console.log("completed{{}}___+++",completedTask);
-
-					var projectLength=this.project.length;
-					console.log("plength==-=-=-=",projectLength);
-
-					var allcompleteproject = completedTask*100/projectLength;
-					console.log("allcompleteproject=-=-={}{}{}",allcompleteproject);
-
-					this.total=allcompleteproject;
-					console.log("total()()++++++++++++++++",this.total);
-
-					this.round = Math.round(this.total);
-					console.log("round()()+++++++++++++++++",this.round);
+			
 
 
-					var ctx = document.getElementById("myChart");
-					var myChart = new Chart(ctx, {
-						type: 'bar',
-						data: {
-							labels: ["to do", "In Progress", "testing", "Complete"],
-							datasets: [{
-								label: '# of Tasks',
-								// data:[7,14,43,33],
-								data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
-								backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)'
-
-								],
-								borderColor: [
-								'rgba(255,99,132,1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)'
-
-								],
-								borderWidth: 1
-							}]
-						},
-						options: {
-
-							scales: {
-								yAxes: [{
-									ticks: {
-										beginAtZero: true
-									}
-								}]
-							}
-						}
-					});
-
-					// var ctxP = document.getElementById("pieChart1");
-					// var myPieChart = new Chart(ctxP, {
-						// 	type: 'pie',
-						// 	data: {
-							// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-							// 		datasets: [{
-								// 			// data:[10,20,30,40],
-								// 			data: this.getTaskPriority(1,this.tracks),
-								// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-								// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-								// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-								// 		}]
-								// 	},
-								// 	options: {
-									// 		responsive: true,
-									// 		legend:{
-										// 			position:"bottom"
-										// 		}
-										// 	}
-										// });
-
-										var ctxL = document.getElementById("lineChart")
-										var myLineChart = new Chart(ctxL, {
-											type: 'line',
-											data: {
-												labels: ["To Do", "In Progress", "Testing", "Complete"],
-												datasets: [{
-													label: "Highest Priority",
-													data: this.getTaskPriority(1,this.tracks),
-													
-													borderColor: [
-													'#DC143C',
-													],
-													borderWidth: 2
-												}
-												]
-											},
-											options: {
-												responsive: true
-											}
-										});
-
-										var ctxL = document.getElementById("lineChart1")
-										var myLineChart = new Chart(ctxL, {
-											type: 'line',
-											data: {
-												labels: ["To Do", "In Progress", "Testing", "Complete"],
-												datasets: [{
-													label: "High Priority",
-													data: this.getTaskPriority(2,this.tracks),
-													
-													borderColor: [
-													'#ff8100',
-													],
-													borderWidth: 2
-												}
-
-												]
-											},
-											options: {
-												responsive: true
-											}
-										});
-
-
-										// var ctxL = document.getElementById("lineChart2")
-										// var myLineChart = new Chart(ctxL, {
-											// 	type: 'line',
-											// 	data: {
-												// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-												// 		datasets: [{
-													// 			label: "Medium Priority",
-													// 			data: this.getTaskPriority(3,this.tracks),
-													
-													// 			borderColor: [
-													// 			'#ffee21',
-													// 			],
-													// 			borderWidth: 2
-													// 		}
-
-													// 		]
-													// 	},
-													// 	options: {
-														// 		responsive: true
-														// 	}
-														// });
-
-														// var ctxL = document.getElementById("lineChart3")
-														// var myLineChart = new Chart(ctxL, {
-															// 	type: 'line',
-															// 	data: {
-																// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																// 		datasets: [{
-																	// 			label: "Low Priority",
-																	// 			data: this.getTaskPriority(4,this.tracks),
-
-																	// 			borderColor: [
-																	// 			'#0087ff',
-																	// 			],
-																	// 			borderWidth: 2
-																	// 		}
-
-																	// 		]
-																	// 	},
-																	// 	options: {
-																		// 		responsive: true
-																		// 	}
-																		// });
-
-
-
-
-																		// var ctxP = document.getElementById("pieChart2");
-																		// var myPieChart = new Chart(ctxP, {
-																			// 	type: 'pie',
-																			// 	data: {
-																				// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																				// 		datasets: [{
-																					// 			data: this.getTaskPriority(2,this.tracks),
-																					// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-																					// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-																					// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-																					// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-																					// 		}]
-																					// 	},
-																					// 	options: {
-																						// 		responsive: true,
-																						// 		legend:{
-																							// 			position:"bottom"
-																							// 		}
-																							// 	}
-																							// });
-
-
-																							// var ctxP = document.getElementById("pieChart3");
-																							// var myPieChart = new Chart(ctxP, {
-																								// 	type: 'pie',
-																								// 	data: {
-																									// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																									// 		datasets: [{
-																										// 			data: this.getTaskPriority(3,this.tracks),
-																										// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-																										// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-																										// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-																										// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-																										// 		}]
-																										// 	},
-																										// 	options: {
-																											// 		responsive: true,
-																											// 		legend:{
-																												// 			position:"bottom"
-																												// 		}
-																												// 	}
-																												// });
-
-
-																												// var ctxP = document.getElementById("pieChart4");
-																												// var myPieChart = new Chart(ctxP, {
-																													// 	type: 'pie',
-																													// 	data: {
-																														// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																														// 		datasets: [{
-																															// 			data: this.getTaskPriority(4,this.tracks),
-																															// 			// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-																															// 			// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-																															// 			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-																															// 			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-																															// 		}]
-																															// 	},
-																															// 	options: {
-																																// 		responsive: true,
-																																// 		legend:{
-																																	// 			position:"bottom",
-
-
-																																	// 		}
-																																	// 	}
-																																	// });
-
-																																	var ctxP = document.getElementById("pieChart5");
-																																	var myPieChart = new Chart(ctxP, {
-																																		type: 'pie',
-																																		data: {
-																																			labels: ["To Do", "In Progress", "Testing", "Complete"],
-																																			datasets: [{
-																																				data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
-																																				// data: [this.getTaskPriority(this.project.priority,this.tracks.title)],
-																																				// backgroundColor: ["#77abb7", "#0075f6", "#ff9d76", "#a4f6a5"],
-																																				backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-																																				hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-																																			}]
-																																		},
-																																		options: {
-																																			responsive: true,
-																																			legend:{
-																																				position:"left",
-																																				labels:{
-
-																																					boxwidth:12
-																																				}
-
-
-																																			}
-																																		}
-																																	});
-																																},1000);
-},err=>{
-	console.log(err);
-	this.loader = false;
-});
-
-
-},1000);
-function custom_sort(a, b) {
-	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-}
-}
-
-
-
-
-getTaskCount(userId, status){
-
-	// console.log("userId===-=-={}{}{}{}{}",userId);
-	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
-}
-
-getCompletedTask(status){
-	// console.log("userId===-=-={}{}{}{}{}",userId);
-	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
-}
-
-
-// getDateTask(project){
-	// 	console.log("proj[][][][]",project);
-	
-
-	// 	return _.filter(this.project,function(o){ if ( o.createdAt == project.createdAt && o.status == project.status) return o}).length;
-	// }
-
-
-	// 	console.log("proj[][][][]",priority,tracks);
-
-	// 		for(var i=0;i<=this.tracks.length;i++){
-
-
-		// 			console.log("date=-=-=-",tracks[i].task[0].createdAt);
-		// 		}
-		// 		// return _.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.createdAt == track.tasks.createdAt) return o }).length;
-		// 	});
-		// }
-
-
-		getTaskPriority(priority, tracks){
-			// console.log(priority, status);
-			var count = [];
-			_.forEach(tracks, track=>{
-				count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
-			});
-			console.log(count);
-			return count;
+		},1000);
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
-
-
 	}
+
+
+
+
+	getTaskCount(userId, status){
+
+		
+		return _.filter(this.tasks, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
+	}
+
+	getCompletedTask(status){
+
+		return _.filter(this.tasks, function(o) { if (o.status == status) return o }).length;
+	}
+
+	getTaskPriority(priority, tracks){
+
+		var count = [];
+		_.forEach(tracks, track=>{
+			count.push(_.filter(this.tasks, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
+		});
+		console.log(count);
+		return count;
+	}
+
+
+}

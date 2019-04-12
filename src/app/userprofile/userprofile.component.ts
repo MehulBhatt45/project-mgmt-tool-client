@@ -37,6 +37,7 @@ export class UserprofileComponent implements OnInit {
 		user;
 		files;
 		projectId;
+		ProjectIdTest;
 		projectArr = [];
 		finalArr = [];
 		editTEmail;
@@ -53,10 +54,14 @@ export class UserprofileComponent implements OnInit {
 
 		constructor(private route: ActivatedRoute,public _alertService: AlertService,
 			private router: Router, public _projectservice: ProjectService, public _loginService: LoginService) { 
+			this.route.params.subscribe(param=>{
+			this.projectId = param.id;
+		});
 		}
 
 		createEditEmail(){
 			this.editTEmail = new FormGroup({
+				projectId: new FormControl('' , Validators.required),
 				subject : new FormControl('', Validators.required),
 				content : new FormControl('', Validators.required),
 				sendTo : new FormControl(['']),
@@ -132,6 +137,8 @@ export class UserprofileComponent implements OnInit {
 						this.getProjectByPmanagerId();
 					}
 					projectSelected(item){
+						console.log("item",item);
+						this.ProjectIdTest = item._id;
 						if(item && item._id){
 							_.forEach(item.Teams,(all)=>{
 								console.log("all",all._id);
@@ -160,8 +167,13 @@ export class UserprofileComponent implements OnInit {
 					}
 
 					addNotification(editTEmail){
+						// console.log("CurrentUserId========>",this.currentUser._id);
+						editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
+						console.log("editTEmail" , editTEmail.value);
+						
 						this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
 							console.log(res);
+
 							// this.notification = this.myObject;
 							// console.log(this.myObject);
 						})

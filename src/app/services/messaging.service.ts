@@ -68,14 +68,38 @@ export class MessagingService {
 
       receiveMessage() {
         this.angularFireMessaging.messages.subscribe(
-          (payload) => {
+          (payload:any) => {
             console.log("new message received. ", payload);
+            console.log("pylod======>",payload.notification.body);
             // console.log(payload.from);
             // this.currentMessage.next(payload);
-            this.toastr.info('New Notification', 'payload', {
+            if (payload.notification.body == "comment") {
+            this.toastr.error(payload.notification.title, "", {
               disableTimeOut: true,
-              closeButton: true
+              closeButton: true,
+              enableHtml: true,
+
             });
+          }
+          else if (payload.notification.body == "leave") {
+            this.toastr.warning(payload.notification.title, "", {
+              disableTimeOut: true,
+              closeButton: true,
+              enableHtml: true
+            });
+          }else if (payload.notification.body == "task") {
+            this.toastr.info(payload.notification.title, "", {
+              disableTimeOut: true,
+              closeButton: true,
+              enableHtml: true
+            });
+          }else{
+            this.toastr.success(payload.notification.title, "", {
+              disableTimeOut: true,
+              closeButton: true,
+              enableHtml: true
+            });
+          }
           })
       }
 
@@ -86,13 +110,5 @@ export class MessagingService {
       }
 
 
-      // addNotification(udata){
-      //   console.log("new notice",udata);
-       
-      //       this.http.post(config.baseApiUrl+"sendNotification/addNotification",udata).subscribe((sucess)=>{
-
-      //       });
-
-      // }
 
     }

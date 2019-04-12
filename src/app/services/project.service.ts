@@ -285,6 +285,7 @@ export class ProjectService {
 	}
 	getTaskById(id){
 		var id = id;
+		console.log("id---------",id);
 		return this.http.get(config.baseApiUrl+"tasks/get-task-by-id/"+id);		
 	}
 
@@ -405,23 +406,26 @@ export class ProjectService {
 			return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
 		}
 
-			getProjectByPmanagerId(pmanagerId){
-				console.log("pmanagerId=====>",pmanagerId);
-	          return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+		getProjectByPmanagerId(pmanagerId){
+			console.log("pmanagerId=====>",pmanagerId);
+			return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
 
-			}
+		}
 
-			addNotification(body){
-				let formdata = new FormData();
-		         formdata.append('subject',body.subject);
-		         formdata.append('content',body.content);
-		         formdata.append('sendTo',body.sendTo);
-		         return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
+		addNotification(body){
+			console.log("body in service" , body);
+			let formdata = new FormData();
+			formdata.append('pmanagerName',body.pmanagerName);
+			formdata.append('projectId', body.projectId);
+			formdata.append('subject',body.subject);
+			formdata.append('content',body.content);
+			formdata.append('sendTo',body.sendTo);
+			return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
 
-			}
-			getNotificationByUserId(currentUserId){
-				return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
-			}
+		}
+		getNotificationByUserId(currentUserId){
+			return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
+		}
 
 		deleteSprint(sprintId){
 			console.log("sprint in service",sprintId);

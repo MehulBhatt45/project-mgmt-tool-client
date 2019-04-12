@@ -388,8 +388,6 @@ export class ChildComponent  implements OnInit{
               console.log("sorting============>"  ,this.projectTeam);
             }
           })
-
-
         },(err:any)=>{
           console.log("err of team============>"  ,err);
         });
