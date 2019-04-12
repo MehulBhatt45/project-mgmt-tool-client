@@ -58,8 +58,6 @@ export class AllDeveloperComponent implements OnInit {
 					if (nameA > nameB)
 						return 1
 					return 0 //default return value (no sorting)
-					// this.projectTeam.push
-					// console.log("response of team============>"  ,this.projectTeam);
 					console.log("project detail===>>>>",this.pro.pmanagerId);
 					setTimeout(()=>{
 						console.log("TM rotate js-------------------------------------------------------------------")
