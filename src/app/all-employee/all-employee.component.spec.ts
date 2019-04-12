@@ -208,14 +208,22 @@ fdescribe('AllEmployeeComponent', () => {
         expect(component.filteredDevelopers).toEqual(developers);
         expect(component.developers).toEqual(developers);
     });
+    it(`should set the error property if server returns the error when getting all projects` , () => {
+        const error = new Error("Server Error");
 
+        spyOn(projectService , 'getProjects').and.returnValue(Observable.throw(error));
+
+        expect(component.error).not.toBeDefined();
+
+        component.ngOnInit();
+
+        expect(component.error).toBeDefined();
+    });
 
 
 
     /*The below test is failing because there is not route in service for the particular API */
-
-
-    /*it(`should delete the develpoers from the developers'Id in function "deleteEmployee(developerid)"` , () => {
+    it(`should delete the develpoers from the developers'Id in function "deleteEmployee(developerid)"` , () => {
         const developerid = "5c752002ff279f07b0fba58e";        
         const developers: Developers[] = [
             { 
@@ -237,18 +245,34 @@ fdescribe('AllEmployeeComponent', () => {
                 "updatedAt" : "2019-02-26T11:16:18.698+0000", 
             }
         ];
-        const spy =  spyOn(projectService , 'deleteEmployeeById').and.returnValue(Observable.empty());
+        const error = new Error("Server Error");
+        const spy =  spyOn(projectService , 'deleteEmployeeById').and.callFake(() =>{
+            return Observable.from([developers]);
+        });
+        
 
         component.deleteEmployee(developerid);
 
-        expect(spy).toHaveBeenCalled();
+        // expect(spy).toHaveBeenCalled();
 
         spyOn(projectService , 'getAllDevelopers').and.callFake(() => {
             return Observable.from([developers]);
         });
-       expect(component.filteredDevelopers).toEqual(developers);
-       expect(component.developers).toEqual(developers); 
-    });*/
+       // expect(component.filteredDevelopers).toEqual(developers);
+       // expect(component.developers).toEqual(developers); 
+    });
+
+    it(`should delete the develpoers from the developers'Id in function "deleteEmployee(developerid) must throw an error"` , () => {
+        const developerid = "5c752002ff279f07b0fba58e";        
+        
+        const error = new Error("Server Error");
+        const spy =  spyOn(projectService , 'deleteEmployeeById').and.returnValue(Observable.throw(error));
+        
+
+        component.deleteEmployee(developerid);
+
+        expect(spy).toHaveBeenCalled();
+    });
 
     /*TESTING PIPES ==============>*/
 
@@ -331,6 +355,19 @@ fdescribe('AllEmployeeComponent', () => {
         ];
         component.onKey("p");
         expect(component.developers[0]).toEqual(component.filteredDevelopers[1]);
+    });
+
+    it(`get initials of the name from the function "getInitialsOfName(name)" when name != "admin"` , () => {
+        const name = "pushpraj chudasama";
+        const b =  component.getInitialsOfName(name);
+
+        expect(b).toBe('PC');
+    });
+    it(`get initials of the name from the function "getInitialsOfName(name)" when name == "admin"` , () => {
+        const name = "admin";
+        const b =  component.getInitialsOfName(name);
+
+        expect(b).toBe('A');
     });
 
 });

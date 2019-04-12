@@ -66,8 +66,6 @@ export class AllEmployeeComponent implements OnInit {
 			return str.toUpperCase();
 		}else if(name == 'admin'){
 			return "A";
-		}else{
-			return "";
 		}
 	}
 	getAllDevelopers(){
@@ -114,6 +112,7 @@ export class AllEmployeeComponent implements OnInit {
 					this.projects = res;
 					console.log("projects ======>" , this.projects);
 				},err=>{
+					this.error = err
 					this._alertService.error(err);
 					console.log(err);
 				})
