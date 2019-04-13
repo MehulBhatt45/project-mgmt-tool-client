@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   forgotPasswordForm: FormGroup;
   loader = false;
+  show: boolean;
+  pwd: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +33,8 @@ export class LoginComponent implements OnInit {
     // redirect to home if already logged in
     if (this._loginService.currentUserValue) { 
       this.router.navigate(['/']);
+      this.show = false;
+      this.pwd = false;
     }
   }
 
@@ -46,6 +50,9 @@ export class LoginComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    $(".toggle-password").click(function() {
+      $(this).toggleClass("fa-eye fa-eye-slash");
+    });
   }
 
   // convenience getter for easy access to form fields
@@ -71,7 +78,19 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  showPassword(){
+    // var pass = document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+     var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
+     if(pass == "password"){
+        document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+    }
+    else{
+       document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
+    }
+    // console.log("pass ==>" , pass);
+    
+    
+  }
   updatePassword(){
     // console.log(this.forgotPasswordForm.value);
     this.loader = true;
@@ -92,5 +111,10 @@ export class LoginComponent implements OnInit {
         footer: ''
       })
     })    
-  }  
+  }
+  
+  password() {
+    this.show = !this.show;
+    this.pwd = !this.pwd;
+  }
 }

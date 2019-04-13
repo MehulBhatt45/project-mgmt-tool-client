@@ -32,9 +32,11 @@ export class ViewProjectComponent implements OnInit {
   tracks;
   projectId;
   project;
+  demoprojects = [];
   idpmt:any;
   objectsArray:any;
   hoveredProject: any;
+  teamproject:any;
   ary:any;
   optionsSelect: Array<any>;
   pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
@@ -58,18 +60,10 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-
-      $('[data-toggle="popover-hover"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'bottom',
-        content: function () { console.log("EVENT TIGGERED"); return 'data'; }
-      });
-    },1000);
-
     this.getProjects();
+
     this.getAllDevelopers();
+    // this.getProject();
     $('.datepicker').pickadate({
       onSet: function(context) {
         console.log('Just set stuff:', context);
@@ -94,11 +88,13 @@ export class ViewProjectComponent implements OnInit {
   getProjects(){
     this.loader=true;
     this._projectService.getProjects().subscribe((res:any)=>{
-      if(this.currentUser.userRole == 'projectManager'){
+      if(this.currentUser.userRole == 'projectManager' || this.currentUser.userRole == 'admin'){
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
         this.projects = res;
-        console.log("this.projects========------=-=-=-=",this.projects);
+        
+        console.log("this.demoprojects========------=-=-=-=",this.projects);
+
       }
       else{
         this.projects = [];
@@ -118,10 +114,17 @@ export class ViewProjectComponent implements OnInit {
         });
       }, 100);
     },err=>{
-     Swal.fire('Oops...', 'Something went wrong!', 'error')  
-     this.loader=false;
-   });
+      Swal.fire('Oops...', 'Something went wrong!', 'error')  
+      this.loader=false;
+    });
+
   }
+  getDate(date){
+    date = date.split("T");
+    return date[0];
+  }
+
+
 
   getTitle(name){
     var str = name.split(' ');
@@ -137,7 +140,7 @@ export class ViewProjectComponent implements OnInit {
   getTechName(tech){
     if(tech == "fa-react") return "React JS"
   }
-addProject(addForm){
+manageroject(addForm){
   var data = new FormData();
   _.forOwn(addForm, function(value, key) {
     data.append(key, value)
@@ -230,75 +233,7 @@ removeAvatar(){
   this.files = [];
 }
 
-getProject(id){
 
-  console.log("id======-=-=",id);
-  this.loader = true;
-  setTimeout(()=>{
-    this._projectService.getTaskById(id).subscribe((res:any)=>{123412
-      console.log("id{}{}{}===",id);
-      this.idpmt=id;
-      console.log("this.idpmt=-=()()()",this.idpmt);
-      console.log("all response()()() ======>",res);
-      // this.getEmptyTracks();
-      this.project = res;
-      console.log("()()()() ======>",this.project);
-      this.project.sort(custom_sort);
-      this.project.reverse();
-      console.log("PROJECT=================>", this.project);
-      _.forEach(this.project , (task)=>{
-        // console.log("task ======>()" , task);
-        _.forEach(this.tracks , (track)=>{
-          // console.log("track ======>()" , track);
-          if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-            if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-              console.log("sorttask==()()()",task);
-              track.tasks.push(task);
-            }
-          }else{
-            if(task.status == track.id){
-              track.tasks.push(task);
-            }
-          }
-        })
-      })
-      
-      this.loader = false;
-
-    },err=>{
-      console.log(err);
-      this.loader = false;
-    });
-
-    // teamByProjectId
-    this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-      //this.projectTeam = res.team;
-
-      // res.Teams.push(this.pro.pmanagerId); 
-      console.log("response of team============>"  ,res.Teams);
-      this.projectTeam = res.Teams;
-      this.projectTeam.sort(function(a, b){
-        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        if (nameA < nameB) //sort string ascending
-          return -1 
-        if (nameA > nameB)
-          return 1
-        return 0 //default return value (no sorting)
-        this.projectTeam.push
-        console.log("sort============>"  ,this.projectTeam);
-      })
-
-
-    },(err:any)=>{
-      console.log("err of team============>"  ,err);
-    });
-
-
-  },1000);
-  function custom_sort(a, b) {
-    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-  }
-}
 
 getTaskCount(status){
 
@@ -306,9 +241,11 @@ getTaskCount(status){
 }
 
 mouseOver(project){
- 
+
   this.hoveredProject = project;
 }
+
+
 
 }
 

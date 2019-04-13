@@ -19,6 +19,7 @@ declare var $ : any;
 export class HeaderComponent implements OnInit {
 	tracks:any;
 	url = [];
+	proId;
 	commentUrl = [];
 	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task = this.getEmptyTask();
@@ -134,8 +135,16 @@ export class HeaderComponent implements OnInit {
 					// 	this.editTaskForm.controls.estimatedTime.setValue($('#estimatedTime').val())
 					// }
 					projectSelected(item){
+						console.log("item is====>",item._id);
+						this.proId = item._id;
 						if(item && item._id){
 							console.log("res-=-=",item);
+							// this.editTaskForm.assignTo = null;
+							// item.task.assignTo = null;
+							// console.log("res-=",this.task.assignTo);
+							// this.clearForm();
+							this.task = this.getEmptyTask();
+							// console.log("res-=",this.getEmptyTask());
 							this.loader = true;
 							$(".progress").addClass("abc");
 							// $(".progress .progress-bar").css({"width": '100%'});
@@ -192,9 +201,9 @@ export class HeaderComponent implements OnInit {
 								this.projects = res;
 								console.log("this.projects",this.projects);
 								_.forEach(this.projects,(project)=>{
-									console.log("project",project);
+									// console.log("project",project);
 									_.forEach(project.pmanagerId,(pid)=>{
-										console.log("pid",pid);
+										// console.log("pid",pid);
 										if(pid._id == this.currentUser._id){
 											this.demoprojects.push(project);
 										}
@@ -275,6 +284,7 @@ export class HeaderComponent implements OnInit {
 						
 					}
 					getProject(id){
+						console.log("your id is===>",id);
 						setTimeout(()=>{
 							this._projectService.getProjectById(id).subscribe((res:any)=>{
 								console.log(res);
@@ -316,7 +326,9 @@ export class HeaderComponent implements OnInit {
 						}
 						this._projectService.addTask(data).subscribe((res:any)=>{
 							console.log("response task***++",res);
+
 							Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
+							this.router.navigate(['./project-details',res.projectId]);
 							this.loader = false;
 							$('#editModel').modal('hide');
 							this.task = this.getEmptyTask();
@@ -330,7 +342,7 @@ export class HeaderComponent implements OnInit {
 						});
 					}
 					getEmptyTask(){
-						return { title:'', desc:'', assignTo: '', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
+						return { title:'', desc:'', assignTo: '', status: '', priority: '' , dueDate:'', estimatedTime:'', projectId:'' };
 					}
 
 					reloadProjects(){
@@ -388,4 +400,19 @@ export class HeaderComponent implements OnInit {
 					removeAlreadyUplodedFile(option){
 						this.newTask.images.splice(option,1);
 					}
+					close(){
+						this.editTaskForm.reset();
+						this.files = this.url = null;
+						this.task.assignTo = null;
+						// console.log("res-=",this.task.assignTo);
+						this.newTask;
+						// console.log("res-=",this.newTask);
+						this.clearForm();
+					}
+					clearForm() {
+						this.editTaskForm.reset({
+							'assignTo': '',
+						});
+					}
 				}
+				// }

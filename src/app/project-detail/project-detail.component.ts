@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/cor
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
@@ -62,7 +62,7 @@ export class ProjectDetailComponent implements OnInit {
 	sorting:any;
 
 	
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute,public router:Router,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService, public _change: ChangeDetectorRef) {
 		$('.datepicker').pickadate();
@@ -223,47 +223,6 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-	// getTasks(){
-	// 	this.loader = true;
-	// 	setTimeout(()=>{
-	// 		this._projectService.getAllTasks().subscribe((res:any)=>{
-	// 			console.log("all response ======>" , res);
-	// 			this.getEmptyTracks();
-	// 			// this.tracks.tasks.reverse();
-	// 			this.tasks = res;
-	// 			this.tasks.sort(custom_sort);
-	// 			this.tasks.reverse();
-	// 			// this.tracks.tasks.reverse();
-	// 			console.log("PROJECT=================>", this.tasks);
-	// 			_.forEach(this.tasks , (task)=>{
-	// 				// _.forEach(task.tasks, (tsk)=>{
-	// 					// console.log("===================>th",tsk);
-	// 					_.forEach(this.tracks , (track)=>{
-	// 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-	// 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-	// 								track.tasks.push(task);
-	// 							}
-	// 						}else{
-	// 							if(task.status == track.id){
-	// 								track.tasks.push(task);
-	// 							}
-	// 						}
-	// 					})
-	// 					// })
-	// 				});
-	// 			console.log("PROJECT=================>", this.tracks);
-	// 			this.loader = false;
-	// 		},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},1000);
-
-	// 	function custom_sort(a, b) {
-	// 		return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-	// 	}
-	// }
-
 	getProject(projectId){
 		var id = this.projectId;
 		console.log("projectId=====>",this.projectId);
@@ -326,9 +285,6 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
-		// function custom_sort(a, b) {
-			// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-			// }	
 
 		}
 
@@ -358,19 +314,31 @@ export class ProjectDetailComponent implements OnInit {
 				data.status = newStatus;
 				this._projectService.completeItem(data).subscribe((res:any)=>{
 					console.log(res);
+							var n = res.timelog.length
+					Swal.fire({
+						type: 'info',
+						title: "Task is shifted to complete from testing" ,
+						showConfirmButton:false,timer: 2000})
 
 				},err=>{
 					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
 				});
 			}else{
 				data.status = newStatus;
 				console.log("UniqueId", data.uniqueId);
 				this._projectService.updateStatus(data).subscribe((res:any)=>{
 					console.log(res);
+					var n = res.timelog.length
+					Swal.fire({
+						type: 'info',
+						title: "Task is"  + " " +res.timelog[n -1].operation ,
+						showConfirmButton:false,timer: 2000})
 					// this.getProject(res.projectId);
 				},(err:any)=>{
 
 					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
 				})
 
 			}
@@ -536,8 +504,10 @@ export class ProjectDetailComponent implements OnInit {
 				this.newTask = this.getEmptyTask();
 				this.editTaskForm.reset();
 				this.files = this.url = [];
+				
 				// this.assignTo.reset();
 				this.loader = false;
+				this.getProject(this.projectId);
 			},err=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				//$('#alert').css('display','block');

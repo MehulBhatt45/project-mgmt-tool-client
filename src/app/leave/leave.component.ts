@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
+import * as moment from 'moment';
 import{LeaveService} from '../services/leave.service';
 // import { ImageViewerModule } from 'ng2-image-viewer';
 import Swal from 'sweetalert2';
@@ -30,6 +31,7 @@ export class LeaveComponent implements OnInit {
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
+			id: new FormControl(''),
 			email: new FormControl (''),
 			name: new FormControl (''),
 			leaveDuration : new FormControl (''),
@@ -93,11 +95,14 @@ export class LeaveComponent implements OnInit {
 		this.files = event.target.files;
 	}
 	addLeave(form){
+		 
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
+		var id = JSON.parse(localStorage.getItem('currentUser'))._id;
 		var name = JSON.parse(localStorage.getItem('currentUser')).name;
 		var email = JSON.parse(localStorage.getItem('currentUser')).email;
+		form['id'] = id;
 		form['name'] = name;
 		form['email'] = email;
 		console.log("valueeeeeeeeeeee",form);
