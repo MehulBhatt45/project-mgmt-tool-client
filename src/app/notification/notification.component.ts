@@ -77,6 +77,7 @@ export class NotificationComponent implements OnInit {
 				console.log(this.currentUser[0].subject);
 				console.log("title=========>",this.currentUser[0].title);
 				console.log("current====>",this.currentUser);
+				console.log("projectId==========>",this.currentUser[0].projectId._id);
 				console.log("type======================>",this.currentUser[0].type);
 				
 			})
