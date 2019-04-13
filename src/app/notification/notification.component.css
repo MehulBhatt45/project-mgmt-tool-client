@@ -6,6 +6,15 @@
 	top: -30px!important;
 	left: -24px!important;
 }
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 .nav-tabs {
 	border: 0;
 	padding: 0.7rem;
@@ -76,7 +85,7 @@ select.browser-default {
 }
 
 .task li{
-	padding: 20px 10px;
+	/*padding: 20px 10px;*/
 	border-bottom: 1px solid blue;
 	border-left: 5px solid lightblue;
 }
@@ -125,7 +134,7 @@ select.browser-default {
 	margin: 0;
 }
 .content label{
-	color: #b7b2b2;
+	color: black;
 	font-size: 14px;
 	margin: 0;
 }
@@ -137,52 +146,83 @@ select.browser-default {
 	border-bottom: 1px solid #4CAF50;
 	border-left: 5px solid #9ecea1;	
 }
+.leave1 li{
+	border-bottom: 1px solid #ffb3b3;
+	border-left: 5px solid #ffb3b3;	
+}
 .other li{
 	border-bottom: 1px solid #9c27b0;
 	border-left: 5px solid #c58fd0;
 }
+.comment li{
+	border-bottom: 1px solid orange;
+	border-left: 5px solid #ffc1074d;
+}
 .task span{
 	background-color: #cde8f1;
-	color: #256dde;/*
-	background-color: #0d7fa5;
-	color: #ffffff;*/
+	color: #256dde;
+	margin: 15px;
 }
 .leave span{
 	background-color: #daf7d0;
 	color: #008a00;
+	margin: 15px;
+}
+.leave1 span{
+	background-color: #ffb3b3;
+	color: red;
+	margin: 15px;
 }
 .other span{
 	background-color: #eecdf7;
 	color: #76008a;
+	margin: 15px;
 }
+.comment span{
+	background-color: #ffc1074d;
+	color: orange;
+	margin: 15px;
+}
+
 .task_priority_highest i{
-	color: red;
+	color: #ff0000;
+	margin-left: 15px;
 }
 .task_priority_high i{
-	color: #ea740a;
+	color: #ff8100;
+	margin-left: 15px;
 }
 .task_priority_medium i{
-	color: #efbd2c;
-	/*color: #efe900;*/
+	color: #ffee21;
+	margin-left: 15px;
 }
 .task_priority_low i{
-	color: #9c9cf9;
+	color: #0087ff;
+	margin-left: 15px;
 }
 .leave_approved i{
 	color: green;
+	margin-left: 15px;
 }
 .leave_rejected i{
 	color: red;	
+	margin-left: 15px;
 }
 .other i{
 	color: purple;
-}
+    margin-left: 15px;}
 .task a{
 	background-color: red;
 }
 .task a:visited{
 	background-color: transparent;
 }
+
+.comment i{
+	color: orange;
+	margin-left: 15px;
+}
+
 .unread{
 	background-color: #f1eaff;
 }

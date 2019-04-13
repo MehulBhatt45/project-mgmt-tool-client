@@ -28,9 +28,11 @@ export class AttendenceComponent implements OnInit {
   items;
   date = [];
   att=[];
+  totaldifff:any;
   currentDate;
   attendenceByDate = [];
   select;
+  maxtime:any;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute) {
     this.route.queryParams
@@ -75,13 +77,11 @@ export class AttendenceComponent implements OnInit {
       res.difference = res.difference[0];
       console.log("diffrence====-=-=-=-=-=-=-",res.difference);
       this.timediff = res.difference;
+      console.log("timediff--=-=-=-=",this.timediff);
 
 
       this.attendence = res.in_out;
       console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
-
-
-
 
 
       _.forEach(this.attendence , (attendence)=>{
@@ -109,7 +109,16 @@ export class AttendenceComponent implements OnInit {
 
       localStorage.setItem("checkIn",JSON.stringify(true));
       this.checkInStatus = true;
-      Swal.fire({type: 'success',text: 'hey '+this.currentUserName,title: 'Check In Successfully',showConfirmButton:false,timer: 2000})
+      Swal.fire({
+          title: 'Hey! '+this.currentUserName,
+          text:'Check In Successfully',
+        // html:'<strong>Hey</strong> '+this.currentUserName,
+        // type: 'success',
+        // // text: 'hey '+this.currentUserName,
+        // title: 'Check In Successfully',
+        // showConfirmButton:false,
+        timer: 2000
+      })
     },(err:any)=>{
       console.log("err of checkin=>",err);
     })
@@ -122,7 +131,16 @@ export class AttendenceComponent implements OnInit {
       console.log("respopnse of checkout=======<",res);
       localStorage.setItem("checkOut",JSON.stringify(false));
       this.checkInStatus = false;
-      Swal.fire({type: 'success',text: 'hey '+this.currentUserName,title: 'Check Out Successfully',showConfirmButton:false,timer: 2000})
+      Swal.fire({
+          title: 'Hey! '+this.currentUserName,
+          text:'Check Out Successfully',
+        // html:'<strong>Hey</strong> '+this.currentUserName,
+        // type: 'success',
+        // // text: 'hey '+this.currentUserName,
+        // title: 'Check In Successfully',
+        // showConfirmButton:false,
+        timer: 2000
+      })
     },(err:any)=>{
       console.log("err of chechout------------->",err);
     })

@@ -21,6 +21,7 @@ export class EditProjectComponent implements OnInit {
 	projects;
 	editAvail;
 	projectId;
+	leavescount: any;
 	dteam = [];
 	updateForm:FormGroup;
 	availData;
@@ -129,14 +130,15 @@ export class EditProjectComponent implements OnInit {
 	getAllDevelopersNotInProject(id){
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
+			console.log("hfghfjgh===============",this.availableDevelopers);
 			this.dteam = [];
 			_.forEach(this.availableDevelopers,(project)=>{
-				console.log("project",project);
+				// console.log("project",project);
 				if(project.userRole == "developer"){
 					this.dteam.push(project);
 				}
 
-				})
+			})
 			console.log("dteam=-=-=-=-",this.dteam);
 			// console.log("adev=-=-=-=-=-",this.availableDevelopers);
 		},err=>{
@@ -168,6 +170,7 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
+
 			// localStorage.setItem("teams" , JSON.stringify(this.availData));
 			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
@@ -175,6 +178,7 @@ export class EditProjectComponent implements OnInit {
 			this.editAvail = true;
 		},(err:any)=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+
 			console.log("err in requested project in edit project component ====>" , err);
 		})
 	}
@@ -184,12 +188,14 @@ export class EditProjectComponent implements OnInit {
 		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
+			console.log( this.availData );
 			this.loader = false;
 			console.log("this . avail data ==========>" ,this.availData);
 			this.projectTeam = this.availData.Teams;
+
 			this.projectMngrTeam = this.availData.pmanagerId;
 			localStorage.setItem('pmanagerteams', JSON.stringify(this.projectMngrTeam)); 
-			localStorage.setItem('teams', JSON.stringify(this.projectTeam)); 
+			localStorage.setItem('teams', JSON.stringify(this.projectTeam));
 
 		},err=>{
 			console.log(err);
@@ -220,19 +226,43 @@ export class EditProjectComponent implements OnInit {
 	deleteProject(projectId){
 		console.log(projectId);
 		if(projectId.BugId.length>0 || projectId.IssueId.length>0 || projectId.taskId.length>0 || projectId.Teams.length>0){
-			console.log("You can't delete this");
-			Swal.fire('Oops...', 'You Can not Delete This!', 'error')
-
+			Swal.fire({
+				title: 'You can not delete this project!',
+				html: "Number of team-members : <strong style="+'font-weight:bold'+">"+projectId.Teams.length  + 
+				"</strong><br> Total number of tasks : <strong style="+'font-weight:bold'+">"+projectId.tasks.length  + 
+				"</strong> <br> <strong style="+'font-weight:bold'+">Are you sure to delete? </strong> ",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes,Delete it!',
+				showCloseButton: true
+			}).then((result) => {
+				if (result.value) {
+					var body;
+					console.log("reeeeeeee",projectId);
+					console.log("bodyy ========>" , body);
+					this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
+						console.log("Delete project======>" , res);
+						this.projects = res;
+						Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
+						this.router.navigate(['./view-projects']);
+					},(err:any)=>{
+						console.log("error in delete project =====>" , err);
+						Swal.fire('Oops...', 'Something went wrong!', 'error')
+					});
+				}
+			})
 		}else{
 			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
-				console.log("Delete project======>" , res);
-				this.projects = res;
-				Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
-				this.router.navigate(['./view-projects']);
-			},(err:any)=>{
-				console.log("error in delete project =====>" , err);
-				Swal.fire('Oops...', 'Something went wrong!', 'error')
-			});
+						console.log("Delete project======>" , res);
+						this.projects = res;
+						Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
+						this.router.navigate(['./view-projects']);
+					},(err:any)=>{
+						console.log("error in delete project =====>" , err);
+						Swal.fire('Oops...', 'Something went wrong!', 'error')
+					})
 		}
 	}
 
@@ -279,3 +309,13 @@ export class EditProjectComponent implements OnInit {
 		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
 	}
 }
+
+// this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
+	// 		console.log("Delete project======>" , res);
+	// 		this.projects = res;
+	// 		Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
+	// 		this.router.navigate(['./view-projects']);
+	// 	},(err:any)=>{
+		// 			console.log("error in delete project =====>" , err);
+		// 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+		// 		});

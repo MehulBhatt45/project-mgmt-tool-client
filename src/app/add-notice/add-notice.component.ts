@@ -82,7 +82,6 @@ export class AddNoticeComponent implements OnInit {
 			}
 		})
 	}
-	
 	removeAvatar(file, index){
 		console.log(file, index);
 		this.url.splice(index, 1);

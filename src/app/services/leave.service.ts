@@ -15,6 +15,7 @@ export class LeaveService {
 		console.log("fikeeeeeeeeeeeeeeesssss",files);
 		console.log("formmmmmmmmmmmmmmmmmm",form);
 		let formData = new FormData();
+		formData.append('id',form.id)
 		formData.append('name',form.name);
 		formData.append('email',form.email);
 		formData.append('endingDate',form.endingDate);

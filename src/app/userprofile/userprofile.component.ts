@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 })
 
 export class UserprofileComponent implements OnInit {
+
 	projects;
 	developers;
 	path = config.baseMediaUrl;
@@ -51,6 +52,7 @@ export class UserprofileComponent implements OnInit {
 		})
 	}
 
+	
 	ngOnInit() {
 		// this.getAllProjects();
 		this.route.params.subscribe(param=>{
@@ -63,31 +65,38 @@ export class UserprofileComponent implements OnInit {
 		// this.projectSelected(this.item);
 		// this.getAllDevelopers();
 		this.getAllProjects();
-		
+
 	}
 	getAllProjects(){
 		this._projectservice.getProjects().subscribe(res=>{
 			console.log("all projects =====>" , res);
 			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
 			console.log("current user ====>" , userId);
+			// this.pro = res.userId;
+			// console.log("project detail===>>>>",this.pro);
 			this.projects = res;
 			console.log(this.projects);
-			console.log("pmanagerId ===>",this.projects[0].pmanagerId);
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (project)=>{
-					if(project._id == userId){
-						this.projectArr.push(task);
-					}
+			console.log(this.projects[0].pmanagerId._id);
+			// if (projects[0].) {
+
+				// }
+				// console.log("team===>",this.projects[0].Teams);
+				_.forEach(this.projects , (task)=>{
+					_.forEach(task.Teams , (project)=>{
+						if(project._id == userId){
+
+							this.projectArr.push(task);
+						}
+					})
 				})
+				for(var i=0;i<this.projects.length;i++){
+					this.finalArr.push(this.projectArr[i]);
+					console.log("response======>",this.finalArr);
+				}	
+			},err=>{
+				this._alertService.error(err);
+				console.log(err);
 			})
-			for(var i=0;i<this.projectArr.length;i++){
-				this.finalArr.push(this.projectArr[i]);
-				console.log("response======>",this.finalArr);
-			}	
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
 	}
 	// getDeveloperById(id){
 		// 	this._loginService.getUserById(id).subscribe((res:any)=>{
@@ -110,9 +119,11 @@ export class UserprofileComponent implements OnInit {
 				}
 				openModel(task){
 					$('#editEmailModel').modal('show');
+					this.getProjectByPmanagerId();
 				}
-
 				projectSelected(item){
+					// console.log("item",item);
+					// this.ProjectIdTest = item._id;
 					if(item && item._id){
 						_.forEach(item.Teams,(all)=>{
 							console.log("all",all._id);
@@ -120,7 +131,7 @@ export class UserprofileComponent implements OnInit {
 						})
 						this.teams =item.Teams;
 						console.log(this.teams);
-						
+
 						$(".progress").addClass("abc");
 						setTimeout(()=>{
 							// this.loader = false;
@@ -137,12 +148,20 @@ export class UserprofileComponent implements OnInit {
 					this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
 						this.currentUser = res;
 						console.log("current====>",this.currentUser);
+
 					})
 				}
 
 				addNotification(editTEmail){
+					// console.log("CurrentUserId========>",this.currentUser._id);
+					editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
+					console.log("editTEmail" , editTEmail.value);
+					
 					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
 						console.log(res);
+
+						// this.notification = this.myObject;
+						// console.log(this.myObject);
 					})
 				}
 				uploadFile(e){
