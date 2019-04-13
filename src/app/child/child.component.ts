@@ -442,9 +442,7 @@ export class ChildComponent  implements OnInit{
         this.loader = false;
       })
     },1000);
-    // function custom_sort(a, b) {
-      //   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      // }
+  
     }
     saveTheData(task){
       this.loader = true;
