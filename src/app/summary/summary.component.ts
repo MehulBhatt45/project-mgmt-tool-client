@@ -227,36 +227,6 @@ export class SummaryComponent implements OnInit {
 						}
 
 					})
-					setTimeout(()=>{
-						$('.developer_slider').slick({
-							infinite: false,
-							speed: 300,
-							slidesToShow: 4,
-							slidesToScroll: 1,
-							prevArrow: '<button type="button" class="btn btn-default slick-prev" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;left: -30px;padding:10px;"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>',
-							nextArrow: '<button type="button" class="btn btn-default slick-next" data-role="none" style="position: absolute;top: 0;bottom: 0;margin: auto;display: table;height: 46px;z-index: 11;right: -30px;padding:10px;"><i class="fa fa-chevron-right" aria-hidden="true"></i></button',
-							responsive: [
-							{
-								breakpoint: 1200,
-								settings: {
-									slidesToShow: 3
-								}
-							},
-							{
-								breakpoint: 768,
-								settings: {
-									slidesToShow: 2
-								}
-							},
-							{
-								breakpoint: 480,
-								settings: {
-									slidesToShow: 1
-								}
-							}
-							]
-						});
-					}, 200);
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);

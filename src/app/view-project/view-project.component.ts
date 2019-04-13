@@ -64,9 +64,9 @@ export class ViewProjectComponent implements OnInit {
         html: true,
         trigger: 'hover',
         placement: 'bottom',
-        content: function () { console.log("EVENT TIGGERED"); return '<img src="' + $(this).data('img') + '" />'; }
+        content: function () { console.log("EVENT TIGGERED"); return 'data'; }
       });
-    },2000);
+    },1000);
 
     this.getProjects();
     this.getAllDevelopers();
