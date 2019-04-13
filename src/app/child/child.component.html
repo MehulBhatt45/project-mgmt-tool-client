@@ -1,4 +1,7 @@
 
+<!-- Task Details Card -->
+
+
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
@@ -37,10 +40,7 @@
 
 												</section>
 											</div>
-											<!-- 	<a href="javascript:void(0);"> -->
-												<i class="fas fa-stopwatch" (click)="timeLogOfTask(task)" style="cursor: pointer;" title="start"> </i>
-												<i class="fas fa-stopwatch" (click)="timeLogOfTask(task)" style="cursor: pointer;margin-left: 15px;" title="stop"> </i>
-												<!-- </a> -->
+											
 												<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 												<div class="card-text">{{task.desc}}</div>
 												<!-- <div>{{task.createdAt}}</div> -->
@@ -72,6 +72,7 @@
 									<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 								</div>
 
+
 							</div>
 						</mat-card-content>
 					</mat-card>
@@ -79,6 +80,7 @@
 			</div>
 		</div>
 	</div>
+
 
 
 
@@ -182,6 +184,8 @@
 									<span>{{task.completedAt | date:'short'}}</span>
 								</p>
 
+
+
 								</div>
 
 								<div class="row justify-content-between">
@@ -200,7 +204,6 @@
 							<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete'" (click)="updateStatus('in progress', task)">Reset progress</button>
 						</div>
 						<div>
 							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">Edit</button>
@@ -305,6 +308,15 @@
 										<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><i class="fas fa-trash fa-2x"></i></a>
 									</div>
 								</div>
+							</div>
+							<div class="form-group col-12">
+								<label for="assignTo">Sprint</label>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+								</select>
 							</div>
 							<div  *ngIf="url && url.length">
 								<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">

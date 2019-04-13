@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { config } from '../config';
@@ -69,28 +69,13 @@ export class ChildComponent  implements OnInit,OnDestroy {
   startText = 'Start';
   time:any;
   assignTo;
-  stopwatchId;
   taskArr= [];
   running: boolean = false;
   timerRef;
   initialTime = 0;
   trackss:any;
- // @HostListener('window:unload', [ '$event' ])
- //  unloadHandler(event) {
-
- //   var func = ()=>{
- //      _.forEach(this.tracks,(track)=>{
- //        _.forEach(track.tasks,(task)=>{
- //          if(task.running == true){
- //            console.log('task==========================================>',task);
- //            debugger;
- //            this.timerUpdate(task);
- //          }
- //        })
- //      })
- //    }
- //    // ...
- //  }
+  currentsprintId;
+  
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef) { 
     this.route.params.subscribe(param=>{
@@ -98,9 +83,6 @@ export class ChildComponent  implements OnInit,OnDestroy {
     });
     this.createEditTaskForm();      
     this.getProject(this.projectId);
-    
-    // console.log(this.tracks);
-    
   }
   ngOnInit(){
     this.getProject(this.projectId);
@@ -145,14 +127,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
        
         })
     })
-
   }
-
-
-  ngOnDestroy(){
-
-     
-    }
 
     ngOnChanges() {
       this._change.detectChanges();
@@ -225,20 +200,21 @@ export class ChildComponent  implements OnInit,OnDestroy {
         break;
       }
     }
-    createEditTaskForm(){
-      this.editTaskForm = new FormGroup({
-        title : new FormControl('', Validators.required),
-        desc : new FormControl('', Validators.required),
-        assignTo : new FormControl('', Validators.required),
-        // sprint :new FormControl('',Validators.required),
-        priority : new FormControl('', Validators.required),
-        startDate : new FormControl('', Validators.required),
-        dueDate : new FormControl('', Validators.required),
-        status : new FormControl({value: '', disabled: true}, Validators.required),
-        files : new FormControl(),
-        estimatedTime : new FormControl()
-      })
-    }
+  
+  createEditTaskForm(){
+    this.editTaskForm = new FormGroup({
+      title : new FormControl('', Validators.required),
+      desc : new FormControl('', Validators.required),
+      assignTo : new FormControl('', Validators.required),
+      sprint :new FormControl('',Validators.required),
+      priority : new FormControl('', Validators.required),
+      startDate : new FormControl('', Validators.required),
+      dueDate : new FormControl('', Validators.required),
+      status : new FormControl({value: '', disabled: true}, Validators.required),
+      files : new FormControl(),
+      estimatedTime : new FormControl()
+    })
+  }
 
     getTitle(name){
       if(name){
@@ -408,33 +384,8 @@ export class ChildComponent  implements OnInit,OnDestroy {
     }
     getEmptyTask(){
       return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-    }
-
-//     updateStatus(newStatus, data){
-//        $('#fullHeightModalRight').modal('hide');
-//       if(newStatus=='complete'){
-//         data.status = newStatus;
-//         this._projectService.completeItem(data).subscribe((res:any)=>{
-//           console.log(res);
-
-// <<<<<<< HEAD
-//         },err=>{
-//           console.log(err);
-//         });
-//       }else{
-//         data.status = newStatus;
-//         console.log("UniqueId", data.uniqueId);
-//         this._projectService.updateStatus(data).subscribe((res:any)=>{
-//           console.log(res);
-//           // this.getProject(res.projectId);
-//         },(err:any)=>{
-
-//           console.log(err);
-//         })
-
-//       }
-//     }
-     updateStatus(newStatus, data){
+   }
+      updateStatus(newStatus, data){
     $('#fullHeightModalRight').modal('hide');
     if(newStatus == 'complete'){
       data.status = newStatus;
@@ -467,6 +418,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
       })
     }
   }
+ 
 
 
     getHHMMTime(difference){
@@ -521,17 +473,17 @@ export class ChildComponent  implements OnInit,OnDestroy {
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           this.projectTeam.sort(function(a, b){
-            if (a.name && b.name) {
-              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-              if (nameA < nameB) //sort string ascending
-                return -1 
-              if (nameA > nameB)
-                return 1
-              return 0 //default return value (no sorting)
-              this.projectTeam.push
-              console.log("sorting============>"  ,this.projectTeam);
-            }
+            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+            if (nameA < nameB) //sort string ascending
+              return -1 
+            if (nameA > nameB)
+              return 1
+            return 0 //default return value (no sorting)
+            this.projectTeam.push
+            console.log("sorting============>"  ,this.projectTeam);
           })
+
+
         },(err:any)=>{
           console.log("err of team============>"  ,err);
         });
@@ -539,8 +491,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
         console.log("err of project============>"  ,err);
       });
 
-      console.log("current user ===>" , this.projectId);
-      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
+      this._projectService.getTaskById(id).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
@@ -548,15 +499,15 @@ export class ChildComponent  implements OnInit,OnDestroy {
         // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
-          // console.log("task ======>" , task);
+          console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            // console.log("tracks==-=-=-=-",this.tracks);
+            console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
               if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
               }
             }else{
-              if(task.status == track.id){
+              if(task.status == track.id ){
                 track.tasks.push(task);
               }
             }
@@ -589,9 +540,6 @@ export class ChildComponent  implements OnInit,OnDestroy {
       task.dueDate = moment().add(task.dueDate,'days').toString();
       task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
       console.log(task);
-      if(task.sprint){
-        delete task['sprint'];
-      }
       let data = new FormData();
       _.forOwn(task, function(value, key) {
         data.append(key, value)
@@ -630,22 +578,6 @@ export class ChildComponent  implements OnInit,OnDestroy {
 
     }
 
-
-    timeLogOfTask(data){
-      this.time = Date.now(); 
-      console.log('data==========================>',data);
-      console.log('unique id=======================>', data.uniqueId);
-      this._projectService.addTimeLog(data).subscribe((res:any)=>{
-        console.log(res);        
-        this.timeLog = res;
-        console.log('this.timeLog',this.timeLog.difference);
-        this.logs = res.log;
-       
-
-          },(err:any)=>{
-            console.log(err);
-          });
-    }
    
 
 
@@ -701,3 +633,4 @@ export class ChildComponent  implements OnInit,OnDestroy {
 
     }
  
+  

@@ -117,7 +117,6 @@ export class ViewProjectComponent implements OnInit {
       Swal.fire('Oops...', 'Something went wrong!', 'error')  
       this.loader=false;
     });
-
   }
   getDate(date){
     date = date.split("T");
@@ -241,7 +240,6 @@ getTaskCount(status){
 }
 
 mouseOver(project){
-
   this.hoveredProject = project;
 }
 

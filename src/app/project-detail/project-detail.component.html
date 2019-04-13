@@ -5,9 +5,28 @@
 	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
+<<<<<<< HEAD
 	<div class="row no-margin no-padding" *ngIf="pro">
 		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
+=======
+
+	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
+		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
+		<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
+		<div class="md-form form-group col-2">
+			<select  class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+				<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+			</select>
+		</div>
+		<div class="col-3">
+			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
+		</div>
+		<div class="col-3">
+			<button type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
+		</div>
+>>>>>>> 75ae43cee80756d836b41635abdc4d007d096b52
 	</div>
+
 	<div class="row">
 		<div class="col-12 col-md-6 ">
 			<div class="md-form form-group">
@@ -16,7 +35,6 @@
 				<label for="exampleForm2">search text goes here</label>
 			</div>
 		</div>
-
 		<div class="col-12 col-md-6 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
@@ -57,12 +75,11 @@
 		<div class="modal-content">
 
 			<div class="card card-cascade narrower modal-header view view-cascade ">
-			
-					<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						
-					</button>
-				
+
+				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">	
+				</button>
+
 			</div>
 			<div class="modal-body view view-cascade">
 				<div class="container">
@@ -116,24 +133,24 @@
 									<option value="1">Highest</option>
 								</select>
 							</div>
-							<!-- <div class="form-group col-12">
+							<div class="form-group col-12">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
-							</div> -->
+							</div>
 							<div class="form-group col-6">
 								<label for="dueDate">Due Days</label>
 								<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 							</div>
-							
+
 							<div class="form-group col-6">
 								<label for="estimatedTime">Estimated Time</label>
 								<div class="md-form form-group">
-									
+
 									<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
 								</div>
 							</div>
@@ -161,5 +178,4 @@
 		</div>
 
 	</div>
-
 </div>
