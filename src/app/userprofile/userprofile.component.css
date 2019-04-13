@@ -134,3 +134,7 @@
     margin-top: 10px;
     text-align: center;
 }
+.notify , .project h2{
+    margin-top: 10px;
+    color: purple;
+}
