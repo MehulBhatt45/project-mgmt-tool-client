@@ -2,7 +2,7 @@
 		<h1 class="text-center font-weight-bold text-black" >Notification</h1>
 	</div>
 	<div class="container">
-		<ul class="task" *ngFor="let data of currentUser">
+		<ul class="task" *ngFor="let data of userNotification">
 			<li class="card mt-1" *ngIf ="data.type == 'task' && data.priority == '1'">
 				<div class="row">
 					<div class="padding-5 col-sm-2">
@@ -89,7 +89,7 @@
 			
 			</li>
 		</ul>
-		<ul class="leave" *ngFor="let data of currentUser">
+		<ul class="leave" *ngFor="let data of userNotification">
 			<li class="card mt-1"  *ngIf ="data.type == 'leave-accepted'" >
 				<div class="row">
 					<div class="padding-5 col-sm-2">
@@ -110,7 +110,7 @@
 				
 					</li>
 				</ul>
-				<ul class="leave1" *ngFor="let data of currentUser">
+				<ul class="leave1" *ngFor="let data of userNotification">
 					<li class="card mt-1" *ngIf ="data.type == 'leave-rejected'" >
 						<div class="row">
 							<div class="padding-5 col-sm-2">
@@ -130,7 +130,7 @@
 						</div>
 					</li>
 				</ul>
-				<ul class="other"  *ngFor="let data of currentUser">
+				<ul class="other"  *ngFor="let data of userNotification">
 					<li class="card mt-1" *ngIf ="data.type == 'other'" >
 						<div class="row">
 							<div class="padding-5 col-sm-2">
@@ -151,7 +151,7 @@
 						</div>
 					</li>
 				</ul>
-				<ul class="comment"  *ngFor="let data of currentUser">
+				<ul class="comment"  *ngFor="let data of userNotification">
 					<li class="card mt-1" *ngIf ="data.type == 'comment'" >
 
 						<div class="row">
@@ -173,7 +173,7 @@
 					</li>
 				</ul>
 					
-					<ul class="leave" *ngFor="let data of currentUser">
+					<ul class="leave" *ngFor="let data of userNotification">
 						<li class="card mt-1"  *ngIf ="data.type == 'leaveAccepted'" >
 							<div class="row">
 								<div class="padding-5 col-sm-2">
@@ -214,7 +214,7 @@
 							</table> -->
 						</li>
 					</ul>
-					<ul class="leave1" *ngFor="let data of currentUser">
+					<ul class="leave1" *ngFor="let data of userNotification">
 						<li class="card mt-1" *ngIf ="data.type == 'leaveRejected'" >
 							<div class="row">
 							<div class="padding-5 col-sm-2">
