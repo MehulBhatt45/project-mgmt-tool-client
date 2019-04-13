@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { config } from '../config';
@@ -100,6 +100,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
     this.getProject(this.projectId);
     
     // console.log(this.tracks);
+    
   }
   ngOnInit(){
     this.getProject(this.projectId);
@@ -124,6 +125,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
        this.func(option);
      }
   }
+
   func = async (option)=>{
     // debugger;
     console.log("in func",option);
@@ -143,6 +145,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
        
         })
     })
+
   }
 
 
@@ -363,6 +366,7 @@ export class ChildComponent  implements OnInit,OnDestroy {
     }
 
 
+
     updateTask(task){
       task.assignTo = this.editTaskForm.value.assignTo;
       task.sprint = this.editTaskForm.value.sprint;
@@ -388,44 +392,81 @@ export class ChildComponent  implements OnInit,OnDestroy {
         $('#save_changes').attr("disabled", false);
         $('#refresh_icon').css('display','none');
         $('#itemManipulationModel1').modal('hide');
+        $('#fullHeightModalRight').modal('hide');
+      this.getProject(this.projectId);
         this.newTask = this.getEmptyTask();
         this.files = this.url = [];
         this.editTaskForm.reset();
         this.loader = false;
+
       },err=>{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log(err);
         this.loader = false;
-        //$('#alert').css('display','block');
-      })
 
+      })
     }
     getEmptyTask(){
       return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
     }
 
-    updateStatus(newStatus, data){
-      if(newStatus=='complete'){
-        data.status = newStatus;
-        this._projectService.completeItem(data).subscribe((res:any)=>{
-          console.log(res);
+//     updateStatus(newStatus, data){
+//        $('#fullHeightModalRight').modal('hide');
+//       if(newStatus=='complete'){
+//         data.status = newStatus;
+//         this._projectService.completeItem(data).subscribe((res:any)=>{
+//           console.log(res);
 
-        },err=>{
-          console.log(err);
-        });
-      }else{
-        data.status = newStatus;
-        console.log("UniqueId", data.uniqueId);
-        this._projectService.updateStatus(data).subscribe((res:any)=>{
-          console.log(res);
-          // this.getProject(res.projectId);
-        },(err:any)=>{
+// <<<<<<< HEAD
+//         },err=>{
+//           console.log(err);
+//         });
+//       }else{
+//         data.status = newStatus;
+//         console.log("UniqueId", data.uniqueId);
+//         this._projectService.updateStatus(data).subscribe((res:any)=>{
+//           console.log(res);
+//           // this.getProject(res.projectId);
+//         },(err:any)=>{
 
-          console.log(err);
-        })
+//           console.log(err);
+//         })
 
-      }
+//       }
+//     }
+     updateStatus(newStatus, data){
+    $('#fullHeightModalRight').modal('hide');
+    if(newStatus == 'complete'){
+      data.status = newStatus;
+      this._projectService.completeItem(data).subscribe((res:any)=>{
+        console.log(res);
+        this.getProject(res.projectId);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is shifted to complete from testing" ,
+          showConfirmButton:false,timer: 2000})
+      },err=>{
+        console.log(err);
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+      });
+    }else{
+      data.status = newStatus;
+      console.log("UniqueId", data.uniqueId);
+      this._projectService.updateStatus(data).subscribe((res:any)=>{
+        console.log(res);
+        this.getProject(res.projectId);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is"  + " " +res.timelog[n -1].operation ,
+          showConfirmButton:false,timer: 2000})
+      },(err:any)=>{
+        console.log(err);
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+      })
     }
+  }
 
 
     getHHMMTime(difference){
@@ -454,92 +495,84 @@ export class ChildComponent  implements OnInit,OnDestroy {
         Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
         console.log("Delete Task======>" , res);
         this.task = res;
+
+  
       },(err:any)=>{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log("error in delete Task=====>" , err);
       });
     }
 
-    getProject(id){
-      console.log("projectId=====>",this.projectId);
-      this.loader = true;
-      setTimeout(()=>{
-        this._projectService.getProjectById(id).subscribe((res:any)=>{
-          console.log("title=={}{}{}{}{}",res);
-          this.pro = res;
-          console.log("project detail===>>>>",this.pro);
-          this.projectId=this.pro._id;
-          console.log("iddddd====>",this.projectId);
-          this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-            this.projectTeam = res.team;
 
-            res.Teams.push(this.pro.pmanagerId); 
-            console.log("response of team============>"  ,res.Teams);
-            this.projectTeam = res.Teams;
-            this.projectTeam.sort(function(a, b){
-              if (a.name && b.name) {
-                var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-                if (nameA < nameB) //sort string ascending
-                  return -1 
-                if (nameA > nameB)
-                  return 1
-                return 0 //default return value (no sorting)
-                this.projectTeam.push
-                console.log("sorting============>"  ,this.projectTeam);
-              }
-            })
+   getProject(id){
+    console.log("projectId=====>",this.projectId);
+    this.loader = true;
+    setTimeout(()=>{
+      this._projectService.getProjectById(id).subscribe((res:any)=>{
+        console.log("title=={}{}{}{}{}",res);
+        this.pro = res;
+        console.log("project detail===>>>>",this.pro);
+        this.projectId=this.pro._id;
+        console.log("iddddd====>",this.projectId);
+        this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+          this.projectTeam = res.team;
 
-
-          },(err:any)=>{
-            console.log("err of team============>"  ,err);
-          });
-        },(err:any)=>{
-          console.log("err of project============>"  ,err);
-        });
-
-        console.log("current user ===>" , this.projectId);
-        this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
-          console.log("all response ======>" , res);
-          this.getEmptyTracks();
-          this.project = res;
-          this.project.sort(custom_sort);
-          this.project.reverse();
-          console.log("PROJECT=================>", this.project);
-          _.forEach(this.project , (task)=>{
-            // console.log("task ======>" , task);
-            _.forEach(this.tracks , (track)=>{
-              // console.log("tracks==-=-=-=-",this.tracks);
-              if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-                if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-                  track.tasks.push(task);
-                }
-              }else{
-                if(task.status == track.id){
-                  track.tasks.push(task);
-                }
-              }
-            })
+          res.Teams.push(this.pro.pmanagerId); 
+          console.log("response of team============>"  ,res.Teams);
+          this.projectTeam = res.Teams;
+          this.projectTeam.sort(function(a, b){
+            if (a.name && b.name) {
+              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+              if (nameA < nameB) //sort string ascending
+                return -1 
+              if (nameA > nameB)
+                return 1
+              return 0 //default return value (no sorting)
+              this.projectTeam.push
+              console.log("sorting============>"  ,this.projectTeam);
+            }
           })
-          this.loader = false;
-          this.func('load');
-          // $(document).on('ready',function() {
-          //   if(localStorage.getItem('isTimerRunning')!="null"){
-          //     console.log("On load===================================================================================================================================================================================================>");
-          //     fromLoad('load');
-          //   }
-          // });
-          // var fromLoad = (option)=>{
-          //   this.func(option);  
-          // }
-        },err=>{
-          console.log(err);
-          this.loader = false;
+        },(err:any)=>{
+          console.log("err of team============>"  ,err);
+        });
+      },(err:any)=>{
+        console.log("err of project============>"  ,err);
+      });
+
+      console.log("current user ===>" , this.projectId);
+      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
+        console.log("all response ======>" , res);
+        this.getEmptyTracks();
+        this.project = res;
+        // this.project.sort(custom_sort);
+        // this.project.reverse();
+        console.log("PROJECT=================>", this.project);
+        _.forEach(this.project , (task)=>{
+          // console.log("task ======>" , task);
+          _.forEach(this.tracks , (track)=>{
+            // console.log("tracks==-=-=-=-",this.tracks);
+            if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+                track.tasks.push(task);
+              }
+            }else{
+              if(task.status == track.id){
+                track.tasks.push(task);
+              }
+            }
+          })
         })
-      },1000);
-      function custom_sort(a, b) {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      }
+
+        this.loader = false;
+         this.func('load');
+      },err=>{
+        console.log(err);
+        this.loader = false;
+      })
+    },1000);
+  
     }
+                 
     saveTheData(task){
       this.loader = true;
       console.log("projectId=========>",this.pro._id);

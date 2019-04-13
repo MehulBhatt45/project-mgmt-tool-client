@@ -88,7 +88,7 @@ export class AttendenceComponent implements OnInit {
           var min = Math.floor((diff/1000/60)%60);
           var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
           log['diff'] = hours + ':' + min + ':' + sec;
-          console.log('jhfgdddjfdghj=========>',log['diff']);
+
         }
       })
 
@@ -104,6 +104,6 @@ export class AttendenceComponent implements OnInit {
       console.log("error",err);
     })
   }
-
+  
 
 }

@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 })
 
 export class UserprofileComponent implements OnInit {
+
 	projects;
 	developers;
 	path = config.baseMediaUrl;
@@ -47,9 +48,11 @@ export class UserprofileComponent implements OnInit {
 			subject : new FormControl('', Validators.required),
 			content : new FormControl('', Validators.required),
 			sendTo : new FormControl(['']),
+			projectId : new FormControl(['']),
 		})
 	}
 
+	
 	ngOnInit() {
 		// this.getAllProjects();
 		this.route.params.subscribe(param=>{
@@ -62,7 +65,7 @@ export class UserprofileComponent implements OnInit {
 		// this.projectSelected(this.item);
 		// this.getAllDevelopers();
 		this.getAllProjects();
-		
+
 	}
 	getAllProjects(){
 		this._projectservice.getProjects().subscribe(res=>{
@@ -75,25 +78,25 @@ export class UserprofileComponent implements OnInit {
 			console.log(this.projects);
 			console.log(this.projects[0].pmanagerId._id);
 			// if (projects[0].) {
-				
-			// }
-			// console.log("team===>",this.projects[0].Teams);
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.Teams , (project)=>{
-					if(project._id == userId){
 
-						this.projectArr.push(task);
-					}
+				// }
+				// console.log("team===>",this.projects[0].Teams);
+				_.forEach(this.projects , (task)=>{
+					_.forEach(task.Teams , (project)=>{
+						if(project._id == userId){
+
+							this.projectArr.push(task);
+						}
+					})
 				})
+				for(var i=0;i<this.projects.length;i++){
+					this.finalArr.push(this.projectArr[i]);
+					console.log("response======>",this.finalArr);
+				}	
+			},err=>{
+				this._alertService.error(err);
+				console.log(err);
 			})
-			for(var i=0;i<this.projects.length;i++){
-				this.finalArr.push(this.projectArr[i]);
-				console.log("response======>",this.finalArr);
-			}	
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
 	}
 	// getDeveloperById(id){
 		// 	this._loginService.getUserById(id).subscribe((res:any)=>{
@@ -109,16 +112,18 @@ export class UserprofileComponent implements OnInit {
 					this._projectservice.getAllDevelopers().subscribe(res=>{
 						this.developers = res;
 						console.log("Developers",this.developers);
-						},err=>{
-							console.log("Couldn't get all developers ",err);
-							this._alertService.error(err);
-						})
+					},err=>{
+						console.log("Couldn't get all developers ",err);
+						this._alertService.error(err);
+					})
 				}
 				openModel(task){
 					$('#editEmailModel').modal('show');
 					this.getProjectByPmanagerId();
 				}
 				projectSelected(item){
+					// console.log("item",item);
+					// this.ProjectIdTest = item._id;
 					if(item && item._id){
 						_.forEach(item.Teams,(all)=>{
 							console.log("all",all._id);
@@ -126,7 +131,7 @@ export class UserprofileComponent implements OnInit {
 						})
 						this.teams =item.Teams;
 						console.log(this.teams);
-						
+
 						$(".progress").addClass("abc");
 						setTimeout(()=>{
 							// this.loader = false;
@@ -140,38 +145,46 @@ export class UserprofileComponent implements OnInit {
 					}
 				}
 				getProjectByPmanagerId(){
-                	this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
-                		this.currentUser = res;
-                		console.log("current====>",this.currentUser);
-                	})
-                }
-			
-				addNotification(editTEmail){
-					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
-						console.log(res);
+					this._projectservice.getProjectByPmanagerId(this.currentUser._id).subscribe((res:any)=>{
+						this.currentUser = res;
+						console.log("current====>",this.currentUser);
+
 					})
 				}
-					uploadFile(e){
-						console.log("file============>",e.target.files);
-						var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-						console.log("userId===============>",userId);
-						this.files = e.target.files;
-						console.log("files===============>",this.files);
-						this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
-							console.log("resss=======>",res);
-							Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
 
-							setTimeout(()=>{
-								this.currentUser = res;
-								localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-							},1000);
-						},error=>{
-							console.log("errrorrrrrr====>",error);
-							Swal.fire('Oops...', 'Something went wrong!', 'error')
-						});  
-					}
+				addNotification(editTEmail){
+					// console.log("CurrentUserId========>",this.currentUser._id);
+					editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
+					console.log("editTEmail" , editTEmail.value);
+					
+					this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
+						console.log(res);
 
+						// this.notification = this.myObject;
+						// console.log(this.myObject);
+					})
 				}
+				uploadFile(e){
+					console.log("file============>",e.target.files);
+					var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+					console.log("userId===============>",userId);
+					this.files = e.target.files;
+					console.log("files===============>",this.files);
+					this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+						console.log("resss=======>",res);
+						Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
+
+						setTimeout(()=>{
+							this.currentUser = res;
+							localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+						},1000);
+					},error=>{
+						console.log("errrorrrrrr====>",error);
+						Swal.fire('Oops...', 'Something went wrong!', 'error')
+					});  
+				}
+
+			}
 
 
 
