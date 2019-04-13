@@ -73,11 +73,11 @@ export class NotificationComponent implements OnInit {
 				 var start = new Date();
 				
 				 start.setTime(1532403882588);
-				
-				console.log(this.userNotification[0].subject);
-				console.log("title=========>",this.userNotification[0].title);
-				console.log("current====>",this.userNotification);
-				console.log("type======================>",this.userNotification[0].type);
+				console.log(this.currentUser[0].subject);
+				console.log("title=========>",this.currentUser[0].title);
+				console.log("current====>",this.currentUser);
+				console.log("projectId==========>",this.currentUser[0].projectId._id);
+				console.log("type======================>",this.currentUser[0].type);
 				
 			})
 			 function custom_sort(a, b) {

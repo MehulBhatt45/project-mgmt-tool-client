@@ -18,9 +18,6 @@ declare var $ : any;
 })
 export class LeaveComponent implements OnInit {
 	addForm:FormGroup;
-	// stratDate;
-	// endDate; 
-	// durationDays;
 	files: Array<File> = [];
 	showOneDays;
 	showMoreDayss;
@@ -119,12 +116,12 @@ export class LeaveComponent implements OnInit {
 			form.noOfDays == "more-day"
 			var date2 = new Date(form.startingDate);
 			var date1 = new Date(form.endingDate);
-			console.log("staring date ===" , date2);
-			console.log("ending date ===" , date1);
+			// console.log("staring date ===" , date2);
+			// console.log("ending date ===" , date1);
 			form['endingDate'] = date1;
 			form['startingDate'] = date2;
-			console.log("staring date ...... ===" , date2);
-			console.log("ending date .........===" , date1);
+			// console.log("staring date ...... ===" , date2);
+			// console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());
 			var daysDuration = Math.ceil(timeDuration/(1000 * 3600 * 24));
 			console.log("daysDuration =======+>" , daysDuration);
