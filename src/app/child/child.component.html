@@ -1,10 +1,4 @@
-<!-- Task Details Card -->
-<!-- <div *ngFor="let time of timeLog">
-	<p>{{time.difference}}</p>
-	
-</div> -->
-<!-- <div [(ngModel)]="timer" mbsc-timer [mbsc-options]="timerSettings"></div>
-<table id="laps"></table> -->
+
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
@@ -23,22 +17,22 @@
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="getPriorityClass(task.priority).class" (click)="openModel(task)" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
+						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
 								<table class="table-responsive">
 									<tr>
 										<td colspan="2">
-
-
-											<!-- <timer interval="1000">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer> -->
 											<div class="container" *ngIf=" task.status == 'in progress'">
 												<section class="timer-counter-label">
-													<div *ngIf="counter; else elseBlock"> {{task.time?task.time:'0:0:0'}} </div>
-													<ng-template #elseBlock> Press Start </ng-template>
+													<div> 
+														{{task.time?task.time:'00:00'}}
+														<!-- {{ getTime(task.counter)}} -->
+													</div>
+													<!-- <ng-template #elseBlock> Press Start </ng-template> -->
 												</section>
 												<section class="timer-button-container">
-													<button class="timer-button" (click)="startTimer(task._id)">
-														{{ startText }}
+													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
+														{{ task.startText?task.startText:'Start' }}
 													</button>
 
 												</section>
@@ -55,7 +49,7 @@
 											</td>
 										</tr>
 									</table>
-									<ul>
+									<ul (click)="openModel(task)">
 										<li class="icon_check">
 											<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
 										</li>
@@ -155,7 +149,12 @@
 									</p>
 									<p  *ngIf="task.timelog1">
 										<label><strong>Time Taken: &nbsp;</strong></label>
-										<span>{{getHHMMTime(task.timelog1.difference)}}</span>
+										<span>
+											{{getHHMMTime(task.timelog1.difference)}}
+											<!-- {{getTime(task.timelog1.count)}} -->
+
+
+										</span>
 									</p>
 								</div>
 								<div class="col-12 col-md-6">

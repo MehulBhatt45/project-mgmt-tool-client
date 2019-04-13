@@ -60,6 +60,7 @@ export class ProjectDetailComponent implements OnInit {
 	priority: boolean = false;
 	// sorting: any;
 	sorting:any;
+	logs;
 
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
@@ -300,10 +301,11 @@ export class ProjectDetailComponent implements OnInit {
 			});
 
 			this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
-				console.log("huhfdfdbbhfef");
 				console.log("all response ==========================================>" , res);
 				this.getEmptyTracks();
 				this.project = res;
+				this.project.sort(custom_sort);
+        this.project.reverse();
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					_.forEach(this.tracks , (track)=>{
@@ -320,6 +322,7 @@ export class ProjectDetailComponent implements OnInit {
 						}
 					})
 				})
+			
 				
 				this.loader = false;
 			},err=>{
@@ -327,9 +330,9 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
-		// function custom_sort(a, b) {
-			// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-			// }	
+		function custom_sort(a, b) {
+				return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
+			}	
 
 		}
 

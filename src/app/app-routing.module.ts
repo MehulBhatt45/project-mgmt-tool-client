@@ -196,7 +196,7 @@ const routes: Routes = [
 			component:AttendenceComponent
 		},
 		{
-			path:'time-log',
+			path:'time-log/:id',
 			component:TimeLogComponent
 		}
 		]

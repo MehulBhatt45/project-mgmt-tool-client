@@ -47,7 +47,7 @@
 	</div>
 </div>
 <div>
-	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)"></app-child>
+	<app-child [developers]="developers" [tracks]='tracks' (task)="openModel($event)" (trackDrop)="onTrackDrop($event)" (talkDrop)="onTalkDrop($event)" [projectId]="projectId"></app-child>
 </div>
 
 <!-- Modal Start Here -->

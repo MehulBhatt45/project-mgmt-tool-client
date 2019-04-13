@@ -83,10 +83,12 @@ export class AttendenceComponent implements OnInit {
       _.map(this.logs, function(log){
         if(log.checkOut!=null){
           var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
+          console.log('diff==========>',diff);
           var hours = Math.floor(diff / 1000 / 60 / 60);
           var min = Math.floor((diff/1000/60)%60);
           var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
           log['diff'] = hours + ':' + min + ':' + sec;
+          console.log('jhfgdddjfdghj=========>',log['diff']);
         }
       })
 

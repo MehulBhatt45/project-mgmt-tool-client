@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { AlertService } from '../services/alert.service';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { config } from '../config';
 
@@ -12,23 +13,28 @@ import { config } from '../config';
 export class TimeLogComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	projects;
-	projectArr = [];
-	finalArr = [];
-	pmanagerArr = [];
 	path = config.baseMediaUrl;
 	baseMediaUrl = config.baseMediaUrl;
-	pro;
 	projectTeam;
 	tracks:any;
 	projectId:any;
 	project = [];
+	tasks = [];
+	displayTable:boolean = false;
+	
 
 
-	constructor(public _projectService: ProjectService,public _alertService: AlertService) { }
+	constructor(public _projectService: ProjectService,public _alertService: AlertService,
+		private route: ActivatedRoute) { 
+		this.route.params.subscribe(param=>{
+			this.projectId = param.id;	
+			this.getTeamByProjectId(this.projectId)		
+		});
+	}
 
 	ngOnInit() {
 		console.log('curruntUser===========>',this.currentUser);
-		this.getAllProjects();
+		// this.getAllProjects();
 		this.getEmptyTracks();
 	}
 	getEmptyTracks(){
@@ -103,45 +109,15 @@ export class TimeLogComponent implements OnInit {
 		}
 	}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			console.log("all projects =====>" , res);
-			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("current user ====>" , userId);
-			// this.pro = res.userId;
-			// console.log("project detail===>>>>",this.pro);
-			this.projects = res;
-			console.log(this.projects);
-			// console.log(this.projects[0].pmanagerId._id);
-			// if (projects[0].) {
-				
-				// }
-				// console.log("team===>",this.projects[0].Teams);
-				_.forEach(this.projects , (task)=>{
-					_.forEach(task.pmanagerId , (project)=>{
-						if(project._id == userId){
+	
 
-							this.projectArr.push(task);
-						}
-					})
-				})
-				for(var i=0;i<this.projectArr.length;i++){
-					this.finalArr.push(this.projectArr[i]);
-					console.log("response======>",this.finalArr);
-					
-				}	
-			},err=>{	
-				this._alertService.error(err);
-				console.log(err);
-			})
-	}
+	getTeamByProjectId(id){
 
-	getTeamByProjectId(data){
-		console.log('projectdata===========>',data);
-		console.log('projectdata===========>',data._id);
-		this.projectId = data._id;
+		console.log('projectdata===========>',id);
+		// console.log('projectdata===========>',data._id);
+		// this.projectId = data._id;
 		console.log('projectId==========>',this.projectId);
-		this._projectService.getTeamByProjectId(data._id).subscribe((res:any)=>{
+		this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
 			// res.Teams.push(this.pro.pmanagerId); 
 			console.log("response of team============>"  ,res.Teams);
 			this.projectTeam = res.Teams;
@@ -157,13 +133,20 @@ export class TimeLogComponent implements OnInit {
 					console.log("sort============>"  ,this.projectTeam);
 				}
 			})
+
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
 	}
+ 
 
-	getTaskOfDeveloper(data){
-		console.log('task Data=============>',data);
+getTaskOfDeveloper(data){
+	console.log('task Data=============>',data);
+	console.log('task Data=============>',data._id);
+	if(data !='all'){
+		this.tasks =[];
+		console.log('this.tasks=========>',this.tasks);
+		this.displayTable = true;
 		this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
 			console.log("id{}{}{}===",this.projectId);
 			console.log("all response()()() ======>",res);
@@ -175,24 +158,29 @@ export class TimeLogComponent implements OnInit {
 				// console.log("task ======>()" , task);
 				_.forEach(this.tracks , (track)=>{
 					// console.log("track ======>()" , track);
-					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-						if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+					// if(this.currentUser.userRole ='projectManager' && this.currentUser.userRole!='admin'){
+						if(task.status == track.id && task.assignTo && task.assignTo._id == data){
 							console.log("sorttask==()()()",task);
-							track.tasks.push(task);
+							this.tasks.push(task);
 						}
-					}else{
-						if(task.status == track.id){
-							track.tasks.push(task);
-						}
-					}
-				})
+
+					})
 			})
-
-
+			
 		})
+	}
 
-
-
+}
+	getHHMMTime(difference){
+		// var milliseconds = ((difference % 1000) / 100),
+		// seconds = Math.floor((difference / 1000) % 60),
+		// minutes = Math.floor((difference / (1000 * 60)) % 60),
+		// hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+		// return hours + ":" + minutes + ":" + seconds ;
+		difference = difference.split("T");
+		difference = difference[1];
+		difference = difference.split(".");
+		return difference[0];
 
 	}
 }

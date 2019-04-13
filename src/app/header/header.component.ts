@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
 			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''}, Validators.required)
+			// status : new FormControl({value: ''}, Validators.required)
 		})
 	}
 
@@ -156,32 +156,32 @@ export class HeaderComponent implements OnInit {
 						console.log(event);
 					}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			console.log("all projects =====>" , res);
-			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("current user ====>" , pmanagerId);
-			this.projects = res;
-			console.log(this.projects);
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.pmanagerId , (project)=>{
-					if(project._id == pmanagerId){
-						this.projectArr.push(task);
+					getAllProjects(){
+						this._projectService.getProjects().subscribe(res=>{
+							console.log("all projects =====>" , res);
+							var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
+							console.log("current user ====>" , pmanagerId);
+							this.projects = res;
+							console.log(this.projects);
+							_.forEach(this.projects , (task)=>{
+								_.forEach(task.pmanagerId , (project)=>{
+									if(project._id == pmanagerId){
+										this.projectArr.push(task);
+									}
+								})
+							})
+							for(var i=0;i<this.projectArr.length;i++){
+								this.finalArr.push(this.projectArr[i]);
+								console.log("response======>",this.finalArr);
+							}
+						},
+						err=>{
+							this._alertService.error(err);
+							console.log(err);
+						})
+						this.projectArr = [];
+						this.finalArr = [];
 					}
-				})
-			})
-			for(var i=0;i<this.projectArr.length;i++){
-				this.finalArr.push(this.projectArr[i]);
-				console.log("response======>",this.finalArr);
-			}
-		},
-		err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-		this.projectArr = [];
-		this.finalArr = [];
-	}
 
 
 					getProjects(){
