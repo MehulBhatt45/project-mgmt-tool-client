@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy, Output, Input, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
@@ -20,7 +20,7 @@ declare var $ : any;
   styleUrls: ['../project-detail/project-detail.component.css'],
   // host: {'window:beforeunload':'doSomething'}
 })
-export class ChildComponent  implements OnInit,OnDestroy {
+export class ChildComponent  implements OnInit{
 
   name;  
   @Input() projectId;
