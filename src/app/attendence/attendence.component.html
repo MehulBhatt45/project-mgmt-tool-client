@@ -12,73 +12,98 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-md-6">
 			<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6">
 			<button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="md-form">
-				<input placeholder="Selected date" type="text" id="date-picker-example" (click)="dateSelected()" class="form-control datepicker" >	
-				<label for="date-picker-example"></label>
-			</div>
-		</div>
+	<!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+	</mwl-demo-utils-calendar-header> -->
+
+	<div class="alert alert-info">
+		Click on a day on the view.
+		<strong *ngIf="clickedDate"
+		>You clicked on this day: {{ clickedDate | date:'medium' }}</strong
+		>
+		<strong *ngIf="clickedColumn != null"
+		>You clicked on this column: {{ clickedColumn }}</strong
+		>
 	</div>
+
+	<div [ngSwitch]="view">
+		<mwl-calendar-month-view
+		*ngSwitchCase="'month'"
+		[viewDate]="viewDate"
+		[events]="events"
+		(columnHeaderClicked)="clickedColumn = $event"
+		(dayClicked)="dateSelected($event.day.date)"
+		>
+	</mwl-calendar-month-view>
+	<mwl-calendar-week-view
+	*ngSwitchCase="'week'"
+	[viewDate]="viewDate"
+	[events]="events"
+	(dayHeaderClicked)="dateSelected($event.day.date)"
+	>
+</mwl-calendar-week-view>
+<mwl-calendar-day-view
+*ngSwitchCase="'day'"
+[viewDate]="viewDate"
+[events]="events"
+>
+</mwl-calendar-day-view>
 </div>
-
+</div>
 <div class="row">
-	<div class="col-md-6">
+	
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">CheckIn</th>
+				<th scope="col">CheckOut</th>
+				<th scope="col">Diffrence</th>
+
+			</tr>
+
+		</thead>
+		<tbody>
+			<!-- <tr *ngFor="let i of attendence">
+				<td>{{i.checkIn}}</td>
+				<td>{{i.checkOut}}</td>
+			</tr> -->
 
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">CheckIn</th>
-					<th scope="col">CheckOut</th>
-					<!-- <th scope="col">Diffrence</th> -->
 
-				</tr>
-
-			</thead>
-			<tbody>
-				<tr *ngFor="let i of attendence">
-					<td>{{i.checkIn}}</td>
-					<td>{{i.checkOut}}</td>
-				</tr>
-
-
-
-		<!-- <tr *ngFor="let ateendence of logs;let i=index;">
+		<tr *ngFor="let ateendence of logs;let i=index;">
 			<td>{{ateendence.checkIn}}</td>
 
 			<td>{{ateendence.checkOut}}</td>
 
 			<td>{{ateendence.diff}}</td>
-		</tr> -->
+		</tr>
 	</tbody>
 </table>
 </div>
-<div class="col-md-6">
+<div class="row">
 	<table class="table">
 		<thead>
 			<tr>
 
-				<th scope="col" style="text-align: center;">Work Time</th>
+				<th scope="col">Work Time</th>
 
 			</tr>
 
 		</thead>
 		<tbody>
 			<tr>
-				<td style="text-align: center;">{{timediff}}</td>
+				<td *ngIf="gate">{{gate}}</td>
 			</tr>
 		</tbody>
 
 	</table>
-</div>
 </div>
 
 

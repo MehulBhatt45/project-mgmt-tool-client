@@ -223,47 +223,6 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-	// getTasks(){
-	// 	this.loader = true;
-	// 	setTimeout(()=>{
-	// 		this._projectService.getAllTasks().subscribe((res:any)=>{
-	// 			console.log("all response ======>" , res);
-	// 			this.getEmptyTracks();
-	// 			// this.tracks.tasks.reverse();
-	// 			this.tasks = res;
-	// 			this.tasks.sort(custom_sort);
-	// 			this.tasks.reverse();
-	// 			// this.tracks.tasks.reverse();
-	// 			console.log("PROJECT=================>", this.tasks);
-	// 			_.forEach(this.tasks , (task)=>{
-	// 				// _.forEach(task.tasks, (tsk)=>{
-	// 					// console.log("===================>th",tsk);
-	// 					_.forEach(this.tracks , (track)=>{
-	// 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-	// 							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-	// 								track.tasks.push(task);
-	// 							}
-	// 						}else{
-	// 							if(task.status == track.id){
-	// 								track.tasks.push(task);
-	// 							}
-	// 						}
-	// 					})
-	// 					// })
-	// 				});
-	// 			console.log("PROJECT=================>", this.tracks);
-	// 			this.loader = false;
-	// 		},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},1000);
-
-	// 	function custom_sort(a, b) {
-	// 		return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-	// 	}
-	// }
-
 	getProject(projectId){
 		var id = this.projectId;
 		console.log("projectId=====>",this.projectId);
@@ -326,9 +285,6 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
-		// function custom_sort(a, b) {
-			// 	return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-			// }	
 
 		}
 
