@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output , Input ,EventEmitter } from '@angular/core';
 import {Router,ActivatedRoute} from '@angular/router';
 // import {ProjectService} from '../services/project.service';
 import{LeaveService} from '../services/leave.service';
@@ -19,6 +19,8 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
+   @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
+
   allLeaves;
   allAproveLeaves;
   leaves;
@@ -418,21 +420,6 @@ export class AllLeaveAppComponent implements OnInit {
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
                 console.log("reeeeeeee",req);
-                _.forEach(this.leaveApp, (apply)=>{
-                  if(apply._id == req){
-                    body = apply;
-                  }
-                })
-                body.status = "approved";
-                console.log("bodyyyyyyyyyyyyyyy",body);
-                this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-
-                  console.log("respondsssssss",res);
-                  this.acceptedLeave = res;
-                  console.log("acceptedd===========>",this.acceptedLeave);
-                },(err:any)=>{
-                  console.log(err);
-                })
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
@@ -464,6 +451,8 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.acceptedLeave = res;
                       console.log("acceptedd===========>",this.acceptedLeave);
+                      // this.leaveEmit.emit(this.acceptedLeave);
+                      // this.getLeaves(Option);
                       this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);

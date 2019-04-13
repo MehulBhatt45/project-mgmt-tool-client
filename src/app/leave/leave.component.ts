@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
+import * as moment from 'moment';
 import{LeaveService} from '../services/leave.service';
 // import { ImageViewerModule } from 'ng2-image-viewer';
 import Swal from 'sweetalert2';
@@ -17,9 +18,6 @@ declare var $ : any;
 })
 export class LeaveComponent implements OnInit {
 	addForm:FormGroup;
-	// stratDate;
-	// endDate; 
-	// durationDays;
 	files: Array<File> = [];
 	showOneDays;
 	showMoreDayss;
@@ -30,6 +28,7 @@ export class LeaveComponent implements OnInit {
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
+			id: new FormControl(''),
 			email: new FormControl (''),
 			name: new FormControl (''),
 			leaveDuration : new FormControl (''),
@@ -93,11 +92,14 @@ export class LeaveComponent implements OnInit {
 		this.files = event.target.files;
 	}
 	addLeave(form){
+		 
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
+		var id = JSON.parse(localStorage.getItem('currentUser'))._id;
 		var name = JSON.parse(localStorage.getItem('currentUser')).name;
 		var email = JSON.parse(localStorage.getItem('currentUser')).email;
+		form['id'] = id;
 		form['name'] = name;
 		form['email'] = email;
 		console.log("valueeeeeeeeeeee",form);
@@ -114,12 +116,12 @@ export class LeaveComponent implements OnInit {
 			form.noOfDays == "more-day"
 			var date2 = new Date(form.startingDate);
 			var date1 = new Date(form.endingDate);
-			console.log("staring date ===" , date2);
-			console.log("ending date ===" , date1);
+			// console.log("staring date ===" , date2);
+			// console.log("ending date ===" , date1);
 			form['endingDate'] = date1;
 			form['startingDate'] = date2;
-			console.log("staring date ...... ===" , date2);
-			console.log("ending date .........===" , date1);
+			// console.log("staring date ...... ===" , date2);
+			// console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());
 			var daysDuration = Math.ceil(timeDuration/(1000 * 3600 * 24));
 			console.log("daysDuration =======+>" , daysDuration);

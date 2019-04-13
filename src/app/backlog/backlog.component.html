@@ -157,7 +157,7 @@
 								<input placeholder="Ending date" name="endDate" [(ngModel)]="sprintData.endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>
 							<div class="col-6">
-								<span>Project Deadline:{{projectOne.deadline | date:'mediumDate'}}</span>
+								<span *ngIf="projectOne">Project Deadline:{{projectOne.deadline | date:'mediumDate'}}</span>
 							</div>
 						</form>
 					</div>

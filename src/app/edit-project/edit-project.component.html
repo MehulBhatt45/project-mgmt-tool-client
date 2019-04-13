@@ -61,14 +61,14 @@
 			<div class="card-body">
 				<div class="container">
 					<div class="form-group">
-						<ng-select placeholder="Select Developers" [items]="availableDevelopers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)">
-							<ng-template ng-label-tmp let-item="item" let-clear="clear">
-								<span class="ng-value-label" ><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
+						<ng-select placeholder="Select Developers" [items]="dteam" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)" >
+							<ng-template ng-label-tmp let-item="item" let-clear="clear" >
+								<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
 								<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
 							</ng-template>
 							<div class="row">
 								<ng-template ng-option-tmp let-item="item">
-									<div class="card testimonial-card" *ngIf="item.userRole == 'developer'">
+									<div class="card testimonial-card" >
 										<div class="card-up deep-purple lighten-2"></div>
 										<div class="avatar white img_section">
 											<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">

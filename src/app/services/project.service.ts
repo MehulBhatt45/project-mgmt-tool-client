@@ -201,9 +201,11 @@ export class ProjectService {
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
+	
 	updateProject(data){
 		console.log("updated Data in project servie" , data);
 		var projectId = data._id;
+		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -256,6 +258,7 @@ export class ProjectService {
 
 	updateTask(id, task){
 		console.log("task =========>",task);
+		// console.log("id-=-=",id);
 		// var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
@@ -400,11 +403,7 @@ export class ProjectService {
 		var sprintId = sprint._id;
 		return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
 	}
-
-	deleteSprint(sprintId){
-		console.log("sprint in service",sprintId);
-		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-	}
+	
 	completeSprint(sprintId){
 		console.log("sprint In service",sprintId);
 		return this.http.get(config.baseApiUrl+"sprint/sprint-complete/"+sprintId);
@@ -414,7 +413,6 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
 	}
 
-
 	getProjectByPmanagerId(pmanagerId){
 		console.log("pmanagerId=====>",pmanagerId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
@@ -422,12 +420,23 @@ export class ProjectService {
 	}
 
 	addNotification(body){
+		console.log("body in service" , body);
 		let formdata = new FormData();
+		formdata.append('pmanagerName',body.pmanagerName);
+		formdata.append('projectId', body.projectId);
 		formdata.append('subject',body.subject);
 		formdata.append('content',body.content);
 		formdata.append('sendTo',body.sendTo);
 		return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
 
+	}
+	getNotificationByUserId(currentUserId){
+		return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
+	}
+
+	deleteSprint(sprintId){
+		console.log("sprint in service",sprintId);
+		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
 	}
 }
 
