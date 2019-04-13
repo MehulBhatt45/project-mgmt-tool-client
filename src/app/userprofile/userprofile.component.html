@@ -135,7 +135,7 @@
 				</div>
 			</div>
 			<div class="name">
-				<p style="font-size: 18px; text-align: center;">Swati Chauhan</p>
+				<span>Swati Chauhan</span>
 			</div>
 			<ul class="nav md-pills pills-primary flex-column" role="tablist">
 				<li class="nav-item">
@@ -160,33 +160,66 @@
 				<div class="tab-pane fade in show active" id="panel21" role="tabpanel">
 					<div class="card z-depth padding-15">
 						<h2>{{currentUser.name}}</h2>
-						<p><i class="fas fa-envelope"></i>{{currentUser.email}}</p>
+						<p><i class="fas fa-envelope"></i> {{currentUser.email}}</p>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="panel22" role="tabpanel">
 					<div class="row">
 						<div class="card">
-							<div class="col col-1" *ngIf="project">
-							<h3>Projects</h3>
-								<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='../assets/4.jpeg'" >
-							</div>
-							<div class="col col-11" *ngIf="project"> 
-								<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
+							<div class="container project">
+								<h2>Projects <i class="fas fa-project-diagram"></i></h2>
+								<div *ngIf="project">
+									<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='../assets/4.jpeg'" >
+									<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="panel23" role="tabpanel">
-					<h5 class="my-2 h5">Panel 3</h5>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<div class="tab-content">
-			<div class="tab-pane fade in show active" id="panel555" role="tabpanel">
-				<div class="row">
-					<div class="col-md-4"></div>
+					<div class="card">
+						<div class="container notify">
+							<h2>Notify <i class="far fa-bell"></i></h2>
+							<form [formGroup]="editTEmail">
+								<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+									<ng-template ng-label-tmp let-item="item" let-clear="clear">
+										<span class="ng-value-label">{{item.title}}</span>
+										<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+									</ng-template>
+									<div class="row">
+										<ng-template ng-option-tmp let-item="item">
+											<h5 class="mt-1">{{item.title}}</h5>
+											<h6>{{item.uniqueId}}</h6>
+										</ng-template>
+									</div>
+								</ng-select>
+								<div class="form-group">
+									<div class="form-group">
+										<div class="md-form">
+											<label for="inputMDEx">Subject</label>
+											<input type="text" id="inputMDEx" class="form-control"formControlName="subject">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="form-group">
+										<div class="md-form">
+											<label for="inputMDEx">Content</label>
+											<input type="text" id="inputMDEx" class="form-control"formControlName="content">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputMDEx">Send To</label>
+									<select class="browser-default custom-select custom-select-lg mb-3" id="sendTo" formControlName="sendTo" >
+										<option value="{{this.total}}" selected>All Team</option>
+										<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
+									</select>
+								</div>
+								<button type="button" class="btn btn-outline-default" (click)="addNotification(editTEmail)">Send</button>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

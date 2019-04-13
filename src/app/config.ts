@@ -6,6 +6,11 @@ const baseUrl = "http://localhost:4001/";
 // const baseMediaUrl = "http://206.189.231.135/project-mgmt-tool-server/uploads/";
 const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 
+
+
+
+
+
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,
