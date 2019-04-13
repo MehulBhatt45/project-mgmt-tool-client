@@ -34,17 +34,7 @@
 						<div class=" row form-group col-6">
 							<button class="btn btn-default" (click)="fileUpload.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-<<<<<<< HEAD
-<<<<<<< HEAD
-								<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)" multiple>
-=======
-
-								<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload" hidden  (change)="changeFile($event)" accept="image/png, image/jpeg, image/jpg" multiple>
-
->>>>>>> 30cc4820781a8899bc9309fb68cce4b272b12d9e
-=======
 								<input type="file" formControlName="images" name="uploadedFiles" #fileUpload id="fileUpload"  (change)="changeFile($event, 'item')" hidden multiple accept="image/png, image/jpeg, image/jpg">
->>>>>>> f18744b044f81ac2816e5e7e37856ae52e06142d
 							</button>
 						</div>
 						<div class="form-group col-6">

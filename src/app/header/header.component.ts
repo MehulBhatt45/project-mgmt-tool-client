@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	demoprojects;
 	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
@@ -154,10 +155,21 @@ export class HeaderComponent implements OnInit {
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
+			console.log("current user id",this.currentUser._id);
 			if(this.currentUser.userRole == 'projectManager'){
-				//this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
-				this.projects = res; 
-				console.log("IN If=========================================",this.projects);
+				this.demoprojects = [];
+				this.projects = res;
+				console.log("this.projects",this.projects);
+				_.forEach(this.projects,(project)=>{
+					// console.log("project",project);
+					_.forEach(project.pmanagerId,(pid)=>{
+						// console.log("pid",pid);
+						if(pid._id == this.currentUser._id){
+							this.demoprojects.push(project);
+						}
+					})
+				})
+				console.log("IN If=========================================",this.demoprojects);
 			}
 			else{
 				this.projects = [];
