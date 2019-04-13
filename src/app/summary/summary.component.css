@@ -58,23 +58,7 @@
    /* margin-left: 20px;
    margin-top: 10px;*/
 }
-.developer_slider {
-    display: inline-block;
-    width: 100%;
-}
-.single_slide{
-    margin: 15px;
-    border: 1px solid #b0b0b0;
-    overflow: hidden;
-    position: relative;
-}
-.single_slide img{
-    object-fit: cover;
-}
-.single_slide .card-body{
-    padding: 0px;
-    height: 249px;
-}
+
 /*.profile{
     width: 100px;
     height: 100px;
@@ -106,6 +90,7 @@ article {
     position: relative;
     display: block;
     max-width: 500px;
+    border: 1px solid black;
 }
 article:before, article .content:before {
     content: '';

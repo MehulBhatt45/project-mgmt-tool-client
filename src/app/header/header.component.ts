@@ -328,7 +328,7 @@ export class HeaderComponent implements OnInit {
 							console.log("response task***++",res);
 
 							Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-							this.router.navigate(['./project-detail']);
+							this.router.navigate(['./project-details',res.projectId]);
 							this.loader = false;
 							$('#editModel').modal('hide');
 							this.task = this.getEmptyTask();

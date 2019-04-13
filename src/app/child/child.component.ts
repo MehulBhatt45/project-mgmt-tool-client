@@ -68,12 +68,14 @@ export class ChildComponent  implements OnInit{
     this.createEditTaskForm();      
     this.getProject(this.projectId);
     // console.log(this.tracks);
+    
   }
 
   ngOnInit(){
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
   }
+
   
   ngOnChanges() {
     this._change.detectChanges();

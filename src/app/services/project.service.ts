@@ -201,6 +201,7 @@ export class ProjectService {
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
+	
 	updateProject(data){
 		console.log("updated Data in project servie" , data);
 		var projectId = data._id;
