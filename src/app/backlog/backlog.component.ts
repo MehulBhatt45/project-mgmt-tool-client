@@ -44,6 +44,7 @@ export class BacklogComponent implements OnInit {
 	pduration:number = 0;
 	remainingLimit:number = 0;
 
+
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -63,10 +64,14 @@ export class BacklogComponent implements OnInit {
 		this.getTaskbyProject(this.projectId);
 
 
-		// Date Picker Valadation Start Here
-		
+		$('#startDate').pickadate({ 
+			min: new Date(),
+			max: [2019,13,20],
+		})
 
-		//console.log("this . prdead" , this.prdead);
+		// Date Picker Valadation Start Here		
+
+		console.log("this . prdead" , this.prdead);
 		
 		var from_input = $('#startDate').pickadate(),
 		from_picker = from_input.pickadate('picker')
@@ -183,12 +188,12 @@ export class BacklogComponent implements OnInit {
 			this.pduration = pdealine.diff(pstart,'days');
 			console.log("Project Duration=====>>>",this.pduration);
 			
-				
-					$('#startDate').pickadate({ 
-						min: new Date(),
-						max: [this.prdead]
-					})
-				
+
+			// $('#startDate').pickadate({ 
+			// 	min: new Date(),
+			// 	max: [this.prdead]
+			// })
+
 			
 
 		},(err:any)=>{
@@ -369,6 +374,3 @@ export class BacklogComponent implements OnInit {
 		return duration = endLimit.diff(startLimit,'days')
 	}
 }
-
-
-

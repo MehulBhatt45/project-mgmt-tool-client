@@ -32,6 +32,8 @@ import { ForgotpwdComponent } from './forgotpwd/forgotpwd.component';
 import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
 import {BacklogComponent} from './backlog/backlog.component';
+import { AttendenceComponent } from './attendence/attendence.component';
+
 
 
 const routes: Routes = [
@@ -187,6 +189,10 @@ const routes: Routes = [
 		{
 			path:'notification',
 			component:NotificationComponent
+		},
+		{
+			path:'attendence',
+			component:AttendenceComponent
 		}
 		]
 

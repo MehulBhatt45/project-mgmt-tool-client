@@ -34,6 +34,7 @@ export class VisitUserProfileComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	singleleave:any;
+	loader : boolean = false;
 	leaveApp:any;
 	leaves:any;
 	leavescount:any;
@@ -48,19 +49,19 @@ export class VisitUserProfileComponent implements OnInit {
 
 		this.leavescount = [
 		{
-			"typeOfLeave" : "sickleave",
+			"typeOfLeave" : "Sick_Leave",
 			"leavesTaken" : Number()
 		},
 		{
-			"typeOfLeave" : "personalleave",
+			"typeOfLeave" : "Personal_Leave",
 			"leavesTaken" : Number()
 		},
 		{
-			"typeOfLeave" : "leavewithoutpay",
+			"typeOfLeave" : "Leave_WithoutPay",
 			"leavesTaken" : Number()
 		},
 		{
-			"typeOfLeave" : "emergencyleave",
+			"typeOfLeave" : "Emergency_Leave",
 			"leavesTaken" : Number()
 		},
 		{
@@ -70,8 +71,6 @@ export class VisitUserProfileComponent implements OnInit {
 		]
 		console.log("leaves+++++++++++++++=",this.leavescount);
 	}
-
-
 	ngOnInit() {
 		
 		this.route.params.subscribe(param=>{
@@ -81,12 +80,10 @@ export class VisitUserProfileComponent implements OnInit {
 		// this.leaveByUserId(this.currentUser.email);
 		this.leaveByUserId(this.developerId);
 		this.getLeave(this.developerId);
-		
-
-
 	}
-	
 	getDeveloperById(id){
+
+		this.loader = true;
 		console.log("id=>>>",id);
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
@@ -105,13 +102,14 @@ export class VisitUserProfileComponent implements OnInit {
 					this.finalArr.push(this.projectArr[i]);
 					console.log("response======>",this.finalArr);
 				}	
+				this.loader = false;
 			}
+
 			)},(err:any)=>{
 				console.log("eroooooor=========>",err);
 			})
-
+		
 	}
-
 	leaveByUserId(id){
 		this._loginService.getUserById(id).subscribe((res:any)=>{
 			this.currentUser = res;
@@ -147,7 +145,7 @@ export class VisitUserProfileComponent implements OnInit {
 						this.approvedLeaves.push(leave)
 					}
 				});
-					console.log('approvedLeaves',this.approvedLeaves);
+				console.log('approvedLeaves',this.approvedLeaves);
 				this.getEmptytracks();
 				var ctxP = document.getElementById("pieChart");
 				var myPieChart = new Chart(ctxP, {
@@ -170,7 +168,6 @@ export class VisitUserProfileComponent implements OnInit {
 						}
 					}
 				});
-
 				var ctxP = document.getElementById("pieChart1");
 				var myPieChart = new Chart(ctxP, {
 					type: 'pie',
@@ -182,7 +179,6 @@ export class VisitUserProfileComponent implements OnInit {
 							hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
 						}]
 					},
-
 					options: {
 						responsive: true,
 						legend:{
@@ -194,10 +190,9 @@ export class VisitUserProfileComponent implements OnInit {
 						}
 					}
 				})
-				
 				_.forEach(this.leaveApp , (leave)=>{
 					_.forEach(this.leavescount , (count)=>{
-						if(count.typeOfLeave == leave.typeOfLeave){
+						if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
 							count.leavesTaken = count.leavesTaken + 1;
 						}
 					});
@@ -208,11 +203,8 @@ export class VisitUserProfileComponent implements OnInit {
 			},err=>{
 				console.log("errrrrrrrrrrrrr",err);
 			})
-
 		})
 	}
-
-
 	getLeaveCount(leaves){
 		console.log("all p_leave=====",leaves);
 		// console.log("attt====>",leaves[0].attechment);
@@ -220,63 +212,58 @@ export class VisitUserProfileComponent implements OnInit {
 		var Sick_Leave :any= [];
 		var Emergency_Leave :any= [];
 		var Leave_WithoutPay :any= [];
-		console.log('this.leaveApp',this.leaveApp);
 		_.forEach(leaves,(leave)=>{
 			switch (leave.typeOfLeave) {
-				case "personalleave":
+				case "Personal_Leave":
 				Personal_Leave.push(leave);
 				break;
-				case "sickleave":
+				case "Sick_Leave":
 				Sick_Leave.push(leave);
 				break;
-				case "emergencyleave":
+				case "Emergency_Leave":
 				Emergency_Leave.push(leave);
 				break;
-				case "leavewithoutpay":
+				case "Leave_WithoutPay":
 				Leave_WithoutPay.push(leave);
 				break;
 			}
 		});
 		console.log(Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length);
-		return [ Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length ];  }
-
-
-		getLeaveDuration(leaves){
-			console.log(leaves);
-			var Half_Day = [];
-			var Full_Day = [];
-			var More_Day = [];
-			_.forEach(leaves,(leave)=>{
-				switch (leave.leaveDuration) {
-					case "second half-day":
-					Half_Day.push(leave);
-					break;
-					case "1":
-					Full_Day.push(leave);
-					break;
-					default :
-					More_Day.push(leave);
-					break; 
-				}
-			})
-			console.log(Half_Day.length,Full_Day.length,More_Day.length);
-			return [Half_Day.length,Full_Day.length,More_Day.length];
-		}
-
-
-
-
-		leaveById(leaveid){
-			console.log("leave id=======>>",leaveid);
-			this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-				this.singleleave = res[0];
-				console.log("single leave",this.singleleave);
-			},err=>{
-				console.log("errrrrrrrrrrrrr",err);
-			})
-
-		}
+		return [ Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length ];
 	}
-	// this Component is created for guest-user who can visit all team members profile....
+	getLeaveDuration(leaves){
+		console.log(leaves);
+		console.log(leaves[1].attechment);
+		var Half_Day = [];
+		var Full_Day = [];
+		var More_Day = [];
+		_.forEach(leaves,(leave)=>{
+			switch (leave.leaveDuration) {
+				case "0.5":
+				Half_Day.push(leave);
+				break;
+				case "1":
+				Full_Day.push(leave);
+				break;
+				default :
+				More_Day.push(leave);
+				break; 
+			}
+		})
+		return [Half_Day.length,Full_Day.length,More_Day.length];
+	}
+
+	leaveById(leaveid){
+		console.log("leave id=======>>",leaveid);
+		this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+			this.singleleave = res[0];
+			console.log("single leave",this.singleleave);
+		},err=>{
+			console.log("errrrrrrrrrrrrr",err);
+		})
+
+	}
+}
+// this Component is created for guest-user who can visit all team members profile....
 
 

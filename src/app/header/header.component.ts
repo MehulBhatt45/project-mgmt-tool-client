@@ -18,6 +18,9 @@ declare var $ : any;
 })
 export class HeaderComponent implements OnInit {
 	tracks:any;
+	url = [];
+	commentUrl = [];
+	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	task = this.getEmptyTask();
 	userId
 	project;
@@ -25,6 +28,9 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	demoprojects=[];
+	projectArr = [];
+	finalArr = [];
 	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
@@ -34,6 +40,8 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
+	pmanger;
+	
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -56,7 +64,6 @@ export class HeaderComponent implements OnInit {
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required),
 			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''}, Validators.required)
 		})
 	}
 
@@ -71,15 +78,7 @@ export class HeaderComponent implements OnInit {
 			this.editTaskForm.reset()
 			this.task = this.getEmptyTask();
 		}
-		$('#estimatedTime').pickatime({
-			afterDone: function(context) {
-				console.log('Just set stuff:', context);
-				setDate(context);
-			}
-		});
-		var setDate = (context)=>{
-			this.timePicked();
-		}
+
 		$('.button-collapse').sideNav({
 			edge: 'left',
 			closeOnClick: true
@@ -125,12 +124,9 @@ export class HeaderComponent implements OnInit {
 		];
 	}
 
-	timePicked(){
-		this.editTaskForm.controls.estimatedTime.setValue($('#estimatedTime').val())
-	}
 	projectSelected(item){
 		if(item && item._id){
-			console.log(item);
+			console.log("res-=-=",item);
 			this.getSprint(item._id);
 			this.loader = true;
 			$(".progress").addClass("abc");
@@ -154,10 +150,21 @@ export class HeaderComponent implements OnInit {
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
+			console.log("current user id",this.currentUser._id);
 			if(this.currentUser.userRole == 'projectManager'){
-				//this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
-				this.projects = res; 
-				console.log("IN If=========================================",this.projects);
+				this.demoprojects = [];
+				this.projects = res;
+				console.log("this.projects",this.projects);
+				_.forEach(this.projects,(project)=>{
+					console.log("project",project);
+					_.forEach(project.pmanagerId,(pid)=>{
+						console.log("pid",pid);
+						if(pid._id == this.currentUser._id){
+							this.demoprojects.push(project);
+						}
+					})
+				})
+				console.log("IN If=========================================",this.demoprojects);
 			}
 			else{
 				this.projects = [];
@@ -192,6 +199,7 @@ export class HeaderComponent implements OnInit {
 		}else{
 			return "";
 		}
+
 	}
 	getDeveloperById(id){
 		console.log("id=>>>",id);
@@ -205,7 +213,6 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 
-	
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -229,7 +236,7 @@ export class HeaderComponent implements OnInit {
 		this.modalTitle = 'Add '+option;
 		$('.datepicker').pickadate();
 		$('#editModel').modal('show');
-		
+
 	}
 	getProject(id){
 		setTimeout(()=>{
@@ -253,7 +260,9 @@ export class HeaderComponent implements OnInit {
 		this.loader = true;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estimatedTime").val();
+		// task.estimatedTime = $("#estimatedTime").val();
+		task.estimatedTime = $("#estTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
@@ -276,6 +285,7 @@ export class HeaderComponent implements OnInit {
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
+			this.files = this.url = [];
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
@@ -283,10 +293,19 @@ export class HeaderComponent implements OnInit {
 			console.log("error========>",err);
 		});
 	}
+
 	getEmptyTask(){
 		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
 	}
 
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+		},(err:any)=>{
+			console.log(err);
+		});
+	}
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			console.log(res);
@@ -309,15 +328,38 @@ export class HeaderComponent implements OnInit {
 		});  
 	}
 
-	onSelectFile(event){
-		this.files = event.target.files;
+	onSelectFile(event, option){
+		// this.files = event.target.files;
+		_.forEach(event.target.files, (file:any)=>{
+			this.files.push(file);
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
+				if(option == 'item')
+					this.url.push(e.target.result);
+				if(option == 'comment')
+					this.commentUrl.push(e.target.result);
+			}
+		})
 	}
-	getSprint(projectId){
-		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			console.log("sprints in project detail=====>>>>",res);
-			this.sprints = res;
-		},(err:any)=>{
-			console.log(err);
-		});
+
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);
+	}
+	removeCommentImage(file, index){
+		console.log(file, index);
+		this.commentUrl.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);	
+	}
+
+	removeAlreadyUplodedFile(option){
+		this.newTask.images.splice(option,1);
 	}
 }
+

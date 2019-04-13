@@ -1,0 +1,188 @@
+.dropdown-menu{
+	background-color: transparent;
+	box-shadow: none; 
+	padding: 10px;
+	float: right;
+	top: -30px!important;
+	left: -24px!important;
+}
+.nav-tabs {
+	border: 0;
+	padding: 0.7rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	margin-bottom: 30px;
+	z-index: 2;
+	position: relative;
+}
+.deep-purple img{
+	color: white !important;
+}
+h6{
+	font-size: 16px;
+	color: purple;
+	font-weight: bolder;
+}
+.modal-header{
+	margin: -25px 16px 0px 16px;
+	color: white;
+}
+.card_border{
+	border: 4px solid #b670df;
+}
+.footer_1{
+	background-color: lightblue;
+	padding: 0px;
+}
+
+.leaveInfo{
+	text-align: center;
+}
+.btn-primary{
+	background-color: 
+}
+
+.leaveInfo p{
+	margin: 0;
+}
+
+.leaveHeading{
+	margin: 20px;
+	font-weight: bold;
+	padding: 10px;
+}
+.leaveCount{
+	padding: 0px;	
+}
+.nav-item{
+	padding: 0px 0px;
+}
+.leave_icon img{
+	height: 30px;
+	width: 30px;
+}
+select.browser-default {
+	display: block;
+	margin: 25px 0px;
+}
+.card_custom{
+	width: 20%;
+	border-radius: 3px;
+	background-image: linear-gradient(#00dbc7,#238388);
+	padding: 10px;
+	margin-right: 117px;
+	margin-left: 23px;
+	text-align: center;
+}
+
+.task li{
+	padding: 20px 10px;
+	border-bottom: 1px solid blue;
+	border-left: 5px solid lightblue;
+}
+.tab-pane ul li {
+	margin-top: 10px;
+	background-color: #fff;
+}
+.header_top{
+	background-color: lightgray;
+	width: 100%;
+}
+.profile{
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile img{
+	min-width: 100%;
+	min-height: 100%;
+	max-height:100%;
+	max-width: 100%;
+	object-fit: cover;
+	margin: auto;
+}
+.profile_dp{
+	border-radius: 50%;
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+}
+.profile_dp img{
+	object-fit: cover;
+}
+.notification ul li{
+	padding: 10px 2px;
+}
+.notification span{
+	font-size: 16px;
+	padding: 3px 6px;
+	border-radius: 4px;
+}
+.notification i{
+	font-size: 25px;
+}
+.content p{
+	margin: 0;
+}
+.content label{
+	color: #b7b2b2;
+	font-size: 14px;
+	margin: 0;
+}
+.task li{
+	border-bottom: 1px solid #2196F3;
+	border-left: 5px solid #8bc1f1;
+}
+.leave li{
+	border-bottom: 1px solid #4CAF50;
+	border-left: 5px solid #9ecea1;	
+}
+.other li{
+	border-bottom: 1px solid #9c27b0;
+	border-left: 5px solid #c58fd0;
+}
+.task span{
+	background-color: #cde8f1;
+	color: #256dde;/*
+	background-color: #0d7fa5;
+	color: #ffffff;*/
+}
+.leave span{
+	background-color: #daf7d0;
+	color: #008a00;
+}
+.other span{
+	background-color: #eecdf7;
+	color: #76008a;
+}
+.task_priority_highest i{
+	color: red;
+}
+.task_priority_high i{
+	color: #ea740a;
+}
+.task_priority_medium i{
+	color: #efbd2c;
+	/*color: #efe900;*/
+}
+.task_priority_low i{
+	color: #9c9cf9;
+}
+.leave_approved i{
+	color: green;
+}
+.leave_rejected i{
+	color: red;	
+}
+.other i{
+	color: purple;
+}
+.task a{
+	background-color: red;
+}
+.task a:visited{
+	background-color: transparent;
+}
+.unread{
+	background-color: #f1eaff;
+}
