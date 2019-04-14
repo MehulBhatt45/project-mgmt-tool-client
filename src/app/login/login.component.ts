@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // this.loginForm.controls.email.setValue("vivekkbharda@gmail.com");
+    // this.loginForm.controls.password.setValue("vivek@123");
   }
 
   // convenience getter for easy access to form fields
@@ -64,7 +66,7 @@ export class LoginComponent implements OnInit {
     .pipe(first())
     .subscribe(
       data => {
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/view-projects']);
       },
       error => {
         this._alertService.error(error);

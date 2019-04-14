@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgModule } from '@angular/core';
+import { NgModule , DebugElement } from '@angular/core';
 import { FormsModule , FormBuilder  , ReactiveFormsModule} from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import { project } from '../services/models/project.model';
 import { SearchTaskPipe } from '../search-task.pipe';
 
 
-fdescribe('AllEmployeeComponent', () => {
+fdescribe('AllEmployeeComponent Unit Testing', () => {
     let component: AllEmployeeComponent;
     let fixture: ComponentFixture<AllEmployeeComponent>;
     let projectService: ProjectService;
@@ -368,6 +368,41 @@ fdescribe('AllEmployeeComponent', () => {
         const b =  component.getInitialsOfName(name);
 
         expect(b).toBe('A');
+    });
+    it(`get initials of the name from the function "getInitialsOfName(name)" when name != "admin" && "{userNAme}"` , () => {
+        const name = "admin";
+        const b =  component.getInitialsOfName(name);
+
+        expect(b).toBe('A');
+    });
+
+});
+
+fdescribe('AllEmployeeComponent Integrated Testing', () => {
+    let component: AllEmployeeComponent;
+    let fixture: ComponentFixture<AllEmployeeComponent>;
+    let projectService: ProjectService;
+    let searchTaskPipe: SearchTaskPipe;
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ AllEmployeeComponent ],
+            imports: [ HttpClientModule , FormsModule , RouterTestingModule , BrowserModule , ReactiveFormsModule],
+            providers: [ ProjectService  , SearchTaskPipe]
+        })
+        .compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AllEmployeeComponent);
+        component = fixture.componentInstance;
+        //fixture.detectChanges();
+        projectService = TestBed.get(ProjectService);
+        localStorage.setItem('currentUser' , '{"userRole":"projectManager","projects":[],"tasks":["5c8902cb07efea54bbd55bc2","5c8903f007efea54bbd55bc3","5c8baa7d7f8c1d3a46d8cb52","5c8baacf2e73613ea207c6dc","5c8bab6d34a5283ef2f1247b","5c8bad90c55b2d4112139f89","5c90dd9c6ad5e96ca7952aeb","5c90dd9c6ad5e96ca7952aeb"],"_id":"5c777ed9c45c94663eb74bb6","name":"Tirthraj Barot","email":"tirthrajbarot2394@gmail.com","password":"$2a$10$cn8G8ON11qGjUk8Kyci7W.Avs..21rtFUNFGFDAaKhv/eW/U6hLSG","createdAt":"2019-02-28T06:25:29.835Z","updatedAt":"2019-03-20T06:37:49.737Z","__v":8,"CV":"5c777ed9c45c94663eb74bb6/Brochure_Rao Infotech.pdf","profilePhoto":"5c777ed9c45c94663eb74bb6/xYXGm.jpg","phone":"9979430007","experience":""}');
+        searchTaskPipe = new SearchTaskPipe();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 
 });
