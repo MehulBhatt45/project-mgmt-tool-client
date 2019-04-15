@@ -83,9 +83,6 @@ export class EditProjectComponent implements OnInit {
 
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
-
-
-
 			this.developers = res;
 			console.log("dev{}{}{}",this.developers);
 			this.developers.sort(function(a, b){
@@ -133,14 +130,11 @@ export class EditProjectComponent implements OnInit {
 			console.log("hfghfjgh===============",this.availableDevelopers);
 			this.dteam = [];
 			_.forEach(this.availableDevelopers,(project)=>{
-				// console.log("project",project);
-				if(project.userRole == "developer"){
+				if(project.userRole == "user" || project.userRole == "developer" ){
 					this.dteam.push(project);
 				}
-
 			})
 			console.log("dteam=-=-=-=-",this.dteam);
-			// console.log("adev=-=-=-=-=-",this.availableDevelopers);
 		},err=>{
 			console.log(err);
 		})
@@ -255,14 +249,14 @@ export class EditProjectComponent implements OnInit {
 			})
 		}else{
 			this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
-						console.log("Delete project======>" , res);
-						this.projects = res;
-						Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
-						this.router.navigate(['./view-projects']);
-					},(err:any)=>{
-						console.log("error in delete project =====>" , err);
-						Swal.fire('Oops...', 'Something went wrong!', 'error')
-					})
+				console.log("Delete project======>" , res);
+				this.projects = res;
+				Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
+				this.router.navigate(['./view-projects']);
+			},(err:any)=>{
+				console.log("error in delete project =====>" , err);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+			})
 		}
 	}
 
@@ -309,13 +303,3 @@ export class EditProjectComponent implements OnInit {
 		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
 	}
 }
-
-// this._projectService.deleteProjectById(this.availData).subscribe((res:any)=>{
-	// 		console.log("Delete project======>" , res);
-	// 		this.projects = res;
-	// 		Swal.fire({type: 'success',title: 'Project deleted Successfully',showConfirmButton:false,timer: 2000})
-	// 		this.router.navigate(['./view-projects']);
-	// 	},(err:any)=>{
-		// 			console.log("error in delete project =====>" , err);
-		// 			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		// 		});
