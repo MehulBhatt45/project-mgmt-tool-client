@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
+import {tick , fakeAsync , async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgModule , DebugElement } from '@angular/core';
 import { AbstractControl , FormGroup , FormsModule , FormBuilder  , ReactiveFormsModule} from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,13 +8,17 @@ import { By , BrowserModule }  from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
+ 
 import { LoginComponent } from './login.component';
 import { Developers } from '../services/models/developers.model';
 import { ViewProjectComponent } from '../view-project/view-project.component';
 fdescribe('LoginComponent Integration testing', () => {
-    let router;
+    let location: Location;
+    let router: Router;
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
+    let userEmailErrorEl: any;
+    let userPasswordErrorEl: any;    
     let userEmail: any;
     let userPassword: any;
     let loginButton: DebugElement;
@@ -22,7 +27,7 @@ fdescribe('LoginComponent Integration testing', () => {
     let passwordFormControl: AbstractControl;  
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ LoginComponent ],
+            declarations: [ LoginComponent , ViewProjectComponent ],
             imports: [ HttpClientModule ,
             FormsModule  ,
             BrowserModule ,
@@ -39,7 +44,9 @@ fdescribe('LoginComponent Integration testing', () => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        router = fixture.debugElement.injector.get(Router);
+        router = TestBed.get(Router);
+        location = TestBed.get(Location);
+        router.initialNavigation();
         //get the html elements
         userEmail = fixture.debugElement.query(By.css('#loginEmail')).nativeElement ;
         userPassword = fixture.debugElement.query(By.css('#loginPassword')).nativeElement ;
@@ -87,9 +94,8 @@ fdescribe('LoginComponent Integration testing', () => {
             expect(passwordFormControl.valid).toBe(true);    
         });
     });
-    it(`form should navigate to "view-project" on succesful login ` , () => {
-        const developers = 
-        { 
+    it(`form should navigate to "view-project" on succesful login ` , async() => {
+        const developers = { 
             "_id" : "5c6c0aa9d96ad972c2e5438e", 
             "userRole" : "user", 
             "name" : "mehul bhatt", 
@@ -102,6 +108,7 @@ fdescribe('LoginComponent Integration testing', () => {
 
         fixture.whenStable().then(() => {
             //act
+            router.navigate(['view-projects']);
             userEmail.value = developers.email;
             userEmail.dispatchEvent(new Event("input"));
 
@@ -110,8 +117,21 @@ fdescribe('LoginComponent Integration testing', () => {
 
             loginButton.triggerEventHandler('click' , null);
             fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(router.navigate).toHaveBeenCalledWith(['view-projects']);                    
+            });
+        });
+    });
 
-            expect(router.navigate).toHaveBeenCalledWith(['./view-projects']);                    
+    it(`form should be invalid when nothing is set ` , async() => {
+        //arrange
+        //act
+        fixture.whenStable().then(() =>{
+            expect(emailFormControl.hasError('required')).toBe(true);
+            expect(emailFormControl.valid).toBe(false);
+
+            expect(passwordFormControl.hasError('required')).toBe(true);
+            expect(passwordFormControl.valid).toBe(false);            
         });
     });
 });

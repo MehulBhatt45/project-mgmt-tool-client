@@ -28,8 +28,8 @@
 					<i class="fa fa-lock prefix"></i>
 					<input mdbInput type="password" autocomplete="new-password" id="loginPassword" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
 					<label for="loginPassword">Password</label>
-					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-						<div *ngIf="f.password.errors.required">Password is required</div>
+					<div  id="passwordEror" *ngIf="submitted && f.password.errors" class="invalid-feedback">
+						<div   *ngIf="f.password.errors.required">Password is required</div>
 					</div>
 				</div>
 				<!-- <div class="form-group">
