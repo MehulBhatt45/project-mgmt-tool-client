@@ -24,7 +24,6 @@ export class ViewProjectComponent implements OnInit {
   pro;
   idet = [];
   pmt:any;
-  managerArr = [];
   developers: any;
   path = config.baseMediaUrl;
   loader:boolean=false;
@@ -61,23 +60,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-
-
-      // $('[data-toggle="popover"]').popover(); 
-      $('[data-toggle="popover-hover"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'bottom',
-        // content: function () { return '<p>hELLO</p>'; }
-        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
-      }, ()=>{
-        console.log("Hover");
-      });
-
-
-
-    },100);
     this.getProjects();
 
     this.getAllDevelopers();
@@ -135,7 +117,6 @@ export class ViewProjectComponent implements OnInit {
       Swal.fire('Oops...', 'Something went wrong!', 'error')  
       this.loader=false;
     });
-
   }
   getDate(date){
     date = date.split("T");
@@ -259,7 +240,6 @@ getTaskCount(status){
 }
 
 mouseOver(project){
-
   this.hoveredProject = project;
 }
 

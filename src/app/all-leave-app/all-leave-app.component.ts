@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output , Input ,EventEmitter } from '@angular/core';
 import {Router,ActivatedRoute} from '@angular/router';
 // import {ProjectService} from '../services/project.service';
 import{LeaveService} from '../services/leave.service';
@@ -19,6 +19,8 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
+   @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
+
   allLeaves;
   allAproveLeaves;
   leaves;
@@ -449,6 +451,8 @@ export class AllLeaveAppComponent implements OnInit {
                       console.log("respondsssssss",res);
                       this.acceptedLeave = res;
                       console.log("acceptedd===========>",this.acceptedLeave);
+                      // this.leaveEmit.emit(this.acceptedLeave);
+                      // this.getLeaves(Option);
                       this.getLeaves(this.title);
                     },(err:any)=>{
                       console.log(err);

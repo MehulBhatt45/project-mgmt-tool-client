@@ -1,3 +1,4 @@
+
 <!-- Task Details Card -->
 
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
@@ -36,15 +37,13 @@
 										<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
 									</li>
 									<li>
-										<ul *ngIf="task.assignTo" class="team-members">	
-											<li  [title]="getTitle(task.assignTo.name)">
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 												<a href="javascript:void(0);">
 													<div class="user_profile_pic"><img src="{{path}}{{task.assignTo	.profilePhoto}}" class="img-rounded" routerLink = "/visit-user-profile/{{task.assignTo._id}}" onerror="this.src='assets/4.jpeg'" ></div>
 												</a>
 											</li>
-										</ul>
-										<ul *ngIf="!task.assignTo" class="team-members">
-											<li  class="add-member">
+											<li *ngIf="!task.assignTo" class="add-member">
 												<a href="javascript:void(0);" title="Add Member">
 													<i class="fa fa-user-plus"></i>
 												</a>
@@ -53,7 +52,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label *ngIf="task.assignTo" class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+								<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>
@@ -300,10 +299,10 @@
 							<div class="form-group col-12">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 							</div>
 							<div class="form-group col-6">

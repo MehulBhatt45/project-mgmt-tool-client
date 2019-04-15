@@ -11,6 +11,7 @@ import {config} from '../config';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import * as _ from 'lodash';
 declare var $ : any;
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-all-developer',
@@ -18,14 +19,16 @@ declare var $ : any;
 	styleUrls: ['./all-developer.component.css']
 })
 export class AllDeveloperComponent implements OnInit {
-	developers;
+	developers: any;
 	userId;
+	availableDevelopers = [];
 	path = config.baseMediaUrl;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	Teams;
+	Teams :any = [];
 	projectId;
 	loader:boolean = false;
 	pro;
+	dteam: any;
 	searchText;
 	developerId;
 
@@ -38,11 +41,7 @@ export class AllDeveloperComponent implements OnInit {
 			this.projectId = param.id;
 			this.getProject(this.projectId);
 		});
-		
-		// this.route.params.subscribe(param=>{
-		// 	this.projectId = param.id;
-		// 	this.getProjectManager(this.projectId);
-		// });
+
 	}
 	getProject(id){
 		this.loader = true;
@@ -52,15 +51,22 @@ export class AllDeveloperComponent implements OnInit {
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				console.log("project detail===>>>>",this.pro.pmanagerId);
-				setTimeout(()=>{
-					console.log("PM rotate js-------------------------------------------------------------------")
-					$('a.rotate-btn').click(function () {
-						$(this).parents(".card-rotating").toggleClass('flipped');
-					});
-				},2000);
+				this.pro.pmanagerId.sort(function(a, b){
+					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					if (nameA < nameB) //sort string ascending
+						return -1 
+					if (nameA > nameB)
+						return 1
+					return 0 //default return value (no sorting)
+					console.log("project detail===>>>>",this.pro.pmanagerId);
+					setTimeout(()=>{
+						console.log("TM rotate js-------------------------------------------------------------------")
+						$('a.rotate-btn').click(function () {
+							$(this).parents(".card-rotating").toggleClass('flipped');
+						});
+					},2000);
+				})
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					//this.projectTeam = res.team;
-					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.Teams = res.Teams;
 					this.Teams.sort(function(a, b){
@@ -90,21 +96,7 @@ export class AllDeveloperComponent implements OnInit {
 		},1000);
 		
 	}
-	
-	// getProjectManager(id){
-	// 	this.loader = true;
-	// 	console.log("project id======>",this.projectId);
-	// 	setTimeout(()=>{
-	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
-	// 			this.pro = res;
-	// 			console.log("project detaill===>>>>",this.pro);
-	// 			},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},10000);
-		
-	// }
+
 
 	onKey(searchText){
 		console.log("searchText",searchText);
@@ -120,25 +112,37 @@ export class AllDeveloperComponent implements OnInit {
 			});
 		});
 	}
-	
 
+	
+	deleteDeveloper(event){
+		console.log(event);
+		Swal.fire({
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
+			if (result.value) {
+				var body;
+				this.Teams.splice(_.findIndex(this.Teams, event), 1);
+				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				console.log(this.Teams);
+				console.log("this .. pro ================>" , this.pro);
+				this.pro.Teams = this.Teams;	
+				console.log("this .. pro ================>" , this.pro);
+				this._projectService.updateProject(this.pro).subscribe((res:any)=>{
+					console.log("res========+>" , res);
+				},(err:any)=>{
+					console.log("err" , err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				});
+			}
+		})
+	}
 }
-// getUserById(id){
-	// 	this._projectService.getAllDevelopers().subscribe(res=>{
-		// 		this.developers = res;
-		// 		this.developers.sort(function(a, b){
-			// 			var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-			// 			if (nameA < nameB) //sort string ascending
-			// 				return -1 
-			// 			if (nameA > nameB)
-			// 				return 1
-			// 			return 0 //default return value (no sorting)
-			// 		})
-			// 		console.log("Developers",this.developers);
-			// 	},err=>{
-				// 		console.log("Couldn't get all developers ",err);
-				// 		this._alertService.error(err);
-				// 	})
-					// }
+
 
 

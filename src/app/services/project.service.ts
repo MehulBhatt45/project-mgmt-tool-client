@@ -201,9 +201,11 @@ export class ProjectService {
 	deleteSelectedFile(data){
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
+	
 	updateProject(data){
 		console.log("updated Data in project servie" , data);
 		var projectId = data._id;
+		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -296,7 +298,8 @@ export class ProjectService {
 	getTeamByProjectId(id){
 		var projectId = id;
 		return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
-	}	
+	}
+
 	addUser_with_file(body,files:any){
 		console.log("fhvg=>",files);
 		console.log("bodyyyyyyyyy===>",body);
@@ -311,219 +314,129 @@ export class ProjectService {
 		formdata.append('experience',body.experience);
 		formdata.append('profilePhoto',files[0]);
 		formdata.append("profilePhoto",files[1]);
-		// for(var i =0; i < files.length; i++){
-			// 	formdata.append("uploadFile",files[i]);
-			// }
-			console.log("body===>>>",body);
+		console.log("body===>>>",body);
+		return this.http.post(config.baseApiUrl+"user/signup",formdata);
+	}
+	addProject_Without_file(body){
+		console.log("addproject2 is calling");
+		console.log("body====>>",body);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
+
+	}
+	deleteTaskById(data){
+		var taskId = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
+	}
+	uploadFilesToFolder(data, file: FileList){
+		console.log(data);
+		let formData = new FormData();
+		formData.append("userId",data);
+		formData.append("uploadFile",file[0]);
+		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
+	}
+	//update employee profile (allemployee.component.ts) -adminSide
+	updateUserById(data){
+		var id = data._id;
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+	}
+
+	getUsersNotInProject(id){
+		return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
+	}
+
+	getAllProjectManagerNotInProject(id){
+		return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
+	}
+
+	deleteEmployeeById(userId){
+		console.log("devloperId{}{}{}-===",userId);
+		return this.http.delete(config.baseApiUrl+"user/delete-user/"+userId);
+	}
 
 
+	changeNoticePicture(files: any, data){
+		console.log("file is=================>",files);
+		console.log("data is ============>",data);
+		let formdata = new FormData();
+		formdata.append("noticeid",data);
+		formdata.append("profilePhoto",files[0]);
+		console.log("file is===>>>",files[0]);
+		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
+	}
 
-			return this.http.post(config.baseApiUrl+"user/signup",formdata);
+	addSprint(data){
+		console.log("data in service===>>>",data);
+		return this.http.post(config.baseApiUrl+"sprint/add-sprint",data);
 
-		}
-		addProject_Without_file(body){
-			console.log("addproject2 is calling");
-			console.log("body====>>",body);
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type':  'application/json',
-					'x-access-token':  JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
+	}
 
-		}
-		deleteTaskById(data){
-			var taskId = data._id;
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type':  'application/json',
-					'x-access-token':  JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
-		}
-		uploadFilesToFolder(data, file: FileList){
-			console.log(data);
-			let formData = new FormData();
-			formData.append("userId",data);
-			formData.append("uploadFile",file[0]);
-			return this.http.post(config.baseApiUrl+"project/upload-file", formData);
-		}
-		//update employee profile (allemployee.component.ts) -adminSide
-		updateUserById(data){
-			var id = data._id;
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Content-Type':  'application/json',
-					'x-access-token':  JSON.parse(localStorage.getItem('token'))
-				})
-			};
-			return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
-		}
+	getSprint(projectId){
+		console.log("data in service===>>>",projectId);
+		return this.http.get(config.baseApiUrl+"sprint/sprint-by-projects/"+projectId);
+	}
 
-		getUsersNotInProject(id){
-			return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
-		}
+	sprintById(sprintId){
+		console.log("data in service===>>>",sprintId);
+		return this.http.get(config.baseApiUrl+"sprint/sprint-by-sprint-id/"+sprintId);
 
-		getAllProjectManagerNotInProject(id){
-			return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
-		}
+	}
+	updateSprint(sprint){
+		console.log("sprint in service",sprint);
+		var sprintId = sprint._id;
+		return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
+	}
+	
+	completeSprint(sprintId){
+		console.log("sprint In service",sprintId);
+		return this.http.get(config.baseApiUrl+"sprint/sprint-complete/"+sprintId);
+	}
+	startSprint(sprintdata){
+		console.log("sprintData in service",sprintdata);
+		return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
+	}
 
-		deleteEmployeeById(userId){
-			console.log("devloperId{}{}{}-===",userId);
-			return this.http.delete(config.baseApiUrl+"user/delete-user/"+userId);
-		}
+	getProjectByPmanagerId(pmanagerId){
+		console.log("pmanagerId=====>",pmanagerId);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
 
+	}
 
-		changeNoticePicture(files: any, data){
-			console.log("file is=================>",files);
-			console.log("data is ============>",data);
-			let formdata = new FormData();
-			formdata.append("noticeid",data);
-			formdata.append("profilePhoto",files[0]);
-			console.log("file is===>>>",files[0]);
-			return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-		}
+	addNotification(body){
+		console.log("body in service" , body);
+		let formdata = new FormData();
+		formdata.append('pmanagerName',body.pmanagerName);
+		formdata.append('projectId', body.projectId);
+		formdata.append('subject',body.subject);
+		formdata.append('content',body.content);
+		formdata.append('sendTo',body.sendTo);
+		return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
 
+	}
+	getNotificationByUserId(currentUserId){
+		return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
+	}
 
+	deleteSprint(sprintId){
+		console.log("sprint in service",sprintId);
+		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
+	}
+}
 
-		addSprint(data){
-			console.log("data in service===>>>",data);
-			return this.http.post(config.baseApiUrl+"sprint/add-sprint",data);
-
-		}
-
-		getSprint(projectId){
-			console.log("data in service===>>>",projectId);
-			return this.http.get(config.baseApiUrl+"sprint/sprint-by-projects/"+projectId);
-		}
-
-		sprintById(sprintId){
-			console.log("data in service===>>>",sprintId);
-			return this.http.get(config.baseApiUrl+"sprint/sprint-by-sprint-id/"+sprintId);
-
-		}
-		updateSprint(sprint){
-			console.log("sprint in service",sprint);
-			var sprintId = sprint._id;
-			return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
-		}
-
-		// getTeamByProjectId(id){
-			// 	var projectId = id;
-			// 	return this.http.get(config.baseApiUrl+"project/get-developer-of-project/"+id);	
-			// }	
-			// addUser_with_file(body,files:any){
-				// 	console.log("fhvg=>",files);
-				// 	console.log("bodyyyyyyyyy===>",body);
-				// 	let formdata = new FormData();
-				// 	formdata.append('fname',body.fname);
-				// 	formdata.append('lname',body.lname);
-				// 	formdata.append('email',body.email);
-				// 	formdata.append('userRole',body.userRole);
-				// 	formdata.append('password',body.password);
-				// 	formdata.append('joiningDate',body.date);
-				// 	formdata.append('phone',body.mobile);
-				// 	formdata.append('experience',body.experience);
-				// 	formdata.append('profilePhoto',files[0]);
-				// 	formdata.append("profilePhoto",files[1]);
-				// 	// for(var i =0; i < files.length; i++){
-					// 		// 	formdata.append("uploadFile",files[i]);
-					// 		// }
-					// 		console.log("body===>>>",body);
-
-
-
-					// 		return this.http.post(config.baseApiUrl+"user/signup",formdata);
-
-					// 	}
-					// 	addProject_Without_file(body){
-						// 		console.log("addproject2 is calling");
-						// 		console.log("body====>>",body);
-						// 		const httpOptions = {
-							// 			headers: new HttpHeaders({
-								// 				'Content-Type':  'application/json',
-								// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-								// 			})
-								// 		};
-								// 		return this.http.post(config.baseApiUrl+"user/signup_without_file",body);
-
-								// 	}
-								// 	deleteTaskById(data){
-									// 		var taskId = data._id;
-									// 		const httpOptions = {
-										// 			headers: new HttpHeaders({
-											// 				'Content-Type':  'application/json',
-											// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-											// 			})
-											// 		};
-											// 		return this.http.delete(config.baseApiUrl+"tasks/delete-task-by-id/"+taskId);
-											// 	}
-											// 	uploadFilesToFolder(data, file: FileList){
-												// 		console.log(data);
-												// 		let formData = new FormData();
-												// 		formData.append("userId",data);
-												// 		formData.append("uploadFile",file[0]);
-												// 		return this.http.post(config.baseApiUrl+"project/upload-file", formData);
-												// 	}
-												// 	//update employee profile (allemployee.component.ts) -adminSide
-												// 	updateUserById(data){
-													// 		var id = data._id;
-													// 		const httpOptions = {
-														// 			headers: new HttpHeaders({
-															// 				'Content-Type':  'application/json',
-															// 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
-															// 			})
-															// 		};
-															// 		return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
-															// 	}
-
-															// 	getUsersNotInProject(id){
-																// 		return this.http.get(config.baseApiUrl+"user/get-user-not-in-project-team/"+id);
-																// 	}
-
-																// 	getAllProjectManagerNotInProject(id){
-																	// 		return this.http.get(config.baseApiUrl+"user/get-project-mngr-not-in-project-team/"+id);
-																	// 	}
-
-
-
-																	// 	deleteEmployeeById(developerid){
-																		// 		console.log("devloperId{}{}{}-===",developerid);
-																		// 		return this.http.delete(config.baseApiUrl+"user/deleteEmp/"+developerid);
-																		// 	}
-
-
-																		// 	changeNoticePicture(files: any, data){
-																			// 		console.log("file is=================>",files);
-																			// 		console.log("data is ============>",data);
-																			// 		let formdata = new FormData();
-																			// 		formdata.append("noticeid",data);
-																			// 		formdata.append("profilePhoto",files[0]);
-																			// 		console.log("file is===>>>",files[0]);
-																			// 		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-																			// 	}
-
-																			getProjectByPmanagerId(pmanagerId){
-																				console.log("pmanagerId=====>",pmanagerId);
-																				return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
-
-																			}
-
-																			addNotification(body){
-																				
-
-																				let formdata = new FormData();
-																				formdata.append('subject',body.subject);
-																				formdata.append('content',body.content);
-																				formdata.append('sendTo',body.sendTo);
-																				return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
-
-																			}
-
-																			deleteSprint(sprintId){
-																				console.log("sprint in service",sprintId);
-																				return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-																			}
-																		}
