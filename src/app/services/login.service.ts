@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { config } from '../config';
+import { Developers } from '../services/models/developers.model';
 @Injectable({
 	providedIn: 'root'
 })
@@ -100,7 +101,7 @@ export class LoginService {
 
     resetPwd(user){
         // console.log("res-=-=",user);
-        return this.http.put(config.baseApiUrl+"user/forgot-password",user);
+        return this.http.put<Developers[]>(config.baseApiUrl+"user/forgot-password",user);
     }
 
     updatepwd(user){

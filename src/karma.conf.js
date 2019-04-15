@@ -4,6 +4,7 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
+    
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
@@ -26,6 +27,10 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: false,
+    files: [
+      'https://code.jquery.com/jquery-1.11.3.min.js',
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+    ],
   });
 };
