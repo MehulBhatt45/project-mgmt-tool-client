@@ -33,6 +33,7 @@ import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
 import {BacklogComponent} from './backlog/backlog.component';
 import { AttendenceComponent } from './attendence/attendence.component';
+import { TimeLogComponent } from './time-log/time-log.component';
 
 
 
@@ -193,6 +194,10 @@ const routes: Routes = [
 		{
 			path:'attendence',
 			component:AttendenceComponent
+		},
+		{
+			path:'time-log/:id',
+			component:TimeLogComponent
 		}
 		]
 
