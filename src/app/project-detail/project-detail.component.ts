@@ -522,7 +522,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		onKey(searchText){
 			console.log("searchText",searchText);
-			console.log(this.project);
+			console.log("project=====>",this.project);
 			var dataToBeFiltered = [this.project];
 			var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
 			console.log("In Component",task);
