@@ -58,13 +58,11 @@ export class BacklogComponent implements OnInit {
 
 	ngOnInit() {
 		this.getProject(this.projectId);			
-		this.getSprint(this.projectId);
 		this.createEditSprintForm();
 		this.getTaskbyProject(this.projectId);
-
+		this.getSprint(this.projectId);
 
 		// Date Picker Valadation Start Here
-		
 
 		//console.log("this . prdead" , this.prdead);
 		
@@ -182,14 +180,11 @@ export class BacklogComponent implements OnInit {
 			console.log("prdead ===+++>" , prdead);
 			this.pduration = pdealine.diff(pstart,'days');
 			console.log("Project Duration=====>>>",this.pduration);
-			
-				
-					$('#startDate').pickadate({ 
-						min: new Date(),
-						max: [this.prdead]
-					})
-				
-			
+
+			$('#startDate').pickadate({ 
+				min: new Date(),
+				max: [this.prdead]
+			})	
 
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
@@ -369,6 +364,3 @@ export class BacklogComponent implements OnInit {
 		return duration = endLimit.diff(startLimit,'days')
 	}
 }
-
-
-
