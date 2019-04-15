@@ -5,10 +5,6 @@
 	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
-<<<<<<< HEAD
-	<div class="row no-margin no-padding" *ngIf="pro">
-		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
-=======
 
 	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
 		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
@@ -24,7 +20,6 @@
 		<div class="col-3">
 			<button type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
 		</div>
->>>>>>> 75ae43cee80756d836b41635abdc4d007d096b52
 	</div>
 
 	<div class="row">
