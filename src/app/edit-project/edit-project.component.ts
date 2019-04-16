@@ -260,14 +260,11 @@ export class EditProjectComponent implements OnInit {
 			}
 		}
 
-		addDeveloper(event){
-			console.log(event);
-
-
-
-			this.projectTeam.push(event);
-
-		}
+	addDeveloper(event){
+		console.log(event);
+		this.projectTeam.push(event);
+		
+	}
 
 		removeDeveloper(event){
 			console.log(event);
