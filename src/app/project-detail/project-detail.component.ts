@@ -279,7 +279,6 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("sort============>"  ,this.projectTeam);
 					})
 
-
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});
@@ -562,6 +561,7 @@ export class ProjectDetailComponent implements OnInit {
 						// if(content.status == track.id){
 							track.tasks.push(content);
 						}
+
 					}
 					else{
 						if(content.status == track.id){

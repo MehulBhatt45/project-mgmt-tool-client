@@ -422,11 +422,9 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
 	}
 
-
-
-		getProjectByPmanagerId(pmanagerId){
-			console.log("pmanagerId=====>",pmanagerId);
-			return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+	getProjectByPmanagerId(pmanagerId){
+		console.log("pmanagerId=====>",pmanagerId);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
 
 
 	}
@@ -448,17 +446,17 @@ export class ProjectService {
 
 
 
-		deleteSprint(sprintId){
-			console.log("sprint in service",sprintId);
-			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-		}
-
-		addTimeLog(data){
-			console.log('data=====++++++>',data);
-			return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
-		}
-
+	deleteSprint(sprintId){
+		console.log("sprint in service",sprintId);
+		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
 	}
+
+	addTimeLog(data){
+		console.log('data=====++++++>',data);
+		return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
+	}
+
+}
 
 
 

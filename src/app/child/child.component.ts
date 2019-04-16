@@ -87,10 +87,10 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+    //this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -136,10 +136,7 @@ export class ChildComponent  implements OnInit{
 
     ngOnChanges() {
       this._change.detectChanges();
-      this.trackss = this.tracks;
       console.log("ngOnChanges()  ===============================",this.tracks);
-      console.log("ngOnChanges()  ===============================",this.trackss);
-       
     }
 
 

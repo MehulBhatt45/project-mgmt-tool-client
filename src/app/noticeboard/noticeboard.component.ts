@@ -178,15 +178,14 @@ export class NoticeboardComponent implements OnInit {
 
   }
 
-  deleteNoticeImage(file, index){
+  deleteNoticeImage(index){
     console.log(index);
-    this.noticeImg.splice(_.findIndex(this.noticeImg, index), 1);
-    if(this.files && this.files.length)
-      this.noticeImg.splice(_.findIndex(this.noticeImg, index), 1);
-    // this._projectservice.updateNotice(this.noticeImg).subscribe((res:any)=>{
-      //   console.log(res);
-      //   this.getAllNotice();
-      // })
-    }
+    console.log(this.singlenotice.images);
+    this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, index), 1);
+    if(this.singlenotice.images && this.singlenotice.length)
+      this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, index), 1);
+
   }
+
+}
 
