@@ -36,6 +36,7 @@ export class UserprofileComponent implements OnInit {
 	item;
 	total:any =[]; 
 	task;
+	uid;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	
@@ -58,6 +59,8 @@ export class UserprofileComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.userId = param.id;
 			this.projectId = param.id;
+			this.uid = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("uid-=-=",this.uid);
 			// this.getDeveloperById(this.userId);
 			// this.getAllProjects(this.projectId);
 		});

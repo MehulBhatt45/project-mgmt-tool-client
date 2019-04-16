@@ -291,6 +291,7 @@ export class HeaderComponent implements OnInit {
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
+			this.files = this.url = [];
 			console.log("res-=-=",this.projectId);
 			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
@@ -326,8 +327,19 @@ export class HeaderComponent implements OnInit {
 		});  
 	}
 
-	onSelectFile(event){
-		this.files = event.target.files;
+	onSelectFile(event,option){
+		// this.files = event.target.files;
+		_.forEach(event.target.files, (file:any)=>{
+			this.files.push(file);
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
+				if(option == 'item')
+					this.url.push(e.target.result);
+				if(option == 'comment')
+					this.commentUrl.push(e.target.result);
+			}
+		})
 	}
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
@@ -354,5 +366,15 @@ export class HeaderComponent implements OnInit {
 
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
+	}
+	close(){
+		this.editTaskForm.reset();
+		this.url = this.files = [];
+		// this.task.estimatedTime = " ";
+		// this.editTaskForm.estimatedTime = "";
+		$("#estTime").val(null);
+		$("#priority").val(null);
+		// this.task.priority = null;
+		// this.newTask.priority = null;
 	}
 }
