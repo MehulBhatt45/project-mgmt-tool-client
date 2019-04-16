@@ -86,8 +86,8 @@ export class LoginService {
             }
     
 
-    editUserProfileWithFile( data){
-        var id = JSON.parse(localStorage.getItem('currentUser'))._id;
+    editUserProfileWithFile( data, id){
+        // var id = JSON.parse(localStorage.getItem('currentUser'))._id;
         return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
     }
 

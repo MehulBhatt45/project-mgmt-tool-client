@@ -6,6 +6,7 @@ import { ProjectService } from '../services/project.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import {SearchTaskPipe} from '../search-task.pipe';
 import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -72,12 +73,16 @@ export class ChildComponent  implements OnInit{
   taskArr= [];
   running: boolean = false;
   timerRef;
-  initialTime = 0;
+  initialTime = 0;  
   trackss:any;
   currentsprintId;
   
+
+  
+
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
-    public _commentService: CommentService, public _change: ChangeDetectorRef) { 
+    public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe) { 
+
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
@@ -85,7 +90,7 @@ export class ChildComponent  implements OnInit{
     // this.getProject(this.projectId);
   }
   ngOnInit(){
-    //this.getProject(this.projectId);
+    this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -418,14 +423,14 @@ export class ChildComponent  implements OnInit{
  
 
 
-    getHHMMTime(difference){
+    // getHHMMTime(difference){
 
-      difference = difference.split("T");  
-      difference = difference[1];
-      difference = difference.split(".");
-      // console.log('difference',difference[0]);
-      return difference[0];
-    }
+    //   difference = difference.split("T");  
+    //   difference = difference[1];
+    //   difference = difference.split(".");
+    //   // console.log('difference',difference[0]);
+    //   return difference[0];
+    // }
     getTime(counter){
       var milliseconds = ((counter % 1000) / 100),
       seconds = Math.floor((counter / 1000) % 60),
@@ -469,16 +474,16 @@ export class ChildComponent  implements OnInit{
           res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
-          this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
-          })
+          // this.projectTeam.sort(function(a, b){
+          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          //   if (nameA < nameB) //sort string ascending
+          //     return -1 
+          //   if (nameA > nameB)
+          //     return 1
+          //   return 0 //default return value (no sorting)
+          //   this.projectTeam.push
+          //   console.log("sorting============>"  ,this.projectTeam);
+          // })
 
 
         },(err:any)=>{
@@ -575,6 +580,34 @@ export class ChildComponent  implements OnInit{
 
     }
 
+    // onKey(searchText){
+    //   console.log("searchText",searchText);
+    //   console.log(this.project);
+    //   var dataToBeFiltered = [this.project];
+    //   var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+    //   console.log("In Component",task);
+    //   this.getEmptyTracks();
+    //   _.forEach(task, (content)=>{
+    //     _.forEach(this.tracks, (track)=>{
+    //       if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+    //         if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+    //           // if(content.status == track.id){
+    //             track.tasks.push(content);
+    //           }
+
+    //         }
+    //         else{
+    //           if(content.status == track.id){
+    //             track.tasks.push(content);
+    //           }
+    //         }
+    //       });
+    //   });
+    // }
+
+  
+
+
    
 
 
@@ -631,3 +664,4 @@ export class ChildComponent  implements OnInit{
     }
  
   
+

@@ -191,15 +191,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		setTimeout(()=>{
+		// setTimeout(()=>{
 
-			$('[data-toggle="popover-hover"]').popover({
-				html: true,
-				trigger: 'hover',
-				placement: 'bottom',
-				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
-			});
-		},2000);
+		// 	$('[data-toggle="popover-hover"]').popover({
+		// 		html: true,
+		// 		trigger: 'hover',
+		// 		placement: 'bottom',
+		// 		content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+		// 	});
+		// },2000);
 		// this.getProject(this.id);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
@@ -268,17 +268,16 @@ export class ProjectDetailComponent implements OnInit {
 					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-						this.projectTeam.push
-						console.log("sort============>"  ,this.projectTeam);
-					})
-
+					// this.projectTeam.sort(function(a, b){
+					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					// 	if (nameA < nameB) //sort string ascending
+					// 		return -1 
+					// 	if (nameA > nameB)
+					// 		return 1
+					// 	return 0 //default return value (no sorting)
+					// 	this.projectTeam.push
+					// 	console.log("sort============>"  ,this.projectTeam);
+					// })
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
