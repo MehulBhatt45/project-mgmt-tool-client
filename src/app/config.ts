@@ -6,7 +6,6 @@ const baseUrl = "http://localhost:4001/";
 // const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
 const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
 
-
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,

@@ -59,6 +59,8 @@ export class HeaderComponent implements OnInit {
 			priority : new FormControl('', Validators.required),
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl('',Validators.required)
+			// dueDate : new FormControl('',Validators.required),
+			// estimatedTime: new FormControl(),
 		})
 	}
 

@@ -14,12 +14,23 @@
 			<select  class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
 				<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 			</select>
+	<!-- <div class="row" *ngIf="pro || activeSprint">
+		<div class="col-12 col-md-6">
+			<div class="row">
+				<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
+				<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
+				<div class="md-form form-group col-4">
+					<select  class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+						<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+					</select>
+				</div>
+			</div> -->
 		</div>
 		<div class="col-3">
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
 		<div class="col-3">
-			<button type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
+			<button *ngIf="activeSprint" type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
 		</div>
 	</div>
 
