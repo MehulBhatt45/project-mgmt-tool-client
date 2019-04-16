@@ -209,6 +209,7 @@ export class BacklogComponent implements OnInit {
 	addSprint(addForm){
 		addForm.startDate = $('#startDate').val();
 		addForm.endDate = $('#endDate').val();
+		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);
 		addForm.projectId = this.projectId;
 		console.log("form value==>>",addForm);
 
@@ -363,7 +364,6 @@ export class BacklogComponent implements OnInit {
 	}
 
 	getTaskCount(sprintId, status){
-		console.log(this.project);
 		return _.filter(this.project, function(o) {  
 			if(o.sprint._id == sprintId && o.status == status){
 				return o;

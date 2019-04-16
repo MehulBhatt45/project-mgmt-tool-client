@@ -47,6 +47,7 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 }
 .star_link{
   color:black;
+  padding-left: 25px;
 }
 .fa-star,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
@@ -311,4 +312,24 @@ ol.breadcrumb.hidden-lg-down li a {
     /*background-color: black !important;*/
     background-image: url('../../assets/bg1.jpg');
 }
-
+.notification_count[_ngcontent-c2] {
+    background-color: #ffaa09;
+    color: black;
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    line-height: 20px;
+    top: -15px;
+    right: 12px;
+    height: 26px;
+    width: 25px;
+    text-align: center;
+    border: 1px solid black;
+    /* border-radius: 1px; */
+    border-right-color: black;
+}
+.notification_count span.custom_badge {
+  line-height: 22px;
+  display: inline-block;
+  font-size: 14px;
+}
