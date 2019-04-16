@@ -351,6 +351,7 @@ export class BacklogComponent implements OnInit {
 	}
 
 	getTaskCount(sprintId, status){
+		console.log(this.project);
 		return _.filter(this.project, function(o) {  
 			if(o.sprint._id == sprintId && o.status == status){
 				return o;
