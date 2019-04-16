@@ -1,3 +1,4 @@
+
 <!-- Task Details Card -->
 
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
@@ -36,15 +37,13 @@
 										<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
 									</li>
 									<li>
-										<ul *ngIf="task.assignTo" class="team-members">	
-											<li  [title]="getTitle(task.assignTo.name)">
+										<ul class="team-members">	
+											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
 												<a href="javascript:void(0);">
 													<div class="user_profile_pic"><img src="{{path}}{{task.assignTo	.profilePhoto}}" class="img-rounded" routerLink = "/visit-user-profile/{{task.assignTo._id}}" onerror="this.src='assets/4.jpeg'" ></div>
 												</a>
 											</li>
-										</ul>
-										<ul *ngIf="!task.assignTo" class="team-members">
-											<li  class="add-member">
+											<li *ngIf="!task.assignTo" class="add-member">
 												<a href="javascript:void(0);" title="Add Member">
 													<i class="fa fa-user-plus"></i>
 												</a>
@@ -53,7 +52,7 @@
 									</li>
 								</ul>
 								<label class="float-right">{{task.uniqueId}}</label>
-								<label *ngIf="task.assignTo" class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+								<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
 						</div>
 					</mat-card-content>
@@ -62,6 +61,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 <!-- Task details Modal -->
@@ -147,10 +147,6 @@
 									<label><strong>Sprint: &nbsp;</strong></label>
 									<span>{{task.sprint.title}}</span>
 								</p>
-								<p *ngIf="task.status == 'complete'">
-									<label><strong>Completed Date: &nbsp;</strong></label>
-									<span>{{task.completedAt | date:'short'}}</span>
-								</p>
 							</div>
 
 							<div class="row justify-content-between">
@@ -167,7 +163,6 @@
 							<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete'" (click)="updateStatus('in progress', task)">Reset progress</button>
 						</div>
 						<div>
 							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">Edit</button>
@@ -304,10 +299,10 @@
 							<div class="form-group col-12">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 							</div>
 							<div class="form-group col-6">

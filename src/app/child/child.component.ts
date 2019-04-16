@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { config } from '../config';
@@ -56,26 +56,24 @@ export class ChildComponent  implements OnInit{
   selectedProjectId = "all";
   selectedDeveloperId = "all";
   sprints;
-  assignTo;
+  currentsprintId;
   
   
 
-  constructor( private route: ActivatedRoute,public _projectService: ProjectService,public router:Router,
+  constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef) { 
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     // console.log(this.tracks);
-    
   }
 
   ngOnInit(){
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
   }
-
   
   ngOnChanges() {
     this._change.detectChanges();
@@ -144,12 +142,13 @@ export class ChildComponent  implements OnInit{
       break;
     }
   }
+  
   createEditTaskForm(){
     this.editTaskForm = new FormGroup({
       title : new FormControl('', Validators.required),
       desc : new FormControl('', Validators.required),
       assignTo : new FormControl('', Validators.required),
-      // sprint :new FormControl('',Validators.required),
+      sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
       startDate : new FormControl('', Validators.required),
       dueDate : new FormControl('', Validators.required),
@@ -215,6 +214,7 @@ export class ChildComponent  implements OnInit{
       data.append("projectId",this.projectId);
       data.append("taskId",taskId);
       // data.append("Images",this.images);
+      //this.ngOnChanges();
       for(var i = 0; i < this.files.length; i++)
         data.append("fileUpload",this.files[i]);
     }else{
@@ -304,14 +304,12 @@ export class ChildComponent  implements OnInit{
       }
     }
     console.log("update =====>",task);
-    console.log("data",data);
     this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
       Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
-      $('#fullHeightModalRight').modal('hide');
-      this.getProject(this.projectId);
+       // this.getProject(this.projectId);
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
@@ -320,44 +318,33 @@ export class ChildComponent  implements OnInit{
       Swal.fire('Oops...', 'Something went wrong!', 'error')
       console.log(err);
       this.loader = false;
-      //$('#alert').css('display','block');
     })
 
   }
   getEmptyTask(){
     return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
+
   updateStatus(newStatus, data){
-    $('#fullHeightModalRight').modal('hide');
-    if(newStatus == 'complete'){
+    if(newStatus=='complete'){
       data.status = newStatus;
       this._projectService.completeItem(data).subscribe((res:any)=>{
         console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is shifted to complete from testing" ,
-          showConfirmButton:false,timer: 2000})
+
       },err=>{
         console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
       });
     }else{
       data.status = newStatus;
       console.log("UniqueId", data.uniqueId);
       this._projectService.updateStatus(data).subscribe((res:any)=>{
         console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is"  + " " +res.timelog[n -1].operation ,
-          showConfirmButton:false,timer: 2000})
+        // this.getProject(res.projectId);
       },(err:any)=>{
+
         console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
       })
+
     }
   }
 
@@ -394,17 +381,17 @@ export class ChildComponent  implements OnInit{
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           this.projectTeam.sort(function(a, b){
-            if (a.name && b.name) {
-              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-              if (nameA < nameB) //sort string ascending
-                return -1 
-              if (nameA > nameB)
-                return 1
-              return 0 //default return value (no sorting)
-              this.projectTeam.push
-              console.log("sorting============>"  ,this.projectTeam);
-            }
+            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+            if (nameA < nameB) //sort string ascending
+              return -1 
+            if (nameA > nameB)
+              return 1
+            return 0 //default return value (no sorting)
+            this.projectTeam.push
+            console.log("sorting============>"  ,this.projectTeam);
           })
+
+
         },(err:any)=>{
           console.log("err of team============>"  ,err);
         });
@@ -412,8 +399,7 @@ export class ChildComponent  implements OnInit{
         console.log("err of project============>"  ,err);
       });
 
-      console.log("current user ===>" , this.projectId);
-      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
+      this._projectService.getTaskById(id).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
@@ -421,15 +407,15 @@ export class ChildComponent  implements OnInit{
         // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
-          // console.log("task ======>" , task);
+          console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            // console.log("tracks==-=-=-=-",this.tracks);
+            console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
               if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
               }
             }else{
-              if(task.status == track.id){
+              if(task.status == track.id ){
                 track.tasks.push(task);
               }
             }
@@ -462,9 +448,6 @@ export class ChildComponent  implements OnInit{
       task.dueDate = moment().add(task.dueDate,'days').toString();
       task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
       console.log(task);
-      if(task.sprint){
-        delete task['sprint'];
-      }
       let data = new FormData();
       _.forOwn(task, function(value, key) {
         data.append(key, value)
@@ -502,4 +485,5 @@ export class ChildComponent  implements OnInit{
       });
 
     }
+
   }

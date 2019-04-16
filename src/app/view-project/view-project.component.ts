@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {AlertService} from '../services/alert.service';
 import { ActivatedRoute } from '@angular/router';
+import{LeaveService} from '../services/leave.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
 declare var $ : any;
 import * as _ from 'lodash';
@@ -16,6 +17,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./view-project.component.css']
 })
 export class ViewProjectComponent implements OnInit {
+  currentEmployeeId = JSON.parse(localStorage.getItem("currentUser"))._id;
+  currentUserName = JSON.parse(localStorage.getItem("currentUser")).name;
+  checkInStatus = JSON.parse(localStorage.getItem('checkIn'));
   projects;
   projectTeam;
   addForm:FormGroup; 
@@ -33,6 +37,8 @@ export class ViewProjectComponent implements OnInit {
   projectId;
   project;
   demoprojects = [];
+  timediff:any;
+  attendence:any;
   idpmt:any;
   objectsArray:any;
   hoveredProject: any;
@@ -40,7 +46,8 @@ export class ViewProjectComponent implements OnInit {
   ary:any;
   optionsSelect: Array<any>;
   pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
+  flag:boolean = false;
+  constructor( public _leaveService:LeaveService,private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -60,23 +67,17 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
 
+   if(this.checkInStatus == false){
 
-      // $('[data-toggle="popover"]').popover(); 
-      $('[data-toggle="popover-hover"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'bottom',
-        // content: function () { return '<p>hELLO</p>'; }
-        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
-      }, ()=>{
-        console.log("Hover");
-      });
+   $('#myModal').modal('show');
+   
+   }else{
 
+      $('#myModal').modal('hide');
 
+   }
 
-    },100);
     this.getProjects();
 
     this.getAllDevelopers();
@@ -101,6 +102,68 @@ export class ViewProjectComponent implements OnInit {
   timePicked(){
     this.addForm.controls.deadline.setValue($('.datepicker').val())
   }
+
+  checkIn(){
+
+    
+
+    this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+      console.log("respopnse of checkin=======<",res);
+
+      res.difference = res.difference.split("T");
+      res.difference = res.difference[1];
+      res.difference = res.difference.split("Z");
+      res.difference = res.difference[0];
+      console.log("diffrence====-=-=-=-=-=-=-",res.difference);
+      this.timediff = res.difference;
+      console.log("timediff--=-=-=-=",this.timediff);
+
+
+      this.attendence = res.in_out;
+      console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
+
+
+      _.forEach(this.attendence , (attendence)=>{
+        console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
+        if(attendence.checkOut != null){
+          attendence.checkOut = attendence.checkOut.split("T");
+          attendence.checkOut = attendence.checkOut[1];
+          attendence.checkOut = attendence.checkOut.split("Z");
+          attendence.checkOut = attendence.checkOut[0];
+        }
+      })
+
+      _.forEach(this.attendence , (attendence)=>{
+        console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
+        if(attendence.checkIn != null){
+          attendence.checkIn = attendence.checkIn.split("T");
+          attendence.checkIn = attendence.checkIn[1];
+          attendence.checkIn = attendence.checkIn.split("Z");
+          attendence.checkIn = attendence.checkIn[0];
+        }
+      })
+
+      // this.date = this.attendence.checkIn;
+      // console.log("date][][][][][][][][",time);
+
+      localStorage.setItem("checkIn",JSON.stringify(true));
+      this.checkInStatus = true;
+      Swal.fire({
+        title: 'Hey! '+this.currentUserName,
+        text:'Check In Successfully',
+        // html:'<strong>Hey</strong> '+this.currentUserName,
+        // type: 'success',
+        // // text: 'hey '+this.currentUserName,
+        // title: 'Check In Successfully',
+        // showConfirmButton:false,
+        timer: 2000
+      })
+    },(err:any)=>{
+      console.log("err of checkin=>",err);
+    })
+
+  }
+
 
   getProjects(){
     this.loader=true;
@@ -134,7 +197,6 @@ export class ViewProjectComponent implements OnInit {
       Swal.fire('Oops...', 'Something went wrong!', 'error')  
       this.loader=false;
     });
-
   }
   getDate(date){
     date = date.split("T");
@@ -258,7 +320,6 @@ getTaskCount(status){
 }
 
 mouseOver(project){
-
   this.hoveredProject = project;
 }
 

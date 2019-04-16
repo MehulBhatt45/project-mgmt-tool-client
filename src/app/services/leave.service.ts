@@ -180,4 +180,12 @@ empAttendence(date){
 	console.log("event of emp service",obj);
 	return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
 }
+getUserById(date){
+
+var obj = {date:date};
+console.log("date event------=-=-=-=",obj);
+
+return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
+
+}
 }

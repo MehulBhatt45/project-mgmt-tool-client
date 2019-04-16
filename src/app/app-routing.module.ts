@@ -63,7 +63,7 @@ const routes: Routes = [
 		{
 			path:'',
 			pathMatch:"full",
-			redirectTo:'attendence'
+			redirectTo:'view-projects'
 		},
 		{
 			path:'noticeboard',

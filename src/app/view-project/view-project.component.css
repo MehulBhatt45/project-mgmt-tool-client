@@ -269,7 +269,7 @@ a.btn-floating.btn-action {
     text-align: center;
 }
 a.btn-floating.btn-action i{
-    width: auto;
+    width: 0px auto;
 }
 @media (max-width: 1199px){
 }

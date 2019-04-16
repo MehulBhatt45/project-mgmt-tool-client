@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild,
   import { startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay,isSameMonth,addHours
   } from 'date-fns';
   import { Subject } from 'rxjs';
+  import { ProjectService } from '../services/project.service';
   import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   import {
     CalendarEvent,
@@ -49,19 +50,30 @@ import { Component, OnInit, ViewChild,
     checkInStatus = JSON.parse(localStorage.getItem('checkIn'));
     logs;
     diff:any;
+    check:any;
     timediff:any;
     gate:any;
     attedenceByDateError;
     errMessage;
     loader : boolean = false;
+    userid = [];
+    presentid = [];
+    presentuser:any;
+    absentuser:any;
     attendence:any;
     items;
     date = [];
+    checkin = [];
+    checkout = [];
     att=[];
+    missing:any;
     totaldifff:any;
     currentDate;
+    developers:any;
+    filteredDevelopers;
     attendenceByDate = [];
     select;
+    currentUser = JSON.parse(localStorage.getItem('currentUser'));
     maxtime:any;
 
     view: string = 'month';
@@ -75,7 +87,7 @@ import { Component, OnInit, ViewChild,
     clickedColumn: number;
 
     constructor(public router:Router, public _leaveService:LeaveService,
-      public _alertService: AlertService,private route: ActivatedRoute,private modal: NgbModal) {
+      public _alertService: AlertService,private route: ActivatedRoute,private modal: NgbModal,public _projectService: ProjectService) {
       this.route.queryParams
       .subscribe(params=>{
         this.items = params;
@@ -90,6 +102,7 @@ import { Component, OnInit, ViewChild,
     ngOnInit() {
 
       localStorage.setItem("checkIn",JSON.stringify(false));
+      this.getAllDevelopers();
 
       // $('.datepicker').pickadate({ 
         //   onSet: function(context) {
@@ -105,6 +118,50 @@ import { Component, OnInit, ViewChild,
           }
 
 
+        }
+
+
+        getAllDevelopers(){
+          this._projectService.getAllDevelopers().subscribe(res=>{
+            console.log("msg-------",res);
+            // this.developers = res;
+            this.developers = res;
+            this.userid = [];
+            _ .forEach(this.developers,(developer)=>{
+              // console.log("userid=======",developer._id);
+
+
+              this.userid.push(developer.name);
+
+
+
+            })
+            console.log("userid============",this.userid);
+            // this.filteredDevelopers = res;
+            // console.log("dev()()==-=-=-=-",this.userid);
+
+            // this.addEmployeeForm = res;
+            this.developers.sort(function(a, b){
+              if (a.name && b.name) {
+                var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+                if (nameA < nameB) //sort string ascending
+                  return -1 
+                if (nameA > nameB)
+                  return 1
+                return 0 //default return value (no sorting)
+              }
+            })
+            console.log("Developers",this.developers);
+          },err=>{
+            console.log("Couldn't get all developers ",err);
+            this._alertService.error(err);
+          })
+          setTimeout(()=>{
+            console.log("rotate js--------------------")
+            $('a.rotate-btn').click(function () {
+              $(this).parents(".card-rotating").toggleClass('flipped');
+            });
+          },2000);
         }
 
 
@@ -197,8 +254,17 @@ import { Component, OnInit, ViewChild,
 
           this._leaveService.empAttendence(date).subscribe((res:any)=>{
             console.log("res ==>" , res);
+            res.difference = res.difference.split("T");
+            res.difference = res.difference[1];
+            res.difference = res.difference.split("Z");
+            res.difference = res.difference[0];
+            console.log("diffrence====-=-=-=-=-=-=-",res.difference);
             this.gate = res.difference;
-            console.log("gate========{}{}",this.gate);
+            console.log("timediff--=-=-=-=",this.gate);
+
+
+            // this.gate = res.difference;
+            // console.log("gate========{}{}",this.gate);
             
 
             if(res == null){
@@ -251,7 +317,42 @@ import { Component, OnInit, ViewChild,
             this.errMessage = "Either Absent Or Holiday"
             console.log("error",err);
           })
+
+          this._leaveService.getUserById(date).subscribe((res:any)=>{
+
+            console.log("response--------------===========-=",res);
+            this.presentuser = res;
+
+
+
+            this.presentid = [];
+            _ .forEach(this.presentuser,(present)=>{
+              // console.log("userid=======",developer._id);
+
+
+              this.presentid.push(present.UserName);
+
+
+
+            })
+            console.log("present userid============",this.presentid);
+            // this.filteredDevelopers = res;
+
+
+
+
+            
+
+            this.missing = this.userid.filter(item => this.presentid.indexOf(item) < 0);
+            console.log("absent student========>>>>",this.missing);
+
+            
+          })
+
+
         }
-
-
       }
+
+
+
+

@@ -77,22 +77,22 @@
 
 
 
-		<tr *ngFor="let ateendence of logs;let i=index;">
-			<td>{{ateendence.checkIn}}</td>
+			<tr *ngFor="let ateendence of logs;let i=index;">
+				<td>{{ateendence.checkIn}}</td>
 
-			<td>{{ateendence.checkOut}}</td>
+				<td>{{ateendence.checkOut}}</td>
 
-			<td>{{ateendence.diff}}</td>
-		</tr>
-	</tbody>
-</table>
+				<td>{{ateendence.diff}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div class="row">
 	<table class="table">
 		<thead>
 			<tr>
 
-				<th scope="col">Work Time</th>
+				<th scope="col"><i class="far fa-clock"></i> Work Time</th>
 
 			</tr>
 
@@ -105,6 +105,67 @@
 
 	</table>
 </div>
+<div class="row">
+	<table class="table" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+		<thead>
+			<tr>
+
+				<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
+				<th scope="col">Check In</th>
+				<th scope="col">Check Out</th>
+				<th scope="col">Difference</th>
+				
+
+				<th scope="col">Sign</th>
+
+
+			</tr>
+
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of presentuser,let i=index">
+				<td>{{user.UserName}}</td>
+				<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
+				<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+				<td>{{user.difference | date:'mediumTime'}}</td>
+
+				<td><i class="fas fa-check"></i></td>
+				<!-- <td></td> -->
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+<div class="row">
+	<table class="table" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+		<thead>
+			<tr>
+
+				<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
+				
+				
+
+				<th scope="col">Sign</th>
+
+
+			</tr>
+
+		</thead>
+		<tbody>
+			<tr *ngFor="let i of missing">
+				<td>{{i}}</td>
+				
+
+				<td><i class="fas fa-times"></i></td>
+				
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
 
 
 	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
