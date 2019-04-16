@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener,EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener,EventEmitter} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { ProjectService } from '../services/project.service';
 import { ActivatedRoute } from '@angular/router';
@@ -43,6 +43,7 @@ export class BacklogComponent implements OnInit {
 	pstart;
 	pduration:number = 0;
 	remainingLimit:number = 0;
+	pDuration;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
 		this.route.params.subscribe(param=>{
@@ -61,6 +62,11 @@ export class BacklogComponent implements OnInit {
 		this.createEditSprintForm();
 		this.getTaskbyProject(this.projectId);
 		this.getSprint(this.projectId);
+		$('#startDate').pickadate({ 
+			min: new Date(),
+		})	
+
+		
 
 		// Date Picker Valadation Start Here
 
@@ -180,12 +186,9 @@ export class BacklogComponent implements OnInit {
 			console.log("prdead ===+++>" , prdead);
 			this.pduration = pdealine.diff(pstart,'days');
 			console.log("Project Duration=====>>>",this.pduration);
+			localStorage.setItem('projectduration' , JSON.stringify(this.pduration));
 
-			$('#startDate').pickadate({ 
-				min: new Date(),
-				max: [this.prdead]
-			})	
-
+			
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
@@ -210,7 +213,7 @@ export class BacklogComponent implements OnInit {
 
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			console.log(res);
+			console.log("All sprint response--------->>>>>>>",res);
 			this.sprints = res;
 			_.forEach(this.sprints , (sprint)=>{
 				console.log("single sptint",typeof sprint.duration);
@@ -220,11 +223,12 @@ export class BacklogComponent implements OnInit {
 					this.Active = true;
 				}
 			})
+			this.pDuration = JSON.parse(localStorage.getItem('projectduration'));
 			console.log("is Active available sprint",this.Active);
 			console.log("total sprint Duration",this.totalSDuration);
-			console.log("total project Duration",this.pduration);
+			console.log("total project Duration",this.pDuration);
 			
-			this.remainingLimit = this.pduration - this.totalSDuration;
+			this.remainingLimit = this.pDuration - this.totalSDuration;
 			console.log("this.remainingLimit",this.remainingLimit);
 		},(err:any)=>{
 			console.log(err);
@@ -294,15 +298,12 @@ export class BacklogComponent implements OnInit {
 		},err=>{
 			console.log(err);    
 		})
-
 	}
 
-	startSprint(sprintid,sprint){
-		sprint.startDate = $('#startDate').val();
-		sprint.endDate = $('#endDate').val();
-		sprint.sprintId = sprintid;
+	startSprint(sprint){
+		console.log("start sprint =====>",sprint);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
-		console.log("sprint ID=========>>>>",this.sprintData);
+		console.log("sprint ID=========>>>>",sprint);
 		if(sprint.duration > this.remainingLimit){
 			Swal.fire('Oops...', 'sprint Duration over projectdue!', 'error')
 		}
@@ -318,7 +319,7 @@ export class BacklogComponent implements OnInit {
 			}).then((result) => {
 				if (result.value) {
 
-					this._projectService.startSprint(this.sprintData).subscribe((res:any)=>{
+					this._projectService.startSprint(sprint).subscribe((res:any)=>{
 						Swal.fire(
 							'Started!',
 							'Your Sprint has been Started.',
@@ -334,7 +335,7 @@ export class BacklogComponent implements OnInit {
 				}
 			})
 		}
-		
+
 	}
 
 	getTaskbyProject(projectId){
@@ -363,4 +364,33 @@ export class BacklogComponent implements OnInit {
 		var duration;
 		return duration = endLimit.diff(startLimit,'days')
 	}
+
+	completeSprint(sprintId){
+		console.log("Sprint ID=====>>>",sprintId);
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,complete it!'
+		}).then((result) => {
+			if (result.value) {
+
+				this._projectService.completeSprint(sprintId).subscribe((res:any)=>{
+					Swal.fire(
+						'Complete!',
+						'Your Sprint has been Completed.',
+						'success'
+						)
+					this.getSprint(this.projectId);
+				},err=>{
+					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+
+			}
+		})
+	}	
 }
