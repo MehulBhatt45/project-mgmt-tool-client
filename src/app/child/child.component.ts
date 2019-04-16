@@ -76,6 +76,7 @@ export class ChildComponent  implements OnInit{
   initialTime = 0;  
   trackss:any;
   currentsprintId;
+  images = [];
   
 
   
@@ -273,9 +274,9 @@ export class ChildComponent  implements OnInit{
         data.append("userId",this.currentUser._id);
         data.append("projectId",this.projectId);
         data.append("taskId",taskId);
-        // data.append("Images",this.images);
+        data.append("Images",this.images);
         for(var i = 0; i < this.files.length; i++)
-          data.append("fileUpload",this.files[i]);
+          data.append('fileUpload',this.files[i]);
       }else{
         data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
       }
