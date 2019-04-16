@@ -74,7 +74,7 @@ export class ProjectDetailComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getProject(this.projectId);
+			// this.getProject(this.projectId);
 		});
 		this.createEditTaskForm();
 
@@ -252,79 +252,79 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-	getProject(id){
+	// getProject(id){
 
-		console.log("projectId=====>",this.projectId);
-		this.loader = true;
-		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
-				console.log("title=={}{}{}{}{}",res);
-				this.temp = res;
-				this.pro = res;
-				console.log("project detail===>>>>",this.pro);
-				this.projectId=this.pro._id;
-				console.log("iddddd====>",this.projectId);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					res.Teams.push(this.pro.pmanagerId); 
-					console.log("response of team============>"  ,res.Teams);
-					this.projectTeam = res.Teams;
-					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-						this.projectTeam.push
-						console.log("sort============>"  ,this.projectTeam);
-					})
+	// 	console.log("projectId=====>",this.projectId);
+	// 	this.loader = true;
+	// 	setTimeout(()=>{
+	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
+	// 			console.log("title=={}{}{}{}{}",res);
+	// 			this.temp = res;
+	// 			this.pro = res;
+	// 			console.log("project detail===>>>>",this.pro);
+	// 			this.projectId=this.pro._id;
+	// 			console.log("iddddd====>",this.projectId);
+	// 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+	// 				res.Teams.push(this.pro.pmanagerId); 
+	// 				console.log("response of team============>"  ,res.Teams);
+	// 				this.projectTeam = res.Teams;
+	// 				this.projectTeam.sort(function(a, b){
+	// 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+	// 					if (nameA < nameB) //sort string ascending
+	// 						return -1 
+	// 					if (nameA > nameB)
+	// 						return 1
+	// 					return 0 //default return value (no sorting)
+	// 					this.projectTeam.push
+	// 					console.log("sort============>"  ,this.projectTeam);
+	// 				})
 
 
-				},(err:any)=>{
-					console.log("err of team============>"  ,err);
-				});
-			},(err:any)=>{
-				console.log("err of project============>"  ,err);
-			});
+	// 			},(err:any)=>{
+	// 				console.log("err of team============>"  ,err);
+	// 			});
+	// 		},(err:any)=>{
+	// 			console.log("err of project============>"  ,err);
+	// 		});
 
-			this._projectService.getTaskById(id).subscribe((res:any)=>{
-				console.log("all response ======>" , res);
-				this.getEmptyTracks();
-				this.project = res;
-				// this.project.sort(custom_sort);
-				// this.project.reverse();
+	// 		this._projectService.getTaskById(id).subscribe((res:any)=>{
+	// 			console.log("all response ======>" , res);
+	// 			this.getEmptyTracks();
+	// 			this.project = res;
+	// 			// this.project.sort(custom_sort);
+	// 			// this.project.reverse();
 
-				console.log("PROJECT=================>", this.project);
-				_.forEach(this.project , (task)=>{
-					_.forEach(this.tracks , (track)=>{
-						console.log("track in foreach",task.sprint.status);
+	// 			console.log("PROJECT=================>", this.project);
+	// 			_.forEach(this.project , (task)=>{
+	// 				_.forEach(this.tracks , (track)=>{
+	// 					console.log("track in foreach",task.sprint.status);
 
-						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
-								track.tasks.push(task);
-							}
-						}else{
-							if(task.status == track.id && task.sprint.status == 'Active'){
-								track.tasks.push(task);
-							}
-						}
-					})
-				})
+	// 					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+	// 						if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
+	// 							track.tasks.push(task);
+	// 						}
+	// 					}else{
+	// 						if(task.status == track.id && task.sprint.status == 'Active'){
+	// 							track.tasks.push(task);
+	// 						}
+	// 					}
+	// 				})
+	// 			})
 
-				console.log("This Tracks=========>>>>>",this.tracks);
-				this.temp =  this.tracks; 
+	// 			console.log("This Tracks=========>>>>>",this.tracks);
+	// 			this.temp =  this.tracks; 
 
-				this.loader = false;
+	// 			this.loader = false;
 
-			},err=>{
-				console.log(err);
-				this.loader = false;
-			})
-		},1000);
-		function custom_sort(a, b) {
-			return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-		}	
-	}
+	// 		},err=>{
+	// 			console.log(err);
+	// 			this.loader = false;
+	// 		})
+	// 	},1000);
+	// 	function custom_sort(a, b) {
+	// 		return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
+	// 	}	
+	// }
 
 
 
@@ -527,7 +527,7 @@ saveTheData(task){
 	this._projectService.addTask(data).subscribe((res:any)=>{
 		console.log("response task***++",res);
 		Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-		this.getProject(res.projectId);
+		// this.getProject(res.projectId);
 		$('#save_changes').attr("disabled", false);
 		$('#refresh_icon').css('display','none');
 		$('#itemManipulationModel').modal('hide');

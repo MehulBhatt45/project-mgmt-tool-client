@@ -20,7 +20,7 @@
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
-						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
+						<div class="card" [ngClass]="getPriorityClass(task.priority).class" (click)="openModel(task)"data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
 								<table class="table-responsive">
 									<tr>
@@ -28,7 +28,7 @@
 											<div class="container" *ngIf=" task.status == 'in progress'">
 												<section class="timer-counter-label">
 													<div> 
-														{{task.time?task.time:'00:00'}}
+														{{task.time?task.time:'00:00:00'}}
 														<!-- {{ getTime(task.counter)}} -->
 													</div>
 													<!-- <ng-template #elseBlock> Press Start </ng-template> -->
@@ -49,7 +49,7 @@
 											</td>
 										</tr>
 									</table>
-									<ul (click)="openModel(task)">
+									<ul>
 										<li class="icon_check">
 											<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
 										</li>
@@ -154,11 +154,9 @@
 									<p  *ngIf="task.timelog1">
 										<label><strong>Time Taken: &nbsp;</strong></label>
 										<span>
-											{{getHHMMTime(task.timelog1.difference)}}
+											{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00:00')}}
+											<!-- {{task.timelog1.difference?task.timelog1.difference:'00:00:00'}} -->
 											<!-- {{getTime(task.timelog1.count)}} -->
-
-
-
 										</span>
 									</p>
 								</div>

@@ -3,7 +3,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { CommentService } from '../services/comment.service';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router, NavigationEnd} from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { config } from '../config';
@@ -77,64 +77,73 @@ export class ChildComponent  implements OnInit{
   currentsprintId;
   
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
-    public _commentService: CommentService, public _change: ChangeDetectorRef) { 
+    public _commentService: CommentService, public _change: ChangeDetectorRef
+    ,private router: Router) { 
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
     this.getProject(this.projectId);
+
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) { 
+         this.func('reload');
+      }
+    });
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
     window.addEventListener('beforeunload', function (e) {
       // Cancel the event
       if(localStorage.getItem('isTimerRunning')!="null"){
-      console.log("EVENT",e);
-      console.log("EVENT",localStorage.getItem('isTimerRunning'));
-       console.log("EVENT",localStorage.getItem('runningStatus'));
-      fromReload('reload');
-
-      e.stopPropagation();
-      // Chrome requires returnValue to be set
-      e.returnValue = false;
+        console.log("EVENT",e);
+        console.log("EVENT",localStorage.getItem('isTimerRunning'));
+        console.log("EVENT",localStorage.getItem('runningStatus'));
+        fromReload('reload');
+        e.stopPropagation();
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
 
       }
     });
-     var fromReload = (option) =>{
-       this.func(option);
-     }
+    var fromReload = (option) =>{
+      this.func(option);
+    }
   }
+  // OnDestroy(){
+    //   this.func('load')
+    // }
 
-  func = async (option)=>{
-    // debugger;
-    console.log("in func",option);
-    console.log("EVENT",localStorage.getItem('isTimerRunning'));
-    var taskId = localStorage.getItem('isTimerRunning');
-    console.log('taskId===========>',taskId);
-    await _.forEach(this.tracks,async (track)=>{
-       console.log('track =================>',track);
-      await _.forEach(track.tasks,(task)=>{
-        if(task._id == taskId){
-          console.log('taskkkkkkkkkkkkkkkk=================>',task);
-          if(option=='reload')
-            this.timerUpdate(task);
-          else if(option=='load')
-            this.startTimer(task);
-        }
-       
+    func = async (option)=>{
+      // debugger;
+      console.log("in func",option);
+      console.log("EVENT",localStorage.getItem('isTimerRunning'));
+      var taskId = localStorage.getItem('isTimerRunning');
+      console.log('taskId===========>',taskId);
+      await _.forEach(this.tracks,async (track)=>{
+        console.log('track =================>',track);
+        await _.forEach(track.tasks,(task)=>{
+          if(task._id == taskId){
+            console.log('taskkkkkkkkkkkkkkkk=================>',task);
+            if(option=='reload')
+              this.timerUpdate(task);
+            else if(option=='load')
+              this.startTimer(task);
+          }
+
         })
-    })
-  }
+      })
+    }
 
     ngOnChanges() {
       this._change.detectChanges();
       this.trackss = this.tracks;
       console.log("ngOnChanges()  ===============================",this.tracks);
       console.log("ngOnChanges()  ===============================",this.trackss);
-       
+
     }
 
 
@@ -200,21 +209,21 @@ export class ChildComponent  implements OnInit{
         break;
       }
     }
-  
-  createEditTaskForm(){
-    this.editTaskForm = new FormGroup({
-      title : new FormControl('', Validators.required),
-      desc : new FormControl('', Validators.required),
-      assignTo : new FormControl('', Validators.required),
-      sprint :new FormControl('',Validators.required),
-      priority : new FormControl('', Validators.required),
-      startDate : new FormControl('', Validators.required),
-      dueDate : new FormControl('', Validators.required),
-      status : new FormControl({value: '', disabled: true}, Validators.required),
-      files : new FormControl(),
-      estimatedTime : new FormControl()
-    })
-  }
+
+    createEditTaskForm(){
+      this.editTaskForm = new FormGroup({
+        title : new FormControl('', Validators.required),
+        desc : new FormControl('', Validators.required),
+        assignTo : new FormControl('', Validators.required),
+        sprint :new FormControl('',Validators.required),
+        priority : new FormControl('', Validators.required),
+        startDate : new FormControl('', Validators.required),
+        dueDate : new FormControl('', Validators.required),
+        status : new FormControl({value: '', disabled: true}, Validators.required),
+        files : new FormControl(),
+        estimatedTime : new FormControl()
+      })
+    }
 
     getTitle(name){
       if(name){
@@ -369,7 +378,7 @@ export class ChildComponent  implements OnInit{
         $('#refresh_icon').css('display','none');
         $('#itemManipulationModel1').modal('hide');
         $('#fullHeightModalRight').modal('hide');
-      this.getProject(this.projectId);
+        this.getProject(this.projectId);
         this.newTask = this.getEmptyTask();
         this.files = this.url = [];
         this.editTaskForm.reset();
@@ -384,50 +393,52 @@ export class ChildComponent  implements OnInit{
     }
     getEmptyTask(){
       return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-   }
-      updateStatus(newStatus, data){
-    $('#fullHeightModalRight').modal('hide');
-    if(newStatus == 'complete'){
-      data.status = newStatus;
-      this._projectService.completeItem(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is shifted to complete from testing" ,
-          showConfirmButton:false,timer: 2000})
-      },err=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      });
-    }else{
-      data.status = newStatus;
-      console.log("UniqueId", data.uniqueId);
-      this._projectService.updateStatus(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is"  + " " +res.timelog[n -1].operation ,
-          showConfirmButton:false,timer: 2000})
-      },(err:any)=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      })
     }
-  }
- 
+    updateStatus(newStatus, data){
+      $('#fullHeightModalRight').modal('hide');
+      if(newStatus == 'complete'){
+        data.status = newStatus;
+        this._projectService.completeItem(data).subscribe((res:any)=>{
+          console.log(res);
+          this.getProject(res.projectId);
+          var n = res.timelog.length
+          Swal.fire({
+            type: 'info',
+            title: "Task is shifted to complete from testing" ,
+            showConfirmButton:false,timer: 2000})
+        },err=>{
+          console.log(err);
+          Swal.fire('Oops...', 'Something went wrong!', 'error')
+        });
+      }else{
+        data.status = newStatus;
+        console.log("UniqueId", data.uniqueId);
+        this._projectService.updateStatus(data).subscribe((res:any)=>{
+          console.log(res);
+          this.getProject(res.projectId);
+          var n = res.timelog.length
+          Swal.fire({
+            type: 'info',
+            title: "Task is"  + " " +res.timelog[n -1].operation ,
+            showConfirmButton:false,timer: 2000})
+        },(err:any)=>{
+          console.log(err);
+          Swal.fire('Oops...', 'Something went wrong!', 'error')
+        })
+      }
+    }
+
 
 
     getHHMMTime(difference){
-
-      difference = difference.split("T");  
-      difference = difference[1];
-      difference = difference.split(".");
-      // console.log('difference',difference[0]);
-      return difference[0];
+      if(difference != '00:00:00'){
+        difference = difference.split("T");  
+        difference = difference[1];
+        difference = difference.split(".");
+        // console.log('difference',difference[0]);
+        return difference[0];
+      }
+      return '00:00:00';
     }
     getTime(counter){
       var milliseconds = ((counter % 1000) / 100),
@@ -448,7 +459,7 @@ export class ChildComponent  implements OnInit{
         console.log("Delete Task======>" , res);
         this.task = res;
 
-  
+
       },(err:any)=>{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log("error in delete Task=====>" , err);
@@ -456,74 +467,74 @@ export class ChildComponent  implements OnInit{
     }
 
 
-   getProject(id){
-    console.log("projectId=====>",this.projectId);
-    this.loader = true;
-    setTimeout(()=>{
-      this._projectService.getProjectById(id).subscribe((res:any)=>{
-        console.log("title=={}{}{}{}{}",res);
-        this.pro = res;
-        console.log("project detail===>>>>",this.pro);
-        this.projectId=this.pro._id;
-        console.log("iddddd====>",this.projectId);
-        this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-          this.projectTeam = res.team;
+    getProject(id){
+      console.log("projectId=====>",this.projectId);
+      this.loader = true;
+      setTimeout(()=>{
+        this._projectService.getProjectById(id).subscribe((res:any)=>{
+          console.log("title=={}{}{}{}{}",res);
+          this.pro = res;
+          console.log("project detail===>>>>",this.pro);
+          this.projectId=this.pro._id;
+          console.log("iddddd====>",this.projectId);
+          this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+            this.projectTeam = res.team;
 
-          res.Teams.push(this.pro.pmanagerId); 
-          console.log("response of team============>"  ,res.Teams);
-          this.projectTeam = res.Teams;
-          this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
-          })
+            res.Teams.push(this.pro.pmanagerId); 
+            console.log("response of team============>"  ,res.Teams);
+            this.projectTeam = res.Teams;
+            this.projectTeam.sort(function(a, b){
+              var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+              if (nameA < nameB) //sort string ascending
+                return -1 
+              if (nameA > nameB)
+                return 1
+              return 0 //default return value (no sorting)
+              this.projectTeam.push
+              console.log("sorting============>"  ,this.projectTeam);
+            })
 
 
+          },(err:any)=>{
+            console.log("err of team============>"  ,err);
+          });
         },(err:any)=>{
-          console.log("err of team============>"  ,err);
+          console.log("err of project============>"  ,err);
         });
-      },(err:any)=>{
-        console.log("err of project============>"  ,err);
-      });
 
-      this._projectService.getTaskById(id).subscribe((res:any)=>{
-        console.log("all response ======>" , res);
-        this.getEmptyTracks();
-        this.project = res;
-        // this.project.sort(custom_sort);
-        // this.project.reverse();
-        console.log("PROJECT=================>", this.project);
-        _.forEach(this.project , (task)=>{
-          console.log("task ======>" , task);
-          _.forEach(this.tracks , (track)=>{
-            console.log("tracks==-=-=-=-",this.tracks);
-            if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-                track.tasks.push(task);
+        this._projectService.getTaskById(id).subscribe((res:any)=>{
+          console.log("all response ======>" , res);
+          this.getEmptyTracks();
+          this.project = res;
+          // this.project.sort(custom_sort);
+          // this.project.reverse();
+          console.log("PROJECT=================>", this.project);
+          _.forEach(this.project , (task)=>{
+            console.log("task ======>" , task);
+            _.forEach(this.tracks , (track)=>{
+              console.log("tracks==-=-=-=-",this.tracks);
+              if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+                if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+                  track.tasks.push(task);
+                }
+              }else{
+                if(task.status == track.id ){
+                  track.tasks.push(task);
+                }
               }
-            }else{
-              if(task.status == track.id ){
-                track.tasks.push(task);
-              }
-            }
+            })
           })
-        })
 
-        this.loader = false;
-         this.func('load');
-      },err=>{
-        console.log(err);
-        this.loader = false;
-      })
-    },1000);
-  
+          this.loader = false;
+          this.func('load');
+        },err=>{
+          console.log(err);
+          this.loader = false;
+        })
+      },1000);
+
     }
-                 
+
     saveTheData(task){
       this.loader = true;
       console.log("projectId=========>",this.pro._id);
@@ -578,59 +589,59 @@ export class ChildComponent  implements OnInit{
 
     }
 
-   
+
 
 
     startTimer(data) {
       console.log('task data================>',data);
-        this.running = !this.running;
-        data['running'] = data.running?!data.running:true;
-        console.log(data.running);
-        // data.timelog1 = {};
-        if (data.running) {
-          // console.log('data.running in if==================>',this.running)
-          data['startText'] = 'Stop';
-          var startTime = Date.now() - (data.timelog1?data.timelog1.count:this.initialTime);
-          // console.log("startTime=======>",startTime);
-          data['timerRef'] = setInterval(() => {
-            data.timelog1['count'] = Date.now() - startTime;
-            var milliseconds = (( data.timelog1.count % 1000) / 100),
-            seconds = Math.floor(( data.timelog1.count / 1000) % 60),
-            minutes = Math.floor(( data.timelog1.count / (1000 * 60)) % 60),
-            hours = Math.floor(( data.timelog1.count / (1000 * 60 * 60)) % 24);
-            // console.log('hours + ":" + minutes + ":" + seconds',hours + ":" + minutes + ":" + seconds);
-            this.time = hours + ":" + minutes + ":" + seconds;
-            data['time'] = this.time;
-            
-          });
-          window.localStorage.setItem("isTimerRunning",data._id);
-          window.localStorage.setItem("runningStatus",data.running);
-        } else {
-          data.startText = 'Resume';
-        
-          window.localStorage.setItem("isTimerRunning","null");
-          console.log(data.timelog1.count);
-          clearInterval(data.timerRef);
-        }
-        this.timerUpdate(data);
-      }
+      this.running = !this.running;
+      data['running'] = data.running?!data.running:true;
+      console.log(data.running);
+      // data.timelog1 = {};
+      if (data.running) {
+        // console.log('data.running in if==================>',this.running)
+        data['startText'] = 'Stop';
+        var startTime = Date.now() - (data.timelog1?data.timelog1.count:this.initialTime);
+        // console.log("startTime=======>",startTime);
+        data['timerRef'] = setInterval(() => {
+          data.timelog1['count'] = Date.now() - startTime;
+          var milliseconds = (( data.timelog1.count % 1000) / 100),
+          seconds = Math.floor(( data.timelog1.count / 1000) % 60),
+          minutes = Math.floor(( data.timelog1.count / (1000 * 60)) % 60),
+          hours = Math.floor(( data.timelog1.count / (1000 * 60 * 60)) % 24);
+          // console.log('hours + ":" + minutes + ":" + seconds',hours + ":" + minutes + ":" + seconds);
+          this.time = hours + ":" + minutes + ":" + seconds;
+          data['time'] = this.time;
 
-      timerUpdate(data){
-        this.taskdata = data;
-        console.log('data===========>',this.taskdata);
-        this._projectService.addTimeLog(this.taskdata).subscribe((res:any)=>{
-          console.log('res=============>',res);        
-          this.timeLog = res;
-          console.log('this.timeLog',this.timeLog.difference);
-          this.logs = res.log;
-
-        },(err:any)=>{
-          console.log(err);
         });
-
+        window.localStorage.setItem("isTimerRunning",data._id);
+        window.localStorage.setItem("runningStatus",data.running);
+      } else {
+        data.startText = 'Resume';
+        
+        window.localStorage.setItem("isTimerRunning","null");
+        console.log(data.timelog1.count);
+        clearInterval(data.timerRef);
       }
+      this.timerUpdate(data);
+    }
 
+    timerUpdate(data){
+      this.taskdata = data;
+      console.log('data===========>',this.taskdata);
+      this._projectService.addTimeLog(this.taskdata).subscribe((res:any)=>{
+        console.log('res=============>',res);        
+        this.timeLog = res;
+        console.log('this.timeLog',this.timeLog.difference);
+        this.logs = res.log;
+
+      },(err:any)=>{
+        console.log(err);
+      });
 
     }
- 
+
+
+  }
+
   
