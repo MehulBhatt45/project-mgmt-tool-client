@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
+import{LeaveService} from '../services/leave.service';
 import { config } from '../config';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
@@ -17,10 +18,16 @@ declare var $ : any;
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+	currentEmployeeId = JSON.parse(localStorage.getItem("currentUser"))._id;
+	currentUserName = JSON.parse(localStorage.getItem("currentUser")).name;
+	checkInStatus = JSON.parse(localStorage.getItem('checkIn'));
 	tracks:any;
 	task = this.getEmptyTask();
 	userId
 	project;
+	url = [];
+	commentUrl = [];
+	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
@@ -35,7 +42,7 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
-	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
+	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -55,14 +62,15 @@ export class HeaderComponent implements OnInit {
 			sprint :new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
-			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''}, Validators.required)
+			dueDate : new FormControl('',Validators.required)
+			// dueDate : new FormControl('',Validators.required),
+			// estimatedTime: new FormControl(),
 		})
 	}
 
 
 	ngOnInit() {
+		localStorage.setItem("checkIn",JSON.stringify(false));
 		this.editTaskForm.reset()
 		this.task = this.getEmptyTask();
 		$('#editModel').on('hidden.bs.modal', function (e) {
@@ -87,6 +95,7 @@ export class HeaderComponent implements OnInit {
 		});
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
+			console.log("res-==",this.projectId);
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
@@ -133,6 +142,7 @@ export class HeaderComponent implements OnInit {
 		if(item && item._id){
 			console.log(item);
 			this.getSprint(item._id);
+			this.projectId = item._id;
 			this.loader = true;
 			$(".progress").addClass("abc");
 			// $(".progress .progress-bar").css({"width": '100%'});
@@ -151,6 +161,28 @@ export class HeaderComponent implements OnInit {
 
 	clearSelection(event){
 		console.log(event);
+	}
+
+	checkOut(){
+
+		this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
+			console.log("respopnse of checkout=======<",res);
+			localStorage.setItem("checkOut",JSON.stringify(false));
+			this.checkInStatus = false;
+			Swal.fire({
+				title: 'Hey! '+this.currentUserName,
+				text:'Check Out Successfully',
+				// html:'<strong>Hey</strong> '+this.currentUserName,
+				// type: 'success',
+				// // text: 'hey '+this.currentUserName,
+				// title: 'Check In Successfully',
+				// showConfirmButton:false,
+				timer: 2000
+			})
+		},(err:any)=>{
+			console.log("err of chechout------------->",err);
+		})
+
 	}
 
 	getProjects(){
@@ -265,7 +297,7 @@ export class HeaderComponent implements OnInit {
 		this.loader = true;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estimatedTime").val();
+		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
@@ -288,6 +320,9 @@ export class HeaderComponent implements OnInit {
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
+			this.files = this.url = [];
+			console.log("res-=-=",this.projectId);
+			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
@@ -321,8 +356,19 @@ export class HeaderComponent implements OnInit {
 		});  
 	}
 
-	onSelectFile(event){
-		this.files = event.target.files;
+	onSelectFile(event,option){
+		// this.files = event.target.files;
+		_.forEach(event.target.files, (file:any)=>{
+			this.files.push(file);
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
+				if(option == 'item')
+					this.url.push(e.target.result);
+				if(option == 'comment')
+					this.commentUrl.push(e.target.result);
+			}
+		})
 	}
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
@@ -331,5 +377,33 @@ export class HeaderComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
+	}
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);
+	}
+	removeCommentImage(file, index){
+		console.log(file, index);
+		this.commentUrl.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);	
+	}
+
+	removeAlreadyUplodedFile(option){
+		this.newTask.images.splice(option,1);
+	}
+	close(){
+		this.editTaskForm.reset();
+		this.url = this.files = [];
+		// this.task.estimatedTime = " ";
+		// this.editTaskForm.estimatedTime = "";
+		$("#estTime").val(null);
+		$("#priority").val(null);
+		// this.task.priority = null;
+		// this.newTask.priority = null;
 	}
 }

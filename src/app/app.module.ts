@@ -77,6 +77,7 @@ import { MyleaveComponent } from './myleave/myleave.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { BacklogComponent } from './backlog/backlog.component';
+import { TimeLogComponent } from './time-log/time-log.component';
 @NgModule({
     declarations: [
     AppComponent,
@@ -116,6 +117,7 @@ import { BacklogComponent } from './backlog/backlog.component';
     NotificationComponent,
     AttendenceComponent,
     BacklogComponent,
+    TimeLogComponent,
     ],
 
     imports: [

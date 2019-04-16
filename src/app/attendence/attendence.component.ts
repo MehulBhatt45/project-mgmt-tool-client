@@ -96,6 +96,7 @@ import { Component, OnInit, ViewChild,
         this.currentDate = moment(this.currentDate).format("DD-MM-YYYY");
         console.log("this is current date",this.currentDate);
         localStorage.setItem("attedenceByDateError",JSON.stringify(false));
+
       })
     }
 
@@ -170,6 +171,8 @@ import { Component, OnInit, ViewChild,
         checkIn(){
 
           this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+            console.log("currentEmployeeId",this.currentEmployeeId);
+            
             console.log("respopnse of checkin=======<",res);
 
             res.difference = res.difference.split("T");
@@ -263,8 +266,8 @@ import { Component, OnInit, ViewChild,
             console.log("timediff--=-=-=-=",this.gate);
 
 
-            // this.gate = res.difference;
-            // console.log("gate========{}{}",this.gate);
+            this.gate = res.difference;
+            console.log("gate========{}{}",this.gate);
             
 
             if(res == null){

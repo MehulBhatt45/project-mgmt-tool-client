@@ -71,6 +71,7 @@ export class AddNoticeComponent implements OnInit {
 	}
 
 	changeFile(event, option){
+		this.files = event.target.files;
 		_.forEach(event.target.files, (file:any)=>{
 			var reader = new FileReader();
 			reader.readAsDataURL(file);

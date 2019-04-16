@@ -38,9 +38,9 @@
 							<label class="float-left" for="userrole" *ngIf="userDetails">UserRole</label>
 							<div class="md-form form-group" *ngIf="userDetails">
 								<select class="custom-select custom-select-lg mb-3" formControlName="userRole" [(ngModel)]="userDetails.userRole">
-									<option value="admin">Admin</option>
-									<option value="projectmanager">Project Manager</option>
-									<option value="user">Developer</option>
+									<option userRole.value="admin">Admin</option>
+									<option userRole.value="projectmanager">Project Manager</option>
+									<option userRole.value="user">Developer</option>
 								</select>
 							</div>
 						
@@ -49,12 +49,17 @@
 								<input type="text" formControlName="experience" class="form-control" id="experience" [(ngModel)]="userDetails.experience">
 							</div>
 
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="experience">Joining Date</label>
+								<input type="text" formControlName="joiningDate" class="form-control" id="joiningDate" [(ngModel)]="userDetails.joiningDate">
+							</div>
+
 							<div class="md-form form-group file-field" *ngIf="userDetails">
 								<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
 									<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 								</div>
 								<div class="file-path-wrapper">
-									<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV.split('/').reverse()[0]" readonly>
+									<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly>
 								</div>
 							</div>
 

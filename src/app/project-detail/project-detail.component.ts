@@ -61,10 +61,12 @@ export class ProjectDetailComponent implements OnInit {
 	priority: boolean = false;
 	// sorting: any;
 	sorting:any;
+	
+
 	temp:any;
 	activeSprint:any;
 	sprintInfo:any;
-	
+
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
 		public _commentService: CommentService, public _change: ChangeDetectorRef) {
@@ -189,15 +191,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		setTimeout(()=>{
+		// setTimeout(()=>{
 
-			$('[data-toggle="popover-hover"]').popover({
-				html: true,
-				trigger: 'hover',
-				placement: 'bottom',
-				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
-			});
-		},2000);
+		// 	$('[data-toggle="popover-hover"]').popover({
+		// 		html: true,
+		// 		trigger: 'hover',
+		// 		placement: 'bottom',
+		// 		content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+		// 	});
+		// },2000);
 		// this.getProject(this.id);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
@@ -251,6 +253,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getProject(id){
+
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
@@ -265,17 +268,16 @@ export class ProjectDetailComponent implements OnInit {
 					res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-					this.projectTeam.sort(function(a, b){
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-						this.projectTeam.push
-						console.log("sort============>"  ,this.projectTeam);
-					})
-
+					// this.projectTeam.sort(function(a, b){
+					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+					// 	if (nameA < nameB) //sort string ascending
+					// 		return -1 
+					// 	if (nameA > nameB)
+					// 		return 1
+					// 	return 0 //default return value (no sorting)
+					// 	this.projectTeam.push
+					// 	console.log("sort============>"  ,this.projectTeam);
+					// })
 
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
@@ -290,6 +292,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.project = res;
 				// this.project.sort(custom_sort);
 				// this.project.reverse();
+
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					_.forEach(this.tracks , (track)=>{
@@ -306,8 +309,10 @@ export class ProjectDetailComponent implements OnInit {
 						}
 					})
 				})
+
 				console.log("This Tracks=========>>>>>",this.tracks);
 				this.temp =  this.tracks; 
+
 				this.loader = false;
 
 			},err=>{
@@ -315,7 +320,16 @@ export class ProjectDetailComponent implements OnInit {
 				this.loader = false;
 			})
 		},1000);
+		function custom_sort(a, b) {
+			return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
+		}	
 	}
+
+
+
+
+
+
 
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
@@ -333,6 +347,9 @@ export class ProjectDetailComponent implements OnInit {
 			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
+
+
+
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
