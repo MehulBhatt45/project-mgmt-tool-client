@@ -82,10 +82,10 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    this.getProject(this.projectId);
+    //this.getProject(this.projectId);
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+   // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -422,7 +422,7 @@ export class ChildComponent  implements OnInit{
 
 
     getHHMMTime(difference){
-
+      
       difference = difference.split("T");  
       difference = difference[1];
       difference = difference.split(".");

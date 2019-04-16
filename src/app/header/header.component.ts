@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
@@ -35,6 +36,8 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
+	userNotification;
+
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -50,14 +53,14 @@ export class HeaderComponent implements OnInit {
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
-			assignTo : new FormControl('', Validators.required),
-			sprint :new FormControl('', Validators.required),
-			priority : new FormControl('', Validators.required),
+			desc : new FormControl('',),
+			assignTo : new FormControl('',),
+			sprint :new FormControl('',),
+			priority : new FormControl('',),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
+			dueDate : new FormControl(''),
 			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''}, Validators.required)
+			status : new FormControl({value: ''},)
 		})
 	}
 
@@ -90,6 +93,7 @@ export class HeaderComponent implements OnInit {
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
+		this.getNotificationByUserId();
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -332,4 +336,29 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		});
 	}
+
+		getNotificationByUserId(){
+			this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
+				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
+				// console.log("loginUser==========>",loginUser);
+				this.userNotification = res;
+				this.userNotification.sort(custom_sort);
+				this.userNotification.reverse();
+				 var start = new Date();
+				
+				 start.setTime(1532403882588);
+				 console.log("response ==========++>" , res);
+				 this.userNotification = res.length;
+				 console.log("count of notification",this.userNotification);
+				// // console.log(this.currentUser[0].subject);
+				// console.log("title=========>",this.currentUser[0].title);
+				// console.log("current====>",this.currentUser);
+				// console.log("projectId==========>",this.currentUser[0].projectId._id);
+				// console.log("type======================>",this.currentUser[0].type);
+				
+			})
+			 function custom_sort(a, b) {
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      }
+		}
 }
