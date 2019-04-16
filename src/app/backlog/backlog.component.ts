@@ -64,9 +64,18 @@ export class BacklogComponent implements OnInit {
 		this.getSprint(this.projectId);
 		$('#startDate').pickadate({ 
 			min: new Date(),
+			format: ' mm/dd/yyyy',
+			formatSubmit: 'mm/dd/yyyy',
+			hiddenPrefix: 'prefix__',
+			hiddenSuffix: '__suffix'
 		})	
-
-		
+		$('#endDate').pickadate({ 
+			min: new Date(),
+			format: ' mm/dd/yyyy',
+			formatSubmit: 'mm/dd/yyyy',
+			hiddenPrefix: 'prefix__',
+			hiddenSuffix: '__suffix'
+		})	
 
 		// Date Picker Valadation Start Here
 
@@ -77,9 +86,12 @@ export class BacklogComponent implements OnInit {
 
 		var to_input = $('#endDate').pickadate(),
 		to_picker = to_input.pickadate('picker')
+
+
 		if ( from_picker.get('value') ) {
 			console.log(from_picker.get('select'));
 			to_picker.set('min', from_picker.get('select'))
+
 		}
 		if ( to_picker.get('value') ) {
 			from_picker.set('max', to_picker.get('select'))

@@ -7,8 +7,8 @@ import { config } from '../config';
 import { CommentService } from '../services/comment.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 declare var $ : any;
-import {SearchTaskPipe} from '../search-task.pipe';
 import * as _ from 'lodash';
+import {SearchTaskPipe} from '../search-task.pipe';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 
@@ -357,6 +357,7 @@ export class MainTableViewComponent implements OnInit {
 		this.getEmptyTracks();
 		if(projectId!='all' && developerId == 'all'){
 			_.forEach(this.tasks, (project)=>{
+				console.log("jdfhjedfh===",projectId);
 				if(project.projectId._id == projectId){
 					_.forEach(this.tracks, (track)=>{
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){

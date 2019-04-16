@@ -279,7 +279,6 @@ export class ProjectDetailComponent implements OnInit {
 					// 	console.log("sort============>"  ,this.projectTeam);
 					// })
 
-
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});

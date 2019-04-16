@@ -258,15 +258,21 @@ export class ProjectService {
 
 	updateTask(id, task){
 		console.log("task =========>",task);
-		// console.log("id-=-=",id);
-		// var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 
-	updateNotice(notice){
-		console.log("notice data in service==>>",notice);
-		var id = notice._id;
-		return this.http.put(config.baseApiUrl+"notice/update-notice-by-id/"+id, notice);	
+	updateNoticeWithFile(data, id){
+		return this.http.put(config.baseApiUrl+"notice/update-notice-by-id/"+id, data);	
+	}
+
+	changeNoticePicture(files: any, data){
+		console.log("file is=================>",files);
+		console.log("data is ============>",data);
+		let formdata = new FormData();
+		formdata.append("noticeid",data);
+		formdata.append("profilePhoto",files[0]);
+		console.log("file is===>>>",files[0]);
+		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 	}
 
 	deleteNotice(id){
@@ -374,15 +380,16 @@ export class ProjectService {
 	}
 
 
-	changeNoticePicture(files: any, data){
-		console.log("file is=================>",files);
-		console.log("data is ============>",data);
-		let formdata = new FormData();
-		formdata.append("noticeid",data);
-		formdata.append("profilePhoto",files[0]);
-		console.log("file is===>>>",files[0]);
-		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-	}
+
+	// changeNoticePicture(files: any, data){
+	// 	console.log("file is=================>",files);
+	// 	console.log("data is ============>",data);
+	// 	let formdata = new FormData();
+	// 	formdata.append("noticeid",data);
+	// 	formdata.append("profilePhoto",files[0]);
+	// 	console.log("file is===>>>",files[0]);
+	// 	return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
+	// }
 
 	addSprint(data){
 		console.log("data in service===>>>",data);
