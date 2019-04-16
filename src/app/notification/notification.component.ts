@@ -24,7 +24,7 @@ import { MessagingService } from '../services/messaging.service';
 })
 export class NotificationComponent implements OnInit {
 	@Input() acceptedLeave;
-
+		userNotification:any;
 		path = config.baseMediaUrl;
 		currentUser = JSON.parse(localStorage.getItem('currentUser'));
 		allLeaves;
@@ -67,17 +67,18 @@ export class NotificationComponent implements OnInit {
 			this._projectservice.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
 				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
 				// console.log("loginUser==========>",loginUser);
-				this.currentUser = res;
-				this.currentUser.sort(custom_sort);
-				this.currentUser.reverse();
+				this.userNotification = res;
+				this.userNotification.sort(custom_sort);
+				this.userNotification.reverse();
 				 var start = new Date();
 				
 				 start.setTime(1532403882588);
-				
-				console.log(this.currentUser[0].subject);
-				console.log("title=========>",this.currentUser[0].title);
-				console.log("current====>",this.currentUser);
-				console.log("type======================>",this.currentUser[0].type);
+				 console.log("plzzz avi jaje",this.userNotification);
+				// // console.log(this.currentUser[0].subject);
+				// console.log("title=========>",this.currentUser[0].title);
+				// console.log("current====>",this.currentUser);
+				// console.log("projectId==========>",this.currentUser[0].projectId._id);
+				// console.log("type======================>",this.currentUser[0].type);
 				
 			})
 			 function custom_sort(a, b) {
