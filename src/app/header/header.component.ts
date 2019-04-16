@@ -21,10 +21,14 @@ export class HeaderComponent implements OnInit {
 	task = this.getEmptyTask();
 	userId
 	project;
+	url = [];
+	commentUrl = [];
+	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
 	projects;
+	demoprojects;
 	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
@@ -54,9 +58,7 @@ export class HeaderComponent implements OnInit {
 			sprint :new FormControl('', Validators.required),
 			priority : new FormControl('', Validators.required),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
-			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''}, Validators.required)
+			dueDate : new FormControl('',Validators.required)
 		})
 	}
 
@@ -86,6 +88,7 @@ export class HeaderComponent implements OnInit {
 		});
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
+			console.log("res-==",this.projectId);
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
@@ -132,6 +135,7 @@ export class HeaderComponent implements OnInit {
 		if(item && item._id){
 			console.log(item);
 			this.getSprint(item._id);
+			this.projectId = item._id;
 			this.loader = true;
 			$(".progress").addClass("abc");
 			// $(".progress .progress-bar").css({"width": '100%'});
@@ -154,10 +158,21 @@ export class HeaderComponent implements OnInit {
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
+			console.log("current user id",this.currentUser._id);
 			if(this.currentUser.userRole == 'projectManager'){
-				//this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
-				this.projects = res; 
-				console.log("IN If=========================================",this.projects);
+				this.demoprojects = [];
+				this.projects = res;
+				console.log("this.projects",this.projects);
+				_.forEach(this.projects,(project)=>{
+					// console.log("project",project);
+					_.forEach(project.pmanagerId,(pid)=>{
+						// console.log("pid",pid);
+						if(pid._id == this.currentUser._id){
+							this.demoprojects.push(project);
+						}
+					})
+				})
+				console.log("IN If=========================================",this.demoprojects);
 			}
 			else{
 				this.projects = [];
@@ -253,7 +268,7 @@ export class HeaderComponent implements OnInit {
 		this.loader = true;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estimatedTime").val();
+		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
@@ -276,6 +291,8 @@ export class HeaderComponent implements OnInit {
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
+			console.log("res-=-=",this.projectId);
+			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
@@ -319,5 +336,23 @@ export class HeaderComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
+	}
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);
+	}
+	removeCommentImage(file, index){
+		console.log(file, index);
+		this.commentUrl.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);	
+	}
+
+	removeAlreadyUplodedFile(option){
+		this.newTask.images.splice(option,1);
 	}
 }

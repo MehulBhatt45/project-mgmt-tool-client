@@ -134,7 +134,7 @@ export class EditProjectComponent implements OnInit {
 			this.dteam = [];
 			_.forEach(this.availableDevelopers,(project)=>{
 				// console.log("project",project);
-				if(project.userRole == "developer"){
+				if(project.userRole == "developer" || project.userRole == "user"){
 					this.dteam.push(project);
 				}
 
