@@ -118,6 +118,7 @@ export class ViewProjectComponent implements OnInit {
       this.loader=false;
     });
   }
+  
   getDate(date){
     date = date.split("T");
     return date[0];

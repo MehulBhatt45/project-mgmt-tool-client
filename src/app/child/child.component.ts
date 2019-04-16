@@ -87,10 +87,9 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    // this.getProject(this.projectId);
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+   // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -423,14 +422,14 @@ export class ChildComponent  implements OnInit{
  
 
 
-    // getHHMMTime(difference){
-
-    //   difference = difference.split("T");  
-    //   difference = difference[1];
-    //   difference = difference.split(".");
-    //   // console.log('difference',difference[0]);
-    //   return difference[0];
-    // }
+    getHHMMTime(difference){
+      
+      difference = difference.split("T");  
+      difference = difference[1];
+      difference = difference.split(".");
+      // console.log('difference',difference[0]);
+      return difference[0];
+    }
     getTime(counter){
       var milliseconds = ((counter % 1000) / 100),
       seconds = Math.floor((counter / 1000) % 60),
@@ -579,31 +578,6 @@ export class ChildComponent  implements OnInit{
       });
 
     }
-
-    // onKey(searchText){
-    //   console.log("searchText",searchText);
-    //   console.log(this.project);
-    //   var dataToBeFiltered = [this.project];
-    //   var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-    //   console.log("In Component",task);
-    //   this.getEmptyTracks();
-    //   _.forEach(task, (content)=>{
-    //     _.forEach(this.tracks, (track)=>{
-    //       if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-    //         if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-    //           // if(content.status == track.id){
-    //             track.tasks.push(content);
-    //           }
-
-    //         }
-    //         else{
-    //           if(content.status == track.id){
-    //             track.tasks.push(content);
-    //           }
-    //         }
-    //       });
-    //   });
-    // }
 
   
 
