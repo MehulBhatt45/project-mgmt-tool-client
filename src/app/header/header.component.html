@@ -184,20 +184,20 @@
                 <label for="desc">Discription</label>
                 <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
               </div>
-              <div class=" row form-group col-12">
+              <div class="row form-group col-12">
                 <button class="btn btn-default" (click)="fileUpload.click()">
                   <i class="fa fa-paperclip mr-1"></i> Add Files
                   <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
                 </button>
               </div>
-              <!-- <div *ngIf="newTask.images && newTask.images.length>0">
+              <div *ngIf="newTask.images && newTask.images.length>0">
                 <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
                   <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
                   <div class="delete-team-member">
                     <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><i class="fas fa-trash fa-2x"></i></a>
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div  *ngIf="url && url.length">
                 <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
                   <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
@@ -209,16 +209,16 @@
               <div class="row no-margin no-padding  border" >
                 <div class="form-group col-12 col-lg-6 pt-1">
                   <label for="assignTo">Assign To</label>
-                  <!-- <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select> -->
+                  </select>
                   <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
                     <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
                   </select>
                 </div>
                 <div class="form-group col-12 col-lg-6 pt-1">
                   <label for="priority">Priority</label>
-                  <select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                  <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
                     <option value="4">Low</option>
                     <option value="3">Medium</option>
                     <option value="2">High</option>
@@ -243,7 +243,7 @@
                   <label for="estimatedTime">Estimated Time</label>
                   <div class="md-form form-group">
 
-                    <input placeholder="Estimated time in hrs.." type="text" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
+                    <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
                   </div>
                 </div>
               </div>

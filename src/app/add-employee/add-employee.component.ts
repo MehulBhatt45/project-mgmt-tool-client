@@ -17,6 +17,7 @@ export class AddEmployeeComponent implements OnInit {
 	
 	files: Array<File> = [];
 	materialSelect;
+
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -24,9 +25,9 @@ export class AddEmployeeComponent implements OnInit {
 			password:new FormControl('',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
-			mobile:new FormControl('',[Validators.required]),
+			mobile:new FormControl(''),
 			userRole:new FormControl('',[Validators.required]),
-			experience:new FormControl('',[Validators.required]),	
+			experience:new FormControl(''),	
 			profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
@@ -34,6 +35,7 @@ export class AddEmployeeComponent implements OnInit {
 
 	ngOnInit() {
 		$('.datepicker').pickadate({
+			min: new Date(),
 			onSet: function(context) {
 				change();
 			}
@@ -41,6 +43,9 @@ export class AddEmployeeComponent implements OnInit {
 		var change:any = ()=>{
 			this.addEmployeeForm.controls.date.setValue($('.datepicker').val());
 		}
+		// $('#date-picker-example').pickadate({ 
+		// 	min: new Date()
+		// })
 	}
 
 	addEmployee(addEmployeeForm){
@@ -48,6 +53,7 @@ export class AddEmployeeComponent implements OnInit {
 
 		this.addEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		this.addEmployeeForm.value.date = $('.datepicker').val();
+		// this.addEmployeeForm.value.date = $('#date-picker-example').val();
 		console.log("form value=====>>>",addEmployeeForm.value);
 		this._loginservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
 			Swal.fire({type: 'success',title: 'Employee Added Successfully',showConfirmButton:false,timer: 2000})
