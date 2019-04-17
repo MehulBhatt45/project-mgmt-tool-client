@@ -7,12 +7,12 @@
 
 <div class="container-fluid" *ngIf="!loader">
 	<div class="row">
-			<div class="card" style="background-color: #372e5f;">
-				<div class="card-body">
-					<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">Attendence Table</a></h2>
-				</div>
+		<div class="card" style="background-color: #372e5f;">
+			<div class="card-body">
+				<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">Attendence Table</a></h2>
 			</div>
 		</div>
+	</div>
 	<!-- <div class="row">
 		<div class="header">
 			<h1>Attendence Table</h1>
@@ -77,10 +77,6 @@
 
 		</thead>
 		<tbody>
-			<!-- <tr *ngFor="let i of attendence">
-				<td>{{i.checkIn}}</td>
-				<td>{{i.checkOut}}</td>
-			</tr> -->
 
 
 
@@ -99,20 +95,120 @@
 		<thead>
 			<tr>
 
-				<th scope="col"><i class="far fa-clock"></i> Work Time</th>
-
+				<th scope="col" style="background-color: lightcoral;
+				text-align: center;"><i class="far fa-clock"></i> Work Time</th>
+				<th *ngIf="worktime" style="float: right;margin-right: 131px;background-color: lightcoral">{{gate}}</th>
 			</tr>
 
 		</thead>
-		<tbody>
-			<tr>
-				<td *ngIf="worktime">{{gate}}</td>
-			</tr>
-		</tbody>
 
 	</table>
 </div>
-<div class="row">
+
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
+	<li class="nav-item">
+		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+		aria-selected="true">Present Developer</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+		aria-selected="false">Absent Developer</a>
+	</li>
+</ul>
+<div class="tab-content card pt-5" id="myTabContentJust">
+	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
+
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+					<thead>
+						<tr>
+
+							<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
+							<th scope="col">Check In</th>
+							<th scope="col">Check Out</th>
+
+
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of presentuser,let i=index">
+							<td>{{user.UserName}}</td>
+							<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
+							<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+
+
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+					<thead>
+						<tr>
+
+							<th scope="col"><i class="far fa-clock"></i> Work Time</th>
+
+
+							<th scope="col">Sign</th>
+
+
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of alldiff">
+
+							<td>{{user}}</td>
+
+							<td><i class="fas fa-check"></i></td>
+
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+
+		
+	</div>
+	<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+		<div class="row">
+			<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+				<thead>
+					<tr>
+
+						<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
+
+
+
+						<th scope="col">Sign</th>
+
+
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let i of missing">
+						<td>{{i}}</td>
+
+
+						<td><i class="fas fa-times"></i></td>
+
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+
+	</div>
+	
+</div>
+
+<!-- <div class="row">
 	<div class="col-md-6">
 		<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 			<thead>
@@ -132,7 +228,7 @@
 					<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
 					<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
 
-					<!-- <td></td> -->
+					
 				</tr>
 			</tbody>
 
@@ -143,7 +239,7 @@
 			<thead>
 				<tr>
 					
-				<th scope="col"><i class="far fa-clock"></i> Work Time</th>
+					<th scope="col"><i class="far fa-clock"></i> Work Time</th>
 
 
 					<th scope="col">Sign</th>
@@ -158,7 +254,7 @@
 					<td>{{user}}</td>
 
 					<td><i class="fas fa-check"></i></td>
-					<!-- <td></td> -->
+					
 				</tr>
 			</tbody>
 
@@ -194,7 +290,7 @@
 	</table>
 </div>
 
-
+-->
 
 
 	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

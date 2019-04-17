@@ -53,7 +53,7 @@ import { Component, OnInit, ViewChild,
     maindiff=[];
     check:any;
     timediff:any;
-    gate = [];
+    gate:any;
     worktime:any;
     attedenceByDateError;
     errMessage;
@@ -266,6 +266,8 @@ import { Component, OnInit, ViewChild,
             // console.log("wirktime=============",this.worktime);
            this.gate = res.difference;
             console.log("gate========{}{}",this.gate);
+            // this.gate = moment(this.gate).format("HH:MM:SS a");
+            //  console.log("gate========{}{}",this.gate);
             // this.maindiff = [];
 
             // _ .forEach(this.gate,(r)=>{
