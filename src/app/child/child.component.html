@@ -18,7 +18,7 @@
 				</div>		
 			</div> -->
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-				<mat-card *ngFor="let task of track.tasks "cdkDrag>
+				<mat-card *ngFor="let task of track.tasks "cdkDrag (click)="openModel(task)">
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
@@ -71,8 +71,6 @@
 								<label class="float-right">{{task.uniqueId}}</label>
 								<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 							</div>
-
-
 						</div>
 					</mat-card-content>
 				</mat-card>
