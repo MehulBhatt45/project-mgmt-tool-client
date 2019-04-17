@@ -16,7 +16,7 @@
                 </div>
                 <div class="row text-center margin-20">
                     <div class="col-md-4 indigo-text">
-                     <strong title="task" class="text-center">
+                       <strong title="task" class="text-center">
                         <i class="fas font-project-view-small fa-tasks fa-fw"></i>
                         <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
                     </strong>
@@ -28,7 +28,7 @@
                     </strong>
                 </div>
                 <div class="col-md-4 red-text">
-                 <strong title="Bug" class=" text-center">
+                   <strong title="Bug" class=" text-center">
                     <i class="fas font-project-view-small fa-bug fa-fw"></i>
                     <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
                 </strong>
@@ -44,8 +44,7 @@
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
 
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
-
-
+        
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
 
     </div>

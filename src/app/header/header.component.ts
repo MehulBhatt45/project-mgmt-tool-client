@@ -301,8 +301,8 @@ export class HeaderComponent implements OnInit {
 	}
 	saveTheData(task){
 		this.loader = true;
-		task.priority = Number(task.priority); 
-		task.status = "to do"
+		task.priority = Number(task.priority);
+		task.status = 'to do'; 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -328,8 +328,8 @@ export class HeaderComponent implements OnInit {
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			console.log("res-=-=",this.projectId);
-			this.router.navigate(["/project-details/"+this.projectId]);
+			// console.log("res-=-=",this.projectId);
+			// this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
