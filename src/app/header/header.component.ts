@@ -273,16 +273,6 @@ export class HeaderComponent implements OnInit {
 			localStorage.setItem("checkOut",JSON.stringify(true));
 			localStorage.setItem("checkIn",JSON.stringify(false));
 			// this.checkInStatus = false;
-			Swal.fire({
-				title: 'Hey! '+this.currentUserName,
-				text:'Check Out Successfully',
-				// html:'<strong>Hey</strong> '+this.currentUserName,
-				// type: 'success',
-				// // text: 'hey '+this.currentUserName,
-				// title: 'Check In Successfully',
-				// showConfirmButton:false,
-				timer: 2000
-			})
 
 			window.location.reload();
 
@@ -496,11 +486,7 @@ export class HeaderComponent implements OnInit {
 			this.userNotification.sort(custom_sort);
 			this.userNotification.reverse();
 			var start = new Date();
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> 3adc9b44d4a5c064c6d441f742cec6c159e6099b
 			start.setTime(1532403882588);
 			console.log("response ==========++>" , res);
 			this.userNotification = res.length;
@@ -510,11 +496,7 @@ export class HeaderComponent implements OnInit {
 			// console.log("current====>",this.currentUser);
 			// console.log("projectId==========>",this.currentUser[0].projectId._id);
 			// console.log("type======================>",this.currentUser[0].type);
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> 3adc9b44d4a5c064c6d441f742cec6c159e6099b
 		})
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

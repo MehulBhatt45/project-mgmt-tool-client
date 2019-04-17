@@ -150,16 +150,6 @@ export class ViewProjectComponent implements OnInit {
       localStorage.setItem("checkIn",JSON.stringify(true));
        localStorage.setItem("checkOut",JSON.stringify(true));
       this.checkInStatus = true;
-      Swal.fire({
-        title: 'Hey! '+this.currentUserName,
-        text:'Check In Successfully',
-        // html:'<strong>Hey</strong> '+this.currentUserName,
-        // type: 'success',
-        // // text: 'hey '+this.currentUserName,
-        // title: 'Check In Successfully',
-        // showConfirmButton:false,
-        timer: 2000
-      })
 
       window.location.reload();
 
