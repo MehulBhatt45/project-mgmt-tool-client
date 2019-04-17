@@ -45,7 +45,7 @@
 
           <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-chalkboard-teacher"></i>   Notice Board</a></li>
           <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-flag-checkered"></i> Add Employee</a></li>
-          <li *ngIf="currentUser.userRole=='admin'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
+          <li><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='projectManager'">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
             (click) ="getAllProjects()"><i class="fas fa-users"></i> Visit Team-members
@@ -94,6 +94,13 @@
       <ol class="breadcrumb hidden-lg-down">
         <li><a data-activates="slide-out" class="button-collapse" ><i class="fa fa-bars"></i></a></li>
         <li class="breadcrumb-item active"><a>Dashboard</a></li>
+      </ol>
+    </div>
+    <div class="float-right">
+      <ol class="breadcrumb hidden-lg-down">
+        
+        <li class="breadcrumb-item active"><button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
+        <li class="breadcrumb-item active"> <button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
       </ol>
     </div>
   </nav>

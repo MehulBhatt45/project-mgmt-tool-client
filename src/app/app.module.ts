@@ -49,6 +49,12 @@ import { SummaryComponent } from './summary/summary.component';
 import { PushNotificationService } from 'ngx-push-notifications';
 import { ImageViewerModule } from 'ng2-image-viewer';
 
+import { CommonModule } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+// import { DemoUtilsModule } from '../demo-utils/module';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+
 
 
 
@@ -134,7 +140,14 @@ import { TimeLogComponent } from './time-log/time-log.component';
     SelectDropDownModule,
     NgSelectModule,
     ImageViewerModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CommonModule,
+    
+    CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory
+    }),  
+    // DemoUtilsModule
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],
