@@ -86,7 +86,7 @@ export class ChildComponent  implements OnInit{
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
-    
+
     this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
