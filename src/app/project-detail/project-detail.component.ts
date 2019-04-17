@@ -191,16 +191,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// setTimeout(()=>{
+		setTimeout(()=>{
 
-		// 	$('[data-toggle="popover-hover"]').popover({
-		// 		html: true,
-		// 		trigger: 'hover',
-		// 		placement: 'bottom',
-		// 		content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
-		// 	});
-		// },2000);
-		// this.getProject(this.id);
+			$('[data-toggle="popover-hover"]').popover({
+				html: true,
+				trigger: 'hover',
+				placement: 'bottom',
+				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+			});
+		},2000);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
@@ -235,7 +234,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.developers = res;
 			this.developers.sort(function(a, b){
 				if (name) {
-					
+
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
@@ -325,12 +324,6 @@ export class ProjectDetailComponent implements OnInit {
 		}	
 	}
 
-
-
-
-
-
-
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -347,9 +340,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
-
-
-
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
