@@ -299,8 +299,8 @@ export class HeaderComponent implements OnInit {
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			console.log("res-=-=",this.projectId);
-			this.router.navigate(["/project-details/"+this.projectId]);
+			// console.log("res-=-=",this.projectId);
+			// this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
