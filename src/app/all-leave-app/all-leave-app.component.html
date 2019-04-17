@@ -54,15 +54,14 @@
           <div class="btn-group dropleft  px-2 py-2 ">
             <div class="search">
               <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
-              <button type="button" class="btn btn-sm px-2" (click)="openSearch()">
+              <button type="button" onclick="document.getElementById('exampleForm2').value =''" class="btn btn-sm px-2" (click)="openSearch()">
                 <i class="fas fa-search mt-0"></i>
               </button>
             </div>
-
             <div class="dropdown-menu">
               <div class="md-form form-group active">
                 <!-- <i class="fas fa-search prefix"></i> -->
-                <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+                <!-- <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off" > -->
                 <!-- <label for="exampleForm2" >Search</label> -->
               </div>
             </div>
@@ -293,11 +292,11 @@ aria-hidden="true">
           </div>
         </div>
      <!--    <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
-          <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a> -->
-        </div>
-      </div>
+      <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a> -->
     </div>
   </div>
+</div>
+</div>
 </div>
 <!--/.Content-->
 </div>
@@ -319,8 +318,8 @@ aria-hidden="true">
       <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
     </div>
 
-    </div>
   </div>
+</div>
 </div>
 </div>
 
