@@ -76,7 +76,6 @@ export class ChildComponent  implements OnInit{
   initialTime = 0;  
   trackss:any;
   currentsprintId;
-  images = [];
   
 
   
@@ -97,6 +96,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
+   this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -279,7 +279,7 @@ export class ChildComponent  implements OnInit{
         data.append("userId",this.currentUser._id);
         data.append("projectId",this.projectId);
         data.append("taskId",taskId);
-        data.append("Images",this.images);
+        // data.append("Images",this.images);
         for(var i = 0; i < this.files.length; i++)
           data.append('fileUpload',this.files[i]);
       }else{
@@ -327,7 +327,6 @@ export class ChildComponent  implements OnInit{
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
   }
-
   openModel(task){
     console.log(task);
     this.task = task;
