@@ -33,6 +33,8 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	timediff:any;
+	attendence:any;
 	demoprojects;
 	userNotification;
 	addUserProfile:FormGroup;
@@ -73,7 +75,7 @@ export class HeaderComponent implements OnInit {
 
 
 	ngOnInit() {
-		localStorage.setItem("checkIn",JSON.stringify(false));
+		// localStorage.setItem("checkIn",JSON.stringify(false));
 		this.editTaskForm.reset()
 		this.task = this.getEmptyTask();
 		$('#editModel').on('hidden.bs.modal', function (e) {
@@ -167,12 +169,80 @@ export class HeaderComponent implements OnInit {
 		console.log(event);
 	}
 
+	checkIn(){
+
+
+
+		this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+			console.log("respopnse of checkin=======<",res);
+
+			// res.difference = res.difference.split("T");
+			// res.difference = res.difference[1];
+			// res.difference = res.difference.split("Z");
+			// res.difference = res.difference[0];
+			console.log("diffrence====-=-=-=-=-=-=-",res.difference);
+			this.timediff = res.difference;
+			console.log("timediff--=-=-=-=",this.timediff);
+
+
+			this.attendence = res.in_out;
+			console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
+
+
+			_.forEach(this.attendence , (attendence)=>{
+				console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
+				if(attendence.checkOut != null){
+					attendence.checkOut = attendence.checkOut.split("T");
+					attendence.checkOut = attendence.checkOut[1];
+					attendence.checkOut = attendence.checkOut.split("Z");
+					attendence.checkOut = attendence.checkOut[0];
+				}
+			})
+
+			_.forEach(this.attendence , (attendence)=>{
+				console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
+				if(attendence.checkIn != null){
+					attendence.checkIn = attendence.checkIn.split("T");
+					attendence.checkIn = attendence.checkIn[1];
+					attendence.checkIn = attendence.checkIn.split("Z");
+					attendence.checkIn = attendence.checkIn[0];
+				}
+			})
+
+			// this.date = this.attendence.checkIn;
+			// console.log("date][][][][][][][][",time);
+
+			localStorage.setItem("checkIn",JSON.stringify(true));
+			this.checkInStatus = true;
+			Swal.fire({
+				title: 'Hey! '+this.currentUserName,
+				text:'Check In Successfully',
+				// html:'<strong>Hey</strong> '+this.currentUserName,
+				// type: 'success',
+				// // text: 'hey '+this.currentUserName,
+				// title: 'Check In Successfully',
+				// showConfirmButton:false,
+				timer: 2000
+			})
+
+			
+
+
+		},(err:any)=>{
+			console.log("err of checkin=>",err);
+		})
+
+	}
+
+
+
 	checkOut(){
 
 		this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
 			console.log("respopnse of checkout=======<",res);
-			localStorage.setItem("checkOut",JSON.stringify(false));
-			this.checkInStatus = false;
+			localStorage.setItem("checkOut",JSON.stringify(true));
+			localStorage.setItem("checkIn",JSON.stringify(false));
+			// this.checkInStatus = false;
 			Swal.fire({
 				title: 'Hey! '+this.currentUserName,
 				text:'Check Out Successfully',
@@ -183,6 +253,10 @@ export class HeaderComponent implements OnInit {
 				// showConfirmButton:false,
 				timer: 2000
 			})
+
+			window.location.reload();
+
+			// this.router.navigate["/view-projects"];
 		},(err:any)=>{
 			console.log("err of chechout------------->",err);
 		})

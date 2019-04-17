@@ -20,6 +20,7 @@ export class ViewProjectComponent implements OnInit {
   currentEmployeeId = JSON.parse(localStorage.getItem("currentUser"))._id;
   currentUserName = JSON.parse(localStorage.getItem("currentUser")).name;
   checkInStatus = JSON.parse(localStorage.getItem('checkIn'));
+  checkOutStatus = JSON.parse(localStorage.getItem('checkOut'));
   projects;
   projectTeam;
   addForm:FormGroup; 
@@ -110,10 +111,10 @@ export class ViewProjectComponent implements OnInit {
     this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
       console.log("respopnse of checkin=======<",res);
 
-      res.difference = res.difference.split("T");
-      res.difference = res.difference[1];
-      res.difference = res.difference.split("Z");
-      res.difference = res.difference[0];
+      // res.difference = res.difference.split("T");
+      // res.difference = res.difference[1];
+      // res.difference = res.difference.split("Z");
+      // res.difference = res.difference[0];
       console.log("diffrence====-=-=-=-=-=-=-",res.difference);
       this.timediff = res.difference;
       console.log("timediff--=-=-=-=",this.timediff);
@@ -147,6 +148,7 @@ export class ViewProjectComponent implements OnInit {
       // console.log("date][][][][][][][][",time);
 
       localStorage.setItem("checkIn",JSON.stringify(true));
+       localStorage.setItem("checkOut",JSON.stringify(true));
       this.checkInStatus = true;
       Swal.fire({
         title: 'Hey! '+this.currentUserName,
@@ -158,11 +160,17 @@ export class ViewProjectComponent implements OnInit {
         // showConfirmButton:false,
         timer: 2000
       })
+
+      window.location.reload();
+
+
     },(err:any)=>{
       console.log("err of checkin=>",err);
     })
 
   }
+
+
 
 
   getProjects(){
