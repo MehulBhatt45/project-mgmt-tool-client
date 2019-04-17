@@ -32,18 +32,14 @@
             <tbody>
               <tr *ngFor="let leaves of leaveApp">
                 <td >{{leaves.leaveDuration}}</td>
-                <td >
+                <td>
                   <span *ngIf="leaves.attechment && leaves.attechment.length">
-                    <span *ngFor="let att of leaves.attechment">
-                      <a *ngIf="!att.includes('.pdf')" data-lightbox="comment_image" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
-                      <a *ngIf="att.includes('.pdf')" class="image_attachment" href="{{path}}{{att}}" target="_blank">View Attechment</a>
+                    <span *ngFor="let att of leaves.attechment;  let i =index">
+
+                      <a class="image_attachment" data-toggle="modal" data-target="#veiwAttach" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                     </span>
                   </span>
-                  <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                    <a data-lightbox="comment_image" class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                  </span>
-
-                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;" >No Attechment</p>
+                  <p *ngIf="!leaves.attechment" style="color: blue; font-size: 16px;">No Attechment</p>
                 </td>
                 <td>
                 	<p *ngIf="!leaves.comment">No Comments</p>
@@ -134,7 +130,29 @@ aria-hidden="true">
   </div>
 </div>
 </div>
-<!--/.Content-->
+  <!--/.Content-->
+</div>
+
+
+<div class="modal fade" id="veiwAttach" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+   <div class="modal-header purple-gradient-2 ">
+    <p class="heading lead text-center">Attachment</p>
+    <button type="button" class="close margin-right-10" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div  *ngIf="gotAttachment && gotAttachment.length">
+      <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
+    </div>
+
+    </div>
+  </div>
+</div>
 </div>
 
 

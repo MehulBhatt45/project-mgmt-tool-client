@@ -76,6 +76,7 @@ export class ChildComponent  implements OnInit{
   initialTime = 0;  
   trackss:any;
   currentsprintId;
+  images = [];
   
 
   
@@ -259,31 +260,31 @@ export class ChildComponent  implements OnInit{
   public Editor = DecoupledEditor;
   public configuration = { placeholder: 'Enter Comment Text...'};
 
-  public onReady( editor ) {
-    editor.ui.getEditableElement().parentElement.insertBefore(
-      editor.ui.view.toolbar.element,
-      editor.ui.getEditableElement()
-      );
-  }
-  public onChange( { editor }: ChangeEvent ) {
-    const data = editor.getData();
-    this.comment = data;
-  }
-  sendComment(taskId){
-    console.log(this.comment);
-    var data : any;
-    if(this.files.length>0){
-      data = new FormData();
-      data.append("content",this.comment?this.comment:"");
-      data.append("userId",this.currentUser._id);
-      data.append("projectId",this.projectId);
-      data.append("taskId",taskId);
-      // data.append("Images",this.images);
-      for(var i = 0; i < this.files.length; i++)
-        data.append("fileUpload",this.files[i]);
-    }else{
-      data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+    public onReady( editor ) {
+      editor.ui.getEditableElement().parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+        );
     }
+    public onChange( { editor }: ChangeEvent ) {
+      const data = editor.getData();
+      this.comment = data;
+    }
+    sendComment(taskId){
+      console.log(this.comment);
+      var data : any;
+      if(this.files.length>0){
+        data = new FormData();
+        data.append("content",this.comment?this.comment:"");
+        data.append("userId",this.currentUser._id);
+        data.append("projectId",this.projectId);
+        data.append("taskId",taskId);
+        data.append("Images",this.images);
+        for(var i = 0; i < this.files.length; i++)
+          data.append('fileUpload',this.files[i]);
+      }else{
+        data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
+      }
     console.log(data);
     this._commentService.addComment(data).subscribe((res:any)=>{
       console.log(res);

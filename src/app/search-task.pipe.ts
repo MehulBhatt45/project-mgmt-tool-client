@@ -25,12 +25,12 @@ export class SearchTaskPipe implements PipeTransform {
 
 			// if(it.assignTo.name){
 
-			if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText))
-			{
-				return it;
-			// }
-		}
-		});
+				if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText))
+				{
+					return it;
+					// }
+				}
+			});
 		// for(var i=0;i<items.length;i++){
 			// }
 			return task;
@@ -76,6 +76,7 @@ export class SearchTaskPipe implements PipeTransform {
 						console.log("it ==>" , it.name);
 
 						return it;
+						
 					}
 				}
 			});
