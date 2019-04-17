@@ -265,7 +265,7 @@ export class ProjectDetailComponent implements OnInit {
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					res.Teams.push(this.pro.pmanagerId); 
+					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					// this.projectTeam.sort(function(a, b){
@@ -278,7 +278,7 @@ export class ProjectDetailComponent implements OnInit {
 					// 	this.projectTeam.push
 					// 	console.log("sort============>"  ,this.projectTeam);
 					// })
-
+					this.loader = false;
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
 				});

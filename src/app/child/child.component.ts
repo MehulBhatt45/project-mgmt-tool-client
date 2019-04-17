@@ -90,7 +90,7 @@ export class ChildComponent  implements OnInit{
     this.createEditTaskForm();      
   }
   ngOnInit(){
-   // this.getProject(this.projectId);
+   this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -294,6 +294,7 @@ export class ChildComponent  implements OnInit{
     getAllCommentOfTask(taskId){
       this._commentService.getAllComments(taskId).subscribe(res=>{
         this.comments = res;
+        console.log("res-=-=",this.comments);
       }, err=>{
         console.error(err);
       })
