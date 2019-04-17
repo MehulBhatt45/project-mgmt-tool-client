@@ -302,15 +302,26 @@ export class BacklogComponent implements OnInit {
 
 		updateSprint(sprint){
 			console.log("update Notice =====>",sprint);
-			this._projectService.updateSprint(sprint).subscribe((res:any)=>{
-				$('#editmodel').modal('hide');
-				Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
-				$('#editmodel').modal('hide');
-				this.getSprint(this.projectId);
-			},err=>{
-				console.log(err);
-				Swal.fire('Oops...', 'Something went wrong!', 'error')
-			})
+			sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
+			console.log("start sprint =====>",sprint.startDate);
+			console.log("system date",this.currentdate);
+			sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
+			console.log("sprint ID=========>>>>",sprint);
+
+			if(sprint.duration > this.remainingLimit){
+				Swal.fire('Oops...', 'sprint Duration over projectdue!', 'error')
+			}
+			else{
+				this._projectService.updateSprint(sprint).subscribe((res:any)=>{
+					$('#editmodel').modal('hide');
+					Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
+					$('#editmodel').modal('hide');
+					this.getSprint(this.projectId);
+				},err=>{
+					console.log(err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+			}
 		}
 
 
