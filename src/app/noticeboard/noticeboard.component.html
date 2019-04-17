@@ -98,8 +98,18 @@
 						<div class=" row form-group col-12">
 							<button class="btn btn-default" (click)="image.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" formControlName="image" name="image" #image id="image"  (change)="changeFile($event, 'item')" hidden multiple accept="image/png, image/jpeg, image/jpg">
+								<input type="file" [(ngModel)]="newNotice.image" formControlName="image" name="image" #image id="image"  (change)="changeFile($event, 'item')" hidden multiple accept="image/png, image/jpeg, image/jpg">
 							</button>
+						</div>
+						<div *ngIf="singlenotice">
+							<div class="text-center notice_img" *ngFor="let image of singlenotice.images ; let i=index;">
+								<div class="avatar-image margin-auto">
+									<img src="{{path}}{{image}}" alt="images" style="height: 150px; width: 150px;">
+									<div class="delete_notice">
+										<a href="javascript:void(0);" (click)="deleteNoticeImage(image,i)"><i class="fas fa-trash fa-2x"></i></a>
+									</div>
+								</div>
+							</div>
 						</div>
 
 						<div *ngIf="url && url.length">
@@ -107,16 +117,6 @@
 								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
 								<div class="delete-team-member">
 									<a href="javascript:void(0);" (click)="removeAvatar(u, i)"><i class="fas fa-trash fa-2x"></i></a>
-								</div>
-							</div>
-						</div>
-						<div *ngIf="singlenotice">
-							<div class="text-center notice_img" *ngFor="let image of singlenotice.images ; let i=index;">
-								<div class="avatar-image margin-auto">
-									<img src="{{path}}{{image}}" alt="images" style="height: 150px; width: 150px;">
-									<div class="delete_notice">
-										<a href="javascript:void(0);" (click)="deleteNoticeImage(i)"><i class="fas fa-trash fa-2x"></i></a>
-									</div>
 								</div>
 							</div>
 						</div>

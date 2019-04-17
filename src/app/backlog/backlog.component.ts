@@ -64,17 +64,9 @@ export class BacklogComponent implements OnInit {
 		this.getSprint(this.projectId);
 		$('#startDate').pickadate({ 
 			min: new Date(),
-			format: ' mm/dd/yyyy',
-			formatSubmit: 'mm/dd/yyyy',
-			hiddenPrefix: 'prefix__',
-			hiddenSuffix: '__suffix'
 		})	
 		$('#endDate').pickadate({ 
 			min: new Date(),
-			format: ' mm/dd/yyyy',
-			formatSubmit: 'mm/dd/yyyy',
-			hiddenPrefix: 'prefix__',
-			hiddenSuffix: '__suffix'
 		})	
 
 		// Date Picker Valadation Start Here
