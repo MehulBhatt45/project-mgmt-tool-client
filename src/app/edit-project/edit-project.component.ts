@@ -150,7 +150,6 @@ export class EditProjectComponent implements OnInit {
 			})
 		}
 
-
 		getProjects(){
 			this._projectService.getProjects().subscribe((res:any)=>{
 				console.log("res of all projects in edit project component ====>" , res);
@@ -261,14 +260,11 @@ export class EditProjectComponent implements OnInit {
 			}
 		}
 
-		addDeveloper(event){
-			console.log(event);
-
-
-
-			this.projectTeam.push(event);
-
-		}
+	addDeveloper(event){
+		console.log(event);
+		this.projectTeam.push(event);
+		
+	}
 
 		removeDeveloper(event){
 			console.log(event);

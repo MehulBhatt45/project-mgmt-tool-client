@@ -34,6 +34,7 @@
     "angular-calendar": "^0.26.11",
     "angular-calendar-scheduler": "^1.0.6",
     "angular-froala-wysiwyg": "^2.9.3",
+    "angular-notification-icons": "^1.0.0",
     "bootstrap-sweetalert": "^1.0.1",
     "chart.js": "^2.8.0",
     "ckeditor": "^4.11.3",

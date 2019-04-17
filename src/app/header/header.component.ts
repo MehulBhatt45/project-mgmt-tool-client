@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
@@ -21,6 +22,9 @@ export class HeaderComponent implements OnInit {
 	task = this.getEmptyTask();
 	userId
 	project;
+	url = [];
+	commentUrl = [];
+	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	path = config.baseMediaUrl;
 	projectId;
 	modalTitle;
@@ -35,6 +39,8 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
+	userNotification;
+
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -50,13 +56,14 @@ export class HeaderComponent implements OnInit {
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
-			assignTo : new FormControl('', Validators.required),
-			sprint :new FormControl('', Validators.required),
-			priority : new FormControl('', Validators.required),
+			desc : new FormControl('',),
+			assignTo : new FormControl('',),
+			sprint :new FormControl('',),
+			priority : new FormControl('',),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
+			dueDate : new FormControl(''),
 			estimatedTime: new FormControl(),
+			status : new FormControl({value: ''},)
 		})
 	}
 
@@ -86,9 +93,11 @@ export class HeaderComponent implements OnInit {
 		});
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
+			console.log("res-==",this.projectId);
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
+		this.getNotificationByUserId();
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -132,6 +141,7 @@ export class HeaderComponent implements OnInit {
 		if(item && item._id){
 			console.log(item);
 			this.getSprint(item._id);
+			this.projectId = item._id;
 			this.loader = true;
 			$(".progress").addClass("abc");
 			// $(".progress .progress-bar").css({"width": '100%'});
@@ -264,7 +274,7 @@ export class HeaderComponent implements OnInit {
 		this.loader = true;
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estimatedTime").val();
+		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
@@ -287,6 +297,9 @@ export class HeaderComponent implements OnInit {
 			$('#editModel').modal('hide');
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
+			this.files = this.url = [];
+			console.log("res-=-=",this.projectId);
+			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
@@ -320,8 +333,19 @@ export class HeaderComponent implements OnInit {
 		});  
 	}
 
-	onSelectFile(event){
-		this.files = event.target.files;
+	onSelectFile(event,option){
+		// this.files = event.target.files;
+		_.forEach(event.target.files, (file:any)=>{
+			this.files.push(file);
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e:any) => {
+				if(option == 'item')
+					this.url.push(e.target.result);
+				if(option == 'comment')
+					this.commentUrl.push(e.target.result);
+			}
+		})
 	}
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
@@ -330,5 +354,58 @@ export class HeaderComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
+	}
+
+		getNotificationByUserId(){
+			this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
+				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
+				// console.log("loginUser==========>",loginUser);
+				this.userNotification = res;
+				this.userNotification.sort(custom_sort);
+				this.userNotification.reverse();
+				 var start = new Date();
+				
+				 start.setTime(1532403882588);
+				 console.log("response ==========++>" , res);
+				 this.userNotification = res.length;
+				 console.log("count of notification",this.userNotification);
+				// // console.log(this.currentUser[0].subject);
+				// console.log("title=========>",this.currentUser[0].title);
+				// console.log("current====>",this.currentUser);
+				// console.log("projectId==========>",this.currentUser[0].projectId._id);
+				// console.log("type======================>",this.currentUser[0].type);
+				
+			})
+			 function custom_sort(a, b) {
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      }
+		}
+	removeAvatar(file, index){
+		console.log(file, index);
+		this.url.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);
+	}
+	removeCommentImage(file, index){
+		console.log(file, index);
+		this.commentUrl.splice(index, 1);
+		if(this.files && this.files.length)
+			this.files.splice(index,1);
+		console.log(this.files);	
+	}
+
+	removeAlreadyUplodedFile(option){
+		this.newTask.images.splice(option,1);
+	}
+	close(){
+		this.editTaskForm.reset();
+		this.url = this.files = [];
+		// this.task.estimatedTime = " ";
+		// this.editTaskForm.estimatedTime = "";
+		$("#estTime").val(null);
+		$("#priority").val(null);
+		// this.task.priority = null;
+		// this.newTask.priority = null;
 	}
 }

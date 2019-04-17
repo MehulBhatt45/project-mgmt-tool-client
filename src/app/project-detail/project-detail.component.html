@@ -5,7 +5,16 @@
 	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
-	<div class="row" *ngIf="pro || activeSprint">
+	<!-- <div class="row no-margin no-padding" *ngIf="pro">
+		<h1>{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1> -->
+	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
+		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
+		<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
+		<div class="md-form form-group col-2">
+			<select  class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+				<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+			</select>
+	<!-- <div class="row" *ngIf="pro || activeSprint">
 		<div class="col-12 col-md-6">
 			<div class="row">
 				<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
@@ -15,13 +24,13 @@
 						<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 					</select>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="col-3">
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
-		<div class="col-3">
-			<button *ngIf="activeSprint" type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
+		<div class="col-3" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+			<button type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
 		</div>
 	</div>
 
@@ -34,7 +43,7 @@
 			</div>
 		</div>
 		<div class="col-12 col-md-6 text-right">
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
 					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -42,7 +51,7 @@
 					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 				</div>
 			</div>
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
 					Due Date
 					<span class="sorting_arrows">

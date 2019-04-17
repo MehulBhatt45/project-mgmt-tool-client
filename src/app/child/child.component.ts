@@ -76,6 +76,7 @@ export class ChildComponent  implements OnInit{
   initialTime = 0;  
   trackss:any;
   currentsprintId;
+  images = [];
   
 
   
@@ -87,10 +88,9 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
-    // this.getProject(this.projectId);
   }
   ngOnInit(){
-    //this.getProject(this.projectId);
+   // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     
@@ -273,9 +273,9 @@ export class ChildComponent  implements OnInit{
         data.append("userId",this.currentUser._id);
         data.append("projectId",this.projectId);
         data.append("taskId",taskId);
-        // data.append("Images",this.images);
+        data.append("Images",this.images);
         for(var i = 0; i < this.files.length; i++)
-          data.append("fileUpload",this.files[i]);
+          data.append('fileUpload',this.files[i]);
       }else{
         data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
       }
@@ -424,7 +424,7 @@ export class ChildComponent  implements OnInit{
 
 
     getHHMMTime(difference){
-
+      
       difference = difference.split("T");  
       difference = difference[1];
       difference = difference.split(".");
@@ -474,16 +474,16 @@ export class ChildComponent  implements OnInit{
           res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
-          this.projectTeam.sort(function(a, b){
-            var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-            if (nameA < nameB) //sort string ascending
-              return -1 
-            if (nameA > nameB)
-              return 1
-            return 0 //default return value (no sorting)
-            this.projectTeam.push
-            console.log("sorting============>"  ,this.projectTeam);
-          })
+          // this.projectTeam.sort(function(a, b){
+          //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          //   if (nameA < nameB) //sort string ascending
+          //     return -1 
+          //   if (nameA > nameB)
+          //     return 1
+          //   return 0 //default return value (no sorting)
+          //   this.projectTeam.push
+          //   console.log("sorting============>"  ,this.projectTeam);
+          // })
 
 
         },(err:any)=>{
@@ -579,31 +579,6 @@ export class ChildComponent  implements OnInit{
       });
 
     }
-
-    // onKey(searchText){
-    //   console.log("searchText",searchText);
-    //   console.log(this.project);
-    //   var dataToBeFiltered = [this.project];
-    //   var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-    //   console.log("In Component",task);
-    //   this.getEmptyTracks();
-    //   _.forEach(task, (content)=>{
-    //     _.forEach(this.tracks, (track)=>{
-    //       if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-    //         if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-    //           // if(content.status == track.id){
-    //             track.tasks.push(content);
-    //           }
-
-    //         }
-    //         else{
-    //           if(content.status == track.id){
-    //             track.tasks.push(content);
-    //           }
-    //         }
-    //       });
-    //   });
-    // }
 
   
 
