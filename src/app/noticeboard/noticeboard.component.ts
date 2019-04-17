@@ -110,9 +110,9 @@ export class NoticeboardComponent implements OnInit {
     data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
     data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
     data.append('published', editNoticeForm.published?editNoticeForm.published:"");
-    if(this.singlenotice.images && this.singlenotice.images.length>0){
-      for(var i=0;i<this.singlenotice.images.length;i++){
-        data.append('image', this.singlenotice.images[i]);
+    if(this.files && this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('image', this.files[i]);
       }
     }
     console.log("data Updated ==========================>" , data);
@@ -183,7 +183,6 @@ export class NoticeboardComponent implements OnInit {
   deleteNoticeImage(event, index){
     console.log(event);
     console.log(index);
-
     this.singlenotice.images.splice(index , 1);
     console.log(this.singlenotice.images);
     if(this.singlenotice.images && this.singlenotice.length)
