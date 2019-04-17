@@ -32,6 +32,7 @@ export class CommentService {
 	}
 
 	addComment(data){
+		console.log(data);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',

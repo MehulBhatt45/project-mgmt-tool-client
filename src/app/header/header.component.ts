@@ -40,6 +40,8 @@ export class HeaderComponent implements OnInit {
 	loader: boolean = false;
 	sprints;
 	userNotification;
+	projectArr = [];
+	finalArr = [];
 
 	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
@@ -158,6 +160,33 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			console.log("all projects =====>" , res);
+			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("current user ====>" , pmanagerId);
+			this.projects = res;
+			console.log(this.projects);
+			_.forEach(this.projects , (task)=>{
+				_.forEach(task.pmanagerId , (project)=>{
+					if(project._id == pmanagerId){
+						this.projectArr.push(task);
+					}
+				})
+			})
+			for(var i=0;i<this.projectArr.length;i++){
+				this.finalArr.push(this.projectArr[i]);
+				console.log("response======>",this.finalArr);
+			}
+		},
+		err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+		this.projectArr = [];
+		this.finalArr = [];
+	}
+
 	clearSelection(event){
 		console.log(event);
 	}
@@ -272,8 +301,8 @@ export class HeaderComponent implements OnInit {
 	}
 	saveTheData(task){
 		this.loader = true;
-		task.priority = Number(task.priority); 
-		task.status = "to do"
+		task.priority = Number(task.priority);
+		task.status = 'to do'; 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -299,8 +328,8 @@ export class HeaderComponent implements OnInit {
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			console.log("res-=-=",this.projectId);
-			this.router.navigate(["/project-details/"+this.projectId]);
+			// console.log("res-=-=",this.projectId);
+			// this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
@@ -357,30 +386,30 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
-		getNotificationByUserId(){
-			this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
-				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
-				// console.log("loginUser==========>",loginUser);
-				this.userNotification = res;
-				this.userNotification.sort(custom_sort);
-				this.userNotification.reverse();
-				 var start = new Date();
-				
-				 start.setTime(1532403882588);
-				 console.log("response ==========++>" , res);
-				 this.userNotification = res.length;
-				 console.log("count of notification",this.userNotification);
-				// // console.log(this.currentUser[0].subject);
-				// console.log("title=========>",this.currentUser[0].title);
-				// console.log("current====>",this.currentUser);
-				// console.log("projectId==========>",this.currentUser[0].projectId._id);
-				// console.log("type======================>",this.currentUser[0].type);
-				
-			})
-			 function custom_sort(a, b) {
-            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      }
+	getNotificationByUserId(){
+		this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
+			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
+			// console.log("loginUser==========>",loginUser);
+			this.userNotification = res;
+			this.userNotification.sort(custom_sort);
+			this.userNotification.reverse();
+			var start = new Date();
+			
+			start.setTime(1532403882588);
+			console.log("response ==========++>" , res);
+			this.userNotification = res.length;
+			console.log("count of notification",this.userNotification);
+			// // console.log(this.currentUser[0].subject);
+			// console.log("title=========>",this.currentUser[0].title);
+			// console.log("current====>",this.currentUser);
+			// console.log("projectId==========>",this.currentUser[0].projectId._id);
+			// console.log("type======================>",this.currentUser[0].type);
+			
+		})
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 		}
+	}
 	removeAvatar(file, index){
 		console.log(file, index);
 		this.url.splice(index, 1);

@@ -96,15 +96,14 @@ export class NoticeboardComponent implements OnInit {
       desc : new FormControl(''),
       published : new FormControl(''),
       expireon :new FormControl(''),
-      image : new FormControl(''),
+      images : new FormControl(''),
     })
   }
 
   updateNotice(editNoticeForm, noticeId){
     console.log("noticeId", noticeId);
-    editNoticeForm.image = this.singlenotice.images;
     console.log("update Notice =====>",editNoticeForm);
-    console.log("fdf============",this.singlenotice.images);
+    console.log("update Notice image =====>",editNoticeForm.images);
     let data = new FormData();
     data.append('title', editNoticeForm.title?editNoticeForm.title:"");
     data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
@@ -112,7 +111,7 @@ export class NoticeboardComponent implements OnInit {
     data.append('published', editNoticeForm.published?editNoticeForm.published:"");
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
-        data.append('image', this.files[i]);
+        data.append('images', this.files[i]);
       }
     }
     console.log("data Updated ==========================>" , data);
@@ -125,7 +124,6 @@ export class NoticeboardComponent implements OnInit {
       Swal.fire('Oops...', 'Something went wrong!', 'error')
     })
   }
-
 
   uploadFile(e,noticeid){
     console.log("file============>",e.target.files);
@@ -150,6 +148,7 @@ export class NoticeboardComponent implements OnInit {
       console.log("all notice===>>>", this.singlenotice);
       console.log("all notice===>>>", this.singlenotice.images);
       this.noticeImg = this.singlenotice.images
+      console.log("notice img===>",this.noticeImg);
       this.path = config.baseMediaUrl;
       console.log("base",this.path); 
     },err=>{
@@ -183,10 +182,10 @@ export class NoticeboardComponent implements OnInit {
   deleteNoticeImage(event, index){
     console.log(event);
     console.log(index);
-    this.singlenotice.images.splice(index , 1);
-    console.log(this.singlenotice.images);
-    if(this.singlenotice.images && this.singlenotice.length)
-      this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, event), index);
+    this.noticeImg.splice(index , 1);
+    console.log(this.noticeImg);
+    if(this.noticeImg && this.singlenotice.length)
+      this.singlenotice.images.splice(_.findIndex(this.noticeImg, event), index);
   }
 
 }
