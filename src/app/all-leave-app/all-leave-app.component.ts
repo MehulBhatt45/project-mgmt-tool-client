@@ -19,7 +19,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
-   @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
+  @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
 
   allLeaves;
   allAproveLeaves;
@@ -126,6 +126,7 @@ export class AllLeaveAppComponent implements OnInit {
                 $(".search .btn").parent(".search").toggleClass("open");
                 $('.search').click((evt)=>{
                   evt.stopPropagation();
+
                 });
               }
 
@@ -592,10 +593,8 @@ export class AllLeaveAppComponent implements OnInit {
                           }
                           console.log("nthi avtu=======>",custom_sort);
                         }
+
                         onKey(searchText){
-                          console.log("p leaves ====>" , this.pLeave);
-                          console.log("r leaves ====>" , this.rLeave);
-                          console.log("a leaves ====>" , this.aLeave);
                           if(this.pLeave == true){
                             console.log('pending leaves',this.allLeaves);
                             var dataToBeFiltered = [this.allLeaves];
@@ -612,7 +611,6 @@ export class AllLeaveAppComponent implements OnInit {
                           _.forEach(leave, (content)=>{
                             this.leaveApp.push(content);
                           });
-
                         }
 
                         leavesByUserId(){

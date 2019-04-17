@@ -102,8 +102,9 @@ export class NoticeboardComponent implements OnInit {
 
   updateNotice(editNoticeForm, noticeId){
     console.log("noticeId", noticeId);
+    editNoticeForm.image = this.singlenotice.images;
     console.log("update Notice =====>",editNoticeForm);
-    console.log("fdf============",this.files);
+    console.log("fdf============",this.singlenotice.images);
     let data = new FormData();
     data.append('title', editNoticeForm.title?editNoticeForm.title:"");
     data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
@@ -114,6 +115,7 @@ export class NoticeboardComponent implements OnInit {
         data.append('image', this.files[i]);
       }
     }
+    console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
       $('#editmodel').modal('hide');
       this.getAllNotice();
@@ -178,13 +180,13 @@ export class NoticeboardComponent implements OnInit {
 
   }
 
-  deleteNoticeImage(index){
+  deleteNoticeImage(event, index){
+    console.log(event);
     console.log(index);
+    this.singlenotice.images.splice(index , 1);
     console.log(this.singlenotice.images);
-    this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, index), 1);
     if(this.singlenotice.images && this.singlenotice.length)
-      this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, index), 1);
-
+      this.singlenotice.images.splice(_.findIndex(this.singlenotice.images, event), index);
   }
 
 }

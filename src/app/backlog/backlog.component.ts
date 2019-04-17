@@ -64,6 +64,7 @@ export class BacklogComponent implements OnInit {
 		this.getSprint(this.projectId);
 	}
 
+
 	ngOnInit() {
 		this.change.detectChanges();
 
