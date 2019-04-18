@@ -267,6 +267,7 @@ export class ProjectDetailComponent implements OnInit {
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
+
 					// this.projectTeam.sort(function(a, b){
 					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					// 	if (nameA < nameB) //sort string ascending

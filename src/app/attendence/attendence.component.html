@@ -1,46 +1,297 @@
-<div class="container-fluid">
+<div class="loader" *ngIf="loader">
+	<span></span>
+	<span></span>
+	<span></span>
+	<span></span>
+</div>
+
+<div class="container-fluid" *ngIf="!loader">
 	<div class="row">
-		<div class="header">
-			<h1>Attendence Table</h1>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-6">
-			<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
-		</div>
-		<div class="col-xs-6">
-			<button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="md-form">
-				<input placeholder="Selected date" type="text" id="date-picker-example" (click)="dateSelected()" class="form-control datepicker" >	
-				<label for="date-picker-example"></label>
+		<div class="card" style="background-color: #372e5f;">
+			<div class="card-body">
+				<h2 class="card-title" style="text-align: center;"><a style="color: #fff;">Attendence Table</a></h2>
 			</div>
 		</div>
 	</div>
+	<!-- <div class="row">
+		<div class="header">
+			<h1>Attendence Table</h1>
+		</div>
+	</div> -->
+	<!-- <div class="row">
+		<div class="col-md-6">
+			<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
+		</div>
+		<div class="col-md-6">
+			<button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button>
+		</div>
+	</div> -->
+	<!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+	</mwl-demo-utils-calendar-header> -->
+
+	<!-- <div class="alert alert-info">
+		Click on a day on the view.
+		<strong *ngIf="clickedDate"
+		>You clicked on this day: {{ clickedDate | date:'medium' }}</strong
+		>
+		<strong *ngIf="clickedColumn != null"
+		>You clicked on this column: {{ clickedColumn }}</strong
+		>
+	</div> -->
+
+	<div [ngSwitch]="view">
+		<mwl-calendar-month-view
+		*ngSwitchCase="'month'"
+		[viewDate]="viewDate"
+		[events]="events"
+		(columnHeaderClicked)="clickedColumn = $event"
+		(dayClicked)="dateSelected($event.day.date)"
+		>
+	</mwl-calendar-month-view>
+	<mwl-calendar-week-view
+	*ngSwitchCase="'week'"
+	[viewDate]="viewDate"
+	[events]="events"
+	(dayHeaderClicked)="dateSelected($event.day.date)"
+	>
+</mwl-calendar-week-view>
+<mwl-calendar-day-view
+*ngSwitchCase="'day'"
+[viewDate]="viewDate"
+[events]="events"
+>
+</mwl-calendar-day-view>
+</div>
+</div>
+<div class="row">
+	
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">CheckIn</th>
+				<th scope="col">CheckOut</th>
+				<th scope="col">Diffrence</th>
+
+			</tr>
+
+		</thead>
+		<tbody>
+
+
+
+			<tr *ngFor="let ateendence of logs;let i=index;">
+				<td>{{ateendence.checkIn | date:'mediumTime'}}</td>
+
+				<td>{{ateendence.checkOut | date:'mediumTime'}}</td>
+
+				<td>{{ateendence.diff}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+
+				<th scope="col" style="background-color: lightcoral;
+				text-align: center;"><i class="far fa-clock"></i> Work Time</th>
+				<th *ngIf="worktime" style="float: right;margin-right: 131px;background-color: lightcoral">{{gate}}</th>
+			</tr>
+
+		</thead>
+
+	</table>
 </div>
 
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
+	<li class="nav-item">
+		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+		aria-selected="true">Present Developer</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+		aria-selected="false">Absent Developer</a>
+	</li>
+</ul>
+<div class="tab-content card pt-5" id="myTabContentJust">
+	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-<table class="table">
-	<thead>
-		<tr>
-			<th scope="col">CheckIn</th>
-			<th scope="col">CheckOut</th>
-			<th scope="col">Diffrence</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let ateendence of logs;let i=index;">
-			<td>{{ateendence.checkIn}}</td>
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+					<thead>
+						<tr>
 
-			<td>{{ateendence.checkOut}}</td>
+							<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
+							<th scope="col">Check In</th>
+							<th scope="col">Check Out</th>
 
-			<td>{{ateendence.diff}}</td>
-		</tr>
-	</tbody>
-</table>
+
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of presentuser,let i=index">
+							<td>{{user.UserName}}</td>
+							<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
+							<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+
+
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+					<thead>
+						<tr>
+
+							<th scope="col"><i class="far fa-clock"></i> Work Time</th>
+
+
+							<th scope="col">Sign</th>
+
+
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of alldiff">
+
+							<td>{{user}}</td>
+
+							<td><i class="fas fa-check"></i></td>
+
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+
+		
+	</div>
+	<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+		<div class="row">
+			<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+				<thead>
+					<tr>
+
+						<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
+
+
+
+						<th scope="col">Sign</th>
+
+
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let i of missing">
+						<td>{{i}}</td>
+
+
+						<td><i class="fas fa-times"></i></td>
+
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+
+	</div>
+	
+</div>
+
+<!-- <div class="row">
+	<div class="col-md-6">
+		<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+			<thead>
+				<tr>
+
+					<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
+					<th scope="col">Check In</th>
+					<th scope="col">Check Out</th>
+
+
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of presentuser,let i=index">
+					<td>{{user.UserName}}</td>
+					<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
+					<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+
+					
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+	<div class="col-md-6">
+		<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+			<thead>
+				<tr>
+					
+					<th scope="col"><i class="far fa-clock"></i> Work Time</th>
+
+
+					<th scope="col">Sign</th>
+
+
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of alldiff">
+					
+					<td>{{user}}</td>
+
+					<td><i class="fas fa-check"></i></td>
+					
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+		<thead>
+			<tr>
+
+				<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
+				
+				
+
+				<th scope="col">Sign</th>
+
+
+			</tr>
+
+		</thead>
+		<tbody>
+			<tr *ngFor="let i of missing">
+				<td>{{i}}</td>
+				
+
+				<td><i class="fas fa-times"></i></td>
+				
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+-->
+
 
 	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
