@@ -273,16 +273,6 @@ export class HeaderComponent implements OnInit {
 			localStorage.setItem("checkOut",JSON.stringify(true));
 			localStorage.setItem("checkIn",JSON.stringify(false));
 			// this.checkInStatus = false;
-			Swal.fire({
-				title: 'Hey! '+this.currentUserName,
-				text:'Check Out Successfully',
-				// html:'<strong>Hey</strong> '+this.currentUserName,
-				// type: 'success',
-				// // text: 'hey '+this.currentUserName,
-				// title: 'Check In Successfully',
-				// showConfirmButton:false,
-				timer: 2000
-			})
 
 			window.location.reload();
 
