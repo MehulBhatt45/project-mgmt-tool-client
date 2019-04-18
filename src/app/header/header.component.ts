@@ -36,8 +36,6 @@ export class HeaderComponent implements OnInit {
 	timediff:any;
 	attendence:any;
 	demoprojects;
-	projectArr = [];
-	finalArr = [];
 	userNotification;
 	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
@@ -49,7 +47,6 @@ export class HeaderComponent implements OnInit {
 	loader: boolean = false;
 	sprints;
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
-
 
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -168,33 +165,6 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			console.log("all projects =====>" , res);
-			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
-			console.log("current user ====>" , pmanagerId);
-			this.projects = res;
-			console.log(this.projects);
-			_.forEach(this.projects , (task)=>{
-				_.forEach(task.pmanagerId , (project)=>{
-					if(project._id == pmanagerId){
-						this.projectArr.push(task);
-					}
-				})
-			})
-			for(var i=0;i<this.projectArr.length;i++){
-				this.finalArr.push(this.projectArr[i]);
-				console.log("response======>",this.finalArr);
-			}
-		},
-		err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-		this.projectArr = [];
-		this.finalArr = [];
-	}
-
 	clearSelection(event){
 		console.log(event);
 	}
@@ -242,7 +212,7 @@ export class HeaderComponent implements OnInit {
 			// this.date = this.attendence.checkIn;
 			// console.log("date][][][][][][][][",time);
 
-			localStorage.setItem("checkIn",JSON.stringify(true));
+			localStorage.setItem("checkIn",JSON.stringify(false));
 			this.checkInStatus = true;
 			Swal.fire({
 				title: 'Hey! '+this.currentUserName,
@@ -273,6 +243,16 @@ export class HeaderComponent implements OnInit {
 			localStorage.setItem("checkOut",JSON.stringify(true));
 			localStorage.setItem("checkIn",JSON.stringify(false));
 			// this.checkInStatus = false;
+			Swal.fire({
+				title: 'Hey! '+this.currentUserName,
+				text:'Check Out Successfully',
+				// html:'<strong>Hey</strong> '+this.currentUserName,
+				// type: 'success',
+				// // text: 'hey '+this.currentUserName,
+				// title: 'Check In Successfully',
+				// showConfirmButton:false,
+				timer: 2000
+			})
 
 			window.location.reload();
 
@@ -317,6 +297,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	logout() {
+		localStorage.setItem("checkIn",JSON.stringify(false));
 		this._loginService.logout();
 		this.router.navigate(['/login']);
 	}
@@ -393,8 +374,7 @@ export class HeaderComponent implements OnInit {
 	}
 	saveTheData(task){
 		this.loader = true;
-		task.priority = Number(task.priority);
-		task.status = 'to do'; 
+		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		task.estimatedTime = $("#estTime").val();
 		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
@@ -420,8 +400,8 @@ export class HeaderComponent implements OnInit {
 			this.task = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			// console.log("res-=-=",this.projectId);
-			// this.router.navigate(["/project-details/"+this.projectId]);
+			console.log("res-=-=",this.projectId);
+			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			//$('#alert').css('display','block');
