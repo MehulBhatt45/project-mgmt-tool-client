@@ -76,7 +76,9 @@
 							</div>	
 						</form>
 					</div>
-
+					<div class="row">
+						<h5>Project Deadline:{{projectDealine | date:'mediumDate'}}</h5>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -108,7 +110,7 @@
 					<div class="row">
 						<form style="width: 100%;"  [formGroup]="editSprintForm">
 							<div class="md-form form-group">
-								<label for="title">Sprint Name</label>
+								<label for="title" class="active">Sprint Name</label>
 								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newsprint.title">
 							</div>
 							<div class="md-form form-group">
@@ -120,10 +122,13 @@
 								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
 							</div>	
 							<div class="md-form form-group">
-								<label for="desc">Sprint Goal</label>
+								<label for="desc" class="active">Sprint Goal</label>
 								<input type ="text" id="desc" formControlName="goal" class="form-control md-textarea" [(ngModel)]="newsprint.goal">
 							</div>
 						</form>
+					</div>
+					<div class="row">
+						<h5>Project Deadline:{{projectDealine | date:'mediumDate'}}</h5>
 					</div>
 				</div>
 			</div>
@@ -155,23 +160,26 @@
 				<div class="container">
 					<div class="row">
 						<form style="width: 100%;"  [formGroup]="editSprintForm">
-							<div class="md-form form-group">
-								<label for="title">Sprint Name</label>
+							<div class="md-form form-group" *ngIf="newsprint">
+								<label for="title" class="active">Sprint Name</label>
 								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newsprint.title">
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;"[(ngModel)]="newsprint.startDate">
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;"  [(ngModel)]="newsprint.startDate">
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;"  [(ngModel)]="newsprint.endDate">
 							</div>	
 							<div class="md-form form-group">
-								<label for="desc">Sprint Goal</label>
+								<label for="desc" class="active">Sprint Goal</label>
 								<input type ="text" id="desc" formControlName="goal" class="form-control md-textarea" [(ngModel)]="newsprint.goal">
 							</div>
 						</form>
+					</div>
+					<div class="row">
+						<h5>Project Deadline:{{projectDealine | date:'mediumDate'}}</h5>
 					</div>
 				</div>
 			</div>

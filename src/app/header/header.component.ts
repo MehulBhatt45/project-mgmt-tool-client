@@ -46,8 +46,9 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
-	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
+	newSprint = [];
 
+	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -151,7 +152,6 @@ export class HeaderComponent implements OnInit {
 			this.projectId = item._id;
 			this.loader = true;
 			$(".progress").addClass("abc");
-			// $(".progress .progress-bar").css({"width": '100%'});
 			setTimeout(()=>{
 				this.loader = false;
 				$(".progress").removeClass("abc");
@@ -214,17 +214,7 @@ export class HeaderComponent implements OnInit {
 
 			localStorage.setItem("checkIn",JSON.stringify(false));
 			this.checkInStatus = true;
-			Swal.fire({
-				title: 'Hey! '+this.currentUserName,
-				text:'Check In Successfully',
-				// html:'<strong>Hey</strong> '+this.currentUserName,
-				// type: 'success',
-				// // text: 'hey '+this.currentUserName,
-				// title: 'Check In Successfully',
-				// showConfirmButton:false,
-				timer: 2000
-			})
-
+			
 			
 
 
@@ -243,16 +233,6 @@ export class HeaderComponent implements OnInit {
 			localStorage.setItem("checkOut",JSON.stringify(true));
 			localStorage.setItem("checkIn",JSON.stringify(false));
 			// this.checkInStatus = false;
-			Swal.fire({
-				title: 'Hey! '+this.currentUserName,
-				text:'Check Out Successfully',
-				// html:'<strong>Hey</strong> '+this.currentUserName,
-				// type: 'success',
-				// // text: 'hey '+this.currentUserName,
-				// title: 'Check In Successfully',
-				// showConfirmButton:false,
-				timer: 2000
-			})
 
 			window.location.reload();
 
@@ -271,9 +251,7 @@ export class HeaderComponent implements OnInit {
 				this.projects = res;
 				console.log("this.projects",this.projects);
 				_.forEach(this.projects,(project)=>{
-					// console.log("project",project);
 					_.forEach(project.pmanagerId,(pid)=>{
-						// console.log("pid",pid);
 						if(pid._id == this.currentUser._id){
 							this.demoprojects.push(project);
 						}
@@ -404,7 +382,6 @@ export class HeaderComponent implements OnInit {
 			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			//$('#alert').css('display','block');
 			this.loader = false;
 			console.log("error========>",err);
 		});
@@ -436,7 +413,6 @@ export class HeaderComponent implements OnInit {
 	}
 
 	onSelectFile(event,option){
-		// this.files = event.target.files;
 		_.forEach(event.target.files, (file:any)=>{
 			this.files.push(file);
 			var reader = new FileReader();
@@ -449,10 +425,17 @@ export class HeaderComponent implements OnInit {
 			}
 		})
 	}
+
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				if(sprint.status !== 'Complete'){
+					console.log("sprint in if",sprint);
+					this.newSprint.push(sprint);
+				}
+			})
 		},(err:any)=>{
 			console.log(err);
 		});

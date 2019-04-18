@@ -315,15 +315,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-12">
-							<label for="assignTo">Sprint</label>
-							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-								<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-							</select>
-							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-								<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-							</select>
-						</div>
 						<div  *ngIf="url && url.length">
 							<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
 								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">

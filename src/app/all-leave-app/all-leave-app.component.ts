@@ -42,14 +42,11 @@ export class AllLeaveAppComponent implements OnInit {
   fileUrl;
   loader : boolean = false;
   filteredLeaves = [];
-  // projectTeam;
-  // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
   selectedStatus:any;
   comment;
   leaveid;
-
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
