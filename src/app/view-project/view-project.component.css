@@ -326,6 +326,7 @@ a.btn-floating.btn-action i{
 .btn-floating i{
     font-size: 14px!important;
 }
+
 .title_image{
     height: 200px;
     width: 100%;
@@ -334,8 +335,8 @@ a.btn-floating.btn-action i{
 .summary{
     position: fixed;
     display: none;
-     z-index: 999;
-     /*background-image: linear-gradient(gray,#31c8cc);*/
+    z-index: 999;
+    /*background-image: linear-gradient(gray,#31c8cc);*/
     background-color: #fff;
     height: 300px;
     width: 300px;
@@ -355,3 +356,4 @@ a.btn-floating.btn-action i{
     display: block !important;
     width: 250px !important;
 }
+
