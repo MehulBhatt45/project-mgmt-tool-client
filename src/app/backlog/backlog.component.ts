@@ -47,6 +47,7 @@ export class BacklogComponent implements OnInit {
 	pDuration;
 	currentdate = moment().format('YYYY-MM-DD'); 
 	activeSprint;
+	projectDealine;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
@@ -70,25 +71,26 @@ export class BacklogComponent implements OnInit {
 
 
 		// setTimeout(()=>{
-			var projectDealine = JSON.parse(localStorage.getItem('projectdeadline'));
-			console.log("project dealine in ng on init",projectDealine);
+			this.projectDealine = JSON.parse(localStorage.getItem('projectdeadline'));
+			console.log("project dealine in ng on init",this.projectDealine);
 
-			$('#startDate').pickadate({ 
-				min: new Date(),
-				max:new Date(projectDealine),
-				format: ' mm/dd/yyyy',
-				formatSubmit: 'mm/dd/yyyy',
-				hiddenPrefix: 'prefix__',
-				hiddenSuffix: '__suffix'
-			})	
-			$('#endDate').pickadate({ 
-				min: new Date(),
-				max:new Date(projectDealine),
-				format: ' mm/dd/yyyy',
-				formatSubmit: 'mm/dd/yyyy',
-				hiddenPrefix: 'prefix__',
-				hiddenSuffix: '__suffix'
-			})	
+
+			// $('#startDate').pickadate({ 
+			// 	min: new Date(),
+			// 	max:new Date(this.projectDealine),
+			// 	format: ' mm/dd/yyyy',
+			// 	formatSubmit: 'mm/dd/yyyy',
+			// 	hiddenPrefix: 'prefix__',
+			// 	hiddenSuffix: '__suffix'
+			// })	
+			// $('#endDate').pickadate({ 
+			// 	min: new Date(),
+			// 	max:new Date(this.projectDealine),
+			// 	format: ' mm/dd/yyyy',
+			// 	formatSubmit: 'mm/dd/yyyy',
+			// 	hiddenPrefix: 'prefix__',
+			// 	hiddenSuffix: '__suffix'
+			// })	
 			// },500);
 
 			var from_input = $('#startDate').pickadate(),
@@ -128,27 +130,6 @@ export class BacklogComponent implements OnInit {
 		}
 		refresh(): void {
 			window.location.reload();
-		}
-
-		ngOnChange(){
-			var projectDealine = JSON.parse(localStorage.getItem('projectdeadline'));
-			console.log("project dealine in ng on init",projectDealine);
-			$('#startDate').pickadate({ 
-				min: new Date(),
-				max:new Date(projectDealine),
-				format: ' mm/dd/yyyy',
-				formatSubmit: 'mm/dd/yyyy',
-				hiddenPrefix: 'prefix__',
-				hiddenSuffix: '__suffix'
-			})	
-			$('#endDate').pickadate({ 
-				min: new Date(),
-				max:new Date(projectDealine),
-				format: ' mm/dd/yyyy',
-				formatSubmit: 'mm/dd/yyyy',
-				hiddenPrefix: 'prefix__',
-				hiddenSuffix: '__suffix'
-			})
 		}
 
 		getEmptyTracks(){
@@ -302,6 +283,7 @@ export class BacklogComponent implements OnInit {
 		}
 
 		updateSprint(sprint){
+ 
 			console.log("update Notice =====>",sprint);
 			sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
 			console.log("start sprint =====>",sprint.startDate);
