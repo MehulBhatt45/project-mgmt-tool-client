@@ -297,6 +297,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	logout() {
+		localStorage.setItem("checkIn",JSON.stringify(false));
 		this._loginService.logout();
 		this.router.navigate(['/login']);
 	}
