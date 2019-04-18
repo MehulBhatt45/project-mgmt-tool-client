@@ -73,22 +73,20 @@ export class BacklogComponent implements OnInit {
 		console.log("project dealine in ng on init",this.projectDealine);
 
 
-		// $('#startDate').pickadate({ 
-		// 	min: new Date(),
-		// 	max:new Date(this.projectDealine),
-		// 	format: ' mm/dd/yyyy',
-		// 	formatSubmit: 'mm/dd/yyyy',
-		// 	hiddenPrefix: 'prefix__',
-		// 	hiddenSuffix: '__suffix'
-		// })	
-		// $('#endDate').pickadate({ 
-		// 	min: new Date(),
-		// 	max:new Date(this.projectDealine),
-		// 	format: ' mm/dd/yyyy',
-		// 	formatSubmit: 'mm/dd/yyyy',
-		// 	hiddenPrefix: 'prefix__',
-		// 	hiddenSuffix: '__suffix'
-		// })	
+		$('#startDate').pickadate({ 
+			min: new Date(),
+			format: ' mm/dd/yyyy',
+			formatSubmit: 'mm/dd/yyyy',
+			hiddenPrefix: 'prefix__',
+			hiddenSuffix: '__suffix'
+		})	
+		$('#endDate').pickadate({ 
+			min: new Date(),
+			format: ' mm/dd/yyyy',
+			formatSubmit: 'mm/dd/yyyy',
+			hiddenPrefix: 'prefix__',
+			hiddenSuffix: '__suffix'
+		})	
 
 
 		var from_input = $('#startDate').pickadate(),
