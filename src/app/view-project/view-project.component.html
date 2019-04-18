@@ -1,5 +1,6 @@
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
+    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -59,7 +60,8 @@
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
 
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
-        
+
+
         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
 
     </div>
@@ -294,7 +296,3 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-
-
-
-

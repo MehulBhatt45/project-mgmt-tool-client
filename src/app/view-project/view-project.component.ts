@@ -150,6 +150,7 @@ export class ViewProjectComponent implements OnInit {
       localStorage.setItem("checkIn",JSON.stringify(true));
        localStorage.setItem("checkOut",JSON.stringify(true));
       this.checkInStatus = true;
+     
 
       window.location.reload();
 
