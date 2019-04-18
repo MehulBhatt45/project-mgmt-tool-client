@@ -63,34 +63,35 @@
 </mwl-calendar-day-view>
 </div>
 </div>
-<div class="row">
-	
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+	<div class="row">
 
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th scope="col">CheckIn</th>
-				<th scope="col">CheckOut</th>
-				<th scope="col">Diffrence</th>
+		<table class="table table-bordered table-striped mb-0">
+			<thead>
+				<tr>
+					<th scope="col">CheckIn</th>
+					<th scope="col">CheckOut</th>
+					<th scope="col">Diffrence</th>
 
-			</tr>
+				</tr>
 
-		</thead>
-		<tbody>
+			</thead>
+			<tbody>
 
 
 
-			<tr *ngFor="let ateendence of logs;let i=index;">
-				<td>{{ateendence.checkIn | date:'mediumTime'}}</td>
+				<tr *ngFor="let ateendence of logs;let i=index;">
+					<td>{{ateendence.checkIn | date:'mediumTime'}}</td>
 
-				<td>{{ateendence.checkOut | date:'mediumTime'}}</td>
+					<td>{{ateendence.checkOut | date:'mediumTime'}}</td>
 
-				<td>{{ateendence.diff}}</td>
-			</tr>
-		</tbody>
-	</table>
+					<td>{{ateendence.diff}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
-<div class="row">
+<div class="row" style="margin-top: 40px;">
 	<table class="table table-bordered">
 		<thead>
 			<tr>
