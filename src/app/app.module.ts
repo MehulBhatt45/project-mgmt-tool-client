@@ -31,7 +31,7 @@ import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
 import { NoticeboardComponent } from './noticeboard/noticeboard.component';
