@@ -212,8 +212,10 @@ export class HeaderComponent implements OnInit {
 			// this.date = this.attendence.checkIn;
 			// console.log("date][][][][][][][][",time);
 
-			localStorage.setItem("checkIn",JSON.stringify(false));
-			this.checkInStatus = true;
+			localStorage.setItem("checkIn",JSON.stringify(true));
+			localStorage.setItem("checkOut",JSON.stringify(false));
+			this.checkInStatus = false;
+			window.location.reload();
 			
 			
 
@@ -232,7 +234,8 @@ export class HeaderComponent implements OnInit {
 			console.log("respopnse of checkout=======<",res);
 			localStorage.setItem("checkOut",JSON.stringify(true));
 			localStorage.setItem("checkIn",JSON.stringify(false));
-			// this.checkInStatus = false;
+
+			this.checkInStatus = false;
 
 			window.location.reload();
 

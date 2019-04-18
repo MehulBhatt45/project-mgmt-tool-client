@@ -593,6 +593,11 @@ export class ChildComponent  implements OnInit{
   }
 
   startTimer(data) {
+    // $('.card.primary').on('click', function(e) {
+    //   if (e.target !== this)
+    //     return;
+    // });
+
     console.log('task data================>',data);
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
