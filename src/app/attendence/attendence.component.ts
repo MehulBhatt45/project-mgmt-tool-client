@@ -52,8 +52,10 @@ import { Component, OnInit, ViewChild,
     diff:any;
     maindiff=[];
     check:any;
+    diffff:any;
     timediff:any;
-    gate:any;
+    gate = [];
+    workdifference=[];
     worktime:any;
     attedenceByDateError;
     errMessage;
@@ -172,89 +174,6 @@ import { Component, OnInit, ViewChild,
 
 
 
-        // checkIn(){
-
-        //   this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
-        //     console.log("currentEmployeeId",this.currentEmployeeId);
-            
-        //     console.log("respopnse of checkin=======<",res);
-
-        //     // res.difference = res.difference.split("T");
-        //     // res.difference = res.difference[1];
-        //     // res.difference = res.difference.split("Z");
-        //     // res.difference = res.difference[0];
-        //     // console.log("diffrence====-=-=-=-=-=-=-",res.difference);
-        //     // this.timediff = res.difference;
-        //     // console.log("timediff--=-=-=-=",this.timediff);
-
-
-        //     this.attendence = res.in_out;
-        //     console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
-
-
-        //     // _.forEach(this.attendence , (attendence)=>{
-        //       //   console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
-        //       //   if(attendence.checkOut != null){
-        //         //     attendence.checkOut = attendence.checkOut.split("T");
-        //         //     attendence.checkOut = attendence.checkOut[1];
-        //         //     attendence.checkOut = attendence.checkOut.split("Z");
-        //         //     attendence.checkOut = attendence.checkOut[0];
-        //         //   }
-        //         // })
-
-        //         // _.forEach(this.attendence , (attendence)=>{
-        //           //   console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
-        //           //   if(attendence.checkIn != null){
-        //             //     attendence.checkIn = attendence.checkIn.split("T");
-        //             //     attendence.checkIn = attendence.checkIn[1];
-        //             //     attendence.checkIn = attendence.checkIn.split("Z");
-        //             //     attendence.checkIn = attendence.checkIn[0];
-        //             //   }
-        //             // })
-
-        //             // this.date = this.attendence.checkIn;
-        //             // console.log("date][][][][][][][][",time);
-
-        //             localStorage.setItem("checkIn",JSON.stringify(true));
-        //             this.checkInStatus = true;
-        //             Swal.fire({
-        //               title: 'Hey! '+this.currentUserName,
-        //               text:'Check In Successfully',
-        //               // html:'<strong>Hey</strong> '+this.currentUserName,
-        //               // type: 'success',
-        //               // // text: 'hey '+this.currentUserName,
-        //               // title: 'Check In Successfully',
-        //               // showConfirmButton:false,
-        //               timer: 2000
-        //             })
-        //           },(err:any)=>{
-        //             console.log("err of checkin=>",err);
-        //           })
-
-        // }
-
-        // checkOut(){
-
-        //   this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
-        //     console.log("respopnse of checkout=======<",res);
-        //     localStorage.setItem("checkOut",JSON.stringify(false));
-        //     localStorage.setItem("checkIn",JSON.stringify(true));
-        //     // this.checkInStatus = false;
-        //     Swal.fire({
-        //       title: 'Hey! '+this.currentUserName,
-        //       text:'Check Out Successfully',
-        //       // html:'<strong>Hey</strong> '+this.currentUserName,
-        //       // type: 'success',
-        //       // // text: 'hey '+this.currentUserName,
-        //       // title: 'Check In Successfully',
-        //       // showConfirmButton:false,
-        //       timer: 2000
-        //     })
-        //   },(err:any)=>{
-        //     console.log("err of chechout------------->",err);
-        //   })
-
-        // }
 
         dateSelected(event){
           var date = moment(event).format('YYYY-MM-DD');
@@ -263,41 +182,45 @@ import { Component, OnInit, ViewChild,
           this._leaveService.empAttendence(date).subscribe((res:any)=>{
             console.log("res ==>" , res);
             this.worktime = res;
-            // console.log("wirktime=============",this.worktime);
-           this.gate = res.difference;
-            console.log("gate========{}{}",this.gate);
-            // this.gate = moment(this.gate).format("HH:MM:SS a");
-            //  console.log("gate========{}{}",this.gate);
-            // this.maindiff = [];
 
-            // _ .forEach(this.gate,(r)=>{
+            this.gate = [];
 
-            //   console.log("resdiff==================",r);
-
-            //   if(r!= null){
-            //     r = r.split("T");
-            //     r = r[1];
-            //     r = r.split("Z");
-            //     r = r[0];
-            //   }
-
-            //   this.maindiff.push(r.difference);
-
-            // })
+            this.gate.push(this.worktime);
 
 
+            this.workdifference = [];
 
-            // this.gate = res.difference;
-            console.log("gate========{}{}",this.maindiff);
-            this.usercheck = res.in_out;
-            console.log("usercheck=========",this.usercheck);
-            // res.difference = res.difference.split("T");
-            // res.difference = res.difference[1];
-            // res.difference = res.difference.split("Z");
-            // res.difference = res.difference[0];
-            console.log("diffrence====-=-=-=-=-=-=-",res.difference);
-            
-            
+            _ .forEach(this.gate,(gate)=>{
+
+              if(gate.difference != null){
+
+                gate.difference = gate.difference.split("T");
+                gate.difference = gate.difference[1];
+                gate.difference = gate.difference.split("Z");
+                gate.difference = gate.difference[0];
+
+
+              }
+
+              this.workdifference.push(gate.difference);
+
+
+            })
+            console.log("workdifference===============",this.workdifference);
+
+            var obj = {
+
+              'difference':this.workdifference[0]
+
+
+            }
+
+            console.log("obj===========",obj.difference);
+
+            this.diffff = obj.difference;
+            console.log("difffffffffff==============",this.diffff);
+
+
 
             if(res == null){
               console.log("either Holiday or No attendence");
@@ -317,38 +240,16 @@ import { Component, OnInit, ViewChild,
 
               this.attendenceByDate.push(res);
               console.log("response()()()()()",this.logs);
-              // _ .forEach(this.logs,(log)=>{
 
-                //   // console.log("attendence.checkIn =========+++>" ,log.checkIn);
-                //   if(log.checkIn != null){
-                  //     log.checkIn = log.checkIn.split("T");
-                  //     log.checkIn = log.checkIn[1];
-                  //     log.checkIn = log.checkIn.split("Z");
-                  //     log.checkIn = log.checkIn[0];
-                  //   }
-
-                  // })
-
-                  // _ .forEach(this.logs,(log)=>{
-
-                    //   // console.log("attendence.checkIn =========+++>" ,log.checkOut);
-                    //   if(log.checkOut != null){
-                      //     log.checkOut = log.checkOut.split("T");
-                      //     log.checkOut = log.checkOut[1];
-                      //     log.checkOut = log.checkOut.split("Z");
-                      //     log.checkOut = log.checkOut[0];
-                      //   }
-
-                      // })
-                      localStorage.setItem("attendenceByDateError",JSON.stringify(false));
-                      this.attedenceByDateError = false;
-                    }
-                  },err=>{
-                    localStorage.setItem("attedenceByDateError",JSON.stringify(true));
-                    this.attedenceByDateError = true;
-                    this.errMessage = "Either Absent Or Holiday"
-                    console.log("error",err);
-                  })
+              localStorage.setItem("attendenceByDateError",JSON.stringify(false));
+              this.attedenceByDateError = false;
+            }
+          },err=>{
+            localStorage.setItem("attedenceByDateError",JSON.stringify(true));
+            this.attedenceByDateError = true;
+            this.errMessage = "Either Absent Or Holiday"
+            console.log("error",err);
+          })
 
           this._leaveService.getUserById(date).subscribe((res:any)=>{
 
@@ -376,8 +277,6 @@ import { Component, OnInit, ViewChild,
 
             this.presentid = [];
             _ .forEach(this.presentuser,(present)=>{
-              // console.log("userid=======",developer._id);
-
 
               this.presentid.push(present.UserName);
 
@@ -385,17 +284,11 @@ import { Component, OnInit, ViewChild,
 
             })
             console.log("present userid============",this.presentid);
-            // this.filteredDevelopers = res;
-
-
-
-
-            
 
             this.missing = this.userid.filter(item => this.presentid.indexOf(item) < 0);
             console.log("absent student========>>>>",this.missing);
 
-            
+
           })
 
 

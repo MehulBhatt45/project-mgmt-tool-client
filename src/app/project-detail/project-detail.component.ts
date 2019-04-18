@@ -55,14 +55,13 @@ export class ProjectDetailComponent implements OnInit {
 	id;
 	projectTeam;
 	sprints;
+	newSprint = [];
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
 	// sorting: any;
 	sorting:any;
-	
-
 	temp:any;
 	activeSprint:any;
 	sprintInfo:any;
@@ -213,6 +212,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
+		this.getSprintWithoutComplete(this.projectId);
 	}
 
 	filterTracks(sprintId){
@@ -269,19 +269,19 @@ export class ProjectDetailComponent implements OnInit {
 					this.projectTeam = res.Teams;
 
 					// this.projectTeam.sort(function(a, b){
-					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-					// 	if (nameA < nameB) //sort string ascending
-					// 		return -1 
-					// 	if (nameA > nameB)
-					// 		return 1
-					// 	return 0 //default return value (no sorting)
-					// 	this.projectTeam.push
-					// 	console.log("sort============>"  ,this.projectTeam);
-					// })
-					this.loader = false;
-				},(err:any)=>{
-					console.log("err of team============>"  ,err);
-				});
+						// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						// 	if (nameA < nameB) //sort string ascending
+						// 		return -1 
+						// 	if (nameA > nameB)
+						// 		return 1
+						// 	return 0 //default return value (no sorting)
+						// 	this.projectTeam.push
+						// 	console.log("sort============>"  ,this.projectTeam);
+						// })
+						this.loader = false;
+					},(err:any)=>{
+						console.log("err of team============>"  ,err);
+					});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -678,5 +678,18 @@ export class ProjectDetailComponent implements OnInit {
 			}
 		})
 
+	}
+
+	getSprintWithoutComplete(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				if(sprint.status !== 'Complete'){
+					this.newSprint.push(sprint);
+				}
+			})
+		},(err:any)=>{
+			console.log(err);
+		});
 	}	
 }

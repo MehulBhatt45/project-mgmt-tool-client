@@ -148,7 +148,7 @@ export class ViewProjectComponent implements OnInit {
       // console.log("date][][][][][][][][",time);
 
       localStorage.setItem("checkIn",JSON.stringify(true));
-       localStorage.setItem("checkOut",JSON.stringify(true));
+       // localStorage.setItem("checkOut",JSON.stringify(true));
       this.checkInStatus = true;
      
 
