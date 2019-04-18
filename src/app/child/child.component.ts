@@ -88,7 +88,7 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
 
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
@@ -97,7 +97,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+    //this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     this.getSprintWithoutComplete(this.projectId);
@@ -427,8 +427,6 @@ export class ChildComponent  implements OnInit{
       })
     }
   }
-
-
 
   getHHMMTime(difference){
 
