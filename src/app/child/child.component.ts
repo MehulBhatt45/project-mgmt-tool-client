@@ -76,6 +76,7 @@ export class ChildComponent  implements OnInit{
   initialTime = 0;  
   trackss:any;
   currentsprintId;
+  newSprint = [];
   
 
   
@@ -96,9 +97,10 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-   this.getProject(this.projectId);
+    this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
+    this.getSprintWithoutComplete(this.projectId);
     
     window.addEventListener('beforeunload', function (e) {
       // Cancel the event
@@ -260,31 +262,31 @@ export class ChildComponent  implements OnInit{
   public Editor = DecoupledEditor;
   public configuration = { placeholder: 'Enter Comment Text...'};
 
-    public onReady( editor ) {
-      editor.ui.getEditableElement().parentElement.insertBefore(
-        editor.ui.view.toolbar.element,
-        editor.ui.getEditableElement()
-        );
+  public onReady( editor ) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+      );
+  }
+  public onChange( { editor }: ChangeEvent ) {
+    const data = editor.getData();
+    this.comment = data;
+  }
+  sendComment(taskId){
+    console.log(this.comment);
+    var data : any;
+    if(this.files.length>0){
+      data = new FormData();
+      data.append("content",this.comment?this.comment:"");
+      data.append("userId",this.currentUser._id);
+      data.append("projectId",this.projectId);
+      data.append("taskId",taskId);
+      // data.append("Images",this.images);
+      for(var i = 0; i < this.files.length; i++)
+        data.append('fileUpload',this.files[i]);
+    }else{
+      data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
     }
-    public onChange( { editor }: ChangeEvent ) {
-      const data = editor.getData();
-      this.comment = data;
-    }
-    sendComment(taskId){
-      console.log(this.comment);
-      var data : any;
-      if(this.files.length>0){
-        data = new FormData();
-        data.append("content",this.comment?this.comment:"");
-        data.append("userId",this.currentUser._id);
-        data.append("projectId",this.projectId);
-        data.append("taskId",taskId);
-        // data.append("Images",this.images);
-        for(var i = 0; i < this.files.length; i++)
-          data.append('fileUpload',this.files[i]);
-      }else{
-        data = {content:this.comment, userId: this.currentUser._id, taskId: taskId};
-      }
     console.log(data);
     this._commentService.addComment(data).subscribe((res:any)=>{
       console.log(res);
@@ -506,9 +508,9 @@ export class ChildComponent  implements OnInit{
         // this.project.reverse();
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
-          console.log("task ======>" , task);
+          //console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            console.log("tracks==-=-=-=-",this.tracks);
+            //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
               if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
@@ -585,12 +587,6 @@ export class ChildComponent  implements OnInit{
 
   }
 
-  
-
-
-
-
-
   startTimer(data) {
     console.log('task data================>',data);
     this.running = !this.running;
@@ -640,6 +636,19 @@ export class ChildComponent  implements OnInit{
 
   }
 
+  getSprintWithoutComplete(projectId){
+    this._projectService.getSprint(projectId).subscribe((res:any)=>{
+      this.sprints = res;
+      _.forEach(this.sprints, (sprint)=>{
+        if(sprint.status !== 'Complete'){
+          console.log("sprint in if",sprint);
+          this.newSprint.push(sprint);
+        }
+      })
+    },(err:any)=>{
+      console.log(err);
+    });
+  }  
 
 }
 

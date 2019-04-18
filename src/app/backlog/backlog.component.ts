@@ -222,6 +222,7 @@ export class BacklogComponent implements OnInit {
 
 			}
 		}
+
 		getProject(id){
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 				console.log(res);
@@ -309,7 +310,7 @@ export class BacklogComponent implements OnInit {
 			console.log("sprint ID=========>>>>",sprint);
 
 			if(sprint.duration > this.remainingLimit){
-				Swal.fire('Oops...', 'sprint Duration over projectdue!', 'error')
+				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
 			}
 			else{
 				this._projectService.updateSprint(sprint).subscribe((res:any)=>{
@@ -377,7 +378,7 @@ export class BacklogComponent implements OnInit {
 
 			if(sprint.startDate == this.currentdate){
 				if(sprint.duration > this.remainingLimit){
-					Swal.fire('Oops...', 'sprint Duration over projectdue!', 'error')
+					Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
 				}
 				else{
 					Swal.fire({
@@ -409,7 +410,7 @@ export class BacklogComponent implements OnInit {
 				}
 			}
 			else{
-				Swal.fire('Oops...', 'Invalid Start Date!', 'error')
+				Swal.fire('Oops...', 'Start Date Must be CurrentDate!', 'error')
 			}
 		}
 
