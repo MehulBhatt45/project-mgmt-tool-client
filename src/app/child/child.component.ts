@@ -586,17 +586,18 @@ export class ChildComponent  implements OnInit{
   }
 
   startTimer(data) {
-    // $('.card.primary').on('click', function(e) {
-    //   if (e.target !== this)
-    //     return;
-    // });
-
     console.log('task data================>',data);
+    $('.timer-button').on('click', function(e) {
+      e.stopPropagation();
+    });
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
     // data.timelog1 = {};
     if (data.running) {
+      $('.timer-button').on('click', function(e) {
+        e.stopPropagation();
+      });
       // console.log('data.running in if==================>',this.running)
       data['startText'] = 'Stop';
       var startTime = Date.now() - (data.timelog1?data.timelog1.count:this.initialTime);
@@ -615,6 +616,9 @@ export class ChildComponent  implements OnInit{
       window.localStorage.setItem("isTimerRunning",data._id);
       window.localStorage.setItem("runningStatus",data.running);
     } else {
+      $('.timer-button').on('click', function(e) {
+        e.stopPropagation();
+      });
       data.startText = 'Resume';
 
       window.localStorage.setItem("isTimerRunning","null");

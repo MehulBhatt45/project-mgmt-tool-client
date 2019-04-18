@@ -18,7 +18,7 @@
 				</div>		
 			</div> -->
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
-				<mat-card *ngFor="let task of track.tasks "cdkDrag (click)="openModel(task)">
+				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag (click)="openModel(task)">
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
@@ -33,6 +33,8 @@
 													</div>
 													<!-- <ng-template #elseBlock> Press Start </ng-template> -->
 												</section>
+											</div>
+											<div class="container" *ngIf=" task.status == 'in progress'">
 												<section class="timer-button-container">
 													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
 														{{ task.startText?task.startText:'Start' }}
@@ -40,6 +42,7 @@
 
 												</section>
 											</div>
+											
 											
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 											<div class="card-text">{{task.desc}}</div>
@@ -154,7 +157,7 @@
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
 										{{getHHMMTime(task.timelog1.difference)}}
-										{{getTime(task.timelog1.count)}}
+										<!-- {{getTime(task.timelog1.count)}} -->
 									</span>
 								</p>
 							</div>
@@ -202,6 +205,7 @@
 							<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
+							<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete'" (click)="updateStatus('in progress', task)">Reset Progress</button>
 							<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">Edit</button>
 						</div>
 						<hr>
