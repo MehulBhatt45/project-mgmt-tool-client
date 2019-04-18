@@ -3,11 +3,11 @@ body{
     padding: 0;
 }
 table{
-	margin-top: 50px;
+    margin-top: 50px;
 }
 
 .btn-danger{
-	margin-left: 15px
+    margin-left: 15px
 }
 .table-bordered td, .table-bordered th {
     vertical-align: middle;
@@ -16,13 +16,13 @@ table{
     /*width: 350px;*/
 }
 .team, .action{
-	white-space: nowrap;
+    white-space: nowrap;
 }
 .card {
     height: 100%;
 }
 .card-action span strong{
-	cursor: pointer;
+    cursor: pointer;
 }
 h2{
     margin:0px;
@@ -32,7 +32,7 @@ h2{
     text-transform: capitalize;
 }
 .team-members li{
-	height: 40px;
+    height: 40px;
     width: 40px;
     border-radius: 50%;
     border: 2px solid white;
@@ -51,17 +51,17 @@ h2{
 }
 
 .team-members li:hover{
-	z-index: 1;
+    z-index: 1;
 }
 
 .team-members li.add-member{
-	margin-right: 0;
-	padding: 8px 12px;
+    margin-right: 0;
+    padding: 8px 12px;
 }
 
 .team-members li a{
-	color: #fff;
-	text-transform: uppercase;
+    color: #fff;
+    text-transform: uppercase;
 }
 .tib-view-projects-description{
     text-align: right;
@@ -109,9 +109,25 @@ h2{
 .card-header {
     background-color: #372e5f !important;
 }
+.btn-group.dropleft.float-right {
+    display: inline-block!important;
+}
+.btn-group.dropleft.float-right .btn-floating i{
+    width: auto;
+    line-height: 26px;
+}
+a.dropdown-item.btn-floating {
+    display: inline-block;
+    width: 37px;
+    height: 37px;
+    text-align: center;
+    padding: 4px 7px;
+    line-height: 30px;
+    margin-bottom: 0 !important;
+}
 button{
     display: table;
-    margin: 0px auto;
+    float: right;
     border:none;
 }
 .form-body{
@@ -305,7 +321,7 @@ a.btn-floating.btn-action i{
     padding: 10px;
     float: right;
     top: -10px!important;
-    left: 15px!important;
+    left: 7px!important;
 }
 .dropdown-item{
     border-radius: 50%;
@@ -321,11 +337,13 @@ a.btn-floating.btn-action i{
     font-size: 14px;
     top: -20px;
     right: -15px;
-    /*    float: right;*/
+    outline: none !important;
+    box-shadow: none !important;
 }
 .btn-floating i{
     font-size: 14px!important;
 }
+
 .title_image{
     height: 200px;
     width: 100%;
@@ -334,8 +352,8 @@ a.btn-floating.btn-action i{
 .summary{
     position: fixed;
     display: none;
-     z-index: 999;
-     /*background-image: linear-gradient(gray,#31c8cc);*/
+    z-index: 999;
+    /*background-image: linear-gradient(gray,#31c8cc);*/
     background-color: #fff;
     height: 300px;
     width: 300px;
@@ -353,5 +371,12 @@ a.btn-floating.btn-action i{
 }
 .dropdown-menu.show {
     display: block !important;
-    width: 250px !important;
+    border: none;
+    min-width: auto !important
 }
+
+button.btn.btn-default.progress_summary {
+    float: none;
+    margin: auto;
+}
+

@@ -119,6 +119,9 @@ export class AllLeaveAppComponent implements OnInit {
                   event.stopPropagation();
                   $(".search").removeClass("open");
                 });
+                $('#centralModalInfo').on('hidden.bs.modal', function () {
+                  $('.modal-body').find('textarea').val('');
+                });
               }
 
 
@@ -689,6 +692,7 @@ export class AllLeaveAppComponent implements OnInit {
                                     console.log("response",res);
                                     Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
                                     $('#centralModalInfo').modal('hide');
+                                    this.comment = "";
                                   },err=>{
                                     console.log("errrrrrrrrrrrrr",err);
                                     Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -701,6 +705,9 @@ export class AllLeaveAppComponent implements OnInit {
                                   this.gotAttachment = attechment;
                                   $('#veiwAttach').modal('show')
                                   console.log("gotattechment array ====>",this.gotAttachment);
+                                }
+                                cancel(){
+                                  this.comment = "";
                                 }
 
                               }
