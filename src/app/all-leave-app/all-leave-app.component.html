@@ -146,7 +146,7 @@
                   <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #efc3c3cc; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
                 </td>
                 <!-- <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td> -->
-                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves)"></i></a></td>
               </tr>
             </tbody>
           </table>
