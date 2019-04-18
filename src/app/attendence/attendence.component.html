@@ -105,17 +105,17 @@
 	</table>
 </div>
 
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 	<li class="nav-item">
 		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-		aria-selected="true">Present Developer</a>
+		aria-selected="true"><i class="fas fa-user"></i> Present Developer</a>
 	</li>
 	<li class="nav-item">
 		<a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-		aria-selected="false">Absent Developer</a>
+		aria-selected="false"><i class="fas fa-user"></i> Absent Developer</a>
 	</li>
 </ul>
-<div class="tab-content card pt-5" id="myTabContentJust">
+<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: -27px;">
 	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
 		<div class="row">
