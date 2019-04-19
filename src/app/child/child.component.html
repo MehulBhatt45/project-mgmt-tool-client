@@ -166,7 +166,7 @@
 								<p *ngIf="task.timelog1">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
-										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00:00')}}
+										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}}
 										<!-- {{getTime(task.timelog1.count)}} -->
 									</span>
 								</p>
@@ -243,9 +243,11 @@
 															</h5>
 															<span class="break" innerHtml="{{i.content}}">
 															</span>
-															<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}">
-																<img src="{{path}}{{i.images}}" width="200" height="100">
+															<div *ngFor="let img of i.images">
+															<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
+																<img src="{{path}}{{img}}" width="200" height="100" style="margin-bottom: 7px;">
 															</a>
+														</div>
 														</div>
 													</div>
 												</div>
@@ -270,7 +272,7 @@
 						</div>
 						<div *ngIf="commentUrl && commentUrl.length">
 							<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
-								<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
+								<img class="avatar-image margin-auto" [src]="c" style="height: 150px; width: 150px;">
 								<div class="delete-team-member">
 									<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
 								</div>

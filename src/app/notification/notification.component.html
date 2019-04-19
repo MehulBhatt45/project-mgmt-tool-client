@@ -1,26 +1,26 @@
-	<div class="container-fluid" style="background-image: linear-gradient(#8bc34ab0,#85cc32)">
+<div class="container-fluid" style="background-image: linear-gradient(#8bc34ab0,#85cc32)">
 		<h1 class="text-center font-weight-bold text-black" >Notification</h1>
 	</div>
 	<div class="container">
 		<ul *ngFor="let data of userNotification">
-				<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '1'">
-					<div class="row" >
-						<div class="padding-5 col-sm-2">
-							<div class="unread1">
-								<div class="task_priority_highest">
-									<i class="far fa-circle" title="Highest"></i>
-									<span class="task_span" ng-click="showAlert(data.id)">Task</span>
-								</div>
+			<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '1'">
+				<div class="row" >
+					<div class="padding-5 col-sm-2">
+						<div class="unread1">
+							<div class="task_priority_highest">
+								<i class="far fa-circle" title="Highest"></i>
+								<span class="task_span" ng-click="showAlert(data.id)">Task</span>
 							</div>
 						</div>
-						<div class="padding-5  col-sm-8">
-							<div class="content">
-								<p innerHtml="{{data.content}}"></p>
-							</div>
+					</div>
+					<div class="padding-5  col-sm-8">
+						<div class="content">
+							<p innerHtml="{{data.content}}"></p>
 						</div>
-						<div class="col-sm-2">
-							<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
-						</div>
+					</div>
+					<div class="col-sm-2">
+						<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+					</div>
 				</div>
 			</li>
 			<li class="card mt-1 task"  *ngIf ="data.type == 'task' && data.priority == '2'">
@@ -59,40 +59,18 @@
 						</div>
 					</div>
 					<div class="col-sm-2">
-					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-
+						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 					</div>
 				</div>
-		
-		</li>
-		<li class="card mt-1" *ngIf ="data.type == 'task' && data.priority == '4'">
-			<div class="row">
-				<div class="padding-5 col-sm-2">
-					<div class="unread1">
-						<div class="task_priority_low">
-							<i class="far fa-circle" title="Low"></i>
-							<span class="task">Task</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-				<div class="col-sm-2">
-					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-				</div>
-			</div>
-			
 			</li>
-		</ul>
-		<ul class="leave" *ngFor="let data of userNotification">
-			<li class="card mt-1"  *ngIf ="data.type == 'leave-accepted'" >
+			<li class="card mt-1" *ngIf ="data.type == 'task' && data.priority == '4'">
 				<div class="row">
 					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
+						<div class="unread1">
+							<div class="task_priority_low">
+								<i class="far fa-circle" title="Low"></i>
+								<span class="task">Task</span>
+							</div>
 						</div>
 					</div>
 					<div class="padding-5  col-sm-8">
@@ -104,38 +82,49 @@
 						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 					</div>
 				</div>
-				
-
-					</li>
-				</ul>
-				<ul class="leave1" *ngFor="let data of userNotification">
-					<li class="card mt-1" *ngIf ="data.type == 'leave-rejected'" >
-						<div class="row">
-							<div class="padding-5 col-sm-2">
-								<div class="leave_rejected">
-									<i class="far fa-thumbs-down" title="Rejected"></i>
-									<span class="leave1">Leave</span>
-								</div>
-							</div>
-							<div class="padding-5  col-sm-8">
-								<div class="content" >
-									<p innerHtml="{{data.content}}"></p>
-								</div>
-							</div>
-							<div class="col-sm-2">
-								<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+			</li>
+				<li class="card mt-1"  *ngIf ="data.type == 'leave-accepted'" >
+					<div class="row">
+						<div class="padding-5 col-sm-2">
+							<div class="leave_approved">
+								<i class="far fa-thumbs-up" title="Approved"></i>
+								<span class="leave_span">Leave</span>
 							</div>
 						</div>
-					</li>
-				</ul>
-				<ul class="other"  *ngFor="let data of userNotification">
+						<div class="padding-5  col-sm-8">
+							<div class="content" >
+								<p innerHtml="{{data.content}}"></p>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+						</div>
+					</div>
+				</li>
+					<li class="card mt-1" *ngIf ="data.type == 'leave-rejected'" >
+							<div class="row">
+								<div class="padding-5 col-sm-2">
+									<div class="leave_rejected">
+										<i class="far fa-thumbs-down" title="Rejected"></i>
+										<span class="leave1">Leave</span>
+									</div>
+								</div>
+								<div class="padding-5  col-sm-8">
+									<div class="content" >
+										<p innerHtml="{{data.content}}"></p>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+								</div>
+							</div>
+						</li>
 					<li class="card mt-1" *ngIf ="data.type == 'other'" >
 						<div class="row">
 							<div class="padding-5 col-sm-2">
-
-								<div class="other">
+								<div class="other1">
 									<i class="far fa-bell"></i>
-									<span class="other">Other</span>
+									<span class="other1_span">Other</span>
 								</div>
 							</div>
 							<div class="padding-5  col-sm-8">
@@ -148,30 +137,25 @@
 							</div>
 						</div>
 					</li>
-				</ul>
-				<ul class="comment"  *ngFor="let data of userNotification">
-					<li class="card mt-1" *ngIf ="data.type == 'comment'" >
+						<li class="card mt-1" *ngIf ="data.type == 'comment'" >
 
-						<div class="row">
-							<div class="padding-5 col-sm-2">
-								<div class="comment">
-									<i class="fa fa-comments"></i>
-									<span class="other">Comment</span>
+							<div class="row">
+								<div class="padding-5 col-sm-2">
+									<div class="comment">
+										<i class="fa fa-comments"></i>
+										<span class="other">Comment</span>
+									</div>
+								</div>
+								<div class="padding-5  col-sm-8">
+									<div class="content" >
+										<p innerHtml="{{data.content}}"></p>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 								</div>
 							</div>
-							<div class="padding-5  col-sm-8">
-								<div class="content" >
-									<p innerHtml="{{data.content}}"></p>
-								</div>
-							</div>
-							<div class="col-sm-2">
-								<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-							</div>
-						</div>
-					</li>
-				</ul>
-					
-					<ul class="leave" *ngFor="let data of userNotification">
+						</li>
 						<li class="card mt-1"  *ngIf ="data.type == 'leaveAccepted'" >
 							<div class="row">
 								<div class="padding-5 col-sm-2">
@@ -190,50 +174,42 @@
 								</div>
 							</div>
 						</li>
-					</ul>
-					<ul class="leave1" *ngFor="let data of userNotification">
-						<li class="card mt-1" *ngIf ="data.type == 'leaveRejected'" >
-							<div class="row">
-							<div class="padding-5 col-sm-2">
-								<div class="leave_rejected">
-									<i class="far fa-thumbs-down" title="Rejected"></i>
-									<span class="leave1">Leave</span>
+							<li class="card mt-1" *ngIf ="data.type == 'leaveRejected'" >
+								<div class="row">
+									<div class="padding-5 col-sm-2">
+										<div class="leave_rejected">
+											<i class="far fa-thumbs-down" title="Rejected"></i>
+											<span class="leave1">Leave</span>
+										</div>
+									</div>
+									<div class="padding-5  col-sm-8">
+										<div class="content" >
+											<p innerHtml="{{data.content}}"></p>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+									</div>
 								</div>
-							</div>
-							<div class="padding-5  col-sm-8">
-								<div class="content" >
-									<p innerHtml="{{data.content}}"></p>
+							</li>
+							<li class="card mt-1"  *ngIf ="data.type == 'leave'" >
+								<div class="row">
+									<div class="padding-5 col-sm-2">
+										<div class="leave_approved">
+											<i class="far fa-thumbs-up" title="Approved"></i>
+											<span class="leave">Leave</span>
+										</div>
+									</div>
+									<div class="padding-5  col-sm-8">
+										<div class="content" >
+											<p innerHtml="{{data.content}}"></p>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+									</div>
 								</div>
-							</div>
-							<div class="col-sm-2">
-								<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-							</div>
-						</div>
-						</li>
-					</ul>
-					<ul class="leave" *ngFor="let data of userNotification">
-			<li class="card mt-1"  *ngIf ="data.type == 'leave'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-				
-					</li>
-				</ul>
-				</div>
-			</li>
+							</li>
 			<li class="card mt-1 leave"  *ngIf ="data.type == 'leaveAccepted'" >
 				<div class="row">
 					<div class="padding-5 col-sm-2">
@@ -272,18 +248,4 @@
 			</li>
 		</ul>
 		
-		<!--  <button type="button" class="btn btn-default " *ngIf ="currentUser.userRole == 'projectManager'" routerLink="/all-leave-app">Save changes</button> -->
-</div>
-
-
-
-<!-- <script>
-$(document).ready(function(){
-  $(.task_span).click(function(){
-    $(.toggle).toggle();
-  });
-});
-</script>
- -->
-
-<!-- routerLink="/project-details/{{data.projectId._id}}" style="cursor: pointer;" -->
+	</div>
