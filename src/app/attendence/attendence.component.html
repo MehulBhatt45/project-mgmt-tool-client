@@ -71,7 +71,7 @@
 		">Attendence</a>
 	</li>
 </ul>
-<div class="tab-content card pt-5" id="myTabContentJust" style="margin-top: -30px;">
+<div class="tab-content card pt-5" id="myTabContentJust" style="margin-top: -30px;" *ngIf="currentUser.userRole=='user' || currentUser.userRole=='developer'" style="margin-top: 40px;">
 	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
 		<div class="row" *ngIf="currentUser.userRole=='user' || currentUser.userRole=='developer'" style="margin-top: 40px;">
