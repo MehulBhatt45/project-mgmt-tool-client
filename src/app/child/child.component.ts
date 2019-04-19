@@ -78,6 +78,7 @@ export class ChildComponent  implements OnInit{
   currentsprintId;
   newSprint = [];
   temp;
+  difference;
   
 
   
@@ -89,7 +90,7 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
 
-    // this.getProject(this.projectId);
+    this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
@@ -98,7 +99,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     this.getSprintWithoutComplete(this.projectId);
@@ -429,14 +430,16 @@ export class ChildComponent  implements OnInit{
     }
   }
 
-  getHHMMTime(difference){
-
-    difference = difference.split("T");  
-    difference = difference[1];
-    difference = difference.split(".");
-    // console.log('difference',difference[0]);
-    return difference[0];
-  }
+ getHHMMTime(difference){
+      if(difference != '00:00:00'){
+        difference = difference.split("T");  
+        difference = difference[1];
+        difference = difference.split(".");
+        // console.log('difference',difference[0]);
+        return difference[0];
+      }
+      return '00:00:00';
+    }
   getTime(counter){
     var milliseconds = ((counter % 1000) / 100),
     seconds = Math.floor((counter / 1000) % 60),

@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
 			projectId : new FormControl('', Validators.required),
 			dueDate : new FormControl(''),
 			estimatedTime: new FormControl(),
-			status : new FormControl({value: ''},)
+			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 		})
 	}
 
@@ -353,45 +353,60 @@ export class HeaderComponent implements OnInit {
 			})
 		},1000);
 	}
+	
 	saveTheData(task){
+
 		this.loader = true;
+
+		task['projectId']= this.projectId;
+		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		task.estimatedTime = $("#estTime").val();
-		task.dueDate = moment().add({days:task.dueDate,months:0}).format('YYYY-MM-DD HH-MM-SS'); 
+		// task.startDate = $("#startDate").val();
+		// task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		// task.images = $("#images").val();
+		console.log("images====>",task.images);
+		console.log(task.dueDate);
+		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log(task);
+		
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
-			// if(key!="estimatedTime")
-			// 	data.append(key, value)
-			// else
 			data.append(key, value)
 		});
+
+
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
+		
+	console.log("ressssssssssss==>",data);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
 			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.loader = false;
-			$('#editModel').modal('hide');
+			this.getProject(res.projectId);
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('#itemManipulationModel').modal('hide');
 			this.task = this.getEmptyTask();
+			console.log("thissssssssssss dot task");
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			console.log("res-=-=",this.projectId);
-			this.router.navigate(["/project-details/"+this.projectId]);
+			// this.assignTo.reset();
+			this.loader = false;
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			this.loader = false;
+			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
 	}
-	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'' };
-	}
+	 getEmptyTask(){
+	 	return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
+	 }
 
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{

@@ -156,7 +156,7 @@
 								<p *ngIf="task.timelog1">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
-										{{getHHMMTime(task.timelog1.difference)}}
+										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00:00')}}
 										<!-- {{getTime(task.timelog1.count)}} -->
 									</span>
 								</p>
