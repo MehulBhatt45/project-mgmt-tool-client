@@ -88,7 +88,7 @@ import { Component, OnInit, ViewChild,
 
     events: CalendarEvent[] = [];
 
-    clickedDate: Date;
+    // clickedDate: Date;
 
     clickedColumn: number;
 
@@ -172,79 +172,7 @@ import { Component, OnInit, ViewChild,
           },2000);
         }
 
-        // checkIn(){
-
-
-
-        //   this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
-        //     console.log("respopnse of checkin=======<",res);
-        //     console.log("diffrence====-=-=-=-=-=-=-",res.difference);
-        //     this.timediff = res.difference;
-        //     console.log("timediff--=-=-=-=",this.timediff);
-
-
-        //     this.attendence = res.in_out;
-        //     console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
-
-
-        //     _.forEach(this.attendence , (attendence)=>{
-        //       console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
-        //       if(attendence.checkOut != null){
-        //         attendence.checkOut = attendence.checkOut.split("T");
-        //         attendence.checkOut = attendence.checkOut[1];
-        //         attendence.checkOut = attendence.checkOut.split("Z");
-        //         attendence.checkOut = attendence.checkOut[0];
-        //       }
-        //     })
-
-        //     _.forEach(this.attendence , (attendence)=>{
-        //       console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
-        //       if(attendence.checkIn != null){
-        //         attendence.checkIn = attendence.checkIn.split("T");
-        //         attendence.checkIn = attendence.checkIn[1];
-        //         attendence.checkIn = attendence.checkIn.split("Z");
-        //         attendence.checkIn = attendence.checkIn[0];
-        //       }
-        //     })
-
-        //     // this.date = this.attendence.checkIn;
-        //     // console.log("date][][][][][][][][",time);
-
-        //     localStorage.setItem("checkIn",JSON.stringify(true));
-        //     this.checkInStatus = true;
-        //     // window.location.reload();
-
-
-
-
-        //   },(err:any)=>{
-        //     console.log("err of checkin=>",err);
-        //   })
-
-        // }
-
-
-
-        // checkOut(){
-
-        //   this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
-        //     console.log("respopnse of checkout=======<",res);
-        //     localStorage.setItem("checkOut",JSON.stringify(true));
-            
-        //     this.checkInStatus = false;
-
-        //     // window.location.reload();
-
-        //     // this.router.navigate["/view-projects"];
-        //   },(err:any)=>{
-        //     console.log("err of chechout------------->",err);
-        //   })
-
-        // }
-
-
-
-
+        
 
         dateSelected(event){
           var date = moment(event).format('YYYY-MM-DD');
@@ -252,52 +180,60 @@ import { Component, OnInit, ViewChild,
 
           this._leaveService.empAttendence(date).subscribe((res:any)=>{
             console.log("res ==>" , res);
-            this.worktime = res;
+            
 
-            this.gate = [];
+            if(res == null){
+              console.log("either Holiday or No attendence");
+              Swal.fire('Developer Is Absent........')
+            }
 
-            this.gate.push(this.worktime);
 
 
-            this.workdifference = [];
+            else{
 
-            _ .forEach(this.gate,(gate)=>{
+              this.worktime = res;
 
-              if(gate.difference != null){
+              this.gate = [];
 
-                gate.difference = gate.difference.split("T");
-                gate.difference = gate.difference[1];
-                gate.difference = gate.difference.split("Z");
-                gate.difference = gate.difference[0];
+              this.gate.push(this.worktime);
+
+
+              this.workdifference = [];
+
+              _ .forEach(this.gate,(gate)=>{
+
+                if(gate.difference != null){
+
+                  gate.difference = gate.difference.split("T");
+                  gate.difference = gate.difference[1];
+                  gate.difference = gate.difference.split("Z");
+                  gate.difference = gate.difference[0];
+
+
+                }
+
+                this.workdifference.push(gate.difference);
+
+
+              })
+              console.log("workdifference===============",this.workdifference);
+
+              var obj = {
+
+                'difference':this.workdifference[0]
 
 
               }
 
-              this.workdifference.push(gate.difference);
+              console.log("obj===========",obj.difference);
 
+              this.diffff = obj.difference;
+              console.log("difffffffffff==============",this.diffff);
 
-            })
-            console.log("workdifference===============",this.workdifference);
+              console.log("either==============-",this.worktime);
 
-            var obj = {
+              this.logs = this.worktime.in_out;
 
-              'difference':this.workdifference[0]
-
-
-            }
-
-            console.log("obj===========",obj.difference);
-
-            this.diffff = obj.difference;
-            console.log("difffffffffff==============",this.diffff);
-
-
-
-            if(res == null){
-              console.log("either Holiday or No attendence");
-            }
-            else{
-              this.logs = res.in_out;
               _.map(this.logs, function(log){
                 if(log.checkOut!=null){
                   var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
