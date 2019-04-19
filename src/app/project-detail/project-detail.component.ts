@@ -210,7 +210,7 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 		});
 
-		//this.filterTracks(this.activeSprint._id);
+		this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
 	}

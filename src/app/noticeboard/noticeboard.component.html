@@ -111,12 +111,12 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div *ngIf="url && url.length">
-							<div class="text-center selected-avatar" *ngFor="let u of url; let i=index;">
-								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-								<div class="delete-team-member">
-									<a href="javascript:void(0);" (click)="removeAvatar(u, i)"><i class="fas fa-trash fa-2x"></i></a>
+							<div *ngIf="url && url.length">
+								<div class="text-center selected-avatar" *ngFor="let u of url; let i=index;">
+									<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+									<div class="delete-team-member">
+										<a href="javascript:void(0);" (click)="removeAvatar(u, i)"><i class="fas fa-trash fa-2x"></i></a>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -26,11 +26,12 @@ export class NoticeboardComponent implements OnInit {
   swal:any;
   expireon;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  files: any;
+  // files: any;
   url = [];
   commentUrl = [];
   path = config.baseMediaUrl;
   noticeid;
+  files:Array<File> = [];
 
 
   ngOnInit() {
@@ -104,16 +105,17 @@ export class NoticeboardComponent implements OnInit {
     console.log("noticeId", noticeId);
     console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);
-    editNoticeForm.images = $("#images").val();
+    // editNoticeForm.images = $("#images").val();
     console.log("update Notice image =====>",editNoticeForm.images);
-    let data = new FormData();
-    _.forOwn(editNoticeForm, function(value, key) {
-      data.append(key, value)
-    });
-    // data.append('title', editNoticeForm.title?editNoticeForm.title:"");
-    // data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
-    // data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
-    // data.append('published', editNoticeForm.published?editNoticeForm.published:"");
+    var data:any;
+    data = new FormData();
+    // _.forOwn(editNoticeForm, function(value, key) {
+    //   data.append(key, value)
+    // });
+    data.append('title', editNoticeForm.title?editNoticeForm.title:"");
+    data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
+    data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
+    data.append('published', editNoticeForm.published?editNoticeForm.published:"");
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('images', this.files[i]);
@@ -121,7 +123,7 @@ export class NoticeboardComponent implements OnInit {
     }
     if (this.files == null) {
       this.files = editNoticeForm.images;
-      data.append('uploadfile', this.files[0]);
+      data.append('images', this.files[0]);
     }
     console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
@@ -168,14 +170,15 @@ export class NoticeboardComponent implements OnInit {
   changeFile(event, option){
     _.forEach(event.target.files, (file:any)=>{
       console.log(event.target.files);
-      this.files = event.target.files;
+      // this.files = event.target.files;
+      this.files.push(file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e:any) => {
         if(option == 'item')
           this.url.push(e.target.result);
-        if(option == 'image')
-          this.url.push(e.target.result);
+        // if(option == 'image')
+        //   this.url.push(e.target.result);
       }
     })  
   }
