@@ -174,15 +174,15 @@ export class EditProjectComponent implements OnInit {
 		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
-			console.log( this.availData );
+			this.availData['add'] = [];
+			this.availData['delete'] = [];
+			console.log("this.availData ================+>" ,  this.availData );
 			this.loader = false;
 			console.log("this . avail data ==========>" ,this.availData);
-			this.projectTeam = this.availData.Teams;
-
+			this.projectTeam = this.availData.Teams; 
 			this.projectMngrTeam = this.availData.pmanagerId;
 			localStorage.setItem('pmanagerteams', JSON.stringify(this.projectMngrTeam)); 
 			localStorage.setItem('teams', JSON.stringify(this.projectTeam));
-
 		},err=>{
 			console.log(err);
 			this.loader = false;
@@ -192,8 +192,13 @@ export class EditProjectComponent implements OnInit {
 	updateProject(updateForm){
 		updateForm.Teams = [];
 		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
+		console.log("Update Team============>",updateForm.Teams);
 		updateForm.pmanagerId = [];
 		_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
+		updateForm.delete = [];
+		_.forEach(this.availData.delete, t => { updateForm.delete.push(t._id) });
+		updateForm.add = [];
+		_.forEach(this.availData.add, t => {updateForm.add.push(t._id) });
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
@@ -255,7 +260,7 @@ export class EditProjectComponent implements OnInit {
 	addDeveloper(event){
 		console.log(event);
 		this.projectTeam.push(event);
-		
+		this.availData.add.push(event);
 	}
 
 	removeDeveloper(event){
@@ -263,6 +268,7 @@ export class EditProjectComponent implements OnInit {
 		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
 		if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 			console.log("in fi");
+			this.availData.delete.push(event);
 			this.availableDevelopers.push(event);
 		}
 	}
