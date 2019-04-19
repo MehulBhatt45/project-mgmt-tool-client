@@ -48,7 +48,7 @@
           <li><a routerLink="/all-employee" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='projectManager'">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
-            (click) ="getAllProjects()"><i class="fas fa-users"></i> Visit Team-members
+            (click) ="getProject()"><i class="fas fa-users"></i> Visit Team-members
             <i class="fa fa-angle-down rotate-icon"></i></a>
             <div class="collapsible-body">
               <ul>
@@ -62,29 +62,9 @@
           </li>
           <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r">  Log</a>
           </li>
-
-         <!--  <li *ngIf="currentUser.userRole=='admin'">
-            <a style="width: 100%;" class="collapsible-header waves-effect arrow-r">Visit Team-members
-             <i class="fa fa-angle-down rotate-icon"></i></a>
-             <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects">
-                  <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a>
-                </li>
-              </ul>
-            </div>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects">
-                  <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><i class="fa fa-bar-chart"></i>{{project.title}}</a>
-                </li>
-              </ul>
-            </div>
-          </li> -->
-
           <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-database"></i> All Leave Application</a></li>
-          <li><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-tie"></i> MyLeave</a></li>
-          <li  ><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fab fa-wpforms"></i> Leave Form</a></li>
+          <li *ngIf="currentUser.userRole=='user'"><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fas fa-user-tie"></i> MyLeave</a></li>
+          <li *ngIf="currentUser.userRole=='user'" ><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="fab fa-wpforms"></i> Leave Form</a></li>
         </ul>
       </li>
     </ul>
@@ -99,8 +79,8 @@
     <div class="float-right">
       <ol class="breadcrumb hidden-lg-down">
         
-        <li class="breadcrumb-item active"><button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
-        <li class="breadcrumb-item active"> <button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
+        <li class="active"><button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
+        <li class="active"> <button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
       </ol>
     </div>
   </nav>
@@ -142,6 +122,9 @@
   </div> 
 </div>     
 </div>
+
+
+<!-- Select project -->
 <div class="modal fade right" id="editModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg container" role="document">
     <div class="modal-content">
@@ -174,6 +157,9 @@
               </ng-select>
             </div>
             <div>
+
+              <!-- Add Task Modal -->
+
               <div class="progress">
                 <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
@@ -193,7 +179,7 @@
                   <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
                 </button>
               </div>
-              <div *ngIf="newTask.images && newTask.images.length>0">
+              <div *ngIf=" task.images && task.images.length>0">
                 <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
                   <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
                   <div class="delete-team-member">
