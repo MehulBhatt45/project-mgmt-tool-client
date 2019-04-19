@@ -460,7 +460,7 @@ export class AllLeaveAppComponent implements OnInit {
                       // this.getLeaves(Option);
                       this.getLeaves(this.title);
                       console.log("thissssssssss===>",dev);
-                      this.filterTracks(dev);
+                      // this.filterTracks(dev);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
