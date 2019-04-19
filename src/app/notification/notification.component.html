@@ -20,6 +20,7 @@
 					</div>
 					<div class="col-sm-2">
 						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+
 					</div>
 				</div>
 			</li>
@@ -144,6 +145,7 @@
 						<div class="comment1">
 							<i class="fa fa-comments"></i>
 							<span class="comment_span">Comment</span>
+
 						</div>
 					</div>
 					<div class="padding-5  col-sm-8">
@@ -156,63 +158,46 @@
 					</div>
 				</div>
 			</li>
-			<li class="card mt-1"  *ngIf ="data.type == 'leave'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
+
+
+	<li class="card mt-1 leave"  *ngIf ="data.type == 'leaveAccepted'" >
+		<div class="row">
+			<div class="padding-5 col-sm-2">
+				<div class="leave_approved">
+					<i class="far fa-thumbs-up" title="Approved"></i>
+					<span class="leave_span">Leave</span>
 				</div>
-			</li>
-			<li class="card mt-1 leave"  *ngIf ="data.type == 'leaveAccepted'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
+			</div>
+			<div class="padding-5  col-sm-8">
+				<div class="content" >
+					<p innerHtml="{{data.content}}"></p>
 				</div>
-			</li>
-			<li class="card mt-1 leave1" *ngIf ="data.type == 'leaveRejected'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_rejected">
-							<i class="far fa-thumbs-down" title="Rejected"></i>
-							<span class="leave1_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
+			</div>
+			<div class="col-sm-2">
+				<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+			</div>
+		</div>
+	</li>
+	<li class="card mt-1 leave1" *ngIf ="data.type == 'leaveRejected'" >
+		<div class="row">
+			<div class="padding-5 col-sm-2">
+				<div class="leave_rejected">
+					<i class="far fa-thumbs-down" title="Rejected"></i>
+					<span class="leave1_span">Leave</span>
 				</div>
-			</li>
-		</ul>
-		
-	</div>
+			</div>
+			<div class="padding-5  col-sm-8">
+				<div class="content" >
+					<p innerHtml="{{data.content}}"></p>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+			</div>
+		</div>
+	</li>
+
+	<!--  <button type="button" class="btn btn-default " *ngIf ="currentUser.userRole == 'projectManager'" routerLink="/all-leave-app">Save changes</button> -->
 
 
 	<!--  <button type="button" class="btn btn-default " *ngIf ="currentUser.userRole == 'projectManager'" routerLink="/all-leave-app">Save changes</button> -->

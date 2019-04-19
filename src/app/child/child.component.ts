@@ -77,7 +77,6 @@ export class ChildComponent  implements OnInit{
   trackss:any;
   currentsprintId;
   newSprint = [];
-  temp;
   
 
   
@@ -89,7 +88,7 @@ export class ChildComponent  implements OnInit{
       this.projectId = param.id;
     });
 
-    // this.getProject(this.projectId);
+    this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
@@ -98,7 +97,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-    this.getProject(this.projectId);
+    // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     this.getSprint(this.projectId);
     this.getSprintWithoutComplete(this.projectId);
@@ -430,13 +429,15 @@ export class ChildComponent  implements OnInit{
   }
 
   getHHMMTime(difference){
-
-    difference = difference.split("T");  
-    difference = difference[1];
-    difference = difference.split(".");
-    // console.log('difference',difference[0]);
-    return difference[0];
-  }
+      if(difference != '00:00:00'){
+        difference = difference.split("T");  
+        difference = difference[1];
+        difference = difference.split(".");
+        // console.log('difference',difference[0]);
+        return difference[0];
+      }
+      return '00:00:00';
+    }
   getTime(counter){
     var milliseconds = ((counter % 1000) / 100),
     seconds = Math.floor((counter / 1000) % 60),
@@ -464,23 +465,22 @@ export class ChildComponent  implements OnInit{
   }
 
 
- getProject(id){
-
+  getProject(id){
     console.log("projectId=====>",this.projectId);
     this.loader = true;
     setTimeout(()=>{
       this._projectService.getProjectById(id).subscribe((res:any)=>{
         console.log("title=={}{}{}{}{}",res);
-        this.temp = res;
         this.pro = res;
         console.log("project detail===>>>>",this.pro);
         this.projectId=this.pro._id;
         console.log("iddddd====>",this.projectId);
         this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-          // res.Teams.push(this.pro.pmanagerId); 
+          this.projectTeam = res.team;
+
+          res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
-
           // this.projectTeam.sort(function(a, b){
             //   var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
             //   if (nameA < nameB) //sort string ascending
@@ -489,9 +489,10 @@ export class ChildComponent  implements OnInit{
             //     return 1
             //   return 0 //default return value (no sorting)
             //   this.projectTeam.push
-            //   console.log("sort============>"  ,this.projectTeam);
+            //   console.log("sorting============>"  ,this.projectTeam);
             // })
-            this.loader = false;
+
+
           },(err:any)=>{
             console.log("err of team============>"  ,err);
           });
@@ -505,14 +506,13 @@ export class ChildComponent  implements OnInit{
         this.project = res;
         // this.project.sort(custom_sort);
         // this.project.reverse();
-
         console.log("PROJECT=================>", this.project);
         _.forEach(this.project , (task)=>{
+          //console.log("task ======>" , task);
           _.forEach(this.tracks , (track)=>{
-            console.log("track in foreach",task.sprint.status);
-
+            //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
               }
             }else{
@@ -523,19 +523,14 @@ export class ChildComponent  implements OnInit{
           })
         })
 
-        console.log("This Tracks=========>>>>>",this.tracks);
-        this.temp =  this.tracks; 
-
         this.loader = false;
-
+        this.func('load');
       },err=>{
         console.log(err);
         this.loader = false;
       })
     },1000);
-    function custom_sort(a, b) {
-      return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-    }  
+
   }
 
   saveTheData(task){
@@ -600,7 +595,6 @@ export class ChildComponent  implements OnInit{
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
-    // data.timelog1 = {};
     if (data.running) {
       $('.timer-button').on('click', function(e) {
         e.stopPropagation();
@@ -665,6 +659,3 @@ export class ChildComponent  implements OnInit{
   }  
 
 }
-
-
-

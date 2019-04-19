@@ -26,53 +26,61 @@
 									<tr>
 										<td colspan="2">
 											<div class="container" *ngIf=" task.status == 'in progress'">
-												<section class="timer-counter-label">
-													<div> 
-														{{task.time?task.time:'00:00'}}
-														<!-- {{ getTime(task.counter)}} -->
+												<div class="row">
+													<div class="col-sm-5 start_btn" style="padding-left: 0;">
+														<section class="timer-button-container">
+															<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
+																{{ task.startText?task.startText:'Start' }}
+															</button>
+														</section>
 													</div>
-													<!-- <ng-template #elseBlock> Press Start </ng-template> -->
-												</section>
+													
+													<div class="col-sm-7">
+														
+														<section class="timer-counter-label">
+															<div> 
+																{{task.time?task.time:'00:00:00'}}
+															</div>
+														</section>
+													</div>
+												</div>
 											</div>
-											<div class="container" *ngIf=" task.status == 'in progress'">
-												<section class="timer-button-container">
-													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
-														{{ task.startText?task.startText:'Start' }}
-													</button>
-
-												</section>
-											</div>
-											
-											
+										</td>
+										<!-- <td>
 											<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
-											<div class="card-text">{{task.desc}}</div>
+											<div class="card-text">{{task.desc}}</div> -->
 											<!-- <div>{{task.createdAt}}</div> -->
 											<!-- <div>{{task.dueDate}}</div> -->
 											<!-- <div>{{task.createdAt | timeAgo }}</div> -->
-										</td>
-									</tr>
-								</table>
-								<ul (click)="openModel(task)">
-									<li class="icon_check">
-										<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
-									</li>
-									<li>
-										<ul class="team-members">	
-											<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
-												<a href="javascript:void(0);">
-													<div class="user_profile_pic"><img src="{{path}}{{task.assignTo	.profilePhoto}}" class="img-rounded" routerLink = "/visit-user-profile/{{task.assignTo._id}}" onerror="this.src='assets/4.jpeg'" ></div>
-												</a>
+											<!-- </td> -->
+										</tr>
+									</table>
+									<div (click)="openModel(task)">
+										<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
+										<div class="card-text">{{task.desc}}</div>
+										<ul>
+											<li class="icon_check">
+												<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
 											</li>
-											<li *ngIf="!task.assignTo" class="add-member">
-												<a href="javascript:void(0);" title="Add Member">
-													<i class="fa fa-user-plus"></i>
-												</a>
+											<li>
+												<ul class="team-members">	
+													<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
+														<a href="javascript:void(0);">
+															<div class="user_profile_pic"><img src="{{path}}{{task.assignTo	.profilePhoto}}" class="img-rounded" routerLink = "/visit-user-profile/{{task.assignTo._id}}" onerror="this.src='assets/4.jpeg'" ></div>
+														</a>
+													</li>
+													<li *ngIf="!task.assignTo" class="add-member">
+														<a href="javascript:void(0);" title="Add Member">
+															<i class="fa fa-user-plus"></i>
+														</a>
+													</li>
+												</ul>
 											</li>
 										</ul>
-									</li>
-								</ul>
-								<label class="float-right">{{task.uniqueId}}</label>
-								<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+										<label class="float-right">{{task.uniqueId}}</label>
+										<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+									</div>
+								
 							</div>
 						</div>
 					</mat-card-content>
@@ -81,6 +89,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 
@@ -134,6 +143,7 @@
 					</div>
 
 
+
 					<div class="details">
 						<div class="row">
 							<div class="col-12 col-md-6">
@@ -156,7 +166,7 @@
 								<p *ngIf="task.timelog1">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
-										{{getHHMMTime(task.timelog1.difference)}}
+										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00:00')}}
 										<!-- {{getTime(task.timelog1.count)}} -->
 									</span>
 								</p>
@@ -180,6 +190,7 @@
 								</p>
 								<p *ngIf="task.status == 'complete'">
 									<label><strong>Completed Date: &nbsp;</strong></label>
+
 
 									<span>{{task.completedAt | date:'short'}}</span>
 								</p>
