@@ -160,7 +160,7 @@
 			</li>
 
 
-	<li class="card mt-1 leave"  *ngIf ="data.type == 'leaveAccepted'" >
+	<li class="card mt-1 leave"    >
 		<div class="row">
 			<div class="padding-5 col-sm-2">
 				<div class="leave_approved">
@@ -174,11 +174,11 @@
 				</div>
 			</div>
 			<div class="col-sm-2">
-				<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+				<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 			</div>
 		</div>
 	</li>
-	<li class="card mt-1 leave1" *ngIf ="data.type == 'leaveRejected'" >
+	<!-- <li class="card mt-1 leave1" *ngIf ="data.type == 'leave'" >
 		<div class="row">
 			<div class="padding-5 col-sm-2">
 				<div class="leave_rejected">
@@ -195,7 +195,7 @@
 				<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
 			</div>
 		</div>
-	</li>
+	</li> -->
 
 	<!--  <button type="button" class="btn btn-default " *ngIf ="currentUser.userRole == 'projectManager'" routerLink="/all-leave-app">Save changes</button> -->
 
