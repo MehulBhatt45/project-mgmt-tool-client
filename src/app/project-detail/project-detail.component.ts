@@ -272,8 +272,6 @@ export class ProjectDetailComponent implements OnInit {
 						}else{
 							if(task.status == track.id){
 								track.tasks.push(task);
-
-
 							}
 						}
 					})

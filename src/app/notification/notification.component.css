@@ -138,47 +138,47 @@ select.browser-default {
 	font-size: 14px;
 	margin: 0;
 }
-.task li{
+.task {
 	border-bottom: 1px solid #2196F3;
 	border-left: 5px solid #8bc1f1;
 }
-.leave li{
+.leave {
 	border-bottom: 1px solid #4CAF50;
 	border-left: 5px solid #9ecea1;	
 }
-.leave1 li{
+.leave1 {
 	border-bottom: 1px solid #ffb3b3;
 	border-left: 5px solid #ffb3b3;	
 }
-.other li{
+.other {
 	border-bottom: 1px solid #9c27b0;
 	border-left: 5px solid #c58fd0;
 }
-.comment li{
+.comment {
 	border-bottom: 1px solid orange;
 	border-left: 5px solid #ffc1074d;
 }
-.task span{
+.task_span{
 	background-color: #cde8f1;
 	color: #256dde;
 	margin: 15px;
 }
-.leave span{
+.leave_span{
 	background-color: #daf7d0;
 	color: #008a00;
 	margin: 15px;
 }
-.leave1 span{
+.leave1_span{
 	background-color: #ffb3b3;
 	color: red;
 	margin: 15px;
 }
-.other span{
+.other1_span{
 	background-color: #eecdf7;
 	color: #76008a;
 	margin: 15px;
 }
-.comment span{
+.comment_span{
 	background-color: #ffc1074d;
 	color: orange;
 	margin: 15px;
@@ -208,7 +208,7 @@ select.browser-default {
 	color: red;	
 	margin-left: 15px;
 }
-.other i{
+.other1 i{
 	color: purple;
     margin-left: 15px;}
 .task a{
@@ -226,3 +226,6 @@ select.browser-default {
 .unread{
 	background-color: #f1eaff;
 }
+/*button{
+	_
+}*/

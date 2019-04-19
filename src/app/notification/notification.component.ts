@@ -16,7 +16,6 @@ import { AllLeaveAppComponent } from '../all-leave-app/all-leave-app.component';
 import { MessagingService } from '../services/messaging.service';
 
 
-
 @Component({
 	selector: 'app-notification',
 	templateUrl: './notification.component.html',
@@ -45,6 +44,7 @@ export class NotificationComponent implements OnInit {
 		project;
 		start;
 		currentUserId;
+		userNotification;
 
 
 		constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
@@ -53,33 +53,32 @@ export class NotificationComponent implements OnInit {
 		}
 
 		ngOnInit() {
-			console.log("appected leave " , this.acceptedLeave);
 			this.get();
 			this.getNotificationByUserId(this.currentUserId);
-			
+			$(document).ready(function(){
+				$(".btoggle").click(function(){
+					$("userNotification._id").toggle();
+				});
+			});
 		}
 		get(){
 			var currentUser = JSON.parse(localStorage.getItem('currentUser'));
 			console.log("res-=-=",currentUser);
-
 		}
 		getNotificationByUserId(currentUserId){
 			this._projectservice.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
 				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
-				// console.log("loginUser==========>",loginUser);
-				this.currentUser = res;
-				this.currentUser.sort(custom_sort);
-				this.currentUser.reverse();
+				this.userNotification = res;
+				this.userNotification.sort(custom_sort);
+				this.userNotification.reverse();
 				 var start = new Date();
 				
 				 start.setTime(1532403882588);
-				
-				console.log(this.currentUser[0].subject);
-				console.log("title=========>",this.currentUser[0].title);
-				console.log("current====>",this.currentUser);
-				console.log("projectId==========>",this.currentUser[0].projectId._id);
-				console.log("type======================>",this.currentUser[0].type);
-				
+				// console.log(this.userNotification[0].subject);
+				// console.log("title=========>",this.userNotification[0].title);
+				console.log("current====>",this.userNotification);
+				console.log("projectId==========>",this.userNotification[0].projectId._id);
+				console.log("type======================>",this.userNotification[0].type);
 			})
 			 function custom_sort(a, b) {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

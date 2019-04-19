@@ -74,11 +74,12 @@ export class MessagingService {
             // console.log(payload.from);
             // this.currentMessage.next(payload);
             if (payload.notification.body == "comment") {
+              
             this.toastr.error(payload.notification.title, "", {
               disableTimeOut: true,
               closeButton: true,
               enableHtml: true,
-
+             
             });
           }
           else if (payload.notification.body == "other") {
