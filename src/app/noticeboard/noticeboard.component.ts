@@ -20,16 +20,22 @@ export class NoticeboardComponent implements OnInit {
   constructor(public router:Router, public _projectservice:ProjectService) { }
   allNotice:any;
   singlenotice:any;
+  noticeImg:any;
   newNotice;
-  path:any;
   editNoticeForm;
   swal:any;
   expireon;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  files;
+  files: any;
+  url = [];
+  commentUrl = [];
+  path = config.baseMediaUrl;
+  noticeid;
+
 
   ngOnInit() {
     this.getAllNotice();
+    // this.getDetails(this.noticeid);
     this.createEditNoticeForm();
     $(document).ready(function(){
       setTimeout(function () {
@@ -84,54 +90,112 @@ export class NoticeboardComponent implements OnInit {
     })
   }
   
-    createEditNoticeForm(){
-      this.editNoticeForm = new FormGroup({
-        title : new FormControl('', Validators.required),
-        desc : new FormControl('', Validators.required),
-        published : new FormControl('',Validators.required),
-        expireon :new FormControl('',Validators.required),
-      })
+  createEditNoticeForm(){
+    this.editNoticeForm = new FormGroup({
+      title : new FormControl(''),
+      desc : new FormControl(''),
+      published : new FormControl(''),
+      expireon :new FormControl(''),
+      images : new FormControl(''),
+    })
+  }
+
+  updateNotice(editNoticeForm, noticeId){
+    console.log("noticeId", noticeId);
+    console.log("file is==",this.files);
+    console.log("update Notice =====>",editNoticeForm);
+    editNoticeForm.images = $("#images").val();
+    console.log("update Notice image =====>",editNoticeForm.images);
+    let data = new FormData();
+    _.forOwn(editNoticeForm, function(value, key) {
+      data.append(key, value)
+    });
+    // data.append('title', editNoticeForm.title?editNoticeForm.title:"");
+    // data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
+    // data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
+    // data.append('published', editNoticeForm.published?editNoticeForm.published:"");
+    if(this.files && this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('images', this.files[i]);
+      }
     }
-
-    updateNotice(notice){
-      console.log("update Notice =====>",notice);
-      this._projectservice.updateNotice(notice).subscribe((res:any)=>{
-        $('#editmodel').modal('hide');
-        Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
-      },err=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      })
+    if (this.files == null) {
+      this.files = editNoticeForm.images;
+      data.append('uploadfile', this.files[0]);
     }
+    console.log("data Updated ==========================>" , data);
+    this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
+      $('#editmodel').modal('hide');
+      this.getAllNotice();
+      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
+    },err=>{
+      console.log(err);
+      Swal.fire('Oops...', 'Something went wrong!', 'error')
+    })
+  }
 
+  uploadFile(e,noticeid){
+    console.log("file============>",e.target.files);
+    console.log("noticeid",noticeid);
+    this.files = e.target.files;
+    console.log("files===============>",this.files);
+    this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
+      console.log("resss=======>",res);
+      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
+      this.getAllNotice();
+    },error=>{
+      console.log("errrorrrrrr====>",error);
+      Swal.fire('Oops...', 'Something went wrong!', 'error')
+    });  
+  }
 
-    uploadFile(e,noticeid){
-      console.log("file============>",e.target.files);
-      console.log("noticeid",noticeid);
-      this.files = e.target.files;
-      console.log("files===============>",this.files);
-      this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
-        console.log("resss=======>",res);
-        Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
-        this.getAllNotice();
-      },error=>{
-        console.log("errrorrrrrr====>",error);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      });  
-    }
-
-    noticeById(noticeid){
+  noticeById(noticeid){
 
     this._projectservice.getNoticeById(noticeid).subscribe((res:any)=>{
       console.log("response====>>>",res);
       this.singlenotice=res;
       console.log("all notice===>>>", this.singlenotice);
-       this.path = config.baseMediaUrl;
+      console.log("all notice===>>>", this.singlenotice.images);
+      this.noticeImg = this.singlenotice.images
+      console.log("notice img===>",this.noticeImg);
+      this.path = config.baseMediaUrl;
       console.log("base",this.path); 
     },err=>{
       console.log(err);    
     })
   }
-}
 
+  changeFile(event, option){
+    _.forEach(event.target.files, (file:any)=>{
+      console.log(event.target.files);
+      this.files = event.target.files;
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e:any) => {
+        if(option == 'item')
+          this.url.push(e.target.result);
+        if(option == 'image')
+          this.url.push(e.target.result);
+      }
+    })  
+  }
+  removeAvatar(file, index){
+    console.log(file, index);
+    this.url.splice(index, 1);
+    if(this.files && this.files.length)
+      this.url.splice(index,1);
+    console.log(this.files);
+
+  }
+
+  deleteNoticeImage(event, index){
+    console.log(event);
+    console.log(index);
+    this.noticeImg.splice(index , 1);
+    console.log(this.noticeImg);
+    if(this.noticeImg && this.singlenotice.length)
+      this.singlenotice.images.splice(_.findIndex(this.noticeImg, event), index);
+  }
+
+}
 

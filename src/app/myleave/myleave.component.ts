@@ -39,14 +39,22 @@ export class MyleaveComponent implements OnInit {
 		})
 	}
 
-	 leaveById(leaveid){
-      console.log("leave id=======>>",leaveid);
-      this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-        this.singleleave = res[0];
-        console.log("single leave",this.singleleave);
-      },err=>{
-        console.log("errrrrrrrrrrrrr",err);
-      })
-    }
+	leaveById(leaveid){
+		console.log("leave id=======>>",leaveid);
+		this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+			this.singleleave = res[0];
+			console.log("single leave",this.singleleave);
+		},err=>{
+			console.log("errrrrrrrrrrrrr",err);
+		})
+	}
+
+	gotAttachment = [];
+	sendAttachment(attechment){
+		console.log("attachment is====>",attechment);
+		this.gotAttachment = attechment;
+		$('#veiwAttach').modal('show')
+		console.log("gotattechment array ====>",this.gotAttachment);
+	}
 
 }

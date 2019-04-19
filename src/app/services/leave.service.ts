@@ -151,13 +151,14 @@ export class LeaveService {
 
 checkIn(Data){
 	var obj = {userId:Data};
-	console.log("data of checkin student service",Data);
+	console.log("data of checkin student service",obj);
 	const httpOptions = {
 		headers: new HttpHeaders({
 			'content-Type':'application/json',
 			'x-access-token': JSON.parse(localStorage.getItem('token'))
 		})
 	};
+	
 	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
 }
 checkOut(Data){
@@ -178,5 +179,13 @@ empAttendence(date){
 	};
 	console.log("event of emp service",obj);
 	return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
+}
+getUserById(date){
+
+var obj = {date:date};
+console.log("date event------=-=-=-=",obj);
+
+return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
+
 }
 }

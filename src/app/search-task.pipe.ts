@@ -22,13 +22,15 @@ export class SearchTaskPipe implements PipeTransform {
 		console.log("Search pipe items = ",items);
 		task = items[0].filter( it => {
 
-			// console.log(it.assignTo);
 
-			if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText))
-			{
-				return it;
-			}
-		});
+			// if(it.assignTo.name){
+
+				if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText))
+				{
+					return it;
+					// }
+				}
+			});
 		// for(var i=0;i<items.length;i++){
 			// }
 			return task;
@@ -74,10 +76,11 @@ export class SearchTaskPipe implements PipeTransform {
 						console.log("it ==>" , it.name);
 
 						return it;
+						
 					}
 				}
 			});
 			return leave;
 		}
-		
+
 	}

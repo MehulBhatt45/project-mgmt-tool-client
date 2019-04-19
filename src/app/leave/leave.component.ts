@@ -28,9 +28,9 @@ export class LeaveComponent implements OnInit {
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
-			id: new FormControl(''),
-			email: new FormControl (''),
-			name: new FormControl (''),
+			// id: new FormControl(''),
+			// email: new FormControl (''),
+			// name: new FormControl (''),
 			leaveDuration : new FormControl (''),
 			typeOfLeave : new FormControl (''),
 			reasonForLeave : new FormControl ('', Validators.required),
@@ -96,13 +96,13 @@ export class LeaveComponent implements OnInit {
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
-		var id = JSON.parse(localStorage.getItem('currentUser'))._id;
-		var name = JSON.parse(localStorage.getItem('currentUser')).name;
-		var email = JSON.parse(localStorage.getItem('currentUser')).email;
-		form['id'] = id;
-		form['name'] = name;
-		form['email'] = email;
-		console.log("valueeeeeeeeeeee",form);
+		// var id = JSON.parse(localStorage.getItem('currentUser'))._id;
+		// var name = JSON.parse(localStorage.getItem('currentUser')).name;
+		// var email = JSON.parse(localStorage.getItem('currentUser')).email;
+		form['id'] = this.currentUser._id;
+		form['name'] = this.currentUser.name;
+		form['email'] = this.currentUser.email;
+		console.log("valueeeeeeeeeeee",form, this.currentUser);
 		if(form.singleDate){
 			form.noOfDays = "1-day";
 			console.log("single date======>",form.singleDate);

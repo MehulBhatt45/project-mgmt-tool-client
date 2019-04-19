@@ -54,15 +54,14 @@
           <div class="btn-group dropleft  px-2 py-2 ">
             <div class="search">
               <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
-              <button type="button" class="btn btn-sm px-2" (click)="openSearch()">
+              <button type="button" onclick="document.getElementById('exampleForm2').value =''" class="btn btn-sm px-2" (click)="openSearch()">
                 <i class="fas fa-search mt-0"></i>
               </button>
             </div>
-
             <div class="dropdown-menu">
               <div class="md-form form-group active">
                 <!-- <i class="fas fa-search prefix"></i> -->
-                <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
+                <!-- <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off" > -->
                 <!-- <label for="exampleForm2" >Search</label> -->
               </div>
             </div>
@@ -147,7 +146,7 @@
                   <strong *ngIf="leaves.status=='rejected'" style="color: red;background-color: #efc3c3cc; padding: 5px; text-transform: uppercase;">{{leaves.status}}</strong>
                 </td>
                 <!-- <td *ngIf="leaves.status=='pending'"><a><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td> -->
-                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a></td>
+                <td *ngIf="leaves.status=='pending'"><a><i class="far fa-thumbs-up a_icon" aria-hidden="true" (click)="leaveAccepted(leaves)"></i><i class="far fa-thumbs-down r_icon" aria-hidden="true" (click)="leaveRejected(leaves)"></i></a></td>
               </tr>
             </tbody>
           </table>
@@ -205,7 +204,7 @@ aria-hidden="true">
           <div class="modal-footer justify-content-center">
             <input type="submit" class="btn btn-default" (click)="submitComment(singleleave._id,comment)">
             <br>
-            <a class="btn btn-outline-default waves-effect" data-dismiss="modal">Cancel</a>
+            <a class="btn btn-outline-default waves-effect" data-dismiss="modal" (click)="cancel()">Cancel</a>
           </div>
         </form>
       </div>
@@ -293,11 +292,11 @@ aria-hidden="true">
           </div>
         </div>
      <!--    <a class="float-right"><i class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></i>
-          <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a> -->
-        </div>
-      </div>
+      <i class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></i></a> -->
     </div>
   </div>
+</div>
+</div>
 </div>
 <!--/.Content-->
 </div>
@@ -319,8 +318,8 @@ aria-hidden="true">
       <app-image-viewer  [images]="gotAttachment" [idContainer]="'idOnHTML'" [loadOnInit]="true"></app-image-viewer>
     </div>
 
-    </div>
   </div>
+</div>
 </div>
 </div>
 
