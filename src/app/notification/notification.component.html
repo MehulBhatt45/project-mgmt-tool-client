@@ -213,6 +213,27 @@
 						</div>
 						</li>
 					</ul>
+					<ul class="leave" *ngFor="let data of userNotification">
+			<li class="card mt-1"  *ngIf ="data.type == 'leave'" >
+				<div class="row">
+					<div class="padding-5 col-sm-2">
+						<div class="leave_approved">
+							<i class="far fa-thumbs-up" title="Approved"></i>
+							<span class="leave">Leave</span>
+						</div>
+					</div>
+					<div class="padding-5  col-sm-8">
+						<div class="content" >
+							<p innerHtml="{{data.content}}"></p>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+					</div>
+				</div>
+				
+					</li>
+				</ul>
 				</div>
 
 <!-- routerLink="/project-details/{{data.projectId._id}}" style="cursor: pointer;" -->

@@ -6,6 +6,7 @@ import { ProjectService } from '../services/project.service';
 import { ActivatedRoute , Router, NavigationEnd} from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-classic';
+import {SearchTaskPipe} from '../search-task.pipe';
 import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -72,17 +73,22 @@ export class ChildComponent  implements OnInit{
   taskArr= [];
   running: boolean = false;
   timerRef;
-  initialTime = 0;
+  initialTime = 0;  
   trackss:any;
   currentsprintId;
   
+
+  
+
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef
-    ,private router: Router) { 
+    ,private router: Router,public searchTextFilter: SearchTaskPipe) { 
+
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
     this.createEditTaskForm();      
+
     this.getProject(this.projectId);
 
     this.router.events.subscribe((ev) => {
@@ -90,6 +96,7 @@ export class ChildComponent  implements OnInit{
          this.func('reload');
       }
     });
+
   }
   ngOnInit(){
     // this.getProject(this.projectId);
@@ -140,9 +147,7 @@ export class ChildComponent  implements OnInit{
 
     ngOnChanges() {
       this._change.detectChanges();
-      this.trackss = this.tracks;
       console.log("ngOnChanges()  ===============================",this.tracks);
-      console.log("ngOnChanges()  ===============================",this.trackss);
 
     }
 
@@ -430,6 +435,7 @@ export class ChildComponent  implements OnInit{
 
 
 
+
     getHHMMTime(difference){
       if(difference != '00:00:00'){
         difference = difference.split("T");  
@@ -440,6 +446,7 @@ export class ChildComponent  implements OnInit{
       }
       return '00:00:00';
     }
+
     getTime(counter){
       var milliseconds = ((counter % 1000) / 100),
       seconds = Math.floor((counter / 1000) % 60),
@@ -465,6 +472,7 @@ export class ChildComponent  implements OnInit{
         console.log("error in delete Task=====>" , err);
       });
     }
+
 
 
     getProject(id){
@@ -498,6 +506,7 @@ export class ChildComponent  implements OnInit{
           },(err:any)=>{
             console.log("err of team============>"  ,err);
           });
+
         },(err:any)=>{
           console.log("err of project============>"  ,err);
         });
@@ -589,10 +598,8 @@ export class ChildComponent  implements OnInit{
 
     }
 
-
-
-
     startTimer(data) {
+      $('#fullHeightModalRight').css('display','none');
       console.log('task data================>',data);
       this.running = !this.running;
       data['running'] = data.running?!data.running:true;
@@ -645,3 +652,4 @@ export class ChildComponent  implements OnInit{
   }
 
   
+

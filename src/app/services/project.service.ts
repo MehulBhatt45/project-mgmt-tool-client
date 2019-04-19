@@ -258,15 +258,21 @@ export class ProjectService {
 
 	updateTask(id, task){
 		console.log("task =========>",task);
-		// console.log("id-=-=",id);
-		// var id = task._id;
 		return this.http.put(config.baseApiUrl+"tasks/update-task-by-id/"+id, task);		
 	}
 
-	updateNotice(notice){
-		console.log("notice data in service==>>",notice);
-		var id = notice._id;
-		return this.http.put(config.baseApiUrl+"notice/update-notice-by-id/"+id, notice);	
+	updateNoticeWithFile(data, id){
+		return this.http.put(config.baseApiUrl+"notice/update-notice-by-id/"+id, data);	
+	}
+
+	changeNoticePicture(files: any, data){
+		console.log("file is=================>",files);
+		console.log("data is ============>",data);
+		let formdata = new FormData();
+		formdata.append("noticeid",data);
+		formdata.append("profilePhoto",files[0]);
+		console.log("file is===>>>",files[0]);
+		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
 	}
 
 	deleteNotice(id){
@@ -374,15 +380,16 @@ export class ProjectService {
 	}
 
 
-	changeNoticePicture(files: any, data){
-		console.log("file is=================>",files);
-		console.log("data is ============>",data);
-		let formdata = new FormData();
-		formdata.append("noticeid",data);
-		formdata.append("profilePhoto",files[0]);
-		console.log("file is===>>>",files[0]);
-		return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-	}
+
+	// changeNoticePicture(files: any, data){
+	// 	console.log("file is=================>",files);
+	// 	console.log("data is ============>",data);
+	// 	let formdata = new FormData();
+	// 	formdata.append("noticeid",data);
+	// 	formdata.append("profilePhoto",files[0]);
+	// 	console.log("file is===>>>",files[0]);
+	// 	return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
+	// }
 
 	addSprint(data){
 		console.log("data in service===>>>",data);
@@ -415,11 +422,9 @@ export class ProjectService {
 		return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
 	}
 
-
-
-		getProjectByPmanagerId(pmanagerId){
-			console.log("pmanagerId=====>",pmanagerId);
-			return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+	getProjectByPmanagerId(pmanagerId){
+		console.log("pmanagerId=====>",pmanagerId);
+		return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
 
 
 	}
@@ -441,17 +446,17 @@ export class ProjectService {
 
 
 
-		deleteSprint(sprintId){
-			console.log("sprint in service",sprintId);
-			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-		}
-
-		addTimeLog(data){
-			console.log('data=====++++++>',data);
-			return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
-		}
-
+	deleteSprint(sprintId){
+		console.log("sprint in service",sprintId);
+		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
 	}
+
+	addTimeLog(data){
+		console.log('data=====++++++>',data);
+		return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
+	}
+
+}
 
 
 

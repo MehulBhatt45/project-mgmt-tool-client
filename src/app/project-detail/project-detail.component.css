@@ -484,6 +484,16 @@ table {
       font-size: 2em;
       /*padding: 10px;*/
       margin: 5px 10px;
-      min-width: 150px;
+      min-width: 81px;
       cursor: pointer;
+      font-size: 18px;
+}
+.start_btn{
+  padding-left: 0;
+    padding-right: 0;
+    left: -9px;
+    top: -14px;
+}
+.timer-button{
+  width: 50%;
 }
