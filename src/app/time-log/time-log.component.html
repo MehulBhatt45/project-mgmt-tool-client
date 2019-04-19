@@ -33,7 +33,7 @@
           </thead>
 
           <tbody *ngFor="let task of tasks ">
-            <tr *ngIf="task.status == 'testing' || task.status == 'complete'">
+            <tr>
               <td>{{task.title}}</td>
               <td>{{task.uniqueId}}</td>
               <td>{{task.status}}</td>

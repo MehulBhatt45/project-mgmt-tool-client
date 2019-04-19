@@ -133,6 +133,7 @@ import { TimeLogComponent } from './time-log/time-log.component';
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule,
+    // DemoUtilsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,

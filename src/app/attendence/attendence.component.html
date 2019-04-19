@@ -31,8 +31,8 @@
 
 	<!-- <div class="alert alert-info">
 		Click on a day on the view.
-		<strong *ngIf="clickedDate"
-		>You clicked on this day: {{ clickedDate | date:'medium' }}</strong
+		<strong *ngIf="dateSelected"
+		>You clicked on this day: {{ dateSelected | date:'medium' }}</strong
 		>
 		<strong *ngIf="clickedColumn != null"
 		>You clicked on this column: {{ clickedColumn }}</strong
@@ -63,10 +63,13 @@
 </mwl-calendar-day-view>
 </div>
 </div>
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar" *ngIf="currentUser.userRole=='user' || currentUser.userRole=='developer'">
+
+	
 	<div class="row">
 
-		<table class="table table-bordered table-striped mb-0">
+		<table class="table table-bordered table-striped mb-0"  *ngIf="logs">
 			<thead>
 				<tr>
 					<th scope="col">CheckIn</th>
@@ -77,9 +80,6 @@
 
 			</thead>
 			<tbody>
-
-
-
 				<tr *ngFor="let ateendence of logs;let i=index;">
 					<td>{{ateendence.checkIn | date:'mediumTime'}}</td>
 
@@ -90,101 +90,76 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div class="row" style="margin-top: 40px;">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+
+					<th scope="col" style="background-color: lightcoral;
+					text-align: center;"><i class="far fa-clock"></i> Work Time</th>
+					<th *ngIf="diffff" style="float: right;margin-right: 131px;background-color: lightcoral">{{diffff}}</th>
+				</tr>
+
+			</thead>
+
+		</table>
+	</div>
 </div>
-<div class="row" style="margin-top: 40px;">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-
-				<th scope="col" style="
-				text-align: center;"><i class="far fa-clock"></i> Work Time</th>
-				<th *ngIf="diffff" style="float: right;margin-right: 131px;background-color: lightcoral">{{diffff}}</th>
-			</tr>
-
-		</thead>
-
-	</table>
-</div>
 
 
-<div class="attendence" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
-	<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-			aria-selected="true">Present Developer</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-			aria-selected="false">Absent Developer</a>
-		</li>
-	</ul>
-	<div class="tab-content card pt-5" id="myTabContentJust">
-		<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-			<div class="row">
-				<div class="col-md-6">
-					<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-						<thead>
-							<tr>
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: 50px;">
+	<li class="nav-item">
+		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+		aria-selected="true"><i class="fas fa-user"></i> Present Developer</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+		aria-selected="false"><i class="fas fa-user"></i> Absent Developer</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
+		aria-selected="false"><i class="fas fa-calendar-day"></i> Today Attendence</a>
+	</li>
+</ul>
+<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: -27px;">
+	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-								<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
-								<th scope="col">Check In</th>
-								<th scope="col">Check Out</th>
+		<h1 *ngIf="presentuser">Present Developer: {{presentuser.length}}</h1>
 
-
-							</tr>
-
-						</thead>
-						<tbody>
-							<tr *ngFor="let user of presentuser,let i=index">
-								<td>{{user.UserName}}</td>
-								<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
-								<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
-
-
-							</tr>
-						</tbody>
-
-					</table>
-				</div>
-				<div class="col-md-6">
-					<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-						<thead>
-							<tr>
-
-								<th scope="col"><i class="far fa-clock"></i> Work Time</th>
-
-
-								<th scope="col">Sign</th>
-
-
-							</tr>
-
-						</thead>
-						<tbody>
-							<tr *ngFor="let user of alldiff">
-
-								<td>{{user}}</td>
-
-								<td><i class="fas fa-check"></i></td>
-
-							</tr>
-						</tbody>
-
-					</table>
-				</div>
-			</div>
-
-
-		</div>
-		<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-			<div class="row">
-				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 					<thead>
 						<tr>
 
-							<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
+							<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
+							<th scope="col">Check In</th>
+							<th scope="col">Check Out</th>
 
+
+						</tr>
+
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of presentuser,let i=index">
+							<td>{{user.UserName}}</td>
+							<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
+							<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+
+
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+					<thead>
+						<tr>
+
+							<th scope="col"><i class="far fa-clock"></i> Work Time</th>
 
 
 							<th scope="col">Sign</th>
@@ -194,19 +169,95 @@
 
 					</thead>
 					<tbody>
-						<tr *ngFor="let i of missing">
-							<td>{{i}}</td>
+						<tr *ngFor="let user of alldiff">
 
+							<td>{{user}}</td>
 
-							<td><i class="fas fa-times"></i></td>
+							<td><i class="fas fa-check"></i></td>
 
 						</tr>
 					</tbody>
 
 				</table>
 			</div>
+		</div>
+
+		
+	</div>
+	<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+
+		<h1 *ngIf="missing">Absent Developer: {{missing.length}}</h1>
+		<div class="row" style="margin-top: 20px;">
+			<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
+				<thead>
+					<tr>
+
+						<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
 
 
+
+						<th scope="col">Sign</th>
+
+
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let i of missing">
+						<td>{{i}}</td>
+
+
+						<td><i class="fas fa-times"></i></td>
+
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+
+	</div>
+	<div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+
+		<h1 style="text-align:center;"><i class="fas fa-user"></i> {{currentUser.name}}</h1>
+
+		<div class="row" style="margin-top: 40px;">
+
+			<table class="table table-bordered table-striped mb-0"  *ngIf="logs">
+				<thead>
+					<tr>
+						<th scope="col">CheckIn</th>
+						<th scope="col">CheckOut</th>
+						<th scope="col">Diffrence</th>
+
+					</tr>
+
+				</thead>
+				<tbody>
+					<tr *ngFor="let ateendence of logs;let i=index;">
+						<td>{{ateendence.checkIn | date:'mediumTime'}}</td>
+
+						<td>{{ateendence.checkOut | date:'mediumTime'}}</td>
+
+						<td>{{ateendence.diff}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="row" style="margin-top: 40px;">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+
+						<th scope="col" style="background-color: lightcoral;
+						text-align: center;"><i class="far fa-clock"></i> Work Time</th>
+						<th *ngIf="diffff" style="float: right;margin-right: 131px;background-color: lightcoral">{{diffff}}</th>
+					</tr>
+
+				</thead>
+
+			</table>
 		</div>
 
 	</div>
