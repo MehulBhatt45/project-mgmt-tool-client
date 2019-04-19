@@ -102,17 +102,26 @@ export class NoticeboardComponent implements OnInit {
 
   updateNotice(editNoticeForm, noticeId){
     console.log("noticeId", noticeId);
+    console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);
+    editNoticeForm.images = $("#images").val();
     console.log("update Notice image =====>",editNoticeForm.images);
     let data = new FormData();
-    data.append('title', editNoticeForm.title?editNoticeForm.title:"");
-    data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
-    data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
-    data.append('published', editNoticeForm.published?editNoticeForm.published:"");
+    _.forOwn(editNoticeForm, function(value, key) {
+      data.append(key, value)
+    });
+    // data.append('title', editNoticeForm.title?editNoticeForm.title:"");
+    // data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
+    // data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
+    // data.append('published', editNoticeForm.published?editNoticeForm.published:"");
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('images', this.files[i]);
       }
+    }
+    if (this.files == null) {
+      this.files = editNoticeForm.images;
+      data.append('uploadfile', this.files[0]);
     }
     console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{

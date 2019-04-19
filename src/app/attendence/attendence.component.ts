@@ -108,6 +108,7 @@ import { Component, OnInit, ViewChild,
 
     ngOnInit() {
 
+
       // localStorage.setItem("checkIn",JSON.stringify(false));
       this.getAllDevelopers();
 
@@ -170,6 +171,76 @@ import { Component, OnInit, ViewChild,
             });
           },2000);
         }
+
+        // checkIn(){
+
+
+
+        //   this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+        //     console.log("respopnse of checkin=======<",res);
+        //     console.log("diffrence====-=-=-=-=-=-=-",res.difference);
+        //     this.timediff = res.difference;
+        //     console.log("timediff--=-=-=-=",this.timediff);
+
+
+        //     this.attendence = res.in_out;
+        //     console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
+
+
+        //     _.forEach(this.attendence , (attendence)=>{
+        //       console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
+        //       if(attendence.checkOut != null){
+        //         attendence.checkOut = attendence.checkOut.split("T");
+        //         attendence.checkOut = attendence.checkOut[1];
+        //         attendence.checkOut = attendence.checkOut.split("Z");
+        //         attendence.checkOut = attendence.checkOut[0];
+        //       }
+        //     })
+
+        //     _.forEach(this.attendence , (attendence)=>{
+        //       console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
+        //       if(attendence.checkIn != null){
+        //         attendence.checkIn = attendence.checkIn.split("T");
+        //         attendence.checkIn = attendence.checkIn[1];
+        //         attendence.checkIn = attendence.checkIn.split("Z");
+        //         attendence.checkIn = attendence.checkIn[0];
+        //       }
+        //     })
+
+        //     // this.date = this.attendence.checkIn;
+        //     // console.log("date][][][][][][][][",time);
+
+        //     localStorage.setItem("checkIn",JSON.stringify(true));
+        //     this.checkInStatus = true;
+        //     // window.location.reload();
+
+
+
+
+        //   },(err:any)=>{
+        //     console.log("err of checkin=>",err);
+        //   })
+
+        // }
+
+
+
+        // checkOut(){
+
+        //   this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
+        //     console.log("respopnse of checkout=======<",res);
+        //     localStorage.setItem("checkOut",JSON.stringify(true));
+            
+        //     this.checkInStatus = false;
+
+        //     // window.location.reload();
+
+        //     // this.router.navigate["/view-projects"];
+        //   },(err:any)=>{
+        //     console.log("err of chechout------------->",err);
+        //   })
+
+        // }
 
 
 
