@@ -231,18 +231,7 @@
 																	</a>
 																</div>
 															</div>
-															<div class="comment_content">
-																<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
-																	{{i.userId.name}}
-																</h5>
-																<span class="break" innerHtml="{{i.content}}">
-																</span>
-																<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}">
-																	<img src="{{path}}{{i.images}}" width="200" height="100">
-																</a>
-															</div>
 														</div>
-
 														<div class="comment_content">
 															<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
 																{{i.userId.name}}

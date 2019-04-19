@@ -439,6 +439,7 @@ export class ChildComponent  implements OnInit{
 
 
   getHHMMTime(difference){
+    // console.log("ave che kai ke nai",difference);
     if(difference != '00:00'){
       difference = difference.split("T");
       difference = difference[1];
@@ -446,8 +447,10 @@ export class ChildComponent  implements OnInit{
       difference = difference[0];
       difference = difference.split(":");
       var diff1 = difference[0];
+      // console.log("ahi j zero mde che",diff1);
       var diff2 = difference[1];
       difference = diff1 +":"+diff2;
+      // console.log("fhuidsifgidif",difference);
       return difference;
     }
     return '00:00';
