@@ -5,10 +5,12 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
 import * as moment from 'moment';
+import{LeaveService} from '../services/leave.service';
 import { config } from '../config';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 declare var $ : any;
+
 
 
 @Component({
@@ -17,6 +19,9 @@ declare var $ : any;
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+	currentEmployeeId = JSON.parse(localStorage.getItem("currentUser"))._id;
+	currentUserName = JSON.parse(localStorage.getItem("currentUser")).name;
+	checkInStatus = JSON.parse(localStorage.getItem('checkIn'));
 	tracks:any;
 	task = this.getEmptyTask();
 	userId
@@ -28,7 +33,10 @@ export class HeaderComponent implements OnInit {
 	projectId;
 	modalTitle;
 	projects;
+	timediff:any;
+	attendence:any;
 	demoprojects;
+	userNotification;
 	addUserProfile:FormGroup;
 	allStatusList = this._projectService.getAllStatus();
 	allPriorityList = this._projectService.getAllProtity();
@@ -38,7 +46,9 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
-	constructor(private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
+	newSprint = [];
+
+	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -53,19 +63,20 @@ export class HeaderComponent implements OnInit {
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
 			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
-			assignTo : new FormControl('', Validators.required),
-			sprint :new FormControl('', Validators.required),
-			priority : new FormControl('', Validators.required),
+			desc : new FormControl('',),
+			assignTo : new FormControl('',),
+			sprint :new FormControl('',),
+			priority : new FormControl('',),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required)
-			// dueDate : new FormControl('',Validators.required),
-			// estimatedTime: new FormControl(),
+			dueDate : new FormControl(''),
+			estimatedTime: new FormControl(),
+			status : new FormControl({value: ''},)
 		})
 	}
 
 
 	ngOnInit() {
+		// localStorage.setItem("checkIn",JSON.stringify(false));
 		this.editTaskForm.reset()
 		this.task = this.getEmptyTask();
 		$('#editModel').on('hidden.bs.modal', function (e) {
@@ -94,6 +105,7 @@ export class HeaderComponent implements OnInit {
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
+		this.getNotificationByUserId();
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -140,7 +152,6 @@ export class HeaderComponent implements OnInit {
 			this.projectId = item._id;
 			this.loader = true;
 			$(".progress").addClass("abc");
-			// $(".progress .progress-bar").css({"width": '100%'});
 			setTimeout(()=>{
 				this.loader = false;
 				$(".progress").removeClass("abc");
@@ -158,6 +169,83 @@ export class HeaderComponent implements OnInit {
 		console.log(event);
 	}
 
+	checkIn(){
+
+
+
+		this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+			console.log("respopnse of checkin=======<",res);
+
+			// res.difference = res.difference.split("T");
+			// res.difference = res.difference[1];
+			// res.difference = res.difference.split("Z");
+			// res.difference = res.difference[0];
+			console.log("diffrence====-=-=-=-=-=-=-",res.difference);
+			this.timediff = res.difference;
+			console.log("timediff--=-=-=-=",this.timediff);
+
+
+			this.attendence = res.in_out;
+			console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
+
+
+			_.forEach(this.attendence , (attendence)=>{
+				console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
+				if(attendence.checkOut != null){
+					attendence.checkOut = attendence.checkOut.split("T");
+					attendence.checkOut = attendence.checkOut[1];
+					attendence.checkOut = attendence.checkOut.split("Z");
+					attendence.checkOut = attendence.checkOut[0];
+				}
+			})
+
+			_.forEach(this.attendence , (attendence)=>{
+				console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
+				if(attendence.checkIn != null){
+					attendence.checkIn = attendence.checkIn.split("T");
+					attendence.checkIn = attendence.checkIn[1];
+					attendence.checkIn = attendence.checkIn.split("Z");
+					attendence.checkIn = attendence.checkIn[0];
+				}
+			})
+
+			// this.date = this.attendence.checkIn;
+			// console.log("date][][][][][][][][",time);
+
+			localStorage.setItem("checkIn",JSON.stringify(true));
+			localStorage.setItem("checkOut",JSON.stringify(false));
+			this.checkInStatus = false;
+			window.location.reload();
+			
+			
+
+
+		},(err:any)=>{
+			console.log("err of checkin=>",err);
+		})
+
+	}
+
+
+
+	checkOut(){
+
+		this._leaveService.checkOut(this.currentEmployeeId).subscribe((res:any)=>{
+			console.log("respopnse of checkout=======<",res);
+			localStorage.setItem("checkOut",JSON.stringify(true));
+			localStorage.setItem("checkIn",JSON.stringify(false));
+
+			this.checkInStatus = false;
+
+			window.location.reload();
+
+			// this.router.navigate["/view-projects"];
+		},(err:any)=>{
+			console.log("err of chechout------------->",err);
+		})
+
+	}
+
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log("current user id",this.currentUser._id);
@@ -166,9 +254,7 @@ export class HeaderComponent implements OnInit {
 				this.projects = res;
 				console.log("this.projects",this.projects);
 				_.forEach(this.projects,(project)=>{
-					// console.log("project",project);
 					_.forEach(project.pmanagerId,(pid)=>{
-						// console.log("pid",pid);
 						if(pid._id == this.currentUser._id){
 							this.demoprojects.push(project);
 						}
@@ -192,6 +278,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	logout() {
+		localStorage.setItem("checkIn",JSON.stringify(false));
 		this._loginService.logout();
 		this.router.navigate(['/login']);
 	}
@@ -298,7 +385,6 @@ export class HeaderComponent implements OnInit {
 			this.router.navigate(["/project-details/"+this.projectId]);
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			//$('#alert').css('display','block');
 			this.loader = false;
 			console.log("error========>",err);
 		});
@@ -330,7 +416,6 @@ export class HeaderComponent implements OnInit {
 	}
 
 	onSelectFile(event,option){
-		// this.files = event.target.files;
 		_.forEach(event.target.files, (file:any)=>{
 			this.files.push(file);
 			var reader = new FileReader();
@@ -343,13 +428,43 @@ export class HeaderComponent implements OnInit {
 			}
 		})
 	}
+
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				if(sprint.status !== 'Complete'){
+					console.log("sprint in if",sprint);
+					this.newSprint.push(sprint);
+				}
+			})
 		},(err:any)=>{
 			console.log(err);
 		});
+	}
+
+	getNotificationByUserId(){
+		this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
+			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
+			// console.log("loginUser==========>",loginUser);
+			this.userNotification = res;
+			this.userNotification.sort(custom_sort);
+			this.userNotification.reverse();
+			var start = new Date();
+			start.setTime(1532403882588);
+			console.log("response ==========++>" , res);
+			this.userNotification = res.length;
+			console.log("count of notification",this.userNotification);
+			// // console.log(this.currentUser[0].subject);
+			// console.log("title=========>",this.currentUser[0].title);
+			// console.log("current====>",this.currentUser);
+			// console.log("projectId==========>",this.currentUser[0].projectId._id);
+			// console.log("type======================>",this.currentUser[0].type);
+		})
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
 	}
 	removeAvatar(file, index){
 		console.log(file, index);

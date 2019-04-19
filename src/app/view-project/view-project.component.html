@@ -1,3 +1,18 @@
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">hey {{currentUser.name}}</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
+    </div>
+</div>
+
+</div>
+</div>
 <div class="loader" *ngIf="loader">
   <span></span>
   <span></span>
@@ -16,7 +31,7 @@
                 </div>
                 <div class="row text-center margin-20">
                     <div class="col-md-4 indigo-text">
-                     <strong title="task" class="text-center">
+                       <strong title="task" class="text-center">
                         <i class="fas font-project-view-small fa-tasks fa-fw"></i>
                         <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'TASK')}}</span>
                     </strong>
@@ -28,7 +43,7 @@
                     </strong>
                 </div>
                 <div class="col-md-4 red-text">
-                 <strong title="Bug" class=" text-center">
+                   <strong title="Bug" class=" text-center">
                     <i class="fas font-project-view-small fa-bug fa-fw"></i>
                     <span class="badge badge-pill z-depth-0 badge-dark">{{getLength(project, 'BUG')}}</span>
                 </strong>
@@ -38,19 +53,17 @@
     <div class="btn-group dropleft float-right">
       <button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
       </button>
+
       <div class="dropdown-menu">
-        <a class="dropdown-item btn-floating  mt-0 mx-1" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-        <a class="dropdown-item btn-floating btn-tw mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><i class="fas fa-users"></i></a>
-        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+         <a class="dropdown-item btn-floating  mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+         <a class="dropdown-item btn-floating mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><i class="fas fa-users"></i></a>
+         <a class="dropdown-item btn-floating  mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
+         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
+         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
+     </div>
+ </div>
 
-        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
-
-
-        <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
-
-    </div>
-</div>
-<div class="card-body card-body-cascade margin-bottom-0 text-center">
+ <div class="card-body card-body-cascade margin-bottom-0 text-center">
     <h5 class="deep-purple-text">
         <i class="fab fa-react">{{getTechName('fa-react')}}</i>
     </h5>
@@ -280,4 +293,3 @@ aria-hidden="true">
         </div>
     </div>
 </div>
-

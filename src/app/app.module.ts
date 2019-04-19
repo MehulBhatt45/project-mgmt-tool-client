@@ -31,7 +31,7 @@ import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
 import { NgxEditorModule } from 'ngx-editor';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { AddNoticeComponent } from './add-notice/add-notice.component';
 import { NoticeboardComponent } from './noticeboard/noticeboard.component';
@@ -48,6 +48,12 @@ import { AllEmployeeComponent } from './all-employee/all-employee.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PushNotificationService } from 'ngx-push-notifications';
 import { ImageViewerModule } from 'ng2-image-viewer';
+
+import { CommonModule } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+// import { DemoUtilsModule } from '../demo-utils/module';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 
 
 
@@ -134,7 +140,14 @@ import { TimeLogComponent } from './time-log/time-log.component';
     SelectDropDownModule,
     NgSelectModule,
     ImageViewerModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CommonModule,
+    
+    CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory
+    }),  
+    // DemoUtilsModule
 
     ],
     providers: [MessagingService, AsyncPipe, PushNotificationService],

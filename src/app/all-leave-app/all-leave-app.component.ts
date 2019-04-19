@@ -19,7 +19,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
-   @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
+  @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
 
   allLeaves;
   allAproveLeaves;
@@ -42,14 +42,11 @@ export class AllLeaveAppComponent implements OnInit {
   fileUrl;
   loader : boolean = false;
   filteredLeaves = [];
-  // projectTeam;
-  // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
   selectedStatus:any;
   comment;
   leaveid;
-
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
@@ -119,6 +116,9 @@ export class AllLeaveAppComponent implements OnInit {
                   event.stopPropagation();
                   $(".search").removeClass("open");
                 });
+                $('#centralModalInfo').on('hidden.bs.modal', function () {
+                  $('.modal-body').find('textarea').val('');
+                });
               }
 
 
@@ -126,6 +126,7 @@ export class AllLeaveAppComponent implements OnInit {
                 $(".search .btn").parent(".search").toggleClass("open");
                 $('.search').click((evt)=>{
                   evt.stopPropagation();
+
                 });
               }
 
@@ -379,7 +380,7 @@ export class AllLeaveAppComponent implements OnInit {
                   break;
                   case "rejected":
                   this.getRejectedLeaves('Rejected');
-                  break;        
+                  break;       
                   default:
                   console.log("DEFAULT CASE");
                   break;
@@ -419,7 +420,7 @@ export class AllLeaveAppComponent implements OnInit {
               leaveAccepted(req){
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
-                console.log("reeeeeeee",req);
+                console.log("reeeeeeee",req._id);
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
@@ -433,14 +434,15 @@ export class AllLeaveAppComponent implements OnInit {
                     var body;
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req){
+                      if(apply._id == req._id){
                         body = apply;
                         body.status = "approved";
                       }
                     })
                     console.log("req ========>" , req);
+                    var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Approve!',
                         'Your Leave has been Approve.',
@@ -454,6 +456,8 @@ export class AllLeaveAppComponent implements OnInit {
                       // this.leaveEmit.emit(this.acceptedLeave);
                       // this.getLeaves(Option);
                       this.getLeaves(this.title);
+                      console.log("thissssssssss===>",dev);
+                      this.filterTracks(dev);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -478,14 +482,15 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("rejected",this.leaveApp);
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req){
+                      if(apply._id == req._id){
                         body = apply;
                         body.status = "rejected";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("req ========>" , req.email);
+                    var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Rejected!',
                         'Your Leave has been Rejected.',
@@ -497,6 +502,8 @@ export class AllLeaveAppComponent implements OnInit {
                       this.rejectedLeave = res;
                       console.log("rejected===========>",this.rejectedLeave);
                       this.getLeaves(this.title);
+                      console.log("thissssssssss===>",dev);
+                      this.filterTracks(dev);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -532,25 +539,15 @@ export class AllLeaveAppComponent implements OnInit {
                           $('.unselected').css('display','none');
                           $('.selected').css('display','block');
                           this.leaveApp.push(leave);
+
                         }
                       });
-                      // _.forEach(this.leaves , (leave)=>{
-                        //   console.log("leavess====",leave);
-                        //   _.forEach(this.leavescount , (count)=>{
-                          //     if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-                            //       count.leavesTaken = count.leavesTaken + 1;
-                            //     }
-                            //   });
-                            // });
-
-                            // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                            // console.log("leaves count ====>" , this.leavescount);
-                          }else{
-                            console.log("not found");
-                          }
-                        },err=>{
-                          console.log(err);
-                        })
+                    }else{
+                      console.log("not found");
+                    }
+                  },err=>{
+                    console.log(err);
+                  })
                   this.loader=false;
                 },1000);
               }
@@ -592,10 +589,8 @@ export class AllLeaveAppComponent implements OnInit {
                           }
                           console.log("nthi avtu=======>",custom_sort);
                         }
+
                         onKey(searchText){
-                          console.log("p leaves ====>" , this.pLeave);
-                          console.log("r leaves ====>" , this.rLeave);
-                          console.log("a leaves ====>" , this.aLeave);
                           if(this.pLeave == true){
                             console.log('pending leaves',this.allLeaves);
                             var dataToBeFiltered = [this.allLeaves];
@@ -612,7 +607,6 @@ export class AllLeaveAppComponent implements OnInit {
                           _.forEach(leave, (content)=>{
                             this.leaveApp.push(content);
                           });
-
                         }
 
                         leavesByUserId(){
@@ -691,6 +685,7 @@ export class AllLeaveAppComponent implements OnInit {
                                     console.log("response",res);
                                     Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
                                     $('#centralModalInfo').modal('hide');
+                                    this.comment = "";
                                   },err=>{
                                     console.log("errrrrrrrrrrrrr",err);
                                     Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -703,6 +698,9 @@ export class AllLeaveAppComponent implements OnInit {
                                   this.gotAttachment = attechment;
                                   $('#veiwAttach').modal('show')
                                   console.log("gotattechment array ====>",this.gotAttachment);
+                                }
+                                cancel(){
+                                  this.comment = "";
                                 }
 
                               }

@@ -55,14 +55,13 @@ export class ProjectDetailComponent implements OnInit {
 	id;
 	projectTeam;
 	sprints;
+	newSprint = [];
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
 	// sorting: any;
 	sorting:any;
-	
-
 	temp:any;
 	activeSprint:any;
 	sprintInfo:any;
@@ -191,16 +190,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// setTimeout(()=>{
+		setTimeout(()=>{
 
-		// 	$('[data-toggle="popover-hover"]').popover({
-		// 		html: true,
-		// 		trigger: 'hover',
-		// 		placement: 'bottom',
-		// 		content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
-		// 	});
-		// },2000);
-		// this.getProject(this.id);
+			$('[data-toggle="popover-hover"]').popover({
+				html: true,
+				trigger: 'hover',
+				placement: 'bottom',
+				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+			});
+		},2000);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
 		this.getAllDevelopers();
@@ -214,6 +212,7 @@ export class ProjectDetailComponent implements OnInit {
 
 		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
+		this.getSprintWithoutComplete(this.projectId);
 	}
 
 	filterTracks(sprintId){
@@ -235,7 +234,7 @@ export class ProjectDetailComponent implements OnInit {
 			this.developers = res;
 			this.developers.sort(function(a, b){
 				if (name) {
-					
+
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
 						return -1 
@@ -340,23 +339,24 @@ export class ProjectDetailComponent implements OnInit {
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					res.Teams.push(this.pro.pmanagerId); 
+					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-					// this.projectTeam.sort(function(a, b){
-					// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-					// 	if (nameA < nameB) //sort string ascending
-					// 		return -1 
-					// 	if (nameA > nameB)
-					// 		return 1
-					// 	return 0 //default return value (no sorting)
-					// 	this.projectTeam.push
-					// 	console.log("sort============>"  ,this.projectTeam);
-					// })
 
-				},(err:any)=>{
-					console.log("err of team============>"  ,err);
-				});
+					// this.projectTeam.sort(function(a, b){
+						// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+						// 	if (nameA < nameB) //sort string ascending
+						// 		return -1 
+						// 	if (nameA > nameB)
+						// 		return 1
+						// 	return 0 //default return value (no sorting)
+						// 	this.projectTeam.push
+						// 	console.log("sort============>"  ,this.projectTeam);
+						// })
+						this.loader = false;
+					},(err:any)=>{
+						console.log("err of team============>"  ,err);
+					});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -400,12 +400,6 @@ export class ProjectDetailComponent implements OnInit {
 		}	
 	}
 
-
-
-
-
-
-
 	get trackIds(): string[] {
 		return this.tracks.map(track => track.id);
 	}
@@ -422,9 +416,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 		}
 	}
-
-
-
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -763,5 +754,18 @@ export class ProjectDetailComponent implements OnInit {
 			}
 		})
 
+	}
+
+	getSprintWithoutComplete(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				if(sprint.status !== 'Complete'){
+					this.newSprint.push(sprint);
+				}
+			})
+		},(err:any)=>{
+			console.log(err);
+		});
 	}	
 }

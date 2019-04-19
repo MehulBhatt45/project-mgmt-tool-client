@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { Chart } from 'chart.js';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
 	selector: 'app-backlog',
@@ -44,8 +45,11 @@ export class BacklogComponent implements OnInit {
 	pduration:number = 0;
 	remainingLimit:number = 0;
 	pDuration;
+	currentdate = moment().format('YYYY-MM-DD'); 
+	activeSprint;
+	projectDealine;
 
-	constructor(public _projectService: ProjectService, private route: ActivatedRoute) { 
+	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 		});
@@ -55,13 +59,20 @@ export class BacklogComponent implements OnInit {
 			startDate: new FormControl('',Validators.required),
 			endDate:new FormControl('',Validators.required)
 		});
-	}
-
-	ngOnInit() {
 		this.getProject(this.projectId);			
 		this.createEditSprintForm();
 		this.getTaskbyProject(this.projectId);
 		this.getSprint(this.projectId);
+	}
+
+
+	ngOnInit() {
+		this.change.detectChanges();
+
+		this.projectDealine = JSON.parse(localStorage.getItem('projectdeadline'));
+		console.log("project dealine in ng on init",this.projectDealine);
+
+
 		$('#startDate').pickadate({ 
 			min: new Date(),
 			format: ' mm/dd/yyyy',
@@ -77,10 +88,7 @@ export class BacklogComponent implements OnInit {
 			hiddenSuffix: '__suffix'
 		})	
 
-		// Date Picker Valadation Start Here
 
-		//console.log("this . prdead" , this.prdead);
-		
 		var from_input = $('#startDate').pickadate(),
 		from_picker = from_input.pickadate('picker')
 
@@ -115,6 +123,9 @@ export class BacklogComponent implements OnInit {
 		})
 
 		// Date Picker Valadation End Here
+	}
+	refresh(): void {
+		window.location.reload();
 	}
 
 	getEmptyTracks(){
@@ -185,9 +196,10 @@ export class BacklogComponent implements OnInit {
 			}
 			];
 			console.log("tracks====-=-_+_++",this.tracks);
-			
+
 		}
 	}
+
 	getProject(id){
 		this._projectService.getProjectById(id).subscribe((res:any)=>{
 			console.log(res);
@@ -199,16 +211,21 @@ export class BacklogComponent implements OnInit {
 			this.pduration = pdealine.diff(pstart,'days');
 			console.log("Project Duration=====>>>",this.pduration);
 			localStorage.setItem('projectduration' , JSON.stringify(this.pduration));
-
-			
+			localStorage.setItem('projectdeadline' , JSON.stringify(prdead));
+			var startpicker = $('#startDate').pickadate('picker');
+			startpicker.set('max', new Date(prdead));
+			var endpicker = $('#endDate').pickadate('picker');
+			endpicker.set('max', new Date(prdead));
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
 	}
 
 	addSprint(addForm){
+
 		addForm.startDate = $('#startDate').val();
 		addForm.endDate = $('#endDate').val();
+		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);
 		addForm.projectId = this.projectId;
 		console.log("form value==>>",addForm);
 
@@ -233,19 +250,23 @@ export class BacklogComponent implements OnInit {
 				this.totalSDuration = this.totalSDuration + sprint.duration; 
 				if(sprint.status == 'Active'){
 					this.Active = true;
+					this.activeSprint = sprint;
+					var activeSprintEnd = moment(this.activeSprint.endDate).format("YYYY,M,DD");
+					var startpicker = $('#startDate').pickadate('picker');
+					startpicker.set('min', new Date(activeSprintEnd));
+
 				}
 			})
+			console.log("Active Sprint------->>>>>>",this.activeSprint);
 			this.pDuration = JSON.parse(localStorage.getItem('projectduration'));
 			console.log("is Active available sprint",this.Active);
 			console.log("total sprint Duration",this.totalSDuration);
 			console.log("total project Duration",this.pDuration);
-			
 			this.remainingLimit = this.pDuration - this.totalSDuration;
 			console.log("this.remainingLimit",this.remainingLimit);
 		},(err:any)=>{
 			console.log(err);
 		});
-
 	}
 
 	createEditSprintForm(){
@@ -258,16 +279,28 @@ export class BacklogComponent implements OnInit {
 	}
 
 	updateSprint(sprint){
+
 		console.log("update Notice =====>",sprint);
-		this._projectService.updateSprint(sprint).subscribe((res:any)=>{
-			$('#editmodel').modal('hide');
-			Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
-			$('#editmodel').modal('hide');
-			this.getSprint(this.projectId);
-		},err=>{
-			console.log(err);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		})
+		sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
+		console.log("start sprint =====>",sprint.startDate);
+		console.log("system date",this.currentdate);
+		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
+		console.log("sprint ID=========>>>>",sprint);
+
+		if(sprint.duration > this.remainingLimit){
+			Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
+		}
+		else{
+			this._projectService.updateSprint(sprint).subscribe((res:any)=>{
+				$('#editmodel').modal('hide');
+				Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
+				$('#editmodel').modal('hide');
+				this.getSprint(this.projectId);
+			},err=>{
+				console.log(err);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+			})
+		}
 	}
 
 
@@ -313,41 +346,50 @@ export class BacklogComponent implements OnInit {
 	}
 
 	startSprint(sprint){
-		console.log("start sprint =====>",sprint);
+
+		sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
+		console.log("start sprint =====>",sprint.startDate);
+		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
-		if(sprint.duration > this.remainingLimit){
-			Swal.fire('Oops...', 'sprint Duration over projectdue!', 'error')
+
+
+		if(sprint.startDate == this.currentdate){
+			if(sprint.duration > this.remainingLimit){
+				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
+			}
+			else{
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes,Start it!'
+				}).then((result) => {
+					if (result.value) {
+
+						this._projectService.startSprint(sprint).subscribe((res:any)=>{
+							Swal.fire(
+								'Started!',
+								'Your Sprint has been Started.',
+								'success'
+								)
+							$('#startmodel').modal('hide');
+							this.getSprint(this.projectId);
+						},err=>{
+							console.log(err);
+							Swal.fire('Oops...', 'Something went wrong!', 'error')
+						})
+
+					}
+				})
+			}
 		}
 		else{
-			Swal.fire({
-				title: 'Are you sure?',
-				text: "You won't be able to revert this!",
-				type: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes,Start it!'
-			}).then((result) => {
-				if (result.value) {
-
-					this._projectService.startSprint(sprint).subscribe((res:any)=>{
-						Swal.fire(
-							'Started!',
-							'Your Sprint has been Started.',
-							'success'
-							)
-						$('#startmodel').modal('hide');
-						this.getSprint(this.projectId);
-					},err=>{
-						console.log(err);
-						Swal.fire('Oops...', 'Something went wrong!', 'error')
-					})
-
-				}
-			})
+			Swal.fire('Oops...', 'Start Date Must be CurrentDate!', 'error')
 		}
-
 	}
 
 	getTaskbyProject(projectId){
@@ -363,7 +405,6 @@ export class BacklogComponent implements OnInit {
 	}
 
 	getTaskCount(sprintId, status){
-		console.log(this.project);
 		return _.filter(this.project, function(o) {  
 			if(o.sprint._id == sprintId && o.status == status){
 				return o;
@@ -405,5 +446,6 @@ export class BacklogComponent implements OnInit {
 
 			}
 		})
-	}	
-}
+	}
+}	
+
