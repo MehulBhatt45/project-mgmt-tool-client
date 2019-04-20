@@ -98,6 +98,7 @@
 
 
 
+
 	<div class="modal fade right" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-full-height modal-right" role="document">
 			<div class="modal-content">
@@ -144,6 +145,7 @@
 
 
 
+
 						<div class="details">
 							<div class="row">
 								<div class="col-12 col-md-6">
@@ -166,7 +168,7 @@
 									<p *ngIf="task.timelog1">
 										<label><strong>Time Taken: &nbsp;</strong></label>
 										<span>
-											{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00:00')}}
+											{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}}
 											<!-- {{getTime(task.timelog1.count)}} -->
 										</span>
 									</p>
@@ -198,16 +200,8 @@
 
 
 								</div>
-
-								<div class="row justify-content-between">
-
-									<div>
-
-									</div>
-								</div>
 							</div>
 						</div>
-
 					</div>
 					<div class="row">
 						<div class="container">
@@ -237,15 +231,20 @@
 																	</a>
 																</div>
 															</div>
+
 															<div class="comment_content">
 																<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
 																	{{i.userId.name}}
 																</h5>
 																<span class="break" innerHtml="{{i.content}}">
 																</span>
-																<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}">
-																	<img src="{{path}}{{i.images}}" width="200" height="100">
-																</a>
+																<div class="row">
+																<div *ngFor="let img of i.images" class="col-sm-4">
+																	<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
+																		<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
+																	</a>
+																</div>
+															</div>
 															</div>
 														</div>
 													</div>
@@ -268,12 +267,14 @@
 									<button class="btn btn-default" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0">Add Comment</button>
 								</div>
 							</div>
-							<div *ngIf="commentUrl && commentUrl.length">
-								<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
-									<img class="avatar-image margin-auto" [src]="commentUrl" style="height: 150px; width: 150px;">
-									<div class="delete-team-member">
-										<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
-									</div>
+
+						</div>
+						<div *ngIf="commentUrl && commentUrl.length">
+							<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
+								<img class="avatar-image margin-auto" [src]="c" style="height: 150px; width: 150px;">
+								<div class="delete-team-member">
+									<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><i class="fas fa-trash fa-2x"></i></a>
+
 								</div>
 							</div>
 						</div>

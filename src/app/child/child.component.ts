@@ -77,6 +77,10 @@ export class ChildComponent  implements OnInit{
   trackss:any;
   currentsprintId;
   newSprint = [];
+  commentImg:any;
+  temp;
+  difference;
+
   
 
   
@@ -273,6 +277,7 @@ export class ChildComponent  implements OnInit{
     this.comment = data;
   }
   sendComment(taskId){
+    // this.func('reload');
     console.log(this.comment);
     var data : any;
     if(this.files.length>0){
@@ -290,9 +295,15 @@ export class ChildComponent  implements OnInit{
     console.log(data);
     this._commentService.addComment(data).subscribe((res:any)=>{
       console.log(res);
+      // console.log('this.files===============>',this.files);
+      // this.files = [];
+      // console.log('this.files=======>',this.files);
+      this.commentImg =res;
+      this.commentUrl = [];
       this.comment = "";
       this.model.editorData = 'Enter comments here';
       this.files = [];
+      console.log('this.files=============>',this.files);
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
@@ -302,6 +313,7 @@ export class ChildComponent  implements OnInit{
   getAllCommentOfTask(taskId){
     this._commentService.getAllComments(taskId).subscribe(res=>{
       this.comments = res;
+      console.log('comments===============>',this.comments);
     }, err=>{
       console.error(err);
     })
@@ -416,7 +428,7 @@ export class ChildComponent  implements OnInit{
       this._projectService.updateStatus(data).subscribe((res:any)=>{
         console.log(res);
         this.getProject(res.projectId);
-        var n = res.timelog.length
+        var n = res.timelog.length;
         Swal.fire({
           type: 'info',
           title: "Task is"  + " " +res.timelog[n -1].operation ,
@@ -428,16 +440,24 @@ export class ChildComponent  implements OnInit{
     }
   }
 
+
   getHHMMTime(difference){
-      if(difference != '00:00:00'){
-        difference = difference.split("T");  
-        difference = difference[1];
-        difference = difference.split(".");
-        // console.log('difference',difference[0]);
-        return difference[0];
-      }
-      return '00:00:00';
+    if(difference != '00:00'){
+      difference = difference.split("T");
+      difference = difference[1];
+      difference = difference.split(".");
+      difference = difference[0];
+      difference = difference.split(":");
+      var diff1 = difference[0];
+      var diff2 = difference[1];
+     
+      difference = diff1 +":"+diff2;
+      return difference;
     }
+    return '00:00';
+  }
+
+
   getTime(counter){
     var milliseconds = ((counter % 1000) / 100),
     seconds = Math.floor((counter / 1000) % 60),
@@ -456,8 +476,7 @@ export class ChildComponent  implements OnInit{
       Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
       console.log("Delete Task======>" , res);
       this.task = res;
-
-
+      this.func('reload');
     },(err:any)=>{
       Swal.fire('Oops...', 'Something went wrong!', 'error')
       console.log("error in delete Task=====>" , err);
@@ -570,6 +589,7 @@ export class ChildComponent  implements OnInit{
       this.files = this.url = [];
       // this.assignTo.reset();
       this.loader = false;
+      this.func('load');
     },err=>{
       Swal.fire('Oops...', 'Something went wrong!', 'error')
       //$('#alert').css('display','block');
@@ -593,7 +613,6 @@ export class ChildComponent  implements OnInit{
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
     if (data.running) {
-      // console.log('data.running in if==================>',this.running)
       data['startText'] = 'Stop';
       var startTime = Date.now() - (data.timelog1?data.timelog1.count:this.initialTime);
       // console.log("startTime=======>",startTime);

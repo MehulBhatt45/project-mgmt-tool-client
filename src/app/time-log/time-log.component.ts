@@ -180,7 +180,16 @@ getTaskOfDeveloper(data){
 		difference = difference.split("T");
 		difference = difference[1];
 		difference = difference.split(".");
-		return difference[0];
+		difference = difference[0];
+		difference = difference.split(":");
+		var diff1 = difference[0];
+		// console.log('difference==========>',difference1);
+		var diff2 = difference[1];
+		// console.log(diff2);
+		 difference = diff1 +":"+diff2;
+		// console.log('difference2============>',difference2);
+		return difference;
+		// return difference[0];
 
 	}
 }
