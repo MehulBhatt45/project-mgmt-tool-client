@@ -110,10 +110,10 @@ export class NoticeboardComponent implements OnInit {
     _.forOwn(editNoticeForm, function(value, key) {
       data.append(key, value)
     });
-    // data.append('title', editNoticeForm.title?editNoticeForm.title:"");
-    // data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
-    // data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
-    // data.append('published', editNoticeForm.published?editNoticeForm.published:"");
+    data.append('title', editNoticeForm.title?editNoticeForm.title:"");
+    data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
+    data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
+    data.append('published', editNoticeForm.published?editNoticeForm.published:"");
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('images', this.files[i]);

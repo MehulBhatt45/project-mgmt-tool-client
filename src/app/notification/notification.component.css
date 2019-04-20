@@ -139,7 +139,7 @@ select.browser-default {
 	margin: 0;
 }
 .task {
-	border-bottom: 1px solid #2196F3;
+	border-bottom: 1px solid #2196F3!important;
 	border-left: 5px solid #8bc1f1;
 }
 .leave {
