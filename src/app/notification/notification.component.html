@@ -160,25 +160,27 @@
 			</li>
 
 
-	<li class="card mt-1 leave"  *ngIf ="data.type == 'leaveAccepted'" >
-		<div class="row">
-			<div class="padding-5 col-sm-2">
-				<div class="leave_approved">
-					<i class="far fa-thumbs-up" title="Approved"></i>
-					<span class="leave_span">Leave</span>
+			<li class="card mt-1 leave" *ngIf = "data.type == 'leave'">
+				<div class="row">
+					<div class="padding-5 col-sm-2">
+						<div class="leave_approved">
+							<i class="far fa-thumbs-up" title="Approved"></i>
+							<span class="leave_span">Leave</span>
+						</div>
+					</div>
+					<div class="padding-5  col-sm-8">
+						<div class="content" >
+							<p innerHtml="{{data.content}}"></p>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+					</div>
 				</div>
-			</div>
-			<div class="padding-5  col-sm-8">
-				<div class="content" >
-					<p innerHtml="{{data.content}}"></p>
-				</div>
-			</div>
-			<div class="col-sm-2">
-				<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-			</div>
-		</div>
-	</li>
-	<li class="card mt-1 leave1" *ngIf ="data.type == 'leaveRejected'" >
+			</li>
+		</ul>
+	</div>
+	<!-- <li class="card mt-1 leave1" *ngIf ="data.type == 'leave'" >
 		<div class="row">
 			<div class="padding-5 col-sm-2">
 				<div class="leave_rejected">
@@ -195,4 +197,4 @@
 				<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 			</div>
 		</div>
-	</li>
+		</li>

@@ -63,18 +63,12 @@ export class NotificationComponent implements OnInit {
 			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
 			// console.log("loginUser==========>",loginUser);
 			this.userNotification = res;
-			this.userNotification.sort(custom_sort);
-			this.userNotification.reverse();
+			// this.userNotification.sort(custom_sort);
+			// this.userNotification.reverse();
 			var start = new Date();
 			
 			start.setTime(1532403882588);
 			console.log("plzzz avi jaje",this.userNotification);
-			// // console.log(this.currentUser[0].subject);
-			// console.log("title=========>",this.currentUser[0].title);
-			// console.log("current====>",this.currentUser);
-			// console.log("projectId==========>",this.currentUser[0].projectId._id);
-			// console.log("type======================>",this.currentUser[0].type);
-			
 		})
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
