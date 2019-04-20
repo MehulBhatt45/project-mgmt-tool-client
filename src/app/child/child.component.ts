@@ -277,6 +277,7 @@ export class ChildComponent  implements OnInit{
     this.comment = data;
   }
   sendComment(taskId){
+    // this.func('reload');
     console.log(this.comment);
     var data : any;
     if(this.files.length>0){
@@ -294,13 +295,15 @@ export class ChildComponent  implements OnInit{
     console.log(data);
     this._commentService.addComment(data).subscribe((res:any)=>{
       console.log(res);
-      console.log('this.files===============>',this.files);
-      this.files = [];
-      console.log('this.files=======>',this.files);
+      // console.log('this.files===============>',this.files);
+      // this.files = [];
+      // console.log('this.files=======>',this.files);
       this.commentImg =res;
+      this.commentUrl = [];
       this.comment = "";
       this.model.editorData = 'Enter comments here';
       this.files = [];
+      console.log('this.files=============>',this.files);
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
@@ -447,6 +450,7 @@ export class ChildComponent  implements OnInit{
       difference = difference.split(":");
       var diff1 = difference[0];
       var diff2 = difference[1];
+     
       difference = diff1 +":"+diff2;
       return difference;
     }
@@ -472,9 +476,7 @@ export class ChildComponent  implements OnInit{
       Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
       console.log("Delete Task======>" , res);
       this.task = res;
-      this.func('load');
-
-
+      this.func('reload');
     },(err:any)=>{
       Swal.fire('Oops...', 'Something went wrong!', 'error')
       console.log("error in delete Task=====>" , err);

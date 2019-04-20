@@ -231,31 +231,22 @@
 																	</a>
 																</div>
 															</div>
+
 															<div class="comment_content">
 																<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
 																	{{i.userId.name}}
 																</h5>
 																<span class="break" innerHtml="{{i.content}}">
 																</span>
-																<a data-lightbox="comment_image" class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{i.images}}">
-																	<img src="{{path}}{{i.images}}" width="200" height="100">
-																</a>
+																<div class="row">
+																<div *ngFor="let img of i.images" class="col-sm-4">
+																	<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
+																		<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
+																	</a>
+																</div>
+															</div>
 															</div>
 														</div>
-
-														<div class="comment_content">
-															<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
-																{{i.userId.name}}
-															</h5>
-															<span class="break" innerHtml="{{i.content}}">
-															</span>
-															<div *ngFor="let img of i.images">
-															<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
-																<img src="{{path}}{{img}}" width="200" height="100" style="margin-bottom: 7px;">
-															</a>
-														</div>
-														</div>
-
 													</div>
 												</div>
 											</div>
