@@ -32,6 +32,7 @@ export class NoticeboardComponent implements OnInit {
   path = config.baseMediaUrl;
   noticeid;
   files:Array<File> = [];
+  i = 0;
 
 
   ngOnInit() {

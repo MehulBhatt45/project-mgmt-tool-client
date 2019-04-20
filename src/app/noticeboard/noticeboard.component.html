@@ -2,11 +2,11 @@
 	<div class="container-fluid">
 		<h1 class="text-center font-weight-bold text-black">Notice Board</h1>
 		<div class="row grid">
-			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice; let i = 'index = 0';">
 				<div class="card mb-3">
 					<!-- <div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}"> -->
-						<a [attr.data-lightbox]="notice._id" href="{{path}}{{notice.images}}" >
-							<img class="img-fluid" src="{{path}}{{notice.images}}" onerror="this.src='../assets/man.png'">
+						<a [attr.data-lightbox]="notice._id" href="{{path}}{{notice.images[i]}}">
+							<img class="img-fluid" src="{{path}}{{notice.images[i]}}" onerror="this.src='../assets/man.png'">
 							<a>
 								<div class="mask rgba-white-slight"></div>
 							</a>
