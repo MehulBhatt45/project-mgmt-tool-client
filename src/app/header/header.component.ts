@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
 	files: Array<File> = [];
 	loader: boolean = false;
 	sprints;
+	unreadNotification;
 	newSprint = [];
 
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
@@ -105,7 +106,8 @@ export class HeaderComponent implements OnInit {
 		});
 		this.getProjects();
 		// this.getAllDevelopers();
-		this.getNotificationByUserId();
+		// this.getNotificationByUserId();
+		this.getUnreadNotification();
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -444,29 +446,14 @@ export class HeaderComponent implements OnInit {
 			console.log(err);
 		});
 	}
-
-	getNotificationByUserId(){
-		this._projectService.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
-			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
-			// console.log("loginUser==========>",loginUser);
-			this.userNotification = res;
-			this.userNotification.sort(custom_sort);
-			this.userNotification.reverse();
-			var start = new Date();
-			start.setTime(1532403882588);
-			console.log("response ==========++>" , res);
-			this.userNotification = res.length;
-			console.log("count of notification",this.userNotification);
-			// // console.log(this.currentUser[0].subject);
-			// console.log("title=========>",this.currentUser[0].title);
-			// console.log("current====>",this.currentUser);
-			// console.log("projectId==========>",this.currentUser[0].projectId._id);
-			// console.log("type======================>",this.currentUser[0].type);
+	getUnreadNotification(){
+		this._projectService.getUnreadNotification(this.currentUser._id).subscribe((res:any)=>{
+			// console.log("length=============>",res);
+			this.unreadNotification = res;
+			console.log("count======================>",this.unreadNotification.length);
 		})
-		function custom_sort(a, b) {
-			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-		}
 	}
+
 	removeAvatar(file, index){
 		console.log(file, index);
 		this.url.splice(index, 1);

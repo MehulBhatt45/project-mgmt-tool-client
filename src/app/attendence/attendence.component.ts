@@ -175,12 +175,13 @@ import { Component, OnInit, ViewChild,
         
 
         dateSelected(event){
+          
           var date = moment(event).format('YYYY-MM-DD');
           console.log("event  of date ===>" , date);   
 
           this._leaveService.empAttendence(date).subscribe((res:any)=>{
             console.log("res ==>" , res);
-            
+
 
             if(res == null){
               console.log("either Holiday or No attendence");

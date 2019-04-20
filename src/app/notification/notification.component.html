@@ -160,7 +160,7 @@
 			</li>
 
 
-	<li class="card mt-1 leave"    >
+	<li class="card mt-1 leave" *ngIf = "data.type == 'leave'">
 		<div class="row">
 			<div class="padding-5 col-sm-2">
 				<div class="leave_approved">
@@ -192,7 +192,7 @@
 				</div>
 			</div>
 			<div class="col-sm-2">
-				<label style="float: right;">{{getHHMMTime(data.createdAt)}}</label>
+				<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 			</div>
 		</div>
 	</li> -->
