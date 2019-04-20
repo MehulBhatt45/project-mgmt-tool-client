@@ -206,12 +206,12 @@
 					<div class="row">
 						<div class="container">
 							<div class="col-md-12 col-12">
-								<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Remove Assignment</button>
+								<button type="button" class="btn btn-default btn-lg" data-dismiss="modal" *ngIf="currentUser.userRole=='projectManager'">Remove Assignment</button>
 								<button class="btn btn-default  btn-lg " *ngIf="task.status == 'to do'" (click)="updateStatus('in progress', task)">Start Progress</button>
 								<button class="btn btn-default  btn-lg" *ngIf="task.status == 'in progress'" (click)="updateStatus('testing', task)">Move To Testing</button>
 								<button class="btn btn-default  btn-lg" *ngIf="task.status == 'testing'" (click)="updateStatus('complete', task)">Complete</button>
-								<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete'" (click)="updateStatus('in progress', task)">Reset Progress</button>
-								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">Edit</button>
+								<button class="btn btn-default  btn-lg" *ngIf="task.status == 'complete' && currentUser.userRole=='projectManager'" (click)="updateStatus('in progress', task)">Reset Progress</button>
+								<button class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task" *ngIf="currentUser.userRole=='projectManager'">Edit</button>
 							</div>
 							<hr>
 							<div class="row">
