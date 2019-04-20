@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@a
 import { first } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import Swal from 'sweetalert2';
+declare var $:any;
 
 @Component({
 	selector: 'app-forgotpwd',
@@ -13,6 +14,11 @@ import Swal from 'sweetalert2';
 export class ForgotpwdComponent implements OnInit {
 	resetPasswordForm:FormGroup;
 	token;
+	show: boolean;
+	pwd: boolean;
+	pwd1: boolean;
+	show1: boolean;
+
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -27,6 +33,10 @@ export class ForgotpwdComponent implements OnInit {
 		this.resetPasswordForm = this.formBuilder.group({
 			password: [''],
 			confirmPassword: ['']
+		});
+
+		$(".toggle-password").click(function() {
+			$(this).toggleClass("fa-eye fa-eye-slash");
 		});
 	}
 
@@ -65,6 +75,15 @@ export class ForgotpwdComponent implements OnInit {
 				footer: ''
 			})
 		}
+	}
+
+	password() {
+		this.show = !this.show;
+		this.pwd = !this.pwd;
+	}
+	confirmPassword() {
+		this.show1 = !this.show1;
+		this.pwd1 = !this.pwd1;
 	}
 
 }

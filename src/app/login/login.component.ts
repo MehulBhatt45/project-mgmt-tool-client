@@ -75,27 +75,26 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this._alertService.error(error);
-     if (error.status == 400) {
+        if (error.status == 400) {
 
-        Swal.fire('Oops...', 'Sorry your password is incorrect..', 'error')
-      }
+          Swal.fire('Oops...', 'Sorry your password is incorrect..', 'error')
+        }
 
-    else if (error.status == 403) {
+        else if (error.status == 403) {
 
-        Swal.fire('Oops...', 'Sorry your Email is incorrect..', 'error')
-      }
-
+          Swal.fire('Oops...', 'Sorry your Email is incorrect..', 'error')
+        }
         this.loading = false;
       });
   }
   showPassword(){
     // var pass = document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
-     var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
-     if(pass == "password"){
-        document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+    var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
+    if(pass == "password"){
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
     }
     else{
-       document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
     }
     // console.log("pass ==>" , pass);
     
