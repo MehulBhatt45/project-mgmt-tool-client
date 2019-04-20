@@ -175,7 +175,7 @@ import { Component, OnInit, ViewChild,
         
 
         dateSelected(event){
-          
+
           var date = moment(event).format('YYYY-MM-DD');
           console.log("event  of date ===>" , date);   
 
@@ -193,6 +193,9 @@ import { Component, OnInit, ViewChild,
             else{
 
               this.worktime = res;
+
+
+              console.log("worktime============-------",this.worktime);
 
               this.gate = [];
 
@@ -247,7 +250,7 @@ import { Component, OnInit, ViewChild,
               })
 
               this.attendenceByDate.push(res);
-              console.log("response()()()()()",this.logs);
+              console.log("logs{}{}{}==========-",this.logs);
 
               localStorage.setItem("attendenceByDateError",JSON.stringify(false));
               this.attedenceByDateError = false;
