@@ -574,9 +574,9 @@ export class ProjectDetailComponent implements OnInit {
 
 
 	saveTheData(task){
-
+		
 		this.loader = true;
-
+		
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
