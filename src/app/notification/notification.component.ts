@@ -50,7 +50,7 @@ export class NotificationComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log("appected leave " , this.acceptedLeave);
+		// console.log("appected leave " , this.acceptedLeave);
 		this.get();
 		this.getNotificationByUserId(this.currentUserId);
 	}
@@ -63,18 +63,13 @@ export class NotificationComponent implements OnInit {
 			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
 			// console.log("loginUser==========>",loginUser);
 			this.userNotification = res;
+			// console.log("data==============>",this.userNotification);
 			this.userNotification.sort(custom_sort);
 			this.userNotification.reverse();
 			var start = new Date();
 			
 			start.setTime(1532403882588);
 			console.log("plzzz avi jaje",this.userNotification);
-			// // console.log(this.currentUser[0].subject);
-			// console.log("title=========>",this.currentUser[0].title);
-			// console.log("current====>",this.currentUser);
-			// console.log("projectId==========>",this.currentUser[0].projectId._id);
-			// console.log("type======================>",this.currentUser[0].type);
-			
 		})
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

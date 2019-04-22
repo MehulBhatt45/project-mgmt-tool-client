@@ -172,24 +172,16 @@ getTaskOfDeveloper(data){
 
 }
 	getHHMMTime(difference){
-		// var milliseconds = ((difference % 1000) / 100),
-		// seconds = Math.floor((difference / 1000) % 60),
-		// minutes = Math.floor((difference / (1000 * 60)) % 60),
-		// hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-		// return hours + ":" + minutes + ":" + seconds ;
 		difference = difference.split("T");
 		difference = difference[1];
 		difference = difference.split(".");
 		difference = difference[0];
 		difference = difference.split(":");
 		var diff1 = difference[0];
-		// console.log('difference==========>',difference1);
 		var diff2 = difference[1];
-		// console.log(diff2);
+		
 		 difference = diff1 +":"+diff2;
-		// console.log('difference2============>',difference2);
 		return difference;
-		// return difference[0];
 
 	}
 }
