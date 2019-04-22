@@ -163,32 +163,6 @@
 					</div>
 				</div>
 			</li>
-			<!-- <li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '1'">
-				<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
-					<div class=" col-sm-2">
-						<div class="unread1 padding-5">
-							<div class="task_priority_highest">
-								<i class="far fa-circle" title="Highest"></i>
-								<span class="task_span">Task</span>
-							</div>
-						</div>
-					</div>
-					<div class="  col-sm-8">
-						<div class="content padding-5">
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-
-				<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
-					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-					</div>
-				</div>
-			</li> -->
 			<li class="card mt-1 leave" *ngIf = "data.type == 'leave'">
 				<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
 					<div class="padding-5 col-sm-2">
@@ -212,6 +186,7 @@
 					</div>
 				</div>
 			</li>
+
 			<li class="card mt-1 leave" *ngIf = "data.type == 'leaveAccepted'">
 				<div class="row">
 					<div class="padding-5 col-sm-2">
