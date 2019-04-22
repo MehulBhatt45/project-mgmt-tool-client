@@ -97,16 +97,16 @@
 						<div class=" row form-group col-12">
 							<button class="btn btn-default" (click)="images.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" formControlName="images" class="form-control" [(ngModel)]="newNotice.images" name="images" #images id="images"  (change)="changeFile($event, 'item')" hidden multiple accept="images/png, images/jpeg, images/jpg">
+								<input type="file" formControlName="images" class="form-control" name="images" #images id="images"  (change)="changeFile($event, 'item')" hidden multiple accept="images/png, images/jpeg, images/jpg">
 							</button>
 						</div>
-						<div class=" row form-group col-12">
-							<div *ngIf="singlenotice">
-								<div class="text-center notice_img" *ngFor="let image of singlenotice.images ; let i=index;">
+						<!-- <div class=" row form-group col-12"> -->
+							<div *ngIf="newNotice && newNotice.images.length>0">
+								<div class="text-center notice_img" *ngFor="let url of newNotice.images ; let i=index;">
 									<div class="avatar-image margin-auto">
-										<img  src="{{path}}{{image}}" alt="images" style="height: 150px; width: 150px;">
+										<img  src="{{path}}{{url}}" alt="images" style="height: 150px; width: 150px;">
 										<div class="delete_notice">
-											<a href="javascript:void(0);" (click)="deleteNoticeImage(image,i)"><i class="fas fa-trash fa-2x"></i></a>
+											<a href="javascript:void(0);" (click)="deleteNoticeImage(i)"><i class="fas fa-trash fa-2x"></i></a>
 										</div>
 									</div>
 								</div>
@@ -119,14 +119,14 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						<!-- </div> -->
 					</form>
 				</div>
 			</div>
 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(editNoticeForm.value, newNotice._id)">Save changes</button>
+				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice, newNotice._id)">Save changes</button>
 			</div>
 		</div>
 	</div>
