@@ -2,16 +2,16 @@
 	<div class="container-fluid">
 		<h1 class="text-center font-weight-bold text-black">Notice Board</h1>
 		<div class="row grid">
-			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
+			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice; let i = 'index = 0';">
 				<div class="card mb-3">
-					<div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}">
-						<a [attr.data-lightbox]="notice._id" href="{{path}}{{image}}" >
-							<img class="img-fluid" src="{{path}}{{image}}" onerror="this.src='../assets/man.png'">
+					<!-- <div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}"> -->
+						<a [attr.data-lightbox]="notice._id" href="{{path}}{{notice.images[i]}}">
+							<img class="img-fluid" src="{{path}}{{notice.images[i]}}" onerror="this.src='../assets/man.png'">
 							<a>
 								<div class="mask rgba-white-slight"></div>
 							</a>
 						</a>
-					</div>
+					<!-- </div> -->
 					<div class="card-body">
 						<div class="btn-group dropleft float-right">
 							<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
@@ -111,12 +111,12 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div *ngIf="url && url.length">
-							<div class="text-center selected-avatar" *ngFor="let u of url; let i=index;">
-								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-								<div class="delete-team-member">
-									<a href="javascript:void(0);" (click)="removeAvatar(u, i)"><i class="fas fa-trash fa-2x"></i></a>
+							<div *ngIf="url && url.length">
+								<div class="text-center selected-avatar" *ngFor="let u of url; let i=index;">
+									<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+									<div class="delete-team-member">
+										<a href="javascript:void(0);" (click)="removeAvatar(u, i)"><i class="fas fa-trash fa-2x"></i></a>
+									</div>
 								</div>
 							</div>
 						</div>

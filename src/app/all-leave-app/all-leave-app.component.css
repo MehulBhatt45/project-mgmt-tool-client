@@ -85,6 +85,8 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 	color: #fff;
     text-shadow: 1px 1px 2px #333;
     font-size: 18px;
+    padding: inherit;
+    color: #000;
 }
 .md-form {
 	position: relative;
