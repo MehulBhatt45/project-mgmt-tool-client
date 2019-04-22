@@ -80,6 +80,7 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
+  addTaskForm;
 
   
 
@@ -91,9 +92,11 @@ export class ChildComponent  implements OnInit{
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
-
+    this.getSprint(this.projectId);
+    this.getSprintWithoutComplete(this.projectId);
     this.getProject(this.projectId);
-    this.createEditTaskForm();  
+    this.createEditTaskForm();
+    this.createAddTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.func('reload');
@@ -103,8 +106,8 @@ export class ChildComponent  implements OnInit{
   ngOnInit(){
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
-    this.getSprint(this.projectId);
-    this.getSprintWithoutComplete(this.projectId);
+    // this.getSprint(this.projectId);
+    // this.getSprintWithoutComplete(this.projectId);
     
     window.addEventListener('beforeunload', function (e) {
       // Cancel the event
@@ -229,6 +232,19 @@ export class ChildComponent  implements OnInit{
       estimatedTime : new FormControl()
     })
   }
+  createAddTaskForm(){
+    this.addTaskForm = new FormGroup({
+      title : new FormControl('', Validators.required),
+      desc : new FormControl('', Validators.required),
+      assignTo : new FormControl('', Validators.required),
+      sprint :new FormControl('',Validators.required),
+      priority : new FormControl('', Validators.required),
+      dueDate : new FormControl('',Validators.required),
+      estimatedTime: new FormControl('',[Validators.required]),
+      status : new FormControl({value: 'to do', disabled: true}, Validators.required),
+      // files : new FormControl()
+    })
+  }
 
   getTitle(name){
     if(name){
@@ -330,6 +346,13 @@ export class ChildComponent  implements OnInit{
           this.commentUrl.push(e.target.result);
       }
     })
+  }
+  removeAvatar(file, index){
+    console.log(file, index);
+    this.url.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
   }
   removeCommentImage(file, index){
     console.log(file, index);
@@ -496,8 +519,7 @@ export class ChildComponent  implements OnInit{
         console.log("iddddd====>",this.projectId);
         this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
           this.projectTeam = res.team;
-
-          res.Teams.push(this.pro.pmanagerId); 
+          // res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           // this.projectTeam.sort(function(a, b){
@@ -661,11 +683,11 @@ export class ChildComponent  implements OnInit{
         if(sprint.status !== 'Complete'){
           console.log("sprint in if",sprint);
           this.newSprint.push(sprint);
+          console.log("res-=-=",this.newSprint);
         }
       })
     },(err:any)=>{
       console.log(err);
     });
-  }  
-
+  }
 }

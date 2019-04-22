@@ -1,6 +1,4 @@
-
 <!-- Task Details Card -->
-
 
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
@@ -239,12 +237,12 @@
 																<span class="break" innerHtml="{{i.content}}">
 																</span>
 																<div class="row">
-																<div *ngFor="let img of i.images" class="col-sm-4">
-																	<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
-																		<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
-																	</a>
+																	<div *ngFor="let img of i.images" class="col-sm-4">
+																		<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
+																			<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
+																		</a>
+																	</div>
 																</div>
-															</div>
 															</div>
 														</div>
 													</div>
