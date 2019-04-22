@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
 	loader: boolean = false;
 	sprints;
 	unreadNotification;
+	newNotification
 	newSprint = [];
 
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
@@ -465,7 +466,9 @@ export class HeaderComponent implements OnInit {
 		this._projectService.getUnreadNotification(this.currentUser._id).subscribe((res:any)=>{
 			// console.log("length=============>",res);
 			this.unreadNotification = res;
-			console.log("count======================>",this.unreadNotification.length);
+			this.newNotification = this.unreadNotification.length;
+			// this.unreadNotification.length = this.newNotification;
+			console.log("count======================>",this.newNotification);
 		})
 	}
 
