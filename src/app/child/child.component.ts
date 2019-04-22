@@ -152,42 +152,77 @@ export class ChildComponent  implements OnInit{
   }
 
 
+  
   getEmptyTracks(){
-    this.tracks = [
-    {
-      "title": "Todo",
-      "id": "to do",
-      "class":"primary",
-      "tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
-      ]
-    },
-    {
-      "title": "In Progress",
-      "id": "in progress",
-      "class":"info",
-      "tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Testing",
-      "id": "testing",
-      "class":"warning",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Done",
-      "id": "complete",
-      "class":"success",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-      ]
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
     }
-    ];
-    console.log("this tracks in child component =====>" , this.tracks);
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
+      
+    }
   }
 
   getPriorityClass(priority){
