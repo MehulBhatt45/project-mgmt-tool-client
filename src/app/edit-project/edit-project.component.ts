@@ -33,6 +33,10 @@ export class EditProjectComponent implements OnInit {
 	basMediaUrl = config.baseMediaUrl;
 	developers;
 	projectMngr;
+	files: Array<File> = [];
+	ProjectId;
+	url = '';
+
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
@@ -50,6 +54,8 @@ export class EditProjectComponent implements OnInit {
 			this.getProjectById(params.id);
 			this.getAllDevelopersNotInProject(params.id);
 			this.getAllProjectManagerNotInProject(params.id);
+			this.ProjectId = params.id;
+
 		})
 	}
 
@@ -178,7 +184,7 @@ export class EditProjectComponent implements OnInit {
 			this.availData['delete'] = [];
 			console.log("this.availData ================+>" ,  this.availData );
 			this.loader = false;
-			console.log("this . avail data ==========>" ,this.availData);
+			console.log("this . avail data ==========>" ,this.availData.avatar);
 			this.projectTeam = this.availData.Teams; 
 			this.projectMngrTeam = this.availData.pmanagerId;
 			localStorage.setItem('pmanagerteams', JSON.stringify(this.projectMngrTeam)); 
@@ -190,9 +196,13 @@ export class EditProjectComponent implements OnInit {
 
 	}
 	updateProject(updateForm){
-		updateForm.Teams = [];
-		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
-		console.log("Update Team============>",updateForm.Teams);
+		console.log(this.files,updateForm);
+		console.log(updateForm.Teams);
+		// console.log("avail data in update form ====>" , this.availData);
+		// console.log('updateForm==============>',updateForm);
+		let newTeams = [];
+		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
+		console.log("Update Team============>",newTeams);
 		updateForm.pmanagerId = [];
 		_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
 		updateForm.delete = [];
@@ -202,9 +212,29 @@ export class EditProjectComponent implements OnInit {
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
+		
+		var data = new FormData();
+		data.append('title', updateForm.title);
+		data.append('desc', updateForm.desc);
+		data.append('uniqueId', updateForm.uniqueId);
+		data.append('deadline', updateForm.deadline);
+		data.append('clientEmail' , updateForm.clientEmail);
+		data.append('clientFullName', updateForm.clientFullName);
+		data.append('clientDesignation', updateForm.clientDesignation);
+		data.append('clientContactNo', updateForm.clientContactNo);
+		_.forEach(updateForm.pmanagerId, t => { data.append('pmanagerId', t) });
+		_.forEach(newTeams, t => { data.append('Teams', t) });
+		data.append('delete', updateForm.delete);
+		data.append('add', updateForm.add);
+		data.append('avatar', updateForm.avatar);
+		if(this.files && this.files.length>0){
+			data.append('avatar', this.files[0]);  
+		}
+		console.log('data====================================>',data);
+		
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
-		this._projectService.updateProject(updateForm).subscribe((res:any)=>{
+		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 			console.log("response of update form  ====>" , res);
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
@@ -297,4 +327,51 @@ export class EditProjectComponent implements OnInit {
 		console.log(this.availData);
 		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
 	}
-}
+
+	// changeFile(event){
+		// 	console.log('event================>',event.target.files);
+		// 	// var projectId = params.id
+		// 	console.log("userId===============>",this.ProjectId);
+		// 	this.files = event.target.files;
+		// 	console.log("files===============>",this.files);
+		// 	this._projectService.changeAvatar(this.files, this.ProjectId).subscribe((res:any)=>{
+			// 		console.log("resss=======>",res);
+			// 		setTimeout(()=>{
+				// 			localStorage.setItem('currentUser', JSON.stringify(res));
+				// 		},1000);
+				// 	},error=>{
+					// 		console.log("errrorrrrrr====>",error);
+
+					// 	});   
+					// }
+					openmodal(){
+
+						$('#basicExampleModal').modal('show');
+					}
+
+
+					addIcon(value){
+						this.updateForm.value['avatar'] = value;
+						console.log(this.updateForm.value['avatar']);
+						this.url = this.basMediaUrl+this.updateForm.value['avatar'];
+						console.log(this.url);
+						$('#basicExampleModal').modal('hide');
+					}
+					onSelectFile(event) {
+						console.log("response from changefile",event.target.files);
+						this.files = event.target.files;
+						$('#basicExampleModal').modal('hide');
+						if (event.target.files && event.target.files[0]) {
+							var reader = new FileReader();
+							reader.readAsDataURL(event.target.files[0]); // read file as data url
+							reader.onload = (event:any) => { // called once readAsDataURL is completed
+								this.url = event.target.result;
+							}
+						}
+					}
+					removeAvatar(){
+						this.url = "";
+						if(this.files && this.files.length)
+							this.files = null;
+					}
+				}

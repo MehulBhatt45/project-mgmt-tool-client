@@ -202,9 +202,10 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
 	
-	updateProject(data){
+	updateProject(projectId,data){
 		console.log("updated Data in project servie" , data);
-		var projectId = data._id;
+		// console.log("updated File in project servie" , file);
+		// var projectId = data._id;
 		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -455,6 +456,17 @@ export class ProjectService {
 		console.log('data=====++++++>',data);
 		return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
 	}
+
+	changeAvatar(files: any, data){
+        console.log("file is=================>",files);
+        console.log("data is ============>",data);
+        let formdata = new FormData();
+        formdata.append("projectId",data);
+        formdata.append("avatar",files[0]);
+        console.log("file is===>>>",files[0]);
+        return this.http.put(config.baseApiUrl+"project/change-avatar/"+data,formdata);
+    }
+
 
 }
 
