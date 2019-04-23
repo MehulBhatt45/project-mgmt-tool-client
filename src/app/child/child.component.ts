@@ -80,8 +80,6 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
-  addTaskForm;
-
   
 
   
@@ -95,8 +93,7 @@ export class ChildComponent  implements OnInit{
     this.getSprint(this.projectId);
     this.getSprintWithoutComplete(this.projectId);
     this.getProject(this.projectId);
-    this.createEditTaskForm();
-    this.createAddTaskForm();  
+    this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.func('reload');
@@ -265,19 +262,6 @@ export class ChildComponent  implements OnInit{
       status : new FormControl({value: '', disabled: true}, Validators.required),
       files : new FormControl(),
       estimatedTime : new FormControl()
-    })
-  }
-  createAddTaskForm(){
-    this.addTaskForm = new FormGroup({
-      title : new FormControl('', Validators.required),
-      desc : new FormControl('', Validators.required),
-      assignTo : new FormControl('', Validators.required),
-      sprint :new FormControl('',Validators.required),
-      priority : new FormControl('', Validators.required),
-      dueDate : new FormControl('',Validators.required),
-      estimatedTime: new FormControl('',[Validators.required]),
-      status : new FormControl({value: 'to do', disabled: true}, Validators.required),
-      // files : new FormControl()
     })
   }
 
