@@ -212,6 +212,7 @@ export class EditProjectComponent implements OnInit {
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
+		console.log("project manager iddddd",updateForm._id);
 		
 		var data = new FormData();
 		data.append('title', updateForm.title);
