@@ -118,8 +118,8 @@ export class LeaveComponent implements OnInit {
 			var date1 = new Date(form.endingDate);
 			// console.log("staring date ===" , date2);
 			// console.log("ending date ===" , date1);
-			form['endingDate'] = date1;
-			form['startingDate'] = date2;
+			form['endingDate'] = $('#endDate').val();
+			form['startingDate'] = $('#startDate').val();
 			// console.log("staring date ...... ===" , date2);
 			// console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());

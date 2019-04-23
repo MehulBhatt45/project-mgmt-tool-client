@@ -53,6 +53,13 @@ export class LoginComponent implements OnInit {
     $(".toggle-password").click(function() {
       $(this).toggleClass("fa-eye fa-eye-slash");
     });
+
+    $('#modalForgotPasswordForm').click(function(){
+      $('.reset_form')[0].reset();
+    });
+    $('.modal-content').click(function(event){
+      event.stopPropagation();
+    });
   }
 
   // convenience getter for easy access to form fields
@@ -75,27 +82,33 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this._alertService.error(error);
-     if (error.status == 400) {
+        if (error.status == 400) {
+          Swal.fire({
+            type: 'info',
+            title: 'Oops...',
+            text: 'Wrong password. Try again or click Forgot password to reset it.',
+          })
 
-        Swal.fire('Oops...', 'Sorry your password is incorrect..', 'error')
-      }
+        }
 
-    else if (error.status == 403) {
+        else if (error.status == 403) {
 
-        Swal.fire('Oops...', 'Sorry your Email is incorrect..', 'error')
-      }
-
+          Swal.fire({
+            type: 'info',
+            text: 'Enter a valid email.',
+          })
+        }
         this.loading = false;
       });
   }
   showPassword(){
     // var pass = document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
-     var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
-     if(pass == "password"){
-        document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+    var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
+    if(pass == "password"){
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
     }
     else{
-       document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
     }
     // console.log("pass ==>" , pass);
     
@@ -114,12 +127,7 @@ export class LoginComponent implements OnInit {
       console.log("res-=-=",err);
       this.loader = false;
       // alert("email not found");
-      Swal.fire({
-        type: 'error',
-        title: 'Oops...',
-        text: 'Email not found!',
-        footer: ''
-      })
+      Swal.fire('Oops...', 'Sorry your Email is incorrect..', 'error')
     })    
   }
   

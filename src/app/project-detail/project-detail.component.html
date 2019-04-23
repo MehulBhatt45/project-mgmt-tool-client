@@ -9,12 +9,12 @@
 	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
 		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 		<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
-		<!-- <div class="md-form form-group col-2">
+		<div class="md-form form-group col-2">
 			<select [(ngModel)]="activeSprint._id"   class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
 				<option  *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 			</select>
 			
-		</div> -->
+		</div>
 		<div class="col-3">
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>

@@ -32,8 +32,8 @@
             </tr>
           </thead>
 
-          <tbody *ngFor="let task of tasks ">
-            <tr>
+          <tbody >
+            <tr *ngFor="let task of tasks ">
               <td>{{task.title}}</td>
               <td>{{task.uniqueId}}</td>
               <td>{{task.status}}</td>

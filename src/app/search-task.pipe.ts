@@ -70,7 +70,7 @@ export class SearchTaskPipe implements PipeTransform {
 
 				if(it.name){
 
-					if(it.name.toLowerCase().includes(searchText) ||  it.startingDate.toLowerCase().includes(searchText) ||
+					if(it.name.toLowerCase().includes(searchText) ||  it.leaveDuration.toLowerCase().includes(searchText) ||
 						it.typeOfLeave.toLowerCase().includes(searchText) )
 					{
 						console.log("it ==>" , it.name);

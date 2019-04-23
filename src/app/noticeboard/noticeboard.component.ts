@@ -21,16 +21,18 @@ export class NoticeboardComponent implements OnInit {
   allNotice:any;
   singlenotice:any;
   noticeImg:any;
-  newNotice;
   editNoticeForm;
   swal:any;
   expireon;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  files: any;
+  // files: any;
   url = [];
   commentUrl = [];
   path = config.baseMediaUrl;
   noticeid;
+  files:Array<File> = [];
+  i = 0;
+  newNotice = { title:'', desc:'', published: '', expireon: '', images: [] };
 
 
   ngOnInit() {
@@ -104,30 +106,34 @@ export class NoticeboardComponent implements OnInit {
     console.log("noticeId", noticeId);
     console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);
-    editNoticeForm.images = $("#images").val();
+    // editNoticeForm.images = $("#images").val();
     console.log("update Notice image =====>",editNoticeForm.images);
+    // var data:any;
+    // data = new FormData();
     let data = new FormData();
-    _.forOwn(editNoticeForm, function(value, key) {
-      data.append(key, value)
-    });
-    // data.append('title', editNoticeForm.title?editNoticeForm.title:"");
-    // data.append('desc', editNoticeForm.desc?editNoticeForm.desc:"");
-    // data.append('expireon', editNoticeForm.expireon?editNoticeForm.expireon:"");
-    // data.append('published', editNoticeForm.published?editNoticeForm.published:"");
+    // _.forOwn(editNoticeForm, function(value, key) {
+    //   data.append(key, value)
+    // });
+    data.append('title', editNoticeForm.title);
+    data.append('desc', editNoticeForm.desc);
+    data.append('expireon', editNoticeForm.expireon);
+    data.append('published', editNoticeForm.published);
+    data.append('images',editNoticeForm.images);
     if(this.files && this.files.length>0){
       for(var i=0;i<this.files.length;i++){
         data.append('images', this.files[i]);
       }
     }
-    if (this.files == null) {
-      this.files = editNoticeForm.images;
-      data.append('uploadfile', this.files[0]);
-    }
+    // if (this.files == null) {
+    //   this.files = editNoticeForm.images;
+    //   data.append('images', this.files[0]);
+    // }
     console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
       $('#editmodel').modal('hide');
       this.getAllNotice();
-      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
+      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000});
+      this.files = this.url = [];
     },err=>{
       console.log(err);
       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -168,14 +174,15 @@ export class NoticeboardComponent implements OnInit {
   changeFile(event, option){
     _.forEach(event.target.files, (file:any)=>{
       console.log(event.target.files);
-      this.files = event.target.files;
+      // this.files = event.target.files;
+      this.files.push(file);
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e:any) => {
         if(option == 'item')
           this.url.push(e.target.result);
-        if(option == 'image')
-          this.url.push(e.target.result);
+        // if(option == 'image')
+        //   this.url.push(e.target.result);
       }
     })  
   }
@@ -188,13 +195,14 @@ export class NoticeboardComponent implements OnInit {
 
   }
 
-  deleteNoticeImage(event, index){
-    console.log(event);
-    console.log(index);
-    this.noticeImg.splice(index , 1);
-    console.log(this.noticeImg);
-    if(this.noticeImg && this.singlenotice.length)
-      this.singlenotice.images.splice(_.findIndex(this.noticeImg, event), index);
+  deleteNoticeImage(index){
+    // console.log(event);
+    // console.log(index);
+    // this.noticeImg.splice(index , 1);
+    // console.log(this.noticeImg);
+    // if(this.noticeImg && this.singlenotice.length)
+    //   this.singlenotice.images.splice(_.findIndex(this.noticeImg, event), index);
+    this.newNotice.images.splice(index,1);
   }
 
 }

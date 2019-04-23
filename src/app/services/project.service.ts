@@ -445,7 +445,9 @@ export class ProjectService {
 		return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
 	}
 
-
+	getUnreadNotification(currentUserId){
+				return this.http.get(config.baseApiUrl+"sendNotification//get-unread-notification/" + currentUserId)
+	}
 
 	deleteSprint(sprintId){
 		console.log("sprint in service",sprintId);

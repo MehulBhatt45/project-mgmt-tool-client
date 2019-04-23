@@ -80,7 +80,6 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
-
   
 
   
@@ -91,7 +90,8 @@ export class ChildComponent  implements OnInit{
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
-
+    this.getSprint(this.projectId);
+    this.getSprintWithoutComplete(this.projectId);
     this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
@@ -103,8 +103,8 @@ export class ChildComponent  implements OnInit{
   ngOnInit(){
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
-    this.getSprint(this.projectId);
-    this.getSprintWithoutComplete(this.projectId);
+    // this.getSprint(this.projectId);
+    // this.getSprintWithoutComplete(this.projectId);
     
     window.addEventListener('beforeunload', function (e) {
       // Cancel the event
@@ -152,42 +152,77 @@ export class ChildComponent  implements OnInit{
   }
 
 
+  
   getEmptyTracks(){
-    this.tracks = [
-    {
-      "title": "Todo",
-      "id": "to do",
-      "class":"primary",
-      "tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
-      ]
-    },
-    {
-      "title": "In Progress",
-      "id": "in progress",
-      "class":"info",
-      "tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Testing",
-      "id": "testing",
-      "class":"warning",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Done",
-      "id": "complete",
-      "class":"success",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-      ]
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
     }
-    ];
-    console.log("this tracks in child component =====>" , this.tracks);
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
+      
+    }
   }
 
   getPriorityClass(priority){
@@ -331,6 +366,13 @@ export class ChildComponent  implements OnInit{
       }
     })
   }
+  removeAvatar(file, index){
+    console.log(file, index);
+    this.url.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
+  }
   removeCommentImage(file, index){
     console.log(file, index);
     this.commentUrl.splice(index, 1);
@@ -442,6 +484,7 @@ export class ChildComponent  implements OnInit{
 
 
   getHHMMTime(difference){
+    // console.log("ave che kai ke nai",difference);
     if(difference != '00:00'){
       difference = difference.split("T");
       difference = difference[1];
@@ -449,9 +492,11 @@ export class ChildComponent  implements OnInit{
       difference = difference[0];
       difference = difference.split(":");
       var diff1 = difference[0];
+      // console.log("ahi j zero mde che",diff1);
       var diff2 = difference[1];
      
       difference = diff1 +":"+diff2;
+      // console.log("fhuidsifgidif",difference);
       return difference;
     }
     return '00:00';
@@ -496,8 +541,7 @@ export class ChildComponent  implements OnInit{
         console.log("iddddd====>",this.projectId);
         this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
           this.projectTeam = res.team;
-
-          res.Teams.push(this.pro.pmanagerId); 
+          // res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           // this.projectTeam.sort(function(a, b){
@@ -661,11 +705,11 @@ export class ChildComponent  implements OnInit{
         if(sprint.status !== 'Complete'){
           console.log("sprint in if",sprint);
           this.newSprint.push(sprint);
+          console.log("res-=-=",this.newSprint);
         }
       })
     },(err:any)=>{
       console.log(err);
     });
-  }  
-
+  }
 }
