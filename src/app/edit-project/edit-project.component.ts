@@ -189,31 +189,31 @@ export class EditProjectComponent implements OnInit {
 		})
 
 	}
-	updateProject(updateForm){
-		updateForm.Teams = [];
-		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
-		console.log("Update Team============>",updateForm.Teams);
-		updateForm.pmanagerId = [];
-		_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
-		updateForm.delete = [];
-		_.forEach(this.availData.delete, t => { updateForm.delete.push(t._id) });
-		updateForm.add = [];
-		_.forEach(this.availData.add, t => {updateForm.add.push(t._id) });
-		updateForm.uniqueId = this.availData.uniqueId;
-		updateForm.avatar = this.availData.avatar;
-		updateForm._id = this.availData._id;
-		console.log("updateForm={}{}{}{}{}",updateForm);
-		console.log("avail data in update form ====>" , this.availData);
-		this._projectService.updateProject(updateForm).subscribe((res:any)=>{
-			this.loader = false;
-			console.log("response of update form  ====>" , res);
-			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
-			this.router.navigate(['./view-projects']);
-		},(err:any)=>{
-			console.log("error of update form  ====>" , err);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		})
-	}
+	// updateProject(updateForm){
+	// 	updateForm.Teams = [];
+	// 	_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
+	// 	console.log("Update Team============>",updateForm.Teams);
+	// 	updateForm.pmanagerId = [];
+	// 	_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
+	// 	updateForm.delete = [];
+	// 	_.forEach(this.availData.delete, t => { updateForm.delete.push(t._id) });
+	// 	updateForm.add = [];
+	// 	_.forEach(this.availData.add, t => {updateForm.add.push(t._id) });
+	// 	updateForm.uniqueId = this.availData.uniqueId;
+	// 	updateForm.avatar = this.availData.avatar;
+	// 	updateForm._id = this.availData._id;
+	// 	console.log("updateForm={}{}{}{}{}",updateForm);
+	// 	console.log("avail data in update form ====>" , this.availData);
+	// 	this._projectService.updateProject(updateForm).subscribe((res:any)=>{
+	// 		this.loader = false;
+	// 		console.log("response of update form  ====>" , res);
+	// 		Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
+	// 		this.router.navigate(['./view-projects']);
+	// 	},(err:any)=>{
+	// 		console.log("error of update form  ====>" , err);
+	// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
+	// 	})
+	// }
 	deleteProject(projectId){
 		console.log(projectId);
 		if(projectId.BugId.length>0 || projectId.IssueId.length>0 || projectId.taskId.length>0 || projectId.Teams.length>0){
