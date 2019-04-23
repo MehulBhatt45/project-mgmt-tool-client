@@ -282,7 +282,7 @@ export class ProjectService {
 	}
 
 	addTask(data){
-		console.log("hiiiiiiiiiii");
+		console.log("hiiiiiiiiiii",data);
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
