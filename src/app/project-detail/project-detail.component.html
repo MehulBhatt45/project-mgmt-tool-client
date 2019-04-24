@@ -91,7 +91,7 @@
 						<div class="row form-group col-12">
 							<button class="btn btn-default" (click)="fileUpload.click()">
 								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept=".png, .jpeg, .jpg">
 							</button>
 						</div>
 						<div *ngIf="newTask.images && newTask.images.length>0">

@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 	styleUrls: ['./add-notice.component.css']
 })
 export class AddNoticeComponent implements OnInit {
-	files:FileList;
+	// files:FileList;
+	files: Array<File> = [];
 	addForm:FormGroup;
 	url = [];
 	commentUrl = [];
@@ -71,15 +72,25 @@ export class AddNoticeComponent implements OnInit {
 	}
 
 	changeFile(event, option){
-		this.files = event.target.files;
+		// this.files = event.target.files;
 		_.forEach(event.target.files, (file:any)=>{
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'image')
-					this.url.push(e.target.result);
+			// console.log(file.type);
+			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+				this.files.push(file);
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = (e:any) => {
+					if(option == 'item')
+						this.url.push(e.target.result);
+					if(option == 'comment')
+						this.commentUrl.push(e.target.result);
+				}
+			}else {
+				Swal.fire({
+					title: 'Error',
+					text: "You can upload images only",
+					type: 'warning',
+				})
 			}
 		})
 	}
