@@ -36,6 +36,8 @@ export class EditProjectComponent implements OnInit {
 	files: Array<File> = [];
 	ProjectId;
 	url = '';
+	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
+	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
@@ -212,6 +214,7 @@ export class EditProjectComponent implements OnInit {
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
+		console.log("project manager iddddd",updateForm._id);
 		
 		var data = new FormData();
 		data.append('title', updateForm.title);
@@ -238,7 +241,12 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			console.log("response of update form  ====>" , res);
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
-			this.router.navigate(['./view-projects']);
+			this.url = '';
+			setTimeout(()=>{
+				this.availData = res;
+				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
+			},1000);
+			// this.router.navigate(['./edit-project/:id']);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -327,51 +335,34 @@ export class EditProjectComponent implements OnInit {
 		console.log(this.availData);
 		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
 	}
+	openmodal(){
 
-	// changeFile(event){
-		// 	console.log('event================>',event.target.files);
-		// 	// var projectId = params.id
-		// 	console.log("userId===============>",this.ProjectId);
-		// 	this.files = event.target.files;
-		// 	console.log("files===============>",this.files);
-		// 	this._projectService.changeAvatar(this.files, this.ProjectId).subscribe((res:any)=>{
-			// 		console.log("resss=======>",res);
-			// 		setTimeout(()=>{
-				// 			localStorage.setItem('currentUser', JSON.stringify(res));
-				// 		},1000);
-				// 	},error=>{
-					// 		console.log("errrorrrrrr====>",error);
-
-					// 	});   
-					// }
-					openmodal(){
-
-						$('#basicExampleModal').modal('show');
-					}
+		$('#basicExampleModal').modal('show');
+	}
 
 
-					addIcon(value){
-						this.updateForm.value['avatar'] = value;
-						console.log(this.updateForm.value['avatar']);
-						this.url = this.basMediaUrl+this.updateForm.value['avatar'];
-						console.log(this.url);
-						$('#basicExampleModal').modal('hide');
-					}
-					onSelectFile(event) {
-						console.log("response from changefile",event.target.files);
-						this.files = event.target.files;
-						$('#basicExampleModal').modal('hide');
-						if (event.target.files && event.target.files[0]) {
-							var reader = new FileReader();
-							reader.readAsDataURL(event.target.files[0]); // read file as data url
-							reader.onload = (event:any) => { // called once readAsDataURL is completed
-								this.url = event.target.result;
-							}
-						}
-					}
-					removeAvatar(){
-						this.url = "";
-						if(this.files && this.files.length)
-							this.files = null;
-					}
-				}
+	addIcon(value){
+		this.updateForm.value['avatar'] = value;
+		console.log(this.updateForm.value['avatar']);
+		this.url = this.basMediaUrl+this.updateForm.value['avatar'];
+		console.log(this.url);
+		$('#basicExampleModal').modal('hide');
+	}
+	onSelectFile(event) {
+		console.log("response from changefile",event.target.files);
+		this.files = event.target.files;
+		$('#basicExampleModal').modal('hide');
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event:any) => { // called once readAsDataURL is completed
+				this.url = event.target.result;
+			}
+		}
+	}
+	removeAvatar(){
+		this.url = "";
+		if(this.files && this.files.length)
+			this.files = null;
+	}
+}

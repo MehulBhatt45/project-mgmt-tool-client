@@ -138,6 +138,32 @@ export class TimeLogComponent implements OnInit {
 				}
 			})
 
+			_.map(this.projectTeam, (user)=>{
+				console.log(user);
+				user['tasks'] = [];
+				// user['totalTime'] = 0;
+				this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
+					this.getEmptyTracks();
+					this.project = res;
+					console.log("PROJECT=================>", this.project);
+					_.forEach(this.project , (task)=>{
+						if(task.status == 'complete' && task.assignTo && task.assignTo._id == user._id){
+							console.log("sorttask==()()()",task);
+							user.tasks.push(task);
+						}
+					})
+					console.log("TASK OF USERS============================================================>",user.tasks);
+					this.totalTime = 0;
+					_.forEach(user.tasks,(task)=>{
+						console.log('task========================>',this.getHHMMTime(task.timelog1.difference));
+						// this.totalTime = +this.totalTime + +this.getHHMMTime(task.timelog1.difference);
+						user['totalTime'] = this.addTimes(this.totalTime,this.getHHMMTime(task.timelog1.difference), user.name)
+						// console.log(this.totalTime);	
+
+					})
+				})
+			})
+
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
@@ -149,6 +175,7 @@ export class TimeLogComponent implements OnInit {
 		console.log('task Data=============>',data._id);
 		if(data !='all'){
 			this.tasks =[];
+			// this.totalTime = 0
 			console.log('this.tasks=========>',this.tasks);
 			this.displayTable = true;
 			this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
@@ -159,25 +186,20 @@ export class TimeLogComponent implements OnInit {
 				console.log("()()()() ======>",this.project);
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
-					// console.log("task ======>()" , task);
-					// _.forEach(this.tracks , (track)=>{
-						// console.log("track ======>()" , track);
-						// if(this.currentUser.userRole ='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == 'complete' && task.assignTo && task.assignTo._id == data._id){
-								console.log("sorttask==()()()",task);
-								this.tasks.push(task);
-							}
-							// })
-						})
-				console.log(this.tasks);
-				_.forEach(this.tasks,(task)=>{
-					console.log('task========================>',this.getHHMMTime(task.timelog1.difference));
-					// this.totalTime = +this.totalTime + +this.getHHMMTime(task.timelog1.difference);
-					this.addTimes(this.totalTime,this.getHHMMTime(task.timelog1.difference))
-					// console.log(this.totalTime);	
-					
+					if(task.status == 'complete' && task.assignTo && task.assignTo._id == data._id){
+						console.log("sorttask==()()()",task);
+						this.tasks.push(task);
+					}
 				})
-			})
+				console.log(this.tasks);
+				// _.forEach(this.tasks,(task)=>{
+					// 	console.log('task========================>',this.getHHMMTime(task.timelog1.difference));
+					// 	// this.totalTime = +this.totalTime + +this.getHHMMTime(task.timelog1.difference);
+					// 	this.addTimes(this.totalTime,this.getHHMMTime(task.timelog1.difference))
+					// 	// console.log(this.totalTime);	
+					
+					// })
+				})
 		}
 
 	}
@@ -198,7 +220,7 @@ export class TimeLogComponent implements OnInit {
 		}
 		return '00:00';
 	}
-	addTimes (startTime, endTime){
+	addTimes (startTime, endTime, userId?){
 		console.log(startTime,endTime);
 		var times = [ 0, 0 ];
 		var max = times.length;
@@ -219,7 +241,8 @@ export class TimeLogComponent implements OnInit {
 			minutes -= 60 * h
 		}
 		this.totalTime =  ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) ;
-		console.log(this.totalTime);
+		console.log(userId,"========================>",this.totalTime);
+		return this.totalTime;
 	}
 
 }

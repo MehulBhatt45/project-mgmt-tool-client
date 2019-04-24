@@ -74,12 +74,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.projectId = param.id;
 			this.getEmptyTracks();
 			this.getProject(this.projectId);
-			this.getSprint(this.projectId);
-			// this.filterTracks(this.activeSprint._id);
-			this.getSprintWithoutComplete(this.projectId);
 		});
 		this.createEditTaskForm();
-
 
 	}
 
@@ -214,7 +210,9 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 		});
 
-		
+		//this.filterTracks(this.activeSprint._id);
+		this.getSprint(this.projectId);
+		this.getSprintWithoutComplete(this.projectId);
 	}
 
 	filterTracks(sprintId){
@@ -519,7 +517,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
+		console.log("task ALL details",task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
 			data.append(key, value)
@@ -702,7 +700,6 @@ export class ProjectDetailComponent implements OnInit {
 			_.forEach(this.sprints, (sprint)=>{
 				if(sprint.status !== 'Complete'){
 					this.newSprint.push(sprint);
-					console.log("res-=-=",this.newSprint);
 				}
 			})
 		},(err:any)=>{
