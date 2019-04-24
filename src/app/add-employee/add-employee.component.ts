@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {LoginService} from '../services/login.service';
 declare var $ : any;
+import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -75,7 +76,27 @@ export class AddEmployeeComponent implements OnInit {
 				// } 	
 
 				addFile(event){
-					this.files.push(event.target.files[0]);
+					// this.files.push(event.target.files[0]);
+					_.forEach(event.target.files, (file:any)=>{
+						// console.log(file.type);
+						if(file.type == "application/pdf"){
+							this.files.push(file);
+							// var reader = new FileReader();
+							// reader.readAsDataURL(file);
+							// reader.onload = (e:any) => {
+							// 	if(option == 'item')
+							// 		this.url.push(e.target.result);
+							// 	if(option == 'comment')
+							// 		this.commentUrl.push(e.target.result);
+							// }
+						}else {
+							Swal.fire({
+								title: 'Error',
+								text: "You can upload pdf file only",
+								type: 'warning',
+							})
+						}
+					})
 				}
 
 

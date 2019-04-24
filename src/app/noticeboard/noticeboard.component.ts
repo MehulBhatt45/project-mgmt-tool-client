@@ -141,18 +141,43 @@ export class NoticeboardComponent implements OnInit {
   }
 
   uploadFile(e,noticeid){
-    console.log("file============>",e.target.files);
-    console.log("noticeid",noticeid);
-    this.files = e.target.files;
-    console.log("files===============>",this.files);
-    this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
-      console.log("resss=======>",res);
-      Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
-      this.getAllNotice();
-    },error=>{
-      console.log("errrorrrrrr====>",error);
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-    });  
+    // console.log("file============>",e.target.files);
+    // console.log("noticeid",noticeid);
+    // this.files = e.target.files;
+    // console.log("files===============>",this.files);
+    _.forEach(e.target.files, (file:any)=>{
+      // console.log(file.type);
+      if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+        this.files.push(file);
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e:any) => {
+            this.url.push(e.target.result);
+        }
+        this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
+          console.log("resss=======>",res);
+          Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
+          this.getAllNotice();
+        },error=>{
+          console.log("errrorrrrrr====>",error);
+          Swal.fire('Oops...', 'Something went wrong!', 'error')
+        });
+      }else {
+        Swal.fire({
+          title: 'Error',
+          text: "You can upload images only",
+          type: 'warning',
+        })
+      }
+    }) 
+    // this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
+    //   console.log("resss=======>",res);
+    //   Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
+    //   this.getAllNotice();
+    // },error=>{
+    //   console.log("errrorrrrrr====>",error);
+    //   Swal.fire('Oops...', 'Something went wrong!', 'error')
+    // });  
   }
 
   noticeById(noticeid){
@@ -172,19 +197,26 @@ export class NoticeboardComponent implements OnInit {
   }
 
   changeFile(event, option){
-    _.forEach(event.target.files, (file:any)=>{
-      console.log(event.target.files);
-      // this.files = event.target.files;
-      this.files.push(file);
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e:any) => {
-        if(option == 'item')
-          this.url.push(e.target.result);
-        // if(option == 'image')
-        //   this.url.push(e.target.result);
+   _.forEach(event.target.files, (file:any)=>{
+      // console.log(file.type);
+      if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+        this.files.push(file);
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e:any) => {
+          if(option == 'item')
+            this.url.push(e.target.result);
+          if(option == 'comment')
+            this.commentUrl.push(e.target.result);
+        }
+      }else {
+        Swal.fire({
+          title: 'Error',
+          text: "You can upload images only",
+          type: 'warning',
+        })
       }
-    })  
+    }) 
   }
   removeAvatar(file, index){
     console.log(file, index);

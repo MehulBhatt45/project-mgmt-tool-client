@@ -667,14 +667,22 @@ export class ProjectDetailComponent implements OnInit {
 
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
-			this.files.push(file);
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'comment')
-					this.commentUrl.push(e.target.result);
+			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+				this.files.push(file);
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = (e:any) => {
+					if(option == 'item')
+						this.url.push(e.target.result);
+					if(option == 'comment')
+						this.commentUrl.push(e.target.result);
+				}
+			}else {
+				Swal.fire({
+					title: 'Error',
+					text: "You can upload images only",
+					type: 'warning',
+				})
 			}
 		})
 	}
