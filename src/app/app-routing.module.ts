@@ -13,6 +13,7 @@ import { IssueComponent } from "./issue/issue.component";
 import { ProjectDetailComponent } from "./project-detail/project-detail.component";
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+// import { LogsComponent } from './logs/logs.component';
 import { FileListComponent } from './file-list/file-list.component';
 import {AddEmployeeComponent} from './add-employee/add-employee.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
@@ -122,11 +123,26 @@ const routes: Routes = [
 			path:'project-team/:id',
 			component:AllDeveloperComponent
 		},
+		// {
+		// 	path:'logs',
+		// 	pathMatch: "full",
+		// 	component: LogsComponent	
+		// },
+		// {
+		// 	path:"logs/:projectId",
+		// 	pathMatch: "full",
+		// 	component: LogsComponent
+		// },
 		{
 			path:'add-employee',
 			component:AddEmployeeComponent
 			
 		},
+		// {
+		// 	path:"logs/:projectId/:memberId",
+		// 	pathMatch: "full",
+		// 	component: LogsComponent
+		// },
 		{
 			path:'reset-password',
 			//pathMatch: "full",

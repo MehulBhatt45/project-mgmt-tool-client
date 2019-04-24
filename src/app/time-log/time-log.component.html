@@ -1,14 +1,43 @@
 <div class="row">
-  <div class="form-group col col-md-10 offset-1">
+  <!-- <div class="form-group col col-md-10 offset-1">
     <select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projectTeam" (change)="getTaskOfDeveloper(trackChangeDeveloperWise = $event.target.value)">
       <option value="all" selected>Team Members</option>
       <option *ngFor="let team of projectTeam"  value="{{team._id}}">{{team.name}}</option>
     </select>
-  </div>
+  </div> -->
+<div class="card card-cascade narrower col col-md-10 offset-1" >
+    <div class="view view-cascade gradient-card-header blue-gradient narrower py-3 mx-4 mb-3 px-3 d-flex justify-content-between align-items-center ">
+      <span class="white-text" style="font-size: 20px;">Team Members</span>   
+    </div> 
+    <div class="px-4">
+      <div class="table-wrapper">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th class="th-lg">
+                <span>Name</span>
+              </th>
+              <th class="th-lg">
+                <span>Total Time</span>
+              </th>
+            </tr>
+          </thead>
 
+          <tbody >
+            <tr *ngFor="let team of projectTeam">
+              <td style="cursor: pointer" (click)="getTaskOfDeveloper(team)">{{team.name}}</td>
+              <td>{{team.totalTime}}</td>  
+            </tr>  
+          </tbody>  
+        </table>
+      </div>
+
+    </div>
+
+  </div>
 </div>
 <div class="row">
-  <div class="card card-cascade narrower col col-md-10 offset-1" *ngIf="displayTable">
+  <div class="card card-cascade narrower col col-md-10 offset-1" *ngIf="displayTable" style="margin-top: 65px;">
     <div class="view view-cascade gradient-card-header blue-gradient narrower py-3 mx-4 mb-3 px-3 d-flex justify-content-between align-items-center ">
       <span class="white-text" style="font-size: 20px;">Task</span>   
     </div> 
@@ -37,7 +66,7 @@
               <td>{{task.title}}</td>
               <td>{{task.uniqueId}}</td>
               <td>{{task.status}}</td>
-              <td>{{getHHMMTime(task.timelog1.difference)}}</td>  
+              <td>{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}}</td>  
             </tr>  
           </tbody>  
         </table>
