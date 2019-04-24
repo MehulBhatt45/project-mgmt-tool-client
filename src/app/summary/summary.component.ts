@@ -228,7 +228,7 @@ export class SummaryComponent implements OnInit {
 				console.log("title{}{}{}{}",this.pro);
 
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					res.Teams.push(this.pro); 
+					// res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					console.log("projectTeam=-{}{}{}{}",this.projectTeam);

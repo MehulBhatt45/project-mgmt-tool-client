@@ -52,6 +52,9 @@ export class AllLeaveAppComponent implements OnInit {
   aLeave:boolean = false;
   rLeave:boolean = false;
   title;
+  approvedLeavesCount;
+  pendingLeavesCount;
+  pendingLeave = [];
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -89,6 +92,8 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavesByUserId();
     this.getAllDevelopers(Option);
     this.getAllLeaves();
+    this. getApprovedLeaves(Option);
+    this. getLeaves(Option);
 
     // this.getRejectedLeaves();
 
@@ -137,6 +142,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.approvedLeaves().subscribe(res=>{
                     console.log("approved leaves",res);
                     this.leaveApp = res;
+                    this.approvedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -200,48 +206,56 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
-                    $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
-                    console.log("data avo joye==========>",this.leaveApp);
-                    $('#statusAction').show();
-                    _.map(this.leaveApp, leave=>{
-                      _.forEach(this.developers, dev=>{
-                        if(leave.email == dev.email){
-                          leave['dev']= dev;
-                        }
+                    // _.forEach(this.leaveApp,(leave)=>{
+                    //       if(leave.status == "pending"){
+                    //           this.pendingLeave.push(leave);
+                    //         }
+                    //         console.log(this.pendingLeave);
+                    //     })
+                        this.pendingLeavesCount= this.leaveApp.length;
+                        // console.log(this.pendingLeave.length);
+                        $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
+                        console.log("data avo joye==========>",this.leaveApp);
+                        $('#statusAction').show();
+                        _.map(this.leaveApp, leave=>{
+                          _.forEach(this.developers, dev=>{
+                            if(leave.email == dev.email){
+                              leave['dev']= dev;
+                            }
 
-                      })
-                    })
-                    _.map(this.leaveApp,leave=>{
-                      var attach = [];
-                      _.map(leave.attechment,att=>{
-                        attach.push(this.path + att);
-                      })
-                      leave.attechment = attach;
-                    })
-                    console.log("leaveApp===>",this.leaveApp);
-                    _.forEach(this.leaveApp , (leave)=>{
-                      leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-                      leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-                    });
-
-                    this.allLeaves = this.leaveApp; 
-                    console.log("applicationsss==>",this.leaveApp);
-                    // _.forEach(this.leaveApp , (leave)=>{
-                      //   _.forEach(this.leavescount , (count)=>{
-                        //     if(count.typeOfLeave == leave.typeOfLeave){
-                          //       count.leavesTaken = count.leavesTaken + 1;
-                          //     }
-                          //   });
-                          // });
-
-                          // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                          // console.log("leaves count ====>" , this.leavescount);
-                          this.pLeave = true;
-                          this.aLeave = false;
-                          this.rLeave = false;
-                        },err=>{
-                          console.log(err);
+                          })
+                        })
+                        _.map(this.leaveApp,leave=>{
+                          var attach = [];
+                          _.map(leave.attechment,att=>{
+                            attach.push(this.path + att);
+                          })
+                          leave.attechment = attach;
+                        })
+                        console.log("leaveApp===>",this.leaveApp);
+                        _.forEach(this.leaveApp , (leave)=>{
+                          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+                          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
                         });
+
+                        this.allLeaves = this.leaveApp; 
+                        console.log("applicationsss==>",this.leaveApp);
+                        // _.forEach(this.leaveApp , (leave)=>{
+                          //   _.forEach(this.leavescount , (count)=>{
+                            //     if(count.typeOfLeave == leave.typeOfLeave){
+                              //       count.leavesTaken = count.leavesTaken + 1;
+                              //     }
+                              //   });
+                              // });
+
+                              // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+                              // console.log("leaves count ====>" , this.leavescount);
+                              this.pLeave = true;
+                              this.aLeave = false;
+                              this.rLeave = false;
+                            },err=>{
+                              console.log(err);
+                            });
                   this.loader=false;
                 },1000);
               }
