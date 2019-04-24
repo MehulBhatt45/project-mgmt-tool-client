@@ -27,44 +27,30 @@ h2{
 	font-size: 30px;
 	color: #000000;    
 }
-
 button{
 	display: table;
 	margin: 0px auto;
 	}
 .deletebtn{
-    float: right;
-    margin-top: 0px;    
-} 
-
-
-
+    float: right;   
+}
 .img_section{
   height: 60px;
   width: 60px;
-  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
 }
 .img_section img{
-  max-height: 100%;
-  max-width: 100%;
   min-height: 100%;
   min-width: 100%;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: cover;
-  margin: 0 auto;
 }
-
 .card.testimonial-card .card-body h5 {
     padding: 0 5px;
     font-size: 18px;
-}
-
-
-:host ::ng-deep .ng-dropdown-panel-items.scroll-host > div + div {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    background-color: #dfdff5;
 }
 
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
@@ -146,4 +132,16 @@ button{
 }
 .delete-team-member a i{
     color: red;
+}
+.icon_for_action span{
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  line-height: 16px;
+  display: table;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }

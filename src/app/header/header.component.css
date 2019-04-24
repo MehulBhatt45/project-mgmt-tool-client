@@ -1,5 +1,5 @@
 header{
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .side_fixed_nav{
   align-items: center;
@@ -133,25 +133,28 @@ ol.breadcrumb.hidden-lg-down li a {
   outline: none;
   cursor: pointer;
 }
+.profile_picture::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 .profile_picture{
-  height: 160px;
-  width: 160px;
-  border-radius: 255%;
+  height: 250px;
+  width: 100%;
   display: block;
-  margin: 30px auto;
   position: relative;
   z-index: 11;
   overflow: hidden;
-  padding: 4px;
-  /*  background-color: rgba(255,255,255,0.75);*/
-  background-color: #fff;
 }
 .profile_picture img{
   min-height: 100%;
   max-width: 100%;
   min-width: 100%;
   object-fit: cover;
-  border-radius: 86px;
+  filter : grayscale(0.9);
 }
 .user_profile_pic img{
   object-position: relative;
@@ -248,19 +251,14 @@ ol.breadcrumb.hidden-lg-down li a {
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
   color: #372e5f;
 }
-@media (max-width:1199px) {
-  header{
-    margin-bottom: 80px;
-  }  
+@media (max-width:1199px) { 
 }
 @media (max-width:575px) {
   .side_fixed_nav{
     display: none;
   }
-  header{
-    margin-bottom: 50px;
-  }
 }
+
 .selected-avatar{
   position: relative;
   width: 150px;
@@ -306,9 +304,36 @@ ol.breadcrumb.hidden-lg-down li a {
   margin: -12px 12px 0px 0px;
   background-color: #fff;
   opacity: 1;
-}*/
-.side-nav {
-    /*background-color: black !important;*/
-    background-image: url('../../assets/bg2.png');
-}
+  }*/
 
+  .navbar{
+    padding: 0 15px;
+  }
+  .navbar-dark{
+    background-color: #181123;
+  }
+  .user_name {  
+    position: absolute;
+    z-index: 11;
+    top: 200px;
+    color: white;
+    left: 10px;
+    text-shadow: 1px 9px 9px black;
+
+  }
+.side-nav .collapsible li a:hover {
+    background-color: #3998c5!important;
+    color: white!important;
+}
+ .side-nav .collapsible li a.active {
+    background-color: #3998c5!important;
+    color: white!important;
+}
+.side-nav .collapsible a{
+ font-size: 1rem!important;
+}
+#sidenav-overlay {
+    background-color: rgba(0, 0, 0, 0.5)!important;
+    z-index: 997;
+    will-change: opacity!important;
+}

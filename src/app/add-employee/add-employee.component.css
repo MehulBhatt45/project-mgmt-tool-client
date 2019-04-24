@@ -13,14 +13,16 @@
     color: #000000; */   
     margin:0;
 }
-.card-header {
-    background-color: #372e5f;
-    font-size: 32px;
+.card{
+    padding: 10px;
 }
 .file-field .btn{
-    line-height: normal!important;
-    background-color: #413670 !important;
-    margin : 0;
+    line-height: 2.5;
+    margin-bottom: 8px!important;
+    margin-left: 0px;
+}
+.custom-select{
+    margin-top: 10px;
 }
 
 @media (max-width: 1199px){

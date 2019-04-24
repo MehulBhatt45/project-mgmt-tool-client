@@ -1,3 +1,4 @@
+/*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
 /*****Loader Css Start*****/
 .loader {
   width: 150px;
@@ -9,6 +10,7 @@
   right: 0;
   margin: auto;
   z-index: 9999;
+  display: none;
 }
 /*.loader:before {
   position: fixed;
@@ -263,6 +265,57 @@ ul{
 body *{
   box-sizing: border-box;
 }
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
+
+/*changes here*/
+h3{
+    margin-bottom: 10px;
+}
+.card{
+  box-shadow: none;
+  border: 1px solid lightgray;
+}
+.btn-default{
+  background-color: #181123!important;
+}
+.btn-primary{
+  background-color: #3998c5!important;
+}
+.deep-purple-skin .btn-primary:hover, .deep-purple-skin .btn-primary:focus{
+    background-color: #3998c5 !important;
+}
+.deep-purple-skin .btn-default:hover, .deep-purple-skin .btn-default:focus{
+    background-color: #181123 !important;
+}
+.deep-purple{
+  background-color: #181123!important;
+}
+.card{
+  margin: auto;
+}
+.card-header-title{
+  color: #181123!important;
+  box-shadow: none!important;
+  width: 100%!important;
+}
+.md-form{
+  margin: 0px;
+}
+body.modal-open {
+    overflow: hidden!important;
+}
+
+/*change ends*/
+
+
+
+
+
 /*
 nav.navbar {
   border: none;
@@ -355,15 +408,6 @@ nav.navbar {
   font-family: 'Roboto Condensed', sans-serif !important;
 }
 
-.purple-gradient-2{
-  background: -webkit-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
-    background: -o-linear-gradient(50deg,#ff6ec4,#7873f5)!important;
-    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
-}
-
-.morpheus-den-gradient {
-    /*background-image: -webkit-gradient(linear,left bottom,right top,from(#30cfd0),to(#330867));*/
-    background-image: -webkit-linear-gradient(left,#30cfd0 0,#330867 100%);
-    background-image: -o-linear-gradient(bottom,#30cfd0 0,#330867 100%);
-    background-image: linear-gradient(to right,#330867 50%,#30cfd0 100%);
-}
+#sidenav-overlay {
+    background-color: rgba(150, 150, 150, 0.5)!important;
+  }

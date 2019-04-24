@@ -21,9 +21,6 @@ img{
 .fas, .far{
   margin-right: 10px !important;
 }
-.card-wrapper .card-up {
-  height: 45% !important;
-}
 .dropdown .dropdown-menu .dropdown-item:hover, .dropdown .dropdown-menu .dropdown-item:active {
  background-color: #F44336 !important;
 }
@@ -41,9 +38,6 @@ img{
   object-fit: cover;
   margin: 0 auto;
   }*/
-  .card{
-    padding: 10px;
-  }
   .action-icon{
     margin-top: -18px;
     float: left

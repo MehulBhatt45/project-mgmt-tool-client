@@ -2,42 +2,47 @@
 	<div class="container mt-6">
 		<div class="card panels-card">
 			<div class="container">
-				<h5 class="top-nav-collapse white-text text-center py-4 waves-green" style="margin-top: -22px;">
-					<strong><i class="fas fa-user prefix waves-green "></i>  Login</strong>
-				</h5>
+				<h4 class="card-header-title mt-2 text-center">
+					<span class="icon-login"></span> Login
+				</h4>
 				<div class="card-body box pt-1">
 					<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-						<div class="md-form">
-							<i class="fas fa-envelope prefix"></i>
-							<input mdbInput type="text" id="form2" autocomplete= 'false | random-string'  class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-							<label for="form2">Username</label>
-							<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-								<div *ngIf="f.email.errors.required">Username is required</div>
+						<div class="row">
+							<div class="col-md-1 margin-auto">
+								<span class="icon-envelope"></span>
+							</div>
+							<div class="col-md-11">
+								<div class="md-form">
+									<input mdbInput type="text" id="form2" autocomplete= 'false | random-string'  class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+									<label for="form2">Username</label>
+									<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+										<div *ngIf="f.email.errors.required">Username is required</div>
+									</div>
+								</div>
 							</div>
 						</div>
-
-
-
-				<!-- <div class="form-group">
-					<input class="form-control" type="text" formControlName="email" placeholder="Username" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-					<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-						<div *ngIf="f.email.errors.required">Username is required</div>
-					</div>
-				</div> -->
-				<div class="md-form">
-					<i class="fa fa-lock prefix"></i><!-- 
+						<div class="row">
+							<div class="col-md-1 margin-auto">
+								<span class="icon-lock "></span>
+							</div>
+							<div class="col-md-11">
+								<div class="md-form">
+					<!-- 
 					<input mdbInput type="password" autocomplete="new-password" id="FORMPASSWORD" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"  />
 					<label for="form2">Password</label>
 					<br>
 					<p (click)="showPassword()"><b>Show Password</b></p> -->
-
+					
 					<input mdbInput type="password" autocomplete="new-password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [type]="show ? 'text' : 'password'" />
-					<span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
+					<span toggle="#password-field" class="toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
 					<label for="form2">Password</label> 
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 						<div *ngIf="f.password.errors.required">Password is required</div>
 					</div>
 				</div>
+			</div>
+		</div>
+
 				<!-- <div class="form-group">
 					<input class="form-control" type="password" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
 					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -45,14 +50,10 @@
 					</div>
 				</div> -->
 				<div class="md-form">
-					<button [disabled]="loading" class="btn btn-default" mdbBtn color="primary" mdbWavesEffect>LOG IN</button>
+					<button [disabled]="loading" style="width: 100%; margin: 0px 0px 0px 15px;" class="btn btn-default" mdbBtn color="primary" mdbWavesEffect>LOG IN</button>
 					<!-- <a [routerLink]="['/register']" class="btn btn-link">Register</a> -->
 					<!-- <button [disabled]="loading" class="btn btn-default">Login</button> -->
-					
 					<img class="loading_img" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-
-					
-
 				</div>
 			</form>
 			<div class="modal fade" id="modalForgotPasswordForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -84,7 +85,7 @@
 			</div>
 		</div>
 		<div class="forgottxt">
-			<a href="" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password?</a>
+			<a href="#" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password?</a>
 		</div>
 	</div>
 </div>

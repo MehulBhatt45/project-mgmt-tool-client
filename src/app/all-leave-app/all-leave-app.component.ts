@@ -199,7 +199,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
-                    $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
+                    $('#pending').css('background-color','#e6a6318f');
                     console.log("data avo joye==========>",this.leaveApp);
                     $('#statusAction').show();
                     _.map(this.leaveApp, leave=>{
