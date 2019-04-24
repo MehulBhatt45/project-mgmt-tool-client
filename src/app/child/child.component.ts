@@ -80,8 +80,6 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
-  addTaskForm;
-
   
 
   
@@ -95,8 +93,7 @@ export class ChildComponent  implements OnInit{
     this.getSprint(this.projectId);
     this.getSprintWithoutComplete(this.projectId);
     this.getProject(this.projectId);
-    this.createEditTaskForm();
-    this.createAddTaskForm();  
+    this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { 
         this.func('reload');
@@ -155,42 +152,77 @@ export class ChildComponent  implements OnInit{
   }
 
 
+  
   getEmptyTracks(){
-    this.tracks = [
-    {
-      "title": "Todo",
-      "id": "to do",
-      "class":"primary",
-      "tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
-      ]
-    },
-    {
-      "title": "In Progress",
-      "id": "in progress",
-      "class":"info",
-      "tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Testing",
-      "id": "testing",
-      "class":"warning",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Done",
-      "id": "complete",
-      "class":"success",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-      ]
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
     }
-    ];
-    console.log("this tracks in child component =====>" , this.tracks);
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
+      
+    }
   }
 
   getPriorityClass(priority){
@@ -230,19 +262,6 @@ export class ChildComponent  implements OnInit{
       status : new FormControl({value: '', disabled: true}, Validators.required),
       files : new FormControl(),
       estimatedTime : new FormControl()
-    })
-  }
-  createAddTaskForm(){
-    this.addTaskForm = new FormGroup({
-      title : new FormControl('', Validators.required),
-      desc : new FormControl('', Validators.required),
-      assignTo : new FormControl('', Validators.required),
-      sprint :new FormControl('',Validators.required),
-      priority : new FormControl('', Validators.required),
-      dueDate : new FormControl('',Validators.required),
-      estimatedTime: new FormControl('',[Validators.required]),
-      status : new FormControl({value: 'to do', disabled: true}, Validators.required),
-      // files : new FormControl()
     })
   }
 
@@ -556,10 +575,11 @@ export class ChildComponent  implements OnInit{
           _.forEach(this.tracks , (track)=>{
             //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id&& task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
             }else{
+              console.log("sprint module",task.sprint);
               if(task.status == track.id && task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
@@ -575,51 +595,6 @@ export class ChildComponent  implements OnInit{
       })
     },1000);
 
-  }
-
-  saveTheData(task){
-    this.loader = true;
-    console.log("projectId=========>",this.pro._id);
-    console.log(task);
-    task['projectId']= this.pro._id;
-    task.priority = Number(task.priority); 
-    task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-    task.startDate = $("#startDate").val();
-    task.estimatedTime = $("#estimatedTime").val();
-    console.log("estimated time=====>",task.estimatedTime);
-    task.images = $("#images").val();
-    console.log("images====>",task.images);
-    console.log(task.dueDate);
-    task.dueDate = moment().add(task.dueDate,'days').toString();
-    task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-    console.log(task);
-    let data = new FormData();
-    _.forOwn(task, function(value, key) {
-      data.append(key, value)
-    });
-    if(this.files.length>0){
-      for(var i=0;i<this.files.length;i++){
-        data.append('fileUpload', this.files[i]);  
-      }
-    }
-    this._projectService.addTask(data).subscribe((res:any)=>{
-      console.log("response task***++",res);
-      Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-      this.getProject(res.projectId);
-      $('#save_changes').attr("disabled", false);
-      $('#refresh_icon').css('display','none');
-      $('#itemManipulationModel').modal('hide');
-      this.newTask = this.getEmptyTask();
-      this.editTaskForm.reset();
-      this.files = this.url = [];
-      // this.assignTo.reset();
-      this.loader = false;
-      this.func('load');
-    },err=>{
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-      //$('#alert').css('display','block');
-      console.log("error========>",err);
-    });
   }
 
   getSprint(projectId){

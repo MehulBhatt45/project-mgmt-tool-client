@@ -26,7 +26,9 @@ import {MatCardModule} from '@angular/material/card';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
-import { LogsComponent } from './logs/logs.component';
+
+// import { LogsComponent } from './logs/logs.component';
+
 import { FileListComponent } from './file-list/file-list.component';
 //import { DndModule } from 'ngx-drag-drop';
 import { NgxEditorModule } from 'ngx-editor';
@@ -93,7 +95,7 @@ import { TimeLogComponent } from './time-log/time-log.component';
     ProjectDetailComponent,
     HomeComponent,
     RegisterComponent,
-    LogsComponent,
+    // LogsComponent,
     FileListComponent,
     TimeAgoPipe,
     UpdateUserComponent,

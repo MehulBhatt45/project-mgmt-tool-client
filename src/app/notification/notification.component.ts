@@ -63,7 +63,6 @@ export class NotificationComponent implements OnInit {
 			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
 			// console.log("loginUser==========>",loginUser);
 			this.userNotification = res;
-			// console.log("data==============>",this.userNotification);
 			this.userNotification.sort(custom_sort);
 			this.userNotification.reverse();
 			var start = new Date();
