@@ -5,12 +5,12 @@
 				<h2>Reset Password</h2>
 				<form [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword();form.reset()" #form="ngForm" ngNativeValidate>
 					<div class="md-form mb-3">
-						<i class="fas fa-envelope prefix grey-text"></i>
+						<span class="icon-envelope prefix grey-text"></span>
 						<input type="password" id="password" class="form-control" formControlName="password" required="required">
 						<label for="password">password</label>
 					</div>
 					<div class="md-form mb-3">
-						<i class="fas fa-envelope prefix grey-text"></i>
+						<span class="icon-envelope prefix grey-text"></span>
 						<input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" required="required">
 						<label for="confirmPassword">confirmPassword</label>
 					</div>

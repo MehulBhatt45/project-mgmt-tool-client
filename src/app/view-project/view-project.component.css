@@ -223,7 +223,7 @@ ul.project-avatar li:hover {
     font-size: 20px;  
 }
 
-span.badge.badge-pill.z-depth-0.badge-dark {
+span.badge.badge-pill.badge-dark {
     margin: 0 5px;
     vertical-align: text-bottom;
 }
@@ -352,8 +352,7 @@ a.btn-floating.btn-action i{
 .summary{
     position: fixed;
     display: none;
-    z-index: 999;
-    /*background-image: linear-gradient(gray,#31c8cc);*/
+     z-index: 999;
     background-color: #fff;
     height: 300px;
     width: 300px;

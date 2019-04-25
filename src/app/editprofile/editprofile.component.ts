@@ -49,7 +49,7 @@ export class EditprofileComponent implements OnInit {
 	}
 
 	updateProfile(editEmployeeForm){
-		if(this.currentUser.userRole == "admin"){
+		if(this.currentUser.userRole == "admin" || this.currentUser.userRole == "projectManager"){
 
 			console.log(this.files);
 			console.log("btn tapped");

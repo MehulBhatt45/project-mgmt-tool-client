@@ -54,6 +54,7 @@ export class AllLeaveAppComponent implements OnInit {
   title;
   approvedLeavesCount;
   pendingLeavesCount;
+  rejectedLeavesCount;
   pendingLeave = [];
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
@@ -93,6 +94,7 @@ export class AllLeaveAppComponent implements OnInit {
     this.getAllDevelopers(Option);
     this.getAllLeaves();
     this. getApprovedLeaves(Option);
+    this.getRejectedLeaves(Option);
     this. getLeaves(Option);
 
     // this.getRejectedLeaves();
@@ -175,6 +177,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.rejectedLeaves().subscribe(res=>{
                     console.log("rejected leaves",res);
                     this.leaveApp = res;
+                    this.rejectedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -206,56 +209,40 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
-                    // _.forEach(this.leaveApp,(leave)=>{
-                    //       if(leave.status == "pending"){
-                    //           this.pendingLeave.push(leave);
-                    //         }
-                    //         console.log(this.pendingLeave);
-                    //     })
-                        this.pendingLeavesCount= this.leaveApp.length;
-                        // console.log(this.pendingLeave.length);
-                        $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
-                        console.log("data avo joye==========>",this.leaveApp);
-                        $('#statusAction').show();
-                        _.map(this.leaveApp, leave=>{
-                          _.forEach(this.developers, dev=>{
-                            if(leave.email == dev.email){
-                              leave['dev']= dev;
-                            }
+                    this.pendingLeavesCount= this.leaveApp.length;
+                    // console.log(this.pendingLeave.length);
+                    $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
+                    console.log("data avo joye==========>",this.leaveApp);
+                    $('#statusAction').show();
+                    _.map(this.leaveApp, leave=>{
+                      _.forEach(this.developers, dev=>{
+                        if(leave.email == dev.email){
+                          leave['dev']= dev;
+                        }
 
-                          })
-                        })
-                        _.map(this.leaveApp,leave=>{
-                          var attach = [];
-                          _.map(leave.attechment,att=>{
-                            attach.push(this.path + att);
-                          })
-                          leave.attechment = attach;
-                        })
-                        console.log("leaveApp===>",this.leaveApp);
-                        _.forEach(this.leaveApp , (leave)=>{
-                          leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-                          leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-                        });
+                      })
+                    })
+                    _.map(this.leaveApp,leave=>{
+                      var attach = [];
+                      _.map(leave.attechment,att=>{
+                        attach.push(this.path + att);
+                      })
+                      leave.attechment = attach;
+                    })
+                    console.log("leaveApp===>",this.leaveApp);
+                    _.forEach(this.leaveApp , (leave)=>{
+                      leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+                      leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+                    });
 
-                        this.allLeaves = this.leaveApp; 
-                        console.log("applicationsss==>",this.leaveApp);
-                        // _.forEach(this.leaveApp , (leave)=>{
-                          //   _.forEach(this.leavescount , (count)=>{
-                            //     if(count.typeOfLeave == leave.typeOfLeave){
-                              //       count.leavesTaken = count.leavesTaken + 1;
-                              //     }
-                              //   });
-                              // });
-
-                              // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                              // console.log("leaves count ====>" , this.leavescount);
-                              this.pLeave = true;
-                              this.aLeave = false;
-                              this.rLeave = false;
-                            },err=>{
-                              console.log(err);
-                            });
+                    this.allLeaves = this.leaveApp; 
+                    console.log("applicationsss==>",this.leaveApp)
+                    this.pLeave = true;
+                    this.aLeave = false;
+                    this.rLeave = false;
+                  },err=>{
+                    console.log(err);
+                  });
                   this.loader=false;
                 },1000);
               }
@@ -434,7 +421,7 @@ export class AllLeaveAppComponent implements OnInit {
               leaveAccepted(req){
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
-                console.log("reeeeeeee",req._id);
+                console.log("reeeeeeee",req);
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
@@ -448,15 +435,15 @@ export class AllLeaveAppComponent implements OnInit {
                     var body;
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "approved";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("reqest of leavesssssssssssssssssss ========>" , req);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Approve!',
                         'Your Leave has been Approve.',
@@ -496,7 +483,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("rejected",this.leaveApp);
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "rejected";
                       }
@@ -504,7 +491,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("req ========>" , req.email);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Rejected!',
                         'Your Leave has been Rejected.',

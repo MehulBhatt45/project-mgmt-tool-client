@@ -25,7 +25,7 @@ export class SearchTaskPipe implements PipeTransform {
 
 			// if(it.assignTo.name){
 
-				if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText))
+				if(it.title.toLowerCase().includes(searchText) || it.assignTo.name.toLowerCase().includes(searchText)  || it.uniqueId.toLowerCase().includes(searchText) || it.desc.toLowerCase().includes(searchText))
 				{
 					return it;
 					// }
@@ -67,12 +67,11 @@ export class SearchTaskPipe implements PipeTransform {
 			searchText = searchText.toLowerCase();
 			console.log("Search pipe items = ",items);
 			leave = items[0].filter( it => {
+				// console.log("ITRETED LOOP==============>", it);
 
 				if(it.name){
 
-					if(it.name.toLowerCase().includes(searchText) ||  it.leaveDuration.toLowerCase().includes(searchText) ||
-						it.typeOfLeave.toLowerCase().includes(searchText) )
-					{
+					if(it.name.toLowerCase().includes(searchText) || it.typeOfLeave.toLowerCase().includes(searchText) ){
 						console.log("it ==>" , it.name);
 
 						return it;
