@@ -49,7 +49,7 @@ export class EditprofileComponent implements OnInit {
 	}
 
 	updateProfile(editEmployeeForm){
-		if(this.currentUser.userRole == "admin"){
+		if(this.currentUser.userRole == "admin" || this.currentUser.userRole == "projectManager"){
 
 			console.log(this.files);
 			console.log("btn tapped");
@@ -129,6 +129,9 @@ export class EditprofileComponent implements OnInit {
 				this.editEmployeeForm.controls['phone'].enable();
 				this.editEmployeeForm.controls['experience'].enable();
 				this.editEmployeeForm.controls['cv'].enable();
+				this.editEmployeeForm.controls['userRole'].enable();
+				this.editEmployeeForm.controls['joiningDate'].enable();
+			
 			}
 			else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
 				this.editEmployeeForm.controls['userRole'].disable();

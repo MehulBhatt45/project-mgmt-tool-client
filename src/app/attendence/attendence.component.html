@@ -1,3 +1,4 @@
+
 <div class="loader" *ngIf="loader">
 	<span></span>
 	<span></span>
@@ -13,32 +14,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="row">
-		<div class="header">
-			<h1>Attendence Table</h1>
-		</div>
-	</div> -->
-	<!-- <div class="row">
-		<div class="col-md-6">
-			<button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button>
-		</div>
-		<div class="col-md-6">
-			<button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button>
-		</div>
-	</div> -->
-	<!-- <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-	</mwl-demo-utils-calendar-header> -->
-
-	<!-- <div class="alert alert-info">
-		Click on a day on the view.
-		<strong *ngIf="dateSelected"
-		>You clicked on this day: {{ dateSelected | date:'medium' }}</strong
-		>
-		<strong *ngIf="clickedColumn != null"
-		>You clicked on this column: {{ clickedColumn }}</strong
-		>
-	</div> -->
-
 	<div [ngSwitch]="view">
 		<mwl-calendar-month-view
 		*ngSwitchCase="'month'"
@@ -196,8 +171,6 @@
 				</table>
 			</div>
 		</div>
-
-		
 	</div>
 	<div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
 
@@ -277,116 +250,3 @@
 
 	</div>
 </div>
-
-<!-- <div class="row">
-	<div class="col-md-6">
-		<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-			<thead>
-				<tr>
-
-					<th scope="col"><i class="fas fa-user"></i> Present Developer</th>
-					<th scope="col">Check In</th>
-					<th scope="col">Check Out</th>
-
-
-				</tr>
-
-			</thead>
-			<tbody>
-				<tr *ngFor="let user of presentuser,let i=index">
-					<td>{{user.UserName}}</td>
-					<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
-					<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
-
-					
-				</tr>
-			</tbody>
-
-		</table>
-	</div>
-	<div class="col-md-6">
-		<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-			<thead>
-				<tr>
-					
-					<th scope="col"><i class="far fa-clock"></i> Work Time</th>
-
-
-					<th scope="col">Sign</th>
-
-
-				</tr>
-
-			</thead>
-			<tbody>
-				<tr *ngFor="let user of alldiff">
-					
-					<td>{{user}}</td>
-
-					<td><i class="fas fa-check"></i></td>
-					
-				</tr>
-			</tbody>
-
-		</table>
-	</div>
-</div>
-
-<div class="row">
-	<table class="table table-bordered" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
-		<thead>
-			<tr>
-
-				<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
-				
-				
-
-				<th scope="col">Sign</th>
-
-
-			</tr>
-
-		</thead>
-		<tbody>
-			<tr *ngFor="let i of missing">
-				<td>{{i}}</td>
-				
-
-				<td><i class="fas fa-times"></i></td>
-				
-			</tr>
-		</tbody>
-
-	</table>
-</div>
-
--->
-
-
-	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="md-form">
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="md-form">
-            <textarea type="text" id="message-text" class="form-control md-textarea" rows="3"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
-    </div>
-  </div>
-</div> -->

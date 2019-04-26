@@ -51,8 +51,8 @@ export class HeaderComponent implements OnInit {
 	unreadNotification;
 	newNotification
 	newSprint = [];
-
-	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
+	
+		constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -537,4 +537,5 @@ export class HeaderComponent implements OnInit {
 		// this.task.priority = null;
 		// this.newTask.priority = null;
 	}
+	
 }

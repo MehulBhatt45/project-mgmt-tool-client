@@ -166,9 +166,6 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
-
-			// localStorage.setItem("teams" , JSON.stringify(this.availData));
-			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;

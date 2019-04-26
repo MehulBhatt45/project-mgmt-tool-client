@@ -197,7 +197,6 @@ export class SummaryComponent implements OnInit {
 
 	filterTracks(sprintId){ 
 		this.getEmptyTracks();
-
 		this.selectedSprint = sprintId;
 		this.currentsprintId = sprintId;
 		console.log("sprintId",this.currentsprintId);
@@ -319,268 +318,230 @@ export class SummaryComponent implements OnInit {
 			}
 		});
 	}
-	// getProject(id){
-		// 	this._projectService.getProjectById(id).subscribe((res:any)=>{
-			// 		console.log(res);
-			// 		this.pro=res;
-			// 	},(err:any)=>{
-				// 		console.log("err of team============>"  ,err);
-				// 	});
-				// }
-				// getTeamByProjectId(id){
-					// 	this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-						// 		res.Teams.push(this.pro); 
-						// 		console.log("response of team============>"  ,res.Teams);
-						// 		this.projectTeam = res.Teams;
-						// 		console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-						// 		this.projectTeam.sort(function(a, b){
-							// 			if (a.name && b.name) {
-								// 				var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-								// 				if (nameA < nameB) 
-								// 					return -1 
-								// 				if (nameA > nameB)
-								// 					return 1
-								// 				return 0 
-								// 				this.projectTeam.push
-								// 			}
-								// 		})
-								// 	},(err:any)=>{
-									// 	});
-									// }
-									// getTaskbyProject(projectId){
-										// 	this._projectService.getTaskById(projectId).subscribe((res:any)=>{
-											// 		console.log("all response ======>" , res);
-											// 		this.getEmptyTracks();
-											// 		this.project = res;
-											// 		console.log("PROJECT=================>", this.project);
-											// 	},err=>{
-												// 		console.log(err);
-												// 	})	
-												// }
+	
+	getCompletedTask(status){
+		var sprint = this.selectedSprint;
+		return _.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == status) return o }).length;
+	}
 
-												getCompletedTask(status){
-													var sprint = this.selectedSprint;
-													return _.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == status) return o }).length;
-												}
+	getTaskCountEachTrack(tracks){
+		var sprint = this.selectedSprint;
+		var count1 = [];
+		_.forEach(tracks,(track)=>{
+			count1.push(_.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == track.id) return o }).length);
+		});
+		console.log("count1---------==========",count1);
+		return count1;
+	}
 
-												getTaskCountEachTrack(tracks){
-													var sprint = this.selectedSprint;
-													var count1 = [];
-													_.forEach(tracks,(track)=>{
-														count1.push(_.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == track.id) return o }).length);
-													});
-													console.log("count1---------==========",count1);
-													return count1;
-												}
+	getTask(){
+		var sprint = this.selectedSprint;
+		return _.filter(this.project,function(o) { if (o.sprint._id == sprint) return o }).length;
+	}
 
-												getTask(){
-													var sprint = this.selectedSprint;
-													return _.filter(this.project,function(o) { if (o.sprint._id == sprint) return o }).length;
-												}
+	getTaskPriority(priority,tracks){
+		var sprint = this.selectedSprint;
+		var count = [];
+		_.forEach(tracks, track=>{
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.sprint._id == sprint) return o }).length);
+		});
+		console.log("cnt=-=-===============",count);
+		return count;
+	}
 
-												getTaskPriority(priority,tracks){
-													var sprint = this.selectedSprint;
-													var count = [];
-													_.forEach(tracks, track=>{
-														count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.sprint._id == sprint) return o }).length);
-													});
-													console.log("cnt=-=-===============",count);
-													return count;
-												}
+	getProject1(id){
+		this.loader = true;
+		setTimeout(()=> {
+			this._projectService.getProjectById(id).subscribe((res:any)=>{
 
-												getProject1(id){
-													this.loader = true;
-													setTimeout(()=> {
-														this._projectService.getProjectById(id).subscribe((res:any)=>{
+				console.log("id-=-=-=-()()()",id);
+				this.pro=res;
+				console.log("title{}{}{}{}",this.pro);
 
-															console.log("id-=-=-=-()()()",id);
-															this.pro=res;
-															console.log("title{}{}{}{}",this.pro);
+				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+					res.Teams.push(this.pro); 
+					console.log("response of team============>"  ,res.Teams);
+					this.projectTeam = res.Teams;
+					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
+					this.projectTeam.sort(function(a, b){
+						if (a.name && b.name) {
+							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+							if (nameA < nameB) 
+								return -1 
+							if (nameA > nameB)
+								return 1
+							return 0 
+							this.projectTeam.push
+						}
 
-															this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-																res.Teams.push(this.pro); 
-																console.log("response of team============>"  ,res.Teams);
-																this.projectTeam = res.Teams;
-																console.log("projectTeam=-{}{}{}{}",this.projectTeam);
-																this.projectTeam.sort(function(a, b){
-																	if (a.name && b.name) {
-																		var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-																		if (nameA < nameB) 
-																			return -1 
-																		if (nameA > nameB)
-																			return 1
-																		return 0 
-																		this.projectTeam.push
-																	}
+					})
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
+			},(err:any)=>{
+				console.log("err of project============>"  ,err);
+			});
 
-																})
-															},(err:any)=>{
-																console.log("err of team============>"  ,err);
-															});
-														},(err:any)=>{
-															console.log("err of project============>"  ,err);
-														});
+			this._projectService.getTaskById(id).subscribe((res:any)=>{123412
+				console.log("id{}{}{}===",id);
+				console.log("all response()()() ======>",res);
+				this.getEmptyTracks();
+				this.project = res;
+				this.pror = res;
+				console.log("()()()() ======>",this.pror);
+				this.project.sort(custom_sort);
+				this.project.reverse();
+				console.log("PROJECT=================>", this.project);
+				_.forEach(this.project , (task)=>{
+					// console.log("task ======>()" , task);
+					_.forEach(this.tracks , (track)=>{
+						// console.log("track ======>()" , track);
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+								console.log("sorttask==()()()",task);
+								track.tasks.push(task);
+							}
+						}else{
+							if(task.status == track.id){
+								track.tasks.push(task);
+							}
+						}
+					})
+				})
+				this.loader = false;
+				setTimeout(()=>{
+					console.log("==================================TimeOUT===========================================");
+					var completedTask=this.getCompletedTask1("complete");
+					console.log("completed{{}}___+++",completedTask);
 
-														this._projectService.getTaskById(id).subscribe((res:any)=>{123412
-															console.log("id{}{}{}===",id);
-															console.log("all response()()() ======>",res);
-															this.getEmptyTracks();
-															this.project = res;
-															this.pror = res;
-															console.log("()()()() ======>",this.pror);
-															this.project.sort(custom_sort);
-															this.project.reverse();
-															console.log("PROJECT=================>", this.project);
-															_.forEach(this.project , (task)=>{
-																// console.log("task ======>()" , task);
-																_.forEach(this.tracks , (track)=>{
-																	// console.log("track ======>()" , track);
-																	if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-																		if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
-																			console.log("sorttask==()()()",task);
-																			track.tasks.push(task);
-																		}
-																	}else{
-																		if(task.status == track.id){
-																			track.tasks.push(task);
-																		}
-																	}
-																})
-															})
-															this.loader = false;
-															setTimeout(()=>{
-																console.log("==================================TimeOUT===========================================");
-																var completedTask=this.getCompletedTask1("complete");
-																console.log("completed{{}}___+++",completedTask);
+					var projectLength=this.project.length;
+					console.log("plength==-=-=-=",projectLength);
 
-																var projectLength=this.project.length;
-																console.log("plength==-=-=-=",projectLength);
+					var allcompleteproject = completedTask*100/projectLength;
+					console.log("allcompleteproject=-=-={}{}{}",allcompleteproject);
 
-																var allcompleteproject = completedTask*100/projectLength;
-																console.log("allcompleteproject=-=-={}{}{}",allcompleteproject);
+					this.total=allcompleteproject;
+					console.log("total()()++++++++++++++++",this.total);
 
-																this.total=allcompleteproject;
-																console.log("total()()++++++++++++++++",this.total);
-
-																this.round = Math.round(this.total);
-																console.log("round()()+++++++++++++++++",this.round);
+					this.round = Math.round(this.total);
+					console.log("round()()+++++++++++++++++",this.round);
 
 
-																var ctx = document.getElementById("myChart");
-																var myChart = new Chart(ctx, {
-																	type: 'bar',
-																	data: {
-																		labels: ["to do", "In Progress", "testing", "Complete"],
-																		datasets: [{
-																			label: '# of Tasks',
-																			// data:[7,14,43,33],
-																			data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
-																			backgroundColor: [
-																			'rgba(255, 99, 132, 0.2)',
-																			'rgba(54, 162, 235, 0.2)',
-																			'rgba(255, 206, 86, 0.2)',
-																			'rgba(75, 192, 192, 0.2)'
+					var ctx = document.getElementById("myChart");
+					var myChart = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: ["to do", "In Progress", "testing", "Complete"],
+							datasets: [{
+								label: '# of Tasks',
+								// data:[7,14,43,33],
+								data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
+								backgroundColor: [
+								'rgba(255, 99, 132, 0.2)',
+								'rgba(54, 162, 235, 0.2)',
+								'rgba(255, 206, 86, 0.2)',
+								'rgba(75, 192, 192, 0.2)'
 
-																			],
-																			borderColor: [
-																			'rgba(255,99,132,1)',
-																			'rgba(54, 162, 235, 1)',
-																			'rgba(255, 206, 86, 1)',
-																			'rgba(75, 192, 192, 1)'
+								],
+								borderColor: [
+								'rgba(255,99,132,1)',
+								'rgba(54, 162, 235, 1)',
+								'rgba(255, 206, 86, 1)',
+								'rgba(75, 192, 192, 1)'
 
-																			],
-																			borderWidth: 1
-																		}]
-																	},
-																	options: {
+								],
+								borderWidth: 1
+							}]
+						},
+						options: {
 
-																		scales: {
-																			yAxes: [{
-																				ticks: {
-																					beginAtZero: true
-																				}
-																			}]
-																		}
-																	}
-																});
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: true
+									}
+								}]
+							}
+						}
+					});
 
 
 
-																var ctxL = document.getElementById("lineChart")
-																var myLineChart = new Chart(ctxL, {
-																	type: 'line',
-																	data: {
-																		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																		datasets: [{
-																			label: "Highest Priority",
-																			data: this.getTaskPriority1(1,this.tracks),
+					var ctxL = document.getElementById("lineChart")
+					var myLineChart = new Chart(ctxL, {
+						type: 'line',
+						data: {
+							labels: ["To Do", "In Progress", "Testing", "Complete"],
+							datasets: [{
+								label: "Highest Priority",
+								data: this.getTaskPriority1(1,this.tracks),
 
-																			borderColor: [
-																			'#DC143C',
-																			],
-																			borderWidth: 2
-																		}
-																		]
-																	},
-																	options: {
-																		responsive: true
-																	}
-																});
+								borderColor: [
+								'#DC143C',
+								],
+								borderWidth: 2
+							}
+							]
+						},
+						options: {
+							responsive: true
+						}
+					});
 
-																var ctxL = document.getElementById("lineChart1")
-																var myLineChart = new Chart(ctxL, {
-																	type: 'line',
-																	data: {
-																		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																		datasets: [{
-																			label: "High Priority",
-																			data: this.getTaskPriority1(2,this.tracks),
+					var ctxL = document.getElementById("lineChart1")
+					var myLineChart = new Chart(ctxL, {
+						type: 'line',
+						data: {
+							labels: ["To Do", "In Progress", "Testing", "Complete"],
+							datasets: [{
+								label: "High Priority",
+								data: this.getTaskPriority1(2,this.tracks),
 
-																			borderColor: [
-																			'#ff8100',
-																			],
-																			borderWidth: 2
-																		}
+								borderColor: [
+								'#ff8100',
+								],
+								borderWidth: 2
+							}
 
-																		]
-																	},
-																	options: {
-																		responsive: true
-																	}
-																});
-
-
-
-																var ctxP = document.getElementById("pieChart5");
-																var myPieChart = new Chart(ctxP, {
-																	type: 'pie',
-																	data: {
-																		labels: ["To Do", "In Progress", "Testing", "Complete"],
-																		datasets: [{
-																			data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
-
-																			backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-																			hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-																		}]
-																	},
-																	options: {
-																		responsive: true,
-																		legend:{
-																			position:"left",
-																			labels:{
-
-																				boxwidth:12
-																			}
+							]
+						},
+						options: {
+							responsive: true
+						}
+					});
 
 
-																		}
-																	}
-																});
-															},1000);
-},err=>{
-	console.log(err);
-	this.loader = false;
-});
+
+					var ctxP = document.getElementById("pieChart5");
+					var myPieChart = new Chart(ctxP, {
+						type: 'pie',
+						data: {
+							labels: ["To Do", "In Progress", "Testing", "Complete"],
+							datasets: [{
+								data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
+
+								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+							}]
+						},
+						options: {
+							responsive: true,
+							legend:{
+								position:"left",
+								labels:{
+
+									boxwidth:12
+								}
+
+
+							}
+						}
+					});
+				},1000);
+			},err=>{
+				console.log(err);
+				this.loader = false;
+			});
 
 
 },1000);

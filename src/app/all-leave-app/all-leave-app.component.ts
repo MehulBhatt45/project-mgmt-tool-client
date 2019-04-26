@@ -52,6 +52,10 @@ export class AllLeaveAppComponent implements OnInit {
   aLeave:boolean = false;
   rLeave:boolean = false;
   title;
+  approvedLeavesCount;
+  pendingLeavesCount;
+  rejectedLeavesCount;
+  pendingLeave = [];
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -89,6 +93,9 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavesByUserId();
     this.getAllDevelopers(Option);
     this.getAllLeaves();
+    this. getApprovedLeaves(Option);
+    this.getRejectedLeaves(Option);
+    this. getLeaves(Option);
 
     // this.getRejectedLeaves();
 
@@ -137,6 +144,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.approvedLeaves().subscribe(res=>{
                     console.log("approved leaves",res);
                     this.leaveApp = res;
+                    this.approvedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -169,6 +177,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.rejectedLeaves().subscribe(res=>{
                     console.log("rejected leaves",res);
                     this.leaveApp = res;
+                    this.rejectedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -200,6 +209,8 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
+                    this.pendingLeavesCount= this.leaveApp.length;
+                    // console.log(this.pendingLeave.length);
                     $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
                     console.log("data avo joye==========>",this.leaveApp);
                     $('#statusAction').show();
@@ -225,23 +236,13 @@ export class AllLeaveAppComponent implements OnInit {
                     });
 
                     this.allLeaves = this.leaveApp; 
-                    console.log("applicationsss==>",this.leaveApp);
-                    // _.forEach(this.leaveApp , (leave)=>{
-                      //   _.forEach(this.leavescount , (count)=>{
-                        //     if(count.typeOfLeave == leave.typeOfLeave){
-                          //       count.leavesTaken = count.leavesTaken + 1;
-                          //     }
-                          //   });
-                          // });
-
-                          // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                          // console.log("leaves count ====>" , this.leavescount);
-                          this.pLeave = true;
-                          this.aLeave = false;
-                          this.rLeave = false;
-                        },err=>{
-                          console.log(err);
-                        });
+                    console.log("applicationsss==>",this.leaveApp)
+                    this.pLeave = true;
+                    this.aLeave = false;
+                    this.rLeave = false;
+                  },err=>{
+                    console.log(err);
+                  });
                   this.loader=false;
                 },1000);
               }
@@ -420,7 +421,7 @@ export class AllLeaveAppComponent implements OnInit {
               leaveAccepted(req){
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
-                console.log("reeeeeeee",req._id);
+                console.log("reeeeeeee",req);
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
@@ -434,15 +435,15 @@ export class AllLeaveAppComponent implements OnInit {
                     var body;
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "approved";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("reqest of leavesssssssssssssssssss ========>" , req);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Approve!',
                         'Your Leave has been Approve.',
@@ -481,7 +482,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("rejected",this.leaveApp);
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "rejected";
                       }
@@ -489,7 +490,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("req ========>" , req.email);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Rejected!',
                         'Your Leave has been Rejected.',
