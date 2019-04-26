@@ -60,7 +60,7 @@ export class AllDeveloperComponent implements OnInit {
 					return 0 //default return value (no sorting)
 					console.log("project detail===>>>>",this.pro.pmanagerId);
 					setTimeout(()=>{
-						console.log("TM rotate js-------------------------------------------------------------------")
+						console.log("rotate js--------------------")
 						$('a.rotate-btn').click(function () {
 							$(this).parents(".card-rotating").toggleClass('flipped');
 						});
@@ -79,7 +79,7 @@ export class AllDeveloperComponent implements OnInit {
 						this.projectTeam.push
 						console.log("response of team============>"  ,this.projectTeam);
 						setTimeout(()=>{
-							console.log("TM rotate js-------------------------------------------------------------------")
+							console.log("rotate js--------------------")
 							$('a.rotate-btn').click(function () {
 								$(this).parents(".card-rotating").toggleClass('flipped');
 							});

@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
 	project;
 	url = [];
 	commentUrl = [];
+	projectArr = [];
+	finalArr = [];
 	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	path = config.baseMediaUrl;
 	projectId;
@@ -248,6 +250,32 @@ export class HeaderComponent implements OnInit {
 		})
 
 	}
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			console.log("all projects =====>" , res);
+			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("current user ====>" , pmanagerId);
+			this.projects = res;
+			console.log(this.projects);
+			_.forEach(this.projects , (task)=>{
+				_.forEach(task.pmanagerId , (project)=>{
+					if(project._id == pmanagerId){
+						this.projectArr.push(task);
+					}
+				})
+			})
+			for(var i=0;i<this.projectArr.length;i++){
+				this.finalArr.push(this.projectArr[i]);
+				console.log("response======>",this.finalArr);
+			}
+		},
+		err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+		this.projectArr = [];
+		this.finalArr = [];
+	}
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
@@ -388,7 +416,7 @@ export class HeaderComponent implements OnInit {
 			}
 		}
 		
-	console.log("ressssssssssss==>",data);
+		console.log("ressssssssssss==>",data);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
 			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
@@ -408,9 +436,9 @@ export class HeaderComponent implements OnInit {
 			console.log("error========>",err);
 		});
 	}
-	 getEmptyTask(){
-	 	return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
-	 }
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
+	}
 
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{

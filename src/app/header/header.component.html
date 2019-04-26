@@ -48,7 +48,7 @@
           <li><a routerLink="/all-employee" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><i class="far fa-user"></i> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='projectManager'">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
-            (click) ="getProject()"><i class="fas fa-users"></i> Visit Team-members
+            (click) ="getAllProjects()"><i class="fas fa-users"></i> Visit Team-members
             <i class="fa fa-angle-down rotate-icon"></i></a>
             <div class="collapsible-body">
               <ul>

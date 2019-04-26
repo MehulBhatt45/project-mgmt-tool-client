@@ -74,7 +74,7 @@ export class EditprofileComponent implements OnInit {
 				Swal.fire('Oops...', 'Something went wrong!', 'error')   
 			})
 		}
-		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='Developer'){
+		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
 			// alert("Developer");
 			// this.files = this.userDetails.CV;
 			console.log(this.files);
@@ -123,14 +123,14 @@ export class EditprofileComponent implements OnInit {
 			this.loader = false;
 			console.log("this user dateailsls ==>" , this.userDetails);
 			// console.log("res-=-=",this.userDetails.userRole);
-			if(this.currentUser.userRole=='projectManager'){
-				this.editEmployeeForm.controls['name'].disable();
-				this.editEmployeeForm.controls['email'].disable();
-				this.editEmployeeForm.controls['phone'].disable();
-				this.editEmployeeForm.controls['experience'].disable();
-				this.editEmployeeForm.controls['cv'].disable();
+			if(this.currentUser.userRole == 'admin'){
+				this.editEmployeeForm.controls['name'].enable();
+				this.editEmployeeForm.controls['email'].enable();
+				this.editEmployeeForm.controls['phone'].enable();
+				this.editEmployeeForm.controls['experience'].enable();
+				this.editEmployeeForm.controls['cv'].enable();
 			}
-			else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer'){
+			else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
 				this.editEmployeeForm.controls['userRole'].disable();
 				this.editEmployeeForm.controls['joiningDate'].disable();
 			}

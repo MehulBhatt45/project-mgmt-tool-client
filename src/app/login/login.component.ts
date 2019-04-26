@@ -85,14 +85,14 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this._alertService.error(error);
-        if (error.status == 400) {
+        if (error.status == 412) {
 
           this.err = error;
           console.log("error is===>",this.err.error.errMsg);
           this.errorMsg = this.err.error.errMsg;
         }
 
-        else if (error.status == 406) {
+        else if (error.status == 404) {
           this.err = error;
           console.log("error is===>",this.err.error.errMsg);
           this.errorMsg = this.err.error.errMsg;
@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
       $('#modalForgotPasswordForm').modal('hide');
     },error=>{
       this._alertService.error(error);
-      if (error.status == 403) {
+      if (error.status == 404) {
         this.err = error;
         console.log("error is===>",this.err.error.errMsg);
         this.error1Msg = this.err.error.errMsg;

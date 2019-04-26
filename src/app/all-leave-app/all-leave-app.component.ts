@@ -466,7 +466,6 @@ export class AllLeaveAppComponent implements OnInit {
                 })
               }
 
-
               leaveRejected(req){
                 Swal.fire({
                   title: 'Are you sure?',
