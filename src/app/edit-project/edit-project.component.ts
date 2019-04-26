@@ -71,16 +71,17 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+
 		$('.datepicker').pickadate({
+			min: new Date(),
 			onSet: function(context) {
-				change(context);
+				console.log('Just set stuff:', context);
+				setDate(context);
 			}
 		});
-		var change:any = ()=>{
-			this.updateForm.controls.deadline.setValue($('.datepicker').val());
+		var setDate = (context)=>{
+			this.timePicked();
 		}
-
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
@@ -88,7 +89,10 @@ export class EditProjectComponent implements OnInit {
 		this.getAllDevelopers();
 		this.getAllProjectMngr();		
 	}
-	
+	timePicked(){
+		this.updateForm.controls.deadline.setValue($('.datepicker').val())
+	}
+
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -214,7 +218,7 @@ export class EditProjectComponent implements OnInit {
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
 		console.log("project manager iddddd",updateForm._id);
-		
+
 		var data = new FormData();
 		data.append('title', updateForm.title);
 		data.append('desc', updateForm.desc);
@@ -233,7 +237,7 @@ export class EditProjectComponent implements OnInit {
 			data.append('avatar', this.files[0]);  
 		}
 		console.log('data====================================>',data);
-		
+
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
@@ -322,7 +326,7 @@ export class EditProjectComponent implements OnInit {
 					this.availData.delete.push(event);
 					this.availableDevelopers.push(event);
 					this.getAllDevelopersNotInProject(this.ProjectId);
-					
+
 				}
 			}
 
