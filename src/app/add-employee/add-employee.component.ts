@@ -24,6 +24,7 @@ export class AddEmployeeComponent implements OnInit {
 			name:new FormControl( '', [Validators.required]),
 			// lname:new FormControl( '', [Validators.required]),
 			password:new FormControl('',[Validators.required]),
+			isDelete: new FormControl('false',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
 			mobile:new FormControl(''),

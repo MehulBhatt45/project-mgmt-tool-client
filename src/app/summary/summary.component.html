@@ -10,7 +10,7 @@
 	</div>
 	<div class="row no-margin no-padding" *ngIf="sprints">
 		<div class="md-form form-group col-2">
-			<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+			<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)" onclick="document.getElementById('exampleForm2').value =''" >
 				<option *ngFor="let sprint of sprints" value="{{sprint._id}}" >{{sprint.title}} {{sprint.status}}</option>
 			</select>
 		</div>
@@ -22,7 +22,8 @@
 					<h4><span class="icon-pie-chart mr-1"></span> Total Completed Project: </h4>
 					<div class="row">
 						<div class="col-sm-6">
-							<p *ngIf="project">Total Task In Project: <b>{{project.length}}</b></p>
+							<p  *ngIf="sprint" id="exampleForm2"> Total Task In Project: <b>{{getTask()}}</b></p>
+							<p *ngIf="project" id="exampleForm2">Total Task In Project: <b>{{project.length}}</b></p>
 						</div>
 						<div class="col-sm-6">
 							<p>Our Completed Project: <b>{{round}}%</b></p>

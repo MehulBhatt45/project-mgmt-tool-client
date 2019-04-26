@@ -72,6 +72,7 @@ export class LoginService {
             formdata.append('password',body.password);
             formdata.append('joiningDate',body.date);
             formdata.append('phone',body.mobile);
+             formdata.append('isDelete',body.isDelete);
             formdata.append('experience',body.experience);
             formdata.append('profilePhoto',files[0]);
             formdata.append("profilePhoto",files[1]);
@@ -90,6 +91,7 @@ export class LoginService {
         // var id = JSON.parse(localStorage.getItem('currentUser'))._id;
         return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
     }
+
 
 
     logout() {
