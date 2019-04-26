@@ -71,7 +71,7 @@ export class LoginService {
             formdata.append('userRole',body.userRole);
             formdata.append('password',body.password);
             formdata.append('joiningDate',body.date);
-            formdata.append('phone',body.mobile);
+            formdata.append('phone',body.phone);
             formdata.append('experience',body.experience);
             formdata.append('profilePhoto',files[0]);
             formdata.append("profilePhoto",files[1]);
