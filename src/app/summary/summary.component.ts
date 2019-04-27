@@ -29,7 +29,6 @@ export class SummaryComponent implements OnInit {
 	tracks:any;
 	modalTitle;
 	comments:any;
-
 	public model = {
 		editorData: 'Enter comments here'
 	};
@@ -40,6 +39,7 @@ export class SummaryComponent implements OnInit {
 	tasks;
 	projects: any;
 	project;
+	pror;
 	comment;
 	projectId;
 	allStatusList = this._projectService.getAllStatus();
@@ -68,8 +68,10 @@ export class SummaryComponent implements OnInit {
 	sprints;
 	newSprint = [];
 	currentsprintId;
-	spId;
-
+	taskId;
+	taskArr= [];
+	selectedSprint:"all";
+	;
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
 
@@ -78,8 +80,10 @@ export class SummaryComponent implements OnInit {
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
 			this.getEmptyTracks();
-			this.getProject(this.projectId);
-			
+			// this.getProject(this.projectId);
+			// this.getTeamByProjectId(this.projectId);
+			// this.getTaskbyProject(this.projectId);
+			this.getProject1(this.projectId);
 
 			
 		});
@@ -88,8 +92,8 @@ export class SummaryComponent implements OnInit {
 	ngOnInit() {
 		this.getEmptyTracks();
 		this.getSprint(this.projectId);
-
 		
+
 	}	
 
 	
@@ -179,46 +183,173 @@ export class SummaryComponent implements OnInit {
 			this.sprints = res;
 			_.forEach(this.sprints, (sprint)=>{
 				console.log(sprint._id);
-				this.spId = sprint._id;
 				if(sprint.status == 'Active'){
 					this.activeSprint = sprint;
 					this.sprintInfo = sprint;
 					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
 					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
 				}
-				console.log("Active Sprint=========>>>>",this.activeSprint);
 			})
-			console.log("ActiveSprint startdate",this.activeSprint.endDate);
-			var currendate = moment(); 
-			var sprintEndDate = this.activeSprint.endDate; 
-			var date3 = moment(sprintEndDate);
-			var duration = date3.diff(currendate,'days');
-			this.activeSprint.remainingDays = duration;
-			console.log("currendate=======>>>",currendate);
-			console.log("sprint end date=======>>>",sprintEndDate);
-			console.log("remaining Days",duration);
 		},(err:any)=>{
 			console.log(err);
 		});
 	}
 
-	filterTracks(sprintId){
-		console.log("shds",sprintId);
-		console.log("project is ====>" , this.pro);
-		console.log("project team is ====>" , this.projectTeam);
-		console.log("project task is ====>" , this.project);
-		console.log("sprint id",this.spId);
-			_.filter(this.project, function(o) { if (o._id == sprintId ) return o }).length;
-		console.log(this.project);
+	filterTracks(sprintId){ 
+		this.getEmptyTracks();
+		this.selectedSprint = sprintId;
+		this.currentsprintId = sprintId;
+		console.log("sprintId",this.currentsprintId);
+		_.forEach(this.project , (task)=>{
+			_.forEach(this.tracks , (track)=>{
+				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+					if(task.sprint._id == sprintId && track.id == task.status &&  task.sprint.status == 'Active'){
+						track.tasks.push(task);
+					}
+				}else{
+					if(task.status == track.id &&  task.sprint.status == 'Active'){
+						track.tasks.push(task);
+					}
+				}
+			})
+		})
+		var completedTask=this.getCompletedTask("complete");
+		var projectLength=this.getTask();
+		var allcompleteproject = completedTask*100/ projectLength;
+		this.total=allcompleteproject;
+		this.round = Math.round(this.total);
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ["to do", "In Progress", "testing", "Complete"],
+				datasets: [{
+					label: '# of Tasks',
+					data: this.getTaskCountEachTrack(this.tracks),
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)'
 
-		// _.forEach(this.project, (taskId)=>{
-		// 	console.log("task id is",taskId._id);
-		// })
+					],
+					borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)'
 
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		var ctxL = document.getElementById("lineChart")
+		var myLineChart = new Chart(ctxL, {
+			type: 'line',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					label: "Highest Priority",
+					data: this.getTaskPriority(1,this.tracks),
+
+					borderColor: [
+					'#DC143C',
+					],
+					borderWidth: 2
+				}
+				]
+			},
+			options: {
+				responsive: true
+			}
+		});
+		var ctxL = document.getElementById("lineChart1")
+		var myLineChart = new Chart(ctxL, {
+			type: 'line',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					label: "High Priority",
+					data: this.getTaskPriority(2,this.tracks),
+
+					borderColor: [
+					'#ff8100',
+					],
+					borderWidth: 2
+				}
+
+				]
+			},
+			options: {
+				responsive: true
+			}
+		});
+		var ctxP = document.getElementById("pieChart5");
+		var myPieChart = new Chart(ctxP, {
+			type: 'pie',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					data: this.getTaskCountEachTrack(this.tracks), 
+					backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
+					hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+				}]
+			},
+			options: {
+				responsive: true,
+				legend:{
+					position:"left",
+					labels:{
+
+						boxwidth:12
+					}
+				}
+			}
+		});
+	}
+	
+	getCompletedTask(status){
+		var sprint = this.selectedSprint;
+		return _.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == status) return o }).length;
 	}
 
-	
-	getProject(id){
+	getTaskCountEachTrack(tracks){
+		var sprint = this.selectedSprint;
+		var count1 = [];
+		_.forEach(tracks,(track)=>{
+			count1.push(_.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == track.id) return o }).length);
+		});
+		console.log("count1---------==========",count1);
+		return count1;
+	}
+
+	getTask(){
+		var sprint = this.selectedSprint;
+		return _.filter(this.project,function(o) { if (o.sprint._id == sprint) return o }).length;
+	}
+
+	getTaskPriority(priority,tracks){
+		var sprint = this.selectedSprint;
+		var count = [];
+		_.forEach(tracks, track=>{
+			count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id && o.sprint._id == sprint) return o }).length);
+		});
+		console.log("cnt=-=-===============",count);
+		return count;
+	}
+
+	getProject1(id){
 		this.loader = true;
 		setTimeout(()=> {
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
@@ -228,7 +359,7 @@ export class SummaryComponent implements OnInit {
 				console.log("title{}{}{}{}",this.pro);
 
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					// res.Teams.push(this.pro); 
+					res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
@@ -256,7 +387,8 @@ export class SummaryComponent implements OnInit {
 				console.log("all response()()() ======>",res);
 				this.getEmptyTracks();
 				this.project = res;
-				console.log("()()()() ======>",this.project);
+				this.pror = res;
+				console.log("()()()() ======>",this.pror);
 				this.project.sort(custom_sort);
 				this.project.reverse();
 				console.log("PROJECT=================>", this.project);
@@ -279,7 +411,7 @@ export class SummaryComponent implements OnInit {
 				this.loader = false;
 				setTimeout(()=>{
 					console.log("==================================TimeOUT===========================================");
-					var completedTask=this.getCompletedTask("complete");
+					var completedTask=this.getCompletedTask1("complete");
 					console.log("completed{{}}___+++",completedTask);
 
 					var projectLength=this.project.length;
@@ -333,7 +465,7 @@ export class SummaryComponent implements OnInit {
 						}
 					});
 
-					
+
 
 					var ctxL = document.getElementById("lineChart")
 					var myLineChart = new Chart(ctxL, {
@@ -342,7 +474,7 @@ export class SummaryComponent implements OnInit {
 							labels: ["To Do", "In Progress", "Testing", "Complete"],
 							datasets: [{
 								label: "Highest Priority",
-								data: this.getTaskPriority(1,this.tracks),
+								data: this.getTaskPriority1(1,this.tracks),
 
 								borderColor: [
 								'#DC143C',
@@ -363,7 +495,7 @@ export class SummaryComponent implements OnInit {
 							labels: ["To Do", "In Progress", "Testing", "Complete"],
 							datasets: [{
 								label: "High Priority",
-								data: this.getTaskPriority(2,this.tracks),
+								data: this.getTaskPriority1(2,this.tracks),
 
 								borderColor: [
 								'#ff8100',
@@ -387,7 +519,7 @@ export class SummaryComponent implements OnInit {
 							labels: ["To Do", "In Progress", "Testing", "Complete"],
 							datasets: [{
 								data: [this.tracks[0].tasks.length, this.tracks[1].tasks.length, this.tracks[2].tasks.length,this.tracks[3].tasks.length],
-								
+
 								backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
 								hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
 							}]
@@ -417,19 +549,10 @@ function custom_sort(a, b) {
 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 }
 }
-
-getTaskCount(userId, status){
-
-	
-	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
-}
-
-getCompletedTask(status){
+getCompletedTask1(status){
 	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 }
-
-
-getTaskPriority(priority, tracks){
+getTaskPriority1(priority, tracks){
 	var count = [];
 	_.forEach(tracks, track=>{
 		count.push(_.filter(this.project, function(o) { if (o.priority == priority && o.status == track.id ) return o }).length);
@@ -437,6 +560,8 @@ getTaskPriority(priority, tracks){
 	console.log(count);
 	return count;
 }
-
-
+getTask1(){
+	var sprint = this.projectId
+	return _.filter(this.project,function(o) { if (o._id == sprint) return o }).length;
+}
 }

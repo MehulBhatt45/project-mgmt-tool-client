@@ -8,13 +8,13 @@
 	<div *ngIf="pro">
 		<h3 class="card-header-title"><span class="mr-1" data-icon="&#xe067;"></span>{{pro.title}}</h3>
 	</div>
-		<div class="row no-margin no-padding" *ngIf="sprints">
-			<div class="md-form form-group col-2">
-				<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
-					<option   *ngFor="let sprint of sprints"  value="{{sprint._id}}" >{{sprint.title}} {{sprint.status}}</option>
-				</select>
-			</div>
+	<div class="row no-margin no-padding" *ngIf="sprints">
+		<div class="md-form form-group col-2">
+			<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+				<option *ngFor="let sprint of sprints" value="{{sprint._id}}" >{{sprint.title}} {{sprint.status}}</option>
+			</select>
 		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="card" style="height: 100%;">
@@ -22,7 +22,7 @@
 					<h4><span class="icon-pie-chart mr-1"></span> Total Completed Project: </h4>
 					<div class="row">
 						<div class="col-sm-6">
-							<p *ngIf="project">Total Task In Project:  <b>{{project.length}}</b></p>
+							<p *ngIf="project">Total Task In Project: <b>{{project.length}}</b></p>
 						</div>
 						<div class="col-sm-6">
 							<p>Our Completed Project: <b>{{round}}%</b></p>
@@ -44,48 +44,48 @@
 		</div>
 	</div>
 	<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span> List of team members along with the number of task in each track:</h3>
-				<div class="row">
-					<div class="col-md-3 padding-10" *ngFor="let user of projectTeam">
-						<article>
-							<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
-								<aside class="four-right two-right three-bottom"></aside>
-								<header>
-									<div class="title">
-										<h5 class="font-weight-bold" style="margin:0; color: #372E5F;">{{user.name}}</h5>
-										<p style="margin: 0px; color: #372E5F;">Developer</p>
-									</div>
-									<div class="blurb">
-										<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
-										<p style="margin: 0px;">Developer</p>
-									</div>
-								</header>
-								<div class="content">
-									<div class="image"  >
-										<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
-											<img src="{{path}}{{user.profilePhoto}}">
-										</div>
-									</div>
-								</div>
-							</a>
-						</article>
+	<div class="row">
+		<div class="col-md-3 padding-10" *ngFor="let user of projectTeam">
+			<article>
+				<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
+					<aside class="four-right two-right three-bottom"></aside>
+					<header>
+						<div class="title">
+							<h5 class="font-weight-bold" style="margin:0; color: #372E5F;">{{user.name}}</h5>
+							<p style="margin: 0px; color: #372E5F;">Developer</p>
+						</div>
+						<div class="blurb">
+							<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
+							<p style="margin: 0px;">Developer</p>
+						</div>
+					</header>
+					<div class="content">
+						<div class="image" >
+							<div class="profile" routerLink="/visit-user-profile/{{user._id}}" style="cursor: pointer;">
+								<img src="{{path}}{{user.profilePhoto}}">
+							</div>
+						</div>
 					</div>
-				</div>
-		<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h3 style="text-align:center;">Highest Priority</h3>
-						<canvas id="lineChart"></canvas>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h3 style="text-align:center;">High Priority</h3>
-						<canvas id="lineChart1"></canvas>
-					</div>
+				</a>
+			</article>
+		</div>
+	</div>
+	<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span> Total Number of High Priority tasks and Highest priority tasks in to do, in progress,testing and complete:</h3>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h3 style="text-align:center;">Highest Priority</h3>
+					<canvas id="lineChart"></canvas>
 				</div>
 			</div>
 		</div>
+		<div class="col-sm-6">
+			<div class="card">
+				<div class="card-body">
+					<h3 style="text-align:center;">High Priority</h3>
+					<canvas id="lineChart1"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -378,4 +378,8 @@ button.btn.btn-default.progress_summary {
     float: none;
     margin: auto;
 }
+.modal-dialog {
+    margin-top: 200px;
+    max-width: 500px;
+}
 

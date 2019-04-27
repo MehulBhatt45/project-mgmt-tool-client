@@ -1,9 +1,8 @@
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
         <h4 class="modal-title">Hey! {{currentUser.name}}</h4>
     </div>
     <div class="modal-footer">
@@ -55,11 +54,11 @@
       </button>
 
       <div class="dropdown-menu">
-         <a class="dropdown-item btn-floating  mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
+         <a class="dropdown-item btn-floating  mt-0 mx-1"  title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
          <a class="dropdown-item btn-floating mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><i class="fas fa-users"></i></a>
          <a class="dropdown-item btn-floating  mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
-         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
+         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1"  title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
+         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
      </div>
  </div>
 

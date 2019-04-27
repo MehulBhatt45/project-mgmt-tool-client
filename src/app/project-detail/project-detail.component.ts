@@ -370,10 +370,12 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
+				        let uniqueId = res.uniqueId;
+
 				Swal.fire({
 					type: 'info',
-					title: "Task is"  + " " +res.timelog[n -1].operation ,
-					showConfirmButton:false,timer: 2000})
+					title: uniqueId  + " " +res.timelog[n -1].operation ,
+					showConfirmButton:false,timer: 3000})
 			},(err:any)=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				console.log(err);
@@ -529,8 +531,16 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
@@ -540,7 +550,15 @@ export class ProjectDetailComponent implements OnInit {
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
@@ -613,18 +631,6 @@ export class ProjectDetailComponent implements OnInit {
 				})
 			}
 		})
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			$('#exampleModalPreview').modal('hide');
-			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			console.log("error in delete Task=====>" , err);
-		});
 	}
 
 	removeAvatar(file, index){

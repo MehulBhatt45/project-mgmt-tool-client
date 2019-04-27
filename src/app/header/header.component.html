@@ -40,8 +40,10 @@
           <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="far fa-user"></span> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='projectManager'">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
+
             (click) ="getAllProjects()"><span class="icon-users mr-1"></span> Visit Team-members
             <span class="fa fa-angle-down rotate-icon"></span></a>
+
             <div class="collapsible-body">
               <ul>
                 <li *ngFor="let project of finalArr">

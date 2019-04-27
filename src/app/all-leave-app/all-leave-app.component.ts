@@ -427,9 +427,11 @@ export class AllLeaveAppComponent implements OnInit {
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
                   type: 'warning',
                   showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes,Approve it!'
+                  // confirmButtonColor: '#3085d6',
+                  // cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes,Approve it!',
+                  cancelButtonText: 'No, cancle!',
+                  reverseButtons: true
                 }).then((result) => {
                   if (result.value) {
                     var body;
@@ -444,9 +446,15 @@ export class AllLeaveAppComponent implements OnInit {
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
                     this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+                      let name = res.name;
+                      console.log("name of applicant",name );
+                       // moment(leave.startingDate).format('YYYY-MM-DD');
+                      let date = moment(res.startingDate).format('YYYY-MM-DD')
+                      console.log("date of application",date);
+
                       Swal.fire(
                         'Approve!',
-                        'Your Leave has been Approve.',
+                        "Leave of " + name + " from " + date + " is approved successfully",
                         'success'
                         )
                       body.status = "approved";
@@ -462,11 +470,18 @@ export class AllLeaveAppComponent implements OnInit {
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
-                    })
+                    });
+                  } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                    ){
+                    Swal.fire(
+                      'Cancled',
+                      'Leave is not approved.',
+                      'error'
+                      )
                   }
                 })
               }
-
 
               leaveRejected(req){
                 Swal.fire({
