@@ -30,13 +30,13 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('',Validators.required),
-      avatar:new FormControl('',Validators.required),
+      avatar:new FormControl(''),
       desc: new FormControl(''),
       deadline: new FormControl(''),
-      uniqueId: new FormControl('',Validators.required),
-      clientEmail: new FormControl('',Validators.required),
-      clientFullName: new FormControl('',Validators.required),
-      clientContactNo: new FormControl('',Validators.required),
+      uniqueId: new FormControl('',),
+      clientEmail: new FormControl('',),
+      clientFullName: new FormControl('',),
+      clientContactNo: new FormControl('',),
       clientDesignation: new FormControl(''),
       allDeveloper:new FormControl(''),
     });
@@ -48,13 +48,20 @@ export class CreateProjectComponent implements OnInit {
     $('.datepicker').pickadate({
       min: new Date(),
       onSet: function(context) {
-        console.log('Just set stuff:', context);
-        setDate(context);
+        // setDate(context);
+        change();
       }
     });
+    var change:any = ()=>{
+      this.dateToString();
+    }
+
     var setDate = (context)=>{
       this.timePicked();
     }
+  }
+  dateToString(){
+    this.addForm.controls.deadline.setValue($('.datepicker').val());
   }
 
   addProject(addForm){
@@ -77,7 +84,7 @@ export class CreateProjectComponent implements OnInit {
       this.router.navigate(['/view-projects']);
     },err=>{
       console.log(err); 
-       Swal.fire('Oops...', 'Something went wrong!', 'error')   
+      Swal.fire('Oops...', 'Something went wrong!', 'error')   
     }) 
   }
 
@@ -110,13 +117,13 @@ export class CreateProjectComponent implements OnInit {
       this.developers = res;
       this.developers.sort(function(a, b){
         if (a.name && b.name) {
-        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        if (nameA < nameB) //sort string ascending
-          return -1 
-        if (nameA > nameB)
-          return 1
-        return 0 //default return value (no sorting)
-      }
+          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          if (nameA < nameB) //sort string ascending
+            return -1 
+          if (nameA > nameB)
+            return 1
+          return 0 //default return value (no sorting)
+        }
       })
       console.log("Developers",this.developers);
     },err=>{

@@ -99,8 +99,6 @@ export class AllEmployeeComponent implements OnInit {
 	}
 	deleteEmployee(developerid){
 		console.log("msgggg--=--",developerid);
-		console.log(developerid._id);
-		var dev = developerid._id;
 		Swal.fire({
 			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
 			type: 'warning',
@@ -112,7 +110,7 @@ export class AllEmployeeComponent implements OnInit {
 		}).then((result) => {
 			if (result.value) {
 				var body;
-				this._projectService.deleteEmployeeById(dev).subscribe(res=>{
+				this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
 					console.log(res);
 					Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
 					this.getAllDevelopers();

@@ -23,6 +23,7 @@ export class AddEmployeeComponent implements OnInit {
 		this.addEmployeeForm = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
 			password:new FormControl('',[Validators.required]),
+			isDelete: new FormControl('false',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
 			phone:new FormControl(''),

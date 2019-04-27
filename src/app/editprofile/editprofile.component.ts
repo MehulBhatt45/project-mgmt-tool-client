@@ -62,7 +62,7 @@ export class EditprofileComponent implements OnInit {
 			data.append('phone', editEmployeeForm.phone?editEmployeeForm.phone:"");
 			data.append('experience', editEmployeeForm.experience?editEmployeeForm.experience:"");
 			data.append('joiningDate',editEmployeeForm.joiningDate?editEmployeeForm.joiningDate:"");
-			data.append('userRole',editEmployeeForm.userRole);
+			data.append('userRole',editEmployeeForm.userRole?editEmployeeForm.userRole:"");
 			if(this.files && this.files.length)
 				data.append('cv', this.files[0]);
 
@@ -87,8 +87,8 @@ export class EditprofileComponent implements OnInit {
 			data.append('email', editEmployeeForm.email?editEmployeeForm.email:"");
 			data.append('phone', editEmployeeForm.phone?editEmployeeForm.phone:"");
 			data.append('experience', editEmployeeForm.experience?editEmployeeForm.experience:"");
-			// data.append('joiningDate',editEmployeeForm.joiningDate?editEmployeeForm.joiningDate:"");
-			// data.append('userRole',editEmployeeForm.userRole);
+			data.append('joiningDate',editEmployeeForm.joiningDate?editEmployeeForm.joiningDate:"");
+			data.append('userRole',editEmployeeForm.userRole);
 			if(this.files && this.files.length)
 				data.append('cv', this.files[0]);
 			// if(this.files == null && this.files.length){

@@ -89,8 +89,21 @@ export class LoginComponent implements OnInit {
         console.log("datysdsatyds",data);
         // Swal.fire({type: 'success',title: 'Login Successfully', showConfirmButton:false, timer:2000});
         let name = data.data.name;
+        var myDate = new Date();
+        console.log("date mde che ke nai",myDate);
+        var hrs = myDate.getHours();
+        console.log("time mde che ke nai",hrs);
+        var greet ;
+        if(hrs<12)
+          greet= 'Good Morning';
+        else if (hrs>=12 && hrs<=17)
+          greet = 'Good Afternoon';
+        else if (hrs>=17 && hrs<=24)
+          greet = 'Good Evening';
+
+        console.log("sanj no time print thavo joye",greet);
         console.log("current user name>>>>>>><<<<<<<",name);
-        this.toaster.success( "", 'Good Morning '+ name + ' Have a nice day', {
+        this.toaster.success(" "," " + greet + " " + name + ' Have a nice day', {
           timeOut: 2000,
           positionClass: 'toast-top-center',
           toastClass: 'custom',

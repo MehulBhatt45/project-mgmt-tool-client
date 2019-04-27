@@ -1,4 +1,4 @@
-<h3 class="card-header-title"> <span class="icon-user-follow"></span> Add Employee </h3>
+	<h3 class="card-header-title"> <span class="icon-user-follow"></span> Add Employee </h3>
 	<div class="card">
 		<div class="card-body">
 			<form [formGroup]="addEmployeeForm" autocomplete="off">
@@ -9,11 +9,11 @@
 							<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="md-form form-group">
-							<label for="email">Email</label>
-							<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
-						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="md-form form-group">
+						<label for="email">Email</label>
+						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
 					</div>
 					<div class="col-md-4">
 						<div class="md-form form-group">
@@ -21,11 +21,11 @@
 							<input type="number" autocomplete= 'false | random-string'  formControlName="phone" class="form-control" id="phone">
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="md-form form-group">
-							<label for="password">Password</label>
-							<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
-						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="md-form form-group">
+						<label for="password">Password</label>
+						<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
 					</div>
 				</div>
 				<div class="row">
@@ -33,15 +33,15 @@
 						<div class="md-form form-group">
 							<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="md-form form-group">
-							<select class="custom-select custom-select-lg" formControlName="userRole">
-								<option value="" disabled selected>Choose user Role</option>
-								<option value="admin">Admin</option>
-								<option value="projectManager">Project Manager</option>
-								<option value="developer">Developer</option>
-							</select>
+						<div class="col-md-4">
+							<div class="md-form form-group">
+								<select class="custom-select custom-select-lg" formControlName="userRole">
+									<option value="" disabled selected>Choose user Role</option>
+									<option value="admin">Admin</option>
+									<option value="projectManager">Project Manager</option>
+									<option value="developer">Developer</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
