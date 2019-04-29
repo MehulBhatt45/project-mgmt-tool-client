@@ -159,7 +159,7 @@ export class AllLeaveAppComponent implements OnInit {
 
                   })
                   this.loader=false;
-                },1000);
+                },3000);
               }
               getRejectedLeaves(option){
                 this.loader=true;

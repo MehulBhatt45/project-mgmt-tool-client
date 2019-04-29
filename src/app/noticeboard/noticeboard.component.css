@@ -45,7 +45,15 @@
 	display: inline-block;
 	width: 100%;
 }
-.btn-floating i {
+.btn-floating {
+	background-color: #181123;
+}
+.btn-floating span {
+	font-size: 17px!important;
+	color: white!important;
+	padding: 12px 10px;
+}
+.btn-floating i{
 	font-size: 15px!important;
 }
 .image_box{
@@ -53,14 +61,15 @@
 }
 .image_box.active{
 	display: block;
-	display: block;
     height: 300px;
     width: 100%;
+    overflow: hidden;
 }
 .image_box img.img-fluid {
     min-width: 100%;
     min-height: 100%;
     max-width: 100%;
     max-height: 100%;
-    overflow: hidden;
+    object-fit: cover;
+    object-position: top;
 }
