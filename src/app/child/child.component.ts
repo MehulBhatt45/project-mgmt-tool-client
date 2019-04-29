@@ -292,6 +292,9 @@ export class ChildComponent  implements OnInit{
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
+    if(this.startText == 'Stop'){
+      console.log('yfudgjhfdjgvhfjhfj================');
+    }
     this.talkDrop.emit(event);
   }
   ondrag(task){
