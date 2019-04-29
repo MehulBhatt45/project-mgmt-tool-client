@@ -1,20 +1,203 @@
-	<div class="container-fluid" style="background-image: linear-gradient(#8bc34ab0,#85cc32)">
-		<h1 class="text-center font-weight-bold text-black" >Notification</h1>
-	</div>
-	<div class="container">
-		<ul *ngFor="let data of userNotification" id="accordionEx" role="tablist" aria-multiselectable="true">
-			<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '1'">
-				<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
-					<div class=" col-sm-2">
-						<div class="unread1 padding-5">
-							<div class="task_priority_highest">
-								<i class="far fa-circle" title="Highest"></i>
-								<span class="task_span">Task</span>
-							</div>
+<div class="container-fluid" style="background-image: linear-gradient(#8bc34ab0,#85cc32)">
+	<h1 class="text-center font-weight-bold text-black" >Notification</h1>
+</div>
+<div class="container">
+	<ul *ngFor="let data of userNotification" id="accordionEx" role="tablist" aria-multiselectable="true">
+		<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '1'">
+			<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
+				<div class=" col-sm-2">
+					<div class="unread1 padding-5">
+						<div class="task_priority_highest">
+							<i class="far fa-circle" title="Highest"></i>
+							<span class="task_span">Task</span>
 						</div>
 					</div>
-					<div class="  col-sm-8">
-						<div class="content padding-5">
+				</div>
+				<div class=" col-sm-8">
+					<div class="content padding-5">
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+
+			<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
+				<div class="card-body">
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '2'">
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="unread1">
+						<div class="task_priority_high">
+							<i class="far fa-circle" title="High"></i>
+							<span class="task_span">Task</span>
+						</div>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '3'">
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="unread1">
+						<div class="task_priority_medium">
+							<i class="far fa-circle" title="Medium"></i>
+							<span class="task_span">Task</span>
+						</div>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '4'">
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="unread1">
+						<div class="task_priority_low">
+							<i class="far fa-circle" title="Low"></i>
+							<span class="task_span">Task</span>
+						</div>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 leave" *ngIf ="data.type == 'leave-accepted'" >
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="leave_approved">
+						<i class="far fa-thumbs-up" title="Approved"></i>
+						<span class="leave_span">Leave</span>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 leave1" *ngIf ="data.type == 'leave-rejected'" >
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="leave_rejected">
+						<i class="far fa-thumbs-down" title="Rejected"></i>
+						<span class="leave1_span">Leave</span>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 other" *ngIf ="data.type == 'other'" >
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="other1">
+						<i class="far fa-bell"></i>
+						<span class="other1_span">Other</span>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 comment" *ngIf ="data.type == 'comment'" >
+
+			<div class="row">
+				<div class="padding-5 col-sm-2">
+					<div class="comment1">
+						<i class="fa fa-comments"></i>
+						<span class="comment_span">Comment</span>
+
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+		</li>
+		<li class="card mt-1 leave" *ngIf = "data.type == 'leave'">
+			<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
+				<div class="padding-5 col-sm-2">
+					<div class="leave_approved">
+						<i class="far fa-thumbs-up" title="Approved"></i>
+						<span class="leave_span"style = "background-color: powderblue;">Leave</span>
+					</div>
+				</div>
+				<div class="padding-5 col-sm-8">
+					<div class="content" >
+						<p innerHtml="{{data.content}}"></p>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+				</div>
+			</div>
+			<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
+				<div class="card-body" style="float: right;">
+					<button type="button" #bName1 id="approved" class="btn btn-outline-secondary accepted" style="color: red;" (click)="updateNotificationApprovedStatus(data._id, bName1.id)">
+						<i class="far fa-thumbs-up a_icon"></i>Accepted</button>
+						<button type="button" #bName id="rejected" class="btn btn-outline-secondary rejected" (click)="updateNotificationApprovedStatus(data._id, bName.id)"><i class="far fa-thumbs-down a_icon"></i>Rejected</button>
+					</div>
+				</div>
+			</li>
+			<li class="card mt-1 leave" *ngIf = "data.type == 'leaveForAdmin'">
+				<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
+					<div class="padding-5 col-sm-2">
+						<div class="leave_approved">
+							<i class="far fa-thumbs-up" title="Approved"></i>
+							<span class="leave_span" style="background-color: pink;">Leave</span>
+						</div>
+					</div>
+					<div class="padding-5 col-sm-8">
+						<div class="content" >
 							<p innerHtml="{{data.content}}"></p>
 						</div>
 					</div>
@@ -22,206 +205,42 @@
 						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
 					</div>
 				</div>
-
 				<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
 					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 task"  *ngIf ="data.type == 'task' && data.priority == '2'">
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="unread1">
-							<div class="task_priority_high">
-								<i class="far fa-circle" title="High"></i>
-								<span class="task_span">Task</span>
-							</div>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '3'">
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="unread1">
-							<div class="task_priority_medium">
-								<i class="far fa-circle" title="Medium"></i>
-								<span class="task_span">Task</span>
-							</div>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 task" *ngIf ="data.type == 'task' && data.priority == '4'">
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="unread1">
-							<div class="task_priority_low">
-								<i class="far fa-circle" title="Low"></i>
-								<span class="task_span">Task</span>
-							</div>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 leave" *ngIf ="data.type == 'leave-accepted'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 leave1" *ngIf ="data.type == 'leave-rejected'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_rejected">
-							<i class="far fa-thumbs-down" title="Rejected"></i>
-							<span class="leave1_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 other" *ngIf ="data.type == 'other'" >
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="other1">
-							<i class="far fa-bell"></i>
-							<span class="other1_span">Other</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 comment" *ngIf ="data.type == 'comment'" >
-
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="comment1">
-							<i class="fa fa-comments"></i>
-							<span class="comment_span">Comment</span>
-
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 leave" *ngIf = "data.type == 'leave'">
-				<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-				<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
-					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-					</div>
-				</div>
-			</li>
-
-			<li class="card mt-1 leave" *ngIf = "data.type == 'leaveAccepted'">
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-			<li class="card mt-1 leave" *ngIf = "data.type == 'leaveRejected'">
-				<div class="row">
-					<div class="padding-5 col-sm-2">
-						<div class="leave_approved">
-							<i class="far fa-thumbs-up" title="Approved"></i>
-							<span class="leave_span">Leave</span>
-						</div>
-					</div>
-					<div class="padding-5  col-sm-8">
-						<div class="content" >
-							<p innerHtml="{{data.content}}"></p>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<label style="float: right;">{{data.createdAt | timeAgo}}</label>
-					</div>
-				</div>
-			</li>
-		</ul>
+						<table >
+							<tr>
+								<th>ProjectManager</th>
+								<th>Status</th>
+							</tr>
+							<tr *ngFor ="let pmId of data.pmId">
+								<td>{{pmId}}</td>
+								<td>pending{{pmStatus}}</td>
+							</tr>
+						</table>
+<!-- <button type="button" class="btn btn-outline-secondary accepted" style="color: red;">
+<i class="far fa-thumbs-up a_icon"></i>Accepted</button>
+<button type="button" class="btn btn-outline-secondary rejected"><i class="far fa-thumbs-down a_icon"></i>Rejected</button> -->
+</div>
+</div>
+</li>
+<li class="card mt-1 leave" *ngIf = "data.type == 'leaveAccepted'">
+	<div class="row">
+		<div class="padding-5 col-sm-2">
+			<div class="leave_approved">
+				<i class="far fa-thumbs-up" title="Approved"></i>
+				<span class="leave_span">Leave</span>
+			</div>
+		</div>
+		<div class="padding-5 col-sm-8">
+			<div class="content" >
+				<p innerHtml="{{data.content}}"></p>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<label style="float: right;">{{data.createdAt | timeAgo}}</label>
+		</div>
 	</div>
+</li>
+
+</ul>
+</div>

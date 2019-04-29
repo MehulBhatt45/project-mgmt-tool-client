@@ -54,6 +54,7 @@ export class AllLeaveAppComponent implements OnInit {
   title;
   approvedLeavesCount;
   pendingLeavesCount;
+  rejectedLeavesCount;
   pendingLeave = [];
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
@@ -93,6 +94,7 @@ export class AllLeaveAppComponent implements OnInit {
     this.getAllDevelopers(Option);
     this.getAllLeaves();
     this. getApprovedLeaves(Option);
+    this.getRejectedLeaves(Option);
     this. getLeaves(Option);
 
     // this.getRejectedLeaves();
@@ -175,6 +177,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.rejectedLeaves().subscribe(res=>{
                     console.log("rejected leaves",res);
                     this.leaveApp = res;
+                    this.rejectedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -414,32 +417,40 @@ export class AllLeaveAppComponent implements OnInit {
               leaveAccepted(req){
                 var body;
                 console.log("dsfdsbgfdf",this.leaveApp);
-                console.log("reeeeeeee",req._id);
+                console.log("reeeeeeee",req);
                 Swal.fire({
                   title: 'Are you sure?',
                   text: "Leaves Left: "+this.leavescount[4].leavesLeft,
                   type: 'warning',
                   showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes,Approve it!'
+                  // confirmButtonColor: '#3085d6',
+                  // cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes,Approve it!',
+                  cancelButtonText: 'No, cancle!',
+                  reverseButtons: true
                 }).then((result) => {
                   if (result.value) {
                     var body;
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "approved";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("reqest of leavesssssssssssssssssss ========>" , req);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+                      let name = res.name;
+                      console.log("name of applicant",name );
+                       // moment(leave.startingDate).format('YYYY-MM-DD');
+                      let date = moment(res.startingDate).format('YYYY-MM-DD')
+                      console.log("date of application",date);
+
                       Swal.fire(
                         'Approve!',
-                        'Your Leave has been Approve.',
+                        "Leave of " + name + " from " + date + " is approved successfully",
                         'success'
                         )
                       body.status = "approved";
@@ -455,11 +466,18 @@ export class AllLeaveAppComponent implements OnInit {
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
-                    })
+                    });
+                  } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                    ){
+                    Swal.fire(
+                      'Cancled',
+                      'Leave is not approved.',
+                      'error'
+                      )
                   }
                 })
               }
-
 
               leaveRejected(req){
                 Swal.fire({
@@ -476,7 +494,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("rejected",this.leaveApp);
                     console.log("reeeeeeee",req);
                     _.forEach(this.leaveApp, (apply)=>{
-                      if(apply._id == req._id){
+                      if(apply._id == req){
                         body = apply;
                         body.status = "rejected";
                       }
@@ -484,7 +502,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("req ========>" , req.email);
                     var dev = req.email;
                     console.log("bodyy ========>" , body);
-                    this._leaveService.leaveApproval(req._id, body).subscribe((res:any)=>{
+                    this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
                         'Rejected!',
                         'Your Leave has been Rejected.',

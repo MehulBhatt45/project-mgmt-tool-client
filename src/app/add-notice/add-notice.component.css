@@ -17,6 +17,10 @@
 .selected-avatar:hover .delete-team-member{
   display: block;
 }
+.btn{
+  margin-left: 0!important;
+  margin-bottom: 0px!important;
+}
 .delete-team-member{
     position: absolute;
     top: 0;

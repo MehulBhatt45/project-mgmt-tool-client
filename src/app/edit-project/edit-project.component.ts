@@ -36,6 +36,7 @@ export class EditProjectComponent implements OnInit {
 	files: Array<File> = [];
 	ProjectId;
 	url = '';
+	devId;
 	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -53,10 +54,11 @@ export class EditProjectComponent implements OnInit {
 			Teams: new FormControl([])
 		});
 		this.route.params.subscribe(params=>{
-			this.getProjectById(params.id);
+			this.ProjectId = params.id;
+			this.getProjectById(this.ProjectId);
 			this.getAllDevelopersNotInProject(params.id);
 			this.getAllProjectManagerNotInProject(params.id);
-			this.ProjectId = params.id;
+			
 
 		})
 	}
@@ -69,16 +71,17 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+
 		$('.datepicker').pickadate({
+			min: new Date(),
 			onSet: function(context) {
-				change(context);
+				console.log('Just set stuff:', context);
+				setDate(context);
 			}
 		});
-		var change:any = ()=>{
-			this.updateForm.controls.deadline.setValue($('.datepicker').val());
+		var setDate = (context)=>{
+			this.timePicked();
 		}
-
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
@@ -86,7 +89,10 @@ export class EditProjectComponent implements OnInit {
 		this.getAllDevelopers();
 		this.getAllProjectMngr();		
 	}
-	
+	timePicked(){
+		this.updateForm.controls.deadline.setValue($('.datepicker').val())
+	}
+
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -164,9 +170,6 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
-
-			// localStorage.setItem("teams" , JSON.stringify(this.availData));
-			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;
@@ -215,7 +218,7 @@ export class EditProjectComponent implements OnInit {
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
 		console.log("project manager iddddd",updateForm._id);
-		
+
 		var data = new FormData();
 		data.append('title', updateForm.title);
 		data.append('desc', updateForm.desc);
@@ -234,7 +237,7 @@ export class EditProjectComponent implements OnInit {
 			data.append('avatar', this.files[0]);  
 		}
 		console.log('data====================================>',data);
-		
+
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
@@ -251,6 +254,7 @@ export class EditProjectComponent implements OnInit {
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
+		this.getProjectById(this.projectId);
 	}
 	deleteProject(projectId){
 		console.log(projectId);
@@ -303,12 +307,30 @@ export class EditProjectComponent implements OnInit {
 
 	removeDeveloper(event){
 		console.log(event);
-		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
-		if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
-			console.log("in fi");
-			this.availData.delete.push(event);
-			this.availableDevelopers.push(event);
-		}
+		var id;
+		console.log(event);
+		Swal.fire({
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.availData.title + "</strong> ? </span>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
+			if (result.value) {
+				var body;
+				this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
+				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
+					this.availData.delete.push(event);
+					this.availableDevelopers.push(event);
+					this.getAllDevelopersNotInProject(this.ProjectId);
+
+				}
+			}
+
+		})
 	}
 
 	addProjectManager(event){
@@ -319,11 +341,30 @@ export class EditProjectComponent implements OnInit {
 
 	removeProjectManager(event){
 		console.log(event);
-		this.projectMngrTeam.splice(_.findIndex(this.projectMngrTeam, event), 1);
-		if(_.findIndex(this.availableProjectMngr, function(o) { return o._id == event._id; }) == -1 ){
-			console.log("in fi");
-			this.availableProjectMngr.push(event);
-		}
+		console.log(event);
+		var id;
+		console.log(event);
+		Swal.fire({
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.availData.title + "</strong> ? </span>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
+			if (result.value) {
+				var body;
+				this.projectMngrTeam.splice(_.findIndex(this.projectMngrTeam, event), 1);
+				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				if(_.findIndex(this.availableProjectMngr, function(o) { return o._id == event._id; }) == -1 ){
+					console.log("in fi");
+					this.availableProjectMngr.push(event);
+				}
+
+			}
+
+		})
 	}
 
 	clearManagerSelection(event){

@@ -357,42 +357,40 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	updateStatus(newStatus, data){
-		// var taskId = localStorage.getItem('isTimerRunning');
-		// console.log('taskId==================>',taskId);
-		// if(taskId == data._id){
-			// 	console.log("drgtuhgjjnbhgjfbmnbmvn");
-			// }else{
-				if(newStatus=='complete'){
-					data.status = newStatus;
-					this._projectService.completeItem(data).subscribe((res:any)=>{
-						console.log(res);
-						var n = res.timelog.length
-						Swal.fire({
-							type: 'info',
-							title: "Task is shifted to complete from testing" ,
-							showConfirmButton:false,timer: 2000})
-					},err=>{
-						Swal.fire('Oops...', 'Something went wrong!', 'error')
-						console.log(err);
-					});
-				}else{
-					data.status = newStatus;
-					console.log("UniqueId", data.uniqueId);
-					this._projectService.updateStatus(data).subscribe((res:any)=>{
-						console.log(res);
-						// this.getProject(res.projectId);
-						var n = res.timelog.length;
-						Swal.fire({
-							type: 'info',
-							title: "Task is"  + " " +res.timelog[n -1].operation ,
-							showConfirmButton:false,timer: 2000})
-					},(err:any)=>{
-						Swal.fire('Oops...', 'Something went wrong!', 'error')
-						console.log(err);
-					})
+
+		if(newStatus=='complete'){
+			data.status = newStatus;
+			this._projectService.completeItem(data).subscribe((res:any)=>{
+				console.log(res);
+				var n = res.timelog.length
+				Swal.fire({
+					type: 'info',
+					title: "Task is shifted to complete from testing" ,
+					showConfirmButton:false,timer: 2000})
+			},err=>{
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				console.log(err);
+			});
+		}else{
+			data.status = newStatus;
+			console.log("UniqueId", data.uniqueId);
+			this._projectService.updateStatus(data).subscribe((res:any)=>{
+				console.log(res);
+				// this.getProject(res.projectId);
+				var n = res.timelog.length;
+				        let uniqueId = res.uniqueId;
+
+				Swal.fire({
+					type: 'info',
+					title: uniqueId  + " " +res.timelog[n -1].operation ,
+					showConfirmButton:false,timer: 3000})
+			},(err:any)=>{
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				console.log(err);
+			})
 
 				}
-				// }
+				
 			}
 
 			sortTasksByDueDate(type){
@@ -515,54 +513,71 @@ export class ProjectDetailComponent implements OnInit {
 
 
 			saveTheData(task){
-
-				this.loader = true;
-
-				task['projectId']= this.projectId;
-				console.log("projectId=========>",this.projectId);
-				task.priority = Number(task.priority); 
-				task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-				// task.startDate = $("#startDate").val();
-				// task.estimatedTime = $("#estimatedTime").val();
-				console.log("estimated time=====>",task.estimatedTime);
-				// task.images = $("#images").val();
-				console.log("images====>",task.images);
-				console.log(task.dueDate);
-				task.dueDate = moment().add(task.dueDate, 'days').toString();
-				task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-				console.log("task ALL details",task);
-				let data = new FormData();
-				_.forOwn(task, function(value, key) {
-					data.append(key, value)
-				});
-				if(this.files.length>0){
-					for(var i=0;i<this.files.length;i++){
-						data.append('fileUpload', this.files[i]);	
-					}
-				}
-				this._projectService.addTask(data).subscribe((res:any)=>{
-					console.log("response task***++",res);
-					Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-					this.getProject(res.projectId);
-					$('#save_changes').attr("disabled", false);
-					$('#refresh_icon').css('display','none');
-					$('#itemManipulationModel').modal('hide');
-					this.newTask = this.getEmptyTask();
-					this.editTaskForm.reset();
-					this.files = this.url = [];
-					// this.assignTo.reset();
-					this.loader = false;
-				},err=>{
-					Swal.fire('Oops...', 'Something went wrong!', 'error')
-					//$('#alert').css('display','block');
-					console.log("error========>",err);
-				});
+		
+		this.loader = true;
+		
+		task['projectId']= this.projectId;
+		console.log("projectId=========>",this.projectId);
+		task.priority = Number(task.priority); 
+		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+		// task.startDate = $("#startDate").val();
+		// task.estimatedTime = $("#estimatedTime").val();
+		console.log("estimated time=====>",task.estimatedTime);
+		// task.images = $("#images").val();
+		console.log("images====>",task.images);
+		console.log(task.dueDate);
+		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+		console.log("task ALL details",task);
+		let data = new FormData();
+		_.forOwn(task, function(value, key) {
+			data.append(key, value)
+		});
+		if(this.files.length>0){
+			for(var i=0;i<this.files.length;i++){
+				data.append('fileUpload', this.files[i]);	
 			}
+		}
+		this._projectService.addTask(data).subscribe((res:any)=>{
+			console.log("response task***++",res);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
+			$('#save_changes').attr("disabled", false);
+			$('#refresh_icon').css('display','none');
+			$('#itemManipulationModel').modal('hide');
+			this.newTask = this.getEmptyTask();
+			this.editTaskForm.reset();
+			this.files = this.url = [];
+			// this.assignTo.reset();
+			this.loader = false;
+		},err=>{
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
+			//$('#alert').css('display','block');
+			console.log("error========>",err);
+		});
+	}
 
 
 			searchTask(){
 				console.log("btn tapped");
 			}
+
 
 
 			onKey(searchText){
@@ -654,6 +669,7 @@ export class ProjectDetailComponent implements OnInit {
 					this.files.splice(index,1);
 				console.log(this.files);	
 			}
+
 
 			removeAlreadyUplodedFile(option){
 				this.newTask.images.splice(option,1);
