@@ -53,7 +53,14 @@
 }
 .image_box.active{
 	display: block;
+	display: block;
+    height: 300px;
+    width: 100%;
 }
 .image_box img.img-fluid {
     min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }

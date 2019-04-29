@@ -1,72 +1,43 @@
-<div style="background-color: #8bc34ab0;">
-	<div class="container-fluid">
-		<h1 class="text-center font-weight-bold text-black">Notice Board</h1>
-		<div class="row grid">
-			<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
-				<div class="card mb-3">
-					<div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}">
-						<a [attr.data-lightbox]="notice._id" href="{{path}}{{image}}" >
-							<img class="img-fluid" src="{{path}}{{image}}" onerror="this.src='../assets/man.png'">
-							<a>
-								<div class="mask rgba-white-slight"></div>
-							</a>
+<div class="container-fluid">
+	<h2 class="card-header-title"> <span class="icon-book-open mr-1"></span> Notice Board</h2>
+	<div class="row grid">
+		<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
+			<div class="card mb-3">
+				<div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}">
+					<a [attr.data-lightbox]="notice._id" href="{{path}}{{image}}" >
+						<img class="img-fluid" src="{{path}}{{image}}" onerror="this.src='../assets/noticeboard.jpg'">
+						<a>
+							<div class="mask rgba-white-slight"></div>
 						</a>
-					</div>
-					<div class="card-body">
-						<div class="btn-group dropleft float-right">
-							<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
-							</button>
-							<div class="dropdown-menu">
-								<input #noticeFile type="file" name="fileUpload" (change)="uploadFile($event,notice._id)" accept=".jpg, .png, .jpeg" hidden multiple>
-								<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i></a>
-								<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" (click)="noticeFile.click()"><i class="fas fa-images"></i></a>
-								<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
-							</div>
+					</a>
+				</div>
+				<div class="card-body">
+					<div class="btn-group dropleft float-right">
+						<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+						</button>
+						<div class="dropdown-menu">
+							<input #noticeFile type="file" name="fileUpload" (change)="uploadFile($event,notice._id)" accept=".jpg, .png, .jpeg" hidden multiple>
+							<a class="dropdown-item btn-floating mt-0 mx-1" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newNotice = notice"><span class="icon-pencil padding-top-1"></span></a>
+							<a class="dropdown-item btn-floating btn-tw mt-0 mx-1" (click)="noticeFile.click()"><span class="fas fa-images"></span></a>
+							<a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" title="Delete Notice" (click)="deleteNotice(notice._id)"><span class="icon-trash"></span></a>
 						</div>
-						<h5>{{notice.title}}</h5>
-						<a href="#" class="btn btn-default margin-0  btn-sm"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 					</div>
+					<h5>{{notice.title}}</h5>
+					<a href="#" class="btn btn-primary margin-0" style="margin-left: 0px;"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- <div class="container">
-	<section class="my-5">
-		<div class="row border border-radius-2 margin-bottom-30 padding-20 height-200" *ngFor="let notice of allNotice">
-			<div class="col-lg-5">
-				<div class="notice-image" *ngFor="let image of notice.images">
-					<div class="profile_image_box ng-star-inserted" title="Profile Image" touranchor="change-profile" ng-reflect-tour-anchor="change-profile">
-						<div  class="image_box_profile_image">
-							<img onerror="this.src='../assets/man.png'" src="{{path}}{{image}}">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-7 padding-left-20 mt-3">
-					<a href="#!" class="deep-purple-text">
-						<h6 class="font-weight-bold mb-1"><i class="fas fa-clipboard pr-2"></i>Notice <p class="float-right">{{notice.expireon | date:'mediumDate'}}</p></h6>
-					</a>
-					<h3 class="font-weight-bold"><strong>{{notice.title}}</strong></h3>
-					<p>{{notice.desc}}</p>
-					<div *ngIf="currentUser.userRole=='projectManager'">
-						<input #noticeFile type="file" name="fileUpload" (change)="uploadFile($event,notice._id)" accept=".jpg, .png, .jpeg" hidden>
-						<a class="btn btn-danger border-radius-10" style="margin-right: 20px;" (click)="noticeFile.click()"><i class="fas fa-images"></i></a>
-						<a class="btn btn-danger border-radius-10" style="margin-right: 20px;" (click)="deleteNotice(notice._id)"><i class="far fa-trash-alt"></i></a>
-						<a class="btn btn-indigo border-radius-10" data-toggle="modal" data-target="#exampleModalPreview" (click)="newNotice = notice"><i class="fas fa-edit"></i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</div> -->
+
 <!-- Modal edit Start Here -->
 <div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
-				<h3  _ngcontent-c4="" id="exampleModalPreviewLabel" class="card-header-title mb-1"><span class="icon-pencil"></span> Edit Notice</h3>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+			<h3  _ngcontent-c4="" id="exampleModalPreviewLabel" class="card-header-title mb-1"><span class="icon-pencil"></span> Edit Notice</h3>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
 			<div class="card-body" *ngIf="newNotice">
 				<div class="container">
 					<div class="row">
@@ -110,12 +81,10 @@
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 style="color: purple;" class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<h4 class="card-header-title" style="padding: 17px 19px 0px;" id="exampleModalLabel" *ngIf="singlenotice"> <span class="icon-book-open mr-1"></span> {{singlenotice.title}}</h4>
+				<button type="button" class="close mt-1" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
-				</button>	
-			</div>
+				</button>
 			<div class="modal-body">
 				<div class="main-img" *ngIf="singlenotice">
 					<img src="{{path}}{{singlenotice.images}}" class="img-fluid" alt="images">
@@ -133,14 +102,10 @@
 						</div>
 					</div>
 				</div>
-				<i class="fa fa-calendar" aria-hidden="true"></i>
+				<span class="icon-calendar mr-1 " aria-hidden="true"></span>
 				<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
 				<div class="desc pt-1">
 					<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="btn-group dropleft float-right">
 				</div>
 			</div>
 		</div>

@@ -102,15 +102,14 @@ h2{
     font-size: 22px;
 }
 .project{
-    height: 75vh;
-    overflow: auto;
+    height:100%;
 }
 .project_img{
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
     overflow: hidden;
-    border-radius: 50%;
-    margin: auto;
+    border-radius: 50%;    
+    margin: 10px auto;
 }
 .project_img img{
     object-fit: cover;
@@ -121,14 +120,13 @@ h2{
 }
 .project label{
     font-size: 18px;
-    line-height: 4;
+    line-height: 5;
+    margin-left: -21px;
 }
 .border_custom{
     border: 1px solid #dcdcdc;
-    background-color: #e8e7e7;
     padding: 15px;
 }
 .profile p{
     font-size: 20px;
-    margin-bottom: 1px;
 }

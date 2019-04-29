@@ -42,24 +42,24 @@
 		<div class="tab-content p-0" id="myTabContentMD">
  			<div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
  				<div class="card profile padding-15">
- 				<h2><span class="icon-user mr-1 black-text"></span> About</h2>
+ 				<h2><span class="icon-user mr-1"></span> About</h2>
  					<h3>{{currentUser.name}}</h3>
- 					<p><span class="icon-envelope"></span> {{currentUser.email}}</p>
- 					<p><span class="icon-screen-smartphone"></span> +919876543210</p>
- 					<p><span class="fab fa-skype"></span> tirthrajbarot</p>
+ 					<p><span class="icon-envelope mr-1"></span> {{currentUser.email}}</p>
+ 					<p><span class="icon-screen-smartphone mr-1"></span> +919876543210</p>
+ 					<p><span class="fab fa-skype mr-1"></span> tirthrajbarot</p>
  				</div>
  			</div>
  			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
  				<div class="card">
- 				<h2><span class="icon-list black-text"></span> Projects</h2>
- 					<div class="container project">
+ 				<h2><span class="icon-list"></span> Projects</h2>
+ 					<div class="project">
  						<div class="row border-bottom" *ngFor="let project of projects">
- 							<div  class="col-md-3 mb-10">
+ 							<div  class="col-md-1 mb-10">
  								<div class="project_img">
  									<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='../assets/4.jpeg'" >
  								</div>
  							</div>
- 							<div class="col-md-9">
+ 							<div class="col-md-11">
  								<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
  							</div>
  						</div>
@@ -68,7 +68,7 @@
  			</div>
  			<div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md">
  				<div class="card">
- 				<h2><span class="icon-bell black-text mr-1"></span> Notify</h2>
+ 				<h2><span class="icon-bell mr-1"></span> Notify</h2>
  					<div class="notify">
  						<form [formGroup]="editTEmail">
  							<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
@@ -99,13 +99,26 @@
  									</div>
  								</div>
  							</div>
+ 							<ng-select placeholder="Send To" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+ 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
+ 									<span class="ng-value-label">{{item.title}}</span>
+ 									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+ 								</ng-template>
+ 								<div class="row">
+ 									<ng-template ng-option-tmp let-item="item">
+ 										<h5 class="mt-1">{{item.title}}</h5>
+ 										<h6>{{item.uniqueId}}</h6>
+ 									</ng-template>
+ 								</div>
+ 							</ng-select>
+ 							<!--select convert into ng select.....  
  							<div class="form-group">
  								<label for="inputMDEx">Send To</label>
  								<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
  									<option value="{{this.total}}" selected>All Team</option>
  									<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
  								</select>
- 							</div>
+ 							</div> -->
  							<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
  						</form>
  					</div>
