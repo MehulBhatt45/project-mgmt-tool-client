@@ -11,7 +11,7 @@
 				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
-							<div class="card-body" style="padding: 0px;">
+							<div class="card-body" style="padding: 0px;" id = "cardId_{{task.uniqueId}}">
 								<table class="table-responsive">
 									<tr>
 										<td colspan="2">
