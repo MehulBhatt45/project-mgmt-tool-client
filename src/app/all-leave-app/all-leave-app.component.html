@@ -152,6 +152,17 @@
         </div>
       </div>
     </div>
+    <div class="row"> 
+      <div class="col-sm-7">
+        <h2 class="text-center" *ngIf="leaveApp">Types of Leaves</h2>
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="col-sm-5">
+         <h2 class="text-center" *ngIf="leaveApp">Duration</h2>
+        <canvas id="pieChart1" style="margin-top: 20px;"></canvas>
+      </div>
+      
+    </div>
   </div>
 </div>
 <div class="total_leave">
@@ -159,19 +170,21 @@
    <div class="row" *ngIf="leavesToDisplay">
     <div class="col-sm-5">
       <h2 class="text-center pt-2">Total Leaves</h2>
-      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{allLeaves.length}} responses</p>
       <canvas id="pieChart"></canvas>
     </div>            
     <div class="col-md-1">
     </div>
     <div class="col-sm-5">
       <h2 class="text-center pt-2">Duration</h2>
-      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{allLeaves.length}} responses</p>
       <canvas id="pieChart1"></canvas>
     </div>
   </div>
 </div>
 </div>
+
+
 
 <!-- Comment Model -->
 

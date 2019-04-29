@@ -62,7 +62,7 @@ export class AllLeaveAppComponent implements OnInit {
 
   }
   getEmptytracks(){
-
+    console.log("getEmptytracks calling===============================================================");
     this.leavescount = [
     {
       "typeOfLeave" : "Sick_Leave",
@@ -96,6 +96,7 @@ export class AllLeaveAppComponent implements OnInit {
     this. getApprovedLeaves(Option);
     this.getRejectedLeaves(Option);
     this. getLeaves(Option);
+    // this. getAllLeave();
 
     // this.getRejectedLeaves();
 
@@ -136,7 +137,6 @@ export class AllLeaveAppComponent implements OnInit {
 
                 });
               }
-
               getApprovedLeaves(option){
                 this.loader=true;
                 setTimeout(()=>{
@@ -160,6 +160,56 @@ export class AllLeaveAppComponent implements OnInit {
                     this.allAproveLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.allAproveLeaves);
                     console.log("applicationsss==>",this.leaveApp);
+                    this.getLeaveCount(this.allAproveLeaves);
+                    this.getLeaveDuration(this.allAproveLeaves);
+                    this.getEmptytracks();
+                    var datas = document.getElementById("barChart");
+                    var myPieChart = new Chart(datas, {
+                      type: 'bar',
+                      data: {
+                        labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
+                        datasets: [{
+                          label: 'Types of Leaves',
+                          data: this.getLeaveCount(this.allAproveLeaves),
+                          backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+                        }]
+                      },
+                      options: {
+
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                    });
+
+                    var ctxP = document.getElementById("pieChart1");
+                    var myPieChart = new Chart(ctxP, {
+                      type: 'pie',
+                      data: {
+                        labels: ["Half Day", "Full Day", "More Day"],
+                        datasets: [{
+                          data:this.getLeaveDuration(this.allAproveLeaves),
+                          backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+                        }]
+                      },
+
+                      options: {
+                        responsive: true,
+                        legend:{
+                          position:"right",
+                          labels:{
+                            boxWidth:12,
+                            // usePointStyle:true,
+                          }
+                        }
+                      }
+                    });
 
                     this.aLeave = true;
                     this.pLeave = false;
@@ -192,6 +242,57 @@ export class AllLeaveAppComponent implements OnInit {
                     })
                     this.rejeLeaves = this.leaveApp;
                     console.log("rejected leaves",this.leaveApp);
+                    this.getLeaveCount(this.leaveApp);
+                    this.getLeaveDuration(this.leaveApp);
+                    this.getEmptytracks();
+                    var datas = document.getElementById("barChart");
+                    var myPieChart = new Chart(datas, {
+                      type: 'bar',
+                      data: {
+                        labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
+                        datasets: [{
+                          label: 'Types of Leaves',
+                          data: this.getLeaveCount(this.leaveApp),
+                          backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+                        }]
+                      },
+                      options: {
+
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                    });
+
+                    var ctxP = document.getElementById("pieChart1");
+                    var myPieChart = new Chart(ctxP, {
+                      type: 'pie',
+                      data: {
+                        labels: ["Half Day", "Full Day", "More Day"],
+                        datasets: [{
+                          data:this.getLeaveDuration(this.leaveApp),
+                          backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+                        }]
+                      },
+
+                      options: {
+                        responsive: true,
+                        legend:{
+                          position:"right",
+                          labels:{
+                            boxWidth:12,
+                            // usePointStyle:true,
+                          }
+                        }
+                      }
+                    });
+
                     this.rLeave = true;
                     this.aLeave = false;
                     this.pLeave = false;
@@ -235,8 +336,60 @@ export class AllLeaveAppComponent implements OnInit {
                       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
                     });
 
-                    this.allLeaves = this.leaveApp; 
-                    console.log("applicationsss==>",this.leaveApp)
+                    // this.allLeaves = this.leaveApp; 
+                    console.log("applicationsss==>",this.leaveApp);
+                    this.getLeaveCount(this.leaveApp);
+                    this.getLeaveDuration(this.leaveApp);
+                    this.getEmptytracks();
+                    var datas = document.getElementById("barChart");
+                    var myPieChart = new Chart(datas, {
+                      type: 'bar',
+                      data: {
+                        labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
+                        datasets: [{
+                          label: 'Types of Leaves',
+                          data: this.getLeaveCount(this.leaveApp),
+                          backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+                        }]
+                      },
+                      options: {
+
+                        scales: {
+                          yAxes: [{
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                    });
+
+                    var ctxP = document.getElementById("pieChart1");
+                    var myPieChart = new Chart(ctxP, {
+                      type: 'pie',
+                      data: {
+                        labels: ["Half Day", "Full Day", "More Day"],
+                        datasets: [{
+                          data:this.getLeaveDuration(this.leaveApp),
+                          backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
+                          hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+                        }]
+                      },
+
+                      options: {
+                        responsive: true,
+                        legend:{
+                          position:"right",
+                          labels:{
+                            boxWidth:12,
+                            // usePointStyle:true,
+                          }
+                        }
+                      }
+                    });
+
+
                     this.pLeave = true;
                     this.aLeave = false;
                     this.rLeave = false;
@@ -247,11 +400,11 @@ export class AllLeaveAppComponent implements OnInit {
                 },1000);
               }
               getAllLeaves(){
-                this._leaveService.pendingLeaves().subscribe(res=>{
-                  this.leaveApp = res;
-                  console.log("data avo joye==========>",this.leaveApp);
+                this._leaveService.getAllLeaves().subscribe(res=>{
+                  this.allLeaves = res;
+                  console.log("data avo joye==========>",this.allLeaves);
                   $('#statusAction').show();
-                  _.map(this.leaveApp, leave=>{
+                  _.map(this.allLeaves, leave=>{
                     _.forEach(this.developers, dev=>{
                       if(leave.email == dev.email){
                         leave['dev']= dev;
@@ -259,18 +412,19 @@ export class AllLeaveAppComponent implements OnInit {
 
                     })
                   })
-                  _.forEach(this.leaveApp , (leave)=>{
+                  _.forEach(this.allLeaves , (leave)=>{
                     leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
                     leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
                   });
                   this.getEmptytracks();
                   var ctxP = document.getElementById("pieChart");
                   var myPieChart = new Chart(ctxP, {
-                    type: 'pie',
+                    type: 'doughnut',
                     data: {
                       labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
                       datasets: [{
-                        data: this.getLeaveCount(this.leaveApp),
+                         label: 'Types of Leaves',
+                        data: this.getLeaveCount(this.allLeaves),
                         backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
                         hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
                       }]
@@ -288,20 +442,22 @@ export class AllLeaveAppComponent implements OnInit {
 
                   var ctxP = document.getElementById("pieChart1");
                   var myPieChart = new Chart(ctxP, {
-                    type: 'pie',
+                    type: 'horizontalBar',
                     data: {
                       labels: ["Half Day", "Full Day", "More Day"],
                       datasets: [{
-                        data:this.getLeaveDuration(this.leaveApp),
+                        label: 'Duration of Leaves',
+                        data:this.getLeaveDuration(this.allLeaves),
                         backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
                         hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
                       }]
                     },
 
+
                     options: {
                       responsive: true,
                       legend:{
-                        position:"right",
+                        position:"top",
                         labels:{
                           boxWidth:12,
                           // usePointStyle:true,
@@ -364,6 +520,7 @@ export class AllLeaveAppComponent implements OnInit {
                     break; 
                   }
                 })
+                console.log(Half_Day.length,Full_Day.length,More_Day.length);
                 return [Half_Day.length,Full_Day.length,More_Day.length];
               }
 
@@ -444,7 +601,7 @@ export class AllLeaveAppComponent implements OnInit {
                     this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       let name = res.name;
                       console.log("name of applicant",name );
-                       // moment(leave.startingDate).format('YYYY-MM-DD');
+                      // moment(leave.startingDate).format('YYYY-MM-DD');
                       let date = moment(res.startingDate).format('YYYY-MM-DD')
                       console.log("date of application",date);
 
