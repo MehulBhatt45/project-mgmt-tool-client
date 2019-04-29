@@ -313,10 +313,6 @@ export class AllLeaveAppComponent implements OnInit {
                   console.log(err);
 
                 });
-                // this.pLeave = false;
-
-                // this.pLeave = false;
-
               }
 
 
