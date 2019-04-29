@@ -473,9 +473,6 @@ export class ChildComponent  implements OnInit{
         timer: 2000,
         // position: 'top-end',
       })
-
-      // setTimeout(()=>{
-      // },2000);
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
