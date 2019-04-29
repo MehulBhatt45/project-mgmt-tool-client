@@ -75,7 +75,6 @@
 }
 .card{
     width: 100%;
-    margin-top: 10px;
     padding: 20px;
 }
 .contant ul li{
@@ -85,20 +84,19 @@
 .name{
     color: #3998c5;
     position: relative;
-    font-size: 35px;
+    font-size: 30px;
+    padding-left: 10px;
 }
 h2{
     color: #3998c5;
-    text-align: center;
 }
 .nav-item .nav-link{
     padding: 15px;
-    background-color: #fff;
-    font-size: 18px;
+    text-align: left;
+    border-left: 4px solid transparent;
 }
 .nav-item .nav-link.active{
-    border-bottom:2px solid #3998c5;
-    /*color: #3998c5;*/
+    border-color: #3998c5;
 }
 .profile i{
     font-size: 22px;
@@ -125,6 +123,12 @@ h2{
     font-size: 18px;
     line-height: 4;
 }
-.tab-content{
-    padding: 0px;
+.border_custom{
+    border: 1px solid #dcdcdc;
+    background-color: #e8e7e7;
+    padding: 15px;
+}
+.profile p{
+    font-size: 20px;
+    margin-bottom: 1px;
 }
