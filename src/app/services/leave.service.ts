@@ -70,12 +70,7 @@ export class LeaveService {
 		return this.http.get(config.baseApiUrl+"leave/leavesByUserId/"+useremail);
 
 	}
-
-
-
-
-
-	leaveApproval(req, body){
+leaveApproval(req, body){
 		var body = body;
 		var id = req;
 		console.log("req=============",req);
@@ -186,6 +181,12 @@ var obj = {date:date};
 console.log("date event------=-=-=-=",obj);
 
 return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
+
+}
+updateNotificationApprovedStatus(leaveId,leaveStatus){
+	console.log("leaveId======>",leaveId);
+	console.log("leaveStatus=====================>",leaveStatus)
+	return this.http.get(config.baseApiUrl+"sendNotification/get-pm-notification/"+leaveId+"/"+leaveStatus);
 
 }
 }

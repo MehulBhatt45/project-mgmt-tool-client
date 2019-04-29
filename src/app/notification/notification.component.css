@@ -226,6 +226,15 @@ select.browser-default {
 .unread{
 	background-color: #f1eaff;
 }
-/*button{
-	_
-}*/
+.accepted {
+    color: #008a00!important;
+    /*background-color: transparent;*/
+    border: 1px solid #008a00;
+}
+.rejected{
+	color: red!important;
+	border: 1px solid red;
+}
+table, th, td {
+  border: 1px solid black;
+}

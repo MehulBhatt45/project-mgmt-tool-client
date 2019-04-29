@@ -52,6 +52,8 @@ export class AllLeaveAppComponent implements OnInit {
   aLeave:boolean = false;
   rLeave:boolean = false;
   title;
+  approvedLeavesCount;
+  pendingLeavesCount;
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -89,6 +91,8 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavesByUserId();
     this.getAllDevelopers(Option);
     this.getAllLeaves();
+    this. getApprovedLeaves(Option);
+    this. getLeaves(Option);
 
     // this.getRejectedLeaves();
 
@@ -137,6 +141,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.approvedLeaves().subscribe(res=>{
                     console.log("approved leaves",res);
                     this.leaveApp = res;
+                    this.approvedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -200,6 +205,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
+                    this.pendingLeavesCount= this.leaveApp.length;
                     $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
                     console.log("data avo joye==========>",this.leaveApp);
                     $('#statusAction').show();
@@ -533,9 +539,9 @@ export class AllLeaveAppComponent implements OnInit {
                       $('.selected').css('display','none');
                       console.log("sucess");
                       _.forEach(this.leaves , (leave)=>{
-                        console.log("dsfbbdsf",leave);
+                        // console.log("dsfbbdsf",leave);
                         if(developerId == leave.email ){
-                          console.log(leave);
+                          // console.log(leave);
                           $('.unselected').css('display','none');
                           $('.selected').css('display','block');
                           this.leaveApp.push(leave);
