@@ -22,31 +22,7 @@ import { MessagingService } from '../services/messaging.service';
 })
 export class NotificationComponent implements OnInit {
 	@Input() acceptedLeave;
-<<<<<<< HEAD
-		userNotification:any;
-		path = config.baseMediaUrl;
-		currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		allLeaves;
-		allAproveLeaves;
-		leaves;
-		projectId;
-		leavescount:any;
-		leaveApp;
-		rejectedLeave;
-		developers;
-		rejeLeaves;
-		developer;
-		projects;
-		developerId;
-		id;
-		projectArr =[];
-		finalArr = [];
-		project;
-		start;
-		currentUserId;
-		createdAt;
 
-=======
 	userNotification:any;
 	path = config.baseMediaUrl;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -68,7 +44,6 @@ export class NotificationComponent implements OnInit {
 	project;
 	start;
 	currentUserId;
->>>>>>> 670d972d260131530cc35ad1a433defc0e5c8346
 
 	constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
 		public _projectservice: ProjectService,public _leaveService:LeaveService) {
