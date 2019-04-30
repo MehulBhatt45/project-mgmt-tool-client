@@ -45,6 +45,7 @@ export class NotificationComponent implements OnInit {
 		project;
 		start;
 		currentUserId;
+		createdAt;
 
 
 		constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
