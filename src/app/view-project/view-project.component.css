@@ -127,7 +127,7 @@ a.dropdown-item.btn-floating {
 }
 button{
     display: table;
-    float: right;
+    /*float: right;*/
     border:none;
 }
 .form-body{
@@ -382,4 +382,24 @@ button.btn.btn-default.progress_summary {
     margin-top: 200px;
     max-width: 500px;
 }
+.attendance{
+    padding: 1rem;
+    display: inline;
+    text-align: center;
+}
+.modal-content {
+    background-color: beige;
+}
+.checkIn-btn{
+    background-color: lightblue !important;
+    width: 150px !important;
+    border-radius: 5px !important;
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px !important;
 
+}
+.checkIn-btn:hover {
+    background-color: white !important;
+}
