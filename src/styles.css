@@ -68,6 +68,7 @@
     -webkit-transform: translate(100%, 0);
             transform: translate(100%, 0);
   }
+}
 
   @-webkit-keyframes move1 {
     0% {
@@ -321,42 +322,6 @@ body.modal-open {
 
 /*change ends*/
 
-
-
-
-
-/*
-nav.navbar {
-  border: none;
-  border-radius: 0px;
-  margin: 0px;
-  padding: 0px;
-}
-.blue{
-	height: 15px;
-	width: 15px;
-	background-color: #fff !important;
-	border: 3px solid #0087ff;
-	border-radius: 50%;
-	display: inline-block;
-}
-.red{
-	height: 15px;
-	width: 15px;
-	background-color: #fff !important;
-	border: 3px solid #f33838;
-	border-radius: 50%;
-	display: inline-block;
-}
-.yellow{
-	height: 15px;
-	width: 15px;
-	background-color: #fff !important;
-	border: 3px solid #ffc202;
-	border-radius: 50%;
-	display: inline-block;
-}
-*/
 
 /*Low Priority*/
 .primary{

@@ -201,7 +201,7 @@ export class EditProjectComponent implements OnInit {
 
 	}
 	updateProject(updateForm){
-		console.log(this.files,updateForm);
+		console.log("update details of project",this.files,updateForm);
 		console.log(updateForm.Teams);
 		// console.log("avail data in update form ====>" , this.availData);
 		// console.log('updateForm==============>',updateForm);
