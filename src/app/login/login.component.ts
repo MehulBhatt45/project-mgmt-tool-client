@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@a
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
 import { LoginService } from '../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 declare var $:any;
 
@@ -25,13 +26,17 @@ export class LoginComponent implements OnInit {
   err: any;
   error1Msg;
   errorMsg;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  name;
+  
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private _loginService: LoginService,
-    private _alertService: AlertService
+    private _alertService: AlertService,
+    private toaster: ToastrService
     ) {
     // redirect to home if already logged in
     if (this._loginService.currentUserValue) { 
@@ -80,7 +85,30 @@ export class LoginComponent implements OnInit {
     this._loginService.login(this.loginForm.value)
     .pipe(first())
     .subscribe(
-      data => {
+      data => {  
+        console.log("datysdsatyds",data);
+        // Swal.fire({type: 'success',title: 'Login Successfully', showConfirmButton:false, timer:2000});
+        let name = data.data.name;
+        var myDate = new Date();
+        console.log("date mde che ke nai",myDate);
+        var hrs = myDate.getHours();
+        console.log("time mde che ke nai",hrs);
+        var greet ;
+        if(hrs<12)
+          greet= 'Good Morning';
+        else if (hrs>=12 && hrs<=17)
+          greet = 'Good Afternoon';
+        else if (hrs>=17 && hrs<=24)
+          greet = 'Good Evening';
+
+        console.log("sanj no time print thavo joye",greet);
+        console.log("current user name>>>>>>><<<<<<<",name);
+        this.toaster.success(" "," " + greet + " " + name + ' Have a nice day', {
+          timeOut: 2000,
+          positionClass: 'toast-top-center',
+          toastClass: 'custom',
+          // messageClass:'name',
+        })
         this.router.navigate([this.returnUrl]);
       },
       error => {
@@ -142,4 +170,7 @@ export class LoginComponent implements OnInit {
     this.show = !this.show;
     this.pwd = !this.pwd;
   }
+
+
+
 }

@@ -33,7 +33,7 @@ export class CreateProjectComponent implements OnInit {
       avatar:new FormControl('',Validators.required),
       desc: new FormControl('',Validators.required),
       deadline: new FormControl(''),
-      uniqueId: new FormControl(''),
+      uniqueId: new FormControl('',),
       clientEmail: new FormControl('',),
       clientFullName: new FormControl('',),
       clientContactNo: new FormControl('',),

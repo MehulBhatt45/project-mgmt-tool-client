@@ -69,7 +69,7 @@
 		<div class="modal-content">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">	
 			</button>
-			<div class="modal-body view view-cascade">
+			<div class="modal-body">
 				<h3 class="card-header-title" id="itemModal"><span class="icon-note"></span> {{modalTitle}}</h3>
 				<form style="width: 100%;" [formGroup]="editTaskForm">
 					<div class="form-group">
@@ -113,15 +113,17 @@
 							<label for="dueDate">Due Days</label>
 							<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 						</div>
+
 						<div class="form-group col-md-12">
 							<label for="estimatedTime">Estimated Time</label>
 							<div class="md-form form-group">
 								<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
 							</div>
+
 						</div>
-						<div class="form-group col-md-12">
-							<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
-						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
 					</div>
 				</form>
 				<button type="button" class="btn btn-default ml-0" data-dismiss="modal">Close</button>

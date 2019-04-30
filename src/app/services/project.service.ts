@@ -339,6 +339,7 @@ export class ProjectService {
 
 	}
 	deleteTaskById(data){
+		console.log("data of taskkkkkkkkkkkkkkkkkkkssssssssssss",data);
 		var taskId = data._id;
 		const httpOptions = {
 			headers: new HttpHeaders({

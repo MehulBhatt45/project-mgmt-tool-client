@@ -1,12 +1,13 @@
-<h3 class="card-header-title"> <span class="icon-user-follow"></span> Add Employee </h3>
-<div class="card">
-	<div class="card-body">
-		<form [formGroup]="addEmployeeForm" autocomplete="off">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="md-form form-group">
-						<label for="firstName"> Name</label>
-						<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
+	<h3 class="card-header-title"> <span class="icon-user-follow"></span> Add Employee </h3>
+	<div class="card">
+		<div class="card-body">
+			<form [formGroup]="addEmployeeForm" autocomplete="off">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<label for="name"> Name</label>
+							<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -14,11 +15,11 @@
 						<label for="email">Email</label>
 						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
 					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="md-form form-group">
-						<label for="mobile">Phone No.</label>
-						<input type="number" autocomplete= 'false | random-string'  formControlName="mobile" class="form-control" id="mobile">
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<label for="phone">Phone No.</label>
+							<input type="number" autocomplete= 'false | random-string'  formControlName="phone" class="form-control" id="phone">
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -27,59 +28,58 @@
 						<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="md-form form-group">
-						<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="md-form form-group">
-						<select class="custom-select custom-select-lg" formControlName="userRole">
-							<option value="" disabled selected>Choose user Role</option>
-							<option value="admin">Admin</option>
-							<option value="projectmanager">Project Manager</option>
-							<option value="developer">Developer</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="md-form form-group">
-						<label for="experience">Experience (Before Joining)</label>
-						<input type="text" autocomplete= 'false | random-string'  formControlName="experience" class="form-control" id="experience">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="file-field">
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
-							<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
 						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
+						<div class="col-md-4">
+							<div class="md-form form-group">
+								<select class="custom-select custom-select-lg" formControlName="userRole">
+									<option value="" disabled selected>Choose user Role</option>
+									<option value="admin">Admin</option>
+									<option value="projectManager">Project Manager</option>
+									<option value="developer">Developer</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="file-field" >
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
-							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="md-form form-group">
+							<label for="experience">Experience (Before Joining)</label>
+							<input type="text" autocomplete= 'false | random-string'  formControlName="experience" class="form-control" id="experience">
 						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload Your CV">
+					</div>
+					<div class="col-md-12">
+						<div class="file-field">
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
+								<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="md-form form-group">
-						<button type="submit" class="btn btn-default ml-0" (click)="addEmployee(addEmployeeForm)" [disabled]="!addEmployeeForm.valid">Add Employee</button>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="file-field" >
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
+								<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your CV">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<button type="submit" class="btn btn-default ml-0" (click)="addEmployee(addEmployeeForm)" [disabled]="!addEmployeeForm.valid">Add Employee</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>

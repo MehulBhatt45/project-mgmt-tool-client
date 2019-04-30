@@ -387,9 +387,9 @@ export class HeaderComponent implements OnInit {
 	}
 	
 	saveTheData(task){
-
+		
 		this.loader = true;
-
+		
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
@@ -402,36 +402,46 @@ export class HeaderComponent implements OnInit {
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
-		
+		console.log("task ALL details",task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
 			data.append(key, value)
 		});
-
-
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
-		
-		console.log("ressssssssssss==>",data);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
-			this.task = this.getEmptyTask();
-			console.log("thissssssssssss dot task");
+			this.newTask = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});

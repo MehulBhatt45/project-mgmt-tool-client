@@ -43,7 +43,7 @@ export class NotificationComponent implements OnInit {
 	project;
 	start;
 	currentUserId;
-
+	pmStatus;
 	constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
 		public _projectservice: ProjectService,public _leaveService:LeaveService) {
 
@@ -61,12 +61,15 @@ export class NotificationComponent implements OnInit {
 	getNotificationByUserId(currentUserId){
 		this._projectservice.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
 			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
-			// console.log("loginUser==========>",loginUser);
+			console.log("loginUser==========>",loginUser);
 			this.userNotification = res;
+			console.log("data==============>",this.userNotification);
+			let name = this.userNotification.name;
+			console.log("name of ommmmmmmmmmmm",name);
+
 			this.userNotification.sort(custom_sort);
 			this.userNotification.reverse();
 			var start = new Date();
-			
 			start.setTime(1532403882588);
 			console.log("plzzz avi jaje",this.userNotification);
 		})
@@ -77,6 +80,15 @@ export class NotificationComponent implements OnInit {
 	
 	displayLeaveEmit(leave){
 		console.log("leave ==>",leave);	
+	}
+	updateNotificationApprovedStatus(leaveId,leaveStatus){
+		this._leaveService.updateNotificationApprovedStatus(leaveId,leaveStatus).subscribe((res:any)=>{
+			console.log("leaveid------------------->",leaveId);
+			console.log("leaveStatus===========>",leaveStatus);
+			console.log("Approved=======>",res);
+			// this.pmStatus = res.leaveStatus;
+			// console.log("pmStatus=============>",this.pmStatus);
+		})
 	}
 
 }

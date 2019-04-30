@@ -22,6 +22,7 @@
         <div class="leave_icon">
           <img src="assets/icons/pending.png">
         </div>
+
         <span class="nav-link">Pending Leaves  {{pendingLeavesCount}}</span>
       </a>
     </li>
@@ -30,6 +31,7 @@
         <div class="leave_icon">
           <img src="assets/icons/approv.png">
         </div>
+
         <span class="nav-link">Approved Leaves  {{approvedLeavesCount}}</span>
       </a>
     </li>
@@ -152,26 +154,51 @@
         </div>
       </div>
     </div>
+    <div class="row"> 
+      <div class="col-sm-7">
+        <h2 class="text-center" *ngIf="leaveApp">Types of Leaves</h2>
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="col-sm-5">
+         <h2 class="text-center" *ngIf="leaveApp">Duration</h2>
+        <canvas id="pieChart1" style="margin-top: 20px;"></canvas>
+      </div>
+      
+    </div>
   </div>
 </div>
 <div class="total_leave">
   <div class="container">
    <div class="row" *ngIf="leavesToDisplay">
+<<<<<<< HEAD
     <div class="col-sm-5">
       <h2 class="text-center pt-2">Total Leaves</h2>
-      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{allLeaves.length}} responses</p>
+=======
+    <div class="col-sm-5 border p-2">
+      <h2 class="text-center">Total Leaves</h2>
+      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #181123;font-weight: bold;background-color: #e2e2e2; padding: 14px;">{{leaveApp.length}} responses</p>
+>>>>>>> design
       <canvas id="pieChart"></canvas>
     </div>            
     <div class="col-md-1">
     </div>
+<<<<<<< HEAD
     <div class="col-sm-5">
       <h2 class="text-center pt-2">Duration</h2>
-      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{leaveApp.length}} responses</p>
+      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{allLeaves.length}} responses</p>
+=======
+    <div class="col-sm-5 border p-2">
+      <h2 class="text-center">Duration</h2>
+      <p class="text-center" *ngIf="leaveApp" style="margin-top: 16px; color: #181123;font-weight: bold;background-color:#e2e2e2; padding: 14px;">{{leaveApp.length}} responses</p>
+>>>>>>> design
       <canvas id="pieChart1"></canvas>
     </div>
   </div>
 </div>
 </div>
+
+
 
 <!-- Comment Model -->
 
@@ -263,8 +290,7 @@ aria-hidden="true">
           </div>
         </div>
       </div>
-     <!--    <a class="float-right"><span class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></span>
-      <span class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></span></a> -->
+     
     </div>
   </div>
 </div>
