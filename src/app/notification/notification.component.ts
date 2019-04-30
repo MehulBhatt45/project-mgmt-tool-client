@@ -50,7 +50,7 @@ export class NotificationComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log("appected leave " , this.acceptedLeave);
+		// console.log("appected leave " , this.acceptedLeave);
 		this.get();
 		this.getNotificationByUserId(this.currentUserId);
 	}
@@ -66,6 +66,7 @@ export class NotificationComponent implements OnInit {
 			console.log("data==============>",this.userNotification);
 			let name = this.userNotification.name;
 			console.log("name of ommmmmmmmmmmm",name);
+
 			this.userNotification.sort(custom_sort);
 			this.userNotification.reverse();
 			var start = new Date();

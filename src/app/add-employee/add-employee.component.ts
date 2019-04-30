@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {LoginService} from '../services/login.service';
 declare var $ : any;
+import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,11 +22,11 @@ export class AddEmployeeComponent implements OnInit {
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
-			// lname:new FormControl( '', [Validators.required]),
 			password:new FormControl('',[Validators.required]),
+			isDelete: new FormControl('false',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
-			mobile:new FormControl(''),
+			phone:new FormControl(''),
 			userRole:new FormControl('',[Validators.required]),
 			experience:new FormControl(''),	
 			profile:new FormControl(''),
@@ -75,7 +76,27 @@ export class AddEmployeeComponent implements OnInit {
 				// } 	
 
 				addFile(event){
-					this.files.push(event.target.files[0]);
+					// this.files.push(event.target.files[0]);
+					_.forEach(event.target.files, (file:any)=>{
+						// console.log(file.type);
+						if(file.type == "application/pdf"){
+							this.files.push(file);
+							// var reader = new FileReader();
+							// reader.readAsDataURL(file);
+							// reader.onload = (e:any) => {
+							// 	if(option == 'item')
+							// 		this.url.push(e.target.result);
+							// 	if(option == 'comment')
+							// 		this.commentUrl.push(e.target.result);
+							// }
+						}else {
+							Swal.fire({
+								title: 'Error',
+								text: "You can upload pdf file only",
+								type: 'warning',
+							})
+						}
+					})
 				}
 
 

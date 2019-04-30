@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
 	project;
 	url = [];
 	commentUrl = [];
+	projectArr = [];
+	finalArr = [];
 	newTask = { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
 	path = config.baseMediaUrl;
 	projectId;
@@ -49,7 +51,7 @@ export class HeaderComponent implements OnInit {
 	unreadNotification;
 	newNotification
 	newSprint = [];
-
+	
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
 		this.addUserProfile = this.formBuilder.group({
@@ -248,6 +250,32 @@ export class HeaderComponent implements OnInit {
 		})
 
 	}
+	getAllProjects(){
+		this._projectService.getProjects().subscribe(res=>{
+			console.log("all projects =====>" , res);
+			var pmanagerId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("current user ====>" , pmanagerId);
+			this.projects = res;
+			console.log(this.projects);
+			_.forEach(this.projects , (task)=>{
+				_.forEach(task.pmanagerId , (project)=>{
+					if(project._id == pmanagerId){
+						this.projectArr.push(task);
+					}
+				})
+			})
+			for(var i=0;i<this.projectArr.length;i++){
+				this.finalArr.push(this.projectArr[i]);
+				console.log("response======>",this.finalArr);
+			}
+		},
+		err=>{
+			this._alertService.error(err);
+			console.log(err);
+		})
+		this.projectArr = [];
+		this.finalArr = [];
+	}
 
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
@@ -359,9 +387,9 @@ export class HeaderComponent implements OnInit {
 	}
 	
 	saveTheData(task){
-
+		
 		this.loader = true;
-
+		
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
@@ -374,43 +402,53 @@ export class HeaderComponent implements OnInit {
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
-		
+		console.log("task ALL details",task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
 			data.append(key, value)
 		});
-
-
 		if(this.files.length>0){
 			for(var i=0;i<this.files.length;i++){
 				data.append('fileUpload', this.files[i]);	
 			}
 		}
-		
-	console.log("ressssssssssss==>",data);
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
-			this.task = this.getEmptyTask();
-			console.log("thissssssssssss dot task");
+			this.newTask = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
 	}
-	 getEmptyTask(){
-	 	return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
-	 }
+	getEmptyTask(){
+		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
+	}
 
 	reloadProjects(){
 		this._projectService.getProjects().subscribe(res=>{
@@ -436,14 +474,23 @@ export class HeaderComponent implements OnInit {
 
 	onSelectFile(event,option){
 		_.forEach(event.target.files, (file:any)=>{
-			this.files.push(file);
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'comment')
-					this.commentUrl.push(e.target.result);
+			// console.log(file.type);
+			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+				this.files.push(file);
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = (e:any) => {
+					if(option == 'item')
+						this.url.push(e.target.result);
+					if(option == 'comment')
+						this.commentUrl.push(e.target.result);
+				}
+			}else {
+				Swal.fire({
+					title: 'Error',
+					text: "You can upload images only",
+					type: 'warning',
+				})
 			}
 		})
 	}
@@ -500,4 +547,5 @@ export class HeaderComponent implements OnInit {
 		// this.task.priority = null;
 		// this.newTask.priority = null;
 	}
+	
 }

@@ -138,6 +138,16 @@ leaveApproval(req, body){
 		return this.http.get(config.baseApiUrl+"leave/leaveid"+leaveid);	
 	}
 
+	getAllLeaves(){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/list-of-all-leaves-app");	
+	}
+
 
 
 

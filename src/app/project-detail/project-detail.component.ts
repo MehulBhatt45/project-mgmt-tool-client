@@ -252,79 +252,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
-	// getProject(id){
-
-	// 	console.log("projectId=====>",this.projectId);
-	// 	this.loader = true;
-	// 	setTimeout(()=>{
-	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
-	// 			console.log("title=={}{}{}{}{}",res);
-	// 			this.temp = res;
-	// 			this.pro = res;
-	// 			console.log("project detail===>>>>",this.pro);
-	// 			this.projectId=this.pro._id;
-	// 			console.log("iddddd====>",this.projectId);
-	// 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-	// 				res.Teams.push(this.pro.pmanagerId); 
-	// 				console.log("response of team============>"  ,res.Teams);
-	// 				this.projectTeam = res.Teams;
-	// 				this.projectTeam.sort(function(a, b){
-	// 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-	// 					if (nameA < nameB) //sort string ascending
-	// 						return -1 
-	// 					if (nameA > nameB)
-	// 						return 1
-	// 					return 0 //default return value (no sorting)
-	// 					this.projectTeam.push
-	// 					console.log("sort============>"  ,this.projectTeam);
-	// 				})
-
-
-	// 			},(err:any)=>{
-	// 				console.log("err of team============>"  ,err);
-	// 			});
-	// 		},(err:any)=>{
-	// 			console.log("err of project============>"  ,err);
-	// 		});
-
-	// 		this._projectService.getTaskById(id).subscribe((res:any)=>{
-	// 			console.log("all response ======>" , res);
-	// 			this.getEmptyTracks();
-	// 			this.project = res;
-	// 			// this.project.sort(custom_sort);
-	// 			// this.project.reverse();
-
-	// 			console.log("PROJECT=================>", this.project);
-	// 			_.forEach(this.project , (task)=>{
-	// 				_.forEach(this.tracks , (track)=>{
-	// 					console.log("track in foreach",task.sprint.status);
-
-	// 					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-	// 						if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
-	// 							track.tasks.push(task);
-	// 						}
-	// 					}else{
-	// 						if(task.status == track.id && task.sprint.status == 'Active'){
-	// 							track.tasks.push(task);
-	// 						}
-	// 					}
-	// 				})
-	// 			})
-
-	// 			console.log("This Tracks=========>>>>>",this.tracks);
-	// 			this.temp =  this.tracks; 
-
-	// 			this.loader = false;
-
-	// 		},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},1000);
-	// 	function custom_sort(a, b) {
-	// 		return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-	// 	}	
-	// }
+	
 
 	getProject(id){
 
@@ -374,7 +302,7 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active' && this.currentUser.userRole == 'developer'){
 								track.tasks.push(task);
 							}
 						}else{
@@ -405,23 +333,31 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
-		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
-		if (event.previousContainer === event.container) {
-			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-		} else {
-			transferArrayItem(event.previousContainer.data,
-				event.container.data,
-				event.previousIndex,
-				event.currentIndex);
-			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
-		}
+		console.log(event);
+			if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
+				Swal.fire('Oops...', 'Stop timer!', 'error')
+			}else{
+				// console.log(event.container.id, event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running);
+				if (event.previousContainer === event.container) {
+					moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+				} else {
+					transferArrayItem(event.previousContainer.data,
+						event.container.data,
+						event.previousIndex,
+						event.currentIndex);
+					this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+
+				}
+			}
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
+		console.log('event in ontrackdrop================>',event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
 	updateStatus(newStatus, data){
+
 		if(newStatus=='complete'){
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
@@ -442,138 +378,141 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
+				        let uniqueId = res.uniqueId;
+
 				Swal.fire({
 					type: 'info',
-					title: "Task is"  + " " +res.timelog[n -1].operation ,
-					showConfirmButton:false,timer: 2000})
+					title: uniqueId  + " " +res.timelog[n -1].operation ,
+					showConfirmButton:false,timer: 3000})
 			},(err:any)=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				console.log(err);
 			})
 
-		}
-	}
-
-	sortTasksByDueDate(type){
-		if(this.priority == true){
-			console.log("sorting Array=============>",this.sorting);
-			console.log("Sorting tasks by dueDate = ",type)
-			_.forEach(this.sorting,function(track){
-				console.log("Sorting track = ",track.title);
-				track.tasks.sort(custom_sort);
-				// track.tasks.sort(custom_sort1);
-				if(type == 'desc'){
-					track.tasks.reverse();
 				}
-				console.log("sorted output======== =====> ",track.tasks);
-			});
-		}else{
-			console.log("Sorting tasks byDueDate = ",type)
+				
+			}
 
-			_.forEach(this.tracks,function(track){
-				console.log("Sorting track =()()() ",track.title);
-				track.tasks.sort(custom_sort);
-				if(type == 'desc'){
-					track.tasks.reverse();
+			sortTasksByDueDate(type){
+				if(this.priority == true){
+					console.log("sorting Array=============>",this.sorting);
+					console.log("Sorting tasks by dueDate = ",type)
+					_.forEach(this.sorting,function(track){
+						console.log("Sorting track = ",track.title);
+						track.tasks.sort(custom_sort);
+						// track.tasks.sort(custom_sort1);
+						if(type == 'desc'){
+							track.tasks.reverse();
+						}
+						console.log("sorted output======== =====> ",track.tasks);
+					});
+				}else{
+					console.log("Sorting tasks byDueDate = ",type)
+
+					_.forEach(this.tracks,function(track){
+						console.log("Sorting track =()()() ",track.title);
+						track.tasks.sort(custom_sort);
+						if(type == 'desc'){
+							track.tasks.reverse();
+						}
+						console.log("sorted output =><>?????)_)_)_ ",track.tasks);
+					});
+
 				}
-				console.log("sorted output =><>?????)_)_)_ ",track.tasks);
-			});
 
-		}
+				function custom_sort(a, b) {
+					// var   Aarr = a.dueDate.split(" ");
+					// a.dueDate = Aarr[0];
+					// var   Barr = b.dueDate.split(" ");
+					// b.dueDate = Barr[0];
+					return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
+				}
+				function custom_sort1(a, b) {
+					return a.priority - b.priority;
+				}
 
-		function custom_sort(a, b) {
-			// var   Aarr = a.dueDate.split(" ");
-			// a.dueDate = Aarr[0];
-			// var   Barr = b.dueDate.split(" ");
-			// b.dueDate = Barr[0];
-			return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
-		}
-		function custom_sort1(a, b) {
-			return a.priority - b.priority;
-		}
-
-		// console.log("sorting======>",custom_sort);
-		$(".due_date_sorting_btn i.fas").toggleClass("hide");
-	}
-
-	sortTasksByPriority(type){
-		this.priority = true;
-		console.log("sorting task by priority=>>>>..",type);
-		_.map(this.tracks,function(track){
-			console.log("Sorting track = ",track.title);
-			track.tasks = track.tasks.sort(custom_sort1);
-			if(type == 'desc'){
-				track.tasks = track.tasks.reverse();
+				// console.log("sorting======>",custom_sort);
+				$(".due_date_sorting_btn i.fas").toggleClass("hide");
 			}
-			var sort = track.tasks;
-			console.log('sorting===========>',sort);
-		});
-		this.sorting = this.tracks;
-		console.log('Sorting Array============================>',this.sorting);
 
-		function custom_sort1(a, b) {
-			return a.priority - b.priority;
-		}
-		this._change.detectChanges();
-		console.log("sorted output =====> ",this.tracks);
-		// console.log("nthi avtu=======>",custom_sort1);
-		$(".priority_sorting_btn i.fas").toggleClass("hide");
-	}
+			sortTasksByPriority(type){
+				this.priority = true;
+				console.log("sorting task by priority=>>>>..",type);
+				_.map(this.tracks,function(track){
+					console.log("Sorting track = ",track.title);
+					track.tasks = track.tasks.sort(custom_sort1);
+					if(type == 'desc'){
+						track.tasks = track.tasks.reverse();
+					}
+					var sort = track.tasks;
+					console.log('sorting===========>',sort);
+				});
+				this.sorting = this.tracks;
+				console.log('Sorting Array============================>',this.sorting);
 
-	getTitle(name){
-		if(name){
-			var str = name.split(' ');
-			return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
-		}else{
-			return '';
-		}
-	}
-
-	getInitialsOfName(name){
-		if(name){
-			var str = name.split(' ')[0][0]+name.split(' ')[1][0];
-			return str.toUpperCase();
-			// return name.split(' ')[0][0]+name.split(' ')[1][0];
-		}else{
-			return '';
-		}
-	}
-
-	getColorCodeOfPriority(priority) {
-		for (var i = 0; i < this.allPriorityList.length; i++) {
-			if (this.allPriorityList[i].value == priority) {
-				return this.allPriorityList[i].colorCode;
+				function custom_sort1(a, b) {
+					return a.priority - b.priority;
+				}
+				this._change.detectChanges();
+				console.log("sorted output =====> ",this.tracks);
+				// console.log("nthi avtu=======>",custom_sort1);
+				$(".priority_sorting_btn i.fas").toggleClass("hide");
 			}
-		}
 
-	}
-	openModel(task){
-		console.log(task);
-		this.task = task;
-		this.getAllCommentOfTask(task._id);
-		$('#fullHeightModalRight').modal('show');
-	}
+			getTitle(name){
+				if(name){
+					var str = name.split(' ');
+					return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+				}else{
+					return '';
+				}
+			}
 
-	editTask(task){
-		this.newTask = task;
-		this.modalTitle = 'Edit Item';
-		$('.datepicker').pickadate();
-		$('#estimatedTime').pickatime({});
-		$('#itemManipulationModel').modal('show');
-	}
+			getInitialsOfName(name){
+				if(name){
+					var str = name.split(' ')[0][0]+name.split(' ')[1][0];
+					return str.toUpperCase();
+					// return name.split(' ')[0][0]+name.split(' ')[1][0];
+				}else{
+					return '';
+				}
+			}
 
-	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-	}
+			getColorCodeOfPriority(priority) {
+				for (var i = 0; i < this.allPriorityList.length; i++) {
+					if (this.allPriorityList[i].value == priority) {
+						return this.allPriorityList[i].colorCode;
+					}
+				}
 
-	addItem(option){
-		this.newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
-		this.modalTitle = 'Add '+option;
-		$('#itemManipulationModel').modal('show');
-	}
+			}
+			openModel(task){
+				console.log(task);
+				this.task = task;
+				this.getAllCommentOfTask(task._id);
+				$('#fullHeightModalRight').modal('show');
+			}
+
+			editTask(task){
+				this.newTask = task;
+				this.modalTitle = 'Edit Item';
+				$('.datepicker').pickadate();
+				$('#estimatedTime').pickatime({});
+				$('#itemManipulationModel').modal('show');
+			}
+
+			getEmptyTask(){
+				return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+			}
+
+			addItem(option){
+				this.newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+				this.modalTitle = 'Add '+option;
+				$('#itemManipulationModel').modal('show');
+			}
 
 
-	saveTheData(task){
+			saveTheData(task){
 		
 		this.loader = true;
 		
@@ -589,7 +528,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
+		console.log("task ALL details",task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
 			data.append(key, value)
@@ -601,8 +540,16 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
@@ -612,170 +559,188 @@ export class ProjectDetailComponent implements OnInit {
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
 	}
 
 
-	searchTask(){
-		console.log("btn tapped");
-	}
-
-
-	onKey(searchText){
-		console.log("searchText",searchText);
-		console.log(this.project);
-		var dataToBeFiltered = [this.project];
-		var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
-		console.log("In Component",task);
-		this.getEmptyTracks();
-		_.forEach(task, (content)=>{
-			_.forEach(this.tracks, (track)=>{
-				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
-						// if(content.status == track.id){
-							track.tasks.push(content);
-						}
-
-					}
-					else{
-						if(content.status == track.id){
-							track.tasks.push(content);
-						}
-					}
-				});
-		});
-	}
-
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-	getAllCommentOfTask(taskId){
-		this._commentService.getAllComments(taskId).subscribe(res=>{
-			this.comments = res;
-		}, err=>{
-			console.error(err);
-		})
-	}
-
-	onSelectFile(event, option){
-		_.forEach(event.target.files, (file:any)=>{
-			this.files.push(file);
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'comment')
-					this.commentUrl.push(e.target.result);
+			searchTask(){
+				console.log("btn tapped");
 			}
-		})
-	}
-	deleteTask(taskId){
-		console.log(taskId);
-		this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-			$('#exampleModalPreview').modal('hide');
-			Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
-			console.log("Delete Task======>" , res);
-			this.task = res;
-		},(err:any)=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			console.log("error in delete Task=====>" , err);
-		});
-	}
 
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
-	removeCommentImage(file, index){
-		console.log(file, index);
-		this.commentUrl.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);	
-	}
 
-	removeAlreadyUplodedFile(option){
-		this.newTask.images.splice(option,1);
-	}
 
-	getSprint(projectId){
-		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			console.log("sprints in project detail=====>>>>",res);
-			this.sprints = res;
-			_.forEach(this.sprints, (sprint)=>{
-				if(sprint.status == 'Active'){
-					this.activeSprint = sprint;
-					this.sprintInfo = sprint;
-					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
-					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
-				}
-				console.log("Active Sprint=========>>>>",this.activeSprint);
-			})
-			console.log("ActiveSprint startdate",this.activeSprint.endDate);
-			var currendate = moment(); 
-			var sprintEndDate = this.activeSprint.endDate; 
-			var date3 = moment(sprintEndDate);
-			var duration = date3.diff(currendate,'days');
-			this.activeSprint.remainingDays = duration;
-			console.log("currendate=======>>>",currendate);
-			console.log("sprint end date=======>>>",sprintEndDate);
-			console.log("remaining Days",duration);
-		},(err:any)=>{
-			console.log(err);
-		});
-	}
+			onKey(searchText){
+				console.log("searchText",searchText);
+				console.log(this.project);
+				var dataToBeFiltered = [this.project];
+				var task = this.searchTextFilter.transform(dataToBeFiltered, searchText);
+				console.log("In Component",task);
+				this.getEmptyTracks();
+				_.forEach(task, (content)=>{
+					_.forEach(this.tracks, (track)=>{
+						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+							if(content.status == track.id && content.assignTo && content.assignTo._id == this.currentUser._id){
+								// if(content.status == track.id){
+									track.tasks.push(content);
+								}
 
-	completeSprint(sprintId){
-		console.log("Sprint ID=====>>>",sprintId);
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes,complete it!'
-		}).then((result) => {
-			if (result.value) {
+							}
+							else{
+								if(content.status == track.id){
+									track.tasks.push(content);
+								}
+							}
+						});
+				});
+			}
 
-				this._projectService.completeSprint(sprintId).subscribe((res:any)=>{
-					Swal.fire(
-						'Complete!',
-						'Your Sprint has been Completed.',
-						'success'
-						)
+			getAllProjects(){
+				this._projectService.getProjects().subscribe(res=>{
+					this.projects = res;
 				},err=>{
+					this._alertService.error(err);
 					console.log(err);
+				})
+			}
+			getAllCommentOfTask(taskId){
+				this._commentService.getAllComments(taskId).subscribe(res=>{
+					this.comments = res;
+				}, err=>{
+					console.error(err);
+				})
+			}
+
+			onSelectFile(event, option){
+				_.forEach(event.target.files, (file:any)=>{
+					if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+						this.files.push(file);
+						var reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = (e:any) => {
+							if(option == 'item')
+								this.url.push(e.target.result);
+							if(option == 'comment')
+								this.commentUrl.push(e.target.result);
+						}
+					}else {
+						Swal.fire({
+							title: 'Error',
+							text: "You can upload images only",
+							type: 'warning',
+						})
+					}
+				})
+			}
+			deleteTask(taskId){
+				console.log(taskId);
+				this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+					$('#exampleModalPreview').modal('hide');
+					Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
+					console.log("Delete Task======>" , res);
+					this.task = res;
+				},(err:any)=>{
 					Swal.fire('Oops...', 'Something went wrong!', 'error')
+					console.log("error in delete Task=====>" , err);
+				});
+			}
+
+			removeAvatar(file, index){
+				console.log(file, index);
+				this.url.splice(index, 1);
+				if(this.files && this.files.length)
+					this.files.splice(index,1);
+				console.log(this.files);
+			}
+			removeCommentImage(file, index){
+				console.log(file, index);
+				this.commentUrl.splice(index, 1);
+				if(this.files && this.files.length)
+					this.files.splice(index,1);
+				console.log(this.files);	
+			}
+
+
+			removeAlreadyUplodedFile(option){
+				this.newTask.images.splice(option,1);
+			}
+
+			getSprint(projectId){
+				this._projectService.getSprint(projectId).subscribe((res:any)=>{
+					console.log("sprints in project detail=====>>>>",res);
+					this.sprints = res;
+					_.forEach(this.sprints, (sprint)=>{
+						if(sprint.status == 'Active'){
+							this.activeSprint = sprint;
+							this.sprintInfo = sprint;
+							this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
+							this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+						}
+						console.log("Active Sprint=========>>>>",this.activeSprint);
+					})
+					console.log("ActiveSprint startdate",this.activeSprint.endDate);
+					var currendate = moment(); 
+					var sprintEndDate = this.activeSprint.endDate; 
+					var date3 = moment(sprintEndDate);
+					var duration = date3.diff(currendate,'days');
+					this.activeSprint.remainingDays = duration;
+					console.log("currendate=======>>>",currendate);
+					console.log("sprint end date=======>>>",sprintEndDate);
+					console.log("remaining Days",duration);
+				},(err:any)=>{
+					console.log(err);
+				});
+			}
+
+			completeSprint(sprintId){
+				console.log("Sprint ID=====>>>",sprintId);
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes,complete it!'
+				}).then((result) => {
+					if (result.value) {
+
+						this._projectService.completeSprint(sprintId).subscribe((res:any)=>{
+							Swal.fire(
+								'Complete!',
+								'Your Sprint has been Completed.',
+								'success'
+								)
+						},err=>{
+							console.log(err);
+							Swal.fire('Oops...', 'Something went wrong!', 'error')
+						})
+
+					}
 				})
 
 			}
-		})
 
-	}
-
-	getSprintWithoutComplete(projectId){
-		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			this.sprints = res;
-			_.forEach(this.sprints, (sprint)=>{
-				if(sprint.status !== 'Complete'){
-					this.newSprint.push(sprint);
-				}
-			})
-		},(err:any)=>{
-			console.log(err);
-		});
-	}	
-}
+			getSprintWithoutComplete(projectId){
+				this._projectService.getSprint(projectId).subscribe((res:any)=>{
+					this.sprints = res;
+					_.forEach(this.sprints, (sprint)=>{
+						if(sprint.status !== 'Complete'){
+							this.newSprint.push(sprint);
+						}
+					})
+				},(err:any)=>{
+					console.log(err);
+				});
+			}	
+		}
