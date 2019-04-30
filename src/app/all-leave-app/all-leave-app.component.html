@@ -152,19 +152,36 @@
         </div>
       </div>
     </div>
+
     <div class="row"> 
       <div class="col-sm-7">
         <h2 class="text-center" *ngIf="leaveApp">Types of Leaves</h2>
         <canvas id="barChart"></canvas>
       </div>
       <div class="col-sm-5">
-         <h2 class="text-center" *ngIf="leaveApp">Duration</h2>
-        <canvas id="pieChart1" style="margin-top: 20px;"></canvas>
-      </div>
-      
-    </div>
-  </div>
+       <h2 class="text-center" *ngIf="leaveApp">Duration</h2>
+       <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
+     </div>
+
+   </div>
+ </div>
 </div>
+<div class=" row text-center" *ngIf="leavesToDisplay">
+  <div class="col-md-4">
+    <span class="min-chart" id="chart-sales" [attr.data-percent]="round"><span class="percent"></span></span> 
+    <h5><span class="label  badge mt-119">Pending Leaves </span></h5>
+    
+  </div>
+  <div class="col-md-4">
+    <span class="min-chart" id="chart-sales" [attr.data-percent]="round1"><span class="percent"></span></span>
+    <h5><span class="label  badge">Approved Leaves </span></h5>
+  </div>
+  <div class="col-md-4">
+    <span class="min-chart" id="chart-sales" [attr.data-percent]="round2"><span class="percent"></span></span> 
+    <h5><span class="label  badge">Rejected Leaves</span></h5>
+  </div>  
+</div>
+
 <div class="total_leave">
   <div class="container">
    <div class="row" *ngIf="leavesToDisplay">
@@ -178,10 +195,11 @@
     <div class="col-sm-5">
       <h2 class="text-center pt-2">Duration</h2>
       <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #f6f4fa;font-weight: bold;background-color: #af7ef3; padding: 14px;">{{allLeaves.length}} responses</p>
-      <canvas id="pieChart1"></canvas>
+      <canvas id="pieChart2"></canvas>
     </div>
   </div>
 </div>
+
 </div>
 
 
