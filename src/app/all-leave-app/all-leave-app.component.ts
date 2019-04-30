@@ -53,6 +53,7 @@ export class AllLeaveAppComponent implements OnInit {
   title;
   approvedLeavesCount;
   pendingLeavesCount;
+
   rejectedLeavesCount;
   pendingLeave = [];
   public myChart: Chart;
@@ -105,6 +106,7 @@ export class AllLeaveAppComponent implements OnInit {
     this.getAllDevelopers(Option);
     this.getAllLeaves();
     this. getApprovedLeaves(Option);
+
     this.getRejectedLeaves(Option);
     this. getLeaves(Option);
     // this. getAllLeave();
@@ -234,7 +236,7 @@ export class AllLeaveAppComponent implements OnInit {
 
                   })
                   this.loader=false;
-                },1000);
+                },3000);
               }
               getRejectedLeaves(option){
                 this.loader=true;
@@ -333,7 +335,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
                     this.pendingLeavesCount= this.leaveApp.length;
-                    // console.log(this.pendingLeave.length);
+
                     $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
                     console.log("data avo joye==========>",this.leaveApp);
                     $('#statusAction').show();
@@ -423,8 +425,8 @@ export class AllLeaveAppComponent implements OnInit {
                   },err=>{
                     console.log(err);
                   });
-this.loader=false;
-},1000);
+                  this.loader=false;
+                },1000);
 }
 getAllLeaves(){
   this._leaveService.getAllLeaves().subscribe(res=>{
@@ -458,8 +460,6 @@ getAllLeaves(){
 
     var leaves1 = this.getPendingLeavs("approved");
     console.log("completed{{}}___+++",leaves1);
-    // var projectLength1 =  this.allLeaves.length;
-    // console.log("plength1==-=-=-=",projectLength1);
     var allcompleteproject1 = leaves1*100/projectLength;
     console.log("allcompleteproject1=-=-={}{}{}",allcompleteproject1);
     this.total1=allcompleteproject1;
@@ -469,8 +469,6 @@ getAllLeaves(){
 
     var leaves2 = this.getPendingLeavs("rejected");
     console.log("completed{{}}2___+++",leaves2);
-    // var projectLength2 =  this.allLeaves.length;
-    // console.log("plength2==-=-=-=",projectLength2);
     var allcompleteproject2 = leaves2*100/projectLength
     console.log("allcompleteproject2=-=-={}{}{}",allcompleteproject2);
     this.total2=allcompleteproject2;
@@ -819,137 +817,305 @@ addComment(comment){
   console.log("data=====>>",comment);
 }
 
-//   leaveById(leaveid){
-  //     console.log("leave id=======>>",leaveid);
-  //     this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-    //       this.singleleave = res[0];
-    //       console.log("single leave",this.singleleave);
-    //     },err=>{
-      //       console.log("errrrrrrrrrrrrr",err);
-      //     })
-      //   }
-      //       console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-      //       console.log("leaves count ====>" , this.leavescount);
-      //     }else{
-        //       console.log("not found");
-        //     }
-        //   },err=>{
-          //     console.log(err);
-          //   })
-          // }
-          sortLeavesByFromDate(type){
-            console.log("Sorting tasks by = ",type)
-            // console.log(this.pendingLeaves);
-            // console.log('leave===============================>',this.pendingLeaves);
-            this.leaveApp.sort(custom_sort);
-            if(type == 'desc'){
-              this.leaveApp.reverse();
-            }
-            console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
-            function custom_sort(a, b) {
 
-              return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
-            }
-            console.log("nthi avtu=======>",custom_sort);
-          }
+sortLeavesByFromDate(type){
+  console.log("Sorting tasks by = ",type)
+  // console.log(this.pendingLeaves);
+  // console.log('leave===============================>',this.pendingLeaves);
+  this.leaveApp.sort(custom_sort);
+  if(type == 'desc'){
+    this.leaveApp.reverse();
+  }
+  console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
+  function custom_sort(a, b) {
 
-          onKey(searchText){
-            if(this.pLeave == true){
-              console.log('pending leaves',this.allLeaves);
-              var dataToBeFiltered = [this.allLeaves];
-            }else if(this.aLeave == true){
-              console.log('approved leaves',this.allAproveLeaves);
-              var dataToBeFiltered = [this.allAproveLeaves];
-            }else if(this.rLeave == true){
-              console.log('rejected leaves',this.rejeLeaves);
-              var dataToBeFiltered = [this.rejeLeaves];
-            }
-            var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-            console.log("In Component",leave);
-            this.leaveApp = [];
-            _.forEach(leave, (content)=>{
-              this.leaveApp.push(content);
+    return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
+  }
+  console.log("nthi avtu=======>",custom_sort);
+}
+
+onKey(searchText){
+  if(this.pLeave == true){
+    console.log('pending leaves',this.allLeaves);
+    var dataToBeFiltered = [this.allLeaves];
+  }else if(this.aLeave == true){
+    console.log('approved leaves',this.allAproveLeaves);
+    var dataToBeFiltered = [this.allAproveLeaves];
+  }else if(this.rLeave == true){
+    console.log('rejected leaves',this.rejeLeaves);
+    var dataToBeFiltered = [this.rejeLeaves];
+  }
+  var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
+  console.log("In Component",leave);
+  this.leaveApp = [];
+  _.forEach(leave, (content)=>{
+    this.leaveApp.push(content);
+  });
+}
+
+// leavesByUserId(){
+//   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+//   console.log("email of login user",obj);
+//   this._leaveService.leavesById(obj).subscribe((res:any)=>{
+//     console.log("resppppppondssss",res);
+//     this.leaves = res;
+//     _.forEach(this.leaves , (leave)=>{
+//       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+//       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+//     })
+//     console.log("statussssssss",this.leaves);
+//   },err=>{
+//     console.log(err);
+//   })
+// }
+
+// // addComment(comment){
+//   //   console.log("data=====>>",comment);
+//   // }
+
+//   leaveById(leaveid, option){
+//     console.log("leave id=======>>",leaveid);
+//     this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+//       this.singleleave = res[0];
+//       var obj =  this.singleleave.email;
+//       console.log("email of login user",obj);
+//       this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
+//         console.log("resppppppondssss",res);
+//         this.leaves = res;
+//         this.getEmptytracks();
+       
+//         _.forEach(this.leaves , (leave)=>{
+//           console.log("leavess====",leave);
+//           _.forEach(this.leavescount , (count)=>{
+//             if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+//               console.log("count ====>" , count);  
+//               count.leavesTaken = count.leavesTaken + 1;
+            
+//                   }
+//                 });
+//             });
+
+       
+//           console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+//           console.log("leaves count ====>" , this.leavescount);
+//           option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+         
+//         },err=>{
+//           console.log("errrrrrrrrrrrrr",err);
+//         })
+//       })
+
+//     }
+   
+  // leaveRejected(req){
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: "You won't be able to revert this!",
+  //     type: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes,Reject it!'
+  //   }).then((result) => {
+  //     if (result.value) {
+  //       var body;
+  //       console.log("rejected",this.leaveApp);
+  //       console.log("reeeeeeee",req);
+  //       _.forEach(this.leaveApp, (apply)=>{
+  //         if(apply._id == req){
+  //           body = apply;
+  //           body.status = "rejected";
+  //         }
+  //       })
+  //       console.log("req ========>" , req.email);
+  //       var dev = req.email;
+  //       console.log("bodyy ========>" , body);
+  //       this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+  //         Swal.fire(
+  //           'Rejected!',
+  //           'Your Leave has been Rejected.',
+  //           'success'
+  //           )
+  //         body.status = "rejected";
+  //         console.log("bodyyyyyyyyyyyyyyy",body);
+  //         console.log("respondsssssss",res);
+  //         this.rejectedLeave = res;
+  //         console.log("rejected===========>",this.rejectedLeave);
+  //         this.getLeaves(this.title);
+  //         console.log("thissssssssss===>",dev);
+  //         // this.filterTracks(dev);
+  //       },(err:any)=>{
+  //         console.log(err);
+  //         Swal.fire('Oops...', 'Something went wrong!', 'error')
+  //       })
+  //     }
+  //   })
+  // }
+
+  // filterTracks(developerId){
+  //   this.loader=true;
+  //   setTimeout(()=>{
+  //     this.title='Application';
+  //     this.getEmptytracks();
+  //     var obj ={ email : developerId};
+  //     console.log("email of selected user",obj);
+  //     this._leaveService.leavesById(obj).subscribe((res:any)=>{
+  //       console.log("resppppppondssss from leaves by id",res);
+  //       this.leaves = res;
+  //       _.forEach(this.leaves , (leave)=>{
+  //         leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+  //         leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+  //       })
+  //       console.log("statussssssss",this.leaves);
+  //       if( developerId!='all'){
+  //         this.leaveApp = [];
+  //         $('.unselected').css('display','block');
+  //         $('.selected').css('display','none');
+  //         console.log("sucess");
+  //         _.forEach(this.leaves , (leave)=>{
+  //           // console.log("dsfbbdsf",leave);
+  //           if(developerId == leave.email ){
+  //             // console.log(leave);
+  //             $('.unselected').css('display','none');
+  //             $('.selected').css('display','block');
+  //             this.leaveApp.push(leave);
+
+  //           }
+  //         });
+  //       }else{
+  //         console.log("not found");
+  //       }
+  //     },err=>{
+  //       console.log(err);
+  //     })
+  //     this.loader=false;
+  //   },1000);
+  // }
+
+  // addComment(comment){
+  //   console.log("data=====>>",comment);
+  // }
+
+
+  // sortLeavesByFromDate(type){
+  //   console.log("Sorting tasks by = ",type)
+  //   // console.log(this.pendingLeaves);
+  //   // console.log('leave===============================>',this.pendingLeaves);
+  //   this.leaveApp.sort(custom_sort);
+  //   if(type == 'desc'){
+  //     this.leaveApp.reverse();
+  //   }
+  //   console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
+  //   function custom_sort(a, b) {
+
+  //     return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
+  //   }
+  //   console.log("nthi avtu=======>",custom_sort);
+  // }
+
+  // onKey(searchText){
+  //   if(this.pLeave == true){
+  //     console.log('pending leaves',this.allLeaves);
+  //     var dataToBeFiltered = [this.allLeaves];
+  //   }else if(this.aLeave == true){
+  //     console.log('approved leaves',this.allAproveLeaves);
+  //     var dataToBeFiltered = [this.allAproveLeaves];
+  //   }else if(this.rLeave == true){
+  //     console.log('rejected leaves',this.rejeLeaves);
+  //     var dataToBeFiltered = [this.rejeLeaves];
+  //   }
+  //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
+  //   console.log("In Component",leave);
+  //   this.leaveApp = [];
+  //   _.forEach(leave, (content)=>{
+  //     this.leaveApp.push(content);
+  //   });
+  // }
+
+  leavesByUserId(){
+    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+    console.log("email of login user",obj);
+    this._leaveService.leavesById(obj).subscribe((res:any)=>{
+      console.log("resppppppondssss",res);
+      this.leaves = res;
+      _.forEach(this.leaves , (leave)=>{
+        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+      })
+      console.log("statussssssss",this.leaves);
+    },err=>{
+      console.log(err);
+    })
+  }
+
+  // addComment(comment){
+    //   console.log("data=====>>",comment);
+    // }
+
+    leaveById(leaveid, option){
+      console.log("leave id=======>>",leaveid);
+      this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+        this.singleleave = res[0];
+        var obj =  this.singleleave.email;
+        console.log("email of login user",obj);
+        this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
+          console.log("resppppppondssss",res);
+          this.leaves = res;
+          this.getEmptytracks();
+          _.forEach(this.leaves , (leave)=>{
+            console.log("leavess====",leave);
+            _.forEach(this.leavescount , (count)=>{
+              if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+                console.log("count ====>" , count);  
+                count.leavesTaken = count.leavesTaken + 1;
+              }
             });
-          }
+          });
 
-          leavesByUserId(){
-            var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-            console.log("email of login user",obj);
-            this._leaveService.leavesById(obj).subscribe((res:any)=>{
-              console.log("resppppppondssss",res);
-              this.leaves = res;
-              _.forEach(this.leaves , (leave)=>{
-                leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-                leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-              })
-              console.log("statussssssss",this.leaves);
+          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+          console.log("leaves count ====>" , this.leavescount);
+          option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+        },err=>{
+          console.log("errrrrrrrrrrrrr",err);
+        })
+      })
+
+    }
+
+
+
+
+
+          submitComment(leaveid,comment){
+            console.log("leave id==>>>>>",leaveid);
+            console.log("====>",comment);
+            var data={
+              leaveId:leaveid,
+              comment:comment
+            }
+            console.log("data==========>>",data);
+            this._leaveService.addComments(data).subscribe((res:any)=>{
+              res['comment'] = true; 
+              console.log("response",res);
+              Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
+              $('#centralModalInfo').modal('hide');
+              this.comment = "";
             },err=>{
-              console.log(err);
+              console.log("errrrrrrrrrrrrr",err);
+              Swal.fire('Oops...', 'Something went wrong!', 'error')
             })
           }
 
-          // addComment(comment){
-            //   console.log("data=====>>",comment);
-            // }
-
-            leaveById(leaveid, option){
-              console.log("leave id=======>>",leaveid);
-              this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-                this.singleleave = res[0];
-                var obj =  this.singleleave.email;
-                console.log("email of login user",obj);
-                this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
-                  console.log("resppppppondssss",res);
-                  this.leaves = res;
-                  this.getEmptytracks();
-                  _.forEach(this.leaves , (leave)=>{
-                    console.log("leavess====",leave);
-                    _.forEach(this.leavescount , (count)=>{
-                      if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-                        console.log("count ====>" , count);  
-                        count.leavesTaken = count.leavesTaken + 1;
-                      }
-                    });
-                  });
-
-                  console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                  console.log("leaves count ====>" , this.leavescount);
-                  option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
-                },err=>{
-                  console.log("errrrrrrrrrrrrr",err);
-                })
-              })
-
-            }
-            submitComment(leaveid,comment){
-              console.log("leave id==>>>>>",leaveid);
-              console.log("====>",comment);
-              var data={
-                leaveId:leaveid,
-                comment:comment
-              }
-              console.log("data==========>>",data);
-              this._leaveService.addComments(data).subscribe((res:any)=>{
-                res['comment'] = true; 
-                console.log("response",res);
-                Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-                $('#centralModalInfo').modal('hide');
-                this.comment = "";
-              },err=>{
-                console.log("errrrrrrrrrrrrr",err);
-                Swal.fire('Oops...', 'Something went wrong!', 'error')
-              })
-            }
-
-            gotAttachment = [];
-            sendAttachment(attechment){
-              console.log("attachment is====>",attechment);
-              this.gotAttachment = attechment;
-              $('#veiwAttach').modal('show')
-              console.log("gotattechment array ====>",this.gotAttachment);
-            }
-            cancel(){
-              this.comment = "";
-            }
-
+          gotAttachment = [];
+          sendAttachment(attechment){
+            console.log("attachment is====>",attechment);
+            this.gotAttachment = attechment;
+            $('#veiwAttach').modal('show')
+            console.log("gotattechment array ====>",this.gotAttachment);
           }
+          cancel(){
+            this.comment = "";
+          }
+
+        }
+        

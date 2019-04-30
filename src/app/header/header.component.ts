@@ -459,18 +459,18 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
-	changeFile(e){
-		console.log(e.target.files);
-		var userId = JSON.parse(localStorage.getItem('login'))._id;
-		console.log("userId===>",this.addUserProfile['userId']);
-		this.files = e.target.files;
-		this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
-			console.log("resss=======>",res);
-			this.addUserProfile = res;
-		},error=>{
-			console.log("errrorrrrrr====>",error);
-		});  
-	}
+	// changeFile(e){
+	// 	console.log(e.target.files);
+	// 	var userId = JSON.parse(localStorage.getItem('login'))._id;
+	// 	console.log("userId===>",this.addUserProfile['userId']);
+	// 	this.files = e.target.files;
+	// 	this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
+	// 		console.log("resss=======>",res);
+	// 		this.addUserProfile = res;
+	// 	},error=>{
+	// 		console.log("errrorrrrrr====>",error);
+	// 	});  
+	// }
 
 	onSelectFile(event,option){
 		_.forEach(event.target.files, (file:any)=>{
@@ -546,6 +546,10 @@ export class HeaderComponent implements OnInit {
 		$("#priority").val(null);
 		// this.task.priority = null;
 		// this.newTask.priority = null;
+	}
+	changeFile(event){
+		console.log(event);
+		this.files = event;
 	}
 	
 }

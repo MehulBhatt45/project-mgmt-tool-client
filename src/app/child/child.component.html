@@ -72,14 +72,7 @@
 	</div>
 </div>
 
-
-
-
-
 <!-- Task details Modal -->
-
-
-
 
 <div class="modal fade" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-full-height" role="document">
@@ -233,31 +226,19 @@
 						</div>
 					</div>
 
-
 					<div *ngIf="comments && comments.length<=0">
 						<p>No comments on this be the first one to comments on...</p>
 					</div>
 					<div>
 						<ckeditor class="ckeditor margin-left-15" style="width:100%;" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<div class="btn btn-default mt-1 ml-0" (click)="commentImg.click()">
-							<span><span class="icon-arrow-up mr-1"></span> Upload image with comment</span>
-							<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-						</div>
+						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
 						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0"> <span class="icon-plus"></span> Add Comment</button>
 					</div>
-					<div *ngIf="commentUrl && commentUrl.length">
-						<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
-							<img class="avatar-image margin-auto" [src]="c" style="height: 150px; width: 150px;">
-							<div class="delete-team-member">
-								<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><span class="fas fa-trash fa-2x"></span></a>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 
 	<!-- Edit Modal -->
@@ -282,20 +263,7 @@
 								<label for="desc">Discription</label>
 								<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
 							</div>
-							<div class="row form-group col-12">
-								<button class="btn btn-default" (click)="fileUpload.click()">
-									<span class="icon-paper-clip mr-1"></span> Add Files
-									<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-								</button>
-							</div>
-							<div *ngIf="newTask.images && newTask.images.length>0">
-								<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-									<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-									<div class="delete-team-member">
-										<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
-									</div>
-								</div>
-							</div>
+
 							<div class="form-group col-12">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
@@ -304,14 +272,6 @@
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
 									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
-							</div>
-							<div  *ngIf="url && url.length">
-								<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-									<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-									<div class="delete-team-member">
-										<a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
-									</div>
-								</div>
 							</div>
 							<div class="row no-margin no-padding  border" >
 								<div class="form-group col-12 col-lg-6 pt-1">
@@ -354,22 +314,39 @@
 									</div>
 								</div>
 							</div>
-
+							<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
+							<div *ngIf="newTask.images && newTask.images.length>0">
+								<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+									<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+									<div class="delete-team-member">
+										<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
+									</div>
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
+<<<<<<< HEAD
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<div id="refresh_icon" style="display: none;"> 
+						<span aria-hidden="true" class="fa fa-refresh refresh"></span>
+					</div>
+					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+						<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
+					</div>
+					<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
+=======
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<div id="refresh_icon" style="display: none;"> 
 					<span aria-hidden="true" class="fa fa-refresh refresh"></span>
 				</div>
 				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
+>>>>>>> 4638c5557a75c9d15aaff3a245ab2b3bf01e3043
 				</div>
-				<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
 			</div>
+
 		</div>
 
 	</div>
-
-</div>

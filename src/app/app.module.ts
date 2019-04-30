@@ -80,6 +80,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { BacklogComponent } from './backlog/backlog.component';
 import { TimeLogComponent } from './time-log/time-log.component';
+import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
+
 @NgModule({
     declarations: [
     AppComponent,
@@ -120,6 +122,8 @@ import { TimeLogComponent } from './time-log/time-log.component';
     AttendenceComponent,
     BacklogComponent,
     TimeLogComponent,
+    FileUploadDndComponent,
+   
     ],
 
     imports: [
