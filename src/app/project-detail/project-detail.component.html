@@ -5,18 +5,20 @@
 	<span></span>
 </div>
 <div class="body_content" *ngIf="!loader">
+
 	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
 		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 		<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
 		<div class="md-form form-group col-2">
-			<select  class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
-				<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+			<select [(ngModel)]="activeSprint._id"   class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+				<option  *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 			</select>
+			
 		</div>
 		<div class="col-3">
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
-		<div class="col-3">
+		<div class="col-3" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 			<button type="submit" id="save_changes" class="btn btn-default btn-sm" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
 		</div>
 	</div>
@@ -30,7 +32,7 @@
 			</div>
 		</div>
 		<div class="col-md-6 text-right">
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
 					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
@@ -38,7 +40,7 @@
 					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
 				</div>
 			</div>
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='user'">
+			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
 					Due Date
 					<span class="sorting_arrows">
@@ -81,7 +83,7 @@
 						</div>
 						<div class="form-group">
 							<button class="btn btn-primary ml-0" (click)="fileUpload.click()">
-								<i class="icon-paper-clip mr-1"></i> Add Files
+								<span class="icon-paper-clip mr-1"></span> Add Files
 								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 							</button>
 						</div>
@@ -123,10 +125,10 @@
 							<div class="form-group col-md-6">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 								</select>
 							</div>
 							<div class="form-group col-md-6">
@@ -153,3 +155,4 @@
 		</div>
 		</div>
 	</div>
+</div>

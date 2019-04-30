@@ -27,28 +27,22 @@
 							</div>
 							<div class="col-md-11">
 								<div class="md-form">
-					<!-- 
-					<input mdbInput type="password" autocomplete="new-password" id="FORMPASSWORD" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"  />
-					<label for="form2">Password</label>
-					<br>
-					<p (click)="showPassword()"><b>Show Password</b></p> -->
-					
-					<input mdbInput type="password" autocomplete="new-password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [type]="show ? 'text' : 'password'" />
-					<span toggle="#password-field" class="toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
-					<label for="form2">Password</label> 
-					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-						<div *ngIf="f.password.errors.required">Password is required</div>
-					</div>
-				</div>
-			</div>
-		</div>
+									<input mdbInput type="password" autocomplete="new-password" id="form2" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [type]="show ? 'text' : 'password'" />
 
-				<!-- <div class="form-group">
-					<input class="form-control" type="password" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-						<div *ngIf="f.password.errors.required">Password is required</div>
-					</div>
-				</div> -->
+									<span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
+
+									<label for="form2">Password</label> 
+									<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+										<div *ngIf="f.password.errors.required">Password is required</div>
+
+									</div>
+								</div>
+								<div class="error_msg" *ngIf="submitted && errorMsg">
+									<i class="fas fa-exclamation-circle err_icon"> 
+										<span class="error" id="id11">{{errorMsg}}</span> </i>
+									</div>
+								</div>
+							</div>
 				<div class="md-form">
 					<button [disabled]="loading" style="width: 100%; margin: 0px 0px 0px 15px;" class="btn btn-default" mdbBtn color="primary" mdbWavesEffect>LOG IN</button>
 					<!-- <a [routerLink]="['/register']" class="btn btn-link">Register</a> -->
@@ -62,24 +56,26 @@
 				<div class="modal-content">
 					<div class="modal-header text-center">
 						<h4 class="modal-title w-100 font-weight-bold">Forgot Password</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
 					</div>
 					<div class="modal-body mx-3">
-						<form [formGroup]="forgotPasswordForm" (ngSubmit)="updatePassword()" ngNativeValidate>
+						<form [formGroup]="forgotPasswordForm" (ngSubmit)="updatePassword()" ngNativeValidate class="reset_form">
 							<div class="md-form mb-3">
-								<i class="fas fa-envelope prefix grey-text"></i>
-								<input type="text" id="email" class="form-control" formControlName="email" required="required">
+								<i class="fas fa-envelope prefix"></i>
+								<input type="text" id="email" class="form-control" formControlName="email" autocomplete= 'false | random-string' required="required">
 								<label for="email">Email address</label>
 							</div>
-							<div class="modal-footer d-flex justify-content-center">
-								<button class="btn btn-deep-orange" type="submit">Submit</button>
-								<div class="spinner-border text-primary" role="status" *ngIf="loader">
-									<span class="sr-only">Loading...</span>
+							<div class="error_msg" *ngIf="submitted && error1Msg">
+								<i class="fas fa-exclamation-circle err_icon"> 
+									<span class="error">{{error1Msg}}</span> </i>
 								</div>
-							</div>
-						</form>
+								<div class="d-flex justify-content-center">
+									<button class="btn btn-deep-orange" type="submit">Submit</button>
+									<div class="spinner-border text-primary" role="status" *ngIf="loader">
+										<span class="sr-only">Loading...</span>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -88,7 +84,6 @@
 			<a href="#" data-toggle="modal" data-target="#modalForgotPasswordForm">Forgot Password?</a>
 		</div>
 	</div>
-</div>
 </div>	
 </div>
 </div>

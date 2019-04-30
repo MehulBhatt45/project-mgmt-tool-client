@@ -1,6 +1,5 @@
 // import { Component, OnInit } from '@angular/core';
 import { Component, OnInit, Output, Input, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
-
 import {Router,ActivatedRoute} from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import{LeaveService} from '../services/leave.service';
@@ -16,7 +15,6 @@ import { AllLeaveAppComponent } from '../all-leave-app/all-leave-app.component';
 import { MessagingService } from '../services/messaging.service';
 
 
-
 @Component({
 	selector: 'app-notification',
 	templateUrl: './notification.component.html',
@@ -24,6 +22,7 @@ import { MessagingService } from '../services/messaging.service';
 })
 export class NotificationComponent implements OnInit {
 	@Input() acceptedLeave;
+<<<<<<< HEAD
 		userNotification:any;
 		path = config.baseMediaUrl;
 		currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -47,56 +46,64 @@ export class NotificationComponent implements OnInit {
 		currentUserId;
 		createdAt;
 
+=======
+	userNotification:any;
+	path = config.baseMediaUrl;
+	currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	allLeaves;
+	allAproveLeaves;
+	leaves;
+	projectId;
+	leavescount:any;
+	leaveApp;
+	rejectedLeave;
+	developers;
+	rejeLeaves;
+	developer;
+	projects;
+	developerId;
+	id;
+	projectArr =[];
+	finalArr = [];
+	project;
+	start;
+	currentUserId;
+>>>>>>> 670d972d260131530cc35ad1a433defc0e5c8346
 
-		constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
-			public _projectservice: ProjectService,public _leaveService:LeaveService) {
-
-		}
-
-		ngOnInit() {
-			console.log("appected leave " , this.acceptedLeave);
-			this.get();
-			this.getNotificationByUserId(this.currentUserId);
-			
-		}
-		get(){
-			var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-			console.log("res-=-=",currentUser);
-
-		}
-		getNotificationByUserId(currentUserId){
-			this._projectservice.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
-				var loginUser = JSON.parse(localStorage.getItem('currentUser'));
-				// console.log("loginUser==========>",loginUser);
-				this.userNotification = res;
-				this.userNotification.sort(custom_sort);
-				this.userNotification.reverse();
-				 var start = new Date();
-				
-				 start.setTime(1532403882588);
-				 console.log("plzzz avi jaje",this.userNotification);
-				// // console.log(this.currentUser[0].subject);
-				// console.log("title=========>",this.currentUser[0].title);
-				// console.log("current====>",this.currentUser);
-				// console.log("projectId==========>",this.currentUser[0].projectId._id);
-				// console.log("type======================>",this.currentUser[0].type);
-				
-			})
-			 function custom_sort(a, b) {
-            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      }
-		}
-		getHHMMTime(data){
-			data = data.split('T');
-			// data = data[1];
-			// data =data.split('Z')
-			return data[0];
-		}
-
-		displayLeaveEmit(leave){
-			console.log("leave ==>",leave);	
-		}
+	constructor(public _messagingservice:MessagingService,public route:ActivatedRoute,public router:Router,
+		public _projectservice: ProjectService,public _leaveService:LeaveService) {
 
 	}
+
+	ngOnInit() {
+		// console.log("appected leave " , this.acceptedLeave);
+		this.get();
+		this.getNotificationByUserId(this.currentUserId);
+	}
+	get(){
+		var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+		console.log("res-=-=",currentUser);
+	}
+	getNotificationByUserId(currentUserId){
+		this._projectservice.getNotificationByUserId(this.currentUser._id).subscribe((res:any)=>{
+			var loginUser = JSON.parse(localStorage.getItem('currentUser'));
+			// console.log("loginUser==========>",loginUser);
+			this.userNotification = res;
+			this.userNotification.sort(custom_sort);
+			this.userNotification.reverse();
+			var start = new Date();
+			
+			start.setTime(1532403882588);
+			console.log("plzzz avi jaje",this.userNotification);
+		})
+		function custom_sort(a, b) {
+			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+		}
+	}
 	
-	
+	displayLeaveEmit(leave){
+		console.log("leave ==>",leave);	
+	}
+
+}
+

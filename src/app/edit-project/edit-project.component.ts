@@ -33,6 +33,12 @@ export class EditProjectComponent implements OnInit {
 	basMediaUrl = config.baseMediaUrl;
 	developers;
 	projectMngr;
+	files: Array<File> = [];
+	ProjectId;
+	url = '';
+	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
+	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
 			title: new FormControl('', Validators.required),
@@ -50,6 +56,8 @@ export class EditProjectComponent implements OnInit {
 			this.getProjectById(params.id);
 			this.getAllDevelopersNotInProject(params.id);
 			this.getAllProjectManagerNotInProject(params.id);
+			this.ProjectId = params.id;
+
 		})
 	}
 
@@ -61,15 +69,16 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		
 		$('.datepicker').pickadate({
 			onSet: function(context) {
-				console.log('Just set stuff:', context);
-				setDate(context);
+				change(context);
 			}
 		});
-		var setDate = (context)=>{
-			this.timePicked();
+		var change:any = ()=>{
+			this.updateForm.controls.deadline.setValue($('.datepicker').val());
 		}
+
 		if(this.projectId){
 			this.editProject(this.projectId);		
 		}
@@ -77,10 +86,7 @@ export class EditProjectComponent implements OnInit {
 		this.getAllDevelopers();
 		this.getAllProjectMngr();		
 	}
-	timePicked(){
-		this.updateForm.controls.deadline.setValue($('.datepicker').val())
-	}
-
+	
 	getAllDevelopers(){
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -95,11 +101,6 @@ export class EditProjectComponent implements OnInit {
 					return 0 
 				}
 			})
-			
-			console.log("Developers",this.developers);
-
-
-			
 		},err=>{
 			console.log("Couldn't get all developers ",err);
 		})
@@ -149,7 +150,6 @@ export class EditProjectComponent implements OnInit {
 		})
 	}
 
-
 	getProjects(){
 		this._projectService.getProjects().subscribe((res:any)=>{
 			console.log("res of all projects in edit project component ====>" , res);
@@ -164,9 +164,6 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
-
-			// localStorage.setItem("teams" , JSON.stringify(this.availData));
-			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;
@@ -182,15 +179,15 @@ export class EditProjectComponent implements OnInit {
 		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
-			console.log( this.availData );
+			this.availData['add'] = [];
+			this.availData['delete'] = [];
+			console.log("this.availData ================+>" ,  this.availData );
 			this.loader = false;
-			console.log("this . avail data ==========>" ,this.availData);
-			this.projectTeam = this.availData.Teams;
-
+			console.log("this . avail data ==========>" ,this.availData.avatar);
+			this.projectTeam = this.availData.Teams; 
 			this.projectMngrTeam = this.availData.pmanagerId;
 			localStorage.setItem('pmanagerteams', JSON.stringify(this.projectMngrTeam)); 
 			localStorage.setItem('teams', JSON.stringify(this.projectTeam));
-
 		},err=>{
 			console.log(err);
 			this.loader = false;
@@ -198,20 +195,55 @@ export class EditProjectComponent implements OnInit {
 
 	}
 	updateProject(updateForm){
-		updateForm.Teams = [];
-		_.forEach(this.availData.Teams, t => { updateForm.Teams.push(t._id) });
+		console.log(this.files,updateForm);
+		console.log(updateForm.Teams);
+		// console.log("avail data in update form ====>" , this.availData);
+		// console.log('updateForm==============>',updateForm);
+		let newTeams = [];
+		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
+		console.log("Update Team============>",newTeams);
 		updateForm.pmanagerId = [];
 		_.forEach(this.availData.pmanagerId, t => { updateForm.pmanagerId.push(t._id) });
+		updateForm.delete = [];
+		_.forEach(this.availData.delete, t => { updateForm.delete.push(t._id) });
+		updateForm.add = [];
+		_.forEach(this.availData.add, t => {updateForm.add.push(t._id) });
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
+		console.log("project manager iddddd",updateForm._id);
+		
+		var data = new FormData();
+		data.append('title', updateForm.title);
+		data.append('desc', updateForm.desc);
+		data.append('uniqueId', updateForm.uniqueId);
+		data.append('deadline', updateForm.deadline);
+		data.append('clientEmail' , updateForm.clientEmail);
+		data.append('clientFullName', updateForm.clientFullName);
+		data.append('clientDesignation', updateForm.clientDesignation);
+		data.append('clientContactNo', updateForm.clientContactNo);
+		_.forEach(updateForm.pmanagerId, t => { data.append('pmanagerId', t) });
+		_.forEach(newTeams, t => { data.append('Teams', t) });
+		data.append('delete', updateForm.delete);
+		data.append('add', updateForm.add);
+		data.append('avatar', updateForm.avatar);
+		if(this.files && this.files.length>0){
+			data.append('avatar', this.files[0]);  
+		}
+		console.log('data====================================>',data);
+		
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
-		this._projectService.updateProject(updateForm).subscribe((res:any)=>{
+		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 			console.log("response of update form  ====>" , res);
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
-			this.router.navigate(['./view-projects']);
+			this.url = '';
+			setTimeout(()=>{
+				this.availData = res;
+				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
+			},1000);
+			// this.router.navigate(['./edit-project/:id']);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -262,11 +294,8 @@ export class EditProjectComponent implements OnInit {
 
 	addDeveloper(event){
 		console.log(event);
-
-		
-
 		this.projectTeam.push(event);
-		
+		this.availData.add.push(event);
 	}
 
 	removeDeveloper(event){
@@ -274,6 +303,7 @@ export class EditProjectComponent implements OnInit {
 		this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
 		if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 			console.log("in fi");
+			this.availData.delete.push(event);
 			this.availableDevelopers.push(event);
 		}
 	}
@@ -281,7 +311,7 @@ export class EditProjectComponent implements OnInit {
 	addProjectManager(event){
 		console.log(event);
 		this.projectMngrTeam.push(event);
-		
+
 	}
 
 	removeProjectManager(event){
@@ -301,5 +331,35 @@ export class EditProjectComponent implements OnInit {
 	clearSelection(event){
 		console.log(this.availData);
 		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
+	}
+	openmodal(){
+
+		$('#basicExampleModal').modal('show');
+	}
+
+
+	addIcon(value){
+		this.updateForm.value['avatar'] = value;
+		console.log(this.updateForm.value['avatar']);
+		this.url = this.basMediaUrl+this.updateForm.value['avatar'];
+		console.log(this.url);
+		$('#basicExampleModal').modal('hide');
+	}
+	onSelectFile(event) {
+		console.log("response from changefile",event.target.files);
+		this.files = event.target.files;
+		$('#basicExampleModal').modal('hide');
+		if (event.target.files && event.target.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(event.target.files[0]); // read file as data url
+			reader.onload = (event:any) => { // called once readAsDataURL is completed
+				this.url = event.target.result;
+			}
+		}
+	}
+	removeAvatar(){
+		this.url = "";
+		if(this.files && this.files.length)
+			this.files = null;
 	}
 }

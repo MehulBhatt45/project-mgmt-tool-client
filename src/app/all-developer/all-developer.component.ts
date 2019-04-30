@@ -115,6 +115,7 @@ export class AllDeveloperComponent implements OnInit {
 
 	
 	deleteDeveloper(event){
+		var id;
 		console.log(event);
 		Swal.fire({
 			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",
@@ -133,7 +134,7 @@ export class AllDeveloperComponent implements OnInit {
 				console.log("this .. pro ================>" , this.pro);
 				this.pro.Teams = this.Teams;	
 				console.log("this .. pro ================>" , this.pro);
-				this._projectService.updateProject(this.pro).subscribe((res:any)=>{
+				this._projectService.updateProject(this.pro,id).subscribe((res:any)=>{
 					console.log("res========+>" , res);
 				},(err:any)=>{
 					console.log("err" , err);
@@ -143,6 +144,8 @@ export class AllDeveloperComponent implements OnInit {
 		})
 	}
 }
+
+
 
 
 

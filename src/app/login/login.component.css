@@ -50,6 +50,13 @@ img.loading_img {
   z-index: 2;
   cursor: pointer;
 }
+.error_msg{
+    color: red;
+}
+.error{
+        margin-left: 10px;
+    }
+
 .forgottxt{
     text-align: center;
     margin-top: 15px;

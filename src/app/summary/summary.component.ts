@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 import { CommentService } from '../services/comment.service';
 import * as moment from 'moment';
 import { Chart } from 'chart.js';
-
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -63,6 +63,12 @@ export class SummaryComponent implements OnInit {
 	total:any;
 	round:any;
 	path = config.baseMediaUrl;
+	activeSprint:any;
+	sprintInfo:any;
+	sprints;
+	newSprint = [];
+	currentsprintId;
+	spId;
 
 	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute) {
@@ -81,6 +87,8 @@ export class SummaryComponent implements OnInit {
 	}
 	ngOnInit() {
 		this.getEmptyTracks();
+		this.getSprint(this.projectId);
+
 		
 	}	
 
@@ -165,9 +173,54 @@ export class SummaryComponent implements OnInit {
 		})
 	}
 
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				console.log(sprint._id);
+				this.spId = sprint._id;
+				if(sprint.status == 'Active'){
+					this.activeSprint = sprint;
+					this.sprintInfo = sprint;
+					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
+					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+				}
+				console.log("Active Sprint=========>>>>",this.activeSprint);
+			})
+			console.log("ActiveSprint startdate",this.activeSprint.endDate);
+			var currendate = moment(); 
+			var sprintEndDate = this.activeSprint.endDate; 
+			var date3 = moment(sprintEndDate);
+			var duration = date3.diff(currendate,'days');
+			this.activeSprint.remainingDays = duration;
+			console.log("currendate=======>>>",currendate);
+			console.log("sprint end date=======>>>",sprintEndDate);
+			console.log("remaining Days",duration);
+		},(err:any)=>{
+			console.log(err);
+		});
+	}
+
+	filterTracks(sprintId){
+		console.log("shds",sprintId);
+		console.log("project is ====>" , this.pro);
+		console.log("project team is ====>" , this.projectTeam);
+		console.log("project task is ====>" , this.project);
+		console.log("sprint id",this.spId);
+			_.filter(this.project, function(o) { if (o._id == sprintId ) return o }).length;
+		console.log(this.project);
+
+		// _.forEach(this.project, (taskId)=>{
+		// 	console.log("task id is",taskId._id);
+		// })
+
+	}
+
+	
 	getProject(id){
 		this.loader = true;
-		setTimeout(()=>{
+		setTimeout(()=> {
 			this._projectService.getProjectById(id).subscribe((res:any)=>{
 
 				console.log("id-=-=-=-()()()",id);
@@ -175,7 +228,7 @@ export class SummaryComponent implements OnInit {
 				console.log("title{}{}{}{}",this.pro);
 
 				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-					res.Teams.push(this.pro); 
+					// res.Teams.push(this.pro); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
 					console.log("projectTeam=-{}{}{}{}",this.projectTeam);
@@ -365,17 +418,13 @@ function custom_sort(a, b) {
 }
 }
 
-
-
-
 getTaskCount(userId, status){
 
-	// console.log("userId===-=-={}{}{}{}{}",userId);
+	
 	return _.filter(this.project, function(o) { if (o.assignTo._id == userId && o.status == status) return o }).length;
 }
 
 getCompletedTask(status){
-	// console.log("userId===-=-={}{}{}{}{}",userId);
 	return _.filter(this.project, function(o) { if (o.status == status) return o }).length;
 }
 

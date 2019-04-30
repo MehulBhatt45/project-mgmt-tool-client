@@ -3,6 +3,7 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import{LeaveService} from '../services/leave.service';
 // import { ImageViewerModule } from 'ng2-image-viewer';
 import Swal from 'sweetalert2';
@@ -89,7 +90,27 @@ export class LeaveComponent implements OnInit {
 	}
 
 	addFile(event){
-		this.files = event.target.files;
+		// this.files = event.target.files;
+		_.forEach(event.target.files, (file:any)=>{
+			console.log(file.type);
+			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg" || file.type == "application/pdf"){
+				this.files.push(file);
+				// var reader = new FileReader();
+				// reader.readAsDataURL(file);
+				// reader.onload = (e:any) => {
+				// 	if(option == 'item')
+				// 		this.url.push(e.target.result);
+				// 	if(option == 'comment')
+				// 		this.commentUrl.push(e.target.result);
+				// }
+			}else {
+				Swal.fire({
+					title: 'Error',
+					text: "You can upload images and pdf only",
+					type: 'warning',
+				})
+			}
+		})
 	}
 	addLeave(form){
 		 
@@ -118,8 +139,8 @@ export class LeaveComponent implements OnInit {
 			var date1 = new Date(form.endingDate);
 			// console.log("staring date ===" , date2);
 			// console.log("ending date ===" , date1);
-			form['endingDate'] = date1;
-			form['startingDate'] = date2;
+			form['endingDate'] = $('#endDate').val();
+			form['startingDate'] = $('#startDate').val();
 			// console.log("staring date ...... ===" , date2);
 			// console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());

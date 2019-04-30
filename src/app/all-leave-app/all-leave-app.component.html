@@ -22,7 +22,7 @@
         <div class="leave_icon">
           <img src="assets/icons/pending.png">
         </div>
-        <span class="nav-link">Pending Leaves</span>
+        <span class="nav-link">Pending Leaves  {{pendingLeavesCount}}</span>
       </a>
     </li>
     <li class="nav-item col-md-4">
@@ -30,7 +30,7 @@
         <div class="leave_icon">
           <img src="assets/icons/approv.png">
         </div>
-        <span class="nav-link">Approved Leaves</span>
+        <span class="nav-link">Approved Leaves  {{approvedLeavesCount}}</span>
       </a>
     </li>
     <li class="nav-item col-md-4">
@@ -38,7 +38,7 @@
         <div class="leave_icon">
           <img src="assets/icons/rejected.png">
         </div>
-        <span class="nav-link">Rejected Leaves</span>
+        <span class="nav-link">Rejected Leaves{{rejectedLeavesCount }}</span>
       </a>
     </li>
   </ul>
@@ -57,14 +57,14 @@
                   <span class="mt-0" data-icon="&#xe090;"></span>
                 </button>
               </div>
-
+<!-- 
               <div class="dropdown-menu">
                 <div class="md-form form-group active">
-                  <!-- <span class="fas fa-search prefix"></span> -->
+                  <span class="fas fa-search prefix"></span>
                   <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
-                  <!-- <label for="exampleForm2" >Search</label> -->
+                  <label for="exampleForm2" >Search</label>
                 </div>
-              </div>
+              </div> -->
             </div>
             <button class="btn-floating" (click)="sortLeavesByFromDate('asc')">
               <span class="icon-arrow-up mt-0"></span>
@@ -145,7 +145,6 @@
                   <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
                   <strong *ngIf="leaves.status=='rejected'" style="color: red;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
                 </td>
-                <!-- <td *ngIf="leaves.status=='pending'"><a><span class="fa fa-check a_icon" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></span><span class="fa fa-times r_icon" aria-hidden="true" (click)="leaveRejected(leaves._id)"></span></a></td> -->
                 <td style="font-size: 20px;" *ngIf="leaves.status=='pending'"><a><span class="icon-check mr-2" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></span><span class="icon-close" aria-hidden="true" (click)="leaveRejected(leaves._id)"></span></a></td>
               </tr>
             </tbody>
@@ -270,7 +269,6 @@ aria-hidden="true">
   </div>
 </div>
 </div>
-<!--/.Content-->
 </div>
 
 

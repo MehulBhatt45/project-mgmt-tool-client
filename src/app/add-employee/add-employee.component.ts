@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../services/project.service';
 import {LoginService} from '../services/login.service';
 declare var $ : any;
+import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,6 +18,7 @@ export class AddEmployeeComponent implements OnInit {
 	
 	files: Array<File> = [];
 	materialSelect;
+
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
@@ -24,9 +26,9 @@ export class AddEmployeeComponent implements OnInit {
 			password:new FormControl('',[Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
-			mobile:new FormControl('',[Validators.required]),
+			mobile:new FormControl(''),
 			userRole:new FormControl('',[Validators.required]),
-			experience:new FormControl('',[Validators.required]),	
+			experience:new FormControl(''),	
 			profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
@@ -34,6 +36,7 @@ export class AddEmployeeComponent implements OnInit {
 
 	ngOnInit() {
 		$('.datepicker').pickadate({
+			min: new Date(),
 			onSet: function(context) {
 				change();
 			}
@@ -41,6 +44,9 @@ export class AddEmployeeComponent implements OnInit {
 		var change:any = ()=>{
 			this.addEmployeeForm.controls.date.setValue($('.datepicker').val());
 		}
+		// $('#date-picker-example').pickadate({ 
+		// 	min: new Date()
+		// })
 	}
 
 	addEmployee(addEmployeeForm){
@@ -48,6 +54,7 @@ export class AddEmployeeComponent implements OnInit {
 
 		this.addEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		this.addEmployeeForm.value.date = $('.datepicker').val();
+		// this.addEmployeeForm.value.date = $('#date-picker-example').val();
 		console.log("form value=====>>>",addEmployeeForm.value);
 		this._loginservice.addUser_with_file(addEmployeeForm.value,this.files).subscribe((res:any)=>{
 			Swal.fire({type: 'success',title: 'Employee Added Successfully',showConfirmButton:false,timer: 2000})
@@ -69,7 +76,27 @@ export class AddEmployeeComponent implements OnInit {
 				// } 	
 
 				addFile(event){
-					this.files.push(event.target.files[0]);
+					// this.files.push(event.target.files[0]);
+					_.forEach(event.target.files, (file:any)=>{
+						// console.log(file.type);
+						if(file.type == "application/pdf"){
+							this.files.push(file);
+							// var reader = new FileReader();
+							// reader.readAsDataURL(file);
+							// reader.onload = (e:any) => {
+							// 	if(option == 'item')
+							// 		this.url.push(e.target.result);
+							// 	if(option == 'comment')
+							// 		this.commentUrl.push(e.target.result);
+							// }
+						}else {
+							Swal.fire({
+								title: 'Error',
+								text: "You can upload pdf file only",
+								type: 'warning',
+							})
+						}
+					})
 				}
 
 

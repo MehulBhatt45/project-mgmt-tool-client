@@ -19,7 +19,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   styleUrls: ['./all-leave-app.component.css']
 })
 export class AllLeaveAppComponent implements OnInit {
-   @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
+  @Output() leaveEmit : EventEmitter<any> = new EventEmitter();
 
   allLeaves;
   allAproveLeaves;
@@ -42,19 +42,20 @@ export class AllLeaveAppComponent implements OnInit {
   fileUrl;
   loader : boolean = false;
   filteredLeaves = [];
-  // projectTeam;
-  // Teams;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   selectedDeveloperId = "all";
   selectedStatus:any;
   comment;
   leaveid;
-
   path = config.baseMediaUrl;
   pLeave:boolean = false;
   aLeave:boolean = false;
   rLeave:boolean = false;
   title;
+  approvedLeavesCount;
+  pendingLeavesCount;
+  rejectedLeavesCount;
+  pendingLeave = [];
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -92,6 +93,9 @@ export class AllLeaveAppComponent implements OnInit {
     this.leavesByUserId();
     this.getAllDevelopers(Option);
     this.getAllLeaves();
+    this. getApprovedLeaves(Option);
+    this.getRejectedLeaves(Option);
+    this. getLeaves(Option);
 
     // this.getRejectedLeaves();
 
@@ -119,6 +123,9 @@ export class AllLeaveAppComponent implements OnInit {
                   event.stopPropagation();
                   $(".search").removeClass("open");
                 });
+                $('#centralModalInfo').on('hidden.bs.modal', function () {
+                  $('.modal-body').find('textarea').val('');
+                });
               }
 
 
@@ -126,6 +133,7 @@ export class AllLeaveAppComponent implements OnInit {
                 $(".search .btn").parent(".search").toggleClass("open");
                 $('.search').click((evt)=>{
                   evt.stopPropagation();
+
                 });
               }
 
@@ -136,6 +144,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.approvedLeaves().subscribe(res=>{
                     console.log("approved leaves",res);
                     this.leaveApp = res;
+                    this.approvedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -168,6 +177,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.rejectedLeaves().subscribe(res=>{
                     console.log("rejected leaves",res);
                     this.leaveApp = res;
+                    this.rejectedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -199,7 +209,9 @@ export class AllLeaveAppComponent implements OnInit {
                   this.title=option;
                   this._leaveService.pendingLeaves().subscribe(res=>{
                     this.leaveApp = res;
-                    $('#pending').css('background-color','#e6a6318f');
+                    this.pendingLeavesCount= this.leaveApp.length;
+                    // console.log(this.pendingLeave.length);
+                    $('#pending').css('background-image','linear-gradient(#e6a6318f,#f3820f)');
                     console.log("data avo joye==========>",this.leaveApp);
                     $('#statusAction').show();
                     _.map(this.leaveApp, leave=>{
@@ -224,23 +236,13 @@ export class AllLeaveAppComponent implements OnInit {
                     });
 
                     this.allLeaves = this.leaveApp; 
-                    console.log("applicationsss==>",this.leaveApp);
-                    // _.forEach(this.leaveApp , (leave)=>{
-                      //   _.forEach(this.leavescount , (count)=>{
-                        //     if(count.typeOfLeave == leave.typeOfLeave){
-                          //       count.leavesTaken = count.leavesTaken + 1;
-                          //     }
-                          //   });
-                          // });
-
-                          // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                          // console.log("leaves count ====>" , this.leavescount);
-                          this.pLeave = true;
-                          this.aLeave = false;
-                          this.rLeave = false;
-                        },err=>{
-                          console.log(err);
-                        });
+                    console.log("applicationsss==>",this.leaveApp)
+                    this.pLeave = true;
+                    this.aLeave = false;
+                    this.rLeave = false;
+                  },err=>{
+                    console.log(err);
+                  });
                   this.loader=false;
                 },1000);
               }
@@ -379,7 +381,7 @@ export class AllLeaveAppComponent implements OnInit {
                   break;
                   case "rejected":
                   this.getRejectedLeaves('Rejected');
-                  break;        
+                  break;       
                   default:
                   console.log("DEFAULT CASE");
                   break;
@@ -438,7 +440,8 @@ export class AllLeaveAppComponent implements OnInit {
                         body.status = "approved";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("reqest of leavesssssssssssssssssss ========>" , req);
+                    var dev = req.email;
                     console.log("bodyy ========>" , body);
                     this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
@@ -454,6 +457,8 @@ export class AllLeaveAppComponent implements OnInit {
                       // this.leaveEmit.emit(this.acceptedLeave);
                       // this.getLeaves(Option);
                       this.getLeaves(this.title);
+                      console.log("thissssssssss===>",dev);
+                      // this.filterTracks(dev);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -483,7 +488,8 @@ export class AllLeaveAppComponent implements OnInit {
                         body.status = "rejected";
                       }
                     })
-                    console.log("req ========>" , req);
+                    console.log("req ========>" , req.email);
+                    var dev = req.email;
                     console.log("bodyy ========>" , body);
                     this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
                       Swal.fire(
@@ -497,6 +503,8 @@ export class AllLeaveAppComponent implements OnInit {
                       this.rejectedLeave = res;
                       console.log("rejected===========>",this.rejectedLeave);
                       this.getLeaves(this.title);
+                      console.log("thissssssssss===>",dev);
+                      // this.filterTracks(dev);
                     },(err:any)=>{
                       console.log(err);
                       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -532,25 +540,15 @@ export class AllLeaveAppComponent implements OnInit {
                           $('.unselected').css('display','none');
                           $('.selected').css('display','block');
                           this.leaveApp.push(leave);
+
                         }
                       });
-                      // _.forEach(this.leaves , (leave)=>{
-                        //   console.log("leavess====",leave);
-                        //   _.forEach(this.leavescount , (count)=>{
-                          //     if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-                            //       count.leavesTaken = count.leavesTaken + 1;
-                            //     }
-                            //   });
-                            // });
-
-                            // console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesLeft-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-                            // console.log("leaves count ====>" , this.leavescount);
-                          }else{
-                            console.log("not found");
-                          }
-                        },err=>{
-                          console.log(err);
-                        })
+                    }else{
+                      console.log("not found");
+                    }
+                  },err=>{
+                    console.log(err);
+                  })
                   this.loader=false;
                 },1000);
               }
@@ -592,10 +590,8 @@ export class AllLeaveAppComponent implements OnInit {
                           }
                           console.log("nthi avtu=======>",custom_sort);
                         }
+
                         onKey(searchText){
-                          console.log("p leaves ====>" , this.pLeave);
-                          console.log("r leaves ====>" , this.rLeave);
-                          console.log("a leaves ====>" , this.aLeave);
                           if(this.pLeave == true){
                             console.log('pending leaves',this.allLeaves);
                             var dataToBeFiltered = [this.allLeaves];
@@ -612,7 +608,6 @@ export class AllLeaveAppComponent implements OnInit {
                           _.forEach(leave, (content)=>{
                             this.leaveApp.push(content);
                           });
-
                         }
 
                         leavesByUserId(){
@@ -691,6 +686,7 @@ export class AllLeaveAppComponent implements OnInit {
                                     console.log("response",res);
                                     Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
                                     $('#centralModalInfo').modal('hide');
+                                    this.comment = "";
                                   },err=>{
                                     console.log("errrrrrrrrrrrrr",err);
                                     Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -703,6 +699,9 @@ export class AllLeaveAppComponent implements OnInit {
                                   this.gotAttachment = attechment;
                                   $('#veiwAttach').modal('show')
                                   console.log("gotattechment array ====>",this.gotAttachment);
+                                }
+                                cancel(){
+                                  this.comment = "";
                                 }
 
                               }

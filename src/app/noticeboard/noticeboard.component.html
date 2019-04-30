@@ -25,7 +25,7 @@
 					<h5 style="font-weight: 500;">{{notice.title}}</h5>
 					<p style="margin-bottom: 8px;"><span class="icon-calendar mr-2"></span>
 						<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span></p>
-						<a href="#" class="btn btn-primary margin-0" style="margin-left: 0px;"  data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
+						<a href="#" class="btn btn-primary margin-0" style="margin-left: 0px;" data-toggle="modal" data-target="#basicExampleModal" (click)="noticeById(notice._id)">Read More</a>
 					</div>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 	<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<h4  _ngcontent-c4=""  style="padding: 17px 19px 0px;" id="exampleModalPreviewLabel" class="card-header-title"><span class="icon-pencil"></span> Edit Notice</h4>
+				<h4 _ngcontent-c4="" style="padding: 17px 19px 0px;" id="exampleModalPreviewLabel" class="card-header-title"><span class="icon-pencil"></span> Edit Notice</h4>
 				<button type="button" style="margin-top: 20px;" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -84,16 +84,16 @@
 					<div class="title">
 						<div class="float-right">
 							<div class="btn-group dropleft float-right">
+							</div>
 						</div>
 					</div>
-				</div>
-				<span class="icon-calendar mr-1 " aria-hidden="true"></span>
-				<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
-				<div class="desc pt-1">
-					<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
+					<span class="icon-calendar mr-1 " aria-hidden="true"></span>
+					<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
+					<div class="desc pt-1">
+						<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <!-- modal end here -->

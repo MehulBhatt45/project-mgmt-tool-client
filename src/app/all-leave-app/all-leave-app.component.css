@@ -34,6 +34,10 @@
 }
 .card{
 	max-width: 100%;
+	width: 100%;
+}
+h3{
+	text-align: center;
 }
 .selected{
 	display: none;
@@ -77,6 +81,8 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 #exampleForm2 {
 	color: #000;
     font-size: 18px;
+    padding: inherit;
+    color: #000;
 }
 .md-form {
 	position: relative;

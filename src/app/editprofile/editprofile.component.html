@@ -8,7 +8,6 @@
 	<h3 class="card-header-title mb-1"><span class="icon-note"></span> Edit User Profile</h3>
 	<div class="card">
 		<div class="card-body">
-			<div class="container">
 				<form [formGroup]="editEmployeeForm" autocomplete="off">
 					<div class="row">
 						<div class="col-md-4">
@@ -46,6 +45,10 @@
 								<label class="active" for="experience">Experience</label>
 								<input type="text" formControlName="experience" class="form-control" id="experience" [(ngModel)]="userDetails.experience">
 							</div>
+							<div class="md-form form-group" *ngIf="userDetails">
+								<label class="active" for="experience">Joining Date</label>
+								<input type="text" formControlName="joiningDate" class="form-control" id="joiningDate" [(ngModel)]="userDetails.joiningDate">
+							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="md-form form-group file-field" *ngIf="userDetails">
@@ -53,7 +56,7 @@
 									<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 								</div>
 								<div class="file-path-wrapper">
-									<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV.split('/').reverse()[0]" readonly>
+									<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly>
 								</div>
 							</div>
 						</div>
@@ -65,6 +68,5 @@
 						</div>
 					</div>
 				</form>
-			</div>
 		</div>
 	</div>

@@ -47,6 +47,7 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 }
 .star_link{
   color:black;
+  padding-left: 25px;
 }
 .fa-star,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
@@ -98,6 +99,7 @@ ol.breadcrumb.hidden-lg-down li a {
   display: inline-block;
   vertical-align: sub;
 }
+
 .dropdown-menu{
   left: 30px !important;
   box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -300,11 +302,30 @@ ol.breadcrumb.hidden-lg-down li a {
 .delete-team-member a i{
   color: red;
 }
-/*.close{
-  margin: -12px 12px 0px 0px;
-  background-color: #fff;
-  opacity: 1;
-  }*/
+.side-nav {
+   background-color: #372e5e !important;
+}
+.notification_count[_ngcontent-c2] {
+    background-color: #ffaa09;
+    color: black;
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    line-height: 20px;
+    top: -15px;
+    right: 12px;
+    height: 26px;
+    width: 25px;
+    text-align: center;
+    border: 1px solid black;
+    /* border-radius: 1px; */
+    border-right-color: black;
+}
+.notification_count span.custom_badge {
+  line-height: 22px;
+  display: inline-block;
+  font-size: 14px;
+}
 
   .navbar{
     padding: 0 15px;

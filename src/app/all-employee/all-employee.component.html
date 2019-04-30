@@ -20,56 +20,7 @@
 		</div>
 	</div>
 </div>
-	<!-- <section class="section pb-3 text-center">
-		<div class="row">
-			<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-4" *ngFor="let developer of developers ">
-				<div class="card-wrapper">
-					<div class="card-rotating effect__click text-center h-100 w-100">
-						<div class="face front">
-							<div class="avatar mx-auto white">
-								<a routerLink = "/visit-user-profile/{{developer._id}}">
-									<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
-								</a>
-							</div>
-							<div class="card-body">
-								<h4 class="font-weight-bold mb-3">{{developer.name}}</h4>
-								<p class="font-weight-bold deep-purple-text" style="text-transform: uppercase;font-size: 14px;">{{developer.userRole}}</p>
-								<a href="javascript:void(0);" class="rotate-btn btn-default"><span class="icon-action-redo"></span> Click here to rotate</a>
-							</div>
-						</div>
-						<div class="face back">
-							<div class="card-body">
-								<div class="dropdown">
-									<a href="#" class="action-icon" data-toggle="dropdown" aria-expanded="false">
-										<span class="fa fa-ellipsis-v"></span>
-									</a>
-									<div class="dropdown-menu">
-										<a class="dropdown-item"  routerLink="/editprofile/{{developer._id}}"><span class="icon-pencil"></span>Edit</a>
-										<a class="dropdown-item"  (click)="deleteEmployee(developer._id)"><span class="icon-trash"></span>Delete</a>
-									</div>
-								</div>
-								<h4 class="font-weight-bold mb-0">About me</h4>
-								<hr>
-								<p>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat tenetur odio suscipit non commodi vel
-								eius veniam maxime?</p>
-								<hr>
-								<ul class="list-inline py-2">
-									<li class="list-inline-item"><a class="p-2 fa-lg fb-ic"><span class="icon-social-facebook"></span></a></li>
-									<li class="list-inline-item"><a class="p-2 fa-lg tw-ic"><span class="icon-social-twitter" data-icon="&#xe009;"></span></a></li>
-									<li class="list-inline-item"><a class="p-2 fa-lg gplus-ic"><span class="fab fa-google-plus-g"></span></a></li>
-									<li class="list-inline-item"><a class="p-2 fa-lg li-ic"><span class="fab fa-linkedin"></span></a></li>
-								</ul>
-								<a href="javascript:void(0);" class="rotate-btn btn-default" style="margin-bottom: 20px;"><span class="fas fa-redo-alt"></span> Click here to back</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</section>
--->
+	
 	<div class="row">
 		<div class="col-md-4" *ngFor="let developer of developers">
 			<div class="border mb-1">

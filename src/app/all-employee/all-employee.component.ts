@@ -99,19 +99,47 @@ export class AllEmployeeComponent implements OnInit {
 	}
 	deleteEmployee(developerid){
 		console.log("msgggg--=--",developerid);
+		console.log(developerid._id);
+		 var dev = developerid._id;
+		Swal.fire({
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
 
-		this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
-			console.log("devid=-=--{}{}{}{}{}",developerid);
-			Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
-			console.log("delete{}{}{}{}",res);
-			this.getAllDevelopers();
-			// this.getDeveloper(this.selectedProjectId );
-		},err=>{
-			console.log("errr=-=-=-= ",err);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		})
+			if (result.value) {
+				var body;
+				this._projectService.deleteEmployeeById(dev).subscribe(res=>{
+					console.log(res);
+					Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
+					this.getAllDevelopers();
+				},err=>{
+					console.log("errr=-=-=-= ",err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				})
+				
+			}
+			// var body;
+			// if (result.value) {
+				// 	this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
+					// 		console.log("devid=-=--{}{}{}{}{}",developerid);
+					// 		Swal.fire({type: 'success',title: 'Employee Deleted Successfully',showConfirmButton:false,timer: 2000})
+					// 		console.log("delete{}{}{}{}",res);
+					// 		this.getAllDevelopers();
+					// 		// this.getDeveloper(this.selectedProjectId );
+					// 	},err=>{
+						// 		console.log("errr=-=-=-= ",err);
+						// 		Swal.fire('Oops...', 'Something went wrong!', 'error')
+						// 	}
+
+						// 	)
+						// }
+					})
 	}
-	
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			this.projects = res;

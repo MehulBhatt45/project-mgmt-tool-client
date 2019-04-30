@@ -22,6 +22,9 @@ export class LoginComponent implements OnInit {
   loader = false;
   show: boolean;
   pwd: boolean;
+  err: any;
+  error1Msg;
+  errorMsg;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,13 +56,20 @@ export class LoginComponent implements OnInit {
     $(".toggle-password").click(function() {
       $(this).toggleClass("fa-eye fa-eye-slash");
     });
+
+    $('#modalForgotPasswordForm').click(function(){
+      $('.reset_form')[0].reset();
+    });
+    $('.modal-content').click(function(event){
+      event.stopPropagation();
+    });
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.  submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -75,23 +85,38 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this._alertService.error(error);
+        if (error.status == 400) {
+
+          this.err = error;
+          console.log("error is===>",this.err.error.errMsg);
+          this.errorMsg = this.err.error.errMsg;
+        }
+
+        else if (error.status == 406) {
+          this.err = error;
+          console.log("error is===>",this.err.error.errMsg);
+          this.errorMsg = this.err.error.errMsg;
+        }
         this.loading = false;
       });
   }
+
+
   showPassword(){
     // var pass = document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
-     var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
-     if(pass == "password"){
-        document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
+    var pass = document.getElementById("FORMPASSWORD").getAttribute("type");
+    if(pass == "password"){
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "text");
     }
     else{
-       document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
+      document.getElementById("FORMPASSWORD").setAttribute("type" , "password");
     }
     // console.log("pass ==>" , pass);
     
     
   }
   updatePassword(){
+    this.submitted = true;
     // console.log(this.forgotPasswordForm.value);
     this.loader = true;
     this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
@@ -100,16 +125,16 @@ export class LoginComponent implements OnInit {
       // alert("Reset password link sent on your email");
       Swal.fire("","Reset password link sent on your email","success");
       $('#modalForgotPasswordForm').modal('hide');
-    },err=>{
-      console.log("res-=-=",err);
+    },error=>{
+      this._alertService.error(error);
+      if (error.status == 403) {
+        this.err = error;
+        console.log("error is===>",this.err.error.errMsg);
+        this.error1Msg = this.err.error.errMsg;
+      }
       this.loader = false;
       // alert("email not found");
-      Swal.fire({
-        type: 'error',
-        title: 'Oops...',
-        text: 'Email not found!',
-        footer: ''
-      })
+      
     })    
   }
   
