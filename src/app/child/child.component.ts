@@ -11,8 +11,6 @@ import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
-
-
 declare var $ : any;
 
 @Component({
@@ -45,7 +43,6 @@ export class ChildComponent  implements OnInit{
   tasks;
   comments;
   comment;
-  // projectId;
   developerId;
   allStatusList = this._projectService.getAllStatus();
   allPriorityList = this._projectService.getAllProtity();
@@ -80,6 +77,8 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
+  file = [];
+  
   
 
   
@@ -380,6 +379,13 @@ export class ChildComponent  implements OnInit{
       this.files.splice(index,1);
     console.log(this.files);  
   }
+  removeCommentImage1(file,index){
+    console.log(file, index);
+    this.file.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
+  }
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
   }
@@ -494,7 +500,7 @@ export class ChildComponent  implements OnInit{
       var diff1 = difference[0];
       // console.log("ahi j zero mde che",diff1);
       var diff2 = difference[1];
-     
+
       difference = diff1 +":"+diff2;
       // console.log("fhuidsifgidif",difference);
       return difference;
@@ -608,7 +614,7 @@ export class ChildComponent  implements OnInit{
   }
 
   startTimer(data) {
-       console.log('task data================>',data);
+    console.log('task data================>',data);
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
@@ -668,4 +674,11 @@ export class ChildComponent  implements OnInit{
       console.log(err);
     });
   }
+
+  changeFile(event){
+    console.log(event);
+    this.files = event;
+  }
+
+
 }

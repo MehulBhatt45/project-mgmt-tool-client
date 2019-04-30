@@ -60,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	// sorting: any;
+	
 	sorting:any;
 	temp:any;
 	activeSprint:any;
@@ -626,14 +626,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("error in delete Task=====>" , err);
 		});
 	}
-
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
+	
 	removeCommentImage(file, index){
 		console.log(file, index);
 		this.commentUrl.splice(index, 1);
@@ -713,5 +706,11 @@ export class ProjectDetailComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
-	}	
+	}
+	changeFile(event){
+		console.log(event);
+		this.files = event;
+	}
+
+
 }
