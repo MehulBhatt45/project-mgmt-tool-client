@@ -220,7 +220,7 @@ export class AllLeaveAppComponent implements OnInit {
 
                   })
                   this.loader=false;
-                },1000);
+                },3000);
               }
               getRejectedLeaves(option){
                 this.loader=true;
@@ -425,10 +425,9 @@ export class AllLeaveAppComponent implements OnInit {
                     data: {
                       labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
                       datasets: [{
-                         label: 'Types of Leaves',
-                        data: this.getLeaveCount(this.allLeaves),
-                        backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
-                        hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+                        data: this.getLeaveCount(this.leaveApp),
+                        backgroundColor: ["#181123", "#3998c5", "#91b9cc", "#cacbcc"],
+                        hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
                       }]
                     },
                     options: {
@@ -448,10 +447,9 @@ export class AllLeaveAppComponent implements OnInit {
                     data: {
                       labels: ["Half Day", "Full Day", "More Day"],
                       datasets: [{
-                        label: 'Duration of Leaves',
-                        data:this.getLeaveDuration(this.allLeaves),
-                        backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
-                        hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+                        data:this.getLeaveDuration(this.leaveApp),
+                        backgroundColor: ["#181123", "#3998c5", "#91b9cc"],
+                        hoverBackgroundColor: ["gray", "gray", "gray"]
                       }]
                     },
 
