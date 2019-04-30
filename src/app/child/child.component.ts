@@ -19,7 +19,7 @@ declare var $ : any;
   selector: 'app-child',
   templateUrl: './child.component.html',
   styleUrls: ['../project-detail/project-detail.component.css'],
-  // host: {'window:beforeunload':'doSomething'}
+  
 })
 export class ChildComponent  implements OnInit{
 
@@ -81,7 +81,7 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
-  
+
 
   
 
@@ -478,6 +478,12 @@ export class ChildComponent  implements OnInit{
       $('#itemManipulationModel1').modal('hide');
       $('#fullHeightModalRight').modal('hide');
       this.getProject(this.projectId);
+      var cardid = '#' + 'cardId_' + taskNo;
+      console.log('cardid=======================================>',cardid);
+      setTimeout(()=>{
+      $(cardid).css({"background-color": "#F5F5F5"});
+
+      },2000)
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
