@@ -158,7 +158,7 @@ import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.compon
     // DemoUtilsModule
 
     ],
-    providers: [MessagingService, AsyncPipe, PushNotificationService],
+    providers: [MessagingService, AsyncPipe, PushNotificationService, NoticeboardComponent],
     bootstrap: [AppComponent],
     
 })
