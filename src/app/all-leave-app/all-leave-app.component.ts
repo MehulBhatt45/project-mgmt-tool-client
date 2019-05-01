@@ -24,6 +24,7 @@ export class AllLeaveAppComponent implements OnInit {
   allAproveLeaves;
   leaves;
   leaveApp;
+  pendingLeaves;
   acceptedLeave;
   rejectedLeave;
   developers;
@@ -67,7 +68,7 @@ export class AllLeaveAppComponent implements OnInit {
   round1;
   total2;
   round2;
-
+  availableLeaves;
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -106,7 +107,6 @@ export class AllLeaveAppComponent implements OnInit {
     this.getAllDevelopers(Option);
     this.getAllLeaves();
     this. getApprovedLeaves(Option);
-
     this.getRejectedLeaves(Option);
     this. getLeaves(Option);
     // this. getAllLeave();
@@ -151,6 +151,7 @@ export class AllLeaveAppComponent implements OnInit {
                 });
               }
               getApprovedLeaves(option){
+                $("#target").val($("#target option:first").val());
                 this.loader=true;
                 setTimeout(()=>{
                   this.title=option;
@@ -239,6 +240,7 @@ export class AllLeaveAppComponent implements OnInit {
                 },3000);
               }
               getRejectedLeaves(option){
+                $("#target").val($("#target option:first").val());
                 this.loader=true;
                 setTimeout(()=>{
                   this.title=option;
@@ -329,6 +331,7 @@ export class AllLeaveAppComponent implements OnInit {
               }
 
               getLeaves(option){
+                $("#target").val($("#target option:first").val());
                 this.loader=true;
                 setTimeout(()=>{
                   this.title=option;
@@ -360,7 +363,7 @@ export class AllLeaveAppComponent implements OnInit {
                       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
                     });
 
-                    // this.allLeaves = this.leaveApp; 
+                    this.pendingLeaves = this.leaveApp; 
                     console.log("applicationsss==>",this.leaveApp);
                     this.getLeaveCount(this.leaveApp);
                     this.getLeaveDuration(this.leaveApp);
@@ -573,7 +576,7 @@ getLeaveCount(leaves){
 
 getLeaveDuration(leaves){
   console.log(leaves);
-  console.log(leaves[1].attechment);
+  // console.log(leaves[1].attechment);
   var Half_Day = [];
   var Full_Day = [];
   var More_Day = [];
@@ -617,6 +620,7 @@ getLeaveType(leaves){
 }
 
 getFilteredLeaves(){
+  this.isFromSelect = false;
   switch (this.selectedStatus) {
     case "pending":
     this.getLeaves('Pending');
@@ -664,68 +668,75 @@ getAllDevelopers(option){
 
 
 leaveAccepted(req){
+  this.leaveById(req);
   var body;
   console.log("dsfdsbgfdf",this.leaveApp);
   console.log("reeeeeeee",req);
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "Leaves Left: "+this.leavescount[4].leavesLeft,
-    type: 'warning',
-    showCancelButton: true,
-    // confirmButtonColor: '#3085d6',
-    // cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes,Approve it!',
-    cancelButtonText: 'No, cancle!',
-    reverseButtons: true
-  }).then((result) => {
-    if (result.value) {
-      var body;
-      console.log("reeeeeeee",req);
-      _.forEach(this.leaveApp, (apply)=>{
-        if(apply._id == req){
-          body = apply;
-          body.status = "approved";
-        }
-      })
-      console.log("reqest of leavesssssssssssssssssss ========>" , req);
-      var dev = req.email;
-      console.log("bodyy ========>" , body);
-      this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-        let name = res.name;
-        console.log("name of applicant",name );
-        // moment(leave.startingDate).format('YYYY-MM-DD');
-        let date = moment(res.startingDate).format('YYYY-MM-DD')
-        console.log("date of application",date);
+  console.log(this.availableLeaves);
+  setTimeout(()=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Leaves Left: "+ this.availableLeaves,
+      type: 'warning',
+      showCancelButton: true,
+      // confirmButtonColor: '#3085d6',
+      // cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes,Approve it!',
+      cancelButtonText: 'No, cancle!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var body;
+        console.log("reeeeeeee",req);
+        _.forEach(this.leaveApp, (apply)=>{
+          if(apply._id == req){
+            body = apply;
+            body.status = "approved";
+          }
+        })
+        console.log("reqest of leavesssssssssssssssssss ========>" , req);
+        var dev = req.email;
+        console.log("bodyy ========>" , body);
+        this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
+          let name = res.name;
+          console.log("name of applicant",name );
+          // moment(leave.startingDate).format('YYYY-MM-DD');
+          let date = moment(res.startingDate).format('YYYY-MM-DD')
+          console.log("date of application",date);
 
+          Swal.fire(
+            'Approve!',
+            "Leave of " + name + " from " + date + " is approved successfully",
+            'success'
+            )
+          body.status = "approved";
+          console.log("bodyyyyyyyyyyyyyyy",body);
+          console.log("respondsssssss",res);
+          this.acceptedLeave = res;
+          console.log("acceptedd===========>",this.acceptedLeave);
+          // this.leaveEmit.emit(this.acceptedLeave);
+          // this.getLeaves(Option);
+          this.getLeaves(this.title);
+          console.log("thissssssssss===>",dev);
+          // this.filterTracks(dev);
+        },(err:any)=>{
+          console.log(err);
+          Swal.fire('Oops...', 'Something went wrong!', 'error')
+        });
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+        ){
         Swal.fire(
-          'Approve!',
-          "Leave of " + name + " from " + date + " is approved successfully",
-          'success'
+          'Cancled',
+          'Leave is not approved.',
+          'error'
           )
-        body.status = "approved";
-        console.log("bodyyyyyyyyyyyyyyy",body);
-        console.log("respondsssssss",res);
-        this.acceptedLeave = res;
-        console.log("acceptedd===========>",this.acceptedLeave);
-        // this.leaveEmit.emit(this.acceptedLeave);
-        // this.getLeaves(Option);
-        this.getLeaves(this.title);
-        console.log("thissssssssss===>",dev);
-        // this.filterTracks(dev);
-      },(err:any)=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      });
-    } else if (
-      result.dismiss === Swal.DismissReason.cancel
-      ){
-      Swal.fire(
-        'Cancled',
-        'Leave is not approved.',
-        'error'
-        )
-    }
-  })
+      }
+    })
+
+
+  },80);
+
 }
 
 leaveRejected(req){
@@ -772,8 +783,10 @@ leaveRejected(req){
     }
   })
 }
+isFromSelect: boolean = false;
 
 filterTracks(developerId){
+  this.isFromSelect = true;
   this.loader=true;
   setTimeout(()=>{
     this.title='Application';
@@ -806,6 +819,7 @@ filterTracks(developerId){
       }else{
         console.log("not found");
       }
+
     },err=>{
       console.log(err);
     })
@@ -813,31 +827,23 @@ filterTracks(developerId){
   },1000);
 }
 
-addComment(comment){
-  console.log("data=====>>",comment);
-}
-
 
 sortLeavesByFromDate(type){
   console.log("Sorting tasks by = ",type)
-  // console.log(this.pendingLeaves);
-  // console.log('leave===============================>',this.pendingLeaves);
   this.leaveApp.sort(custom_sort);
   if(type == 'desc'){
     this.leaveApp.reverse();
   }
   console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
   function custom_sort(a, b) {
-
     return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
   }
-  console.log("nthi avtu=======>",custom_sort);
 }
 
 onKey(searchText){
   if(this.pLeave == true){
-    console.log('pending leaves',this.allLeaves);
-    var dataToBeFiltered = [this.allLeaves];
+    console.log('pending leaves',this.pendingLeaves);
+    var dataToBeFiltered = [this.pendingLeaves];
   }else if(this.aLeave == true){
     console.log('approved leaves',this.allAproveLeaves);
     var dataToBeFiltered = [this.allAproveLeaves];
@@ -853,269 +859,91 @@ onKey(searchText){
   });
 }
 
-// leavesByUserId(){
-//   var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
-//   console.log("email of login user",obj);
-//   this._leaveService.leavesById(obj).subscribe((res:any)=>{
-//     console.log("resppppppondssss",res);
-//     this.leaves = res;
-//     _.forEach(this.leaves , (leave)=>{
-//       leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-//       leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-//     })
-//     console.log("statussssssss",this.leaves);
-//   },err=>{
-//     console.log(err);
-//   })
-// }
 
-// // addComment(comment){
-//   //   console.log("data=====>>",comment);
-//   // }
-
-//   leaveById(leaveid, option){
-//     console.log("leave id=======>>",leaveid);
-//     this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-//       this.singleleave = res[0];
-//       var obj =  this.singleleave.email;
-//       console.log("email of login user",obj);
-//       this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
-//         console.log("resppppppondssss",res);
-//         this.leaves = res;
-//         this.getEmptytracks();
-       
-//         _.forEach(this.leaves , (leave)=>{
-//           console.log("leavess====",leave);
-//           _.forEach(this.leavescount , (count)=>{
-//             if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-//               console.log("count ====>" , count);  
-//               count.leavesTaken = count.leavesTaken + 1;
-            
-//                   }
-//                 });
-//             });
-
-       
-//           console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-//           console.log("leaves count ====>" , this.leavescount);
-//           option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
-         
-//         },err=>{
-//           console.log("errrrrrrrrrrrrr",err);
-//         })
-//       })
-
-//     }
-   
-  // leaveRejected(req){
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert this!",
-  //     type: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes,Reject it!'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       var body;
-  //       console.log("rejected",this.leaveApp);
-  //       console.log("reeeeeeee",req);
-  //       _.forEach(this.leaveApp, (apply)=>{
-  //         if(apply._id == req){
-  //           body = apply;
-  //           body.status = "rejected";
-  //         }
-  //       })
-  //       console.log("req ========>" , req.email);
-  //       var dev = req.email;
-  //       console.log("bodyy ========>" , body);
-  //       this._leaveService.leaveApproval(req, body).subscribe((res:any)=>{
-  //         Swal.fire(
-  //           'Rejected!',
-  //           'Your Leave has been Rejected.',
-  //           'success'
-  //           )
-  //         body.status = "rejected";
-  //         console.log("bodyyyyyyyyyyyyyyy",body);
-  //         console.log("respondsssssss",res);
-  //         this.rejectedLeave = res;
-  //         console.log("rejected===========>",this.rejectedLeave);
-  //         this.getLeaves(this.title);
-  //         console.log("thissssssssss===>",dev);
-  //         // this.filterTracks(dev);
-  //       },(err:any)=>{
-  //         console.log(err);
-  //         Swal.fire('Oops...', 'Something went wrong!', 'error')
-  //       })
-  //     }
-  //   })
-  // }
-
-  // filterTracks(developerId){
-  //   this.loader=true;
-  //   setTimeout(()=>{
-  //     this.title='Application';
-  //     this.getEmptytracks();
-  //     var obj ={ email : developerId};
-  //     console.log("email of selected user",obj);
-  //     this._leaveService.leavesById(obj).subscribe((res:any)=>{
-  //       console.log("resppppppondssss from leaves by id",res);
-  //       this.leaves = res;
-  //       _.forEach(this.leaves , (leave)=>{
-  //         leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-  //         leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-  //       })
-  //       console.log("statussssssss",this.leaves);
-  //       if( developerId!='all'){
-  //         this.leaveApp = [];
-  //         $('.unselected').css('display','block');
-  //         $('.selected').css('display','none');
-  //         console.log("sucess");
-  //         _.forEach(this.leaves , (leave)=>{
-  //           // console.log("dsfbbdsf",leave);
-  //           if(developerId == leave.email ){
-  //             // console.log(leave);
-  //             $('.unselected').css('display','none');
-  //             $('.selected').css('display','block');
-  //             this.leaveApp.push(leave);
-
-  //           }
-  //         });
-  //       }else{
-  //         console.log("not found");
-  //       }
-  //     },err=>{
-  //       console.log(err);
-  //     })
-  //     this.loader=false;
-  //   },1000);
-  // }
-
-  // addComment(comment){
-  //   console.log("data=====>>",comment);
-  // }
-
-
-  // sortLeavesByFromDate(type){
-  //   console.log("Sorting tasks by = ",type)
-  //   // console.log(this.pendingLeaves);
-  //   // console.log('leave===============================>',this.pendingLeaves);
-  //   this.leaveApp.sort(custom_sort);
-  //   if(type == 'desc'){
-  //     this.leaveApp.reverse();
-  //   }
-  //   console.log("sorted output =><>?????)_)_)_ ",this.leaveApp);
-  //   function custom_sort(a, b) {
-
-  //     return new Date(new Date(a.startingDate)).getTime() - new Date(new Date(b.startingDate)).getTime();
-  //   }
-  //   console.log("nthi avtu=======>",custom_sort);
-  // }
-
-  // onKey(searchText){
-  //   if(this.pLeave == true){
-  //     console.log('pending leaves',this.allLeaves);
-  //     var dataToBeFiltered = [this.allLeaves];
-  //   }else if(this.aLeave == true){
-  //     console.log('approved leaves',this.allAproveLeaves);
-  //     var dataToBeFiltered = [this.allAproveLeaves];
-  //   }else if(this.rLeave == true){
-  //     console.log('rejected leaves',this.rejeLeaves);
-  //     var dataToBeFiltered = [this.rejeLeaves];
-  //   }
-  //   var leave = this.searchTextFilter.transform2(dataToBeFiltered, searchText);
-  //   console.log("In Component",leave);
-  //   this.leaveApp = [];
-  //   _.forEach(leave, (content)=>{
-  //     this.leaveApp.push(content);
-  //   });
-  // }
-
-  leavesByUserId(){
-    var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+leavesByUserId(){
+  var obj ={ email : JSON.parse(localStorage.getItem('currentUser')).email};
+  console.log("email of login user",obj);
+  this._leaveService.leavesById(obj).subscribe((res:any)=>{
+    console.log("resppppppondssss",res);
+    this.leaves = res;
+    _.forEach(this.leaves , (leave)=>{
+      leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
+      leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
+    })
+    console.log("statussssssss",this.leaves);
+  },err=>{
+    console.log(err);
+  })
+}
+leaveById(leaveid, option?){
+  console.log("leave id=======>>",leaveid,option);
+  this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
+    this.singleleave = res[0];
+    var obj =  this.singleleave.email;
     console.log("email of login user",obj);
-    this._leaveService.leavesById(obj).subscribe((res:any)=>{
+    this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
       console.log("resppppppondssss",res);
       this.leaves = res;
+      this.getEmptytracks();
       _.forEach(this.leaves , (leave)=>{
-        leave.startingDate = moment(leave.startingDate).format('YYYY-MM-DD');
-        leave.endingDate = moment(leave.endingDate).format('YYYY-MM-DD');
-      })
-      console.log("statussssssss",this.leaves);
+        console.log("leavess====",leave);
+        _.forEach(this.leavescount , (count)=>{
+          if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
+            console.log("count ====>" , count);  
+            count.leavesTaken = count.leavesTaken + 1;
+          }
+        });
+      });
+
+      console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
+      console.log("leaves count ====>" , this.leavescount);
+      this.availableLeaves = this.leavescount[4].leavesLeft;
+      console.log(this.availableLeaves);
+      if(option){
+
+        option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
+      }
     },err=>{
-      console.log(err);
+      console.log("errrrrrrrrrrrrr",err);
     })
+  })
+
+}
+
+
+
+
+
+submitComment(leaveid,comment){
+  console.log("leave id==>>>>>",leaveid);
+  console.log("====>",comment);
+  var data={
+    leaveId:leaveid,
+    comment:comment
   }
+  console.log("data==========>>",data);
+  this._leaveService.addComments(data).subscribe((res:any)=>{
+    res['comment'] = true; 
+    console.log("response",res);
+    Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
+    $('#centralModalInfo').modal('hide');
+    this.comment = "";
+  },err=>{
+    console.log("errrrrrrrrrrrrr",err);
+    Swal.fire('Oops...', 'Something went wrong!', 'error')
+  })
+}
 
-  // addComment(comment){
-    //   console.log("data=====>>",comment);
-    // }
+gotAttachment = [];
+sendAttachment(attechment){
+  console.log("attachment is====>",attechment);
+  this.gotAttachment = attechment;
+  $('#veiwAttach').modal('show')
+  console.log("gotattechment array ====>",this.gotAttachment);
+}
+cancel(){
+  this.comment = "";
+}
 
-    leaveById(leaveid, option){
-      console.log("leave id=======>>",leaveid);
-      this._leaveService.getbyId(leaveid).subscribe((res:any)=>{
-        this.singleleave = res[0];
-        var obj =  this.singleleave.email;
-        console.log("email of login user",obj);
-        this._leaveService.leaveByUserId(obj).subscribe((res:any)=>{
-          console.log("resppppppondssss",res);
-          this.leaves = res;
-          this.getEmptytracks();
-          _.forEach(this.leaves , (leave)=>{
-            console.log("leavess====",leave);
-            _.forEach(this.leavescount , (count)=>{
-              if(count.typeOfLeave == leave.typeOfLeave && leave.status == "approved"){
-                console.log("count ====>" , count);  
-                count.leavesTaken = count.leavesTaken + 1;
-              }
-            });
-          });
+}
 
-          console.log( this.leavescount[4].leavesLeft = this.leavescount[4].leavesPerYear-(this.leavescount[3].leavesTaken+this.leavescount[2].leavesTaken+this.leavescount[1].leavesTaken+this.leavescount[0].leavesTaken));
-          console.log("leaves count ====>" , this.leavescount);
-          option == 'view'?$("#viewMore").modal('show'):$("#centralModalInfo").modal('show');
-        },err=>{
-          console.log("errrrrrrrrrrrrr",err);
-        })
-      })
-
-    }
-
-
-
-
-
-          submitComment(leaveid,comment){
-            console.log("leave id==>>>>>",leaveid);
-            console.log("====>",comment);
-            var data={
-              leaveId:leaveid,
-              comment:comment
-            }
-            console.log("data==========>>",data);
-            this._leaveService.addComments(data).subscribe((res:any)=>{
-              res['comment'] = true; 
-              console.log("response",res);
-              Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
-              $('#centralModalInfo').modal('hide');
-              this.comment = "";
-            },err=>{
-              console.log("errrrrrrrrrrrrr",err);
-              Swal.fire('Oops...', 'Something went wrong!', 'error')
-            })
-          }
-
-          gotAttachment = [];
-          sendAttachment(attechment){
-            console.log("attachment is====>",attechment);
-            this.gotAttachment = attechment;
-            $('#veiwAttach').modal('show')
-            console.log("gotattechment array ====>",this.gotAttachment);
-          }
-          cancel(){
-            this.comment = "";
-          }
-
-        }
-        

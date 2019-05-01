@@ -124,7 +124,7 @@ export class EditprofileComponent implements OnInit {
 			console.log("this user dateailsls ==>" , this.userDetails);
 			// console.log("res-=-=",this.userDetails.userRole);
 			if(this.currentUser.userRole == 'admin'){
-				this.editEmployeeForm.controls['name'].enable();
+				this.editEmployeeForm.controls['name'].disable();
 				this.editEmployeeForm.controls['email'].enable();
 				this.editEmployeeForm.controls['phone'].enable();
 				this.editEmployeeForm.controls['experience'].enable();
