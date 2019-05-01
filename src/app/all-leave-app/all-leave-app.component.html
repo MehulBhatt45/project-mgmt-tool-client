@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md-2 ml-auto mb-1">
     <a class="nav-link" (click)="leavesToDisplay=false">
-      <select class="browser-default custom-select custom-select-lg  text-left float-right" *ngIf="developers && currentUser.userRole=='projectManager'" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)">
+      <select class="browser-default custom-select custom-select-lg  text-left float-right" *ngIf="developers && (currentUser.userRole=='projectManager' || currentUser.userRole=='admin')" (change)="filterTracks(trackChangeDeveloperWise = $event.target.value)" id ="target">
         <option value="all" selected>All Developer</option>
         <option *ngFor="let developer of developers" value="{{developer.email}}">{{developer.name}}</option>
       </select>
@@ -40,7 +40,7 @@
         <div class="leave_icon">
           <img src="assets/icons/rejected.png">
         </div>
-        <span class="nav-link">Rejected Leaves{{rejectedLeavesCount }}</span>
+        <span class="nav-link">Rejected Leaves  {{rejectedLeavesCount }}</span>
       </a>
     </li>
   </ul>
@@ -49,13 +49,13 @@
   <div class="col-12 col-md-12">
     <div class="card card-cascade narrower mt-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' ">
       <div [id]="title" *ngIf="!loader">
-        <h3 class="card-header-title" style="padding: 15px;max-width: calc(100% - 375px);float: left;margin: 0; color: #3998c5;" >
+        <h3 class="card-header-title" style="padding: 15px;max-width: calc(100% - 394px);float: left;margin: 0; color: #3998c5;" >
           <img src="assets/icons/leave.png" height="40px" width="40px" style="float: left;margin-right: 10px;">{{title}} Leaves</h3>
           <div style="padding: 7px;float: right;margin: auto;">
             <div class="btn-group dropleft  px-2 py-2 ">
-              <div class="search">
-                <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
-                <button type="button" class="btn btn-sm px-2" (click)="openSearch()">
+              <div class="search" *ngIf ="title != 'Application'">
+                <input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off" >
+                <button type="button" class="btn btn-sm px-2" (click)="openSearch()" onclick="document.getElementById('exampleForm2').value =''" >
                   <span class="mt-0" data-icon="&#xe090;"></span>
                 </button>
               </div>
@@ -141,12 +141,12 @@
     </div>
 
     <div class="row"> 
-      <div class="col-sm-7">
-        <h2 class="text-center" *ngIf="leaveApp">Types of Leaves</h2>
+      <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
+        <h2 class="text-center">Types of Leaves</h2>
         <canvas id="barChart"></canvas>
       </div>
-      <div class="col-sm-5">
-       <h2 class="text-center" *ngIf="leaveApp">Duration</h2>
+      <div class="col-sm-5" *ngIf="leaveApp && !isFromSelect">
+       <h2 class="text-center">Duration</h2>
 
        <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
      </div>
@@ -176,7 +176,10 @@
    <div class="row" *ngIf="leavesToDisplay">
     <div class="col-sm-5 border p-2">
       <h2 class="text-center">Total Leaves</h2>
-      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #181123;font-weight: bold;background-color: #e2e2e2; padding: 14px;">{{leaveApp.length}} responses</p>
+
+      <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #181123;font-weight: bold;background-color: #e2e2e2; padding: 14px;">{{allLeaves.length}} responses</p>
+
+
       <canvas id="pieChart"></canvas>
     </div>            
     <div class="col-md-1">
@@ -205,7 +208,7 @@ aria-hidden="true">
     </div>
     <div class="modal-body">
       <p *ngIf="singleleave">Previous Comment:{{singleleave.comment}}</p>
-      <form style="width: 100%;">
+      <form  style="width: 100%;">
         <div class="text-center">
           <div class="form-group" style="text-align: left">
             <label for="exampleFormControlTextarea3"><strong style="font-size: 24px;">Add Comment:</strong></label>
@@ -213,7 +216,7 @@ aria-hidden="true">
           </div>
         </div>
         <div class="float-left">
-          <input type="submit"  style="height: 47px;" class="btn btn-outline-default ml-0" (click)="submitComment(singleleave._id,comment)">
+          <input type="submit"  style="height: 47px;" class="btn btn-outline-default ml-0" (click)="submitComment(singleleave._id,comment)" [disabled]= "!comment">
           <a class="btn btn-primary  waves-effect ml-0" data-dismiss="modal">Cancel</a> 
         </div>  
       </form>

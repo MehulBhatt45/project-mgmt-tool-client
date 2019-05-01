@@ -25,7 +25,7 @@
 						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
 						<label for="projecttitle" class="active">Project Title</label>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-4" >
 						<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
 							<label for="date-picker-example">Deadline</label>
 							<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
