@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ export class NoticeboardComponent implements OnInit {
   files:Array<File> = [];
   i = 0;
   newNotice = { title:'', desc:'', published: '', expireon: '', images: [] };
-
+  @Output() noticeUpdate = new EventEmitter();
 
   ngOnInit() {
     this.getAllNotice();
@@ -121,9 +121,12 @@ export class NoticeboardComponent implements OnInit {
     console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
       $('#editmodel').modal('hide');
+      this.noticeUpdate.emit('noticeUpdate');
       this.getAllNotice();
       Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000});
-      this.files = this.url = [];
+      this.files = [];
+      this.url = [];
+      console.log("files: ",this.files);
     },err=>{
       console.log(err);
       Swal.fire('Oops...', 'Something went wrong!', 'error')

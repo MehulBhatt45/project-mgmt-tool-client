@@ -328,15 +328,13 @@
 				</div>
 				<div class="modal-footer">
 
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<div id="refresh_icon" style="display: none;"> 
-						<span aria-hidden="true" class="fa fa-refresh refresh"></span>
-					</div>
-					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-						<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
-					</div>
 					<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
-
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<div id="refresh_icon" style="display: none;"> 
+					<span aria-hidden="true" class="fa fa-refresh refresh"></span>
+				</div>
+				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
 				</div>
 			</div>
 

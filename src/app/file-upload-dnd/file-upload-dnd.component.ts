@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 declare var $ : any;
 import * as _ from 'lodash';
-
+import { NoticeboardComponent } from '../noticeboard/noticeboard.component';
 @Component({
 	selector: 'app-file-upload-dnd',
 	templateUrl: './file-upload-dnd.component.html',
@@ -24,7 +24,13 @@ export class FileUploadDndComponent implements OnInit {
 	videos =[];
 	currentInput;
 	typeOfFile;
-	constructor() {
+	constructor(public notice: NoticeboardComponent) {
+		this.notice.noticeUpdate.subscribe(data=>{
+			if(data == 'noticeUpdate'){
+				this.files = [];
+				this.videos = [];
+			}
+		})
 	}
 
 	ngOnInit() {

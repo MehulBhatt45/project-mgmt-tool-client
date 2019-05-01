@@ -113,7 +113,6 @@
 							<label for="dueDate">Due Days</label>
 							<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 						</div>
-
 						<div class="form-group col-md-12">
 							<label for="estimatedTime">Estimated Time</label>
 							<div class="md-form form-group">
@@ -126,15 +125,15 @@
 						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
 					</div>
 				</form>
-				<button type="button" class="btn btn-default ml-0" data-dismiss="modal">Close</button>
-				<div id="refresh_icon" style="display: none;"> 
-					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
-				</div>
-				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
-				</div>
-				<button type="submit" id="save_changes" class="btn btn-primary" (click)="saveTheData(editTaskForm.value)" >Save changes</button>
 			</div>
+			<button type="button" class="btn btn-default ml-0" data-dismiss="modal">Close</button>
+			<div id="refresh_icon" style="display: none;"> 
+				<i aria-hidden="true" class="fa fa-refresh refresh"></i>
+			</div>
+			<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+				<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
+			</div>
+			<button type="submit" id="save_changes" class="btn btn-primary" (click)="saveTheData(editTaskForm.value)" >Save changes</button>
 		</div>
 	</div>
 </div>

@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+// import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
 
 // import { LogsComponent } from './logs/logs.component';
 
@@ -157,7 +158,7 @@ import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.compon
     // DemoUtilsModule
 
     ],
-    providers: [MessagingService, AsyncPipe, PushNotificationService],
+    providers: [MessagingService, AsyncPipe, PushNotificationService, NoticeboardComponent],
     bootstrap: [AppComponent],
     
 })

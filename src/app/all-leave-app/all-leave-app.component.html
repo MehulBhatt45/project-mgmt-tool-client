@@ -59,14 +59,6 @@
                   <span class="mt-0" data-icon="&#xe090;"></span>
                 </button>
               </div>
-<!-- 
-              <div class="dropdown-menu">
-                <div class="md-form form-group active">
-                  <span class="fas fa-search prefix"></span>
-                  <input type="text" id="exampleForm2" class="form-control animated fadeInRight slower border border-radius-40 " [(ngModel)]="searchText" placeholder="Search" (keyup)="onKey(searchText)" autocomplete="off">
-                  <label for="exampleForm2" >Search</label>
-                </div>
-              </div> -->
             </div>
             <button class="btn-floating" (click)="sortLeavesByFromDate('asc')">
               <span class="icon-arrow-up mt-0"></span>
@@ -124,16 +116,9 @@
               <td>
                 <span *ngIf="leaves.attechment && leaves.attechment.length">
                   <span *ngFor="let att of leaves.attechment;  let i =index">
-                      <!-- <app-image-viewer  [images]="leaves.attechment"
-                      [idContainer]="'idOnHTML'"[loadOnInit]="false" [rotate]="true" [resetZoom]="true"
-                      ></app-image-viewer> -->
-                      <!-- <a *ngIf="!att.includes('.pdf') && leaves.attechment.length" [attr.data-lightbox]="leaves._id" class="image_attachment" href="{{path}}{{att}}" target="_blank"><span *ngIf="i == 0">View images</span></a> -->
                       <a class="image_attachment" data-toggle="modal" data-target="#veiwAttach" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                     </span>
                   </span>
-                  <!-- <span  *ngIf="leaves.attechment && !leaves.attechment.length">
-                    <a data-lightbox="comment_image"  class="image_attachment" href="{{path}}{{leaves.attechment}}">View Attechment</a>
-                  </span> -->
                   <p *ngIf="!leaves.attechment" style="color: #3998c5; font-size: 16px;">No Attechment</p>
                 </td>
                 <td>
@@ -189,10 +174,11 @@
 <div class="total_leave">
   <div class="container">
    <div class="row" *ngIf="leavesToDisplay">
-    
     <div class="col-sm-5 border p-2">
       <h2 class="text-center">Total Leaves</h2>
+
       <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #181123;font-weight: bold;background-color: #e2e2e2; padding: 14px;">{{allLeaves.length}} responses</p>
+
 
       <canvas id="pieChart"></canvas>
     </div>            
@@ -203,7 +189,6 @@
       <h2 class="text-center ">Duration</h2>
       <p class="text-center" *ngIf="allLeaves" style="margin-top: 16px; color: #181123;font-weight: bold;background-color: #e2e2e2; padding: 14px;">{{allLeaves.length}} responses</p>
       <canvas id="pieChart2"></canvas>
-
     </div>
   </div>
 </div>
