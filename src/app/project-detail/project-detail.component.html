@@ -9,12 +9,11 @@
 	<div class="row no-margin no-padding" *ngIf="pro || activeSprint">
 		<h1 *ngIf="pro.title">{{pro.title}}<sub>({{pro.uniqueId}})</sub></h1>
 		<h3 *ngIf="activeSprint">{{activeSprint.title}}</h3>
-		<!-- <div class="md-form form-group col-2">
+		<div class="md-form form-group col-2">
 			<select [(ngModel)]="activeSprint._id"   class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
 				<option  *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 			</select>
-			
-		</div> -->
+		</div>
 		<div class="col-3">
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><i class="far fa-clock"></i>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
@@ -24,14 +23,14 @@
 	</div>
 
 	<div class="row">
-		<div class="col-12 col-md-6 ">
+		<div class="col-md-6 ">
 			<div class="md-form form-group">
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
 				<label for="exampleForm2">search text goes here</label>
 			</div>
 		</div>
-		<div class="col-12 col-md-6 text-right">
+		<div class="col-md-6 text-right">
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
@@ -67,111 +66,74 @@
 <!-- Modal Start Here -->
 <div class="modal fade right" id="itemManipulationModel" tabindex="-1" role="dialog" aria-labelledby="itemModal" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
-
 		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">	
+			</button>
+			<div class="modal-body">
+				<h3 class="card-header-title" id="itemModal"><span class="icon-note"></span> {{modalTitle}}</h3>
+				<form style="width: 100%;" [formGroup]="editTaskForm">
+					<div class="form-group">
+						<label for="title">Title</label>
+						<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="desc">Discription</label>
+						<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
+					</div>
 
-			<div class="card card-cascade narrower modal-header view view-cascade ">
+					<div class="row no-margin no-padding  border" >
+						<div class="form-group col-md-6 pt-1">
+							<label for="assignTo">Assign To</label>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+								<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+							</select>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+								<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6 pt-1">
+							<label for="priority">Priority</label>
+							<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+								<option value="4">Low</option>
+								<option value="3">Medium</option>
+								<option value="2">High</option>
+								<option value="1">Highest</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="assignTo">Sprint</label>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
+								<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+							</select>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
+								<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="dueDate">Due Days</label>
+							<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+						</div>
+						<div class="form-group col-md-12">
+							<label for="estimatedTime">Estimated Time</label>
+							<div class="md-form form-group">
+								<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
+							</div>
 
-				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">	
-				</button>
-
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
+					</div>
+				</form>
 			</div>
-			<div class="modal-body view view-cascade">
-				<div class="container">
-					<form style="width: 100%;" [formGroup]="editTaskForm">
-						<div class="form-group col-12">
-							<label for="title">Title</label>
-							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" class="form-control">
-						</div>
-						<div class="form-group col-12">
-							<label for="desc">Discription</label>
-							<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
-						</div>
-						<div class="row form-group col-12">
-							<button class="btn btn-default" (click)="fileUpload.click()">
-								<i class="fa fa-paperclip mr-1"></i> Add Files
-								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-							</button>
-						</div>
-						<div *ngIf="newTask.images && newTask.images.length>0">
-							<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-								<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-								<div class="delete-team-member">
-									<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><i class="fas fa-trash fa-2x"></i></a>
-								</div>
-							</div>
-						</div>
-						<div  *ngIf="url && url.length">
-							<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-								<div class="delete-team-member">
-									<a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><i class="fas fa-trash fa-2x"></i></a>
-								</div>
-							</div>
-						</div>
-						<div class="row no-margin no-padding  border" >
-							<div class="form-group col-12 col-lg-6 pt-1">
-								<label for="assignTo">Assign To</label>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-								</select>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
-									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-								</select>
-							</div>
-							<div class="form-group col-12 col-lg-6 pt-1">
-								<label for="priority">Priority</label>
-								<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
-									<option value="4">Low</option>
-									<option value="3">Medium</option>
-									<option value="2">High</option>
-									<option value="1">Highest</option>
-								</select>
-							</div>
-							<div class="form-group col-12">
-								<label for="assignTo">Sprint</label>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-								</select>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-								</select>
-							</div>
-							<div class="form-group col-6">
-								<label for="dueDate">Due Days</label>
-								<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
-							</div>
-
-							<div class="form-group col-6">
-								<label for="estimatedTime">Estimated Time</label>
-								<div class="md-form form-group">
-
-									<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
-								</div>
-							</div>
-						</div>
-
-					</form>
-				</div>
+			<button type="button" class="btn btn-default ml-0" data-dismiss="modal">Close</button>
+			<div id="refresh_icon" style="display: none;"> 
+				<i aria-hidden="true" class="fa fa-refresh refresh"></i>
 			</div>
-			<div class="modal-footer">
-				<!-- <div class="alert alert-danger alert-dismissible error-alert" role="alert" id="alert">
-					<strong>ERROR!</strong>Task couldn't be added.
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<div id="refresh_icon" style="display: none;"> 
-					<i aria-hidden="true" class="fa fa-refresh refresh"></i>
-				</div>
-				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
-				</div>
-				<button type="submit" id="save_changes" class="btn btn-default" (click)="saveTheData(editTaskForm.value)" >Save changes</button>
+			<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
+				<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
 			</div>
+			<button type="submit" id="save_changes" class="btn btn-primary" (click)="saveTheData(editTaskForm.value)" >Save changes</button>
 		</div>
-
 	</div>
 </div>

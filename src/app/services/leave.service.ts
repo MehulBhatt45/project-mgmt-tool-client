@@ -70,11 +70,6 @@ export class LeaveService {
 		return this.http.get(config.baseApiUrl+"leave/leavesByUserId/"+useremail);
 
 	}
-
-
-
-
-
 	leaveApproval(req, body){
 		var body = body;
 		var id = req;
@@ -143,6 +138,16 @@ export class LeaveService {
 		return this.http.get(config.baseApiUrl+"leave/leaveid"+leaveid);	
 	}
 
+	getAllLeaves(){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type':  'application/json',
+				'x-access-token':  JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.get(config.baseApiUrl+"leave/list-of-all-leaves-app");	
+	}
+
 
 
 
@@ -196,6 +201,14 @@ export class LeaveService {
 		console.log("date========----",obj);
 
 		return this.http.post(config.baseApiUrl+"attendence/getAttendenceInInterval",obj);
+
+	}
+
+
+	updateNotificationApprovedStatus(leaveId,leaveStatus){
+		console.log("leaveId======>",leaveId);
+		console.log("leaveStatus=====================>",leaveStatus)
+		return this.http.get(config.baseApiUrl+"sendNotification/get-pm-notification/"+leaveId+"/"+leaveStatus);
 
 	}
 

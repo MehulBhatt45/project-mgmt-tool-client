@@ -202,9 +202,10 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
 	
-	updateProject(data){
+	updateProject(projectId,data){
 		console.log("updated Data in project servie" , data);
-		var projectId = data._id;
+		// console.log("updated File in project servie" , file);
+		// var projectId = data._id;
 		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -281,7 +282,7 @@ export class ProjectService {
 	}
 
 	addTask(data){
-		console.log("hiiiiiiiiiii");
+		console.log("hiiiiiiiiiii",data);
 		console.log(data);
 		// data['operatorId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		const httpOptions = {
@@ -338,6 +339,7 @@ export class ProjectService {
 
 	}
 	deleteTaskById(data){
+		console.log("data of taskkkkkkkkkkkkkkkkkkkssssssssssss",data);
 		var taskId = data._id;
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -375,88 +377,100 @@ export class ProjectService {
 	}
 
 	deleteEmployeeById(userId){
+		var is;
 		console.log("devloperId{}{}{}-===",userId);
-		return this.http.delete(config.baseApiUrl+"user/delete-user/"+userId);
+		return this.http.put(config.baseApiUrl+"user/delete-user/"+userId, is);
 	}
-
-
 
 	// changeNoticePicture(files: any, data){
-	// 	console.log("file is=================>",files);
-	// 	console.log("data is ============>",data);
-	// 	let formdata = new FormData();
-	// 	formdata.append("noticeid",data);
-	// 	formdata.append("profilePhoto",files[0]);
-	// 	console.log("file is===>>>",files[0]);
-	// 	return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
-	// }
+		// 	console.log("file is=================>",files);
+		// 	console.log("data is ============>",data);
+		// 	let formdata = new FormData();
+		// 	formdata.append("noticeid",data);
+		// 	formdata.append("profilePhoto",files[0]);
+		// 	console.log("file is===>>>",files[0]);
+		// 	return this.http.put(config.baseApiUrl+"notice/change-photo/"+data,formdata);
+		// }
 
-	addSprint(data){
-		console.log("data in service===>>>",data);
-		return this.http.post(config.baseApiUrl+"sprint/add-sprint",data);
+		addSprint(data){
+			console.log("data in service===>>>",data);
+			return this.http.post(config.baseApiUrl+"sprint/add-sprint",data);
+
+		}
+
+		getSprint(projectId){
+			console.log("data in service===>>>",projectId);
+			return this.http.get(config.baseApiUrl+"sprint/sprint-by-projects/"+projectId);
+		}
+
+		sprintById(sprintId){
+			console.log("data in service===>>>",sprintId);
+			return this.http.get(config.baseApiUrl+"sprint/sprint-by-sprint-id/"+sprintId);
+
+		}
+		updateSprint(sprint){
+			console.log("sprint in service",sprint);
+			var sprintId = sprint._id;
+			return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
+		}
+
+		completeSprint(sprintId){
+			console.log("sprint In service",sprintId);
+			return this.http.get(config.baseApiUrl+"sprint/sprint-complete/"+sprintId);
+		}
+		startSprint(sprintdata){
+			console.log("sprintData in service",sprintdata);
+			return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
+		}
+
+		getProjectByPmanagerId(pmanagerId){
+			console.log("pmanagerId=====>",pmanagerId);
+			return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
+
+
+		}
+
+		addNotification(body){
+			console.log("body in service" , body);
+			let formdata = new FormData();
+			formdata.append('pmanagerName',body.pmanagerName);
+			formdata.append('projectId', body.projectId);
+			formdata.append('subject',body.subject);
+			formdata.append('content',body.content);
+			formdata.append('sendTo',body.sendTo);
+			return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
+
+		}
+		getNotificationByUserId(currentUserId){
+			return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
+		}
+
+		getUnreadNotification(currentUserId){
+			return this.http.get(config.baseApiUrl+"sendNotification//get-unread-notification/" + currentUserId)
+		}
+
+		deleteSprint(sprintId){
+			console.log("sprint in service",sprintId);
+			return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
+		}
+
+		addTimeLog(data){
+			console.log('data=====++++++>',data);
+			return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
+		}
+
+		changeAvatar(files: any, data){
+			console.log("file is=================>",files);
+			console.log("data is ============>",data);
+			let formdata = new FormData();
+			formdata.append("projectId",data);
+			formdata.append("avatar",files[0]);
+			console.log("file is===>>>",files[0]);
+			return this.http.put(config.baseApiUrl+"project/change-avatar/"+data,formdata);
+		}
+
 
 	}
-
-	getSprint(projectId){
-		console.log("data in service===>>>",projectId);
-		return this.http.get(config.baseApiUrl+"sprint/sprint-by-projects/"+projectId);
-	}
-
-	sprintById(sprintId){
-		console.log("data in service===>>>",sprintId);
-		return this.http.get(config.baseApiUrl+"sprint/sprint-by-sprint-id/"+sprintId);
-
-	}
-	updateSprint(sprint){
-		console.log("sprint in service",sprint);
-		var sprintId = sprint._id;
-		return this.http.put(config.baseApiUrl+"sprint/update-sprint-by-id/"+sprintId,sprint);
-	}
-	
-	completeSprint(sprintId){
-		console.log("sprint In service",sprintId);
-		return this.http.get(config.baseApiUrl+"sprint/sprint-complete/"+sprintId);
-	}
-	startSprint(sprintdata){
-		console.log("sprintData in service",sprintdata);
-		return this.http.put(config.baseApiUrl+"sprint/start-sprint",sprintdata);
-	}
-
-	getProjectByPmanagerId(pmanagerId){
-		console.log("pmanagerId=====>",pmanagerId);
-		return this.http.get(config.baseApiUrl+"project/get-project-by-pmanagerId/"+pmanagerId);
-
-
-	}
-
-	addNotification(body){
-		console.log("body in service" , body);
-		let formdata = new FormData();
-		formdata.append('pmanagerName',body.pmanagerName);
-		formdata.append('projectId', body.projectId);
-		formdata.append('subject',body.subject);
-		formdata.append('content',body.content);
-		formdata.append('sendTo',body.sendTo);
-		return this.http.post(config.baseApiUrl+"sendNotification/addNotification",formdata);
-
-	}
-	getNotificationByUserId(currentUserId){
-		return this.http.get(config.baseApiUrl+"sendNotification/get-notification-By-Id/" + currentUserId)
-	}
-
-
-
-	deleteSprint(sprintId){
-		console.log("sprint in service",sprintId);
-		return this.http.delete(config.baseApiUrl+"sprint/delete-sprint-by-id/"+sprintId);
-	}
-
-	addTimeLog(data){
-		console.log('data=====++++++>',data);
-		return this.http.post(config.baseApiUrl+"timeLog/timeLog",data);
-	}
-
-}
 
 
 

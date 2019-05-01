@@ -62,52 +62,54 @@ export class LoginService {
 
 
     addUser_with_file(body,files:any){
-            console.log("fhvg=>",files);
-            console.log("bodyyyyyyyyy===>",body);
-            let formdata = new FormData();
-            formdata.append('name',body.name);
-            // formdata.append('lname',body.lname);
-            formdata.append('email',body.email);
-            formdata.append('userRole',body.userRole);
-            formdata.append('password',body.password);
-            formdata.append('joiningDate',body.date);
-            formdata.append('phone',body.mobile);
-            formdata.append('experience',body.experience);
-            formdata.append('profilePhoto',files[0]);
-            formdata.append("profilePhoto",files[1]);
-            // for(var i =0; i < files.length; i++){
-                //     formdata.append("uploadFile",files[i]);
-                // }
-                console.log("body===>>>",body);
+        console.log("fhvg=>",files);
+        console.log("bodyyyyyyyyy===>",body);
+        let formdata = new FormData();
+        formdata.append('name',body.name);
+        // formdata.append('lname',body.lname);
+        formdata.append('email',body.email);
+        formdata.append('userRole',body.userRole);
+        formdata.append('password',body.password);
+        formdata.append('joiningDate',body.date);
+        formdata.append('phone',body.phone);
+        formdata.append('isDelete',body.isDelete);
+        formdata.append('experience',body.experience);
+        formdata.append('profilePhoto',files[0]);
+        formdata.append("profilePhoto",files[1]);
+        // for(var i =0; i < files.length; i++){
+            //     formdata.append("uploadFile",files[i]);
+            // }
+            console.log("body===>>>",body);
 
 
-                return this.http.post(config.baseApiUrl+"user/signup",formdata);
+            return this.http.post(config.baseApiUrl+"user/signup",formdata);
 
-            }
-    
+        }
+        
 
-    editUserProfileWithFile( data, id){
-        // var id = JSON.parse(localStorage.getItem('currentUser'))._id;
-        return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+        editUserProfileWithFile( data, id){
+            // var id = JSON.parse(localStorage.getItem('currentUser'))._id;
+            return this.http.put(config.baseApiUrl+"user/update-details/"+id, data);
+        }
+
+
+
+        logout() {
+            // remove user from local storage to log user out
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('token');
+            this.currentUserSubject.next(null);
+        }
+
+        resetPwd(user){
+            // console.log("res-=-=",user);
+            return this.http.put(config.baseApiUrl+"user/forgot-password",user);
+        }
+
+        updatepwd(user){
+            return this.http.put(config.baseApiUrl+"user/update-password",user);
+        }
     }
-
-
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('token');
-        this.currentUserSubject.next(null);
-    }
-
-    resetPwd(user){
-        // console.log("res-=-=",user);
-        return this.http.put(config.baseApiUrl+"user/forgot-password",user);
-    }
-
-    updatepwd(user){
-        return this.http.put(config.baseApiUrl+"user/update-password",user);
-    }
-}
 
 
 

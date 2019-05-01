@@ -167,10 +167,12 @@ export class ViewProjectComponent implements OnInit {
   getProjects(){
     this.loader=true;
     this._projectService.getProjects().subscribe((res:any)=>{
+      console.log("current user id",this.currentUser._id);
       if(this.currentUser.userRole == 'projectManager' || this.currentUser.userRole == 'admin'){
         this.projects = _.filter(res, (p)=>{ return p.pmanagerId._id == this.currentUser._id });
         console.log("IN If=========================================",this.projects);
         this.projects = res;
+        console.log("response of projectsssssssssss",this.projects);
         
         console.log("this.demoprojects========------=-=-=-=",this.projects);
 

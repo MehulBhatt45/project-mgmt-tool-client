@@ -11,15 +11,13 @@ import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
-
-
 declare var $ : any;
 
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
   styleUrls: ['../project-detail/project-detail.component.css'],
-  // host: {'window:beforeunload':'doSomething'}
+  
 })
 export class ChildComponent  implements OnInit{
 
@@ -27,7 +25,8 @@ export class ChildComponent  implements OnInit{
   @Input() projectId;
   @Input() developers;
   @Input() tracks;
-  @Output() task : EventEmitter<any> = new EventEmitter();
+  task :any;
+  // @Output() task : EventEmitter<any> = new EventEmitter();
   @Output() trackDrop : EventEmitter<any> = new EventEmitter();
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -45,7 +44,6 @@ export class ChildComponent  implements OnInit{
   tasks;
   comments;
   comment;
-  // projectId;
   developerId;
   allStatusList = this._projectService.getAllStatus();
   allPriorityList = this._projectService.getAllProtity();
@@ -80,8 +78,10 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
-
+  file = [];
   
+  
+
 
   
 
@@ -91,7 +91,8 @@ export class ChildComponent  implements OnInit{
     this.route.params.subscribe(param=>{
       this.projectId = param.id;
     });
-
+    this.getSprint(this.projectId);
+    this.getSprintWithoutComplete(this.projectId);
     this.getProject(this.projectId);
     this.createEditTaskForm();  
     this.router.events.subscribe((ev) => {
@@ -103,8 +104,8 @@ export class ChildComponent  implements OnInit{
   ngOnInit(){
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
-    this.getSprint(this.projectId);
-    this.getSprintWithoutComplete(this.projectId);
+    // this.getSprint(this.projectId);
+    // this.getSprintWithoutComplete(this.projectId);
     
     window.addEventListener('beforeunload', function (e) {
       // Cancel the event
@@ -152,42 +153,77 @@ export class ChildComponent  implements OnInit{
   }
 
 
+  
   getEmptyTracks(){
-    this.tracks = [
-    {
-      "title": "Todo",
-      "id": "to do",
-      "class":"primary",
-      "tasks": [
+    console.log("user=====================>",this.currentUser.userRole);
+    if(this.currentUser.userRole == "projectManager" || this.currentUser.userRole == "admin"){
 
-      ]
-    },
-    {
-      "title": "In Progress",
-      "id": "in progress",
-      "class":"info",
-      "tasks": [
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Testing",
-      "id": "testing",
-      "class":"warning",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
 
-      ]
-    },
-    {
-      "title": "Done",
-      "id": "complete",
-      "class":"success",
-      "tasks": [
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
 
-      ]
+        ]
+      },
+      {
+        "title": "Done",
+        "id": "complete",
+        "class":"success",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
     }
-    ];
-    console.log("this tracks in child component =====>" , this.tracks);
+    else{
+      this.tracks = [
+      {
+        "title": "Todo",
+        "id": "to do",
+        "class":"primary",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "In Progress",
+        "id": "in progress",
+        "class":"info",
+        "tasks": [
+
+        ]
+      },
+      {
+        "title": "Testing",
+        "id": "testing",
+        "class":"warning",
+        "tasks": [
+
+        ]
+      }
+      ];
+      console.log("tracks====-=-_+_++",this.tracks);
+      
+    }
   }
 
   getPriorityClass(priority){
@@ -230,15 +266,15 @@ export class ChildComponent  implements OnInit{
     })
   }
 
+ 
   getTitle(name){
     if(name){
       var str = name.split(' ');
       return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
     }else{
-
       return '';
     }
-  }
+  }                                                                
 
   getInitialsOfName(name){
     if(name){
@@ -257,6 +293,9 @@ export class ChildComponent  implements OnInit{
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
+    if(this.startText == 'Stop'){
+      console.log('yfudgjhfdjgvhfjhfj================');
+    }
     this.talkDrop.emit(event);
   }
   ondrag(task){
@@ -331,12 +370,26 @@ export class ChildComponent  implements OnInit{
       }
     })
   }
+  removeAvatar(file, index){
+    console.log(file, index);
+    this.url.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
+  }
   removeCommentImage(file, index){
     console.log(file, index);
     this.commentUrl.splice(index, 1);
     if(this.files && this.files.length)
       this.files.splice(index,1);
     console.log(this.files);  
+  }
+  removeCommentImage1(file,index){
+    console.log(file, index);
+    this.file.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
   }
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
@@ -360,6 +413,40 @@ export class ChildComponent  implements OnInit{
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
+  }
+  updateStatus(newStatus, data){
+    if(newStatus=='complete'){
+      data.status = newStatus;
+      this._projectService.completeItem(data).subscribe((res:any)=>{
+        console.log(res);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is shifted to complete from testing" ,
+          showConfirmButton:false,timer: 2000})
+      },err=>{
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+        console.log(err);
+      });
+    }else{
+      data.status = newStatus;
+      console.log("UniqueId", data.uniqueId);
+      this._projectService.updateStatus(data).subscribe((res:any)=>{
+        console.log(res);
+        // this.getProject(res.projectId);
+        var n = res.timelog.length;
+        let uniqueId = res.uniqueId;
+
+        Swal.fire({
+          type: 'info',
+          title: uniqueId  + " " +res.timelog[n -1].operation ,
+          showConfirmButton:false,timer: 3000})
+      },(err:any)=>{
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+        console.log(err);
+      })
+
+    }
   }
 
 
@@ -385,12 +472,25 @@ export class ChildComponent  implements OnInit{
     }
     console.log("update =====>",task);
     this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-      Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
+      let taskNo = res.uniqueId;
+      console.log("updated tassssssssskkkkkkkkkk>>>>>>><<<<<<<",taskNo);
+      Swal.fire({type: 'success',
+        title: taskNo + " updated successfully",
+        showConfirmButton:false,
+        timer: 2000,
+        // position: 'top-end',
+      })
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
       $('#fullHeightModalRight').modal('hide');
       this.getProject(this.projectId);
+      var cardid = '#' + 'cardId_' + taskNo;
+      console.log('cardid=======================================>',cardid);
+      setTimeout(()=>{
+        $(cardid).css({"background-color": "#F5F5F5"});
+
+      },2000)
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
@@ -406,42 +506,10 @@ export class ChildComponent  implements OnInit{
   getEmptyTask(){
     return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
-  updateStatus(newStatus, data){
-    $('#fullHeightModalRight').modal('hide');
-    if(newStatus == 'complete'){
-      data.status = newStatus;
-      this._projectService.completeItem(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is shifted to complete from testing" ,
-          showConfirmButton:false,timer: 2000})
-      },err=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      });
-    }else{
-      data.status = newStatus;
-      console.log("UniqueId", data.uniqueId);
-      this._projectService.updateStatus(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length;
-        Swal.fire({
-          type: 'info',
-          title: "Task is"  + " " +res.timelog[n -1].operation ,
-          showConfirmButton:false,timer: 2000})
-      },(err:any)=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      })
-    }
-  }
-
+  
 
   getHHMMTime(difference){
+    // console.log("ave che kai ke nai",difference);
     if(difference != '00:00'){
       difference = difference.split("T");
       difference = difference[1];
@@ -449,9 +517,11 @@ export class ChildComponent  implements OnInit{
       difference = difference[0];
       difference = difference.split(":");
       var diff1 = difference[0];
+      // console.log("ahi j zero mde che",diff1);
       var diff2 = difference[1];
-     
+
       difference = diff1 +":"+diff2;
+      // console.log("fhuidsifgidif",difference);
       return difference;
     }
     return '00:00';
@@ -467,20 +537,62 @@ export class ChildComponent  implements OnInit{
   }
 
   deleteTask(taskId){
-    console.log(taskId);
-    this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-      $('#exampleModalPreview').modal('hide');
-      $('#itemManipulationModel1').modal('hide');
-      $('#fullHeightModalRight').modal('hide');
-      this.getProject(this.projectId);
-      Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
-      console.log("Delete Task======>" , res);
-      this.task = res;
-      this.func('reload');
-    },(err:any)=>{
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-      console.log("error in delete Task=====>" , err);
-    });
+    console.log("taskId of delete button",taskId);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false,
+    })
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "'You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancle!',
+      reverseButtons: true
+    }).then((result)=>{
+      if(result.value){
+        this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Task '+this.task.uniqueId+' has been deleted.',
+            'success'
+            )
+          $('#exampleModalPreview').modal('hide');
+          $('#itemManipulationModel1').modal('hide');
+          $('#fullHeightModalRight').modal('hide');
+          this.getProject(this.projectId);
+
+          console.log("Delete Task======>" , res);
+          this.task = res;
+          console.log("response of deleted task",this.task);
+          this.func('reload');
+        },(err:any)=>{
+          Swal.fire({
+            type: 'error',
+            title: 'Ooops',
+            text: 'Something went wrong',
+            animation: false,
+            customClass: {
+              popup: 'animated tada'
+            }
+          })
+          console.log("error in delete Task=====>" , err);
+        });
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+        ) {
+
+        swalWithBootstrapButtons.fire(
+          'Cancled!',
+          'Your task has been safe.',
+          'error'
+          )
+      }
+    })
   }
 
 
@@ -496,8 +608,7 @@ export class ChildComponent  implements OnInit{
         console.log("iddddd====>",this.projectId);
         this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
           this.projectTeam = res.team;
-
-          res.Teams.push(this.pro.pmanagerId); 
+          // res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
           this.projectTeam = res.Teams;
           // this.projectTeam.sort(function(a, b){
@@ -531,10 +642,11 @@ export class ChildComponent  implements OnInit{
           _.forEach(this.tracks , (track)=>{
             //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id&& task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
             }else{
+              console.log("sprint module",task.sprint);
               if(task.status == track.id && task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
@@ -552,51 +664,6 @@ export class ChildComponent  implements OnInit{
 
   }
 
-  saveTheData(task){
-    this.loader = true;
-    console.log("projectId=========>",this.pro._id);
-    console.log(task);
-    task['projectId']= this.pro._id;
-    task.priority = Number(task.priority); 
-    task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-    task.startDate = $("#startDate").val();
-    task.estimatedTime = $("#estimatedTime").val();
-    console.log("estimated time=====>",task.estimatedTime);
-    task.images = $("#images").val();
-    console.log("images====>",task.images);
-    console.log(task.dueDate);
-    task.dueDate = moment().add(task.dueDate,'days').toString();
-    task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-    console.log(task);
-    let data = new FormData();
-    _.forOwn(task, function(value, key) {
-      data.append(key, value)
-    });
-    if(this.files.length>0){
-      for(var i=0;i<this.files.length;i++){
-        data.append('fileUpload', this.files[i]);  
-      }
-    }
-    this._projectService.addTask(data).subscribe((res:any)=>{
-      console.log("response task***++",res);
-      Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-      this.getProject(res.projectId);
-      $('#save_changes').attr("disabled", false);
-      $('#refresh_icon').css('display','none');
-      $('#itemManipulationModel').modal('hide');
-      this.newTask = this.getEmptyTask();
-      this.editTaskForm.reset();
-      this.files = this.url = [];
-      // this.assignTo.reset();
-      this.loader = false;
-      this.func('load');
-    },err=>{
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-      //$('#alert').css('display','block');
-      console.log("error========>",err);
-    });
-  }
-
   getSprint(projectId){
     this._projectService.getSprint(projectId).subscribe((res:any)=>{
       console.log("sprints in project detail=====>>>>",res);
@@ -608,7 +675,7 @@ export class ChildComponent  implements OnInit{
   }
 
   startTimer(data) {
-       console.log('task data================>',data);
+    console.log('task data================>',data);
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
@@ -661,11 +728,18 @@ export class ChildComponent  implements OnInit{
         if(sprint.status !== 'Complete'){
           console.log("sprint in if",sprint);
           this.newSprint.push(sprint);
+          console.log("res-=-=",this.newSprint);
         }
       })
     },(err:any)=>{
       console.log(err);
     });
-  }  
+  }
+
+  changeFile(event){
+    console.log(event);
+    this.files = event;
+  }
+
 
 }

@@ -60,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	// sorting: any;
+	
 	sorting:any;
 	temp:any;
 	activeSprint:any;
@@ -252,79 +252,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 
-	// getProject(id){
-
-	// 	console.log("projectId=====>",this.projectId);
-	// 	this.loader = true;
-	// 	setTimeout(()=>{
-	// 		this._projectService.getProjectById(id).subscribe((res:any)=>{
-	// 			console.log("title=={}{}{}{}{}",res);
-	// 			this.temp = res;
-	// 			this.pro = res;
-	// 			console.log("project detail===>>>>",this.pro);
-	// 			this.projectId=this.pro._id;
-	// 			console.log("iddddd====>",this.projectId);
-	// 			this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
-	// 				res.Teams.push(this.pro.pmanagerId); 
-	// 				console.log("response of team============>"  ,res.Teams);
-	// 				this.projectTeam = res.Teams;
-	// 				this.projectTeam.sort(function(a, b){
-	// 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-	// 					if (nameA < nameB) //sort string ascending
-	// 						return -1 
-	// 					if (nameA > nameB)
-	// 						return 1
-	// 					return 0 //default return value (no sorting)
-	// 					this.projectTeam.push
-	// 					console.log("sort============>"  ,this.projectTeam);
-	// 				})
-
-
-	// 			},(err:any)=>{
-	// 				console.log("err of team============>"  ,err);
-	// 			});
-	// 		},(err:any)=>{
-	// 			console.log("err of project============>"  ,err);
-	// 		});
-
-	// 		this._projectService.getTaskById(id).subscribe((res:any)=>{
-	// 			console.log("all response ======>" , res);
-	// 			this.getEmptyTracks();
-	// 			this.project = res;
-	// 			// this.project.sort(custom_sort);
-	// 			// this.project.reverse();
-
-	// 			console.log("PROJECT=================>", this.project);
-	// 			_.forEach(this.project , (task)=>{
-	// 				_.forEach(this.tracks , (track)=>{
-	// 					console.log("track in foreach",task.sprint.status);
-
-	// 					if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-	// 						if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
-	// 							track.tasks.push(task);
-	// 						}
-	// 					}else{
-	// 						if(task.status == track.id && task.sprint.status == 'Active'){
-	// 							track.tasks.push(task);
-	// 						}
-	// 					}
-	// 				})
-	// 			})
-
-	// 			console.log("This Tracks=========>>>>>",this.tracks);
-	// 			this.temp =  this.tracks; 
-
-	// 			this.loader = false;
-
-	// 		},err=>{
-	// 			console.log(err);
-	// 			this.loader = false;
-	// 		})
-	// 	},1000);
-	// 	function custom_sort(a, b) {
-	// 		return new Date(new Date(a.createdAt)).getTime() - new Date(new Date(b.createdAt)).getTime();
-	// 	}	
-	// }
+	
 
 	getProject(id){
 
@@ -374,7 +302,7 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active' && this.currentUser.userRole == 'developer'){
 								track.tasks.push(task);
 							}
 						}else{
@@ -405,23 +333,31 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
-		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
-		if (event.previousContainer === event.container) {
-			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-		} else {
-			transferArrayItem(event.previousContainer.data,
-				event.container.data,
-				event.previousIndex,
-				event.currentIndex);
-			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+		console.log(event);
+		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
+			Swal.fire('Oops...', 'Stop timer!', 'error')
+		}else{
+			// console.log(event.container.id, event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running);
+			if (event.previousContainer === event.container) {
+				moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+			} else {
+				transferArrayItem(event.previousContainer.data,
+					event.container.data,
+					event.previousIndex,
+					event.currentIndex);
+				this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+
+			}
 		}
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
+		console.log('event in ontrackdrop================>',event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
 	updateStatus(newStatus, data){
+
 		if(newStatus=='complete'){
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
@@ -442,16 +378,19 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
+				let uniqueId = res.uniqueId;
+
 				Swal.fire({
 					type: 'info',
-					title: "Task is"  + " " +res.timelog[n -1].operation ,
-					showConfirmButton:false,timer: 2000})
+					title: uniqueId  + " " +res.timelog[n -1].operation ,
+					showConfirmButton:false,timer: 3000})
 			},(err:any)=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				console.log(err);
 			})
 
 		}
+		
 	}
 
 	sortTasksByDueDate(type){
@@ -589,7 +528,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log(task);
+		console.log("task ALL details",task);
 		let data = new FormData();
 		_.forOwn(task, function(value, key) {
 			data.append(key, value)
@@ -601,8 +540,16 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
@@ -612,7 +559,15 @@ export class ProjectDetailComponent implements OnInit {
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
@@ -622,6 +577,7 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
+
 
 
 	onKey(searchText){
@@ -667,14 +623,22 @@ export class ProjectDetailComponent implements OnInit {
 
 	onSelectFile(event, option){
 		_.forEach(event.target.files, (file:any)=>{
-			this.files.push(file);
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = (e:any) => {
-				if(option == 'item')
-					this.url.push(e.target.result);
-				if(option == 'comment')
-					this.commentUrl.push(e.target.result);
+			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+				this.files.push(file);
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = (e:any) => {
+					if(option == 'item')
+						this.url.push(e.target.result);
+					if(option == 'comment')
+						this.commentUrl.push(e.target.result);
+				}
+			}else {
+				Swal.fire({
+					title: 'Error',
+					text: "You can upload images only",
+					type: 'warning',
+				})
 			}
 		})
 	}
@@ -690,14 +654,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("error in delete Task=====>" , err);
 		});
 	}
-
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
+	
 	removeCommentImage(file, index){
 		console.log(file, index);
 		this.commentUrl.splice(index, 1);
@@ -705,6 +662,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.files.splice(index,1);
 		console.log(this.files);	
 	}
+
+
 
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
@@ -777,5 +736,11 @@ export class ProjectDetailComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
-	}	
+	}
+	changeFile(event){
+		console.log(event);
+		this.files = event;
+	}
+
+
 }

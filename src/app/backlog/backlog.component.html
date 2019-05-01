@@ -3,7 +3,7 @@
 		<h1 *ngIf="projectOne">{{projectOne.title}}</h1>
 	</div>
 	<div class="col-6 ">
-		<button type="submit" class="btn btn-default float-right z-depth-1 mt-1"  title="Edit Notice" data-toggle="modal" data-target="#addsprint" (click)="newNotice = notice"><i class="far fa-edit padding-top-1"></i>Create Sprint</button>
+		<button type="submit" class="btn btn-default float-right mt-1"  title="Edit Notice" data-toggle="modal" data-target="#addsprint" (click)="newNotice = notice"><span class="icon-note padding-top-1"></span>Create Sprint</button>
 	</div>
 </div>
 
@@ -17,16 +17,16 @@
 					</div>
 				</div>
 				<div class="btn-group dropleft float-right">
-					<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+					<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><span class="fas fa-ellipsis-v"></span> 
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item btn-floating mt-0" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><i class="far fa-edit padding-top-1"></i></a>
-						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><i class="far fa-trash-alt"></i></a>
+						<a class="dropdown-item btn-floating mt-0" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><span class="icon-pencile padding-top-1"></span></a>
+						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><span class="far fa-trash-alt"></span></a>
 					</div>
 				</div>
 				<div class="card-body card-body-cascade margin-bottom-0">
-					<p *ngIf="sprint.startDate"><i class="far fa-calendar-plus margin-right-5"></i>Start:<span>{{sprint.startDate | date:'mediumDate'}}</span></p>
-					<p *ngIf="sprint.endDate"><i class="far fa-calendar-plus margin-right-5"></i>End:<span>{{sprint.endDate | date:'mediumDate'}}</span></p>
+					<p *ngIf="sprint.startDate"><span class="icon-calendar margin-right-5"></span>Start:<span>{{sprint.startDate | date:'mediumDate'}}</span></p>
+					<p *ngIf="sprint.endDate"><span class="icon-calendar margin-right-5"></span>End:<span>{{sprint.endDate | date:'mediumDate'}}</span></p>
 					<p class="card-text">{{sprint.goal}}</p>
 					<ul class="list-group list-group-flush" style="margin-top: -15px;width:300px;">
 						<li class="list-group-item">To Do: <b style=" color: #FF5722;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(sprint._id, 'to do')}}</b></li>
@@ -49,7 +49,7 @@
 		<div class="modal-content">
 
 			<div class="modal-header">
-				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel"	><i class="fas fa-edit"></i>Create Sprint</h5>
+				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel"	><span class="icon-pencile"></span>Create Sprint</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -68,11 +68,11 @@
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="addstartDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="addendDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>	
 						</form>
 					</div>
@@ -99,7 +99,7 @@
 			<div class="modal-header">
 				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
 				color: purple;
-				"><i class="fas fa-edit"></i> Edit Sprint</h5>
+				"><span class="icon-pencile"></span> Edit Sprint</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -114,12 +114,12 @@
 								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newsprint.title">
 							</div>
 							<div class="md-form form-group" *ngIf="newsprint">
-								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.startDate">
-							</div> 
+								<span class="icon-calendar prefix"></span>
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="updatestartDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.startDate">
+							</div>
 							<div class="md-form form-group" *ngIf="newsprint">
-								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
+								<span class="icon-calendar prefix"></span>
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="updateendDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
 							</div>	
 							<div class="md-form form-group" *ngIf="newsprint">
 								<label for="desc" class="active">Sprint Goal</label>
@@ -149,14 +149,13 @@
 
 			<div class="modal-header">
 				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
-				color: purple;
-				"><i class="fas fa-edit"></i>Start Sprint</h5>
+				color: purple;" *ngIf="singlesprint"><span class="icon-pencile"></span>{{singlesprint.title}}Start Sprint</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 
-			<div class="modal-body px-10" *ngIf="newsprint">
+			<div class="modal-body px-10">
 				<div class="container">
 					<div class="row">
 						<form style="width: 100%;"  [formGroup]="editSprintForm">
@@ -165,16 +164,15 @@
 								<input type="text" id="title" formControlName="title" class="form-control" [(ngModel)]="newsprint.title">
 							</div>
 							<div class="md-form form-group">
-								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;"  [(ngModel)]="newsprint.startDate">
+								<span class="icon-calendar prefix"></span>
+								<input placeholder="Starting date" name="startDate" [(ngModel)]="sprintData.startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>
 							<div class="md-form form-group">
-								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;"  [(ngModel)]="newsprint.endDate">
-							</div>	
-							<div class="md-form form-group">
-								<label for="desc" class="active">Sprint Goal</label>
-								<input type ="text" id="desc" formControlName="goal" class="form-control md-textarea" [(ngModel)]="newsprint.goal">
+								<span class="icon-calendar prefix"></span>
+								<input placeholder="Ending date" name="endDate" [(ngModel)]="sprintData.endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
+							</div>
+							<div class="col-6">
+								<span *ngIf="projectOne">Project Deadline:{{projectOne.deadline | date:'mediumDate'}}</span>
 							</div>
 						</form>
 					</div>

@@ -1,125 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>ProjectManager</title>
-  <base href="/">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#9C27B0">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel='stylesheet' type='text/css' href='assets/bower_components/bootstrap/dist/css/bootstrap.min.css' />
-  <link rel='stylesheet' type='text/css' href='assets/bower_components/font-raoit/css/fonts.css' />
-  <link rel='stylesheet' type='text/css' href='assets/bower_components/spacing-raoit/css/spacing-raoit.css' />
-  <link rel='stylesheet' type='text/css' href='assets/bower_components/color-raoit/css/colors.css' />
-  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="assets/bower_components/css/mdb.css" />
-  <link rel="stylesheet" type="text/css" href="assets/bower_components/css/lightbox.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="assets/css/isotop.css">
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-  <link href="https://unpkg.com/bootstrap-css-only@4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
-  <link href="https://unpkg.com/angular-calendar@0.27.3/css/angular-calendar.css" rel="stylesheet">
-  <link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
-  <link rel="stylesheet" href="node_modules/angular-notification-icons/dist/angular-notification-icons.min.css">
-  <link href="css/addons/datatables.min.css" rel="stylesheet">
-  <!-- DataTables JS -->
-
-
-  <!-- DataTables Select CSS -->
-  <link href="css/addons/datatables-select.min.css" rel="stylesheet">
-  <!-- DataTables Select JS -->
-
-
-  <!-- <link rel="stylesheet" href="assets/bower_components/MDBootstrap/css/mdb.css" /> -->
-
-
-
-  <!-- <link rel="stylesheet" type="text/css" href="node_modules/froala-editor/css/froala_editor.pkgd.min.css"> -->
+<meta charset="utf-8">
+<title>ProjectManager</title>
+<base href="/">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#9C27B0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel='stylesheet' type='text/css' href='assets/bower_components/bootstrap/dist/css/bootstrap.min.css' />
+<link rel='stylesheet' type='text/css' href='assets/bower_components/font-raoit/css/fonts.css' />
+<link rel='stylesheet' type='text/css' href='assets/bower_components/spacing-raoit/css/spacing-raoit.css' />
+<link rel='stylesheet' type='text/css' href='assets/bower_components/color-raoit/css/colors.css' />
+<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/bower_components/css/mdb.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/line-icons.css">
+<link rel="stylesheet" type="text/css" href="assets/bower_components/css/lightbox.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="assets/css/isotop.css">
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+<link href="https://unpkg.com/angular-calendar@0.27.3/css/angular-calendar.css" rel="stylesheet">
+<link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
+<link rel="stylesheet" href="node_modules/angular-notification-icons/dist/angular-notification-icons.min.css">
+<link href="toastr.css" rel="stylesheet"/>
 </head>
-<body class="deep-purple-skin" style="background-color: #eee;">
-  <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- <script src="//code.jquery.com/jquery-2.1.4.min.js"></script> -->
-  <!-- <script src="jQuery-plugin-progressbar.js"></script> -->
-  <script type="text/javascript" src="assets/bower_components/js/lightbox.js"></script>
-  <script type="text/javascript" src="assets/bower_components/js/popper.min.js"></script>
-  <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="assets/bower_components/js/tether.min.js" ,></script>
-  <script type="text/javascript" src="assets/bower_components/js/mdb.min.js"></script>
-  <script type="text/javascript" src="assets/bower_components/MDBootstrap/js/mdb.min.js"></script>
-  <script type="text/javascript" src="assets/js/isotop.js"></script>
+<body class="deep-purple-skin" style="background-color: white;">
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="assets/bower_components/js/lightbox.js"></script>
+<script type="text/javascript" src="assets/bower_components/js/popper.min.js"></script>
+<script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/bower_components/js/tether.min.js" ,></script>
+<script type="text/javascript" src="assets/bower_components/js/mdb.min.js"></script>
+<script src="toastr.js"></script>
+<script type="text/javascript" src="assets/js/isotop.js"></script>
+<app-root></app-root>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script> <!-- Not required, but recommended -->
-  <script src="bower_components/angular-notification-icons/dist/angular-notification-icons.min.js"></script>
-  <script href="js/addons/datatables.min.js" rel="stylesheet"></script>
-  <script href="js/addons/datatables-select.min.js" rel="stylesheet"></script>
-  <app-root></app-root>
-  
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('.datepicker').pickadate();
-      $('#estimatedTime').pickatime({});
-      $('.button-collapse').sideNav({
-        edge: 'left',
-        closeOnClick: true
-      });
-      var el = document.querySelector('.custom-scrollbar');
-      Ps.initialize(el);
+<script type="text/javascript">
+$(document).ready(function () {
+$('.datepicker').pickadate();
+$('#estimatedTime').pickatime({});
+$('.button-collapse').sideNav({
+edge: 'left',
+closeOnClick: true
+});
+var el = document.querySelector('.custom-scrollbar');
+Ps.initialize(el);
 
-      // $('[data-toggle="popover"]').popover(); 
+$('[data-toggle="popover-hover"]').popover({
+html: true,
+trigger: 'hover',
+placement: 'bottom',
+content: function () { return '<img src="' + $(this).data('img') + '" />'; }
+});
+})
 
-      $('[data-toggle="popover-hover"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'bottom',
-        content: function () { return '<img src="' + $(this).data('img') + '" />'; }
-      });
-    })
-    
-    
-    $(".button-collapse").sideNav();
-    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-    Ps.initialize(sideNavScrollbar);
 
-    $('.button-collapse').sideNav({
-      edge: 'right',
-      closeOnClick: true,
-      breakpoint: 1200
-    });
+$(".button-collapse").sideNav();
+var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+Ps.initialize(sideNavScrollbar);
 
-    $('.button-collapse').sideNav('show');
-    $('.button-collapse').sideNav('hide');
+$('.button-collapse').sideNav({
+edge: 'right',
+closeOnClick: true,
+breakpoint: 1200
+});
 
-    $(function () {
-      $('.min-chart#chart-sales').easyPieChart({
-        barColor: "#4caf50",
-        onStep: function (from, to, percent) {
-          $(this.el).find('.percent').text(Math.round(percent));
-        }
-      });
-    });
+$('.button-collapse').sideNav('show');
+$('.button-collapse').sideNav('hide');
 
-    
-    
-  </script>
+$(function () {
+$('.min-chart#chart-sales').easyPieChart({
+barColor: "#4caf50",
+onStep: function (from, to, percent) {
+$(this.el).find('.percent').text(Math.round(percent));
+}
+});
+});
+
+</script>
 </body>
 </html>
 
 
 
-
-
-
-<!-- #fullHeightModalRight {
-    overflow: hidden !important;
-}
-#fullHeightModalRight .modal-dialog.modal-lg{
-    height: 100%!important;
-}
-#fullHeightModalRight .modal-body{
-    overflow-y: auto!important;
-} -->

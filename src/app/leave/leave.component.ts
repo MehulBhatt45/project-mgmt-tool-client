@@ -3,6 +3,7 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { NgModule } from '@angular/core';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import{LeaveService} from '../services/leave.service';
 // import { ImageViewerModule } from 'ng2-image-viewer';
 import Swal from 'sweetalert2';
@@ -23,14 +24,13 @@ export class LeaveComponent implements OnInit {
 	showMoreDayss;
 	leaveDuration;
 	startDate;
+	commentUrl= [];
+	url = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
-			// id: new FormControl(''),
-			// email: new FormControl (''),
-			// name: new FormControl (''),
 			leaveDuration : new FormControl (''),
 			typeOfLeave : new FormControl (''),
 			reasonForLeave : new FormControl ('', Validators.required),
@@ -44,8 +44,7 @@ export class LeaveComponent implements OnInit {
 
 	ngOnInit() {
 
-		// Date Picker Valadation Start Here
-
+		
 		$('.datepicker').pickadate({ 
 			min: new Date(),
 		})
@@ -78,27 +77,24 @@ export class LeaveComponent implements OnInit {
 				from_picker.set('max', false)
 			}
 		})
-
-		// Date Picker Valadation End Here
-
 		this.showMoreDayss = false;
 		localStorage.setItem("showMoreDayss" , JSON.stringify(false));
 
 		this.showOneDays = false;
 		localStorage.setItem("showOneDays" , JSON.stringify(false));
 	}
-
-	addFile(event){
-		this.files = event.target.files;
+	
+	changeFile(event){
+		this.files = event;
+		console.log(this.files);
+		console.log("filesssssssss",this.files);
 	}
+	
+	
 	addLeave(form){
-		 
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
-		// var id = JSON.parse(localStorage.getItem('currentUser'))._id;
-		// var name = JSON.parse(localStorage.getItem('currentUser')).name;
-		// var email = JSON.parse(localStorage.getItem('currentUser')).email;
 		form['id'] = this.currentUser._id;
 		form['name'] = this.currentUser.name;
 		form['email'] = this.currentUser.email;
@@ -118,8 +114,8 @@ export class LeaveComponent implements OnInit {
 			var date1 = new Date(form.endingDate);
 			// console.log("staring date ===" , date2);
 			// console.log("ending date ===" , date1);
-			form['endingDate'] = date1;
-			form['startingDate'] = date2;
+			form['endingDate'] = $('#endDate').val();
+			form['startingDate'] = $('#startDate').val();
 			// console.log("staring date ...... ===" , date2);
 			// console.log("ending date .........===" , date1);
 			var timeDuration = Math.abs(date1.getTime()-date2.getTime());

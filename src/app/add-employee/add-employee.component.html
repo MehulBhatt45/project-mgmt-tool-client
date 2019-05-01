@@ -1,107 +1,85 @@
-<div class="container ">
-	
-		<div class="col-md-12">
-			<div class="card card-cascade narrower">
-				
-				<!-- Card image -->
-				<div class="view view-cascade gradient-card-header" style="background-color: #372e5f">
-					<!-- Title -->
-					<h2 class="card-header-title white-text  text-center py-4" align="center" >Add Employee </h2>
-				</div>
-				<!-- Card content -->
-				<div class="card-body  card-body-cascade text-center px-lg-5" style="padding-top: 35px;">
-					<div class="container">
-						<form [formGroup]="addEmployeeForm" autocomplete="off">
-							<div class="md-form form-group">
-								<label for="firstName"> Name</label>
-								<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
-							</div>
-
-						<!-- 	<div class="md-form form-group">
-								<label for="lastName">Last Name</label> 
-								<input type="text" formControlName="lname" class="form-control"  id="lastName">
-							</div> -->
-							<div class="md-form form-group">
-								<label for="email">Email</label>
-								<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
-							</div>
-							<div class="md-form form-group">
-								<label for="password">Password</label>
-								<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
-							</div>
-							<div class="md-form form-group">
-								<label for="mobile">Phone No.</label>
-								<input type="number" autocomplete= 'false | random-string'  formControlName="mobile" class="form-control" id="mobile">
-							</div>
-				<!-- <div class="form-group">
-					<label for="date">Joining Date</label>
-					<input type="date" formControlName="date" class="form-control">
-				</div> -->
-				<div class="md-form form-group">
-					<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
-					<!-- <label for="date-picker-example">Try me...</label> -->
-				</div>
-				<div class="md-form form-group" style="height: 45px;">
-					<!-- <label for="userrole">UserRole</label> -->
-					<select class="custom-select custom-select-lg mb-3" formControlName="userRole">
-						<option value="" disabled selected>Choose user Role</option>
-						<option value="admin">Admin</option>
-						<option value="projectmanager">Project Manager</option>
-						<option value="developer">Developer</option>
-					</select>
-				</div>
-				
-				<div class="md-form form-group">
-					<label for="experience">Experience (Before Joining)</label>
-					<input type="text" autocomplete= 'false | random-string'  formControlName="experience" class="form-control" id="experience">
-				</div>
-				<!-- <div class="form-group">
-					<label for="profile">Profile photo</label>
-					<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
-				</div> -->
-				<div class="file-field">
-					<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
-						<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
-					</div>
-				</div>
-				<!-- <div class="md-form form-group">
-					<form class="md-form my-3" action="#">
-					</form>
-				</div> -->
-					<!-- <div class="file-field" action="#">
-						<label for="profile">Profile photo</label>
-						<div class="btn btn-primary btn-sm float-left">
-							<span>Profile photo</span>
-							<input type="file" formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload one or more files">
-						</div>
-					</div> -->
-
-					<div class="file-field" >
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
-							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text" placeholder="Upload Your CV">
+	<h3 class="card-header-title"> <span class="icon-user-follow"></span> Add Employee </h3>
+	<div class="card">
+		<div class="card-body">
+			<form [formGroup]="addEmployeeForm" autocomplete="off">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<label for="name"> Name</label>
+							<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName">
 						</div>
 					</div>
-					<!-- <div class="md-form form-group">
-						<form class="md-form my-3" action="#">
-						</form>
-					</div> -->
+				</div>
+				<div class="col-md-4">
 					<div class="md-form form-group">
-						<button type="submit" class="btn btn-default" (click)="addEmployee(addEmployeeForm)" [disabled]="!addEmployeeForm.valid" style="margin-top: 30px;">Add Employee</button>
-						<!-- <a routerLink="/view" class="btn btn-link">Cancel</a> -->
+						<label for="email">Email</label>
+						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email">
 					</div>
-
-				</form>
-			</div>
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<label for="phone">Phone No.</label>
+							<input type="number" autocomplete= 'false | random-string'  formControlName="phone" class="form-control" id="phone">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="md-form form-group">
+						<label for="password">Password</label>
+						<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<input placeholder="Joining date" type="text" id="date-picker-example" class="form-control datepicker" formControlName="date">
+						</div>
+						<div class="col-md-4">
+							<div class="md-form form-group">
+								<select class="custom-select custom-select-lg" formControlName="userRole">
+									<option value="" disabled selected>Choose user Role</option>
+									<option value="admin">Admin</option>
+									<option value="projectManager">Project Manager</option>
+									<option value="developer">Developer</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="md-form form-group">
+							<label for="experience">Experience (Before Joining)</label>
+							<input type="text" autocomplete= 'false | random-string'  formControlName="experience" class="form-control" id="experience">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="file-field">
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
+								<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your Profile Photo">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="file-field" >
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
+								<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text" placeholder="Upload Your CV">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="md-form form-group">
+							<button type="submit" class="btn btn-default ml-0" (click)="addEmployee(addEmployeeForm)" [disabled]="!addEmployeeForm.valid">Add Employee</button>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
-</div>
-</div>

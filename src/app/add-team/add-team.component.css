@@ -1,5 +1,4 @@
-
-*[role="form"] {
+/**[role="form"] {
 	 max-width: 530px;
     padding: 15px;
     margin: 0 auto;
@@ -9,12 +8,8 @@
     margin-top: 80px;
 }
 
- h2 { 
-	font-size: 30px;
-	color: #000000;
-}
 button:focus{
 	display: table;
 	margin: 0px auto;
    border:none;
-}
+}*/

@@ -20,9 +20,8 @@
 .nav-tabs .nav-link.active {
 	background-color: #42396D;
 }
-
 .nav-link{
-	color: black
+	color: black;
 }
 .profile_image{
     overflow: hidden;
@@ -35,38 +34,46 @@
 	max-width: calc(100% - 250px);
 }
 .profile_image label.profile_and_cover_edit {
-        opacity: 0;
+    opacity: 0;
     position: absolute;
+    left: 0;
     right: 0;
+    bottom: 0;
     background-color: #6c757d;
     z-index: 1111;
     text-align: center;
     color: #fff;
-    padding: 18px 18px 40px 40px;
+    padding: 7px;
     cursor: pointer;
-    border-radius: 0px 0px 0px 100%;
-    font-size: 25px;
+    border-radius: 0;
+    font-size: 15px;
     margin: 0;
-    line-height: 28px;
+    line-height: 16px;
     transition: all 0.5s;
 }
-.image_box_profile_image img {
+.profile_image_box{
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile_image_box img{
     position: absolute;
-    -o-object-fit: cover;
-    object-fit: cover;
-    top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
-    max-width: 100%;
-    min-height: 98%;
+    bottom: 0;
+    top: 0;
+    object-fit: cover;
     min-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    max-width: 100%;
 }
 .profile_image_box:hover label.profile_and_cover_edit {
     opacity: 0.75;
 }
 .card{
-    height: 80vh;
     width: 100%;
     padding: 20px;
 }
@@ -75,46 +82,51 @@
     margin-right: 15px;
 }
 .name{
-    background-color: #c9f0e4;
-    padding: 15px;
-    margin-top: 400px;
-    text-align: center;
-    color: #20c997;
+    color: #3998c5;
     position: relative;
-    font-size: 35px;
+    font-size: 30px;
+    padding-left: 10px;
 }
 h2{
-    margin-top: 10px;
-    color: #20c997;
-    text-align: center;
+    color: #3998c5;
 }
-.md-pills.pills-primary .nav-item .nav-link{
+.nav-item .nav-link{
     padding: 15px;
-    background-color: #fff;
-    font-size: 18px;
+    text-align: left;
+    border-left: 4px solid transparent;
 }
-.md-pills.pills-primary .nav-item .nav-link.active{
-    background-color: #20c997;
+.nav-item .nav-link.active{
+    border-color: #3998c5;
 }
 .profile i{
     font-size: 22px;
 }
 .project{
-    overflow: auto;
+    height:100%;
 }
 .project_img{
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
     overflow: hidden;
+    border-radius: 50%;    
+    margin: 10px auto;
 }
 .project_img img{
     object-fit: cover;
     max-width: 100%;
     max-height: 100%;
-    border-radius: 50%;
+    min-height: 100%;
+    min-width: 100%;
 }
 .project label{
     font-size: 18px;
-    line-height: 4;
-
+    line-height: 5;
+    margin-left: -21px;
+}
+.border_custom{
+    border: 1px solid #dcdcdc;
+    padding: 15px;
+}
+.profile p{
+    font-size: 20px;
 }
