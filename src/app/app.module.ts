@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+// import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
 
 // import { LogsComponent } from './logs/logs.component';
 
@@ -53,8 +54,10 @@ import { ImageViewerModule } from 'ng2-image-viewer';
 
 import { CommonModule } from '@angular/common';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
-// import { DemoUtilsModule } from '../demo-utils/module';
+import { DemoUtilsModule } from './demo-utils/module';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -80,6 +83,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { BacklogComponent } from './backlog/backlog.component';
 import { TimeLogComponent } from './time-log/time-log.component';
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
 
 @NgModule({
@@ -133,13 +138,20 @@ import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.compon
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     FormsModule,
     HttpClientModule,
+    NgbModule,
+
     DragDropModule,
     MatCardModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     NgxEditorModule,
     CKEditorModule,
-    // DemoUtilsModule,
+    Ng2SearchPipeModule,
+    // <----- this module will be deprecated in the future version.
+    MatDatepickerModule,        // <----- import(must)
+    MatNativeDateModule,        // <----- import for date formating(optional)
+
+    DemoUtilsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireMessagingModule,
@@ -157,7 +169,7 @@ import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.compon
     // DemoUtilsModule
 
     ],
-    providers: [MessagingService, AsyncPipe, PushNotificationService],
+    providers: [MessagingService, AsyncPipe, PushNotificationService, NoticeboardComponent],
     bootstrap: [AppComponent],
     
 })

@@ -115,6 +115,7 @@ export class EditprofileComponent implements OnInit {
 					})
 				}
 
+
 			}
 			getDetails(id){
 				this.loader = true;

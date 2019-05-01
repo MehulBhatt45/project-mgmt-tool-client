@@ -202,7 +202,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
 	
-	updateProject(projectId,data){
+	updateProject(projectId,data?){
 		console.log("updated Data in project servie" , data);
 		// console.log("updated File in project servie" , file);
 		// var projectId = data._id;

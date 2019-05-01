@@ -68,11 +68,12 @@
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="addstartDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>
 							<div class="md-form form-group">
 								<i class="far fa-calendar-alt prefix"></i>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" >
+
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="addendDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>	
 						</form>
 					</div>
@@ -115,11 +116,11 @@
 							</div>
 							<div class="md-form form-group" *ngIf="newsprint">
 								<span class="icon-calendar prefix"></span>
-								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.startDate">
+								<input placeholder="Starting date" formControlName="startDate" type="text" id="updatestartDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.startDate">
 							</div>
 							<div class="md-form form-group" *ngIf="newsprint">
 								<span class="icon-calendar prefix"></span>
-								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
+								<input placeholder="Ending date" formControlName="endDate" type="text" id="updateendDate" class="form-control datepicker" style="margin-bottom: 30px;" [(ngModel)]="newsprint.endDate">
 							</div>	
 							<div class="md-form form-group" *ngIf="newsprint">
 								<label for="desc" class="active">Sprint Goal</label>
@@ -155,7 +156,7 @@
 				</button>
 			</div>
 
-			<div class="modal-body px-10" *ngIf="newsprint">
+			<div class="modal-body px-10">
 				<div class="container">
 					<div class="row">
 						<form style="width: 100%;"  [formGroup]="editSprintForm">

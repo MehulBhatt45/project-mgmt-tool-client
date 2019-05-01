@@ -22,6 +22,7 @@ import { MessagingService } from '../services/messaging.service';
 })
 export class NotificationComponent implements OnInit {
 	@Input() acceptedLeave;
+
 	userNotification:any;
 	path = config.baseMediaUrl;
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));

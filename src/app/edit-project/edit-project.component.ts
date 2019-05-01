@@ -61,6 +61,9 @@ export class EditProjectComponent implements OnInit {
 			
 
 		})
+		if(this.projectId){
+			this.editProject(this.projectId);		
+		}
 	}
 
 	ngViewAfterChecked(){
@@ -170,6 +173,8 @@ export class EditProjectComponent implements OnInit {
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
+			localStorage.setItem("teams" , JSON.stringify(this.availData));
+			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;
@@ -201,11 +206,11 @@ export class EditProjectComponent implements OnInit {
 
 	}
 	updateProject(updateForm){
-		console.log(this.files,updateForm);
+		console.log("update details of project",this.files,updateForm);
 		console.log(updateForm.Teams);
 		// console.log("avail data in update form ====>" , this.availData);
 		// console.log('updateForm==============>',updateForm);
-		let newTeams = [];
+		var newTeams = [];
 		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
 		console.log("Update Team============>",newTeams);
 		updateForm.pmanagerId = [];
@@ -228,11 +233,18 @@ export class EditProjectComponent implements OnInit {
 		data.append('clientFullName', updateForm.clientFullName);
 		data.append('clientDesignation', updateForm.clientDesignation);
 		data.append('clientContactNo', updateForm.clientContactNo);
-		_.forEach(updateForm.pmanagerId, t => { data.append('pmanagerId', t) });
-		_.forEach(newTeams, t => { data.append('Teams', t) });
-		data.append('delete', updateForm.delete);
-		data.append('add', updateForm.add);
-		data.append('avatar', updateForm.avatar);
+		_.forEach(this.availData.pmanagerId, t => { data.append('pmanagerId', t._id) });
+		_.forEach(this.availData.Teams, t => { data.append('Teams', t._id) });
+		// if(newTeams.length == 0){
+		// 	data.append('Teams', null);
+		// }else if(newTeams.length != 0){
+		// }
+		_.forEach(updateForm.delete, t => { data.append('delete', t) });
+		_.forEach(updateForm.add, t => { data.append('add', t) });
+		// data.append('delete', updateForm.delete);
+		// data.append('Teams',newTeams);
+		// data.append('add', updateForm.add);
+		// data.append('avatar', updateForm.avatar);
 		if(this.files && this.files.length>0){
 			data.append('avatar', this.files[0]);  
 		}
@@ -318,10 +330,11 @@ export class EditProjectComponent implements OnInit {
 			confirmButtonText: 'Yes,Delete it!',
 			showCloseButton: true
 		}).then((result) => {
+			console.log(result);
 			if (result.value) {
 				var body;
 				this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
-				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				// Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
 				if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 					this.availData.delete.push(event);
 					this.availableDevelopers.push(event);
