@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+// import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
 
 // import { LogsComponent } from './logs/logs.component';
 
@@ -80,6 +81,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { AttendenceComponent } from './attendence/attendence.component';
 import { BacklogComponent } from './backlog/backlog.component';
 import { TimeLogComponent } from './time-log/time-log.component';
+import { FileUploadDndComponent } from './file-upload-dnd/file-upload-dnd.component';
+
 @NgModule({
     declarations: [
     AppComponent,
@@ -120,6 +123,8 @@ import { TimeLogComponent } from './time-log/time-log.component';
     AttendenceComponent,
     BacklogComponent,
     TimeLogComponent,
+    FileUploadDndComponent,
+   
     ],
 
     imports: [

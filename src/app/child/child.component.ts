@@ -11,15 +11,13 @@ import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
-
-
 declare var $ : any;
 
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
   styleUrls: ['../project-detail/project-detail.component.css'],
-  // host: {'window:beforeunload':'doSomething'}
+  
 })
 export class ChildComponent  implements OnInit{
 
@@ -27,7 +25,8 @@ export class ChildComponent  implements OnInit{
   @Input() projectId;
   @Input() developers;
   @Input() tracks;
-  @Output() task : EventEmitter<any> = new EventEmitter();
+  task :any;
+  // @Output() task : EventEmitter<any> = new EventEmitter();
   @Output() trackDrop : EventEmitter<any> = new EventEmitter();
   @Output() talkDrop : EventEmitter<any> = new EventEmitter();
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -45,7 +44,6 @@ export class ChildComponent  implements OnInit{
   tasks;
   comments;
   comment;
-  // projectId;
   developerId;
   allStatusList = this._projectService.getAllStatus();
   allPriorityList = this._projectService.getAllProtity();
@@ -80,7 +78,10 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
+  file = [];
   
+  
+
 
   
 
@@ -292,6 +293,9 @@ export class ChildComponent  implements OnInit{
     this.trackDrop.emit(event);
   }
   onTalkDrop(event){
+    if(this.startText == 'Stop'){
+      console.log('yfudgjhfdjgvhfjhfj================');
+    }
     this.talkDrop.emit(event);
   }
   ondrag(task){
@@ -380,6 +384,13 @@ export class ChildComponent  implements OnInit{
       this.files.splice(index,1);
     console.log(this.files);  
   }
+  removeCommentImage1(file,index){
+    console.log(file, index);
+    this.file.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
+  }
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
   }
@@ -402,6 +413,40 @@ export class ChildComponent  implements OnInit{
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
+  }
+  updateStatus(newStatus, data){
+    if(newStatus=='complete'){
+      data.status = newStatus;
+      this._projectService.completeItem(data).subscribe((res:any)=>{
+        console.log(res);
+        var n = res.timelog.length
+        Swal.fire({
+          type: 'info',
+          title: "Task is shifted to complete from testing" ,
+          showConfirmButton:false,timer: 2000})
+      },err=>{
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+        console.log(err);
+      });
+    }else{
+      data.status = newStatus;
+      console.log("UniqueId", data.uniqueId);
+      this._projectService.updateStatus(data).subscribe((res:any)=>{
+        console.log(res);
+        // this.getProject(res.projectId);
+        var n = res.timelog.length;
+        let uniqueId = res.uniqueId;
+
+        Swal.fire({
+          type: 'info',
+          title: uniqueId  + " " +res.timelog[n -1].operation ,
+          showConfirmButton:false,timer: 3000})
+      },(err:any)=>{
+        Swal.fire('Oops...', 'Something went wrong!', 'error')
+        console.log(err);
+      })
+
+    }
   }
 
 
@@ -427,12 +472,25 @@ export class ChildComponent  implements OnInit{
     }
     console.log("update =====>",task);
     this._projectService.updateTask(task._id, data).subscribe((res:any)=>{
-      Swal.fire({type: 'success',title: 'Task Updated Successfully',showConfirmButton:false,timer: 2000})
+      let taskNo = res.uniqueId;
+      console.log("updated tassssssssskkkkkkkkkk>>>>>>><<<<<<<",taskNo);
+      Swal.fire({type: 'success',
+        title: taskNo + " updated successfully",
+        showConfirmButton:false,
+        timer: 2000,
+        // position: 'top-end',
+      })
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
       $('#fullHeightModalRight').modal('hide');
       this.getProject(this.projectId);
+      var cardid = '#' + 'cardId_' + taskNo;
+      console.log('cardid=======================================>',cardid);
+      setTimeout(()=>{
+        $(cardid).css({"background-color": "#F5F5F5"});
+
+      },2000)
       this.newTask = this.getEmptyTask();
       this.files = this.url = [];
       this.editTaskForm.reset();
@@ -448,40 +506,7 @@ export class ChildComponent  implements OnInit{
   getEmptyTask(){
     return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
-  updateStatus(newStatus, data){
-    $('#fullHeightModalRight').modal('hide');
-    if(newStatus == 'complete'){
-      data.status = newStatus;
-      this._projectService.completeItem(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length
-        Swal.fire({
-          type: 'info',
-          title: "Task is shifted to complete from testing" ,
-          showConfirmButton:false,timer: 2000})
-      },err=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      });
-    }else{
-      data.status = newStatus;
-      console.log("UniqueId", data.uniqueId);
-      this._projectService.updateStatus(data).subscribe((res:any)=>{
-        console.log(res);
-        this.getProject(res.projectId);
-        var n = res.timelog.length;
-        Swal.fire({
-          type: 'info',
-          title: "Task is"  + " " +res.timelog[n -1].operation ,
-          showConfirmButton:false,timer: 2000})
-      },(err:any)=>{
-        console.log(err);
-        Swal.fire('Oops...', 'Something went wrong!', 'error')
-      })
-    }
-  }
-
+  
 
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
@@ -494,7 +519,7 @@ export class ChildComponent  implements OnInit{
       var diff1 = difference[0];
       // console.log("ahi j zero mde che",diff1);
       var diff2 = difference[1];
-     
+
       difference = diff1 +":"+diff2;
       // console.log("fhuidsifgidif",difference);
       return difference;
@@ -512,20 +537,62 @@ export class ChildComponent  implements OnInit{
   }
 
   deleteTask(taskId){
-    console.log(taskId);
-    this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
-      $('#exampleModalPreview').modal('hide');
-      $('#itemManipulationModel1').modal('hide');
-      $('#fullHeightModalRight').modal('hide');
-      this.getProject(this.projectId);
-      Swal.fire({type: 'success',title: 'Task Deleted Successfully',showConfirmButton:false,timer: 2000})
-      console.log("Delete Task======>" , res);
-      this.task = res;
-      this.func('reload');
-    },(err:any)=>{
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
-      console.log("error in delete Task=====>" , err);
-    });
+    console.log("taskId of delete button",taskId);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false,
+    })
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "'You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancle!',
+      reverseButtons: true
+    }).then((result)=>{
+      if(result.value){
+        this._projectService.deleteTaskById(this.task).subscribe((res:any)=>{
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Task '+this.task.uniqueId+' has been deleted.',
+            'success'
+            )
+          $('#exampleModalPreview').modal('hide');
+          $('#itemManipulationModel1').modal('hide');
+          $('#fullHeightModalRight').modal('hide');
+          this.getProject(this.projectId);
+
+          console.log("Delete Task======>" , res);
+          this.task = res;
+          console.log("response of deleted task",this.task);
+          this.func('reload');
+        },(err:any)=>{
+          Swal.fire({
+            type: 'error',
+            title: 'Ooops',
+            text: 'Something went wrong',
+            animation: false,
+            customClass: {
+              popup: 'animated tada'
+            }
+          })
+          console.log("error in delete Task=====>" , err);
+        });
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+        ) {
+
+        swalWithBootstrapButtons.fire(
+          'Cancled!',
+          'Your task has been safe.',
+          'error'
+          )
+      }
+    })
   }
 
 
@@ -608,7 +675,7 @@ export class ChildComponent  implements OnInit{
   }
 
   startTimer(data) {
-       console.log('task data================>',data);
+    console.log('task data================>',data);
     this.running = !this.running;
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
@@ -668,4 +735,11 @@ export class ChildComponent  implements OnInit{
       console.log(err);
     });
   }
+
+  changeFile(event){
+    console.log(event);
+    this.files = event;
+  }
+
+
 }

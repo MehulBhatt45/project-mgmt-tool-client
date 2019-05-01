@@ -56,6 +56,7 @@ export class BacklogComponent implements OnInit {
 		this.addForm = new FormGroup({
 			title: new FormControl('', Validators.required),
 			goal: new FormControl('',Validators.required),
+			sprintData: new FormControl('',),
 			startDate: new FormControl('',Validators.required),
 			endDate:new FormControl('',Validators.required)
 		});

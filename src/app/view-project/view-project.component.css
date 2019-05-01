@@ -127,7 +127,7 @@ a.dropdown-item.btn-floating {
 }
 button{
     display: table;
-    float: right;
+    /*float: right;*/
     border:none;
 }
 .form-body{
@@ -223,7 +223,7 @@ ul.project-avatar li:hover {
     font-size: 20px;  
 }
 
-span.badge.badge-pill.z-depth-0.badge-dark {
+span.badge.badge-pill.badge-dark {
     margin: 0 5px;
     vertical-align: text-bottom;
 }
@@ -352,8 +352,7 @@ a.btn-floating.btn-action i{
 .summary{
     position: fixed;
     display: none;
-    z-index: 999;
-    /*background-image: linear-gradient(gray,#31c8cc);*/
+     z-index: 999;
     background-color: #fff;
     height: 300px;
     width: 300px;
@@ -379,4 +378,28 @@ button.btn.btn-default.progress_summary {
     float: none;
     margin: auto;
 }
+.modal-dialog {
+    margin-top: 200px;
+    max-width: 500px;
+}
+.attendance{
+    padding: 1rem;
+    display: inline;
+    text-align: center;
+}
+.modal-content {
+    background-color: beige;
+}
+.checkIn-btn{
+    background-color: lightblue !important;
+    width: 150px !important;
+    border-radius: 5px !important;
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px !important;
 
+}
+.checkIn-btn:hover {
+    background-color: white !important;
+}

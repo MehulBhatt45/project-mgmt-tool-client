@@ -60,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	// sorting: any;
+	
 	sorting:any;
 	temp:any;
 	activeSprint:any;
@@ -333,23 +333,31 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
-		console.log(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
-		if (event.previousContainer === event.container) {
-			moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-		} else {
-			transferArrayItem(event.previousContainer.data,
-				event.container.data,
-				event.previousIndex,
-				event.currentIndex);
-			this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+		console.log(event);
+		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
+			Swal.fire('Oops...', 'Stop timer!', 'error')
+		}else{
+			// console.log(event.container.id, event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running);
+			if (event.previousContainer === event.container) {
+				moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+			} else {
+				transferArrayItem(event.previousContainer.data,
+					event.container.data,
+					event.previousIndex,
+					event.currentIndex);
+				this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+
+			}
 		}
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
+		console.log('event in ontrackdrop================>',event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
 
 	updateStatus(newStatus, data){
+
 		if(newStatus=='complete'){
 			data.status = newStatus;
 			this._projectService.completeItem(data).subscribe((res:any)=>{
@@ -370,16 +378,19 @@ export class ProjectDetailComponent implements OnInit {
 				console.log(res);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
+				let uniqueId = res.uniqueId;
+
 				Swal.fire({
 					type: 'info',
-					title: "Task is"  + " " +res.timelog[n -1].operation ,
-					showConfirmButton:false,timer: 2000})
+					title: uniqueId  + " " +res.timelog[n -1].operation ,
+					showConfirmButton:false,timer: 3000})
 			},(err:any)=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
 				console.log(err);
 			})
 
 		}
+		
 	}
 
 	sortTasksByDueDate(type){
@@ -529,8 +540,16 @@ export class ProjectDetailComponent implements OnInit {
 		}
 		this._projectService.addTask(data).subscribe((res:any)=>{
 			console.log("response task***++",res);
-			Swal.fire({type: 'success',title: 'Task Added Successfully',showConfirmButton:false,timer: 2000})
-			this.getProject(res.projectId);
+			let name = res.assignTo.name;
+			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+			Swal.fire({type: 'success',
+				title: 'Task Added Successfully to',
+				text: name,
+				showConfirmButton:false,
+				timer: 2000,
+				// position: 'top-end'
+			})
+			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
@@ -540,7 +559,15 @@ export class ProjectDetailComponent implements OnInit {
 			// this.assignTo.reset();
 			this.loader = false;
 		},err=>{
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			Swal.fire({
+				type: 'error',
+				title: 'Ooops',
+				text: 'Something went wrong',
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
@@ -550,6 +577,7 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
+
 
 
 	onKey(searchText){
@@ -626,14 +654,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("error in delete Task=====>" , err);
 		});
 	}
-
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
+	
 	removeCommentImage(file, index){
 		console.log(file, index);
 		this.commentUrl.splice(index, 1);
@@ -641,6 +662,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.files.splice(index,1);
 		console.log(this.files);	
 	}
+
+
 
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
@@ -713,5 +736,11 @@ export class ProjectDetailComponent implements OnInit {
 		},(err:any)=>{
 			console.log(err);
 		});
-	}	
+	}
+	changeFile(event){
+		console.log(event);
+		this.files = event;
+	}
+
+
 }

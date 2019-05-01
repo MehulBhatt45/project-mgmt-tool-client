@@ -31,12 +31,12 @@ export class CreateProjectComponent implements OnInit {
     this.addForm = new FormGroup({
       title: new FormControl('',Validators.required),
       avatar:new FormControl('',Validators.required),
-      desc: new FormControl(''),
+      desc: new FormControl('',Validators.required),
       deadline: new FormControl(''),
-      uniqueId: new FormControl('',Validators.required),
-      clientEmail: new FormControl('',Validators.required),
-      clientFullName: new FormControl('',Validators.required),
-      clientContactNo: new FormControl('',Validators.required),
+      uniqueId: new FormControl('',),
+      clientEmail: new FormControl('',),
+      clientFullName: new FormControl('',),
+      clientContactNo: new FormControl('',),
       clientDesignation: new FormControl(''),
       allDeveloper:new FormControl(''),
     });
@@ -77,7 +77,7 @@ export class CreateProjectComponent implements OnInit {
       this.router.navigate(['/view-projects']);
     },err=>{
       console.log(err); 
-       Swal.fire('Oops...', 'Something went wrong!', 'error')   
+      Swal.fire('Oops...', 'Something went wrong!', 'error')   
     }) 
   }
 
@@ -93,16 +93,8 @@ export class CreateProjectComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    console.log("response from changefile",event.target.files);
-    this.files = event.target.files;
-    $('#basicExampleModal').modal('hide');
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event:any) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
-      }
-    }
+    console.log("response from changefile",event);
+    this.files = event;
   }
 
   getAllDevelopers(){
@@ -110,13 +102,13 @@ export class CreateProjectComponent implements OnInit {
       this.developers = res;
       this.developers.sort(function(a, b){
         if (a.name && b.name) {
-        var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-        if (nameA < nameB) //sort string ascending
-          return -1 
-        if (nameA > nameB)
-          return 1
-        return 0 //default return value (no sorting)
-      }
+          var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+          if (nameA < nameB) //sort string ascending
+            return -1 
+          if (nameA > nameB)
+            return 1
+          return 0 //default return value (no sorting)
+        }
       })
       console.log("Developers",this.developers);
     },err=>{
