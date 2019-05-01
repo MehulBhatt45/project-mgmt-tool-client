@@ -92,6 +92,7 @@
 						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 						<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice, newNotice._id)">Save changes</button>
 					</div>
+
 				</div>
 			</div>
 			
@@ -109,12 +110,28 @@
 
 						<span aria-hidden="true">&times;</span>
 					</button>
+				</div>
 					<div class="modal-body">
-						<div class="main-img" *ngIf="singlenotice">
-							<img src="{{path}}{{singlenotice.images}}" class="img-fluid" alt="images" width="100%">
+						<div class="row">
+							<!-- <div class="col-md-4"> -->
+								<div class="main-img" *ngIf="singlenotice">
+									<div *ngFor = "let img of singlenotice.images" style="display: inline-block; margin: 0 0 15px 0;" class="col-md-4">
+										<img src="{{path}}{{img}}" style="height: 150px; width: 150px; padding-right: 15px;" alt="images">
+									</div>
+								</div>
+							<!-- </div> -->
+						</div>
+						<div class="row mt-1">
+							<div class="col-md-12">
+								<span class="icon-calendar mr-1 " aria-hidden="true"></span>
+								<span *ngIf="singlenotice">{{singlenotice.expireon | date:'mediumDate'}}</span>
+								<div class="desc pt-1">
+									<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="title">
+					<!-- <div class="title">
 						<div class="float-right">
 							<div class="btn-group dropleft float-right">
 
@@ -125,8 +142,7 @@
 						<div class="desc pt-1">
 							<p *ngIf="singlenotice" style="text-align: justify; margin-bottom: 0px;">{{singlenotice.desc}}</p>
 						</div>
-					</div>
-				</div>
+					</div> -->
 			</div>
 		</div>
 <!-- modal end here -->
