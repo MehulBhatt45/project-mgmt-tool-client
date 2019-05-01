@@ -15,18 +15,13 @@
   box-sizing: border-box;
   margin-right: 14px;
   flex-shrink: 0;
-
-  /*background: rgba(0, 0, 0, 0.03);*/
   border-radius: 4px;
-  /*padding: 8px;*/
   display: flex;
   flex-direction: column;
 }
-
 .card-body{
   background-color: white;
 }
-
 .card-list:last-child{
   margin-right: 0px;
 }
@@ -38,7 +33,6 @@
   flex-shrink: 0;
   margin-top: 10px;
 }
-
 .card-list-content {
   /*overflow: auto;
   flex-grow: 1;*/
@@ -211,7 +205,10 @@ table {
 
 .due_date_sorting_btn, 
 .priority_sorting_btn{
-  padding: 14.5px 30px!important;
+  padding: 10px 20px!important;
+  border: 1px solid #181123;
+  outline: none;
+  background: none;
 }
 .due_date_sorting_btn i.fas,
 .priority_sorting_btn i.fas {
@@ -220,30 +217,21 @@ table {
   opacity: 0.75;
   display: block;
 }
-/*.due_date_sorting_btn i.fas.hide,
-.priority_sorting_btn i.fas.hide{
-  opacity: 1;
-  pointer-events: none;
-  }*/
-/*.fa-angle-up ,.fa-angle-down{
-  font-size: 15px;
-  }*/
+.details {
+  border: 1px solid lightgray;
+  padding: 10px 25px;
+  border-radius: 3px;
+  margin: 10px 0px;
+}
 
-  .details {
-    border: 1px solid lightgray;
-    padding: 10px 25px;
-    border-radius: 3px;
-    margin: 10px 0px;
-  }
+.second_icon{
+  padding-bottom: 12px;
+  display: inline-block;
+}
+.star_link{
+  color:black;
 
-  .second_icon{
-    padding-bottom: 12px;
-    display: inline-block;
-  }
-  .star_link{
-    color:black;
-
-  }
+}
 /*.fa-star-o,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
   font-size: 23px;
   }*/

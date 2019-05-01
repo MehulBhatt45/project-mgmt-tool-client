@@ -30,6 +30,7 @@ h2{
 .card-title{
     outline: none;
     text-transform: capitalize;
+    font-size: 1.2rem;
 }
 .team-members li{
     height: 40px;
@@ -104,10 +105,7 @@ h2{
     right: 24px;
 }
 .btn-floating{
-    background-color: #372e5f;
-}
-.card-header {
-    background-color: #372e5f !important;
+    background-color: #3998c5;
 }
 .btn-group.dropleft.float-right {
     display: inline-block!important;
@@ -218,11 +216,6 @@ ul.project-avatar li:hover {
     text-transform: capitalize !important;
     font-weight: bold;
 }
-
-.font-project-view-small{
-    font-size: 20px;  
-}
-
 span.badge.badge-pill.badge-dark {
     margin: 0 5px;
     vertical-align: text-bottom;
@@ -343,23 +336,25 @@ a.btn-floating.btn-action i{
 .btn-floating i{
     font-size: 14px!important;
 }
-
 .title_image{
-    height: 200px;
+    height: 120px;
     width: 100%;
     object-fit: cover;
 }
 .summary{
-    position: fixed;
+    position: absolute;
     display: none;
-     z-index: 999;
+    z-index: 999;
     background-color: #fff;
-    height: 300px;
-    width: 300px;
-    top: 85px;
-    right: 5px;
+    height: 200px;
+    width: 400px;
+    top: 168px;
+    left: 441px;
     border-radius: 5px;
-    color: black;
+    color: black
+}
+.summary p{
+    font-size: 12px;
 }
 .progress_summary {
     position: relative;
@@ -375,7 +370,23 @@ a.btn-floating.btn-action i{
 }
 
 button.btn.btn-default.progress_summary {
-    float: none;
-    margin: auto;
+   width: 100%;
 }
-
+.card-cascade .view{
+    border-radius: none!important;
+}
+.tib{
+    background-color: white;
+    margin: 10px 15px;
+    padding: 1px;
+}
+.badge{
+    box-shadow: none!important;
+    border: 1px solid lightgray;
+}
+.deep-purple-text{
+    color: #3998c5!important;
+}
+.tib p{
+    margin: 0;
+}

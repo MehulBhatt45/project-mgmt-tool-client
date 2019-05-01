@@ -1,6 +1,5 @@
 <h3 class="card-header-title mb-1"><span class="icon-bell"></span> Notification</h3>
 <div class="card p-3">
-
 	<ul *ngFor="let data of userNotification" id="accordionEx" role="tablist" aria-multiselectable="true">
 		<li class="task" *ngIf ="data.type == 'task' && data.priority == '1'">
 			<div class="row" role="tab" data-toggle="collapse" data-parent="#accordionEx" [attr.href]="'#un'+data._id" aria-expanded="true" [attr.aria-controls]="'un'+data._id">
