@@ -330,10 +330,11 @@ export class EditProjectComponent implements OnInit {
 			confirmButtonText: 'Yes,Delete it!',
 			showCloseButton: true
 		}).then((result) => {
+			console.log(result);
 			if (result.value) {
 				var body;
 				this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
-				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				// Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
 				if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 					this.availData.delete.push(event);
 					this.availableDevelopers.push(event);
