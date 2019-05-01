@@ -44,7 +44,6 @@
 
             (click) ="getAllProjects()"><span class="icon-users mr-1"></span> Visit Team-members
             <span class="fa fa-angle-down rotate-icon"></span></a>
-
             <div class="collapsible-body">
               <ul>
                 <li *ngFor="let project of finalArr">
@@ -124,115 +123,106 @@
     <div class="modal-content">
       <div class="modal-body">
         <h3 class="card-header-title" id="myModalLabel"><span class="icon-note"></span>{{modalTitle}}</h3>
-          <form style="width: 100%;" [formGroup]="editTaskForm">
-            <div class="form-group col-12 col-lg-12 pt-1">
-              <ng-select placeholder="Select Project" [items]="demoprojects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
-                <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                  <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
-                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                </ng-template>
-                <div class="row">
-                  <ng-template ng-option-tmp let-item="item">
-                    <div class="card testimonial-card">
-                      <div class="card-up deep-purple lighten-2"></div>
-                      <div class="avatar white img_section">
-                        <img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-                      </div>
-                      <div class="card-body">
-                        <h5 class="card-title mt-1">{{item.title}}</h5>
-                        <h6 class="card-title">{{item.uniqueId}}</h6>
-                      </div>
+        <form style="width: 100%;" [formGroup]="editTaskForm">
+          <div class="form-group col-12 col-lg-12 pt-1">
+            <ng-select placeholder="Select Project" [items]="demoprojects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </ng-template>
+              <div class="row">
+                <ng-template ng-option-tmp let-item="item">
+                  <div class="card testimonial-card">
+                    <div class="card-up deep-purple lighten-2"></div>
+                    <div class="avatar white img_section">
+                      <img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
                     </div>
-                  </ng-template>
-                </div>
-              </ng-select>
-            </div>
-            <div>
-
-              <!-- Add Task Modal -->
-
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="card-body">
+                      <h5 class="card-title mt-1">{{item.title}}</h5>
+                      <h6 class="card-title">{{item.uniqueId}}</h6>
+                    </div>
+                  </div>
+                </ng-template>
               </div>
+            </ng-select>
+          </div>
+          <div>
+
+            <!-- Add Task Modal -->
+
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div [hidden]="!task.projectId">
+          </div>
+          <div [hidden]="!task.projectId">
+            <div class="form-group col-12">
+              <label for="title">Title</label>
+              <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+            </div>
+            <div class="form-group col-12">
+              <label for="desc">Discription</label>
+              <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+            </div>
+
+            <div class="row no-margin no-padding  border" >
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="assignTo">Assign To</label>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="priority">Priority</label>
+                <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                  <option value="4">Low</option>
+                  <option value="3">Medium</option>
+                  <option value="2">High</option>
+                  <option value="1">Highest</option>
+                </select>
+              </div>
               <div class="form-group col-12">
-                <label for="title">Title</label>
-                <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+                <label for="assignTo">Sprint</label>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
+                  <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                </select>
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
+                  <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="dueDate">Due Days</label>
+                <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
+              </div>
+
+              <div class="form-group col-6">
+                <label for="estimatedTime">Estimated Time</label>
+                <div class="md-form form-group">
+
+                  <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
+                </div>
               </div>
               <div class="form-group col-12">
-                <label for="desc">Discription</label>
-                <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+                <app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
               </div>
-              <div class=" row form-group col-12">
-                <button class="btn btn-primary" (click)="fileUpload.click()">
-                  <span class="icon-paper-clip mr-1"></span> Add Files
-                  <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-                </button>
-              </div>
-              <div *ngIf=" task.images && task.images.length>0">
-                <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-                  <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-                  <div class="delete-team-member">
-                    <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
-                  </div>
-                </div>
-              </div>
-              <div  *ngIf="url && url.length">
-                <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-                  <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-                  <div class="delete-team-member">
-                    <a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
-                  </div>
-                </div>
-              </div>
-              <div class="row no-margin no-padding  border" >
-                <div class="form-group col-12 col-lg-6 pt-1">
-                  <label for="assignTo">Assign To</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-                    <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-                    <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
-                </div>
-                <div class="form-group col-12 col-lg-6 pt-1">
-                  <label for="priority">Priority</label>
-                  <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-                    <option value="4">Low</option>
-                    <option value="3">Medium</option>
-                    <option value="2">High</option>
-                    <option value="1">Highest</option>
-                  </select>
-                </div>
-                <div class="form-group col-12">
-                  <label for="assignTo">Sprint</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
-                    <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-                  </select>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
-                    <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-                  </select>
-                </div>
-                <div class="form-group col-6">
-                  <label for="dueDate">Due Days</label>
-                  <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
-                </div>
-
-                <div class="form-group col-6">
-                  <label for="estimatedTime">Estimated Time</label>
-                  <div class="md-form form-group">
-
-                    <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
-                  </div>
+            </div>
+            
+            <div *ngIf=" task.images && task.images.length>0">
+              <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+                <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+                <div class="delete-team-member">
+                  <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
                 </div>
               </div>
             </div>
-          </form>
-      <div class="float-right">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
-        <button type="button" class="btn btn-primary btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
-      </div>
+          </div>
+        </form>
+        <div class="float-right">
+          <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
+          <button type="button" class="btn btn-primary btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
+        </div>
       </div>
     </div>
   </div>

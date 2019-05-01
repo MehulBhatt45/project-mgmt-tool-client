@@ -11,8 +11,6 @@ import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
-
-
 declare var $ : any;
 
 @Component({
@@ -46,7 +44,6 @@ export class ChildComponent  implements OnInit{
   tasks;
   comments;
   comment;
-  // projectId;
   developerId;
   allStatusList = this._projectService.getAllStatus();
   allPriorityList = this._projectService.getAllProtity();
@@ -81,6 +78,9 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
+  file = [];
+  
+  
 
 
   
@@ -384,6 +384,13 @@ export class ChildComponent  implements OnInit{
       this.files.splice(index,1);
     console.log(this.files);  
   }
+  removeCommentImage1(file,index){
+    console.log(file, index);
+    this.file.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
+  }
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
   }
@@ -481,7 +488,7 @@ export class ChildComponent  implements OnInit{
       var cardid = '#' + 'cardId_' + taskNo;
       console.log('cardid=======================================>',cardid);
       setTimeout(()=>{
-      $(cardid).css({"background-color": "#F5F5F5"});
+        $(cardid).css({"background-color": "#F5F5F5"});
 
       },2000)
       this.newTask = this.getEmptyTask();
@@ -728,4 +735,11 @@ export class ChildComponent  implements OnInit{
       console.log(err);
     });
   }
+
+  changeFile(event){
+    console.log(event);
+    this.files = event;
+  }
+
+
 }

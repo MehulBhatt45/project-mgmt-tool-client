@@ -30,8 +30,8 @@ export class CreateProjectComponent implements OnInit {
 
     this.addForm = new FormGroup({
       title: new FormControl('',Validators.required),
-      avatar:new FormControl(''),
-      desc: new FormControl(''),
+      avatar:new FormControl('',Validators.required),
+      desc: new FormControl('',Validators.required),
       deadline: new FormControl(''),
       uniqueId: new FormControl('',),
       clientEmail: new FormControl('',),
@@ -48,20 +48,13 @@ export class CreateProjectComponent implements OnInit {
     $('.datepicker').pickadate({
       min: new Date(),
       onSet: function(context) {
-        // setDate(context);
-        change();
+        console.log('Just set stuff:', context);
+        setDate(context);
       }
     });
-    var change:any = ()=>{
-      this.dateToString();
-    }
-
     var setDate = (context)=>{
       this.timePicked();
     }
-  }
-  dateToString(){
-    this.addForm.controls.deadline.setValue($('.datepicker').val());
   }
 
   addProject(addForm){
@@ -100,16 +93,8 @@ export class CreateProjectComponent implements OnInit {
   }
 
   onSelectFile(event) {
-    console.log("response from changefile",event.target.files);
-    this.files = event.target.files;
-    $('#basicExampleModal').modal('hide');
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (event:any) => { // called once readAsDataURL is completed
-        this.url = event.target.result;
-      }
-    }
+    console.log("response from changefile",event);
+    this.files = event;
   }
 
   getAllDevelopers(){

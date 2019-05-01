@@ -69,7 +69,6 @@
             transform: translate(100%, 0);
   }
 }
-
   @-webkit-keyframes move1 {
     0% {
       -webkit-transform: translate(0);
