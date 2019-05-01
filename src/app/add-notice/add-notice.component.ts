@@ -18,15 +18,16 @@ export class AddNoticeComponent implements OnInit {
 	files: Array<File> = [];
 	addForm:FormGroup;
 	path = config.baseMediaUrl;
+	submitted = false;
 
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
 		this.addForm = new FormGroup({
-			title: new FormControl('', Validators.required),
-			desc: new FormControl('',Validators.required),
-			images: new FormControl('' , Validators.required),
-			published:new FormControl('',Validators.required),
-			expireon:new FormControl('',Validators.required)
+			title: new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			desc: new FormControl('', [Validators.required,  Validators.maxLength(300)]),
+			images: new FormControl(''),
+			published:new FormControl(''),
+			expireon:new FormControl('')
 		});
 	}
 	
@@ -35,8 +36,13 @@ export class AddNoticeComponent implements OnInit {
 		$('.datepicker').pickadate({ min: new Date(),
 		})
 	}
-
+	get f() { return this.addForm.controls; }
 	addNotice(addForm){
+
+		this.submitted = true;
+		if (this.addForm.invalid) {
+			return;
+		}
 		addForm.expireon = $('#expireon').val();
 		console.log(addForm);
 		var data = new FormData();
