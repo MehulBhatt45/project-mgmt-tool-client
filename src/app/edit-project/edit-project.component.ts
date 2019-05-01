@@ -59,6 +59,9 @@ export class EditProjectComponent implements OnInit {
 			this.ProjectId = params.id;
 
 		})
+		if(this.projectId){
+			this.editProject(this.projectId);		
+		}
 	}
 
 	ngViewAfterChecked(){
@@ -79,9 +82,9 @@ export class EditProjectComponent implements OnInit {
 			this.updateForm.controls.deadline.setValue($('.datepicker').val());
 		}
 
-		if(this.projectId){
-			this.editProject(this.projectId);		
-		}
+		// if(this.projectId){
+		// 	this.editProject(this.projectId);		
+		// }
 		this.getProjects();
 		this.getAllDevelopers();
 		this.getAllProjectMngr();		
@@ -165,7 +168,7 @@ export class EditProjectComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
 
-			// localStorage.setItem("teams" , JSON.stringify(this.availData));
+			localStorage.setItem("teams" , JSON.stringify(this.availData));
 			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
@@ -202,7 +205,7 @@ export class EditProjectComponent implements OnInit {
 		console.log(updateForm.Teams);
 		// console.log("avail data in update form ====>" , this.availData);
 		// console.log('updateForm==============>',updateForm);
-		let newTeams = [];
+		var newTeams = [];
 		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
 		console.log("Update Team============>",newTeams);
 		updateForm.pmanagerId = [];
@@ -225,11 +228,18 @@ export class EditProjectComponent implements OnInit {
 		data.append('clientFullName', updateForm.clientFullName);
 		data.append('clientDesignation', updateForm.clientDesignation);
 		data.append('clientContactNo', updateForm.clientContactNo);
-		_.forEach(updateForm.pmanagerId, t => { data.append('pmanagerId', t) });
-		_.forEach(newTeams, t => { data.append('Teams', t) });
-		data.append('delete', updateForm.delete);
-		data.append('add', updateForm.add);
-		data.append('avatar', updateForm.avatar);
+		_.forEach(this.availData.pmanagerId, t => { data.append('pmanagerId', t._id) });
+		_.forEach(this.availData.Teams, t => { data.append('Teams', t._id) });
+		// if(newTeams.length == 0){
+		// 	data.append('Teams', null);
+		// }else if(newTeams.length != 0){
+		// }
+		_.forEach(updateForm.delete, t => { data.append('delete', t) });
+		_.forEach(updateForm.add, t => { data.append('add', t) });
+		// data.append('delete', updateForm.delete);
+		// data.append('Teams',newTeams);
+		// data.append('add', updateForm.add);
+		// data.append('avatar', updateForm.avatar);
 		if(this.files && this.files.length>0){
 			data.append('avatar', this.files[0]);  
 		}
