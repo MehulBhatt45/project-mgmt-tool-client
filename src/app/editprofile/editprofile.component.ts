@@ -21,18 +21,19 @@ export class EditprofileComponent implements OnInit {
 	developerId;
 	date: any;
 	loader: boolean = false;
+	submitted = false;
+
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
-			name:new FormControl(''),
-			email: new FormControl(''),
-			phone:new FormControl(''),
-			userRole:new FormControl({value: ''}),
-			experience:new FormControl(''),
-			joiningDate:new FormControl(''),
-			cv:new FormControl('')
+			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
+			email: new FormControl('',[Validators.required, Validators.email]),
+			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+			userRole:new FormControl({value: ''}, [Validators.required]),
+			experience:new FormControl('',[Validators.required]),
+			joiningDate:new FormControl('',[Validators.required]),
+			cv:new FormControl('',[Validators.required])
 		}); 
 	}
-
 
 	ngOnInit() {
 		this.route.params.subscribe(param=>{
@@ -47,8 +48,14 @@ export class EditprofileComponent implements OnInit {
 	addFile(event){
 		this.files = event.target.files;
 	}
+	get f() { return this.editEmployeeForm.controls; }
+
 
 	updateProfile(editEmployeeForm){
+		this.submitted = true;
+		if (this.editEmployeeForm.invalid) {
+			return;
+		}
 		if(this.currentUser.userRole == "admin" || this.currentUser.userRole == "projectManager"){
 
 			console.log(this.files);
@@ -92,60 +99,60 @@ export class EditprofileComponent implements OnInit {
 			if(this.files && this.files.length)
 				data.append('cv', this.files[0]);
 			// if(this.files == null && this.files.length){
-			// 	this.files[0] = this.userDetails.CV;
-			// 	data.append('cv', this.files[0]);
-			// }
-			// else{
-			// 	data.append('cv', this.files[0]);
-			// }
-
-			this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
-				console.log("res",res);
-				Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
-			},err=>{
-				console.log("error",err); 
-				Swal.fire('Oops...', 'Something went wrong!', 'error')   
-			})
-		}
-
-	}
-	getDetails(id){
-		this.loader = true;
-		// var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
-		var id = this.developerId;
-		this._loginService.getUserById(id).subscribe((res:any)=>{
-			console.log("user Di ======++>" , id);
-			this.userDetails = res;
-			// var dat = this.userDetails.joiningDate.split("T");
-			// this.date = dat[0];
-			// console.log("res-=",this.date);
-			// console.log("res-=-=",dat);
-			this.loader = false;
-			console.log("this user dateailsls ==>" , this.userDetails);
-			// console.log("res-=-=",this.userDetails.userRole);
-			if(this.currentUser.userRole == 'admin'){
-				this.editEmployeeForm.controls['name'].enable();
-				this.editEmployeeForm.controls['email'].enable();
-				this.editEmployeeForm.controls['phone'].enable();
-				this.editEmployeeForm.controls['experience'].enable();
-				this.editEmployeeForm.controls['cv'].enable();
-				this.editEmployeeForm.controls['userRole'].enable();
-				this.editEmployeeForm.controls['joiningDate'].enable();
-			
-			}
-			else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
-				this.editEmployeeForm.controls['userRole'].disable();
-				this.editEmployeeForm.controls['joiningDate'].disable();
-			}
-			// else{
-				// 	this.editEmployeeForm.controls['userRole'].disable();
-				// 	this.editEmployeeForm.controls['joiningDate'].disable();
+				// 	this.files[0] = this.userDetails.CV;
+				// 	data.append('cv', this.files[0]);
 				// }
-			},(err:any)=>{
-				console.log(err);
-				this.loader = false;
-			})
-	}
+				// else{
+					// 	data.append('cv', this.files[0]);
+					// }
+
+					this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
+						console.log("res",res);
+						Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+					},err=>{
+						console.log("error",err); 
+						Swal.fire('Oops...', 'Something went wrong!', 'error')   
+					})
+				}
+
+			}
+			getDetails(id){
+				this.loader = true;
+				// var id =  JSON.parse(localStorage.getItem('currentUser'))._id;
+				var id = this.developerId;
+				this._loginService.getUserById(id).subscribe((res:any)=>{
+					console.log("user Di ======++>" , id);
+					this.userDetails = res;
+					// var dat = this.userDetails.joiningDate.split("T");
+					// this.date = dat[0];
+					// console.log("res-=",this.date);
+					// console.log("res-=-=",dat);
+					this.loader = false;
+					console.log("this user dateailsls ==>" , this.userDetails);
+					// console.log("res-=-=",this.userDetails.userRole);
+					if(this.currentUser.userRole == 'admin'){
+						this.editEmployeeForm.controls['name'].enable();
+						this.editEmployeeForm.controls['email'].enable();
+						this.editEmployeeForm.controls['phone'].enable();
+						this.editEmployeeForm.controls['experience'].enable();
+						this.editEmployeeForm.controls['cv'].enable();
+						this.editEmployeeForm.controls['userRole'].enable();
+						this.editEmployeeForm.controls['joiningDate'].enable();
+
+					}
+					else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
+						this.editEmployeeForm.controls['userRole'].disable();
+						this.editEmployeeForm.controls['joiningDate'].disable();
+					}
+					// else{
+						// 	this.editEmployeeForm.controls['userRole'].disable();
+						// 	this.editEmployeeForm.controls['joiningDate'].disable();
+						// }
+					},(err:any)=>{
+						console.log(err);
+						this.loader = false;
+					})
+			}
 
 
-}
+		}

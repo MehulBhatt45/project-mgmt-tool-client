@@ -69,6 +69,7 @@ export class AllEmployeeComponent implements OnInit {
 		}
 	}
 	getAllDevelopers(){
+		console.log("hiiiiiiiiii");
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
 			this.filteredDevelopers = res;
@@ -181,32 +182,6 @@ export class AllEmployeeComponent implements OnInit {
 
 	}
 }
-// onKey(searchText){
-	// 	console.log("searchText",searchText);
-	// 	var dataToBeFiltered = [this.filteredDevelopers,];
-	// 	var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-	// 	console.log("developer =======>", developer);
-	// 	this.developers = [];
-	// 	var dataToBeFiltered1 = [this.Teams ];
-	// 	var team = this.searchTextFilter.transform1(dataToBeFiltered1, searchText);
-	// 	console.log("team =======>", team);
-	// 	if(this.selectedProjectId !='all'){
-		// 		_.forEach(team, (content)=>{
-			// 			this.developers.push(content);
-			// 		});
-			// 	}
-			// 	else if (this.selectedProjectId =='all'){
-				// 		_.forEach(developer, (content)=>{
-					// 			this.developers.push(content);
-					// 		});
-					// 	}
-					// 	else{
-						// 		_.forEach(developer, (content)=>{
-							// 			this.developers.push(content);
-							// 		});
-							// 	}
-							// }
-
 
 
 

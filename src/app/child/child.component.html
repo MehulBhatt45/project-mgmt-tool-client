@@ -257,64 +257,91 @@
 						<form style="width: 100%;" [formGroup]="editTaskForm">
 							<div class="form-group col-12"s>
 								<label for="title">Title</label>
-								<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title">
+								<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+								<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+									<div *ngIf="f.title.errors.required">Project title is required</div>
+								</div>
 							</div>
 							<div class="form-group col-12">
 								<label for="desc">Discription</label>
-								<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
+								<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }"></textarea>
+								<div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+									<div *ngIf="f.desc.errors.required">Project description is required</div>
+								</div>
 							</div>
 
-							<div class="form-group col-12">
-								<label for="assignTo">Sprint</label>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-								</select>
-								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-								</select>
-							</div>
 							<div class="row no-margin no-padding  border" >
 								<div class="form-group col-12 col-lg-6 pt-1">
 									<label for="assignTo">Assign To</label>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id" [ngClass]="{ 'is-invalid': submitted && f.assignTo.errors }">
 										<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 									</select>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+									<div *ngIf="submitted && f.assignTo.errors" class="invalid-feedback">
+										<div *ngIf="f.assignTo.errors.required">Please assign the task to some one</div>
+									</div>
+									
+									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo" [ngClass]="{ 'is-invalid': submitted && f.assignTo.errors }">
 										<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
 									</select>
+									<div *ngIf="submitted && f.assignTo.errors" class="invalid-feedback">
+										<div *ngIf="f.assignTo.errors.required">Please assign the task to some one</div>
+									</div>
+									
 								</div>
 								<div class="form-group col-12 col-lg-6 pt-1">
 									<label for="priority">Priority</label>
-									<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+									<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority" [ngClass]="{ 'is-invalid': submitted && f.priority.errors }">
 										<option value="4">Low</option>
 										<option value="3">Medium</option>
 										<option value="2">High</option>
 										<option value="1">Highest</option>
 									</select>
+									<div *ngIf="submitted && f.priority.errors" class="invalid-feedback">
+										<div *ngIf="f.priority.errors.required">Priority is required</div>
+									</div>
+									
 								</div>
 								<div class="form-group col-12">
 									<label for="assignTo">Sprint</label>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
+									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
 										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
 									</select>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
+									<div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
+										<div *ngIf="f.sprint.errors.required">Sprint is required</div>
+									</div>
+									
+									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
 										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
 									</select>
+									<div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
+										<div *ngIf="f.sprint.errors.required">Sprint is required</div>
+									</div>
+									
 								</div>
 								<div class="form-group col-6">
 									<label for="dueDate">Due Days</label>
-									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
+									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }">
+									<div *ngIf="submitted && f.dueDate.errors" class="invalid-feedback">
+										<div *ngIf="f.dueDate.errors.required">Due days is required</div>
+									</div>
 								</div>
 
 								<div class="form-group col-6">
 									<label for="estimatedTime">Estimated Time</label>
 									<div class="md-form form-group">
 
-										<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
+										<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.estimatedTime.errors }" />
+										<div *ngIf="submitted && f.estimatedTime.errors" class="invalid-feedback">
+											<div *ngIf="f.estimatedTime.errors.required">Estimated time is required</div>
+										</div>
+
 									</div>
 								</div>
+								<div class="form-group col-12">
+									<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
+								</div>
 							</div>
-							<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
+							
 							<div *ngIf="newTask.images && newTask.images.length>0">
 								<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
 									<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
@@ -327,7 +354,6 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-<<<<<<< HEAD
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<div id="refresh_icon" style="display: none;"> 
 						<span aria-hidden="true" class="fa fa-refresh refresh"></span>
@@ -336,17 +362,9 @@
 						<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
 					</div>
 					<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
-=======
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<div id="refresh_icon" style="display: none;"> 
-					<span aria-hidden="true" class="fa fa-refresh refresh"></span>
+
 				</div>
-				<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-					<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
->>>>>>> 4638c5557a75c9d15aaff3a245ab2b3bf01e3043
-				</div>
+
 			</div>
 
 		</div>
-
-	</div>

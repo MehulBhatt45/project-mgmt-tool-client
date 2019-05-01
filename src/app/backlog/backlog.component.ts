@@ -48,7 +48,7 @@ export class BacklogComponent implements OnInit {
 	currentdate = moment().format('YYYY-MM-DD'); 
 	activeSprint;
 	projectDealine;
-
+	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -220,9 +220,9 @@ export class BacklogComponent implements OnInit {
 			console.log("err of team============>"  ,err);
 		});
 	}
+	get f() { return this.addForm.controls; }
 
 	addSprint(addForm){
-
 		addForm.startDate = $('#startDate').val();
 		addForm.endDate = $('#endDate').val();
 		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);

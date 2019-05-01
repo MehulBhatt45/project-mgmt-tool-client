@@ -79,7 +79,7 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
-  
+  submitted = false;
   
 
 
@@ -342,6 +342,7 @@ export class ChildComponent  implements OnInit{
       this.comment = "";
       this.model.editorData = 'Enter comments here';
       this.files = [];
+      this.file = [];
       console.log('this.files=============>',this.files);
       this.getAllCommentOfTask(res.taskId);
     },err=>{
@@ -449,9 +450,13 @@ export class ChildComponent  implements OnInit{
     }
   }
 
-
+  get f() { return this.editTaskForm.controls; }
 
   updateTask(task){
+    this.submitted = true;
+    if (this.editTaskForm.invalid) {
+      return;
+    }
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
