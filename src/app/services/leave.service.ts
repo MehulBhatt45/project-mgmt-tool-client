@@ -146,46 +146,57 @@ export class LeaveService {
 
 
 
-// Attendence service
+	// Attendence service
 
 
-checkIn(Data){
-	var obj = {userId:Data};
-	console.log("data of checkin student service",obj);
-	const httpOptions = {
-		headers: new HttpHeaders({
-			'content-Type':'application/json',
-			'x-access-token': JSON.parse(localStorage.getItem('token'))
-		})
-	};
-	
-	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
-}
-checkOut(Data){
-	var obj = {userId:Data};
-	console.log("data of checkout ",Data);
-	const httpOption = {
-		headers: new HttpHeaders({
-			'content-type': 'application/json',
-			'x-access-token': JSON.parse(localStorage.getItem('token'))
-		})
-	};
-	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
-}
+	checkIn(Data){
+		var obj = {userId:Data};
+		console.log("data of checkin student service",obj);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'content-Type':'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		
+		return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+	}
+	checkOut(Data){
+		var obj = {userId:Data};
+		console.log("data of checkout ",Data);
+		const httpOption = {
+			headers: new HttpHeaders({
+				'content-type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+	}
 
-empAttendence(date){
-	var obj = {date: date,
-		user_Id : JSON.parse(localStorage.getItem("currentUser"))._id,
-	};
-	console.log("event of emp service",obj);
-	return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
-}
-getUserById(date){
+	empAttendence(date){
+		var obj = {date: date,
+			user_Id : JSON.parse(localStorage.getItem("currentUser"))._id,
+		};
+		console.log("event of emp service",obj);
+		return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
+	}
+	getUserById(date){
 
-var obj = {date:date};
-console.log("date event------=-=-=-=",obj);
+		var obj = {date:date};
+		console.log("date event------=-=-=-=",obj);
 
-return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
+		return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
 
-}
+	}
+
+	getUserByDate(formattedfDate,TODate){
+		console.log("fdate,todate=========",formattedfDate,TODate);
+
+		var obj = {fromDate:formattedfDate,toDate:TODate};
+		console.log("date========----",obj);
+
+		return this.http.post(config.baseApiUrl+"attendence/getAttendenceInInterval",obj);
+
+	}
+
 }

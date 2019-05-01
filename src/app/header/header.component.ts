@@ -278,8 +278,8 @@ export class HeaderComponent implements OnInit {
 	}
 
 	logout() {
-		localStorage.setItem("checkIn",JSON.stringify(false));
-		localStorage.setItem("checkOut",JSON.stringify(true));
+		// localStorage.setItem("checkIn",JSON.stringify(false));
+		// localStorage.setItem("checkOut",JSON.stringify(true));
 		this._loginService.logout();
 		this.router.navigate(['/login']);
 	}
