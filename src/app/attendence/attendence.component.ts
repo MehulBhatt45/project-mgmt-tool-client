@@ -497,20 +497,7 @@ import { Component, OnInit, ViewChild,
 
 		}
 
-		//  getUserDate(event1,event2){
-
-			//   var date1 = moment(event1).format('YYYY-MM-DD');
-			//   console.log("event  of date ===>",date1);   
-
-			//   var date2 = moment(event2).format('YYYY-MM-DD');
-			//   console.log("event  of date ===>",date2);   
-
-
-			// }
-
-
-
-		}
+	}
 
 
 
