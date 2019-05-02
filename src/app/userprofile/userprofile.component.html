@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<div class="border_custom">
 			<div class="row p-2">
 				<div class="col-md-4 p-0">
@@ -16,7 +16,7 @@
 						<div class="name">
 							<span>{{currentUser.name}}</span>
 						</div>
-						<p style="padding-left: 10px;">Project Manager</p>
+						<p style="padding-left: 10px;">{{currentUser.userRole}}</p>
 					</div>
 				</div>
 			</div>
@@ -38,15 +38,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-9">
 		<div class="tab-content p-0" id="myTabContentMD">
 			<div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
 				<div class="card profile padding-15">
 					<h2><span class="icon-user mr-1"></span> About</h2>
 					<h3>{{currentUser.name}}</h3>
 					<p><span class="icon-envelope mr-1"></span> {{currentUser.email}}</p>
-					<p><span class="icon-screen-smartphone mr-1"></span> +919876543210</p>
+					<p><span class="icon-screen-smartphone mr-1"></span> {{currentUser.phone}}</p>
 					<p><span class="fab fa-skype mr-1"></span> tirthrajbarot</p>
+					<button type="button" class="btn btn-primary" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="icon-note"></i> Edit profile</button>
+
 				</div>
 			</div>
 			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
