@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<div class="border_custom">
 			<div class="row p-2">
 				<div class="col-md-4 p-0">
@@ -16,7 +16,7 @@
 						<div class="name">
 							<span>{{currentUser.name}}</span>
 						</div>
-						<p style="padding-left: 10px;">Project Manager</p>
+						<p style="padding-left: 10px;">{{currentUser.userRole}}</p>
 					</div>
 				</div>
 			</div>
@@ -38,15 +38,17 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-9">
 		<div class="tab-content p-0" id="myTabContentMD">
 			<div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
 				<div class="card profile padding-15">
 					<h2><span class="icon-user mr-1"></span> About</h2>
 					<h3>{{currentUser.name}}</h3>
 					<p><span class="icon-envelope mr-1"></span> {{currentUser.email}}</p>
-					<p><span class="icon-screen-smartphone mr-1"></span> +919876543210</p>
+					<p><span class="icon-screen-smartphone mr-1"></span> {{currentUser.phone}}</p>
 					<p><span class="fab fa-skype mr-1"></span> tirthrajbarot</p>
+					<button type="button" class="btn btn-primary" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="icon-note"></i> Edit profile</button>
+
 				</div>
 			</div>
 			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
@@ -73,16 +75,25 @@
 						<form [formGroup]="editTEmail">
 							<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label">{{item.title}}</span>
+									<span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
 									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
 								</ng-template>
 								<div class="row">
 									<ng-template ng-option-tmp let-item="item">
-										<h5 class="mt-1">{{item.title}}</h5>
-										<h6>{{item.uniqueId}}</h6>
+										<div class="card testimonial-card">
+											<div class="card-up deep-purple lighten-2"></div>
+											<div class="avatar white img_section">
+												<img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+											</div>
+											<div class="card-body">
+												<h5 class="card-title mt-1">{{item.title}}</h5>
+												<h6 class="card-title">{{item.uniqueId}}</h6>
+											</div>
+										</div>
 									</ng-template>
 								</div>
 							</ng-select>
+							
 							<div class="form-group">
 								<div class="form-group">
 									<div class="md-form">
@@ -99,31 +110,18 @@
 									</div>
 								</div>
 							</div>
-							<ng-select placeholder="Send To" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
-								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label">{{item.title}}</span>
-									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-								</ng-template>
-								<div class="row">
-									<ng-template ng-option-tmp let-item="item">
-										<h5 class="mt-1">{{item.title}}</h5>
-										<h6>{{item.uniqueId}}</h6>
-									</ng-template>
-								</div>
-							</ng-select>
-<!--select convert into ng select..... 
-<div class="form-group">
-<label for="inputMDEx">Send To</label>
-<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
-<option value="{{this.total}}" selected>All Team</option>
-<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
-</select>
-</div> -->
-<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
-</form>
-</div>
-</div>
-</div>
-</div>
+
+							<label for="inputMDEx">Send To</label>
+							<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
+								<option value="{{this.total}}" selected>All Team</option>
+								<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
+							</select>
+						<!-- </div>  -->
+						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div>

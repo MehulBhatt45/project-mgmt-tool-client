@@ -31,7 +31,7 @@ export class AddEmployeeComponent implements OnInit {
 			phone:new FormControl( '', [Validators.minLength(10), Validators.maxLength(10)]),
 			userRole:new FormControl('',[Validators.required]),
 			experience:new FormControl(''),	
-			profile:new FormControl(''),
+			// profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
 	}

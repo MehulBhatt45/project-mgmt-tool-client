@@ -132,6 +132,7 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getAllDevelopersNotInProject(id){
+		console.log("kenu id hse============>",id);
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
 			console.log("hfghfjgh===============",this.availableDevelopers);
@@ -259,6 +260,13 @@ export class EditProjectComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			
 			this.url = '';
+
+			setTimeout(()=>{
+				this.availData = res;
+				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
+			},1000);
+			this.updateForm.reset();
+			this.getAllDevelopersNotInProject(this.projectId);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
