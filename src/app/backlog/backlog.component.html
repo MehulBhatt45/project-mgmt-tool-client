@@ -9,19 +9,17 @@
 
 <div class="project_bord">
 	<div class="row">
-		<div class="col-md-10 margin-tb-20" *ngFor="let sprint of sprints" style="margin-bottom: 20px;">
+		<div class="col-md-3 margin-tb-20" *ngFor="let sprint of sprints" style="margin-bottom: 20px;">
 			<div class="card card-cascade narrower">
-				<div class="view view-cascade overlay" style="background-color: #ddd;width: 30%;">
-					<div class="margin-top-10 margin-bottom-10">
-						<h4 class="font-weight-bold card-title text-center">{{sprint.title}} / {{sprint.status}}</h4>
-					</div>
+				<div style="background-color: #e7ebee; padding: 12px 10px">
+						<h4 class="card-title">{{sprint.title}} / {{sprint.status}}</h4>
 				</div>
 				<div class="btn-group dropleft float-right">
 					<button type="button" style="border-radius: 50%;" class="btn btn-default btn-floating btn_popover_menu padding-0" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><span class="fas fa-ellipsis-v"></span> 
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item btn-floating mt-0" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><span class="icon-pencile padding-top-1"></span></a>
-						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><span class="icon-trash-alt"></span></a>
+						<a class="dropdown-item btn-floating mt-0" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><span class="icon-pencil padding-top-1"></span></a>
+						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><span class="icon-trash"></span></a>
 					</div>
 				</div>
 				<div class="card-body card-body-cascade margin-bottom-0">

@@ -31,14 +31,17 @@
 
 .card-list button {
   flex-shrink: 0;
-  margin-top: 10px;
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  padding: 5px;
+  width: 120px;
+  font-size: 14px;
 }
 .card-list-content {
-  /*overflow: auto;
-  flex-grow: 1;*/
   padding: 4px;
-  background-color: #f6f4f6;
   height: 100%;
+  margin-bottom: 10px;
 }
 
 .cdk-drag-animating, .cdk-drop-list-dragging .cdk-drag {
@@ -100,33 +103,33 @@ table {
   }
 
   .card-header{
-       background-color: #f4f5f7 !important;
-    border: none!important;
-  }
-  mat-card.mat-card {
-    padding: 0;
-    margin-bottom: 10px;
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
-  }
-  .track_title{
-    color: #5E6C84;
-    font-size: 0.85714286em;
-    font-weight: 600;
-    line-height: 1.33333333;
-    text-transform: uppercase;
-    font-weight: normal; 
-  }
-
-  .card .card-body .card-text {
-   color: #172B4D;
-   font-size: 14px;
-   font-weight: 400;
-   font-style: normal;
-   word-break: break-word;
+   background-color: #f4f5f7 !important;
+   border: none!important;
  }
- .fa-check-square{
+ mat-card.mat-card {
+  padding: 0;
+  margin-bottom: 10px;
+  -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5);
+}
+.track_title{
+  color: #5E6C84;
+  font-size: 0.85714286em;
+  font-weight: 600;
+  line-height: 1.33333333;
+  text-transform: uppercase;
+  font-weight: normal; 
+}
+
+.card .card-body .card-text {
+ color: #172B4D;
+ font-size: 14px;
+ font-weight: 400;
+ font-style: normal;
+ word-break: break-word;
+}
+.fa-check-square{
   color:#1a73e8;
   border:none;
   
@@ -358,7 +361,7 @@ table {
     position: relative;
     cursor: pointer;
   }
-    .dropdown-menu {
+  .dropdown-menu {
     left: 30px;
     padding: 5px;
     top: 10px;
@@ -368,7 +371,7 @@ table {
     padding: 7px;
   }
   .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-    background-color: #181123!important;
+    background-color: #b3b3b3!important;
   }
   .selected-avatar{
     position: relative;
@@ -468,4 +471,14 @@ table {
   }
   .timer-button{
     width: 50%;
+  }
+  .right_div{
+    float: right;
+  }
+  .sprint_button{
+    float: right;
+    display: -webkit-inline-box;
+  }
+  select.browser-default {
+    display: -webkit-inline-box!important;
   }

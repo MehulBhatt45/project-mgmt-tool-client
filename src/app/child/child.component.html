@@ -11,32 +11,28 @@
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
 								<div class="container" *ngIf=" task.status == 'in progress'">
-									<div class="row">
-										<div class="stopwatch">
-										<div class="col-sm-5" style="padding-left: 0;">
-												<section class="timer-button-container">
+									<div class="row sprint">
+											<div class="col-sm-5" style="padding-left: 0; background-color: #62aacc; height: 40px;">
+												<section class="timer-button-container start_button">
 													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
+														<span class="icon-clock mr-1"></span>
 														{{ task.startText?task.startText:'Start' }}
 													</button>
 												</section>
 											</div>
-											<div class="col-sm-7">
+											<div class="col-sm-7" style="background-color: #dcdfe0; height: 40px;">
 												<section class="timer-counter-label" style="float: right;">
-													<div> 
+													<div style="padding: 8px"> 
 														{{task.time?task.time:'00:00:00'}}
 													</div>
 												</section>
 											</div>
-										</div>
 									</div>
 								</div>
 								<div (click)="openModel(task)">
 									<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 									<div class="card-text">{{task.desc}}</div>
 									<ul>
-										<li class="icon_check">
-											<i class="fa fa-check-square" aria-hidden="true" title="Task"></i>
-										</li>
 										<li>
 											<ul class="team-members">	
 												<li *ngIf="task.assignTo" [title]="getTitle(task.assignTo.name)">
@@ -52,7 +48,7 @@
 											</ul>
 										</li>
 									</ul>
-									<label class="float-right">{{task.uniqueId}}</label>
+									<!-- <label class="float-right">{{task.uniqueId}}</label> -->
 									<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 								</div>
 							</div>
