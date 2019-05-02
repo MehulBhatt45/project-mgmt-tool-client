@@ -923,10 +923,14 @@ submitComment(leaveid,comment){
   }
   console.log("data==========>>",data);
   this._leaveService.addComments(data).subscribe((res:any)=>{
+    // if(this.comment == ""){
+    //   Swal.fire('Oops...', 'Please enter some text !', 'error')
+    // }
     res['comment'] = true; 
     console.log("response",res);
     Swal.fire({type: 'success',title: 'Comment Added Successfully',showConfirmButton:false,timer: 2000})
     $('#centralModalInfo').modal('hide');
+
     this.comment = "";
   },err=>{
     console.log("errrrrrrrrrrrrr",err);
