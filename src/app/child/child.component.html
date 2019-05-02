@@ -1,43 +1,35 @@
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
-			<div class="card">
-				<div class="card-header">
-					<span class="track_title">{{track.title}}</span>
+			<div class="card-header">
+					<span class="track_title"> <span class="{{track.icon}}"></span> {{track.title}}</span>
 					<span class="card_count_lbl">{{track.tasks.length}}</span>
-				</div>		
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
-								<table class="table-responsive">
-									<tr>
-										<td colspan="2">
-											<div class="container" *ngIf=" task.status == 'in progress'">
-												<div class="row">
-													<div class="col-sm-5 start_btn" style="padding-left: 0;">
-														<section class="timer-button-container">
-															<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
-																{{ task.startText?task.startText:'Start' }}
-															</button>
-														</section>
-													</div>
-													
-													<div class="col-sm-7">
-														
-														<section class="timer-counter-label">
-															<div> 
-																{{task.time?task.time:'00:00:00'}}
-															</div>
-														</section>
-													</div>
-												</div>
+								<div class="container" *ngIf=" task.status == 'in progress'">
+									<div class="row">
+										<div class="stopwatch">
+										<div class="col-sm-5" style="padding-left: 0;">
+												<section class="timer-button-container">
+													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
+														{{ task.startText?task.startText:'Start' }}
+													</button>
+												</section>
 											</div>
-										</td>
-									</tr>
-								</table>
+											<div class="col-sm-7">
+												<section class="timer-counter-label" style="float: right;">
+													<div> 
+														{{task.time?task.time:'00:00:00'}}
+													</div>
+												</section>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div (click)="openModel(task)">
 									<div class="card-text text-bold" style="color: #333333 !important">{{task.title}}</div>
 									<div class="card-text">{{task.desc}}</div>

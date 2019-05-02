@@ -7,7 +7,7 @@
 <div *ngIf="!loader">
 	<div class="row" *ngIf="pro || activeSprint">
 		<div class="col-6">
-			<h3 *ngIf="pro.title" class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe03a;"></span> {{pro.title}}<sub>({{pro.uniqueId}})</sub></h3>
+			<h3 *ngIf="pro.title" class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe06a;"></span> {{pro.title}}<sub>({{pro.uniqueId}})</sub></h3>
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><span class="icon-clock mr-1"></span>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
 		<div class="col-4 md-form form-group">
@@ -25,9 +25,13 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row md-form form-group">
-				<span class="mr-1" data-icon="&#xe090;"></span>
-				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
-				<label for="exampleForm2">search text goes here</label>
+				<div class="col-1" style="text-align: center;top: 19px;font-size: 25px;">
+					<span class="mr-1" style="position: absolute; right: 0;" data-icon="&#xe090;"></span>
+				</div>
+				<div class="col-11">
+					<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText" (keyup)="onKey(searchText)" autocomplete="off">
+				<label for="exampleForm2" style="padding-left: 15px;">search text goes here</label>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-6">

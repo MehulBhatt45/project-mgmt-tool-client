@@ -100,10 +100,8 @@ table {
   }
 
   .card-header{
-    background-color: #f4f5f7 !important;
-    border-radius: 4px 4px 0 0;
-    padding: 1px 3px 0;
-    height: 40px;
+       background-color: #f4f5f7 !important;
+    border: none!important;
   }
   mat-card.mat-card {
     padding: 0;
@@ -367,6 +365,7 @@ table {
   }
   .dropdown-menu a.dropdown-item {
     font-size: 15px;
+    padding: 7px;
   }
   .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
     background-color: #181123!important;
@@ -470,5 +469,3 @@ table {
   .timer-button{
     width: 50%;
   }
-  /* */
-

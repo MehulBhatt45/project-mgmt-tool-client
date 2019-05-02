@@ -39,3 +39,6 @@
 .delete-team-member a i{
     color: red;
 }
+.stopwatch{
+  background-color: red;
+}

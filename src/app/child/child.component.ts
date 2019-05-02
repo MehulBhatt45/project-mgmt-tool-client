@@ -159,6 +159,7 @@ export class ChildComponent  implements OnInit{
 
       this.tracks = [
       {
+        "icon":"icon-notebook",
         "title": "Todo",
         "id": "to do",
         "class":"primary",
@@ -167,6 +168,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-equalizer",
         "title": "In Progress",
         "id": "in progress",
         "class":"info",
@@ -175,6 +177,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-settings",
         "title": "Testing",
         "id": "testing",
         "class":"warning",
@@ -183,6 +186,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-like",
         "title": "Done",
         "id": "complete",
         "class":"success",
