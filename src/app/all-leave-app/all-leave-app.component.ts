@@ -523,7 +523,6 @@ getAllLeaves(){
         }]
       },
 
-
       options: {
         responsive: true,
         legend:{

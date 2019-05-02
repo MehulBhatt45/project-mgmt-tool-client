@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
-
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
@@ -432,6 +431,8 @@ export class HeaderComponent implements OnInit {
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
+			$('#editModel').modal('hide');
+			
 			this.newTask = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
