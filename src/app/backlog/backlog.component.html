@@ -3,7 +3,7 @@
 		<h1 *ngIf="projectOne">{{projectOne.title}}</h1>
 	</div>
 	<div class="col-6 ">
-		<button type="submit" class="btn btn-default float-right mt-1"  title="Edit Notice" data-toggle="modal" data-target="#addsprint" (click)="newNotice = notice"><span class="icon-note padding-top-1"></span>Create Sprint</button>
+		<button type="submit" class="btn btn-default float-right mt-1"  title="Edit Notice" data-toggle="modal" data-target="#addsprint" (click)="newNotice = notice"><span class="icon-note mr-1"></span>Create Sprint</button>
 	</div>
 </div>
 
@@ -21,12 +21,12 @@
 					</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item btn-floating mt-0" title="Edit Notice" data-toggle="modal" data-target="#editmodel" (click)="newsprint = sprint"><span class="icon-pencile padding-top-1"></span></a>
-						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><span class="far fa-trash-alt"></span></a>
+						<a class="dropdown-item btn-floating btn-gplus mt-0" title="Delete Sprint" (click)="deleteSprint(sprint._id)"><span class="icon-trash-alt"></span></a>
 					</div>
 				</div>
 				<div class="card-body card-body-cascade margin-bottom-0">
-					<p *ngIf="sprint.startDate"><span class="icon-calendar margin-right-5"></span>Start:<span>{{sprint.startDate | date:'mediumDate'}}</span></p>
-					<p *ngIf="sprint.endDate"><span class="icon-calendar margin-right-5"></span>End:<span>{{sprint.endDate | date:'mediumDate'}}</span></p>
+					<p *ngIf="sprint.startDate"><span class="icon-calendar margin-right-2"></span>Start:<span>{{sprint.startDate | date:'mediumDate'}}</span></p>
+					<p *ngIf="sprint.endDate"><span class="icon-calendar margin-right-2"></span>End:<span>{{sprint.endDate | date:'mediumDate'}}</span></p>
 					<p class="card-text">{{sprint.goal}}</p>
 					<ul class="list-group list-group-flush" style="margin-top: -15px;width:300px;">
 						<li class="list-group-item">To Do: <b style=" color: #FF5722;padding: 7px;border-radius: 12px;text-shadow: 1px 0px;">{{getTaskCount(sprint._id, 'to do')}}</b></li>
@@ -47,9 +47,8 @@
 <div class="modal fade" id="addsprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-
 			<div class="modal-header">
-				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel"	><span class="icon-pencile"></span>Create Sprint</h5>
+				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel"><span class="icon-pencil mr-1"></span>Create Sprint</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -67,11 +66,11 @@
 								<textarea type ="text" id="desc" formControlName="goal" class="md-textarea form-control" rows="4"></textarea>	
 							</div>
 							<div class="md-form form-group">
-								<i class="far fa-calendar-alt prefix"></i>
+								<span class="icon-calendar prefix"></span>
 								<input placeholder="Starting date" formControlName="startDate" type="text" id="startDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>
 							<div class="md-form form-group">
-								<i class="far fa-calendar-alt prefix"></i>
+								<span class="icon-calendar prefix"></span>
 								<input placeholder="Ending date" formControlName="endDate" type="text" id="endDate" class="form-control datepicker" style="margin-bottom: 30px;">
 							</div>	
 						</form>
@@ -82,8 +81,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-				<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="addSprint(addForm.value)">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" id="my_button" class="btn btn-outline-default" (click)="addSprint(addForm.value)">Save</button>
 			</div>
 		</div>
 	</div>

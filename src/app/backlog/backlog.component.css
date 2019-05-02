@@ -55,3 +55,11 @@ button.btn.btn-default.progress_summary {
     width: auto;
     line-height: 26px;
 }
+.btn-outline-default{
+    border: 2px solid #3998c5;
+    color: #3998c5!important;
+}
+.modal-footer {
+    padding: 5px;
+    border: none;
+}

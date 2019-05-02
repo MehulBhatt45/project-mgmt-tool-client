@@ -56,13 +56,13 @@
       </button>
 
       <div class="dropdown-menu" style="width: 255px;">
-         <a class="dropdown-item btn-floating  mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Edit Project" routerLink="/edit-project/{{project._id}}"><i class="far fa-edit padding-top-1"></i></a>
-         <a class="dropdown-item btn-floating mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><i class="fas fa-users"></i></a>
-         <a class="dropdown-item btn-floating  mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><i class="fa fa-bar-chart" aria-hidden="true"></i></a>
-         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><i class="fas fa-clock"></i></a>
-         <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
-     </div>
- </div>
+       <a class="dropdown-item btn-floating  mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Edit Project" routerLink="/edit-project/{{project._id}}"><span class="icon-pencil padding-top-1"></span></a>
+       <a class="dropdown-item btn-floating mt-0 mx-1" [title]="project.Teams.length + ' Team-Members'"><span class="icon-users text-white"></span></a>
+       <a class="dropdown-item btn-floating  mt-0 mx-1" title="Project Summary" routerLink="/summary/{{project._id}}"><span data-icon="&#xe077;" aria-hidden="true"></span></a>
+           <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Time Log" routerLink="/time-log/{{project._id}}"><span class="icon-clock"></span></a>
+           <a class="dropdown-item btn-floating btn-gplus mt-0 mx-1" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'" title="Project backlog" routerLink="/backlog/{{project._id}}"><i class="fas fa-running"></i></a>
+       </div>
+   </div>
 
  <div class="card-body card-body-cascade margin-bottom-0 text-center">
     <h5 class="deep-purple-text">
@@ -75,7 +75,7 @@
         <p style="color: #aba7a7; margin-top: 5px;"><span class="icon-calendar mr-1"></span> <span>{{getDate(project.createdAt)}}</span></p>
         <p class="card-text">{{project.desc}}</p>
         <button class="btn btn-default progress_summary" (mouseover)="mouseOver(project)">Progress</button>
-        <div class="summary card"  *ngIf="hoveredProject">
+        <div class="summary card z-depth-4"  *ngIf="hoveredProject">
             <h4 style="color: #3998c5; margin-top: 15px;">{{hoveredProject.title}}</h4>
             <h5 style="color: #948e8e;">Project Progress</h5>
             <div class="row padding-20">
@@ -98,7 +98,6 @@
             </div>
         </div>
     </div>
-
 </div>
 </div>
 </div>
@@ -161,7 +160,7 @@
                                     <div class="text-center selected-avatar" *ngIf="url">
                                         <img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
                                         <div class="delete-team-member">
-                                            <a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+                                            <a href="javascript:void(0);" (click)="removeAvatar()"><span class="icon-trash"></span></a>
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">

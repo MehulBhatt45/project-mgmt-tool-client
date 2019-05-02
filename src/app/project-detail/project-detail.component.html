@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-2">
 			<div *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
-				<button type="submit" id="save_changes" class="btn btn-default" style="float: right" (click)="completeSprint(activeSprint._id)">Complete Sprint</button>
+				<button type="submit" id="save_changes" class="btn btn-default" style="float: right" (click)="completeSprint(activeSprint._id)"> <span class="mr-1" data-icon="&#xe080;"></span> Complete Sprint</button>
 			</div>
 		</div>
 	</div>
@@ -34,9 +34,9 @@
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
 				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Item</button>
 				<div class="dropdown-menu dropdown-default">
-					<a class="dropdown-item" (click)="addItem('Task')">Task</a>
-					<a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-					<a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+					<a class="dropdown-item" (click)="addItem('Task')"> <span data-icon="&#xe067;" class="mr-1"></span> Task</a>
+					<a class="dropdown-item" (click)="addItem('Bug')"> <span class="icon-energy mr-1"></span> Bug</a>
+					<a class="dropdown-item" (click)="addItem('Issue')"> <span class="icon-question mr-1"></span> Issue</a>
 				</div>
 			</div>
 			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">

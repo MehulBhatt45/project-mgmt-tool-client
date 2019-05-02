@@ -356,39 +356,27 @@ table {
     border-radius: 50%;
     border: 2px solid #fff;
     display: inline-block;
-
     float: left;
-    /*box-shadow: 0 0 20px 0 rgba(171,171,171,.8);*/
     position: relative;
     cursor: pointer;
-
   }
-  
-  .dropdown-menu {
-    /*bottom: 12.5px;*/
+    .dropdown-menu {
     left: 30px;
-    box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     padding: 5px;
     top: 10px;
-    /*border-radius: 10px 10px 10px 10px;*/
   }
   .dropdown-menu a.dropdown-item {
-    text-align: left;
-    padding:16px;
     font-size: 15px;
-    border-radius: 5px!important;
   }
   .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-    background-color: #372e5f;
+    background-color: #181123!important;
   }
-
   .selected-avatar{
     position: relative;
     width: 150px;
     height: 150px;
     display: inline-block;
     margin: 5px;
-    /*margin: 0 auto 5px;*/
   }
   .selected-avatar:hover .delete-team-member{
     display: block;
