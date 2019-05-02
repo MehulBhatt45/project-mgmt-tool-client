@@ -5,7 +5,6 @@
 const baseUrl = "http://192.168.43.66:4001/";
 
 
-
 // const baseMediaUrl = "http://132.140.160.114/project_mgmt_tool/server/uploads/";
 // const baseMediaUrl = "https://raoinfotech-conduct.tk/server/uploads/";
 // const baseMediaUrl = "http://localhost/project_mgmt_tool/server/uploads/";
