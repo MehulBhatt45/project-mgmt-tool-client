@@ -22,21 +22,34 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="md-form form-group" *ngIf="availData">
-						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" >
+						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="projecttitle" class="active">Project Title</label>
-					</div>
-					<div class="col-md-4" >
-						<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
-							<label for="date-picker-example">Deadline</label>
-							<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
+						<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+							<div *ngIf="f.title.errors.required">Project title  is required</div>
+							<div *ngIf="f.title.errors.maxLength">Project title  is must be only 60 characters</div>
 						</div>
 					</div>
 				</div>
-				<div class="md-form form-group" *ngIf="availData">
-					<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
-					<label for="desc" class="active" >Project Discription</label>
+				<div class="col-md-1" ></div>
+				<div class="col-md-4" >
+					<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
+						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.deadline.errors }">
+						<label for="date-picker-example" class="active">Deadline</label>
+						<div *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
+							<div *ngIf="f.deadline.errors.required">Project deadline is required</div>
+						</div>
+					</div>
 				</div>
 			</div>
+			<div class="md-form form-group" *ngIf="availData">
+				<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }">
+				<label for="desc" class="active" >Project Discription</label>
+				<div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+					<div *ngIf="f.desc.errors.required">Project description is required</div>
+					<div *ngIf="f.desc.errors.maxLength">Project description is must be only 300 characters</div>
+				</div>
+			</div>
+
 
 			<!-- Developers list -->
 
@@ -47,20 +60,20 @@
 						<div class="form-group">
 							<ng-select placeholder="Select Developers" [items]="dteam" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)" >
 								<ng-template ng-label-tmp let-item="item" let-clear="clear" >
-									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/bug.png'" width="20px" height="20px"> {{item.name}}</span>
+									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true"> × </span>
 								</ng-template>
 								<div class="row">
 									<ng-template ng-option-tmp let-item="item">
-										<div class="row" >
-											<div class="col-md-3">
-												<div class="avatar img_section">
-													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'">
+										<div class="row border m-2">
+											<div class="col-md-3"  style="margin-top: 10px;">
+												<div class="img_section">
+													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'" >
 												</div>
 											</div>
 											<div class="col-md-9">
-												<span style="line-height: 2;">{{item.name}}</span>
-												<p style="font-size: 14px;">{{item.userRole}}</p>
+												<span style="line-height: 2; margin-left: 20px;">{{item.name}}</span>
+												<p style="font-size: 14px; margin-left: 20px;margin-top: -20px;">{{item.userRole}}</p>
 											</div>
 										</div>
 									</ng-template>
@@ -93,9 +106,7 @@
 					</div>
 				</div>
 			</div>
-
-
-
+			
 			<!-- Project manager -->
 
 			<div class="card mt-1 p-1">
@@ -105,22 +116,20 @@
 						<div class="form-group">
 							<ng-select placeholder="Select ProjectManager" [items]="availableProjectMngr" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addProjectManager($event)" (remove)="removeProjectManager($event.value)" (clear)="clearSelection($event)">
 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/bug.png'" width="20px" height="20px"> {{item.name}}</span>
+									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true"> × </span>
 								</ng-template>
-								<div class="row">
+								<div>
 									<ng-template ng-option-tmp let-item="item">
-										<div class="row">
-											<div class="col-md-3">
-												<div class="col-md-3">
-													<div class="avatar img_section">
-														<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-													</div>
+										<div class="row border m-2">
+											<div class="col-md-3"  style="margin-top: 10px;">
+												<div class="img_section">
+													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
 												</div>
-												<div class="col-md-9">
-													<span style="line-height: 2;">{{item.name}}</span>
-													<p style="font-size: 14px;">{{item.userRole}}</p>
-												</div>
+											</div>
+											<div class="col-md-9">
+												<span style="line-height: 2; margin-left: 20px;">{{item.name}}</span>
+												<p style="font-size: 14px; margin-left: 20px; margin-top: -20px;">{{item.userRole}}</p>
 											</div>
 										</div>
 									</ng-template>
@@ -152,8 +161,7 @@
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)" [disabled]="updateForm.invalid">Update Project</button>
-
+			<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)">Update Project</button>
 
 			<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			aria-hidden="true">
