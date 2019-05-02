@@ -27,13 +27,13 @@ export class LeaveComponent implements OnInit {
 	commentUrl= [];
 	url = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+	submitted = false;
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
-			leaveDuration : new FormControl (''),
-			typeOfLeave : new FormControl (''),
-			reasonForLeave : new FormControl ('', Validators.required),
+			leaveDuration : new FormControl ('', Validators.required),
+			typeOfLeave : new FormControl ('', Validators.required),
+			reasonForLeave : new FormControl (''),
 			startingDate: new FormControl (''),
 			noOfDays: new FormControl(''),
 			endingDate: new FormControl (''),
@@ -89,15 +89,21 @@ export class LeaveComponent implements OnInit {
 		console.log(this.files);
 		console.log("filesssssssss",this.files);
 	}
-	
+	get f() { return this.addForm.controls; }
 	
 	addLeave(form){
+		this.submitted = true;
+		if (this.addForm.invalid) {
+			return;
+		}
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
+
 		form['id'] = this.currentUser._id;
 		form['name'] = this.currentUser.name;
 		form['email'] = this.currentUser.email;
+
 		console.log("valueeeeeeeeeeee",form, this.currentUser);
 		if(form.singleDate){
 			form.noOfDays = "1-day";

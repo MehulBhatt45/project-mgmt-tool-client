@@ -4,12 +4,21 @@
 		<form class="md-form" [formGroup]='addForm' role="form" style="color: #757575;">
 			<div class="md-form form-group">
 				<label for="projecttitle" style="margin: 0; padding: 0;">Notice Title</label>
-				<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control">
+				<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+				<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+					<div *ngIf="f.title.errors.required"> Notice Title is required</div>
+					<div *ngIf="f.title.errors.maxLength"> Notice Title is required</div>
+				</div>
 			</div>
 			<div class="md-form form-group">
 				<label for="desc" style="margin: 0; padding: 0;">Notice Content</label>
-				<textarea style="margin: 0; padding: 0;" id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+				<input type="text" id="desc" formControlName="desc"  autocomplete= 'false | random-string' class="form-control" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }" /> 
+				<div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+					<div *ngIf="f.desc.errors.required">Notice content is required</div>
+					<div *ngIf="f.desc.errors.maxLength"> Notice content is must be only 300 characters</div>
+				</div>
 			</div>
+
 			<div class="row"> 
 				<div class="col-md-4">
 					<div class="md-form form-group">

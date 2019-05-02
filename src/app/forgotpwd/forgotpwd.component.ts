@@ -18,6 +18,8 @@ export class ForgotpwdComponent implements OnInit {
 	pwd: boolean;
 	pwd1: boolean;
 	show1: boolean;
+	match: boolean = false;
+	submitted = false;
 
 
 	constructor(
@@ -31,29 +33,30 @@ export class ForgotpwdComponent implements OnInit {
 
 	ngOnInit() {
 		this.resetPasswordForm = this.formBuilder.group({
-			password: [''],
-			confirmPassword: ['']
+			password: new FormControl( '', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,20}')]),
+			confirmPassword: new FormControl( '', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,20}')]),
 		});
 
 		$(".toggle-password").click(function() {
 			$(this).toggleClass("fa-eye fa-eye-slash");
 		});
 	}
+	get f() { return this.resetPasswordForm.controls; }
 
 	resetPassword(){
+		this.submitted = true;
+		if (this.resetPasswordForm.invalid) {
+			return;
+		}
 		if(this.resetPasswordForm.value.password == this.resetPasswordForm.value.confirmPassword){
-			// console.log(this.token);
 			delete this.resetPasswordForm.value["confirmPassword"];
-			// console.log(this.resetPasswordForm.value);
 			var obj = {};
 			obj = {
 				"password": this.resetPasswordForm.value.password,
 				"token": this.token
 			};
-			// console.log(obj);
 			this._loginService.updatepwd(obj).subscribe(res=>{
 				console.log("res-=-=",res);
-				// alert("Password reset successfully");
 				Swal.fire("","Password reset successfully","success");
 				this.router.navigate(["/login"]);
 			},err=>{
@@ -67,7 +70,6 @@ export class ForgotpwdComponent implements OnInit {
 			})
 		}
 		else if(this.resetPasswordForm.value.password != this.resetPasswordForm.value.confirmPassword){
-			// alert("Please enter same password");
 			Swal.fire({
 				type: 'error',
 				title: 'Oops...',
@@ -84,6 +86,16 @@ export class ForgotpwdComponent implements OnInit {
 	confirmPassword() {
 		this.show1 = !this.show1;
 		this.pwd1 = !this.pwd1;
+	}
+	comparePassword(form){
+		console.log(form.value.password == form.value.confirmPassword, this.match);
+		if(form.value.password === form.value.confirmPassword){
+			console.log("In true condition");
+			this.match = true;
+		}else{
+			this.match = false;
+		} 
+
 	}
 
 }

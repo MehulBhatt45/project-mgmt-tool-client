@@ -135,6 +135,7 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getAllDevelopersNotInProject(id){
+		console.log("kenu id hse============>",id);
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
 			console.log("hfghfjgh===============",this.availableDevelopers);
@@ -261,6 +262,8 @@ export class EditProjectComponent implements OnInit {
 				this.availData = res;
 				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
 			},1000);
+			this.updateForm.reset();
+			this.getAllDevelopersNotInProject(this.projectId);
 			// this.router.navigate(['./edit-project/:id']);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
