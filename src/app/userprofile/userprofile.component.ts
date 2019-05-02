@@ -40,7 +40,8 @@ export class UserprofileComponent implements OnInit {
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	baseMediaUrl = config.baseMediaUrl;
 	pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
-	
+	submitted = false;
+
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectservice: ProjectService, public _loginService: LoginService) { 
 	}
@@ -49,8 +50,8 @@ export class UserprofileComponent implements OnInit {
 		this.editTEmail = new FormGroup({
 			subject : new FormControl('', Validators.required),
 			content : new FormControl('', Validators.required),
-			sendTo : new FormControl(['']),
-			projectId : new FormControl(['']),
+			sendTo : new FormControl(['', Validators.required]),
+			projectId : new FormControl(['', Validators.required]),
 		})
 	}
 
@@ -67,6 +68,8 @@ export class UserprofileComponent implements OnInit {
 		this.getProjects();
 
 	}
+		get f() { return this.editTEmail.controls; }
+
 
 	getProjects(){
 		this._projectservice.getProjects().subscribe((res:any)=>{
@@ -135,9 +138,9 @@ export class UserprofileComponent implements OnInit {
 			setTimeout(()=>{
 				// this.loader = false;
 				$(".progress").removeClass("abc");
-				this.task.projectId = item._id;	
+				// this.task.projectId = item._id;	
 				this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;
-				// console.log(this.developers);
+				console.log(this.developers);
 			},3000);
 		}else{
 			this.editTEmail.reset();
@@ -152,13 +155,22 @@ export class UserprofileComponent implements OnInit {
 	}
 
 	addNotification(editTEmail){
+		console.log("data of usersssssssss=========>",editTEmail);
+		// this.submitted = true;
+		// if (this.editTEmail.invalid) {
+		// 	return;
+		// }
 		// console.log("CurrentUserId========>",this.currentUser._id);
 		editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
 		console.log("editTEmail" , editTEmail.value);
 
 		this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
 			console.log(res);
-
+			Swal.fire({type: 'success',
+				title: 'You Notified '+ res.name + ' of ',
+				showConfirmButton:false,
+				timer: 2000,
+})
 			// this.notification = this.myObject;
 			// console.log(this.myObject);
 		})

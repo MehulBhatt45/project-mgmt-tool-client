@@ -21,24 +21,20 @@ export class AddEmployeeComponent implements OnInit {
 	materialSelect;
 	submitted = false;
 
-
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
-			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern('([A-zÀ-ž\s]){2,}')]),
-			password:new FormControl( '', [Validators.required, Validators.minLength(6),Validators.maxLength(20),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,20}')]),
+			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
+			password:new FormControl( '', [Validators.required, Validators.minLength(6),Validators.maxLength(20),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
 			isDelete: new FormControl('false', [Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
 			phone:new FormControl( '', [Validators.minLength(10), Validators.maxLength(10)]),
 			userRole:new FormControl('',[Validators.required]),
 			experience:new FormControl(''),	
-			profile:new FormControl(''),
+			// profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
 	}
-
-
-
 	ngOnInit() {
 		$('.datepicker').pickadate({
 			min: new Date(),

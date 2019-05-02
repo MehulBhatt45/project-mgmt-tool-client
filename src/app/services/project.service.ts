@@ -206,6 +206,7 @@ export class ProjectService {
 		console.log("updated Data in project servie" , data);
 		// console.log("updated File in project servie" , file);
 		// var projectId = data._id;
+		// var projectId = projectId._id;
 		console.log("projectId ======>" , projectId);
 		const httpOptions = {
 			headers: new HttpHeaders({

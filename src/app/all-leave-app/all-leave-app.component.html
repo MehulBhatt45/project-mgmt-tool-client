@@ -116,43 +116,43 @@
               <td>
                 <span *ngIf="leaves.attechment && leaves.attechment.length">
                   <span *ngFor="let att of leaves.attechment;  let i =index">
-                      <a class="image_attachment" data-toggle="modal" data-target="#veiwAttach" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
-                    </span>
+                    <a class="image_attachment" data-toggle="modal" data-target="#veiwAttach" (click)="sendAttachment(leaves.attechment)"><span *ngIf="i == 0">View Attachment</span></a>
                   </span>
-                  <p *ngIf="!leaves.attechment" style="color: #3998c5; font-size: 16px;">No Attechment</p>
-                </td>
-                <td>
-                  <a data-toggle="modal" data-target="#centralModalInfo" style="color: #3998c5;" (click)="leaveById(leaves._id, 'comment')">Comment</a>
-                </td>
-                <td>
-                  <a data-toggle="modal" style="color: #3998c5;" data-target="#viewMore" (click)="leaveById(leaves._id, 'view')">Viewmore</a>
-                </td>
-                <td>
-                  <strong *ngIf="leaves.status=='pending'" style="color: orange; padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
-                  <strong *ngIf="leaves.status=='rejected'" style="color: red;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
-                </td>
-                <td style="font-size: 20px;" *ngIf="leaves.status=='pending'"><a><span class="icon-check mr-2" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></span><span class="icon-close" aria-hidden="true" (click)="leaveRejected(leaves._id)"></span></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                </span>
+                <p *ngIf="!leaves.attechment" style="color: #3998c5; font-size: 16px;">No Attechment</p>
+              </td>
+              <td>
+                <a data-toggle="modal" data-target="#centralModalInfo" style="color: #3998c5;" (click)="leaveById(leaves._id, 'comment')">Comment</a>
+              </td>
+              <td>
+                <a data-toggle="modal" style="color: #3998c5;" data-target="#viewMore" (click)="leaveById(leaves._id, 'view')">Viewmore</a>
+              </td>
+              <td>
+                <strong *ngIf="leaves.status=='pending'" style="color: orange; padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
+                <strong *ngIf="leaves.status=='approved'" style="color: darkgreen;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
+                <strong *ngIf="leaves.status=='rejected'" style="color: red;padding: 5px; text-transform: capitalize;">{{leaves.status}}</strong>
+              </td>
+              <td style="font-size: 20px;" *ngIf="leaves.status=='pending'"><a><span class="icon-check mr-2" aria-hidden="true" (click)="leaveAccepted(leaves._id)"></span><span class="icon-close" aria-hidden="true" (click)="leaveRejected(leaves._id)"></span></a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
 
-    <div class="row"> 
-      <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
-        <h2 class="text-center">Types of Leaves</h2>
-        <canvas id="barChart"></canvas>
-      </div>
-      <div class="col-sm-5" *ngIf="leaveApp && !isFromSelect">
-       <h2 class="text-center">Duration</h2>
+  <div class="row"> 
+    <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
+      <h2 class="text-center">Types of Leaves</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="col-sm-5" *ngIf="leaveApp && !isFromSelect">
+     <h2 class="text-center">Duration</h2>
 
-       <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
-     </div>
-
+     <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
    </div>
+
  </div>
+</div>
 </div>
 <div class=" row text-center" *ngIf="leavesToDisplay">
   <div class="col-md-4">
@@ -215,7 +215,7 @@ aria-hidden="true">
           </div>
         </div>
         <div class="float-left">
-          <input type="submit"  style="height: 47px;" class="btn btn-outline-default ml-0" (click)="submitComment(singleleave._id,comment)" [disabled]= "!comment">
+          <input type="submit"  style="height: 47px;" class="btn btn-outline-default ml-0" (click)="submitComment(singleleave._id,comment)" [disabled]= "!comment" >
           <a class="btn btn-primary  waves-effect ml-0" data-dismiss="modal">Cancel</a> 
         </div>  
       </form>
