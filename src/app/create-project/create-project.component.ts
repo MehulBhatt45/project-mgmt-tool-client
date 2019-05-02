@@ -25,14 +25,16 @@ export class CreateProjectComponent implements OnInit {
   baseUrl = config.baseMediaUrl;
   objectsArray: any = [];
   setDate:any;
+  submitted = false;
+
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 
 
     this.addForm = new FormGroup({
-      title: new FormControl('',Validators.required),
-      avatar:new FormControl('',Validators.required),
-      desc: new FormControl('',Validators.required),
-      deadline: new FormControl(''),
+      title: new FormControl('', [Validators.required,  Validators.maxLength(60)]),
+      avatar:new FormControl(''),
+      desc: new FormControl('', [Validators.required,  Validators.maxLength(200)]),
+      deadline: new FormControl('', Validators.required),
       uniqueId: new FormControl('',),
       clientEmail: new FormControl('',),
       clientFullName: new FormControl('',),
@@ -57,8 +59,15 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
+  get f() { return this.addForm.controls; }
+
   addProject(addForm){
+    this.submitted = true;
+    if (this.addForm.invalid) {
+      return;
+    }
     console.log(addForm, this.files);
+
     var data = new FormData();
     _.forOwn(addForm, function(value, key) {
       data.append(key, value)
