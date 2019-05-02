@@ -29,7 +29,7 @@ export class AddEmployeeComponent implements OnInit {
 			phone:new FormControl(''),
 			userRole:new FormControl('',[Validators.required]),
 			experience:new FormControl(''),	
-			profile:new FormControl(''),
+			// profile:new FormControl(''),
 			cv:new FormControl('')
 		}); 
 	}

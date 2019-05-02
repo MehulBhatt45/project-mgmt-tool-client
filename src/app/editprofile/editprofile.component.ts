@@ -26,7 +26,7 @@ export class EditprofileComponent implements OnInit {
 			name:new FormControl(''),
 			email: new FormControl(''),
 			phone:new FormControl(''),
-			userRole:new FormControl({value: ''}),
+			userRole:new FormControl(''),
 			experience:new FormControl(''),
 			joiningDate:new FormControl(''),
 			cv:new FormControl('')
@@ -40,7 +40,15 @@ export class EditprofileComponent implements OnInit {
 			// console.log("id-=",this.developerId);
 			this.getDetails(this.developerId);
 			
-
+			$('.datepicker').pickadate({
+			min: new Date(),
+			onSet: function(context) {
+				change();
+			}
+		});
+			var change:any = ()=>{
+			this.editEmployeeForm.controls.joiningDate.setValue($('.datepicker').val());
+		}
 		})
 		// this.getDetails();
 	}
@@ -49,11 +57,12 @@ export class EditprofileComponent implements OnInit {
 	}
 
 	updateProfile(editEmployeeForm){
-		if(this.currentUser.userRole == "admin" || this.currentUser.userRole == "projectManager"){
+		if(this.currentUser.userRole == "admin"){
 
 			console.log(this.files);
 			console.log("btn tapped");
 			// this.editEmployeeForm['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+			editEmployeeForm = {...editEmployeeForm, name:this.userDetails.name,email:this.userDetails.email,phone:this.userDetails.phone,experience:this.userDetails.experience,joiningDate:this.userDetails.joiningDate}
 			this.editEmployeeForm['userId'] = this.userDetails._id;
 			console.log("form value=====>>>",editEmployeeForm);
 			let data = new FormData();
@@ -81,6 +90,7 @@ export class EditprofileComponent implements OnInit {
 			console.log("btn tapped");
 			// this.editEmployeeForm['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 			this.editEmployeeForm['userId'] = this.userDetails._id;
+			editEmployeeForm = {...editEmployeeForm, userRole:this.userDetails.userRole,joiningDate:editEmployeeForm.joiningDate?editEmployeeForm.joiningDate:this.userDetails.joiningDate}
 			console.log("form value=====>>>",editEmployeeForm);
 			let data = new FormData();
 			data.append('name', editEmployeeForm.name?editEmployeeForm.name:"");
@@ -125,27 +135,27 @@ export class EditprofileComponent implements OnInit {
 			// console.log("res-=-=",this.userDetails.userRole);
 			if(this.currentUser.userRole == 'admin'){
 				this.editEmployeeForm.controls['name'].disable();
-				this.editEmployeeForm.controls['email'].enable();
-				this.editEmployeeForm.controls['phone'].enable();
-				this.editEmployeeForm.controls['experience'].enable();
-				this.editEmployeeForm.controls['cv'].enable();
+				this.editEmployeeForm.controls['email'].disable();
+				this.editEmployeeForm.controls['phone'].disable();
+				this.editEmployeeForm.controls['experience'].disable();
+				this.editEmployeeForm.controls['cv'].disable();
 				this.editEmployeeForm.controls['userRole'].enable();
 				this.editEmployeeForm.controls['joiningDate'].enable();
 			
 			}
 			else if(this.currentUser.userRole=='developer' || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
 				this.editEmployeeForm.controls['userRole'].disable();
-				this.editEmployeeForm.controls['joiningDate'].disable();
+				// this.editEmployeeForm.controls['joiningDate'].disable();
+			}else{
+				this.editEmployeeForm.controls['userRole'].disable();
+				// this.editEmployeeForm.controls['joiningDate'].disable();
 			}
-			// else{
-				// 	this.editEmployeeForm.controls['userRole'].disable();
-				// 	this.editEmployeeForm.controls['joiningDate'].disable();
-				// }
 			},(err:any)=>{
 				console.log(err);
 				this.loader = false;
 			})
 	}
+
 
 
 }
