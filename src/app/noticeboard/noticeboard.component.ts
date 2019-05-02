@@ -33,7 +33,12 @@ export class NoticeboardComponent implements OnInit {
   files:Array<File> = [];
   i = 0;
   newNotice = { title:'', desc:'', published: '', expireon: '', images: [] };
+
+  submitted =false;
+
+
   @Output() noticeUpdate = new EventEmitter();
+
 
   ngOnInit() {
     this.getAllNotice();
@@ -94,15 +99,21 @@ export class NoticeboardComponent implements OnInit {
   
   createEditNoticeForm(){
     this.editNoticeForm = new FormGroup({
-      title : new FormControl(''),
-      desc : new FormControl(''),
+      title :new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+      desc : new FormControl('', [Validators.required,  Validators.maxLength(300)]),
       published : new FormControl(''),
-      expireon :new FormControl(''),
+      expireon :new FormControl('', [Validators.required]),
       images : new FormControl(''),
     })
   }
+  get f() { return this.editNoticeForm.controls; }
 
   updateNotice(editNoticeForm, noticeId){
+
+    this.submitted = true;
+    if (this.editNoticeForm.invalid) {
+      return;
+    }
     console.log("noticeId", noticeId);
     console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);

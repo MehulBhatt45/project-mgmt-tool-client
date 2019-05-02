@@ -65,6 +65,7 @@ export class ProjectDetailComponent implements OnInit {
 	temp:any;
 	activeSprint:any;
 	sprintInfo:any;
+	submitted = false;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -175,10 +176,11 @@ export class ProjectDetailComponent implements OnInit {
 		}
 	}
 
+
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', Validators.required),
-			desc : new FormControl('', Validators.required),
+			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			desc : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
 			assignTo : new FormControl('', Validators.required),
 			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
@@ -214,6 +216,8 @@ export class ProjectDetailComponent implements OnInit {
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
 	}
+
+	
 
 	filterTracks(sprintId){
 		console.log("tem ====>" , this.temp);
@@ -510,18 +514,19 @@ export class ProjectDetailComponent implements OnInit {
 		this.modalTitle = 'Add '+option;
 		$('#itemManipulationModel').modal('show');
 	}
-
+	get f() { return this.editTaskForm.controls; }
 
 	saveTheData(task){
 		
+		this.submitted = true;
+		if (this.editTaskForm.invalid) {
+			return;
+		}
 		this.loader = true;
-		
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
-		// task.startDate = $("#startDate").val();
-		// task.estimatedTime = $("#estimatedTime").val();
 		console.log("estimated time=====>",task.estimatedTime);
 		// task.images = $("#images").val();
 		console.log("images====>",task.images);
@@ -577,9 +582,6 @@ export class ProjectDetailComponent implements OnInit {
 	searchTask(){
 		console.log("btn tapped");
 	}
-
-
-
 	onKey(searchText){
 		console.log("searchText",searchText);
 		console.log(this.project);
