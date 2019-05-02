@@ -134,7 +134,7 @@ export class AllDeveloperComponent implements OnInit {
 				console.log("this .. pro ================>" , this.pro);
 				this.pro.Teams = this.Teams;	
 				console.log("this .. pro ================>" , this.pro);
-				this._projectService.updateProject(this.pro).subscribe((res:any)=>{
+				this._projectService.updateProject(this.pro._id,this.pro).subscribe((res:any)=>{
 					console.log("res========+>" , res);
 				},(err:any)=>{
 					console.log("err" , err);
