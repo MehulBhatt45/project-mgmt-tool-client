@@ -10,8 +10,8 @@
 	</div>
 	<div class="row no-margin no-padding" *ngIf="sprints">
 		<div class="md-form form-group col-2">
+			<span *ngIf="activeSprint"></span>
 			<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
-				<option *ngIf="activeSprint">{{activeSprint.title}}{{activeSprint.status}}</option>
 				<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 			</select>
 		</div>

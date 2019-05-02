@@ -12,9 +12,6 @@ const baseMediaUrl = "http://192.168.43.66/project_mgmt_tool/server/uploads/";
 
 
 
-
-
-
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,
