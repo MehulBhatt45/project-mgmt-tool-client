@@ -342,16 +342,16 @@ a.btn-floating.btn-action i{
     object-fit: cover;
 }
 .summary{
-    position: absolute;
-    display: none;
-    z-index: 999;
-    background-color: #fff;
-    height: 200px;
-    width: 400px;
-    top: 168px;
-    left: 441px;
-    border-radius: 5px;
-    color: black
+   position: absolute;
+   display: none;
+   z-index: 999;
+   background-color: #fff;
+   height: 200px;
+   width: 400px; 
+   top: -46px;
+   left: 15px;
+   border-radius: 5px;
+   color: black;
 }
 .summary p{
     font-size: 12px;
@@ -370,7 +370,7 @@ a.btn-floating.btn-action i{
 }
 
 button.btn.btn-default.progress_summary {
-   width: 100%;
+ width: 97%;
 }
 .modal-dialog {
     margin-top: 200px;
@@ -414,4 +414,7 @@ button.btn.btn-default.progress_summary {
 }
 .tib p{
     margin: 0;
+}
+.z-depth-4 {
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21); 
 }

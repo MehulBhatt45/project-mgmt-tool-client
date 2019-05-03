@@ -59,9 +59,6 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   font-size: 15px;
   border-radius: 5px!important;
 }
-.dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-  background-color: #372e5f;
-}
 .dropdown-content.open{
   display: block !important;
   opacity: 1;
@@ -88,7 +85,6 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 ol.breadcrumb.hidden-lg-down li a {
   top: 0px;
   left: 0px;
-  margin-left: 0;
   display: inline-block;
   vertical-align: sub;
 }
@@ -109,7 +105,7 @@ ol.breadcrumb.hidden-lg-down li a {
   box-shadow: none;
 }
 .dropdown-item:hover{
-  background-color: #181123 !important;
+  background-color: #b3b3b3 !important;
   color: #fff!important;
 }
 .side-nav .search-form input[type=text] {
