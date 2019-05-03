@@ -92,10 +92,11 @@ export class LeaveComponent implements OnInit {
 	get f() { return this.addForm.controls; }
 	
 	addLeave(form){
-		this.submitted = true;
-		if (this.addForm.invalid) {
-			return;
-		}
+		console.log("form data============>",form);
+		// this.submitted = true;
+		// if (this.addForm.invalid) {
+		// 	return;
+		// }
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();

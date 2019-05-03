@@ -92,8 +92,8 @@
   <div class="bottom_icon">
     <div class="second_icon">
       <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right" style="color: #181123;"><span class="icon-bell" style="font-size: 20px;" aria-hidden="true" >
-        <span class="notification_count animated bounce">
-          <span class="custom_badge ">{{newNotification}}</span>
+        <span class="notification_count animated bounce" *ngIf= "newNotification > 0">
+          <span class="custom_badge " >{{newNotification}}</span>
         </span>
       </span>
     </a>

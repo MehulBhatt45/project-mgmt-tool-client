@@ -360,7 +360,8 @@ export class BacklogComponent implements OnInit {
 
 	startSprint(sprint){
 		console.log($('#startDate').val(), $('#endDate').val());
-		sprint.startDate = moment($('#startDate').val()).format('YYYY-MM-DD'); 
+		sprint.startDate = moment($('#startDate').val()).format('YYYY-MM-DD');
+		sprint.endDate = moment ($('#endDate').val()).format('YYYY-MM-DD'); 
 		console.log("start sprint =====>",sprint.startDate);
 		sprint.endDate = moment($('#endDate').val()).format('YYYY-MM-DD');
 		console.log("system date",this.currentdate);

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild,
-	TemplateRef, ChangeDetectionStrategy} from '@angular/core';
+	TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 	import {Router,ActivatedRoute} from '@angular/router';
 	import{AttendenceService} from '../services/attendence.service';
 	import { AlertService } from '../services/alert.service';
@@ -75,7 +75,7 @@ import { Component, OnInit, ViewChild,
 		usercheck:any;
 		presentuser:any;
 		absentuser:any;
-		finalresultpresentuser:any;
+		finalResultPresentUser = [];
 		attendence:any;
 		items;
 		// date = [];
@@ -112,7 +112,8 @@ import { Component, OnInit, ViewChild,
 		toDate: NgbDate;
 
 		constructor(calendar: NgbCalendar,public router:Router, public _leaveService:LeaveService,
-			public _alertService: AlertService,private route: ActivatedRoute,private modal: NgbModal,public _projectService: ProjectService) {
+			public _alertService: AlertService,private route: ActivatedRoute,private modal: NgbModal,
+			public _projectService: ProjectService, public change: ChangeDetectorRef) {
 			this.route.queryParams
 			.subscribe(params=>{
 				this.items = params;
@@ -131,387 +132,315 @@ import { Component, OnInit, ViewChild,
 		ngOnInit() {
 
 			this.getAllDevelopers();
+			
+
+			$('#daterange1').daterangepicker({
+				opens: 'left'
+			},function(start, end, label) {
+				var fromDate = start.format('YYYY-MM-DD');
+				console.log("fromDate===============",fromDate);
+				var toDate = end.format('YYYY-MM-DD');
+				console.log("toDate===========",toDate);
+				localFunction1(fromDate, toDate);
+			});
+
+			var localFunction1 = (fromDate, toDate) => {
+				console.log(fromDate, toDate);
+				this.getAllDate(fromDate, toDate);
+			}
 
 			var localFunction = (date)=>{
-				this.dateSelected(date);
-			}
-
-			$('#dtMaterialDesignExample').DataTable();
-			$('#dtMaterialDesignExample_wrapper').find('label').each(function () {
-				$(this).parent().append($(this).children());
-			});
-			$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
-				$('input').attr("placeholder", "Search");
-				$('input').removeClass('form-control-sm');
-			});
-			$('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
-			$('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
-			$('#dtMaterialDesignExample_wrapper select').removeClass(
-				'custom-select custom-select-sm form-control form-control-sm');
-			$('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
-			$('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
-			$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
-
-
-
-			var dateFormat = "mm/dd/yy",
-			from = $( "#from" )
-			.datepicker({
-				defaultDate: "+1w",
-				changeMonth: true,
-				numberOfMonths: 3
-			})
-			.on( "change", function() {
-				to.datepicker( "option", "minDate", getDate( this ) );
-			}),
-			to = $( "#to" ).datepicker({
-				defaultDate: "+1w",
-				changeMonth: true,
-				numberOfMonths: 3
-			})
-			.on( "change", function() {
-				from.datepicker( "option", "maxDate", getDate( this ) );
-			});
-
-			function getDate( element ) {
-				var date;
-				try {
-					date = $.datepicker.parseDate( dateFormat, element.value );
-				} catch( error ) {
-					date = null;
+					this.dateSelected(date);
 				}
 
-				return date;
-			}
-
-
-
-		}
-
-
-		onDateSelection(date: NgbDate) {
-
-			console.log("date=====",date);
-
-
-			if (!this.fromDate && !this.toDate) {
-				this.fromDate = date;
-
-			} else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-				this.toDate = date;
-			} else {
-				this.toDate = null;
-				this.fromDate = date;
-			}
-			var fdate = this.fromDate;
-			console.log("fromdate==========",fdate);
-			const formattedfDate = fdate.year + "-" + fdate.month + "-" + fdate.day;
-			console.log("formateddate",formattedfDate);
-
-			var tdate = this.toDate;
-			console.log("todate==========",tdate);
-			const TODate = tdate.year + "-" + tdate.month + "-" + tdate.day;
-			console.log("TODate",TODate);
-			this._leaveService.getUserByDate(formattedfDate,TODate).subscribe((res:any)=>{
-
-				console.log("userDate=======================",res);
-
-				this.finalresultpresentuser = res;
-			})
-		}
-
-		isHovered(date: NgbDate) {
-			return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-		}
-
-		isInside(date: NgbDate) {
-			return date.after(this.fromDate) && date.before(this.toDate);
-		}
-
-		isRange(date: NgbDate) {
-			return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
-		}
-
-
-
-
-		getAllDevelopers(){
-			this._projectService.getAllDevelopers().subscribe(res=>{
-				console.log("msg-------",res);
-				// this.developers = res;
-				this.developers = res;
-				this.userid = [];
-				_ .forEach(this.developers,(developer)=>{
-					// console.log("userid=======",developer._id);
-
-
-					this.userid.push(developer.name);
-
-
-
-				})
-				console.log("userid============",this.userid);
-				// this.filteredDevelopers = res;
-				// console.log("dev()()==-=-=-=-",this.userid);
-
-				// this.addEmployeeForm = res;
-				this.developers.sort(function(a, b){
-					if (a.name && b.name) {
-						var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						if (nameA < nameB) //sort string ascending
-							return -1 
-						if (nameA > nameB)
-							return 1
-						return 0 //default return value (no sorting)
-					}
-				})
-				console.log("Developers",this.developers);
-			},err=>{
-				console.log("Couldn't get all developers ",err);
-				this._alertService.error(err);
-			})
-			setTimeout(()=>{
-				console.log("rotate js--------------------")
-				$('a.rotate-btn').click(function () {
-					$(this).parents(".card-rotating").toggleClass('flipped');
+				$('#dtMaterialDesignExample').DataTable();
+				$('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+					$(this).parent().append($(this).children());
 				});
-			},2000);
-		}
+				$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+					$('input').attr("placeholder", "Search");
+					$('input').removeClass('form-control-sm');
+				});
+				$('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+				$('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+				$('#dtMaterialDesignExample_wrapper select').removeClass(
+					'custom-select custom-select-sm form-control form-control-sm');
+				$('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+				$('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+				$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
 
 
 
-		dateSelected(event){
+				var dateFormat = "mm/dd/yy",
+				from = $( "#from" )
+				.datepicker({
+					defaultDate: "+1w",
+					changeMonth: true,
+					numberOfMonths: 3
+				})
+				.on( "change", function() {
+					to.datepicker( "option", "minDate", getDate( this ) );
+				}),
+				to = $( "#to" ).datepicker({
+					defaultDate: "+1w",
+					changeMonth: true,
+					numberOfMonths: 3
+				})
+				.on( "change", function() {
+					from.datepicker( "option", "maxDate", getDate( this ) );
+				});
 
+				function getDate( element ) {
+					var date;
+					try {
+						date = $.datepicker.parseDate( dateFormat, element.value );
+					} catch( error ) {
+						date = null;
+					}
 
-
-
-			var date = moment(event).format('YYYY-MM-DD');
-			console.log("event  of date ===>" , date);   
-
-			this._leaveService.empAttendence(date).subscribe((res:any)=>{
-				console.log("res ==>" , res);
-
-
-				if(res == null){
-					console.log("either Holiday or No attendence");
-					Swal.fire("You Are Absent On" + " " +date);
+					return date;
 				}
+			}
+
+
+			
 
 
 
-				else{
-
-					this.worktime = res;
-
-
-					console.log("worktime============-------",this.worktime);
-
-					this.gate = [];
-
-					this.gate.push(this.worktime);
+			getAllDevelopers(){
+				this._projectService.getAllDevelopers().subscribe(res=>{
+					console.log("msg-------",res);
+					// this.developers = res;
+					this.developers = res;
+					this.userid = [];
+					_ .forEach(this.developers,(developer)=>{
+						// console.log("userid=======",developer._id);
 
 
-					this.workdifference = [];
+						this.userid.push(developer.name);
 
-					_ .forEach(this.gate,(gate)=>{
 
-						if(gate.difference != null){
 
-							gate.difference = gate.difference.split("T");
-							gate.difference = gate.difference[1];
-							gate.difference = gate.difference.split("Z");
-							gate.difference = gate.difference[0];
+					})
+					console.log("userid============",this.userid);
+					// this.filteredDevelopers = res;
+					// console.log("dev()()==-=-=-=-",this.userid);
+
+					// this.addEmployeeForm = res;
+					this.developers.sort(function(a, b){
+						if (a.name && b.name) {
+							var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
+							if (nameA < nameB) //sort string ascending
+								return -1 
+							if (nameA > nameB)
+								return 1
+							return 0 //default return value (no sorting)
+						}
+					})
+					console.log("Developers",this.developers);
+				},err=>{
+					console.log("Couldn't get all developers ",err);
+					this._alertService.error(err);
+				})
+				setTimeout(()=>{
+					console.log("rotate js--------------------")
+					$('a.rotate-btn').click(function () {
+						$(this).parents(".card-rotating").toggleClass('flipped');
+					});
+				},2000);
+			}
+
+
+
+			dateSelected(event){
+
+
+
+
+				var date = moment(event).format('YYYY-MM-DD');
+				console.log("event  of date ===>" , date);   
+
+				this._leaveService.empAttendence(date).subscribe((res:any)=>{
+					console.log("res ==>" , res);
+
+
+					if(res == null){
+						console.log("either Holiday or No attendence");
+						Swal.fire("You Are Absent On" + " " +date);
+					}
+
+
+
+					else{
+
+						this.worktime = res;
+
+
+						console.log("worktime============-------",this.worktime);
+
+						this.gate = [];
+
+						this.gate.push(this.worktime);
+
+
+						this.workdifference = [];
+
+						_ .forEach(this.gate,(gate)=>{
+
+							if(gate.difference != null){
+
+								gate.difference = gate.difference.split("T");
+								gate.difference = gate.difference[1];
+								gate.difference = gate.difference.split("Z");
+								gate.difference = gate.difference[0];
+
+
+							}
+
+							this.workdifference.push(gate.difference);
+
+
+						})
+						console.log("workdifference===============",this.workdifference);
+
+						var obj = {
+
+							'difference':this.workdifference[0]
 
 
 						}
 
-						this.workdifference.push(gate.difference);
+						console.log("obj===========",obj.difference);
+
+						this.diffff = obj.difference;
+						console.log("difffffffffff==============",this.diffff);
+
+						console.log("either==============-",this.worktime);
+
+
+						this.logs = this.worktime.in_out;
+
+						_.map(this.logs, function(log){
+
+
+
+
+							if(log.checkOut!=null){
+								var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
+								var hours = Math.floor(diff / 1000 / 60 / 60);
+								var min = Math.floor((diff/1000/60)%60);
+								var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
+								log['diff'] = hours + ':' + min + ':' + sec;
+
+								var time = moment().format('h:mm:ss');
+								console.log("time=================",time);
+
+								var out = log.diff;
+								console.log("log============---------",out);
+
+
+								
+
+
+							}
+
+						})
+
+						this.attendenceByDate.push(res);
+						console.log("logs{}{}{}==========-",this.logs);
+
+						localStorage.setItem("attendenceByDateError",JSON.stringify(false));
+						this.attedenceByDateError = false;
+					}
+
+
+
+				},err=>{
+					localStorage.setItem("attedenceByDateError",JSON.stringify(true));
+					this.attedenceByDateError = true;
+					this.errMessage = "Either Absent Or Holiday"
+					console.log("error",err);
+				})
+
+
+				this._leaveService.getUserById(date).subscribe((res:any)=>{
+
+					console.log("response--------------===========-=",res);
+					this.presentuser = res;
+
+					this.alldiff = [];
+
+					_ .forEach(this.presentuser,(pre)=>{
+
+						if(pre.difference!= null){
+							pre.difference = pre.difference.split("T");
+							pre.difference = pre.difference[1];
+							pre.difference = pre.difference.split("Z");
+							pre.difference = pre.difference[0];
+						}
+
+
+						this.alldiff.push(pre.difference);
 
 
 					})
-					console.log("workdifference===============",this.workdifference);
 
-					var obj = {
+					console.log("alldiff=============",this.alldiff);
 
-						'difference':this.workdifference[0]
+					this.presentid = [];
+					_ .forEach(this.presentuser,(present)=>{
 
-
-					}
-
-					console.log("obj===========",obj.difference);
-
-					this.diffff = obj.difference;
-					console.log("difffffffffff==============",this.diffff);
-
-					console.log("either==============-",this.worktime);
-
-
-					this.logs = this.worktime.in_out;
-
-					_.map(this.logs, function(log){
+						this.presentid.push(present.UserName);
 
 
 
+					})
+					console.log("present userid============",this.presentid);
 
-						if(log.checkOut!=null){
-							var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
-							var hours = Math.floor(diff / 1000 / 60 / 60);
-							var min = Math.floor((diff/1000/60)%60);
-							var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
-							log['diff'] = hours + ':' + min + ':' + sec;
-
-							var time = moment().format('h:mm:ss');
-							console.log("time=================",time);
-
-							var out = log.diff;
-							console.log("log============---------",out);
-
-
-							// var times = [ 0, 0, 0 ]
-							// var max = times.length
-
-							// var a = (time || '').split(':')
-							// var b = (out || '').split(':')
-
-							// // normalize time values
-							// for (var i = 0; i < max; i++) {
-								//   a[i] = a[i] ? 0 : a[i]
-								//   b[i] = b[i] ? 0 : b[i]
-								// }
-
-								// // store time values
-								// for (var i = 0; i < max; i++) {
-									//   times[i] = a[i] + b[i]
-									// }
-
-									// var hours = times[0]
-									// var minutes = times[1]
-									// var seconds = times[2]
-
-									// if (seconds >= 60) {
-										//   var m = (seconds / 60) << 0
-										//   minutes += m
-										//   seconds -= 60 * m
-										// }
-
-										// if (minutes >= 60) {
-											//   var h = (minutes / 60) << 0
-											//   hours += h
-											//   minutes -= 60 * h
-											// }
-
-											// return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
-
-
-											// var logoutdiff = time + out;
-											// console.log("logoutdiff=========-----------",logoutdiff);
-
-
-										}
-
-									})
-
-					this.attendenceByDate.push(res);
-					console.log("logs{}{}{}==========-",this.logs);
-
-					localStorage.setItem("attendenceByDateError",JSON.stringify(false));
-					this.attedenceByDateError = false;
-				}
-
-
-
-			},err=>{
-				localStorage.setItem("attedenceByDateError",JSON.stringify(true));
-				this.attedenceByDateError = true;
-				this.errMessage = "Either Absent Or Holiday"
-				console.log("error",err);
-			})
-
-
-			this._leaveService.getUserById(date).subscribe((res:any)=>{
-
-				console.log("response--------------===========-=",res);
-				this.presentuser = res;
-
-				this.alldiff = [];
-
-				_ .forEach(this.presentuser,(pre)=>{
-
-					if(pre.difference!= null){
-						pre.difference = pre.difference.split("T");
-						pre.difference = pre.difference[1];
-						pre.difference = pre.difference.split("Z");
-						pre.difference = pre.difference[0];
-					}
-
-
-					this.alldiff.push(pre.difference);
+					this.missing = this.userid.filter(item => this.presentid.indexOf(item) < 0);
+					console.log("absent student========>>>>",this.missing);
 
 
 				})
 
-				console.log("alldiff=============",this.alldiff);
-
-				this.presentid = [];
-				_ .forEach(this.presentuser,(present)=>{
-
-					this.presentid.push(present.UserName);
+			}
 
 
+
+			puser(log){
+
+				console.log("log============",log);
+				this.arry = log;
+				$('#myModal').modal('show');
+
+
+				_.map(this.arry, function(log){
+
+
+
+
+					if(log.checkOut!=null){
+						var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
+						var hours = Math.floor(diff / 1000 / 60 / 60);
+						var min = Math.floor((diff/1000/60)%60);
+						var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
+						log['diff'] = hours + ':' + min + ':' + sec;
+
+					}
 
 				})
-				console.log("present userid============",this.presentid);
+				console.log("arry--------=========",this.arry);
 
-				this.missing = this.userid.filter(item => this.presentid.indexOf(item) < 0);
-				console.log("absent student========>>>>",this.missing);
+			}
 
-
-			})
-
+			getAllDate(from, to){
+				this._leaveService.getUserByDate(from, to).subscribe((res:any)=>{
+					console.log("userDate=======================",res);
+					this.finalResultPresentUser = res;
+					console.log("finalresult==============",this.finalResultPresentUser);
+					this.change.detectChanges();
+				},err=>{
+					console.log("userDate=======================",err);
+				})
+			}
 		}
-
-
-		puser(log){
-
-			console.log("log============",log);
-			this.arry = log;
-			$('#myModal').modal('show');
-
-
-			_.map(this.arry, function(log){
-
-
-
-
-				if(log.checkOut!=null){
-					var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
-					var hours = Math.floor(diff / 1000 / 60 / 60);
-					var min = Math.floor((diff/1000/60)%60);
-					var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
-					log['diff'] = hours + ':' + min + ':' + sec;
-
-				}
-
-			})
-			console.log("arry--------=========",this.arry);
-
-		}
-
-		//  getUserDate(event1,event2){
-
-			//   var date1 = moment(event1).format('YYYY-MM-DD');
-			//   console.log("event  of date ===>",date1);   
-
-			//   var date2 = moment(event2).format('YYYY-MM-DD');
-			//   console.log("event  of date ===>",date2);   
-
-
-			// }
-
-
-
-		}
-
-
-
-

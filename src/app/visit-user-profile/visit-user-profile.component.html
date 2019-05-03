@@ -7,90 +7,6 @@
 	<span></span>
 	<span></span>
 </div>
-<!-- <div class="container-fluid"  *ngIf="!loader">
-	<div class="row">
-		<div class="col-md-6">
-			<div class="left-side" ng-star-inserted title="Profile Image" touranchor="change-profile" ng-reflect-tour-anchor="change-profile">
-				<div class="left-img animated fadeInLeft slower">
-					<img onerror="this.src='../assets/man.png'" src="{{path}}{{currentUser.profilePhoto}}">
-				</div>
-				<div class="left-name">
-					<div class="username_and_designtion">
-						<p class="animated fadeInRight slower">{{currentUser.userRole}}</p>
-						<h2 class="animated fadeInRight slower delay-2s mb-2">{{currentUser.name | uppercase}}</h2>
-						<p class="animated fadeInUp slower"><i class="fas fa-envelope"></i>{{currentUser.email}}</p>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="right-side">
-				<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-					<div class="card">
-						<div class="card">
-							<div class="card-header" role="tab" id="headingTwo2">
-								<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-								aria-expanded="false" aria-controls="collapseTwo2">
-								<h5 class="animated fadeInRight slower">
-									Projects<i class="fas fa-angle-down rotate-icon"></i>
-								</h5>
-							</a>
-						</div>
-						<div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-						data-parent="#accordionEx">
-						<div class="card-body">
-							<h5 class="text-bold" style="color:#330867; ">My All Projects  </h5>
-							<ul>
-								<li  *ngFor = "let project of finalArr" style="cursor: pointer;"> 
-									<div class="row" style="margin-top: 5px;">
-										<div class="col col-1" *ngIf="project">
-											<img src="{{path}}{{project.avatar}}" class="avatar_image" onerror="this.src='assets/4.jpeg'" >
-										</div>
-										<div class="col col-11" *ngIf="project"> 
-											<label class="txt_label1" routerLink="/user-summary/{{currentUser._id}}/{{project._id}}">{{project.title}}</label>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header" role="tab" id="headingThree3">
-						<a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-						aria-expanded="false" aria-controls="collapseThree3">
-						<h5 class="animated fadeInRight slower">
-							Leaves<i class="fas fa-angle-down rotate-icon"></i>
-						</h5>
-					</a>
-				</div>
-				<div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-				data-parent="#accordionEx">
-				<div class="card-body">
-					<h5 style="color: #330867;">Total Leaves: <span *ngFor="let leave of leavescount"> {{leave.leavesPerYear}} </span>
-						<span style="margin-left: 10px; color: #330867;">Available Leaves:</span><span *ngFor="let leave of leavescount"> {{leave.leavesLeft}}</span></h5>
-						<div class="container">
-							<div class="row">
-								<div class="col-sm-4">
-									<h2 class="text-center pt-2">Leaves Type</h2>
-									<p class="text-center" *ngIf="approvedLeaves">
-									{{approvedLeaves.length}} responses</p>
-									<canvas id="pieChart"></canvas>
-								</div>            
-								<div class="col-md-4">
-									<h2 class="text-center pt-2">Leave</h2>
-									<p class="text-center" *ngFor="let leave of leavescount">{{leave.typeOfLeave}} {{leave.leavesTaken}}</p>
-								</div>
-								<div class="col-sm-4">
-									<h2 class="text-center pt-2">Duration</h2>
-									<p class="text-center" *ngIf="leaveApp">{{approvedLeaves.length}} responses</p>
-									<canvas id="pieChart1"></canvas>
-								</div>
-							</div>
-						</div>
- -->
-
 
  <div class="row">
  	<div class="col-md-3">
@@ -177,7 +93,7 @@
 								</div>
 							</div>
 							<div class="row" style="margin-top:20px;">
-								<div class="col-md-7">
+								<div class="col-md-12">
 									<!-- <h2 class="text-center pt-2">Leave</h2> -->
 									<div class="row txtcolor">
 										<div class="col-md-3 text-center">
@@ -218,7 +134,7 @@
 									<!-- </div> -->
 								</div>
 							
-								<div class="col-md-5">
+								<!-- <div class="col-md-5">
 
 									<div class="row txtcolor">
 										<div class="col-md-4 text-center">
@@ -244,7 +160,7 @@
 									</div>
 
 								</div>
-							</div>
+							</div> -->
 
 						<!-- </div> -->
 						<!-- </div> -->
