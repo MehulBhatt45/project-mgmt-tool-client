@@ -9,6 +9,7 @@
 						<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
 						<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
 							<div *ngIf="f.title.errors.required">Project title  is required</div>
+							<div *ngIf="f.title.errors.maxlength">Project title  must be only 60 characters</div>
 						</div>
 					</div>
 				</div>

@@ -39,6 +39,13 @@ export class VisitUserProfileComponent implements OnInit {
 	leaves:any;
 	leavescount:any;
 	approvedLeaves:any = [];
+	Half_Day = [];
+	Full_Day = [];
+	More_Day = [];
+	Personal_Leave :any= [];
+	Sick_Leave :any= [];
+	Emergency_Leave :any= [];
+	Leave_WithoutPay :any= [];
 
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectService: ProjectService,
@@ -154,8 +161,8 @@ export class VisitUserProfileComponent implements OnInit {
 						labels: [ "Personal Leave","Sick leave(Illness or Injury)","Emergency leave","Leave without pay"],
 						datasets: [{
 							data: this.getLeaveCount(this.approvedLeaves),
-							backgroundColor: ["#008000", "#ff8100", "#ff0000", "#3385ff"],
-							hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+							backgroundColor: ["#181123", "#3998c5", "#91b9cc", "#cacbcc"],
+							hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
 						}]
 					},
 					options: {
@@ -175,8 +182,8 @@ export class VisitUserProfileComponent implements OnInit {
 						labels: ["Half Day", "Full Day", "More Day"],
 						datasets: [{
 							data:this.getLeaveDuration(this.approvedLeaves),
-							backgroundColor: ["#ff0000", "#ff8100", "#005ce6"],
-							hoverBackgroundColor: ["lightgray", "lightgray", "gray"]
+							backgroundColor: ["#181123", "#3998c5", "#91b9cc"],
+							hoverBackgroundColor: ["gray", "gray", "gray"]
 						}]
 					},
 					options: {
@@ -208,49 +215,44 @@ export class VisitUserProfileComponent implements OnInit {
 	getLeaveCount(leaves){
 		console.log("all p_leave=====",leaves);
 		// console.log("attt====>",leaves[0].attechment);
-		var Personal_Leave :any= [];
-		var Sick_Leave :any= [];
-		var Emergency_Leave :any= [];
-		var Leave_WithoutPay :any= [];
 		_.forEach(leaves,(leave)=>{
 			switch (leave.typeOfLeave) {
 				case "Personal_Leave":
-				Personal_Leave.push(leave);
+				this.Personal_Leave.push(leave);
 				break;
 				case "Sick_Leave":
-				Sick_Leave.push(leave);
+				this.Sick_Leave.push(leave);
 				break;
 				case "Emergency_Leave":
-				Emergency_Leave.push(leave);
+				this.Emergency_Leave.push(leave);
 				break;
 				case "Leave_WithoutPay":
-				Leave_WithoutPay.push(leave);
+				this.Leave_WithoutPay.push(leave);
 				break;
 			}
 		});
-		console.log(Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length);
-		return [ Personal_Leave.length, Sick_Leave.length, Emergency_Leave.length, Leave_WithoutPay.length ];
+		console.log(this.Personal_Leave.length, this.Sick_Leave.length, this.Emergency_Leave.length, this.Leave_WithoutPay.length);
+		return [ this.Personal_Leave.length, this.Sick_Leave.length, this.Emergency_Leave.length, this.Leave_WithoutPay.length ];
 	}
 	getLeaveDuration(leaves){
 		console.log(leaves);
 		console.log(leaves[1].attechment);
-		var Half_Day = [];
-		var Full_Day = [];
-		var More_Day = [];
+		
 		_.forEach(leaves,(leave)=>{
 			switch (leave.leaveDuration) {
 				case "0.5":
-				Half_Day.push(leave);
+				this.Half_Day.push(leave);
 				break;
 				case "1":
-				Full_Day.push(leave);
+				this.Full_Day.push(leave);
 				break;
 				default :
-				More_Day.push(leave);
+				this.More_Day.push(leave);
 				break; 
 			}
 		})
-		return [Half_Day.length,Full_Day.length,More_Day.length];
+		console.log(this.Half_Day.length,this.Full_Day.length,this.More_Day.length);
+		return [this.Half_Day.length,this.Full_Day.length,this.More_Day.length];
 	}
 
 	leaveById(leaveid){

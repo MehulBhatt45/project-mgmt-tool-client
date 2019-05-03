@@ -111,7 +111,7 @@
 
 
 
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: 50px;">
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && worktime" style="    margin-top: 50px;">
 	<li class="nav-item">
 		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
 		aria-selected="true"><i class="fas fa-user"></i> Present Developer</a>
@@ -125,7 +125,7 @@
 		aria-selected="false"><i class="fas fa-calendar-day"></i> Today Attendence</a>
 	</li>
 </ul>
-<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: -27px;">
+<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && worktime" style="    margin-top: -27px;">
 	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
 		<div class="row" *ngIf="presentuser">
@@ -145,7 +145,7 @@
 
 		<div class="row" style="margin-top: 20px;" *ngIf="presentuser">
 			<div class="col-md-6" *ngIf="presentuser.length>0">
-				<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+				<table id="dtMaterialDesignExample1" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 					<thead>
 						<tr>
 							<th class="th-sm"><i class="fas fa-user"></i> Present Developer</th>
@@ -171,7 +171,7 @@
 
 			</div>
 			<div class="col-md-6" *ngIf="presentuser.length>0">
-				<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+				<table id="dtMaterialDesignExample2" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 					<thead>
 						<tr>
 							<th class="th-sm"><i class="far fa-clock"></i> Work Time</th>
@@ -198,7 +198,7 @@
 		<h2 *ngIf="missing">Absent Developer: {{missing.length}}</h2>
 		<div class="row" style="margin-top: 20px;">
 
-			<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+			<table id="dtMaterialDesignExample3" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 				<thead>
 					<tr>
 						<th scope="col"><i class="fas fa-user"></i>  Absent Developer</th>
@@ -231,7 +231,7 @@
 
 		<div class="row" style="margin-top: 40px;">
 
-			<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<table id="dtMaterialDesignExample4" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th scope="col">CheckIn</th>
@@ -256,7 +256,7 @@
 
 		<div class="row" style="margin-top: 40px;">
 
-			<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<table id="dtMaterialDesignExample5" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 
@@ -282,7 +282,7 @@
 			</div>
 			<div class="modal-body">
 				
-				<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<table id="dtMaterialDesignExample6" class="table table-striped table-bordered" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th scope="col">CheckIn</th>
@@ -313,95 +313,74 @@
 </div>
 
 
-<div class="row" style="margin-top: 40px;" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
-
-	<!-- <input type="text" ngbDatepicker #d="ngbDatepicker" ngbDatepicker (dateSelect)="onDateSelection($event)" [displayMonths]="1" outsideDays="hidden"/>
-		<button (click)="d.toggle()">Toggle</button> -->
-
-		<ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" outsideDays="hidden">
-		</ngb-datepicker>
-
-		<ng-template #t let-date let-focused="focused">
-			<span class="custom-day"
-			[class.focused]="focused"
-			[class.range]="isRange(date)"
-			[class.faded]="isHovered(date) || isInside(date)"
-			(mouseenter)="hoveredDate = date"
-			(mouseleave)="hoveredDate = null">
-			{{ date.day }}
-		</span>
-	</ng-template>
-
-	<!-- <hr> -->
-
-<!-- <pre>From: {{ fromDate | json }} </pre>
-	<pre>To: {{ toDate | json }} </pre> -->
+<div class="row" style="margin-top: 40px;">
+	<div class="col-md-6">
+		<input type="text" id="daterange1" name="daterange"  />
+	</div>
 
 </div>
 
-
-
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" style="    margin-top: 50px;">
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust1" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && finalResultPresentUser.length>0" style="    margin-top: 50px;">
 	<li class="nav-item">
-		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+		<a class="nav-link active" id="dev-tab-just" data-toggle="tab" href="#home-just1" role="tab" aria-controls="home-just1"
 		aria-selected="true"><i class="fas fa-user"></i> Present Developer</a>
 	</li>
 </ul>
-<div class="tab-content card pt-5" id="myTabContentJust"  style="    margin-top: -27px;" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'" >
-	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
-		<div class="row" style="margin-top: 20px;" *ngIf="finalresultpresentuser">
-			<div class="col-md-6" *ngIf="finalresultpresentuser.length>0">
-				<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+<div class="tab-content card pt-5" id="myTabContentJust1"  style="margin-top: -27px;" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && finalResultPresentUser.length>0" >
+	<div class="tab-pane fade show active" id="home-just1" role="tabpanel" aria-labelledby="dev-tab-just">
+
+		<div class="row" style="margin-top: 20px;" *ngIf="finalResultPresentUser">
+			<div class="col-md-6" *ngIf="finalResultPresentUser.length>0">
+				<table id="dtMaterialDesignExample7" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 					<thead>
-						<tr>
+						<tr >
 							<th class="th-sm"><i class="fas fa-user"></i> Present Developer</th>
-							<th class="th-sm">Check In</th>
-							<th class="th-sm">Check Out</th>
 							
+							<th class="th-sm">Date</th>
+
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let user of finalresultpresentuser | filter:searchText ,let i=index">
-							<td (click)="puser(user.check)" style="cursor: pointer;">{{user.UserName}}</td>
-							<td>{{user.check.slice(-1)[0].checkIn | date:'mediumTime'}}</td>
-							<td>{{user.check.slice(-1)[0].checkOut | date:'mediumTime'}}</td>
+						<tr *ngFor = "let developer of finalResultPresentUser">
+							<td style="cursor: pointer;">{{developer.UserName}}</td>
+							<td>{{developer.date | date:'mediumDate'}}</td>
 
-							
+
 
 						</tr>
 
 
 					</tbody>
-					
+
 				</table>
 
 			</div>
-			<div class="col-md-6" *ngIf="finalresultpresentuser.length>0">
-				<table id="dtMaterialDesignExample" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+			<div class="col-md-6" *ngIf="finalResultPresentUser.length>0">
+				<table id="dtMaterialDesignExample8" class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 					<thead>
 						<tr>
 							<th class="th-sm"><i class="far fa-clock"></i> Work Time</th>
 							<th scope="col">Sign</th>
-							
-							
+
+
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let user of finalresultpresentuser">
+						<tr *ngFor="let user of finalResultPresentUser">
 							<td>{{user.difference | date:'mediumTime'}}</td>
 
 							<td><i class="fas fa-check"></i></td>
 						</tr>
 
 					</tbody>
-					
+
 				</table>
 			</div>
 		</div>
 
-		
+
 	</div>
-	
+
 </div>
 

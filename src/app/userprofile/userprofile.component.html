@@ -75,16 +75,25 @@
 						<form [formGroup]="editTEmail">
 							<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label">{{item.title}}</span>
+									<span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
 									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
 								</ng-template>
 								<div class="row">
 									<ng-template ng-option-tmp let-item="item">
-										<h5 class="mt-1">{{item.title}}</h5>
-										<h6>{{item.uniqueId}}</h6>
+										<div class="card testimonial-card">
+											<div class="card-up deep-purple lighten-2"></div>
+											<div class="avatar white img_section">
+												<img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+											</div>
+											<div class="card-body">
+												<h5 class="card-title mt-1">{{item.title}}</h5>
+												<h6 class="card-title">{{item.uniqueId}}</h6>
+											</div>
+										</div>
 									</ng-template>
 								</div>
 							</ng-select>
+							
 							<div class="form-group">
 								<div class="form-group">
 									<div class="md-form">
@@ -101,31 +110,18 @@
 									</div>
 								</div>
 							</div>
-							<ng-select placeholder="Send To" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
-								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label">{{item.title}}</span>
-									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-								</ng-template>
-								<div class="row">
-									<ng-template ng-option-tmp let-item="item">
-										<h5 class="mt-1">{{item.title}}</h5>
-										<h6>{{item.uniqueId}}</h6>
-									</ng-template>
-								</div>
-							</ng-select>
-<!--select convert into ng select..... 
-<div class="form-group">
-<label for="inputMDEx">Send To</label>
-<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
-<option value="{{this.total}}" selected>All Team</option>
-<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
-</select>
-</div> -->
-<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
-</form>
-</div>
-</div>
-</div>
-</div>
+
+							<label for="inputMDEx">Send To</label>
+							<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
+								<option value="{{this.total}}" selected>All Team</option>
+								<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
+							</select>
+						<!-- </div>  -->
+						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </div>

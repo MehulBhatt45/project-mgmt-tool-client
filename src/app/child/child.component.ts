@@ -453,10 +453,10 @@ export class ChildComponent  implements OnInit{
   get f() { return this.editTaskForm.controls; }
 
   updateTask(task){
-    this.submitted = true;
-    if (this.editTaskForm.invalid) {
-      return;
-    }
+    // this.submitted = true;
+    // if (this.editTaskForm.invalid) {
+    //   return;
+    // }
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
@@ -602,16 +602,17 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
     setTimeout(()=>{
-      this._projectService.getProjectById(id).subscribe((res:any)=>{
+      this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
         console.log("title=={}{}{}{}{}",res);
         this.pro = res;
         console.log("project detail===>>>>",this.pro);
         this.projectId=this.pro._id;
         console.log("iddddd====>",this.projectId);
-        this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+        this._projectService.getTeamByProjectId(this.projectId).subscribe((res:any)=>{
           this.projectTeam = res.team;
           // res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
@@ -635,7 +636,7 @@ export class ChildComponent  implements OnInit{
         console.log("err of project============>"  ,err);
       });
 
-      this._projectService.getTaskById(id).subscribe((res:any)=>{
+      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;

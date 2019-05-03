@@ -115,7 +115,6 @@ export class AllDeveloperComponent implements OnInit {
 
 	
 	deleteDeveloper(event){
-	
 		console.log(event);
 		Swal.fire({
 			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",

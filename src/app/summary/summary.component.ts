@@ -206,11 +206,11 @@ export class SummaryComponent implements OnInit {
 		_.forEach(this.project , (task)=>{
 			_.forEach(this.tracks , (track)=>{
 				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-					if(task.sprint._id == sprintId && track.id == task.status &&  task.sprint.status == 'Active'){
+					if(task.sprint._id == sprintId && track.id == task.status ){
 						track.tasks.push(task);
 					}
 				}else{
-					if(task.status == track.id &&  task.sprint.status == 'Active'){
+					if(task.status == track.id ){
 						track.tasks.push(task);
 					}
 				}
@@ -423,7 +423,7 @@ export class SummaryComponent implements OnInit {
 					console.log("round()()+++++++++++++++++",this.round);
 
 					var ctx = document.getElementById("myChart");
-					  if (this.myChart1) this.myChart1.destroy();
+					if (this.myChart1) this.myChart1.destroy();
 					this.myChart1 = new Chart(ctx, {
 						type: 'bar',
 						data: {
@@ -502,7 +502,7 @@ export class SummaryComponent implements OnInit {
 						}
 					});
 					var ctxP = document.getElementById("pieChart5");
-					  if (this.myChart) this.myChart.destroy();
+					if (this.myChart) this.myChart.destroy();
 					this.myChart = new Chart(ctxP, {
 						type: 'pie',
 						data: {
@@ -533,7 +533,7 @@ export class SummaryComponent implements OnInit {
 			});
 
 
-		},1000);
+},1000);
 function custom_sort(a, b) {
 	return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
 }

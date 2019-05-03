@@ -60,7 +60,6 @@ textarea{
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  background-color: #dfdff5;
 }
 
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
