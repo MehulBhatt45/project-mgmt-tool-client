@@ -50,7 +50,7 @@ export class BacklogComponent implements OnInit {
 	projectDealine;
 
 	newsprint;
-	
+	addSprintres;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -61,6 +61,7 @@ export class BacklogComponent implements OnInit {
 			startDate: new FormControl('',Validators.required),
 			endDate:new FormControl('',Validators.required)
 		});
+		
 		this.getProject(this.projectId);			
 		this.createEditSprintForm();
 		this.getTaskbyProject(this.projectId);
@@ -73,36 +74,25 @@ export class BacklogComponent implements OnInit {
 
 		this.projectDealine = JSON.parse(localStorage.getItem('projectdeadline'));
 		console.log("project dealine in ng on init",this.projectDealine);
+		
+		
 
-
-		$('#startDate').pickadate({ 
-			min: new Date(),
-			format: ' mm/dd/yyyy',
-			formatSubmit: 'mm/dd/yyyy',
-			onSet: function(date){
-				console.log(date);
-				updateDates('startDate', date);
-			}
-		})	
-		$('#endDate').pickadate({ 
-			min: new Date(),
-			format: ' mm/dd/yyyy',
-			formatSubmit: 'mm/dd/yyyy',
-			onSet: function(date){
-				console.log(date);
-				updateDates('endDate', date);
-			}
-		})	
-		let updateDates = (key, val)=>{
-			this.newsprint[key] = val;
-			console.log(this.newsprint);
-		}
-
-		var from_input = $('#startDate').pickadate(),
+		var from_input = $('#addstartDate').pickadate({
+			min:new Date()
+		}),
 		from_picker = from_input.pickadate('picker')
 
-		var to_input = $('#endDate').pickadate(),
+		var to_input = $('#addendDate').pickadate({
+			min:new Date()
+		}),
 		to_picker = to_input.pickadate('picker')
+
+
+		// var from_input_edit = $('#editstartDate').pickadate(),
+		// from_picker = from_input_edit.pickadate('picker')
+
+		// var to_input_edit = $('#editendDate').pickadate(),
+		// to_picker = to_input_edit.pickadate('picker')
 
 
 		if ( from_picker.get('value') ) {
@@ -130,6 +120,7 @@ export class BacklogComponent implements OnInit {
 				from_picker.set('max', false)
 			}
 		})
+
 
 		// Date Picker Valadation End Here
 	}
@@ -215,16 +206,18 @@ export class BacklogComponent implements OnInit {
 			this.projectOne = res;
 			var pdealine = moment(this.projectOne.deadline);
 			var pstart = moment(this.projectOne.createdAt);
-			var prdead = moment(this.projectOne.deadline).format("YYYY,M,DD");
-			console.log("prdead ===+++>" , prdead);
+			this.prdead = moment(this.projectOne.deadline).format("YYYY,M,DD");
+			console.log("prdead ===+++>" , this.prdead);
 			this.pduration = pdealine.diff(pstart,'days');
 			console.log("Project Duration=====>>>",this.pduration);
 			localStorage.setItem('projectduration' , JSON.stringify(this.pduration));
-			localStorage.setItem('projectdeadline' , JSON.stringify(prdead));
-			var startpicker = $('#startDate').pickadate('picker');
-			startpicker.set('max', new Date(prdead));
-			var endpicker = $('#endDate').pickadate('picker');
-			endpicker.set('max', new Date(prdead));
+			localStorage.setItem('projectdeadline' , JSON.stringify(this.prdead));
+			var startpicker = $('#addstartDate').pickadate('picker');
+			startpicker.set('max', new Date(this.prdead));
+			// var endpicker = $('#addendDate').pickadate('picker');
+			// endpicker.set('max', new Date(this.prdead));
+		
+			// endpicker.set('min',new Date(startpicker))
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
@@ -232,17 +225,22 @@ export class BacklogComponent implements OnInit {
 	get f() { return this.addForm.controls; }
 
 	addSprint(addForm){
-		addForm.startDate = $('#startDate').val();
-		addForm.endDate = $('#endDate').val();
+		console.log('addForm===============>',addForm);
+		addForm.startDate = $('#addstartDate').val();
+		// addForm.startDate = $('#startDate').val();
+		console.log('addForm.startDate================>',addForm.startDate);
+		addForm.endDate = $('#addendDate').val();
 		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);
 		addForm.projectId = this.projectId;
 		console.log("form value==>>",addForm);
 
 		this._projectService.addSprint(addForm).subscribe((res:any)=>{
 			console.log(res);
+			this.addSprintres = res;
 			$('#addsprint').modal('hide');
 			Swal.fire({type: 'success',title: 'Sprint Created Successfully',showConfirmButton:false,timer: 2000})
 			this.getSprint(this.projectId);
+			this.addForm.reset();
 		},(err:any)=>{
 			console.log(err);
 			Swal.fire('Oops...','Something went wrong!', 'error')
@@ -255,14 +253,19 @@ export class BacklogComponent implements OnInit {
 			this.sprints = res;
 			_.forEach(this.sprints , (sprint)=>{
 				console.log("single sptint",typeof sprint.duration);
-
+				console.log('sprint durration==>',sprint.duration);
 				this.totalSDuration = this.totalSDuration + sprint.duration; 
+				console.log('this.totalSDuration=====>',this.totalSDuration);
 				if(sprint.status == 'Active'){
 					this.Active = true;
 					this.activeSprint = sprint;
 					var activeSprintEnd = moment(this.activeSprint.endDate).format("YYYY,M,DD");
-					var startpicker = $('#startDate').pickadate('picker');
+					console.log('activeSprintEnd================>',activeSprintEnd);
+					var startpicker = $('#addstartDate').pickadate('picker');
+					console.log('startpicker=======>',startpicker);
 					startpicker.set('min', new Date(activeSprintEnd));
+					// var editstartpicker = $('#editstartDate').pickadate('picker');
+					// editstartpicker.set('min',new Date(activeSprintEnd))
 
 				}
 			})
@@ -295,7 +298,7 @@ export class BacklogComponent implements OnInit {
 		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
-
+		console.log('this.remainingLimit==========>',this.remainingLimit);
 		if(sprint.duration > this.remainingLimit){
 			Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
 		}
@@ -305,6 +308,7 @@ export class BacklogComponent implements OnInit {
 				Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
 				$('#editmodel').modal('hide');
 				this.getSprint(this.projectId);
+				// this.editSprintForm.reset();
 			},err=>{
 				console.log(err);
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -358,6 +362,7 @@ export class BacklogComponent implements OnInit {
 		console.log($('#startDate').val(), $('#endDate').val());
 		sprint.startDate = moment($('#startDate').val()).format('YYYY-MM-DD'); 
 		console.log("start sprint =====>",sprint.startDate);
+		sprint.endDate = moment($('#endDate').val()).format('YYYY-MM-DD');
 		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
@@ -457,5 +462,46 @@ export class BacklogComponent implements OnInit {
 			}
 		})
 	}
-}	
+
+	editSprintData(data){
+		console.log('data====================>',data);
+		this.newsprint = data;
+		console.log('this.newsprint=================>',this.newsprint);
+		setTimeout(()=>{
+			$('#startDate, #editstartDate').pickadate({ 
+				min: new Date(),
+				max: new Date(this.prdead),
+				format: ' mm/dd/yyyy',
+				formatSubmit: 'mm/dd/yyyy',
+				onSet: function(date){
+					var date1=new Date(date.select).toISOString();
+					console.log('date================>',date1);
+					updateDates('startDate', date1);
+				}
+			})	
+			$('#endDate, #editendDate').pickadate({ 
+				min: new Date(),
+				max: new Date(this.prdead),
+				format: ' mm/dd/yyyy',
+				formatSubmit: 'mm/dd/yyyy',
+				onSet: function(date){
+					var date1=new Date(date.select).toISOString();
+					console.log('date================>',date1);
+					updateDates('endDate', date1);
+
+				}
+			})	
+		},500)
+
+		let updateDates = (key, val)=>{
+			console.log(key,val);
+			this.newsprint[key] = val;
+			// this.sprintData={
+				// 	key: val
+				// }
+				console.log(this.newsprint);
+			}
+
+		}
+	}	
 
