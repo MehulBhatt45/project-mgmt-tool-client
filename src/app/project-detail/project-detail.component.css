@@ -137,13 +137,6 @@ table {
   font-size: 19px;
   /*height: 15px;*/
 }
-.float-right {
-  float: left!important;
-  width: 100px;
-}
-.float-left{
-  float: right !important;
-}
 .icon_check{
   padding: 0;
 }
