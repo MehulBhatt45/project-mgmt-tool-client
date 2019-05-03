@@ -16,9 +16,6 @@ export class ResetPasswordComponent implements OnInit {
 
 		console.log("Component Re-Initialized.");
 
-		// get return url from route parameters or default to '/'
-		// this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
 	}
 
 
@@ -28,6 +25,7 @@ export class ResetPasswordComponent implements OnInit {
 	loader: boolean = false;
 	match: boolean = false;
 
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
@@ -36,22 +34,20 @@ export class ResetPasswordComponent implements OnInit {
 		private _alertService: AlertService) { 
 		if (this._loginService.currentUserValue) { 
 			console.log("REDIRECTION UNCONTROLLED")
-			// this.router.navigate(['/']);
 		}
 		this.resetPasswordForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
 			currentPassword: new FormControl('', [Validators.required]),
-			newPassword: new FormControl('', [Validators.required]),
-			confirmPassword: new FormControl('', [Validators.required])
+			newPassword: new FormControl('',[Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+			confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')])
 		});
 	}
-
 	
 	get f() { return this.resetPasswordForm.controls; }
 
 	resetPassword() {
 		console.log("user is=========>");
-		// stop here if form is invalid
+		this.submitted = true;
 		if (this.resetPasswordForm.invalid) {
 			return;
 		}

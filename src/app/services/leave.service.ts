@@ -70,7 +70,7 @@ export class LeaveService {
 		return this.http.get(config.baseApiUrl+"leave/leavesByUserId/"+useremail);
 
 	}
-leaveApproval(req, body){
+	leaveApproval(req, body){
 		var body = body;
 		var id = req;
 		console.log("req=============",req);
@@ -151,52 +151,65 @@ leaveApproval(req, body){
 
 
 
-// Attendence service
+	// Attendence service
 
 
-checkIn(Data){
-	var obj = {userId:Data};
-	console.log("data of checkin student service",obj);
-	const httpOptions = {
-		headers: new HttpHeaders({
-			'content-Type':'application/json',
-			'x-access-token': JSON.parse(localStorage.getItem('token'))
-		})
-	};
-	
-	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
-}
-checkOut(Data){
-	var obj = {userId:Data};
-	console.log("data of checkout ",Data);
-	const httpOption = {
-		headers: new HttpHeaders({
-			'content-type': 'application/json',
-			'x-access-token': JSON.parse(localStorage.getItem('token'))
-		})
-	};
-	return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
-}
+	checkIn(Data){
+		var obj = {userId:Data};
+		console.log("data of checkin student service",obj);
+		const httpOptions = {
+			headers: new HttpHeaders({
+				'content-Type':'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		
+		return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+	}
+	checkOut(Data){
+		var obj = {userId:Data};
+		console.log("data of checkout ",Data);
+		const httpOption = {
+			headers: new HttpHeaders({
+				'content-type': 'application/json',
+				'x-access-token': JSON.parse(localStorage.getItem('token'))
+			})
+		};
+		return this.http.post(config.baseApiUrl+"attendence/emp-attendence",obj);
+	}
 
-empAttendence(date){
-	var obj = {date: date,
-		user_Id : JSON.parse(localStorage.getItem("currentUser"))._id,
-	};
-	console.log("event of emp service",obj);
-	return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
-}
-getUserById(date){
+	empAttendence(date){
+		var obj = {date: date,
+			user_Id : JSON.parse(localStorage.getItem("currentUser"))._id,
+		};
+		console.log("event of emp service",obj);
+		return this.http.post(config.baseApiUrl+"attendence/get-attendence-by-get-and-id",obj);
+	}
+	getUserById(date){
 
-var obj = {date:date};
-console.log("date event------=-=-=-=",obj);
+		var obj = {date:date};
+		console.log("date event------=-=-=-=",obj);
 
-return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
+		return this.http.post(config.baseApiUrl+"attendence/AllemployeeAttendenceByDate",obj);
 
-}
-updateNotificationApprovedStatus(leaveId,leaveStatus){
-	console.log("leaveId======>",leaveId);
-	console.log("leaveStatus=====================>",leaveStatus)
-	return this.http.get(config.baseApiUrl+"sendNotification/get-pm-notification/"+leaveId+"/"+leaveStatus);
+	}
 
-}
+	getUserByDate(fromDate,toDate){
+		console.log("fdate,todate=========",fromDate,toDate);
+
+		var obj = {fromDate:fromDate,toDate:toDate};
+		console.log("date========----",obj);
+
+		return this.http.post(config.baseApiUrl+"attendence/getAttendenceInInterval",obj);
+
+	}
+
+
+	updateNotificationApprovedStatus(leaveId,leaveStatus){
+		console.log("leaveId======>",leaveId);
+		console.log("leaveStatus=====================>",leaveStatus)
+		return this.http.get(config.baseApiUrl+"sendNotification/get-pm-notification/"+leaveId+"/"+leaveStatus);
+
+	}
+
 }

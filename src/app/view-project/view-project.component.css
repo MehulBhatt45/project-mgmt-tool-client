@@ -30,6 +30,7 @@ h2{
 .card-title{
     outline: none;
     text-transform: capitalize;
+    font-size: 1.2rem;
 }
 .team-members li{
     height: 40px;
@@ -104,10 +105,7 @@ h2{
     right: 24px;
 }
 .btn-floating{
-    background-color: #372e5f;
-}
-.card-header {
-    background-color: #372e5f !important;
+    background-color: #3998c5;
 }
 .btn-group.dropleft.float-right {
     display: inline-block!important;
@@ -127,7 +125,7 @@ a.dropdown-item.btn-floating {
 }
 button{
     display: table;
-    float: right;
+    /*float: right;*/
     border:none;
 }
 .form-body{
@@ -218,11 +216,6 @@ ul.project-avatar li:hover {
     text-transform: capitalize !important;
     font-weight: bold;
 }
-
-.font-project-view-small{
-    font-size: 20px;  
-}
-
 span.badge.badge-pill.badge-dark {
     margin: 0 5px;
     vertical-align: text-bottom;
@@ -343,23 +336,25 @@ a.btn-floating.btn-action i{
 .btn-floating i{
     font-size: 14px!important;
 }
-
 .title_image{
-    height: 200px;
+    height: 120px;
     width: 100%;
     object-fit: cover;
 }
 .summary{
-    position: fixed;
-    display: none;
-     z-index: 999;
-    background-color: #fff;
-    height: 300px;
-    width: 300px;
-    top: 85px;
-    right: 5px;
-    border-radius: 5px;
-    color: black;
+   position: absolute;
+   display: none;
+   z-index: 999;
+   background-color: #fff;
+   height: 200px;
+   width: 400px; 
+   top: -46px;
+   left: 15px;
+   border-radius: 5px;
+   color: black;
+}
+.summary p{
+    font-size: 12px;
 }
 .progress_summary {
     position: relative;
@@ -375,11 +370,51 @@ a.btn-floating.btn-action i{
 }
 
 button.btn.btn-default.progress_summary {
-    float: none;
-    margin: auto;
+ width: 97%;
 }
 .modal-dialog {
     margin-top: 200px;
     max-width: 500px;
 }
+.attendance{
+    padding: 1rem;
+    display: inline;
+    text-align: center;
+}
+.modal-content {
+    background-color: beige;
+}
+.checkIn-btn{
+    background-color: lightblue !important;
+    width: 150px !important;
+    border-radius: 5px !important;
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px !important;
 
+}
+.checkIn-btn:hover {
+    background-color: white !important;
+}
+.card-cascade .view{
+    border-radius: none!important;
+}
+.tib{
+    background-color: white;
+    margin: 10px 15px;
+    padding: 1px;
+}
+.badge{
+    box-shadow: none!important;
+    border: 1px solid lightgray;
+}
+.deep-purple-text{
+    color: #3998c5!important;
+}
+.tib p{
+    margin: 0;
+}
+.z-depth-4 {
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21); 
+}

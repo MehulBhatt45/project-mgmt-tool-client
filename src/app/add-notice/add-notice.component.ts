@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { config } from '../config';
 declare var $:any;
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
+
 
 @Component({
 	selector: 'app-add-notice',
@@ -16,18 +17,17 @@ export class AddNoticeComponent implements OnInit {
 	// files:FileList;
 	files: Array<File> = [];
 	addForm:FormGroup;
-	url = [];
-	commentUrl = [];
 	path = config.baseMediaUrl;
+	submitted = false;
+
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
 		this.addForm = new FormGroup({
-			title: new FormControl('', Validators.required),
-			desc: new FormControl('',Validators.required),
-			images: new FormControl('' , Validators.required),
-			published:new FormControl('',Validators.required),
-			expireon:new FormControl('',Validators.required)
-
+			title: new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			desc: new FormControl('', [Validators.required,  Validators.maxLength(300)]),
+			images: new FormControl(''),
+			published:new FormControl(''),
+			expireon:new FormControl('')
 		});
 	}
 	
@@ -35,10 +35,14 @@ export class AddNoticeComponent implements OnInit {
 		this.getAllNotice();
 		$('.datepicker').pickadate({ min: new Date(),
 		})
-
 	}
-
+	get f() { return this.addForm.controls; }
 	addNotice(addForm){
+
+		this.submitted = true;
+		if (this.addForm.invalid) {
+			return;
+		}
 		addForm.expireon = $('#expireon').val();
 		console.log(addForm);
 		var data = new FormData();
@@ -71,35 +75,9 @@ export class AddNoticeComponent implements OnInit {
 		})
 	}
 
-	changeFile(event, option){
-		// this.files = event.target.files;
-		_.forEach(event.target.files, (file:any)=>{
-			// console.log(file.type);
-			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
-				this.files.push(file);
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = (e:any) => {
-					if(option == 'item')
-						this.url.push(e.target.result);
-					if(option == 'comment')
-						this.commentUrl.push(e.target.result);
-				}
-			}else {
-				Swal.fire({
-					title: 'Error',
-					text: "You can upload images only",
-					type: 'warning',
-				})
-			}
-		})
-	}
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.url.splice(index,1);
-		console.log(this.files);
+	changeFile(event){
+		console.log(event);
+		this.files = event;
 	}
 
 }

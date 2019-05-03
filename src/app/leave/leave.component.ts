@@ -24,17 +24,16 @@ export class LeaveComponent implements OnInit {
 	showMoreDayss;
 	leaveDuration;
 	startDate;
+	commentUrl= [];
+	url = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+	submitted = false;
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
-			// id: new FormControl(''),
-			// email: new FormControl (''),
-			// name: new FormControl (''),
-			leaveDuration : new FormControl (''),
-			typeOfLeave : new FormControl (''),
-			reasonForLeave : new FormControl ('', Validators.required),
+			leaveDuration : new FormControl ('', Validators.required),
+			typeOfLeave : new FormControl ('', Validators.required),
+			reasonForLeave : new FormControl (''),
 			startingDate: new FormControl (''),
 			noOfDays: new FormControl(''),
 			endingDate: new FormControl (''),
@@ -45,8 +44,7 @@ export class LeaveComponent implements OnInit {
 
 	ngOnInit() {
 
-		// Date Picker Valadation Start Here
-
+		
 		$('.datepicker').pickadate({ 
 			min: new Date(),
 		})
@@ -79,50 +77,34 @@ export class LeaveComponent implements OnInit {
 				from_picker.set('max', false)
 			}
 		})
-
-		// Date Picker Valadation End Here
-
 		this.showMoreDayss = false;
 		localStorage.setItem("showMoreDayss" , JSON.stringify(false));
 
 		this.showOneDays = false;
 		localStorage.setItem("showOneDays" , JSON.stringify(false));
 	}
-
-	addFile(event){
-		// this.files = event.target.files;
-		_.forEach(event.target.files, (file:any)=>{
-			console.log(file.type);
-			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg" || file.type == "application/pdf"){
-				this.files.push(file);
-				// var reader = new FileReader();
-				// reader.readAsDataURL(file);
-				// reader.onload = (e:any) => {
-				// 	if(option == 'item')
-				// 		this.url.push(e.target.result);
-				// 	if(option == 'comment')
-				// 		this.commentUrl.push(e.target.result);
-				// }
-			}else {
-				Swal.fire({
-					title: 'Error',
-					text: "You can upload images and pdf only",
-					type: 'warning',
-				})
-			}
-		})
+	
+	changeFile(event){
+		this.files = event;
+		console.log(this.files);
+		console.log("filesssssssss",this.files);
 	}
+	get f() { return this.addForm.controls; }
+	
 	addLeave(form){
-		 
+		console.log("form data============>",form);
+		// this.submitted = true;
+		// if (this.addForm.invalid) {
+		// 	return;
+		// }
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
-		// var id = JSON.parse(localStorage.getItem('currentUser'))._id;
-		// var name = JSON.parse(localStorage.getItem('currentUser')).name;
-		// var email = JSON.parse(localStorage.getItem('currentUser')).email;
+
 		form['id'] = this.currentUser._id;
 		form['name'] = this.currentUser.name;
 		form['email'] = this.currentUser.email;
+
 		console.log("valueeeeeeeeeeee",form, this.currentUser);
 		if(form.singleDate){
 			form.noOfDays = "1-day";

@@ -11,8 +11,6 @@ import { config } from '../config';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import Swal from 'sweetalert2';
-
-
 declare var $ : any;
 
 @Component({
@@ -46,7 +44,6 @@ export class ChildComponent  implements OnInit{
   tasks;
   comments;
   comment;
-  // projectId;
   developerId;
   allStatusList = this._projectService.getAllStatus();
   allPriorityList = this._projectService.getAllProtity();
@@ -68,7 +65,7 @@ export class ChildComponent  implements OnInit{
   diff;
   counter: number;
   taskdata;
-  startText = 'Start';
+  startText = 'START';
   time:any;
   assignTo;
   taskArr= [];
@@ -81,6 +78,9 @@ export class ChildComponent  implements OnInit{
   commentImg:any;
   temp;
   difference;
+  file = [];
+  submitted = false;
+  
 
 
   
@@ -160,6 +160,7 @@ export class ChildComponent  implements OnInit{
 
       this.tracks = [
       {
+        "icon":"icon-notebook",
         "title": "Todo",
         "id": "to do",
         "class":"primary",
@@ -168,6 +169,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-equalizer",
         "title": "In Progress",
         "id": "in progress",
         "class":"info",
@@ -176,6 +178,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-settings",
         "title": "Testing",
         "id": "testing",
         "class":"warning",
@@ -184,6 +187,7 @@ export class ChildComponent  implements OnInit{
         ]
       },
       {
+        "icon":"icon-like",
         "title": "Done",
         "id": "complete",
         "class":"success",
@@ -266,15 +270,15 @@ export class ChildComponent  implements OnInit{
     })
   }
 
+ 
   getTitle(name){
     if(name){
       var str = name.split(' ');
       return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
     }else{
-
       return '';
     }
-  }
+  }                                                                
 
   getInitialsOfName(name){
     if(name){
@@ -341,6 +345,7 @@ export class ChildComponent  implements OnInit{
       this.comment = "";
       this.model.editorData = 'Enter comments here';
       this.files = [];
+      this.file = [];
       console.log('this.files=============>',this.files);
       this.getAllCommentOfTask(res.taskId);
     },err=>{
@@ -382,6 +387,13 @@ export class ChildComponent  implements OnInit{
     if(this.files && this.files.length)
       this.files.splice(index,1);
     console.log(this.files);  
+  }
+  removeCommentImage1(file,index){
+    console.log(file, index);
+    this.file.splice(index, 1);
+    if(this.files && this.files.length)
+      this.files.splice(index,1);
+    console.log(this.files);
   }
   removeAlreadyUplodedFile(option){
     this.newTask.images.splice(option,1);
@@ -439,10 +451,16 @@ export class ChildComponent  implements OnInit{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log(err);
       })
-
     }
   }
+
+  get f() { return this.editTaskForm.controls; }
+
   updateTask(task){
+    // this.submitted = true;
+    // if (this.editTaskForm.invalid) {
+    //   return;
+    // }
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
@@ -479,7 +497,7 @@ export class ChildComponent  implements OnInit{
       var cardid = '#' + 'cardId_' + taskNo;
       console.log('cardid=======================================>',cardid);
       setTimeout(()=>{
-      $(cardid).css({"background-color": "#F5F5F5"});
+        $(cardid).css({"background-color": "#F5F5F5"});
 
       },2000)
       this.newTask = this.getEmptyTask();
@@ -583,16 +601,17 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
     setTimeout(()=>{
-      this._projectService.getProjectById(id).subscribe((res:any)=>{
+      this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
         console.log("title=={}{}{}{}{}",res);
         this.pro = res;
         console.log("project detail===>>>>",this.pro);
         this.projectId=this.pro._id;
         console.log("iddddd====>",this.projectId);
-        this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+        this._projectService.getTeamByProjectId(this.projectId).subscribe((res:any)=>{
           this.projectTeam = res.team;
           // res.Teams.push(this.pro.pmanagerId); 
           console.log("response of team============>"  ,res.Teams);
@@ -616,7 +635,7 @@ export class ChildComponent  implements OnInit{
         console.log("err of project============>"  ,err);
       });
 
-      this._projectService.getTaskById(id).subscribe((res:any)=>{
+      this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
         console.log("all response ======>" , res);
         this.getEmptyTracks();
         this.project = res;
@@ -666,7 +685,7 @@ export class ChildComponent  implements OnInit{
     data['running'] = data.running?!data.running:true;
     console.log(data.running);
     if (data.running) {
-      data['startText'] = 'Stop';
+      data['startText'] = 'STOP';
       var startTime = Date.now() - (data.timelog1?data.timelog1.count:this.initialTime);
       // console.log("startTime=======>",startTime);
       data['timerRef'] = setInterval(() => {
@@ -683,7 +702,7 @@ export class ChildComponent  implements OnInit{
       window.localStorage.setItem("isTimerRunning",data._id);
       window.localStorage.setItem("runningStatus",data.running);
     } else {
-      data.startText = 'Resume';
+      data.startText = 'RESUME';
 
       window.localStorage.setItem("isTimerRunning","null");
       console.log(data.timelog1.count);
@@ -721,4 +740,11 @@ export class ChildComponent  implements OnInit{
       console.log(err);
     });
   }
+
+  changeFile(event){
+    console.log(event);
+    this.files = event;
+  }
+
+
 }

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>ProjectManager</title>
   <base href="/">
+  
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#9C27B0">
@@ -16,29 +17,30 @@
   <link rel="stylesheet" href="assets/bower_components/css/mdb.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/line-icons.css">
   <link rel="stylesheet" type="text/css" href="assets/bower_components/css/lightbox.css">
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"> -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
   <link rel="stylesheet" type="text/css" href="assets/css/isotop.css">
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-  <!-- <link href="https://unpkg.com/bootstrap-css-only@4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!-- <link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet"> -->
   <link href="https://unpkg.com/angular-calendar@0.27.3/css/angular-calendar.css" rel="stylesheet">
   <link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
   <link rel="stylesheet" href="node_modules/angular-notification-icons/dist/angular-notification-icons.min.css">
   <link href="toastr.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body class="deep-purple-skin" style="background-color: white;">
   <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="assets/bower_components/js/lightbox.js"></script>
   <script type="text/javascript" src="assets/bower_components/js/popper.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  
+  <script type="text/javascript" src="assets/bower_components/js/lightbox.js"></script>
   <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="assets/bower_components/js/tether.min.js" ,></script>
   <script type="text/javascript" src="assets/bower_components/js/mdb.min.js"></script>
   <script src="toastr.js"></script>
-  <!-- <script type="text/javascript" src="assets/bower_components/MDBootstrap/js/mdb.min.js"></script> -->
   <script type="text/javascript" src="assets/js/isotop.js"></script>
-  <app-root></app-root>
   
+  <app-root></app-root>
+
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -51,8 +53,6 @@
       var el = document.querySelector('.custom-scrollbar');
       Ps.initialize(el);
 
-      // $('[data-toggle="popover"]').popover(); 
-
       $('[data-toggle="popover-hover"]').popover({
         html: true,
         trigger: 'hover',
@@ -60,8 +60,8 @@
         content: function () { return '<img src="' + $(this).data('img') + '" />'; }
       });
     })
-    
-    
+
+
     $(".button-collapse").sideNav();
     var sideNavScrollbar = document.querySelector('.custom-scrollbar');
     Ps.initialize(sideNavScrollbar);
@@ -83,11 +83,10 @@
         }
       });
     });
-    
+
   </script>
 </body>
 </html>
-
 
 
 

@@ -6,51 +6,38 @@
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="projecttitle">Project Title</label>
-						<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control">
+						<input type="text" autocomplete= 'false | random-string' id="projecttitle"  formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+						<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+							<div *ngIf="f.title.errors.required">Project title  is required</div>
+							<div *ngIf="f.title.errors.maxlength">Project title  must be only 60 characters</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-12">
 					<div class="md-form form-group">
 						<label for="projectalias">Project Alias</label>
 						<input type="text" autocomplete= 'false | random-string' id="projectalias"  formControlName="uniqueId" class="form-control">
 					</div>
 				</div>
 			</div>
-			<div class="md-form form-group">
+			<div class="md-form form-group" >
 				<label for="desc">Description</label>
-				<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea"></textarea>
+				<textarea id="desc" rows="5" formControlName="desc" class="form-control rounded-0 md-textarea" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }" ></textarea>
+				<div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+					<div *ngIf="f.desc.errors.required">Project description is required</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="date-picker-example">Deadline</label>
-						<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" >
+						<input type="text" id="date-picker"	formControlName="deadline"	class="form-control datepicker" [ngClass]="{ 'is-invalid': submitted && f.deadline.errors }">
+						<div *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
+							<div *ngIf="f.deadline.errors.required">Project deadline is required</div>
+						</div>
 					</div>
 				</div>
-	<!-- 			<div class="col-md-4">
-					<div class="form-group">
-						<ng-select placeholder="Select Developers" [items]="developers" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams">
-							<ng-template ng-label-tmp let-item="item" let-clear="clear">
-								<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.name}}</span>
-								<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-							</ng-template>
-							<div class="row">
-								<ng-template ng-option-tmp let-item="item">
-									<div class="card testimonial-card">
-										<div class="card-up deep-purple lighten-2"></div>
-										<div class="avatar white img_section">
-											<img src="{{baseUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-										</div>
-										<div class="card-body">
-											<h5 class="card-title mt-1">{{item.name}}</h5>
-											<h6 class="card-title">{{item.userRole}}</h6>
-										</div>
-									</div>
-								</ng-template>
-							</div>
-						</ng-select>
-					</div>
-				</div> -->
+
 			</div>
 			<div>
 				<h4 style="color: #181123;">Client Details</h4>
@@ -82,15 +69,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="selected-avatar" *ngIf="url">
+			<div></div>
+			<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="onSelectFile($event)"></app-file-upload-dnd>
+			<div class="text-center selected-avatar" *ngIf="url">
 				<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
 				<div class="delete-team-member">
-					<a href="javascript:void(0);" (click)="removeAvatar()"><span class="icon-trash"></span></a>
+					<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
 				</div>
 			</div>
+
 			<div class="row float-left">
-					<button type="button" class="btn btn-primary mr-2 ml-2" data-toggle="modal" data-target="#basicExampleModal"> <span class="icon-user"></span> Select Project avatar</button>
-				<button type="submit" class="btn btn-default" [disabled]="addForm.invalid"  (click)="addProject(addForm.value)"><span class="icon-plus mr-1"></span>Create Project</button>
+				<button type="button" class="btn btn-primary mr-2 ml-2" data-toggle="modal" data-target="#basicExampleModal"> <span class="icon-user"></span> Select Project avatar</button>
+				<button type="submit" class="btn btn-default"  (click)="addProject(addForm.value)"><span class="icon-plus mr-1" ></span>Create Project</button>
 			</div>
 		</form>
 	</div>
@@ -108,15 +98,6 @@ aria-hidden="true">
 		</div>
 		<div class="modal-body">
 			<div class="md-form form-group">
-				<div class="file-field">
-					<div class="btn btn-default btn-sm float-left">
-						<span>Upload a new avatar</span>
-						<input type="file" name="fileUpload" accept=".jpg, .jpeg, .png" (change)="onSelectFile($event)">
-					</div>
-					<div class="file-path-wrapper">
-						<input  class="file-path validate" autocomplete= 'false | random-string' type="text" placeholder="Upload your file">
-					</div>
-				</div>
 				<ul class="project-avatar">
 					<li>
 						<button class="icon-button" (click)="addIcon('/avatar/school.png')">

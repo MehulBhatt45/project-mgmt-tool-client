@@ -49,6 +49,8 @@ export class BacklogComponent implements OnInit {
 	activeSprint;
 	projectDealine;
 
+	newsprint;
+	
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -77,17 +79,24 @@ export class BacklogComponent implements OnInit {
 			min: new Date(),
 			format: ' mm/dd/yyyy',
 			formatSubmit: 'mm/dd/yyyy',
-			hiddenPrefix: 'prefix__',
-			hiddenSuffix: '__suffix'
+			onSet: function(date){
+				console.log(date);
+				updateDates('startDate', date);
+			}
 		})	
 		$('#endDate').pickadate({ 
 			min: new Date(),
 			format: ' mm/dd/yyyy',
 			formatSubmit: 'mm/dd/yyyy',
-			hiddenPrefix: 'prefix__',
-			hiddenSuffix: '__suffix'
+			onSet: function(date){
+				console.log(date);
+				updateDates('endDate', date);
+			}
 		})	
-
+		let updateDates = (key, val)=>{
+			this.newsprint[key] = val;
+			console.log(this.newsprint);
+		}
 
 		var from_input = $('#startDate').pickadate(),
 		from_picker = from_input.pickadate('picker')
@@ -220,9 +229,9 @@ export class BacklogComponent implements OnInit {
 			console.log("err of team============>"  ,err);
 		});
 	}
+	get f() { return this.addForm.controls; }
 
 	addSprint(addForm){
-
 		addForm.startDate = $('#startDate').val();
 		addForm.endDate = $('#endDate').val();
 		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);
@@ -346,14 +355,15 @@ export class BacklogComponent implements OnInit {
 	}
 
 	startSprint(sprint){
-
-		sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
+		console.log($('#startDate').val(), $('#endDate').val());
+		sprint.startDate = moment($('#startDate').val()).format('YYYY-MM-DD');
+		sprint.endDate = moment ($('#endDate').val()).format('YYYY-MM-DD'); 
 		console.log("start sprint =====>",sprint.startDate);
 		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
 
-
+		console.log("date of sorint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
 		if(sprint.startDate == this.currentdate){
 			if(sprint.duration > this.remainingLimit){
 				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
@@ -368,6 +378,7 @@ export class BacklogComponent implements OnInit {
 					cancelButtonColor: '#d33',
 					confirmButtonText: 'Yes,Start it!'
 				}).then((result) => {
+					console.log("result of sprint",result);
 					if (result.value) {
 
 						this._projectService.startSprint(sprint).subscribe((res:any)=>{

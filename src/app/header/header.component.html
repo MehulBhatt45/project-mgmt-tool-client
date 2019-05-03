@@ -17,102 +17,97 @@
           <li>
             <a class="collapsible-header waves-effect arrow-r">
               <span style="outline: none;" routerLink="/view-projects">
-                <span class="mr-1" data-icon="&#xe067;"></span>  Projects
-              </span><!-- 
-              <span class="icon-arrow-down rotate-icon"></span>
-              <span class="icon-refresh" aria-hidden="true" (click)="getProjects()"></span> -->
-            </a>
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of projects">
-                  <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><span class="icon-bar-chart mr-1"></span>{{project.title}}</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-note mr-1"></span> Create Project</a>
-          </li>
+                <span class="mr-1" data-icon="&#xe067;"></span> Projects
+</span><!-- 
+<span class="icon-arrow-down rotate-icon"></span>
+<span class="icon-refresh" aria-hidden="true" (click)="getProjects()"></span> -->
+</a>
+<div class="collapsible-body">
+  <ul>
+    <li *ngFor="let project of projects">
+      <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><span class="icon-bar-chart mr-1"></span>{{project.title}}</a>
+    </li>
+  </ul>
+</div>
+</li>
+<li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-note mr-1"></span> Create Project</a>
+</li>
+<li><a *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="mr-1" data-icon="&#xe06a;"></span> Item List</a></li>
+<li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-flag mr-1"></span> Add Notice</a></li>
 
-          <li><a *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="mr-1" data-icon="&#xe06a;"></span>      Item List</a></li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-flag mr-1"></span> Add Notice</a></li>
-
-          <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-book-open mr-1"></span>   Notice Board</a></li>
-          <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-flag-checkered"></span> Add Employee</a></li>
-          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="far fa-user"></span> All Employee</a></li>
-          <li *ngIf="currentUser.userRole=='projectManager'">
-            <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
-
-            (click) ="getAllProjects()"><span class="icon-users mr-1"></span> Visit Team-members
-            <span class="fa fa-angle-down rotate-icon"></span></a>
-
-            <div class="collapsible-body">
-              <ul>
-                <li *ngFor="let project of finalArr">
-                  <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><span class="icon-bar-chart"></span>{{project.title}}</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-user-following mr-1"></span>   Attendence</a>
-          </li>
-          <li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-clock mr-1"></span> Log</a>
-          </li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-docs mr-1"></span> All Leave Application</a></li>
-          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-user-tie"></span> MyLeave</a></li>
-          <li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fab fa-wpforms"></span> Leave Form</a></li>
-        </ul>
+<li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-book-open mr-1"></span> Notice Board</a></li>
+<li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-flag-checkered"></span> Add Employee</a></li>
+<li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="far fa-user"></span> All Employee</a></li>
+<li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+  <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
+  (click) ="getAllProjects()"><span class="icon-users mr-1"></span> Visit Team-members
+  <span class="fa fa-angle-down rotate-icon"></span></a>
+  <div class="collapsible-body">
+    <ul>
+      <li *ngFor="let project of finalArr">
+        <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><span class="icon-bar-chart"></span>{{project.title}}</a>
       </li>
     </ul>
   </div>
-  <nav class="navbar fixed-top navbar-toggleable-md navbar-dark double-nav">
-    <div class="float-left">
-      <ol class="breadcrumb hidden-lg-down">
-        <li><a data-activates="slide-out" class="button-collapse" ><span class="fa fa-bars"></span></a></li>
-        <li class="breadcrumb-item active"><a>Dashboard</a></li>
-      </ol>
-    </div>
-    <div class="float-right">
-      <ol class="breadcrumb hidden-lg-down">
-        
-        <li class="active"><button type="submit" class="btn btn-default" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
-        <li class="active"> <button type="submit" class="btn btn-default" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
-      </ol>
-    </div>
-  </nav>
+</li>
+<li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-user-following mr-1"></span> Attendence</a>
+</li>
+<li><a routerLink="/logs" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-clock mr-1"></span> Log</a>
+</li>
+<li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-docs mr-1"></span> All Leave Application</a></li>
+<li *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-user-tie"></span> MyLeave</a></li>
+<li><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fab fa-wpforms"></span> Leave Form</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<nav class="navbar fixed-top navbar-toggleable-md navbar-dark double-nav">
+  <div class="float-left">
+    <ol class="breadcrumb hidden-lg-down">
+      <li><a data-activates="slide-out" class="button-collapse" ><span class="fa fa-bars"></span></a></li>
+      <li class="breadcrumb-item active"><a>Dashboard</a></li>
+    </ol>
+  </div>
+  <div class="float-right">
+    <ol class="breadcrumb hidden-lg-down">
+      <li class="active"><button type="submit" class="btn btn-primary" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
+      <li class="active"> <button type="submit" class="btn btn-primary" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
+    </ol>
+  </div>
+</nav>
 </header>
 
 <div class="side_fixed_nav">
   <div class="top_icon" >
     <div class="second_icondropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
-      <a href="" class="star_link" title="Create(c)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-plus" aria-hidden="true" ></span></a>
+      <a href="" class="star_link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-plus" style="font-size: 20px;color: #181123;" aria-hidden="true" ></span></a>
       <div class="dropdown-menu">
-        <a class="dropdown-item"  [routerLink]="['/create-project']">Project</a>
-        <a class="dropdown-item" (click)="addItem('Task')">Task</a>
-        <a class="dropdown-item" (click)="addItem('Bug')">Bug</a>
-        <a class="dropdown-item" (click)="addItem('Issue')">Issue</a>
+        <a class="dropdown-item" [routerLink]="['/create-project']"> <span class="icon-folder-alt mr-1"></span> Project</a>
+        <a class="dropdown-item" (click)="addItem('Task')"><span data-icon="&#xe067;" class="mr-1"></span> Task</a>
+        <a class="dropdown-item" (click)="addItem('Bug')"><span class="icon-energy mr-1"></span> Bug</a>
+        <a class="dropdown-item" (click)="addItem('Issue')"> <span class="icon-question mr-1"></span> Issue</a>
       </div>
-    </div>  
+    </div> 
   </div>
   <div class="bottom_icon">
     <div class="second_icon">
       <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell fa-2x"  aria-hidden="true"  >
-        <span class="notification_count animated bounce" *ngIf = "newNotification > 0 && newNotification > 1">
           <span class="custom_badge ">{{newNotification}}</span>
         </span>
-      </i>
+      </span>
     </a>
-  </div>  
+  </div> 
 
   <div class="second_icon dropdown">
-    <a href=""  class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+    <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
     <ul class="team-members">
       <li id="login_details">
         <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
         <div class="dropdown-menu"> 
-          <a class="dropdown-item" (click)="logout()">Log Out</a>
-          <a  class="dropdown-item" routerLink="/userprofile">My Profile</a>
+          <a class="dropdown-item" (click)="logout()"><span class="icon-logout mr-1"></span> Log Out</a>
+          <a class="dropdown-item" routerLink="/userprofile"> <span class="icon-user mr-1"></span> My Profile</a>
         </div>
-      </li>   
+      </li> 
     </ul>
   </div> 
 </div>
@@ -125,115 +120,115 @@
     <div class="modal-content">
       <div class="modal-body">
         <h3 class="card-header-title" id="myModalLabel"><span class="icon-note"></span>{{modalTitle}}</h3>
-          <form style="width: 100%;" [formGroup]="editTaskForm">
-            <div class="form-group col-12 col-lg-12 pt-1">
-              <ng-select placeholder="Select Project" [items]="demoprojects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
-                <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                  <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
-                  <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-                </ng-template>
-                <div class="row">
-                  <ng-template ng-option-tmp let-item="item">
-                    <div class="card testimonial-card">
-                      <div class="card-up deep-purple lighten-2"></div>
-                      <div class="avatar white img_section">
-                        <img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
-                      </div>
-                      <div class="card-body">
-                        <h5 class="card-title mt-1">{{item.title}}</h5>
-                        <h6 class="card-title">{{item.uniqueId}}</h6>
-                      </div>
+        <form style="width: 100%;" [formGroup]="editTaskForm">
+          <div class="form-group col-12 col-lg-12 pt-1">
+            <ng-select placeholder="Select Project" [items]="demoprojects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
+              <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                <span class="ng-value-label"><img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" width="20px" height="20px"> {{item.title}}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </ng-template>
+              <div class="row">
+                <ng-template ng-option-tmp let-item="item">
+                  <div class="card testimonial-card">
+                    <div class="card-up deep-purple lighten-2"></div>
+                    <div class="avatar white img_section">
+                      <img src="{{path}}{{item.avatar}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
                     </div>
-                  </ng-template>
-                </div>
-              </ng-select>
+                    <div class="card-body">
+                      <h5 class="card-title mt-1">{{item.title}}</h5>
+                      <h6 class="card-title">{{item.uniqueId}}</h6>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-select>
+          </div>
+          <div>
+
+            <!-- Add Task Modal -->
+
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div>
-
-              <!-- Add Task Modal -->
-
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div [hidden]="!task.projectId">
+            <div class="form-group col-12">
+              <label for="title">Title</label>
+              <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+            </div>
+            <div class="form-group col-12">
+              <label for="desc">Discription</label>
+              <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+            </div>
+            <div class=" row form-group col-12">
+              <button class="btn btn-primary" (click)="fileUpload.click()">
+                <span class="icon-paper-clip mr-1"></span> Add Files
+                <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+              </button>
+            </div>
+            <div *ngIf=" task.images && task.images.length>0">
+              <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+                <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+                <div class="delete-team-member">
+                  <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
+                </div>
               </div>
             </div>
-            <div [hidden]="!task.projectId">
+            <div *ngIf="url && url.length">
+              <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
+                <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+                <div class="delete-team-member">
+                  <a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
+                </div>
+              </div>
+            </div>
+            <div class="row no-margin no-padding border" >
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="assignTo">Assign To</label>
+                <select class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+                <select class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+                  <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col-12 col-lg-6 pt-1">
+                <label for="priority">Priority</label>
+                <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                  <option value="4">Low</option>
+                  <option value="3">Medium</option>
+                  <option value="2">High</option>
+                  <option value="1">Highest</option>
+                </select>
+              </div>
               <div class="form-group col-12">
-                <label for="title">Title</label>
-                <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+                <label for="assignTo">Sprint</label>
+                <select class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
+                  <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                </select>
+                <select class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
+                  <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+                </select>
               </div>
-              <div class="form-group col-12">
-                <label for="desc">Discription</label>
-                <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
+              <div class="form-group col-6">
+                <label for="dueDate">Due Days</label>
+                <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
               </div>
-              <div class=" row form-group col-12">
-                <button class="btn btn-primary" (click)="fileUpload.click()">
-                  <span class="icon-paper-clip mr-1"></span> Add Files
-                  <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-                </button>
-              </div>
-              <div *ngIf=" task.images && task.images.length>0">
-                <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-                  <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-                  <div class="delete-team-member">
-                    <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
-                  </div>
-                </div>
-              </div>
-              <div  *ngIf="url && url.length">
-                <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-                  <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-                  <div class="delete-team-member">
-                    <a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
-                  </div>
-                </div>
-              </div>
-              <div class="row no-margin no-padding  border" >
-                <div class="form-group col-12 col-lg-6 pt-1">
-                  <label for="assignTo">Assign To</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
-                    <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
-                    <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
-                  </select>
-                </div>
-                <div class="form-group col-12 col-lg-6 pt-1">
-                  <label for="priority">Priority</label>
-                  <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
-                    <option value="4">Low</option>
-                    <option value="3">Medium</option>
-                    <option value="2">High</option>
-                    <option value="1">Highest</option>
-                  </select>
-                </div>
-                <div class="form-group col-12">
-                  <label for="assignTo">Sprint</label>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
-                    <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-                  </select>
-                  <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
-                    <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
-                  </select>
-                </div>
-                <div class="form-group col-6">
-                  <label for="dueDate">Due Days</label>
-                  <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
-                </div>
 
-                <div class="form-group col-6">
-                  <label for="estimatedTime">Estimated Time</label>
-                  <div class="md-form form-group">
+              <div class="form-group col-6">
+                <label for="estimatedTime">Estimated Time</label>
+                <div class="md-form form-group">
 
-                    <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
-                  </div>
+                  <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
                 </div>
               </div>
             </div>
-          </form>
-      <div class="float-right">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
-        <button type="button" class="btn btn-primary btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
-      </div>
+          </div>
+        </form>
+        <div class="float-right">
+          <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
+          <button type="button" class="btn btn-primary btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader">Save changes</button>
+        </div>
       </div>
     </div>
   </div>

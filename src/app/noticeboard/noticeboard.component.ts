@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { FormGroup , FormControl, Validators } from '@angular/forms';
@@ -33,6 +33,11 @@ export class NoticeboardComponent implements OnInit {
   files:Array<File> = [];
   i = 0;
   newNotice = { title:'', desc:'', published: '', expireon: '', images: [] };
+
+  submitted =false;
+
+
+  @Output() noticeUpdate = new EventEmitter();
 
 
   ngOnInit() {
@@ -94,26 +99,26 @@ export class NoticeboardComponent implements OnInit {
   
   createEditNoticeForm(){
     this.editNoticeForm = new FormGroup({
-      title : new FormControl(''),
-      desc : new FormControl(''),
+      title :new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+      desc : new FormControl('', [Validators.required,  Validators.maxLength(300)]),
       published : new FormControl(''),
-      expireon :new FormControl(''),
+      expireon :new FormControl('', [Validators.required]),
       images : new FormControl(''),
     })
   }
+  get f() { return this.editNoticeForm.controls; }
 
   updateNotice(editNoticeForm, noticeId){
+
+    this.submitted = true;
+    if (this.editNoticeForm.invalid) {
+      return;
+    }
     console.log("noticeId", noticeId);
     console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);
-    // editNoticeForm.images = $("#images").val();
     console.log("update Notice image =====>",editNoticeForm.images);
-    // var data:any;
-    // data = new FormData();
     let data = new FormData();
-    // _.forOwn(editNoticeForm, function(value, key) {
-    //   data.append(key, value)
-    // });
     data.append('title', editNoticeForm.title);
     data.append('desc', editNoticeForm.desc);
     data.append('expireon', editNoticeForm.expireon);
@@ -124,16 +129,15 @@ export class NoticeboardComponent implements OnInit {
         data.append('images', this.files[i]);
       }
     }
-    // if (this.files == null) {
-    //   this.files = editNoticeForm.images;
-    //   data.append('images', this.files[0]);
-    // }
     console.log("data Updated ==========================>" , data);
     this._projectservice.updateNoticeWithFile(data, noticeId).subscribe((res:any)=>{
       $('#editmodel').modal('hide');
+      this.noticeUpdate.emit('noticeUpdate');
       this.getAllNotice();
       Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000});
-      this.files = this.url = [];
+      this.files = [];
+      this.url = [];
+      console.log("files: ",this.files);
     },err=>{
       console.log(err);
       Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -141,10 +145,6 @@ export class NoticeboardComponent implements OnInit {
   }
 
   uploadFile(e,noticeid){
-    // console.log("file============>",e.target.files);
-    // console.log("noticeid",noticeid);
-    // this.files = e.target.files;
-    // console.log("files===============>",this.files);
     _.forEach(e.target.files, (file:any)=>{
       // console.log(file.type);
       if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
@@ -152,7 +152,7 @@ export class NoticeboardComponent implements OnInit {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = (e:any) => {
-            this.url.push(e.target.result);
+          this.url.push(e.target.result);
         }
         this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
           console.log("resss=======>",res);
@@ -170,14 +170,6 @@ export class NoticeboardComponent implements OnInit {
         })
       }
     }) 
-    // this._projectservice.changeNoticePicture(this.files,noticeid).subscribe((res:any)=>{
-    //   console.log("resss=======>",res);
-    //   Swal.fire({type: 'success',title: 'Notice Updated Successfully',showConfirmButton:false,timer: 2000})
-    //   this.getAllNotice();
-    // },error=>{
-    //   console.log("errrorrrrrr====>",error);
-    //   Swal.fire('Oops...', 'Something went wrong!', 'error')
-    // });  
   }
 
   noticeById(noticeid){
@@ -196,44 +188,12 @@ export class NoticeboardComponent implements OnInit {
     })
   }
 
-  changeFile(event, option){
-   _.forEach(event.target.files, (file:any)=>{
-      // console.log(file.type);
-      if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
-        this.files.push(file);
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e:any) => {
-          if(option == 'item')
-            this.url.push(e.target.result);
-          if(option == 'comment')
-            this.commentUrl.push(e.target.result);
-        }
-      }else {
-        Swal.fire({
-          title: 'Error',
-          text: "You can upload images only",
-          type: 'warning',
-        })
-      }
-    }) 
-  }
-  removeAvatar(file, index){
-    console.log(file, index);
-    this.url.splice(index, 1);
-    if(this.files && this.files.length)
-      this.url.splice(index,1);
-    console.log(this.files);
-
+  changeFile(event){
+    console.log(event);
+    this.files = event;
   }
 
   deleteNoticeImage(index){
-    // console.log(event);
-    // console.log(index);
-    // this.noticeImg.splice(index , 1);
-    // console.log(this.noticeImg);
-    // if(this.noticeImg && this.singlenotice.length)
-    //   this.singlenotice.images.splice(_.findIndex(this.noticeImg, event), index);
     this.newNotice.images.splice(index,1);
   }
 

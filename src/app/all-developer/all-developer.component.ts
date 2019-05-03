@@ -31,6 +31,8 @@ export class AllDeveloperComponent implements OnInit {
 	dteam: any;
 	searchText;
 	developerId;
+	pmanagerId = [];
+	
 
 	constructor(private route: ActivatedRoute,
 		private router: Router, public _projectService: ProjectService,
@@ -51,6 +53,8 @@ export class AllDeveloperComponent implements OnInit {
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				console.log("project detail===>>>>",this.pro.pmanagerId);
+				this.pmanagerId = this.pro.pmanagerId;
+				console.log(" manager is ======>",this.pmanagerId);
 				this.pro.pmanagerId.sort(function(a, b){
 					var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
 					if (nameA < nameB) //sort string ascending
@@ -115,7 +119,6 @@ export class AllDeveloperComponent implements OnInit {
 
 	
 	deleteDeveloper(event){
-		var id;
 		console.log(event);
 		Swal.fire({
 			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",
@@ -134,7 +137,35 @@ export class AllDeveloperComponent implements OnInit {
 				console.log("this .. pro ================>" , this.pro);
 				this.pro.Teams = this.Teams;	
 				console.log("this .. pro ================>" , this.pro);
-				this._projectService.updateProject(this.pro,id).subscribe((res:any)=>{
+				this._projectService.updateProject(this.pro._id,this.pro).subscribe((res:any)=>{
+					console.log("res========+>" , res);
+				},(err:any)=>{
+					console.log("err" , err);
+					Swal.fire('Oops...', 'Something went wrong!', 'error')
+				});
+			}
+		})
+	}
+	deleteProjectManager(event){
+		console.log(event);
+		Swal.fire({
+			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + event.name + " </strong> " + " from  <strong style="+'font-weight:bold'+">" + " "+ this.pro.title + "</strong> ? </span>",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes,Delete it!',
+			showCloseButton: true
+		}).then((result) => {
+			if (result.value) {
+				var body;
+				this.pmanagerId.splice(_.findIndex(this.pmanagerId, event), 1);
+				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				console.log(this.pmanagerId);
+				console.log("this .. pro ================>" , this.pro);
+				this.pro.pmanagerId = this.pmanagerId;	
+				console.log("this .. pro ================>" , this.pro);
+				this._projectService.updateProject(this.pro._id,this.pro).subscribe((res:any)=>{
 					console.log("res========+>" , res);
 				},(err:any)=>{
 					console.log("err" , err);

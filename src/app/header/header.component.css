@@ -19,11 +19,9 @@ header{
   fill: rgb(189, 194, 193);
   height: 100%;
 }
-
 ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   background-color: rgba(22, 5, 34, 0.8);
 }
-
 .top_icon{
   -webkit-box-align: center;
   align-items: center;
@@ -45,13 +43,6 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   padding-bottom: 12px;
   display: inline-block;
 }
-.star_link{
-  color:black;
-  padding-left: 25px;
-}
-.fa-star,.fa-search,.fa-plus,.fa-bell,.fa-th,.fa-question-circle{
-  font-size: 23px;
-}
 .fa-refresh{
   float: right;
   margin: 13px 35px !important;
@@ -59,7 +50,6 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
 .dropdown-content {
   bottom: 12.5px;
   left: 30px;
-  box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   padding: 5px;
   border-radius: 10px 10px 10px 0px;
 }
@@ -68,9 +58,6 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   padding:16px;
   font-size: 15px;
   border-radius: 5px!important;
-}
-.dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-  background-color: #372e5f;
 }
 .dropdown-content.open{
   display: block !important;
@@ -92,35 +79,35 @@ ul.custom-scrollbar.ps-container.ps-theme-default.ps-active-x {
   max-width: 100%;
   object-fit: cover;
 }
+.breadcrumb{
+  padding: 0!important;
+}
 ol.breadcrumb.hidden-lg-down li a {
   top: 0px;
   left: 0px;
-  margin-left: 0;
   display: inline-block;
   vertical-align: sub;
 }
-
 .dropdown-menu{
+  top: -25px!important;
   left: 30px !important;
-  box-shadow: 0 2px 8px 5px rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   padding: 5px;
   border-radius: 10px 10px 10px 0px;
+  box-shadow: none!important; 
+  border: 1px solid lightgray;
 }
 #plus_details .dropdown-menu {
   border-radius: 0px 10px 10px 10px;
 }
 .dropdown-menu a.dropdown-item {
-  text-align: left;
-  padding: 16px;
-  font-size: 15px;
-  border-radius: 5px!important;
+  padding: 7px;
   transition: all 0.7s;
+  box-shadow: none;
 }
 .dropdown-item:hover{
-  background-color: #372e5f !important;
+  background-color: #b3b3b3 !important;
   color: #fff!important;
 }
-
 .side-nav .search-form input[type=text] {
   border-bottom: 1px solid #fff;
   font-weight: 300;
@@ -303,58 +290,57 @@ ol.breadcrumb.hidden-lg-down li a {
   color: red;
 }
 .side-nav {
-   background-color: #372e5e !important;
+ background-color: #181123 !important;
 }
 .notification_count[_ngcontent-c2] {
-    background-color: #ffaa09;
-    color: black;
-    display: inline-block;
-    position: relative;
-    border-radius: 50%;
-    line-height: 20px;
-    top: -15px;
-    right: 12px;
-    height: 26px;
-    width: 25px;
-    text-align: center;
-    border: 1px solid black;
-    /* border-radius: 1px; */
-    border-right-color: black;
+ background-color: #3998c5;
+ color: #fff;
+ display: inline-block;
+ position: relative;
+ border-radius: 50%;
+ top: -23px;
+ right: 13px;
+ height: 29px;
+ width: 29px;
+ text-align: center;
+ border: 1px solid #fff;
 }
 .notification_count span.custom_badge {
   line-height: 22px;
   display: inline-block;
   font-size: 14px;
 }
-
-  .navbar{
-    padding: 0 15px;
-  }
-  .navbar-dark{
-    background-color: #181123;
-  }
-  .user_name {  
-    position: absolute;
-    z-index: 11;
-    top: 200px;
-    color: white;
-    left: 10px;
-    text-shadow: 1px 9px 9px black;
-
-  }
-.side-nav .collapsible li a:hover {
-    background-color: #3998c5!important;
-    color: white!important;
+.navbar{
+  padding: 0 15px;
 }
- .side-nav .collapsible li a.active {
-    background-color: #3998c5!important;
-    color: white!important;
+.navbar-dark{
+  background-color: #181123;
+}
+.user_name {  
+  position: absolute;
+  z-index: 11;
+  top: 200px;
+  color: white;
+  left: 10px;
+  text-shadow: 1px 9px 9px black;
+}
+.side-nav .collapsible li a:hover {
+  background-color: #3998c5!important;
+  color: white!important;
+}
+.side-nav .collapsible li a.active {
+  background-color: #3998c5!important;
+  color: white!important;
 }
 .side-nav .collapsible a{
  font-size: 1rem!important;
 }
 #sidenav-overlay {
-    background-color: rgba(0, 0, 0, 0.5)!important;
-    z-index: 997;
-    will-change: opacity!important;
+  background-color: rgba(0, 0, 0, 0.5)!important;
+  z-index: 997;
+  will-change: opacity!important;
+}
+nav.navbar.fixed-top.navbar-toggleable-md.navbar-dark.double-nav {
+  margin: 0!important;
+  padding: 0!important;
 }

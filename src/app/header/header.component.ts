@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 declare var $ : any;
 
 
-
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
@@ -51,6 +50,7 @@ export class HeaderComponent implements OnInit {
 	unreadNotification;
 	newNotification
 	newSprint = [];
+	submitted = false;
 	
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
@@ -66,14 +66,14 @@ export class HeaderComponent implements OnInit {
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', Validators.required),
-			desc : new FormControl('',),
-			assignTo : new FormControl('',),
-			sprint :new FormControl('',),
-			priority : new FormControl('',),
+			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			desc : new FormControl('',[Validators.required]),
+			assignTo : new FormControl('',Validators.required),
+			sprint :new FormControl('',Validators.required),
+			priority : new FormControl('',Validators.required),
 			projectId : new FormControl('', Validators.required),
-			dueDate : new FormControl(''),
-			estimatedTime: new FormControl(),
+			dueDate : new FormControl('',Validators.required),
+			estimatedTime: new FormControl('', Validators.required),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 		})
 	}
@@ -385,11 +385,15 @@ export class HeaderComponent implements OnInit {
 			})
 		},1000);
 	}
+
+	get f() { return this.editTaskForm.controls; }
 	
 	saveTheData(task){
-		
+		this.submitted = true;
+		if (this.editTaskForm.invalid) {
+			return;
+		}
 		this.loader = true;
-		
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
@@ -427,10 +431,12 @@ export class HeaderComponent implements OnInit {
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
+			$('#editModel').modal('hide');
+			
 			this.newTask = this.getEmptyTask();
 			this.editTaskForm.reset();
 			this.files = this.url = [];
-			// this.assignTo.reset();
+			// this.assignTo.reset();	
 			this.loader = false;
 		},err=>{
 			Swal.fire({
@@ -459,93 +465,97 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
-	changeFile(e){
-		console.log(e.target.files);
-		var userId = JSON.parse(localStorage.getItem('login'))._id;
-		console.log("userId===>",this.addUserProfile['userId']);
-		this.files = e.target.files;
-		this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
-			console.log("resss=======>",res);
-			this.addUserProfile = res;
-		},error=>{
-			console.log("errrorrrrrr====>",error);
-		});  
-	}
+	// changeFile(e){
+		// 	console.log(e.target.files);
+		// 	var userId = JSON.parse(localStorage.getItem('login'))._id;
+		// 	console.log("userId===>",this.addUserProfile['userId']);
+		// 	this.files = e.target.files;
+		// 	this._projectService.uploadFilesToFolder(this.files, userId).subscribe((res:any)=>{
+			// 		console.log("resss=======>",res);
+			// 		this.addUserProfile = res;
+			// 	},error=>{
+				// 		console.log("errrorrrrrr====>",error);
+				// 	});  
+				// }
 
-	onSelectFile(event,option){
-		_.forEach(event.target.files, (file:any)=>{
-			// console.log(file.type);
-			if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
-				this.files.push(file);
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = (e:any) => {
-					if(option == 'item')
-						this.url.push(e.target.result);
-					if(option == 'comment')
-						this.commentUrl.push(e.target.result);
+				onSelectFile(event,option){
+					_.forEach(event.target.files, (file:any)=>{
+						// console.log(file.type);
+						if(file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg"){
+							this.files.push(file);
+							var reader = new FileReader();
+							reader.readAsDataURL(file);
+							reader.onload = (e:any) => {
+								if(option == 'item')
+									this.url.push(e.target.result);
+								if(option == 'comment')
+									this.commentUrl.push(e.target.result);
+							}
+						}else {
+							Swal.fire({
+								title: 'Error',
+								text: "You can upload images only",
+								type: 'warning',
+							})
+						}
+					})
 				}
-			}else {
-				Swal.fire({
-					title: 'Error',
-					text: "You can upload images only",
-					type: 'warning',
-				})
+
+				getSprint(projectId){
+					this._projectService.getSprint(projectId).subscribe((res:any)=>{
+						console.log("sprints in project detail=====>>>>",res);
+						this.sprints = res;
+						_.forEach(this.sprints, (sprint)=>{
+							if(sprint.status !== 'Complete'){
+								console.log("sprint in if",sprint);
+								this.newSprint.push(sprint);
+							}
+						})
+					},(err:any)=>{
+						console.log(err);
+					});
+				}
+				getUnreadNotification(){
+					this._projectService.getUnreadNotification(this.currentUser._id).subscribe((res:any)=>{
+						// console.log("length=============>",res);
+						this.unreadNotification = res;
+						this.newNotification = this.unreadNotification.length;
+						// this.unreadNotification.length = this.newNotification;
+						console.log("count======================>",this.newNotification);
+					})
+				}
+
+				removeAvatar(file, index){
+					console.log(file, index);
+					this.url.splice(index, 1);
+					if(this.files && this.files.length)
+						this.files.splice(index,1);
+					console.log(this.files);
+				}
+				removeCommentImage(file, index){
+					console.log(file, index);
+					this.commentUrl.splice(index, 1);
+					if(this.files && this.files.length)
+						this.files.splice(index,1);
+					console.log(this.files);	
+				}
+
+				removeAlreadyUplodedFile(option){
+					this.newTask.images.splice(option,1);
+				}
+				close(){
+					this.editTaskForm.reset();
+					this.url = this.files = [];
+					// this.task.estimatedTime = " ";
+					// this.editTaskForm.estimatedTime = "";
+					$("#estTime").val(null);
+					$("#priority").val(null);
+					// this.task.priority = null;
+					// this.newTask.priority = null;
+				}
+				changeFile(event){
+					console.log(event);
+					this.files = event;
+				}
+
 			}
-		})
-	}
-
-	getSprint(projectId){
-		this._projectService.getSprint(projectId).subscribe((res:any)=>{
-			console.log("sprints in project detail=====>>>>",res);
-			this.sprints = res;
-			_.forEach(this.sprints, (sprint)=>{
-				if(sprint.status !== 'Complete'){
-					console.log("sprint in if",sprint);
-					this.newSprint.push(sprint);
-				}
-			})
-		},(err:any)=>{
-			console.log(err);
-		});
-	}
-	getUnreadNotification(){
-		this._projectService.getUnreadNotification(this.currentUser._id).subscribe((res:any)=>{
-			// console.log("length=============>",res);
-			this.unreadNotification = res;
-			this.newNotification = this.unreadNotification.length;
-			// this.unreadNotification.length = this.newNotification;
-			console.log("count======================>",this.newNotification);
-		})
-	}
-
-	removeAvatar(file, index){
-		console.log(file, index);
-		this.url.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);
-	}
-	removeCommentImage(file, index){
-		console.log(file, index);
-		this.commentUrl.splice(index, 1);
-		if(this.files && this.files.length)
-			this.files.splice(index,1);
-		console.log(this.files);	
-	}
-
-	removeAlreadyUplodedFile(option){
-		this.newTask.images.splice(option,1);
-	}
-	close(){
-		this.editTaskForm.reset();
-		this.url = this.files = [];
-		// this.task.estimatedTime = " ";
-		// this.editTaskForm.estimatedTime = "";
-		$("#estTime").val(null);
-		$("#priority").val(null);
-		// this.task.priority = null;
-		// this.newTask.priority = null;
-	}
-	
-}

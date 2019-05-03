@@ -37,19 +37,16 @@ export class EditProjectComponent implements OnInit {
 	ProjectId;
 	url = '';
 	devId;
+	submitted = false;
 	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
 		this.updateForm = new FormGroup({
-			title: new FormControl('', Validators.required),
-			desc: new FormControl(''),
+			title: new FormControl('', [Validators.required,  Validators.maxLength(60)]),
+			desc: new FormControl('', [Validators.required,  Validators.maxLength(300)]),
 			uniqueId: new FormControl('' ),
-			deadline: new FormControl('' ),
-			clientEmail: new FormControl('' ),
-			clientFullName: new FormControl(''),
-			clientContactNo: new FormControl(''),
-			clientDesignation: new FormControl(''),
+			deadline: new FormControl('', Validators.required),
 			avatar:new FormControl(''),
 			Teams: new FormControl([])
 		});
@@ -61,6 +58,9 @@ export class EditProjectComponent implements OnInit {
 			
 
 		})
+		if(this.projectId){
+			this.editProject(this.projectId);		
+		}
 	}
 
 	ngViewAfterChecked(){
@@ -132,6 +132,7 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getAllDevelopersNotInProject(id){
+		console.log("kenu id hse============>",id);
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
 			console.log("hfghfjgh===============",this.availableDevelopers);
@@ -164,12 +165,16 @@ export class EditProjectComponent implements OnInit {
 			console.log("err in all projects in edit project component ====>" , err);
 		})
 	}
+
+
 	editProject(projectId){
 		this._projectService.getProjectById(projectId).subscribe((res:any)=>{
 			console.log("res of requested project in edit project component ====>" , res);
 			this.loader = false;
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
+			localStorage.setItem("teams" , JSON.stringify(this.availData));
+			// this.teams = true;
 			console.log("this . avail Data in edit projects ======>" , this.availData);
 			localStorage.setItem('editAvail' , JSON.stringify(true));
 			this.editAvail = true;
@@ -200,12 +205,19 @@ export class EditProjectComponent implements OnInit {
 		})
 
 	}
+	get f() { return this.updateForm.controls; }
+
 	updateProject(updateForm){
-		console.log(this.files,updateForm);
+		this.submitted = true;
+		if (this.updateForm.invalid) {
+			return;
+		}
+		// this.getAllProjectManagerNotInProject(this.projectId)
+		console.log("update details of project",this.files,updateForm);
 		console.log(updateForm.Teams);
 		// console.log("avail data in update form ====>" , this.availData);
 		// console.log('updateForm==============>',updateForm);
-		let newTeams = [];
+		var newTeams = [];
 		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
 		console.log("Update Team============>",newTeams);
 		updateForm.pmanagerId = [];
@@ -228,11 +240,10 @@ export class EditProjectComponent implements OnInit {
 		data.append('clientFullName', updateForm.clientFullName);
 		data.append('clientDesignation', updateForm.clientDesignation);
 		data.append('clientContactNo', updateForm.clientContactNo);
-		_.forEach(updateForm.pmanagerId, t => { data.append('pmanagerId', t) });
-		_.forEach(newTeams, t => { data.append('Teams', t) });
-		data.append('delete', updateForm.delete);
-		data.append('add', updateForm.add);
-		data.append('avatar', updateForm.avatar);
+		_.forEach(this.availData.pmanagerId, t => { data.append('pmanagerId', t._id) });
+		_.forEach(this.availData.Teams, t => { data.append('Teams', t._id) });
+		_.forEach(updateForm.delete, t => { data.append('delete', t) });
+		_.forEach(updateForm.add, t => { data.append('add', t) });
 		if(this.files && this.files.length>0){
 			data.append('avatar', this.files[0]);  
 		}
@@ -242,14 +253,20 @@ export class EditProjectComponent implements OnInit {
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
+			setTimeout(()=>{
+				window.location.reload();
+			},500);
 			console.log("response of update form  ====>" , res);
-			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
+			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
+			
 			this.url = '';
+
 			setTimeout(()=>{
 				this.availData = res;
 				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
 			},1000);
-			// this.router.navigate(['./edit-project/:id']);
+			this.updateForm.reset();
+			this.getAllDevelopersNotInProject(this.projectId);
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -300,6 +317,7 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	addDeveloper(event){
+
 		console.log(event);
 		this.projectTeam.push(event);
 		this.availData.add.push(event);
@@ -318,10 +336,11 @@ export class EditProjectComponent implements OnInit {
 			confirmButtonText: 'Yes,Delete it!',
 			showCloseButton: true
 		}).then((result) => {
+			console.log(result);
 			if (result.value) {
 				var body;
 				this.projectTeam.splice(_.findIndex(this.projectTeam, event), 1);
-				Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
+				// Swal.fire({type: 'success',title: 'Deleted Successfully',showConfirmButton:false,timer: 2000})
 				if(_.findIndex(this.dteam, function(o) { return o._id == event._id; }) == -1 ){
 					this.availData.delete.push(event);
 					this.availableDevelopers.push(event);
@@ -340,7 +359,6 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	removeProjectManager(event){
-		console.log(event);
 		console.log(event);
 		var id;
 		console.log(event);
@@ -374,7 +392,8 @@ export class EditProjectComponent implements OnInit {
 
 	clearSelection(event){
 		console.log(this.availData);
-		this.projectTeam = JSON.parse(localStorage.getItem('teams'));
+		window.location.reload();
+		this.projectTeam = JSON.parse(localStorage.getItem('teams')); 
 	}
 	openmodal(){
 
