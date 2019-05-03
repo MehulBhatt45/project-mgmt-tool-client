@@ -134,10 +134,19 @@
 								</p>
 							</div>
 							<div class="col-md-4">
-								<p  *ngIf="task.timelog1">
+								<p  *ngIf="!timeLog">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
 										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}}
+										<!-- {{getTime(task.timelog1.count)}} -->
+									</span>
+								</p>
+							</div>
+							<div class="col-md-4">
+								<p  *ngIf="timeLog">
+									<label><strong>Time Taken: &nbsp;</strong></label>
+									<span>
+										{{getHHMMTime(timeLog.difference?timeLog.difference:'00:00')}}
 										<!-- {{getTime(task.timelog1.count)}} -->
 									</span>
 								</p>
@@ -236,7 +245,7 @@
 			<div class="modal-content">
 
 				<div class="card card-cascade narrower modal-header view view-cascade "> 
-					<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
+					<h5 class="modal-title" id="itemModal"><span class="icon-note"></span>{{modalTitle}}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					</button>
 				</div>
@@ -292,14 +301,14 @@
 								<div class="form-group col-12">
 									<label for="assignTo">Sprint</label>
 									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
-										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 									</select>
 									<div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
 										<div *ngIf="f.sprint.errors.required">Sprint is required</div>
 									</div>
 									
 									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
-										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
+										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 									</select>
 									<div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
 										<div *ngIf="f.sprint.errors.required">Sprint is required</div>
@@ -342,14 +351,14 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 					<div id="refresh_icon" style="display: none;"> 
 						<span aria-hidden="true" class="fa fa-refresh refresh"></span>
 					</div>
 					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
-						<button class="btn btn-deep-orange" type="button" (click)="deleteTask(taskId)"style="padding: 17px;">Delete Task</button>
+						<button class="btn btn-primary" type="button" (click)="deleteTask(taskId)">Delete Task</button>
 					</div>
-					<button type="submit" id="save_changes" class="btn btn-default" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
+					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
 				</div>
 
 			</div>

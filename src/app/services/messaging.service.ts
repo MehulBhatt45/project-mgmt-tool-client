@@ -62,7 +62,7 @@ export class MessagingService {
             //this.updateToken(userId, token);
           },
           (err) => {
-            console.error('Unable to get permission to notify.', err);
+            // console.error('Unable to get permission to notify.', err);
           });
       }
 

@@ -357,8 +357,8 @@ export class MainTableViewComponent implements OnInit {
 		this.getEmptyTracks();
 		if(projectId!='all' && developerId == 'all'){
 			_.forEach(this.tasks, (project)=>{
-				console.log("jdfhjedfh===",projectId);
-				if(project.projectId._id == projectId){
+				console.log("project", project);
+				if(project.projectId._id ==  projectId){
 					_.forEach(this.tracks, (track)=>{
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
 							if(project.status == track.id && project.assignTo && project.assignTo._id == this.currentUser._id){
@@ -377,6 +377,7 @@ export class MainTableViewComponent implements OnInit {
 			_.forEach(this.tasks, (project)=>{
 				console.log(project);
 				_.forEach(this.tracks, (track)=>{
+					console.log(track);
 					if(project.status == track.id && project.assignTo && project.assignTo._id == developerId){
 						track.tasks.push(project);
 					}
