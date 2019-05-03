@@ -31,13 +31,10 @@
 					</div>
 				</div>
 				<div class="col-md-1" ></div>
-				<div class="col-md-4" >
+				<div class="col-md-4" *ngIf="availData">
 					<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
-						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.deadline.errors }">
+						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
 						<label for="date-picker-example" class="active">Deadline</label>
-						<div *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
-							<div *ngIf="f.deadline.errors.required">Project deadline is required</div>
-						</div>
 					</div>
 				</div>
 			</div>
