@@ -135,8 +135,10 @@ import { Component, OnInit, ViewChild,
 			
 
 			$('#daterange1').daterangepicker({
-				opens: 'left'
-			},function(start, end, label) {
+
+				opens: 'top'
+			},function(start, end) {
+				var input = $('#daterange1').val();
 				var fromDate = start.format('YYYY-MM-DD');
 				console.log("fromDate===============",fromDate);
 				var toDate = end.format('YYYY-MM-DD');
@@ -203,7 +205,7 @@ import { Component, OnInit, ViewChild,
 		}
 
 
-		
+
 
 
 
@@ -339,7 +341,7 @@ import { Component, OnInit, ViewChild,
 							console.log("log============---------",out);
 
 
-							
+
 
 
 						}
@@ -442,5 +444,21 @@ import { Component, OnInit, ViewChild,
 			},err=>{
 				console.log("userDate=======================",err);
 			})
+		}
+
+		getByMailDetails(event){
+
+			console.log("event==========",event);
+
+			var date = moment(event).format('YYYY-MM-DD');
+			console.log("event  of date ===>" , date);  
+
+			this._leaveService.getDetails(date).subscribe((res:any)=>{
+				console.log("userDate=======================",res);
+				
+			},err=>{
+				console.log("userDate=======================",err);
+			})
+
 		}
 	}
