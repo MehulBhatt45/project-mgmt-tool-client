@@ -21,7 +21,7 @@
 <div class="project_bord">
     <h3 class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe06a;"></span> Projects</h3>
     <div class="row">
-        <div class="col-md-3 margin-tb-20" *ngFor="let project of projects" >
+        <div class="col-md-4 col-sm-6 col-lg-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
               <div class="view view-cascade overlay" style="background-color: #e7ebee; box-shadow: none;">
                 <img  routerLink="/project-details/{{project._id}}" class="img-fluid title_image margin-auto width-80" src="{{path}}{{project.avatar}}" alt="Card image cap" onerror="this.src='assets/4.jpeg'">
@@ -30,19 +30,19 @@
                 </div>
                 <div class="tib">
                     <div class="row text-center margin-20">
-                        <div class="col-md-4">
+                        <div class="col-4">
                          <strong title="task" class="text-center">
                             <p><span class="icon-list mr-1"></span></p>
                             <p><span class="badge">{{getLength(project, 'TASK')}}</span></p>
                         </strong>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <strong title="Issue" class="text-center" > 
                             <p><span class="icon-energy mr-1"></span></p>
                             <p><span class="badge">{{getLength(project, 'ISSUE')}}</span></p>
                         </strong>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                      <strong title="Bug" class=" text-center">
                         <p><span class="icon-question mr-1"></span></p>
                         <p><span class="badge">{{getLength(project, 'BUG')}}</span></p>

@@ -36,9 +36,6 @@
 	max-width: 100%;
 	width: 100%;
 }
-h3{
-	text-align: center;
-}
 .selected{
 	display: none;
 }
@@ -81,7 +78,6 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 #exampleForm2 {
 	color: #000;
     font-size: 18px;
-    padding: inherit;
     color: #000;
 }
 .md-form {
@@ -155,9 +151,8 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 .total_leave{
 	display: inline-block;
 	width: 100%;
-	padding-top: 40px;
+	padding: 15px;
 }
-
 .avatar a {
     height: 60px;
     width: 60px;
@@ -241,4 +236,12 @@ input[type=text]::placeholder{
     border: none;
     padding: 2px 2px 11px 2px;
     background-color: #6c5d84;
+}
+
+/*responsive*/
+@media (max-width: 575px){
+	.nav-link{    
+		font-size: 12px;
+    line-height: 20px;
+}
 }

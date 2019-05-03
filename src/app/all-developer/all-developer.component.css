@@ -22,7 +22,7 @@ img{
   margin-right: 10px !important;
 }
 .dropdown .dropdown-menu .dropdown-item:hover, .dropdown .dropdown-menu .dropdown-item:active {
- background-color: #F44336 !important;
+ background-color: #b3b3b3 !important;
 }
 
 /*.img_section{
@@ -62,7 +62,7 @@ img{
   border-radius: 5px!important;
 }
 .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-  background-color: #372e5f !important;
+  background-color: #b3b3b3 !important;
   color: white;
 }
 .dropdown-content.open{

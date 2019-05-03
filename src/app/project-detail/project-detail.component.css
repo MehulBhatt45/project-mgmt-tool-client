@@ -265,7 +265,7 @@ table {
       border-radius: 5px!important;
     }
     .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-      background-color: #372e5f !important;
+      background-color: #b3b3b3 !important;
     }
     .dropdown-content.open{
       display: block !important;
@@ -445,8 +445,6 @@ table {
     width: 100px;
     padding:10px;
   }
-
-
   /*stop watch*/
 
   .timer-button-container{
@@ -481,4 +479,20 @@ table {
   }
   select.browser-default {
     display: -webkit-inline-box!important;
+  }
+
+  @media (max-width: 1199px){
+    .card-list button {
+      width: 0px;
+    }
+  }
+    @media (max-width: 1199px){
+    .card-list button {
+      width: 0px;
+    }
+  }
+    @media (max-width: 1199px){
+    .card-list button {
+      width: 0px;
+    }
   }

@@ -130,3 +130,15 @@
 .align-content-center.d-flex.flex-wrap{
   height: 100%;
 }
+.profile_image{
+  min-width: 100px;
+}
+.dev_name{
+  min-width: calc( 100% - 140px)
+}
+.dev_edit{
+  min-width: 20px;
+}
+.dev_delete{
+  min-width: 20px;
+}

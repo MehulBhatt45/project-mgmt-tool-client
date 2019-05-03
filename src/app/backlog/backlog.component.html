@@ -9,7 +9,7 @@
 
 <div class="project_bord">
 	<div class="row">
-		<div class="col-md-3 margin-tb-20" *ngFor="let sprint of sprints" style="margin-bottom: 20px;">
+		<div class="col-md-3 col-sm-4 col-xs-12 margin-tb-20" *ngFor="let sprint of sprints" style="margin-bottom: 20px;">
 			<div class="card card-cascade narrower">
 				<div style="background-color: #e7ebee; padding: 12px 10px">
 						<h4 class="card-title">{{sprint.title}} / {{sprint.status}}</h4>
@@ -94,9 +94,7 @@
 		<div class="modal-content">
 
 			<div class="modal-header">
-				<h5 _ngcontent-c4="" class="modal-title" id="exampleModalPreviewLabel" style="
-				color: purple;
-				"><span class="icon-pencile"></span> Edit Sprint</h5>
+				<h5 _ngcontent-c4="" class="card-header-title" id="exampleModalPreviewLabel"><span class="icon-pencil"></span> Edit Sprint</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
