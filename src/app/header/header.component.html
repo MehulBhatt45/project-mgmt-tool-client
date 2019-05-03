@@ -91,28 +91,29 @@
   </div>
   <div class="bottom_icon">
     <div class="second_icon">
+
       <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right" style="color: #181123;"><span class="icon-bell" style="font-size: 20px;" aria-hidden="true" >
-        <span class="notification_count animated bounce">
-          <span class="custom_badge ">{{newNotification}}</span>
+        <span class="notification_count animated bounce" *ngIf= "newNotification > 0">
+          <span class="custom_badge " >{{newNotification}}</span>
         </span>
       </span>
     </a>
-  </div> 
+  </div>
+</div> 
 
-  <div class="second_icon dropdown">
-    <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
-    <ul class="team-members">
-      <li id="login_details">
-        <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
-        <div class="dropdown-menu"> 
-          <a class="dropdown-item" (click)="logout()"><span class="icon-logout mr-1"></span> Log Out</a>
-          <a class="dropdown-item" routerLink="/userprofile"> <span class="icon-user mr-1"></span> My Profile</a>
-        </div>
-      </li> 
-    </ul>
-  </div> 
-</div>
-</div>
+<div class="second_icon dropdown">
+  <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
+  <ul class="team-members">
+    <li id="login_details">
+      <a href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="user_profile_pic"><img src="{{path}}{{currentUser.profilePhoto}}" class="img-rounded" onerror="this.src='assets/4.jpeg'" ></div></a>
+      <div class="dropdown-menu"> 
+        <a class="dropdown-item" (click)="logout()"><span class="icon-logout mr-1"></span> Log Out</a>
+        <a class="dropdown-item" routerLink="/userprofile"> <span class="icon-user mr-1"></span> My Profile</a>
+      </div>
+    </li> 
+  </ul>
+</div> 
+
 
 
 <!-- Select project -->
