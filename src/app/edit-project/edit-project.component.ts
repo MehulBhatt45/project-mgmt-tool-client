@@ -247,6 +247,9 @@ export class EditProjectComponent implements OnInit {
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 
+			setTimeout(()=>{
+				window.location.reload();
+			},500);
 			console.log("response of update form  ====>" , res);
 			
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
@@ -256,7 +259,6 @@ export class EditProjectComponent implements OnInit {
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
-		
 	}
 	deleteProject(projectId){
 		console.log(projectId);

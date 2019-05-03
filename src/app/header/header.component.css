@@ -344,3 +344,6 @@ nav.navbar.fixed-top.navbar-toggleable-md.navbar-dark.double-nav {
   margin: 0!important;
   padding: 0!important;
 }
+.modal-backdrop{
+  z-index: 10 !important;
+}

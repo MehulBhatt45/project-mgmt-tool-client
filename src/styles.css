@@ -1,4 +1,8 @@
 /*****Loader Css Start*****/
+.modal-backdrop{
+  z-index: 10 !important;
+}
+
 .loader {
   width: 80px;
   height: 80px;
