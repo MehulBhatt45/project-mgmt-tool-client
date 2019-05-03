@@ -71,7 +71,6 @@ export class NotificationComponent implements OnInit {
 			this.userNotification.reverse();
 			var start = new Date();
 			start.setTime(1532403882588);
-			console.log("plzzz avi jaje",this.userNotification);
 		})
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

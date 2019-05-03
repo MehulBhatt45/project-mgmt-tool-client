@@ -210,17 +210,37 @@
 														<div><img class="comment_profile" src="{{path}}{{currentUser.profilePhoto}}"  onerror="this.src='assets/4.jpeg'" >
 														</div></a>
 														<div class="comment_content">
-															<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
+															<div class="row">
+															<div class="col-sm-10">
+																<h5 class="mt-0 font-weight-bold " *ngIf="i.userId">
 																{{i.userId.name}}
 															</h5>
-															<span class="break" innerHtml="{{i.content}}">
-															</span>
-															<div class="row">
-																<div *ngFor="let img of i.images" class="col-sm-4">
-																	<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
-																		<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
-																	</a>
-																</div>
+														<span class="break" innerHtml="{{i.content}}">
+														</span>
+													</div>
+													<div class="col-sm-1">
+														<button type="button" class="btn btn-outline-secondary accepted" style="color: red;" (click)="focusOnTextArea(i)">
+														Reply</button>
+																<!-- <span aria-hidden="true" data-icon="&#xe05f;"></span> -->
+																<!-- <div class="comment-options">
+																	<ul class="options-list pre_edit">
+																		<li class="comment-reply">
+																			<span aria-hidden="true" data-icon="&#xe05f;"></span>
+																			<a href="#" class="reply-to-comment fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+
+
+																			</a>
+																		</li>
+																	</ul>
+																</div> -->
+															</div>
+														</div>
+															
+														<div class="row">
+															<div *ngFor="let img of i.images" class="col-sm-4">
+																<a [attr.data-lightbox]="i._id"  class="image_attachment" *ngIf="i.images.length>0" href="{{path}}{{img}}">
+																	<img src="{{path}}{{img}}" width="100%" height="150"  class="comment_img" style="margin-bottom: 7px;height: 150px;">
+																</a>
 															</div>
 														</div>
 													</div>
@@ -232,133 +252,134 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
 
-					<div *ngIf="comments && comments.length<=0">
-						<p>No comments on this be the first one to comments on...</p>
+				<div *ngIf="comments && comments.length<=0">
+					<p>No comments on this be the first one to comments on...</p>
+				</div>
+				<div>
+					<ckeditor class="ckeditor margin-left-15" style="width:100%;" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
+					<div class="btn btn-default mt-1 ml-0" (click)="commentImg.click()">
+						<span><span class="icon-arrow-up mr-1"></span> Upload image with comment</span>
+						<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
 					</div>
-					<div>
-						<ckeditor class="ckeditor margin-left-15" style="width:100%;" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
-						<div class="btn btn-default mt-1 ml-0" (click)="commentImg.click()">
-							<span><span class="icon-arrow-up mr-1"></span> Upload image with comment</span>
-							<input type="file" #commentImg name="commentImg" (change)="onSelectFile($event, 'comment')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-						</div>
-						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0"> <span class="icon-plus"></span> Add Comment</button>
-					</div>
-					<div *ngIf="commentUrl && commentUrl.length">
-						<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
-							<img class="avatar-image margin-auto" [src]="c" style="height: 150px; width: 150px;">
-							<div class="delete-team-member">
-								<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><span class="fas fa-trash fa-2x"></span></a>
-							</div>
+					<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0"> <span class="icon-plus"></span> Add Comment</button>
+				</div>
+				<div *ngIf="commentUrl && commentUrl.length">
+					<div class="text-center selected-avatar" *ngFor="let c of commentUrl; let ci=index;">
+						<img class="avatar-image margin-auto" [src]="c" style="height: 150px; width: 150px;">
+						<div class="delete-team-member">
+							<a href="javascript:void(0);" (click)="removeCommentImage(c, ci)"><span class="fas fa-trash fa-2x"></span></a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
 
-	<!-- Edit Modal -->
-	<div class="modal fade right" id="itemManipulationModel1" tabindex="-1" role="dialog" aria-labelledby="itemModal" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
+<!-- Edit Modal -->
+<div class="modal fade right" id="itemManipulationModel1" tabindex="-1" role="dialog" aria-labelledby="itemModal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
 
-			<div class="modal-content">
+		<div class="modal-content">
 
-				<div class="card card-cascade narrower modal-header view view-cascade "> 
-					<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					</button>
-				</div>
-				<div class="modal-body view view-cascade">
-					<div class="container">
-						<form style="width: 100%;" [formGroup]="editTaskForm">
-							<div class="form-group col-12"s>
-								<label for="title">Title</label>
-								<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title">
-							</div>
-							<div class="form-group col-12">
-								<label for="desc">Discription</label>
-								<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
-							</div>
-							<div class="row form-group col-12">
-								<button class="btn btn-default" (click)="fileUpload.click()">
-									<span class="icon-paper-clip mr-1"></span> Add Files
-									<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-								</button>
-							</div>
-							<div *ngIf="newTask.images && newTask.images.length>0">
-								<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-									<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-									<div class="delete-team-member">
-										<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
-									</div>
+			<div class="card card-cascade narrower modal-header view view-cascade "> 
+				<h5 class="modal-title text-center" id="itemModal">{{modalTitle}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				</button>
+			</div>
+			<div class="modal-body view view-cascade">
+				<div class="container">
+					<form style="width: 100%;" [formGroup]="editTaskForm">
+						<div class="form-group col-12"s>
+							<label for="title">Title</label>
+							<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title">
+						</div>
+						<div class="form-group col-12">
+							<label for="desc">Discription</label>
+							<textarea id="desc" formControlName="desc" [(ngModel)]="newTask.desc" class="form-control md-textarea"></textarea>
+						</div>
+						<div class="row form-group col-12">
+							<button class="btn btn-default" (click)="fileUpload.click()">
+								<span class="icon-paper-clip mr-1"></span> Add Files
+								<input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
+							</button>
+						</div>
+						<div *ngIf="newTask.images && newTask.images.length>0">
+							<div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
+								<img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
+								<div class="delete-team-member">
+									<a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
 								</div>
+							</div>
+						</div>
+						<div class="form-group col-12">
+							<label for="assignTo">Sprint</label>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
+								<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+							</select>
+							<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
+								<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+							</select>
+						</div>
+						<div  *ngIf="url && url.length">
+							<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
+								<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
+								<div class="delete-team-member">
+									<a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
+								</div>
+							</div>
+						</div>
+						<div class="row no-margin no-padding  border" >
+							<div class="form-group col-12 col-lg-6 pt-1">
+								<label for="assignTo">Assign To</label>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+								</select>
+								<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
+									<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
+								</select>
+							</div>
+							<div class="form-group col-12 col-lg-6 pt-1">
+								<label for="priority">Priority</label>
+								<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
+									<option value="4">Low</option>
+									<option value="3">Medium</option>
+									<option value="2">High</option>
+									<option value="1">Highest</option>
+								</select>
 							</div>
 							<div class="form-group col-12">
 								<label for="assignTo">Sprint</label>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
 								</select>
 								<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-									<option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+									<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
 								</select>
 							</div>
-							<div  *ngIf="url && url.length">
-								<div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-									<img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-									<div class="delete-team-member">
-										<a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
-									</div>
-								</div>
-							</div>
-							<div class="row no-margin no-padding  border" >
-								<div class="form-group col-12 col-lg-6 pt-1">
-									<label for="assignTo">Assign To</label>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="newTask.assignTo" [(ngModel)]="newTask.assignTo._id">
-										<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-									</select>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!newTask.assignTo">
-										<option *ngFor="let team of projectTeam" value="{{team._id}}">{{team.name}}</option>
-									</select>
-								</div>
-								<div class="form-group col-12 col-lg-6 pt-1">
-									<label for="priority">Priority</label>
-									<select class="browser-default custom-select custom-select-lg mb-1" id="priority" formControlName="priority" [(ngModel)]="newTask.priority">
-										<option value="4">Low</option>
-										<option value="3">Medium</option>
-										<option value="2">High</option>
-										<option value="1">Highest</option>
-									</select>
-								</div>
-								<div class="form-group col-12">
-									<label for="assignTo">Sprint</label>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="newTask.sprint" [(ngModel)]="newTask.sprint._id">
-										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
-									</select>
-									<select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!newTask.sprint">
-										<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}}</option>
-									</select>
-								</div>
-								<div class="form-group col-6">
-									<label for="dueDate">Due Days</label>
-									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
-								</div>
-
-								<div class="form-group col-6">
-									<label for="estimatedTime">Estimated Time</label>
-									<div class="md-form form-group">
-
-										<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
-									</div>
-								</div>
+							<div class="form-group col-6">
+								<label for="dueDate">Due Days</label>
+								<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control">
 							</div>
 
-						</form>
-					</div>
+							<div class="form-group col-6">
+								<label for="estimatedTime">Estimated Time</label>
+								<div class="md-form form-group">
+
+									<input placeholder="Estimated time in hrs.." type="text" id="estimatedTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="newTask.estimatedTime" autocomplete="off">
+								</div>
+							</div>
+						</div>
+
+					</form>
 				</div>
-				<div class="modal-footer">
+			</div>
+			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<div id="refresh_icon" style="display: none;"> 
 					<span aria-hidden="true" class="fa fa-refresh refresh"></span>
@@ -373,3 +394,54 @@
 	</div>
 
 </div>
+
+
+<!-- <span aria-hidden="true" data-icon="&#xe05f;"></span>
+
+<div class="comment-options">
+	<ul class="options-list pre_edit">
+		<li class="comment-reply">
+			<a href="#" class="reply-to-comment fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+
+				
+			</a>
+		</li>
+		<li class="comment-like">
+			<a href="#" data-liked="0" class="like-comment fkit_tip liked_0 tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+				<svg class="svg-icon-xs">
+					<use xlink:href="#heart-empty"></use>
+				</svg>
+				<span class="liked-times">0</span>
+			</a>
+		</li>
+		<li class="comment-link">
+			<a href="#comment-10979237" class="comment-link click-to-scroll fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+				<svg class="svg-icon-xs">
+					<use xlink:href="#link"></use>
+				</svg>
+			</a>
+		</li>
+		<li class="comment-tag tags_btn">
+			<a class="comment-link click-to-scroll fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+				<svg class="svg-icon-xs">
+					<use xlink:href="#tag"></use>
+				</svg>
+			</a>
+		</li>
+		<li class="comment-edit">
+			<a href="#" class="edit_comment_button fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+				<svg class="svg-icon-xs">
+					<use xlink:href="#pencil"></use>
+				</svg>
+			</a>
+		</li>
+		<li class="comment-delete"><a href="https://freedcamp.com/Raoinfotech_0kC/projectmgmttool_4u2/comments_module/delete/10979237" data-callback="delete_comment" class="delete_comment delete fkit_tip tooltipstered" data-tip-options="{&quot;side&quot;:&quot;bottom&quot;}">
+			<svg class="svg-icon-xs">
+				<use xlink:href="#trash-simple"></use>
+			</svg>
+		</a>
+	</li>
+</ul>
+</div> -->
+
+

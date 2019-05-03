@@ -304,7 +304,6 @@ export class ChildComponent  implements OnInit{
 
   public Editor = DecoupledEditor;
   public configuration = { placeholder: 'Enter Comment Text...'};
-
   public onReady( editor ) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
@@ -394,18 +393,20 @@ export class ChildComponent  implements OnInit{
     this.getAllCommentOfTask(task._id);
     $('#fullHeightModalRight').modal('show');
   }
-
-
   editTask(task){
     this.newTask = task;
     console.log("newTask",this.newTask);
     console.log("title===>",this.newTask.title);
     console.log("title2===>",this.newTask.assignTo);
     console.log("title3===>",this.newTask.sprint);
-
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
+  }
+  focusOnTextArea(comment){
+    $('.ck.ck-content.ck-editor__editable').focus();
+    console.log("click===========>",comment);
+    this.model.editorData = "<blockquote><q>" + comment.content + "</q></blockquote><p></p>"
   }
   updateStatus(newStatus, data){
     if(newStatus=='complete'){
@@ -441,9 +442,6 @@ export class ChildComponent  implements OnInit{
 
     }
   }
-
-
-
   updateTask(task){
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
@@ -499,8 +497,6 @@ export class ChildComponent  implements OnInit{
   getEmptyTask(){
     return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
-  
-
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
     if(difference != '00:00'){
@@ -519,8 +515,6 @@ export class ChildComponent  implements OnInit{
     }
     return '00:00';
   }
-
-
   getTime(counter){
     var milliseconds = ((counter % 1000) / 100),
     seconds = Math.floor((counter / 1000) % 60),
@@ -528,7 +522,6 @@ export class ChildComponent  implements OnInit{
     hours = Math.floor((counter / (1000 * 60 * 60)) % 24);
     return hours + ":" + minutes + ":" + seconds ;
   }
-
   deleteTask(taskId){
     console.log("taskId of delete button",taskId);
     const swalWithBootstrapButtons = Swal.mixin({
