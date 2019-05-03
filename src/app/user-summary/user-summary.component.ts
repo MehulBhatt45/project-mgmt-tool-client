@@ -59,6 +59,9 @@ export class UserSummaryComponent implements OnInit {
 	Team;
 	uid;
 	pid;
+	sprints;
+	activeSprint:any;
+	sprintInfo:any;
 	
 
 
@@ -79,6 +82,7 @@ export class UserSummaryComponent implements OnInit {
 
 	ngOnInit() {
 		this.getEmptyTracks();
+		this.getSprint(this.projectId);
 	}
 
 	getEmptyTracks(){
@@ -250,20 +254,21 @@ export class UserSummaryComponent implements OnInit {
 
 							data: this.getTaskCountEachTrack(this.tracks),
 							backgroundColor: [
-							'rgba(255, 99, 132, 0.2)',
-							'rgba(54, 162, 235, 0.2)',
-							'rgba(255, 206, 86, 0.2)',
-							'rgba(75, 192, 192, 0.2)'
+								'rgba(24, 17, 35, 0.2)',
+								'rgba(57, 152, 197, 0.2)',
+								'rgba(145, 185, 204, 0.2)',
+								'rgba(202, 203, 204, 0.2)'
 
-							],
-							borderColor: [
-							'rgba(255,99,132,1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(255, 206, 86, 1)',
-							'rgba(75, 192, 192, 1)'
+								],
+								borderColor: [
+								'rgba(24, 17, 35,1)',
+								'rgba(57, 152, 197, 1)',
+								'rgba(145, 185, 204, 1)',
+								'rgba(202, 203, 204, 1)'
 
-							],
-							borderWidth: 1
+								],
+								borderWidth: 1,
+								hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
 						}]
 					},
 					options: {
@@ -331,8 +336,8 @@ export class UserSummaryComponent implements OnInit {
 						datasets: [{
 							data: this.getTaskCountEachTrack(this.tracks),
 
-							backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-							hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
+							backgroundColor: ["#181123", "#3998c5", "#91b9cc", "#cacbcc"],
+							hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
 						}]
 					},
 					options: {
@@ -389,5 +394,24 @@ export class UserSummaryComponent implements OnInit {
 		});
 		console.log("cnt=-=-===============",count);
 		return count;
+	}
+
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				console.log(sprint._id);
+				if(sprint.status == 'Active'){
+					this.activeSprint = sprint;
+					console.log("active sprint",this.activeSprint._id);
+					this.sprintInfo = sprint;
+					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
+					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+				}
+			})
+		},(err:any)=>{
+			console.log(err);
+		});
 	}
 }
