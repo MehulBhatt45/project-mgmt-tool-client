@@ -405,6 +405,7 @@ export class ChildComponent  implements OnInit{
     console.log(task.status);
     this.getAllCommentOfTask(task._id);
     $('#fullHeightModalRight').modal('show');
+    
   }
 
 
@@ -429,6 +430,7 @@ export class ChildComponent  implements OnInit{
           type: 'info',
           title: "Task is shifted to complete from testing" ,
           showConfirmButton:false,timer: 2000})
+        this.getProject(this.projectId);
       },err=>{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log(err);
@@ -446,6 +448,7 @@ export class ChildComponent  implements OnInit{
           type: 'info',
           title: uniqueId  + " " +res.timelog[n -1].operation ,
           showConfirmButton:false,timer: 3000})
+        this.getProject(this.projectId);
       },(err:any)=>{
         Swal.fire('Oops...', 'Something went wrong!', 'error')
         console.log(err);
@@ -709,7 +712,7 @@ export class ChildComponent  implements OnInit{
       data.startText = 'RESUME';
 
       window.localStorage.setItem("isTimerRunning","null");
-      console.log(data.timelog1.count);
+      console.log("res-=-=",data.timelog1.count);
       clearInterval(data.timerRef);
     }
     this.timerUpdate(data);
