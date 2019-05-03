@@ -253,9 +253,9 @@ export class EditProjectComponent implements OnInit {
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
-			setTimeout(()=>{
-				window.location.reload();
-			},500);
+			// setTimeout(()=>{
+			// 	window.location.reload();
+			// },500);
 			console.log("response of update form  ====>" , res);
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			
@@ -271,7 +271,7 @@ export class EditProjectComponent implements OnInit {
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
-		this.getProjectById(this.projectId);
+		this.getProjectById(this.ProjectId);
 	}
 	deleteProject(projectId){
 		console.log(projectId);
