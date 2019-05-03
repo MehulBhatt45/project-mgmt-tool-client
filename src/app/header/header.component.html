@@ -91,10 +91,12 @@
   </div>
   <div class="bottom_icon">
     <div class="second_icon">
-      <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right"><i class="fa fa-bell fa-2x"  aria-hidden="true"  >
-        <span class="custom_badge" *ngIf = "newNotification > 0 && newNotification > 1">{{newNotification}}</span>
-      </i>
-      
+
+      <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right" style="color: #181123;"><span class="icon-bell" style="font-size: 20px;" aria-hidden="true" >
+        <span class="notification_count animated bounce" *ngIf= "newNotification > 0">
+          <span class="custom_badge " >{{newNotification}}</span>
+        </span>
+      </span>
     </a>
   </div>
 </div> 
