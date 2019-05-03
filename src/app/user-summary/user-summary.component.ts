@@ -59,8 +59,16 @@ export class UserSummaryComponent implements OnInit {
 	Team;
 	uid;
 	pid;
-	
-
+	sprints;
+	activeSprint:any;
+	sprintInfo:any;
+	selectedSprint:"all";
+	allCount: any;
+	currentsprintId;
+	total:any;
+	round:any;
+	public myChart1: Chart;
+	public myChart: Chart;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute, private activatedRoute: ActivatedRoute) {
 		this.route.params.subscribe(param=>{
@@ -79,6 +87,7 @@ export class UserSummaryComponent implements OnInit {
 
 	ngOnInit() {
 		this.getEmptyTracks();
+		this.getSprint(this.projectId);
 	}
 
 	getEmptyTracks(){
@@ -240,110 +249,111 @@ export class UserSummaryComponent implements OnInit {
 				})
 
 
-				var ctx = document.getElementById("myChart");
-				var myChart = new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: ["to do", "In Progress", "testing", "Complete"],
-						datasets: [{
-							label: '# of Tasks',
+				// var ctx = document.getElementById("myChart");
+				// var myChart = new Chart(ctx, {
+				// 	type: 'bar',
+				// 	data: {
+				// 		labels: ["to do", "In Progress", "testing", "Complete"],
+				// 		datasets: [{
+				// 			label: '# of Tasks',
 
-							data: this.getTaskCountEachTrack(this.tracks),
-							backgroundColor: [
-							'rgba(255, 99, 132, 0.2)',
-							'rgba(54, 162, 235, 0.2)',
-							'rgba(255, 206, 86, 0.2)',
-							'rgba(75, 192, 192, 0.2)'
+				// 			data: this.getTaskCountEachTrack(this.tracks),
+				// 			backgroundColor: [
+				// 				'rgba(24, 17, 35, 0.2)',
+				// 				'rgba(57, 152, 197, 0.2)',
+				// 				'rgba(145, 185, 204, 0.2)',
+				// 				'rgba(202, 203, 204, 0.2)'
 
-							],
-							borderColor: [
-							'rgba(255,99,132,1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(255, 206, 86, 1)',
-							'rgba(75, 192, 192, 1)'
+				// 				],
+				// 				borderColor: [
+				// 				'rgba(24, 17, 35,1)',
+				// 				'rgba(57, 152, 197, 1)',
+				// 				'rgba(145, 185, 204, 1)',
+				// 				'rgba(202, 203, 204, 1)'
 
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
+				// 				],
+				// 				borderWidth: 1,
+				// 				hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
+				// 		}]
+				// 	},
+				// 	options: {
 
-						scales: {
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
-
-
-				var ctxL = document.getElementById("lineChart")
-				var myLineChart = new Chart(ctxL, {														
-					type: 'line',
-					data: {
-						labels: ["To Do", "In Progress", "Testing", "Complete"],
-						datasets: [{
-							label: "Highest Priority",
-							data: this.getTaskPriority(1,this.tracks),
-
-							borderColor: [
-							'#DC143C',
-							],
-							borderWidth: 2
-						}
-
-						]
-					},
-					options: {
-						responsive: true
-					}
-				});
-
-				var ctxL = document.getElementById("lineChart1")
-				var myLineChart = new Chart(ctxL, {
-					type: 'line',
-					data: {
-						labels: ["To Do", "In Progress", "Testing", "Complete"],
-						datasets: [{
-							label: "High Priority",
-							data: this.getTaskPriority(2,this.tracks),
-
-							borderColor: [
-							'#ff8100',
-							],
-							borderWidth: 2
-						}
-
-						]
-					},
-					options: {
-						responsive: true
-					}
-				});
-
-				var ctxP = document.getElementById("pieChart5");
-				var myPieChart = new Chart(ctxP, {
-					type: 'pie',
-					data: {
-						labels: ["To Do", "In Progress", "Testing", "Complete"],
-						datasets: [{
-							data: this.getTaskCountEachTrack(this.tracks),
-
-							backgroundColor: ["#ff0000", "#ff8100", "#ffee21", "#0087ff"],
-							hoverBackgroundColor: ["lightgray", "lightgray", "gray", "gray"]
-						}]
-					},
-					options: {
-						responsive: true,
-						legend:{
-							position:"left",
+				// 		scales: {
+				// 			yAxes: [{
+				// 				ticks: {
+				// 					beginAtZero: true
+				// 				}
+				// 			}]
+				// 		}
+				// 	}
+				// });
 
 
-						}
-					}
-				});
+				// var ctxL = document.getElementById("lineChart")
+				// var myLineChart = new Chart(ctxL, {														
+				// 	type: 'line',
+				// 	data: {
+				// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+				// 		datasets: [{
+				// 			label: "Highest Priority",
+				// 			data: this.getTaskPriority(1,this.tracks),
+
+				// 			borderColor: [
+				// 			'#DC143C',
+				// 			],
+				// 			borderWidth: 2
+				// 		}
+
+				// 		]
+				// 	},
+				// 	options: {
+				// 		responsive: true
+				// 	}
+				// });
+
+				// var ctxL = document.getElementById("lineChart1")
+				// var myLineChart = new Chart(ctxL, {
+				// 	type: 'line',
+				// 	data: {
+				// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+				// 		datasets: [{
+				// 			label: "High Priority",
+				// 			data: this.getTaskPriority(2,this.tracks),
+
+				// 			borderColor: [
+				// 			'#ff8100',
+				// 			],
+				// 			borderWidth: 2
+				// 		}
+
+				// 		]
+				// 	},
+				// 	options: {
+				// 		responsive: true
+				// 	}
+				// });
+
+				// var ctxP = document.getElementById("pieChart5");
+				// var myPieChart = new Chart(ctxP, {
+				// 	type: 'pie',
+				// 	data: {
+				// 		labels: ["To Do", "In Progress", "Testing", "Complete"],
+				// 		datasets: [{
+				// 			data: this.getTaskCountEachTrack(this.tracks),
+
+				// 			backgroundColor: ["#181123", "#3998c5", "#91b9cc", "#cacbcc"],
+				// 			hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
+				// 		}]
+				// 	},
+				// 	options: {
+				// 		responsive: true,
+				// 		legend:{
+				// 			position:"left",
+
+
+				// 		}
+				// 	}
+				// });
 
 				this.loader = false;
 
@@ -354,6 +364,139 @@ export class UserSummaryComponent implements OnInit {
 
 		},1000);
 
+	}
+
+	filterTracks(sprintId){ 
+		this.getEmptyTracks();
+		this.selectedSprint = sprintId;
+		this.currentsprintId = sprintId;
+		console.log("sprintId",this.currentsprintId);
+		_.forEach(this.project , (task)=>{
+			_.forEach(this.tracks , (track)=>{
+				if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
+					if(task.sprint._id == sprintId && track.id == task.status ){
+						track.tasks.push(task);
+					}
+				}else{
+					if(task.status == track.id ){
+						track.tasks.push(task);
+					}
+				}
+			})
+		})
+		var completedTask=this.getCompletedTask("complete");
+		var projectLength=this.getTask();
+		this.allCount = projectLength;
+		console.log('this.allCount=================>',this.allCount);
+		var allcompleteproject = completedTask*100/ projectLength;
+		this.total=allcompleteproject;
+		this.round = Math.round(this.total);
+		var ctx = document.getElementById("myChart");
+		if (this.myChart1) this.myChart1.destroy();
+		this.myChart1 = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ["to do", "In Progress", "testing", "Complete"],
+				datasets: [{
+					label: '# of Tasks',
+					data: this.getTaskCountEachTrack(this.tracks),
+					backgroundColor: [
+					'rgba(24, 17, 35, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)'
+
+					],
+					borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)'
+
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		});
+		var ctxL = document.getElementById("lineChart")
+		var myLineChart = new Chart(ctxL, {
+			type: 'line',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					label: "Highest Priority",
+					data: this.getTaskPriority(1,this.tracks),
+
+					borderColor: [
+					'#DC143C',
+					],
+					borderWidth: 2
+				}
+				]
+			},
+			options: {
+				responsive: true
+			}
+		});
+		var ctxL = document.getElementById("lineChart1")
+		var myLineChart = new Chart(ctxL, {
+			type: 'line',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					label: "High Priority",
+					data: this.getTaskPriority(2,this.tracks),
+
+					borderColor: [
+					'#ff8100',
+					],
+					borderWidth: 2
+				}
+
+				]
+			},
+			options: {
+				responsive: true
+			}
+		});
+		var ctxP = document.getElementById("pieChart5");
+		if (this.myChart) this.myChart.destroy();
+		this.myChart = new Chart(ctxP, {
+			type: 'pie',
+			data: {
+				labels: ["To Do", "In Progress", "Testing", "Complete"],
+				datasets: [{
+					data: this.getTaskCountEachTrack(this.tracks), 
+					backgroundColor: ["#181123", "#3998c5", "#91b9cc", "#cacbcc"],
+					hoverBackgroundColor: ["gray", "gray", "gray", "gray"]
+				}]
+			},
+			options: {
+				responsive: true,
+				legend:{
+					position:"left",
+					labels:{
+
+						boxwidth:12
+					}
+				}
+			}
+		});
+	}
+	
+	getCompletedTask(status){
+		var sprint = this.selectedSprint;
+		return _.filter(this.project, function(o) { if (o.sprint._id == sprint && o.status == status) return o }).length;
 	}
 
 	getTaskCountEachTrack(tracks){
@@ -389,5 +532,24 @@ export class UserSummaryComponent implements OnInit {
 		});
 		console.log("cnt=-=-===============",count);
 		return count;
+	}
+
+	getSprint(projectId){
+		this._projectService.getSprint(projectId).subscribe((res:any)=>{
+			console.log("sprints in project detail=====>>>>",res);
+			this.sprints = res;
+			_.forEach(this.sprints, (sprint)=>{
+				console.log(sprint._id);
+				if(sprint.status == 'Active'){
+					this.activeSprint = sprint;
+					console.log("active sprint",this.activeSprint._id);
+					this.sprintInfo = sprint;
+					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
+					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+				}
+			})
+		},(err:any)=>{
+			console.log(err);
+		});
 	}
 }
