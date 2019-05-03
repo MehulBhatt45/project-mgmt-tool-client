@@ -7,6 +7,14 @@
 				</div>
 			</div>
 		</div>
+		<div class="row mt-1" *ngIf="sprints">
+			<div class="md-form form-group col-2">
+				<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
+					<option *ngIf="activeSprint">{{activeSprint.title}}{{activeSprint.status}}</option>
+					<option *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
+				</select>
+			</div>
+		</div>
 		
 		<div class="row">
 			<div class="col-sm-6 top" *ngIf="project">
