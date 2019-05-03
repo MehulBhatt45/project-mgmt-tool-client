@@ -34,7 +34,8 @@ a.dropdown-item.btn-floating {
     line-height: 28px;
     margin-bottom: 0 !important;
     float: left!important;
-    background-color: #372e5e;
+    background-color: #181123;
+    color: #fff;
 }
 .dropdown-menu.show {
     display: block !important;
@@ -54,4 +55,15 @@ button.btn.btn-default.progress_summary {
 .btn-group.dropleft.float-right .btn-floating i{
     width: auto;
     line-height: 26px;
+}
+.btn-outline-default{
+    border: 2px solid #3998c5;
+    color: #3998c5!important;
+}
+.modal-footer {
+    padding: 5px;
+    border: none;
+}
+..card-title {
+     margin-bottom: 0!important; 
 }
