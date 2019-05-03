@@ -59,7 +59,7 @@ export class EditProjectComponent implements OnInit {
 
 		})
 		if(this.projectId){
-			this.editProject(this.projectId);		
+			this.getProject(this.projectId);		
 		}
 	}
 
@@ -83,7 +83,7 @@ export class EditProjectComponent implements OnInit {
 			this.timePicked();
 		}
 		if(this.projectId){
-			this.editProject(this.projectId);		
+			this.getProject(this.projectId);		
 		}
 		this.getProjects();
 		this.getAllDevelopers();
@@ -132,7 +132,6 @@ export class EditProjectComponent implements OnInit {
 	}
 
 	getAllDevelopersNotInProject(id){
-		console.log("kenu id hse============>",id);
 		this._projectService.getUsersNotInProject(id).subscribe((res:any)=>{
 			this.availableDevelopers = res;
 			console.log("hfghfjgh===============",this.availableDevelopers);
@@ -167,11 +166,11 @@ export class EditProjectComponent implements OnInit {
 	}
 
 
-	editProject(projectId){
+	getProject(projectId){
 		this._projectService.getProjectById(projectId).subscribe((res:any)=>{
 			console.log("res of requested project in edit project component ====>" , res);
 			this.loader = false;
-			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false,timer: 2000})
+			Swal.fire({type: 'success',title: 'Project found Successfully',showConfirmButton:false,timer: 2000})
 			this.availData = res;
 			localStorage.setItem("teams" , JSON.stringify(this.availData));
 			// this.teams = true;
@@ -183,10 +182,11 @@ export class EditProjectComponent implements OnInit {
 
 			console.log("err in requested project in edit project component ====>" , err);
 		})
+
 	}
 
 	getProjectById(id){
-		this.loader = true;
+		this.loader = false;
 		console.log("id--=-=-=-{}{}{}",id);
 		this._projectService.getProjectById(id).subscribe(res=>{
 			this.availData = res;
@@ -212,11 +212,9 @@ export class EditProjectComponent implements OnInit {
 		if (this.updateForm.invalid) {
 			return;
 		}
-		// this.getAllProjectManagerNotInProject(this.projectId)
+
 		console.log("update details of project",this.files,updateForm);
 		console.log(updateForm.Teams);
-		// console.log("avail data in update form ====>" , this.availData);
-		// console.log('updateForm==============>',updateForm);
 		var newTeams = [];
 		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
 		console.log("Update Team============>",newTeams);
@@ -236,10 +234,6 @@ export class EditProjectComponent implements OnInit {
 		data.append('desc', updateForm.desc);
 		data.append('uniqueId', updateForm.uniqueId);
 		data.append('deadline', updateForm.deadline);
-		data.append('clientEmail' , updateForm.clientEmail);
-		data.append('clientFullName', updateForm.clientFullName);
-		data.append('clientDesignation', updateForm.clientDesignation);
-		data.append('clientContactNo', updateForm.clientContactNo);
 		_.forEach(this.availData.pmanagerId, t => { data.append('pmanagerId', t._id) });
 		_.forEach(this.availData.Teams, t => { data.append('Teams', t._id) });
 		_.forEach(updateForm.delete, t => { data.append('delete', t) });
@@ -248,30 +242,22 @@ export class EditProjectComponent implements OnInit {
 			data.append('avatar', this.files[0]);  
 		}
 		console.log('data====================================>',data);
-
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
-			// setTimeout(()=>{
-			// 	window.location.reload();
-			// },500);
-			console.log("response of update form  ====>" , res);
-			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
-			
-			this.url = '';
-
 			setTimeout(()=>{
-				this.availData = res;
-				localStorage.setItem('projectAvatar', JSON.stringify(this.projectAvatar));
-			},1000);
-			this.updateForm.reset();
-			this.getAllDevelopersNotInProject(this.projectId);
+				window.location.reload();
+			},500);
+			console.log("response of update form  ====>" , res);
+			
+			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
+			this.getProjectById(res._id);
+			this.url = '';
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 		})
-		this.getProjectById(this.ProjectId);
 	}
 	deleteProject(projectId){
 		console.log(projectId);
@@ -322,7 +308,6 @@ export class EditProjectComponent implements OnInit {
 		this.projectTeam.push(event);
 		this.availData.add.push(event);
 	}
-
 	removeDeveloper(event){
 		console.log(event);
 		var id;

@@ -346,10 +346,11 @@ a.btn-floating.btn-action i{
    display: none;
    z-index: 999;
    background-color: #fff;
-   height: 200px;
-   width: 400px; 
-   top: -46px;
-   left: 15px;
+   width: 100%; 
+   height: auto;
+   top: -30px;
+   left: 0px;
+   right: 0px;
    border-radius: 5px;
    color: black;
 }
@@ -364,7 +365,7 @@ a.btn-floating.btn-action i{
     display: block;
 }
 .dropdown-menu.show {
-    display: block !important;
+    display: inline-flex !important;
     border: none;
     min-width: auto !important
 }

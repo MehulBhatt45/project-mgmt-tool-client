@@ -137,13 +137,6 @@ table {
   font-size: 19px;
   /*height: 15px;*/
 }
-.float-right {
-  float: left!important;
-  width: 100px;
-}
-.float-left{
-  float: right !important;
-}
 .icon_check{
   padding: 0;
 }
@@ -323,8 +316,8 @@ table {
       }
     }
     .modal-header {
-      background-color: #372e5f;
-      color: white;
+      /*background-color: #372e5f;*/
+      color: #000;
     }
 
     .dropdown{

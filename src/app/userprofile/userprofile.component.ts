@@ -124,8 +124,7 @@ export class UserprofileComponent implements OnInit {
 		this.getProjectByPmanagerId();
 	}
 	projectSelected(item){
-		// console.log("item",item);
-		// this.ProjectIdTest = item._id;
+		
 		if(item && item._id){
 			_.forEach(item.Teams,(all)=>{
 				console.log("all",all._id);
@@ -136,7 +135,6 @@ export class UserprofileComponent implements OnInit {
 
 			$(".progress").addClass("abc");
 			setTimeout(()=>{
-				// this.loader = false;
 				$(".progress").removeClass("abc");
 				// this.task.projectId = item._id;	
 				this.developers = this.projects[_.findIndex(this.projects, {_id: item._id})].Teams;

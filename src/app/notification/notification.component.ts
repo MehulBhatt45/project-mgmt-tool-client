@@ -72,7 +72,6 @@ export class NotificationComponent implements OnInit {
 			this.userNotification.reverse();
 			var start = new Date();
 			start.setTime(1532403882588);
-			console.log("plzzz avi jaje",this.userNotification);
 		})
 		function custom_sort(a, b) {
 			return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -83,12 +82,21 @@ export class NotificationComponent implements OnInit {
 		console.log("leave ==>",leave);	
 	}
 	updateNotificationApprovedStatus(leaveId,leaveStatus){
-		this._leaveService.updateNotificationApprovedStatus(leaveId,leaveStatus).subscribe((res:any)=>{
-			console.log("leaveid------------------->",leaveId);
-			console.log("leaveStatus===========>",leaveStatus);
-			console.log("Approved=======>",res);
-			// this.pmStatus = res.leaveStatus;
-			// console.log("pmStatus=============>",this.pmStatus);
+		Swal.fire({
+			title: 'Are you sure?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No',
+			reverseButtons: true
+		}).then((result) => {
+			this._leaveService.updateNotificationApprovedStatus(leaveId,leaveStatus).subscribe((res:any)=>{
+				this.pmStatus = res.leaveStatus;
+				console.log("pmStatus=============>",this.pmStatus);
+			},err=>{
+				console.log(err);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+			})
 		})
 	}
 
