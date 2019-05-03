@@ -1,7 +1,7 @@
 		<p class="h4 mb-1">Team Member Profile</p>
 		<p class="h5 mb-1 text-left">Project Manager</p>
 		<div class="row">
-			<div class="col-md-4" *ngFor="let pManager of pro.pmanagerId">
+			<div class="col-md-4" *ngFor="let pManager of pmanagerId">
 				<div class="border mb-1">
 					<div class="row">
 						<div class="col-md-3">
@@ -18,12 +18,8 @@
 								<p style="font-size: 14px; margin-bottom: 0px;">{{pManager.userRole}}</p>
 							</div>
 						</div>
-						<!-- <div class="col-md-1">
-							<a routerLink="/editprofile/{{pManager._id}}" class="icon_for_action"><span class="icon-pencil" style="color: black;"></span></a>
-						</div> -->
 						<div class="col-md-1">
-							<a (click)="deleteDeveloper(pManager)" class="icon_for_action"><span class="icon-trash"  style="color: black;"></span></a>
-
+							<a (click)="deleteProjectManager(pManager)" class="icon_for_action"><span class="icon-trash"  style="color: black;"></span></a>
 						</div>
 					</div>
 				</div>
@@ -48,12 +44,8 @@
 								<p style="font-size: 14px; margin-bottom: 0px;">{{team.userRole}}</p>
 							</div>
 						</div>
-						<!-- <div class="col-md-1">
-							<a routerLink="/editprofile/{{team._id}}" class="icon_for_action"><span class="icon-pencil" style="color: black;"></span></a>
-						</div> -->
 						<div class="col-md-1">
 							<a (click)="deleteDeveloper(team)" class="icon_for_action"><span class="icon-trash"  style="color: black;"></span></a>
-
 						</div>
 					</div>
 				</div>
