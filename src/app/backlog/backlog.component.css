@@ -67,3 +67,12 @@ button.btn.btn-default.progress_summary {
 ..card-title {
      margin-bottom: 0!important; 
 }
+/*responsive*/
+@media(max-width: 575px){
+    .project_name h1{
+        font-size: 20px;
+    }
+    .sprint_button button{
+        padding: 10px!important;
+    }
+}

@@ -137,13 +137,6 @@ table {
   font-size: 19px;
   /*height: 15px;*/
 }
-.float-right {
-  float: left!important;
-  width: 100px;
-}
-.float-left{
-  float: right !important;
-}
 .icon_check{
   padding: 0;
 }
@@ -369,6 +362,7 @@ table {
   .dropdown-menu a.dropdown-item {
     font-size: 15px;
     padding: 7px;
+    box-shadow: none;
   }
   .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
     background-color: #b3b3b3!important;
@@ -475,10 +469,6 @@ table {
   }
   .sprint_button{
     float: right;
-    display: -webkit-inline-box;
-  }
-  select.browser-default {
-    display: -webkit-inline-box!important;
   }
 
   @media (max-width: 1199px){

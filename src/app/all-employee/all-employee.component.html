@@ -8,7 +8,7 @@
 	</div>
 	<div class="col-md-3 all_prjct_drpdown">
 		<div class="form-group">
-			<select class="browser-default custom-select custom-select-lg mb-3" style="width: 378px;" id="projectId" *ngIf="projects" (change)="getDeveloper( trackChangeDeveloperWise = $event.target.value)">
+			<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="getDeveloper( trackChangeDeveloperWise = $event.target.value)">
 				<option value="all" selected>All Projects</option>
 				<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 			</select>
@@ -39,12 +39,14 @@
 						<p style="font-size: 14px; margin-bottom: 0px;">{{developer.userRole}}</p>
 						</div>
 					</div>
+					<div class="icons">
 					<div class="dev_edit">
-						<a routerLink="/editprofile/{{developer._id}}" class="icon_for_action"><span class="icon-pencil" style="color: black;"></span></a>
+						<a routerLink="/editprofile/{{developer._id}}"><span class="icon-pencil" style="color: black;"></span></a>
 					</div>
 					<div class="dev_delete">
-						<a (click)="deleteEmployee(developer._id)" class="icon_for_action"><span class="icon-trash"  style="color: black;"></span></a>
+						<a (click)="deleteEmployee(developer._id)"><span class="icon-trash"  style="color: black;"></span></a>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
