@@ -62,10 +62,10 @@ export class EditprofileComponent implements OnInit {
 
 	updateProfile(editEmployeeForm){
 		console.log('jkfdg');
-		this.submitted = true;
-		if (this.editEmployeeForm.invalid) {
-			return;
-		}
+		// this.submitted = true;
+		// if (this.editEmployeeForm.invalid) {
+		// 	return;
+		// }
 		if(this.currentUser.userRole == "admin"){
 
 			console.log(this.files);
