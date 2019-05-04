@@ -21,6 +21,9 @@
 </div>
 <div class="project_bord">
     <h3 class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe06a;"></span> Projects</h3>
+    <div *ngIf = "!projects.length">
+        <p style="text-align: center;">No Projects Found</p>
+    </div>
     <div class="row">
         <div class="col-md-4 col-sm-6 col-lg-3 margin-tb-20" *ngFor="let project of projects" >
             <div class="card card-cascade narrower">
