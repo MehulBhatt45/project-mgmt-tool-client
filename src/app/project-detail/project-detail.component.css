@@ -195,6 +195,7 @@ table {
   margin-left: 5px;
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .due_date_sorting_btn, 

@@ -30,3 +30,8 @@
   max-width: 100%;
   object-fit: cover;
 }
+.pdf_img img{
+  margin: auto;
+  height: 30px;
+  width: 30px;
+}
