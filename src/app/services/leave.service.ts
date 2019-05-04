@@ -212,4 +212,15 @@ export class LeaveService {
 
 	}
 
+	getDetails(date){
+
+		var obj = {date:date};
+		console.log("date event------=-=-=-=",obj);
+
+		return this.http.post(config.baseApiUrl+"attendence/getDetailByMail",obj);
+
+
+
+	}
+
 }

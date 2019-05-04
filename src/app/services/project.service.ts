@@ -28,6 +28,7 @@ export class ProjectService {
 	}
 	
 	getAllDevelopers(){
+		console.log("sbsbcjs--=")
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',

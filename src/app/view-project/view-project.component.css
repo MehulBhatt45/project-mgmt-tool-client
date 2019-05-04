@@ -12,9 +12,6 @@ table{
 .table-bordered td, .table-bordered th {
     vertical-align: middle;
 }
-.project_title, .project_description{
-    /*width: 350px;*/
-}
 .team, .action{
     white-space: nowrap;
 }
@@ -59,7 +56,6 @@ h2{
     margin-right: 0;
     padding: 8px 12px;
 }
-
 .team-members li a{
     color: #fff;
     text-transform: uppercase;
@@ -376,14 +372,19 @@ button.btn.btn-default.progress_summary {
 .modal-dialog {
     margin-top: 200px;
     max-width: 500px;
+    max-height: 800px;
 }
 .attendance{
     padding: 1rem;
     display: inline;
     text-align: center;
+    border-radius:  5px;
 }
 .modal-content {
     background-color: beige;
+    border: 4px solid black;
+    border-radius: 10px;
+    /*max-height: */
 }
 .checkIn-btn{
     background-color: lightblue !important;
