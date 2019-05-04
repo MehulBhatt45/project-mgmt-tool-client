@@ -116,6 +116,7 @@
 								<option value="{{this.total}}" selected>All Team</option>
 								<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
 							</select>
+							<br>
 						<!-- </div>  -->
 						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
 					</form>

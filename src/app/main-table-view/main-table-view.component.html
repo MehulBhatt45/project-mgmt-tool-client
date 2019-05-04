@@ -13,39 +13,39 @@
 				<label for="exampleForm2">search text goes here</label>
 			</div>
 		</div>
-		<div class="col-md-2 all_prjct_drpdown" *ngIf="currentUser.userRole=='projectManager' ||  currentUser.userRole=='admin'" >
-			<div class="form-group ">
-				<select class="browser-default custom-select custom-select-lg mb-3" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
+		<div class="col-md-8 all_prjct_drpdown" *ngIf="currentUser.userRole=='projectManager' ||  currentUser.userRole=='admin'" >
+			<div class="float-left display-inline-block">
+			<div class="form-group">
+				<select class="browser-default custom-select custom-select-lg"  style="margin-left: -7px;" id="projectId" *ngIf="projects" (change)="filterTracks(trackChangeProjectWise = $event.target.value, trackChangeDeveloperWise = trackChangeDeveloperWise?trackChangeDeveloperWise:'all')">
 					<option value="all" selected>All Projects</option>
 					<option *ngFor="let project of projects" value="{{project._id}}">{{project.title}}</option>
 				</select>
 			</div>
-		</div>
-		<div class="col-md-2">
-			<div class="form-group">
-				<select class="browser-default custom-select custom-select-lg mb-3" id="assignTo" *ngIf="developers" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
-					<option value="all" selected>All Developer</option>
-					<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
-				</select>
+				<div class="form-group">
+					<select class="browser-default custom-select custom-select-lg" id="assignTo" *ngIf="developers" (change)="filterTracks(trackChangeProjectWise = trackChangeProjectWise?trackChangeProjectWise:'all', trackChangeDeveloperWise = $event.target.value)">
+						<option value="all" selected>All Developer</option>
+						<option *ngFor="let developer of developers" value="{{developer._id}}">{{developer.name}}</option>
+					</select>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
-				<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
-					Due Date
-					<span class="sorting_arrows">
-						<i class="fas fa-angle-up hide" (click)="sortTasksByDueDate('asc')"></i>
-						<i class="fas fa-angle-down" (click)="sortTasksByDueDate('desc')"></i>
-					</span>
-				</button>
+			<div class="float-right">
+				<div class="dropdown" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+					<button class="due_date_sorting_btn btn btn-default" type="button" aria-haspopup="true" aria-expanded="false">
+						Due Date
+						<span class="sorting_arrows">
+							<i class="fas fa-angle-up hide" (click)="sortTasksByDueDate('asc')"></i>
+							<i class="fas fa-angle-down" (click)="sortTasksByDueDate('desc')"></i>
+						</span>
+					</button>
 
-				<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
-					Priority 
-					<span class="sorting_arrows">
-						<i class="fas fa-angle-up " (click)="sortTasksByPriority('asc')"></i>
-						<i class="fas fa-angle-down" (click)="sortTasksByPriority('desc')"></i>
-					</span>
-				</button>
+					<button class="priority_sorting_btn btn btn-default" type="button"  aria-haspopup="true" aria-expanded="false">
+						Priority 
+						<span class="sorting_arrows">
+							<i class="fas fa-angle-up " (click)="sortTasksByPriority('asc')"></i>
+							<i class="fas fa-angle-down" (click)="sortTasksByPriority('desc')"></i>
+						</span>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

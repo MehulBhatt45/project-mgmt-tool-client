@@ -20,37 +20,30 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-4 col-sm-12">
 					<div class="md-form form-group" *ngIf="availData">
 						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="projecttitle" class="active">Project Title</label>
-						<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-							<div *ngIf="f.title.errors.required">Project title  is required</div>
-							<div *ngIf="f.title.errors.maxLength">Project title  is must be only 60 characters</div>
+					</div>
+				</div>
+					<div class="col-md-4 col-sm-12">
+						<div class="md-form form-group"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
+							<label for="date-picker-example">Deadline</label>
+							<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
 						</div>
 					</div>
-				</div>
-				<div class="col-md-1" ></div>
-				<div class="col-md-4" *ngIf="availData">
-					<div class="md-form form-group" [hidden]="!availData && !availData.deadline">
-						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
-						<label for="date-picker-example" class="active">Deadline</label>
+				<div class="col-sm-12 col-md-12 col-12">
+					<div class="md-form form-group" *ngIf="availData">
+						<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
+						<label for="desc" class="active" >Project Discription</label>
 					</div>
-				</div>
-			</div>
-			<div class="md-form form-group" *ngIf="availData">
-				<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }">
-				<label for="desc" class="active" >Project Discription</label>
-				<div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
-					<div *ngIf="f.desc.errors.required">Project description is required</div>
-					<div *ngIf="f.desc.errors.maxLength">Project description is must be only 300 characters</div>
 				</div>
 			</div>
 
 
 			<!-- Developers list -->
 
-			<div class="card mt-1 p-1">
+			<div class="card">
 				<h4 style="color: #181123; margin-top: 10px; margin-left: 20px;">Project Team</h4>
 				<div class="card-body">
 					<div class="container">
@@ -62,15 +55,15 @@
 								</ng-template>
 								<div class="row">
 									<ng-template ng-option-tmp let-item="item">
-										<div class="row border m-2">
-											<div class="col-md-3"  style="margin-top: 10px;">
-												<div class="img_section">
-													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'" >
+										<div class="row" >
+											<div class="col-md-3 col-sm-3 col-3">
+												<div class="avatar img_section">
+													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'">
 												</div>
 											</div>
-											<div class="col-md-9">
-												<span style="line-height: 2; margin-left: 20px;">{{item.name}}</span>
-												<p style="font-size: 14px; margin-left: 20px;margin-top: -20px;">{{item.userRole}}</p>
+											<div class="col-md-9 col-sm-9 col-9">
+												<span style="line-height: 2;">{{item.name}}</span>
+												<p style="font-size: 14px;">{{item.userRole}}</p>
 											</div>
 										</div>
 									</ng-template>
@@ -80,19 +73,19 @@
 					</div>
 					<div class="container">
 						<div class="row">
-							<div class="col-md-4" *ngFor="let item of projectTeam">
+							<div class="col-md-4 col-sm-6 col-12" *ngFor="let item of projectTeam">
 								<div class="border mb-1">
 									<div class="row padding-5">
-										<div class="col-md-3">
+										<div class="col-md-3 col-sm-3 col-3">
 											<div class="img_section">
 												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
 											</div>
 										</div>
-										<div class="col-md-7">
+										<div class="col-md-7 col-sm-7 col-7">
 											<span style="line-height: 2;">{{item.name}}</span>
 											<p style="font-size: 14px;">{{item.userRole}}</p>
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-2 col-sm-2 col-2">
 											<a href="javascript:void(0);" (click)="removeDeveloper(item)" class="icon_for_action" ><span class="icon-trash"></span></a>
 										</div>
 									</div>
@@ -118,10 +111,16 @@
 								</ng-template>
 								<div>
 									<ng-template ng-option-tmp let-item="item">
-										<div class="row border m-2">
-											<div class="col-md-3"  style="margin-top: 10px;">
-												<div class="img_section">
-													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="col-md-3 col-sm-3 col-3">
+													<div class="avatar img_section">
+														<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/avatar.png'" class="rounded-circle img-fluid">
+													</div>
+												</div>
+												<div class="col-md-9 col-sm-9 col-9">
+													<span style="line-height: 2;">{{item.name}}</span>
+													<p style="font-size: 14px;">{{item.userRole}}</p>
 												</div>
 											</div>
 											<div class="col-md-9">
@@ -139,16 +138,16 @@
 							<div class="col-md-4" *ngFor="let item of projectMngrTeam">
 								<div class="border mb-1">
 									<div class="row padding-5">
-										<div class="col-md-3">
+										<div class="col-md-3 col-sm-3 col-3">
 											<div class="img_section">
 												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
 											</div>
 										</div>
-										<div class="col-md-7">
+										<div class="col-md-7 col-sm-7 col-7">
 											<span style="line-height: 2;">{{item.name}}</span>
 											<p style="font-size: 14px;">{{item.userRole}}</p>
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-2 col-sm-2 col-2">
 											<a href="javascript:void(0);" (click)="removeProjectManager(item)" class="icon_for_action" ><span class="icon-trash"></span></a>
 										</div>
 									</div>
