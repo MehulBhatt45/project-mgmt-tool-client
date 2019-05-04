@@ -26,7 +26,7 @@ export class AddEmployeeComponent implements OnInit {
 
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
-			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z]+\\.?")]),
+			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z ]+\\.?")]),
 			password:new FormControl( '', [Validators.required, Validators.minLength(6),Validators.maxLength(20)]),
 			isDelete: new FormControl('false', [Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),

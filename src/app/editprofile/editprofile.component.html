@@ -56,7 +56,7 @@
 								<option value="projectManager">Project Manager</option>
 								<option value="developer">Developer</option>
 								<div *ngIf="submitted && f.userRole.errors" class="invalid-feedback">
-									<div *ngIf="f.userRole.errors.required">Username is required</div>
+									<div *ngIf="f.userRole.errors.required">Please select userRole</div>
 								</div>
 							</select>
 						</div>
@@ -73,7 +73,10 @@
 					<div class="col-md-4">
 						<div class="md-form form-group" *ngIf="userDetails">
 							<label class="active" for="experience">Joining Date</label>
-							<input type="text" formControlName="joiningDate" class="form-control datepicker" id="joiningDate" ngModel="{{userDetails.joiningDate | date }}">
+							<input type="text" formControlName="joiningDate" class="form-control datepicker" id="joiningDate" ngModel="{{userDetails.joiningDate | date }}" [ngClass]="{ 'is-invalid': submitted && f.userRole.errors }">
+						</div>
+						<div *ngIf="submitted && f.joiningDate.errors" class="invalid-feedback">
+							<div *ngIf="f.joiningDate.errors.required">Joining date is required</div>
 						</div>
 
 					</div>
@@ -84,8 +87,15 @@
 								<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 							</div>
 							<div class="file-path-wrapper">
-								<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly>
-								<span class="far fa-file-pdf"></span>
+								<div class="row">
+									<div class="col-1" style="margin: auto;
+										left: 66px;">
+										<span class="far fa-file-pdf" ></span>
+									</div>
+									<div class="col-11">
+										<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
