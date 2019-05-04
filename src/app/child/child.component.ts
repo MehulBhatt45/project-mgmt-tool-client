@@ -589,7 +589,6 @@ export class ChildComponent  implements OnInit{
       } else if (
         result.dismiss === Swal.DismissReason.cancel
         ) {
-
         swalWithBootstrapButtons.fire(
           'Cancled!',
           'Your task has been safe.',

@@ -60,7 +60,7 @@ export class ProjectDetailComponent implements OnInit {
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	
+	sprint;
 	sorting:any;
 	temp:any;
 	activeSprint:any;
@@ -215,6 +215,7 @@ export class ProjectDetailComponent implements OnInit {
 		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
+
 	}
 
 	
@@ -232,7 +233,7 @@ export class ProjectDetailComponent implements OnInit {
 			})
 		})
 	}
-
+	
 	getAllDevelopers(){	
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -259,6 +260,9 @@ export class ProjectDetailComponent implements OnInit {
 	
 
 	getProject(id){
+		this._projectService.startSprint(this.sprint).subscribe((res:any)=>{
+			console.log("sprint=================>",res);
+	})
 
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
@@ -338,6 +342,9 @@ export class ProjectDetailComponent implements OnInit {
 
 	onTalkDrop(event: CdkDragDrop<any>) {
 		console.log(event);
+		console.log(event.previousContainer);
+		console.log("sprint data==============>",event.previousContainer.data[1].sprint.status);
+		// if()
 		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
 			Swal.fire('Oops...', 'Stop timer!', 'error')
 		}else{
@@ -359,7 +366,6 @@ export class ProjectDetailComponent implements OnInit {
 		console.log('event in ontrackdrop================>',event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
-
 	updateStatus(newStatus, data){
 
 		if(newStatus=='complete'){
@@ -380,6 +386,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
+				console.log(res.sprint);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
 				let uniqueId = res.uniqueId;
@@ -528,10 +535,10 @@ export class ProjectDetailComponent implements OnInit {
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		console.log("estimated time=====>",task.estimatedTime);
-		// task.images = $("#images").val();
 		console.log("images====>",task.images);
-		console.log(task.dueDate);
+		console.log("due date===========>",task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		console.log("after===========>",task.dueDate);
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("task ALL details",task);
 		let data = new FormData();

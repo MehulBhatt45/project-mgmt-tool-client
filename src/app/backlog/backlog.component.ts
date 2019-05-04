@@ -250,6 +250,7 @@ export class BacklogComponent implements OnInit {
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("All sprint response--------->>>>>>>",res);
+			console.log("status=====>",res[0].status);
 			this.sprints = res;
 			_.forEach(this.sprints , (sprint)=>{
 				console.log("single sptint",typeof sprint.duration);
@@ -367,8 +368,7 @@ export class BacklogComponent implements OnInit {
 		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
-
-		console.log("date of sorint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
+		console.log("date of sprint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
 		if(sprint.startDate == this.currentdate){
 			if(sprint.duration > this.remainingLimit){
 				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')

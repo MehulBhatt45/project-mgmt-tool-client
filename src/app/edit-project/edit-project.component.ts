@@ -248,7 +248,6 @@ export class EditProjectComponent implements OnInit {
 			data.append('avatar', this.files[0]);  
 		}
 		console.log('data====================================>',data);
-
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{

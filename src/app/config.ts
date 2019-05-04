@@ -1,8 +1,8 @@
 
 // const baseUrl = "https://raoinfotech-conduct.tk:4001/";
 
-// const baseUrl = "http://132.140.160.114:4001/";
-const baseUrl = "http://localhost:4001/";
+const baseUrl = "http://132.140.160.114:4001/";
+// const baseUrl = "http://localhost:4001/";
 
 // const baseUrl = "http://192.168.43.66:4001/";
 
@@ -16,7 +16,7 @@ const baseMediaUrl = "http://132.140.160.114/project_mgmt_tool/server/uploads/";
 
 
 
-
+// 
 export const config = {
     baseApiUrl: baseUrl,
     baseMediaUrl: baseMediaUrl,
