@@ -24,6 +24,7 @@ export class ResetPasswordComponent implements OnInit {
 	returnUrl: string;
 	loader: boolean = false;
 	match: boolean = false;
+	isDisable:boolean = false;
 
 
 	constructor(
@@ -51,17 +52,19 @@ export class ResetPasswordComponent implements OnInit {
 		if (this.resetPasswordForm.invalid) {
 			return;
 		}
-
+		this.isDisable = true;
 		delete this.resetPasswordForm.value['confirmPassword']
 		console.log(this.resetPasswordForm.value);
 		this._loginService.resetPassword(this.resetPasswordForm.value)
 		.pipe(first())
 		.subscribe(data => {
 			Swal.fire({type: 'success',title: 'Password Change Successfully',showConfirmButton:false,timer: 2000})
+			this.isDisable = false;
 			this.router.navigate(['/login']);
 		},
 		error => {
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			this.isDisable = false;
 		});
 	}
 

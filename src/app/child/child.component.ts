@@ -80,6 +80,7 @@ export class ChildComponent  implements OnInit{
   difference;
   file = [];
   submitted = false;
+  isDisable:boolean =false;
   
 
 
@@ -319,6 +320,7 @@ export class ChildComponent  implements OnInit{
     this.comment = data;
   }
   sendComment(taskId){
+    this.isDisable = true;
     // this.func('reload');
     console.log(this.comment);
     var data : any;
@@ -347,6 +349,7 @@ export class ChildComponent  implements OnInit{
       this.files = [];
       this.file = [];
       console.log('this.files=============>',this.files);
+      this.isDisable = false;
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
@@ -464,6 +467,7 @@ export class ChildComponent  implements OnInit{
     // if (this.editTaskForm.invalid) {
     //   return;
     // }
+     this.isDisable = true;
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
@@ -492,6 +496,7 @@ export class ChildComponent  implements OnInit{
         timer: 2000,
         // position: 'top-end',
       })
+      this.isDisable = false;
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');

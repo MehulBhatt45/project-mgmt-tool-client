@@ -66,6 +66,7 @@ export class ProjectDetailComponent implements OnInit {
 	activeSprint:any;
 	sprintInfo:any;
 	submitted = false;
+	isDisable :boolean = false;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -518,10 +519,11 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		
-		this.submitted = true;
-		if (this.editTaskForm.invalid) {
-			return;
-		}
+		// this.submitted = true;
+		// if (this.editTaskForm.invalid) {
+		// 	return;
+		// }
+		this.isDisable = true;
 		this.loader = true;
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
@@ -563,6 +565,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.files = this.url = [];
 			// this.assignTo.reset();
 			this.loader = false;
+			this.isDisable = false;
+			this.editTaskForm.reset();
 		},err=>{
 			Swal.fire({
 				type: 'error',
@@ -573,6 +577,7 @@ export class ProjectDetailComponent implements OnInit {
 					popup: 'animated tada'
 				}
 			})
+			this.isDisable = false;
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});

@@ -358,7 +358,7 @@
 					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 						<button class="btn btn-primary" type="button" (click)="deleteTask(taskId)">Delete Task</button>
 					</div>
-					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
+					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled] = "isDisable">Save changes</button>
 				</div>
 
 			</div>

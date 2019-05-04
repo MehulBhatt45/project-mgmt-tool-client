@@ -19,7 +19,7 @@ export class AddNoticeComponent implements OnInit {
 	addForm:FormGroup;
 	path = config.baseMediaUrl;
 	submitted = false;
-
+	isDisable:boolean= false;
 	constructor(public router:Router, public _projectservice:ProjectService) { 
 
 		this.addForm = new FormGroup({
@@ -38,11 +38,11 @@ export class AddNoticeComponent implements OnInit {
 	}
 	get f() { return this.addForm.controls; }
 	addNotice(addForm){
-
 		this.submitted = true;
 		if (this.addForm.invalid) {
 			return;
 		}
+		this.isDisable= true;
 		addForm.expireon = $('#expireon').val();
 		console.log(addForm);
 		var data = new FormData();
@@ -60,9 +60,11 @@ export class AddNoticeComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Notice Added Successfully',showConfirmButton:false,timer: 2000})
 			this.router.navigate(['./noticeboard']);
 			console.log(res);
+			this.isDisable= false;
 		},err=>{
 			console.log(err);   
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			this.isDisable= false;
 		}) 
 	}
 
