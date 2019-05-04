@@ -280,9 +280,13 @@ export class ChildComponent  implements OnInit{
 
 
   getTitle(name){
+    console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
-      return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      if(str.length > 1)
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      else
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1)
     }else{
       return '';
     }
