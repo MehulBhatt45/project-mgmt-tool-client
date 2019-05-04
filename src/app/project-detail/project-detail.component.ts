@@ -184,7 +184,7 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
+			dueDate : new FormControl(''),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 			// files : new FormControl()
