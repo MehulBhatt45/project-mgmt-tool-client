@@ -344,3 +344,12 @@ nav.navbar.fixed-top.navbar-toggleable-md.navbar-dark.double-nav {
   margin: 0!important;
   padding: 0!important;
 }
+
+a.disabled {
+   
+   cursor: not-allowed; 
+}
+a.disabled:hover {
+   background-color: #181123 !important;
+   
+}
