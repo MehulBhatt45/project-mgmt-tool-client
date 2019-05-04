@@ -20,15 +20,18 @@ export class AddEmployeeComponent implements OnInit {
 	files: Array<File> = [];
 	materialSelect;
 	submitted = false;
+	show: boolean;
+	pwd: boolean;
+
 
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
-			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
-			password:new FormControl( '', [Validators.required, Validators.minLength(6),Validators.maxLength(20),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+			name:new FormControl( '', [Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z ]+\\.?")]),
+			password:new FormControl( '', [Validators.required, Validators.minLength(6),Validators.maxLength(20)]),
 			isDelete: new FormControl('false', [Validators.required]),
 			email: new FormControl('', [Validators.required, Validators.email]),
 			date:new FormControl('',[Validators.required]),
-			phone:new FormControl( '', [Validators.minLength(10), Validators.maxLength(10)]),
+			phone:new FormControl( '', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern("[0-9]+\\.?")]),
 			userRole:new FormControl('',[Validators.required]),
 			experience:new FormControl(''),	
 			profile:new FormControl(''),
@@ -45,7 +48,16 @@ export class AddEmployeeComponent implements OnInit {
 		var change:any = ()=>{
 			this.addEmployeeForm.controls.date.setValue($('.datepicker').val());
 		}
+		$(".toggle-password").click(function() {
+			$(this).toggleClass("fa-eye fa-eye-slash");
+		});
+
 	}
+	password() {
+		this.show = !this.show;
+		this.pwd = !this.pwd;
+	}
+
 	get f() { return this.addEmployeeForm.controls; }
 
 	addEmployee(addEmployeeForm){
@@ -79,6 +91,4 @@ export class AddEmployeeComponent implements OnInit {
 			}
 		})
 	}
-
-
 }
