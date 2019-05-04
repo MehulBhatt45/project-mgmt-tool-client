@@ -8,7 +8,6 @@
 	<h3 class="card-header-title mb-1"><span class="icon-note"></span> Edit User Profile</h3>
 	<div class="card">
 		<div class="card-body">
-
 			<form [formGroup]="editEmployeeForm" autocomplete="off">
 				<div class="row">
 					<div class="col-md-4">
@@ -18,10 +17,12 @@
 							<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
 								<div *ngIf="f.name.errors.required">Name is required</div>
 								<div *ngIf="f.name.errors.minlength">Name must be at least 2 characters</div>
+								<div *ngIf="f.name.errors.pattern">Please enter only alphabates</div>
 								<div *ngIf="f.name.errors.maxlength">Name must be only 20 characters</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-md-1"></div>
 					<div class="col-md-4">
 						<div class="md-form form-group" *ngIf="userDetails">
 							<label class="active" for="email">Email</label>
@@ -33,19 +34,20 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-md-4">
 						<div class="md-form form-group" *ngIf="userDetails">
 							<label class="active" for="mobile">Phone No.</label>
-							<input type="tel" formControlName="phone" class="form-control" id="mobile" [(ngModel)]="userDetails.phone" [(ngModel)]="userDetails.phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+							<input type="text" formControlName="phone" class="form-control" id="mobile" [(ngModel)]="userDetails.phone" [(ngModel)]="userDetails.phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
 							<div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-								<div *ngIf="f.phone.errors.required">Phone is required</div>
 								<div *ngIf="f.phone.errors.minlength">Phone must be only 10 digits</div>
+								<div *ngIf="f.phone.errors.pattern">You can enter only numbers</div>
 								<div *ngIf="f.phone.errors.maxlength">Phone must be only 10 digits</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
+					<div class="col-md-1"></div>
 					<div class="col-md-4">
 						<label class="float-left" for="userrole" *ngIf="userDetails">UserRole</label>
 						<div class="md-form form-group" *ngIf="userDetails">
@@ -55,24 +57,27 @@
 								<option value="developer">Developer</option>
 								<div *ngIf="submitted && f.userRole.errors" class="invalid-feedback">
 									<div *ngIf="f.userRole.errors.required">Username is required</div>
-
 								</div>
 							</select>
 						</div>
-
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-md-4">
 						<div class="md-form form-group" *ngIf="userDetails">
 							<label class="active" for="experience">Experience</label>
 							<input type="text" formControlName="experience" class="form-control" id="experience" [(ngModel)]="userDetails.experience">
-
 						</div>
+					</div>
+					<div class="col-md-1"></div>
+					<div class="col-md-4">
 						<div class="md-form form-group" *ngIf="userDetails">
-								<label class="active" for="experience">Joining Date</label>
-								<input type="text" formControlName="joiningDate" class="form-control datepicker" id="joiningDate" ngModel="{{userDetails.joiningDate | date }}">
-							</div>
+							<label class="active" for="experience">Joining Date</label>
+							<input type="text" formControlName="joiningDate" class="form-control datepicker" id="joiningDate" ngModel="{{userDetails.joiningDate | date }}">
+						</div>
 
 					</div>
+
 					<div class="col-md-12">
 						<div class="md-form form-group file-field" *ngIf="userDetails">
 							<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
@@ -94,3 +99,4 @@
 			</form>
 		</div>
 	</div>
+</div>

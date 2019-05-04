@@ -255,11 +255,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-
-	
-
 	getProject(id){
-
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
@@ -274,21 +270,10 @@ export class ProjectDetailComponent implements OnInit {
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-
-					// this.projectTeam.sort(function(a, b){
-						// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						// 	if (nameA < nameB) //sort string ascending
-						// 		return -1 
-						// 	if (nameA > nameB)
-						// 		return 1
-						// 	return 0 //default return value (no sorting)
-						// 	this.projectTeam.push
-						// 	console.log("sort============>"  ,this.projectTeam);
-						// })
-						this.loader = false;
-					},(err:any)=>{
-						console.log("err of team============>"  ,err);
-					});
+					this.loader = false;
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -297,9 +282,6 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
-				// this.project.sort(custom_sort);
-				// this.project.reverse();
-
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					_.forEach(this.tracks , (track)=>{
@@ -319,9 +301,7 @@ export class ProjectDetailComponent implements OnInit {
 
 				console.log("This Tracks=========>>>>>",this.tracks);
 				this.temp =  this.tracks; 
-
 				this.loader = false;
-
 			},err=>{
 				console.log(err);
 				this.loader = false;
@@ -423,19 +403,13 @@ export class ProjectDetailComponent implements OnInit {
 			});
 
 		}
-
 		function custom_sort(a, b) {
-			// var   Aarr = a.dueDate.split(" ");
-			// a.dueDate = Aarr[0];
-			// var   Barr = b.dueDate.split(" ");
-			// b.dueDate = Barr[0];
 			return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
 		}
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
 
-		// console.log("sorting======>",custom_sort);
 		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 
