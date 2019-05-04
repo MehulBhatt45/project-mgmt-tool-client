@@ -20,9 +20,9 @@ export class AddEmployeeComponent implements OnInit {
 	files: Array<File> = [];
 	materialSelect;
 	submitted = false;
+	isDisable:boolean= false;
 	show: boolean;
 	pwd: boolean;
-
 
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({
@@ -65,6 +65,7 @@ export class AddEmployeeComponent implements OnInit {
 		if (this.addEmployeeForm.invalid) {
 			return;
 		}
+		this.isDisable= true;
 		this.addEmployeeForm.value['userId'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		this.addEmployeeForm.value.date = $('.datepicker').val();
 		console.log("form value=====>>>",addEmployeeForm.value);
@@ -72,9 +73,11 @@ export class AddEmployeeComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Employee Added Successfully',showConfirmButton:false,timer: 2000})
 			this.router.navigate(['./all-employee']);
 			console.log("res=-=-=()()",res);
+			this.isDisable= false;
 		},err=>{
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			console.log("error",err);    
+			console.log("error",err);  
+			this.isDisable= false;  
 		})
 	}
 	

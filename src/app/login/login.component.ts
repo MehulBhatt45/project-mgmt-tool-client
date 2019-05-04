@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   errorMsg;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   name;
-  
+  isDisable = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
+    this.isDisable = true;
     this.loading = true;
     this._loginService.login(this.loginForm.value)
     .pipe(first())
@@ -89,26 +89,29 @@ export class LoginComponent implements OnInit {
         console.log("datysdsatyds",data);
         // Swal.fire({type: 'success',title: 'Login Successfully', showConfirmButton:false, timer:2000});
         let name = data.data.name;
-        // var myDate = new Date();
-        // console.log("date mde che ke nai",myDate);
-        // var hrs = myDate.getHours();
-        // console.log("time mde che ke nai",hrs);
-        // var greet ;
-        // if(hrs<12)
-        //   greet= 'Good Morning';
-        // else if (hrs>=12 && hrs<=17)
-        //   greet = 'Good Afternoon';
-        // else if (hrs>=17 && hrs<=24)
-        //   greet = 'Good Evening';
 
-        // console.log("sanj no time print thavo joye",greet);
-        // console.log("current user name>>>>>>><<<<<<<",name);
-        // this.toaster.success(" "," " + greet + " " + name + ' Have a nice day', {
-        //   timeOut: 2000,
-        //   positionClass: 'toast-top-center',
-        //   toastClass: 'custom',
-        //   // messageClass:'name',
-        // })
+        var myDate = new Date();
+        console.log("date mde che ke nai",myDate);
+        var hrs = myDate.getHours();
+        console.log("time mde che ke nai",hrs);
+        var greet ;
+        if(hrs<12)
+          greet= 'Good Morning';
+        else if (hrs>=12 && hrs<=17)
+          greet = 'Good Afternoon';
+        else if (hrs>=17 && hrs<=24)
+          greet = 'Good Evening';
+
+        console.log("sanj no time print thavo joye",greet);
+        console.log("current user name>>>>>>><<<<<<<",name);
+        this.toaster.success(" "," " + greet + " " + name + ' Have a nice day', {
+          timeOut: 2000,
+          positionClass: 'toast-top-center',
+          toastClass: 'custom',
+          // messageClass:'name',
+        })
+         this.isDisable = false;
+
         this.router.navigate([this.returnUrl]);
       },
       error => {
@@ -118,12 +121,14 @@ export class LoginComponent implements OnInit {
           this.err = error;
           console.log("error is===>",this.err.error.errMsg);
           this.errorMsg = this.err.error.errMsg;
+           this.isDisable = false;
         }
 
         else if (error.status == 404) {
           this.err = error;
           console.log("error is===>",this.err.error.errMsg);
           this.errorMsg = this.err.error.errMsg;
+           this.isDisable = false;
         }
         this.loading = false;
       });
@@ -147,18 +152,21 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     // console.log(this.forgotPasswordForm.value);
     this.loader = true;
+    this.isDisable = true;
     this._loginService.resetPwd(this.forgotPasswordForm.value).subscribe(res=>{
       console.log("res-=-=",res);
       this.loader = false;
       // alert("Reset password link sent on your email");
       Swal.fire("","Reset password link sent on your email","success");
       $('#modalForgotPasswordForm').modal('hide');
+       this.isDisable = false;
     },error=>{
       this._alertService.error(error);
       if (error.status == 404) {
         this.err = error;
         console.log("error is===>",this.err.error.errMsg);
         this.error1Msg = this.err.error.errMsg;
+         this.isDisable = false;
       }
       this.loader = false;
       // alert("email not found");

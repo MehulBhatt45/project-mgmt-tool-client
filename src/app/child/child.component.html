@@ -1,3 +1,6 @@
+<!-- <div *ngIf = "!tracks.tasks">
+	<p style="text-align: center;">No Task Found</p>
+</div> -->
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
@@ -6,6 +9,9 @@
 				<span class="card_count_lbl">{{track.tasks.length}}</span>
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+				<!-- <div *ngIf = "track.tasks.length == 0">
+					<p style="text-align: center;">No Task Found</p>	
+				</div> -->
 				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
@@ -59,6 +65,10 @@
 		</div>
 	</div>
 </div>
+<div *ngIf = "!isTaskFound">
+	<p style="text-align: center;">No Task Found</p>
+</div>
+
 <!-- Task details Modal -->
 
 <div class="modal fade" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -228,7 +238,7 @@
 					<div>
 						<ckeditor class="ckeditor margin-left-15" style="width:100%;" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
-						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0"> <span class="icon-plus"></span> Add Comment</button>
+						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="(!comment && files.length==0) || isDisable"> <span class="icon-plus"></span> Add Comment</button>
 					</div>
 					
 				</div>
@@ -356,7 +366,7 @@
 					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 						<button class="btn btn-primary" type="button" (click)="deleteTask(taskId)">Delete Task</button>
 					</div>
-					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
+					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled] = "isDisable">Save changes</button>
 				</div>
 
 			</div>

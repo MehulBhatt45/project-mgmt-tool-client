@@ -61,9 +61,9 @@
 						<div class="form-group">
 							<div class="switch">
 								<label>
-									Publish False
+									Publish
 									<input type="checkbox" formControlName="published" [(ngModel)]="newNotice.published">
-									<span class="lever"></span>Publish True
+									<span class="lever"></span>
 								</label>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 					</form>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-						<button type="submit" id="my_button" class="btn btn-primary btn-lg" (click)="updateNotice(newNotice, newNotice._id)">Save changes</button>
+						<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice, newNotice._id)" [disabled] = "isDisable">Save changes</button>
 					</div>
 				</div>
 			</div>

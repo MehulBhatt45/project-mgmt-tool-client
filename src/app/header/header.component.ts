@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
 	newNotification
 	newSprint = [];
 	submitted = false;
+	isDisable:boolean =false;
 	
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
@@ -400,6 +401,7 @@ export class HeaderComponent implements OnInit {
 		if (this.editTaskForm.invalid) {
 			return;
 		}
+		this.isDisable = true;
 		this.loader = true;
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
@@ -434,6 +436,7 @@ export class HeaderComponent implements OnInit {
 				timer: 2000,
 				// position: 'top-end'
 			})
+			this.isDisable = false;
 			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
@@ -455,6 +458,7 @@ export class HeaderComponent implements OnInit {
 					popup: 'animated tada'
 				}
 			})
+			this.isDisable = false;
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});

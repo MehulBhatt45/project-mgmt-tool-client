@@ -172,15 +172,15 @@
 						<p innerHtml="{{data.contentForPm}}"></p>
 					</div>
 				</div>
-				<div class="notification_date ml-auto">
-					<label style="float: right; margin-right: 25px;">{{data.createdAt | timeAgo}}</label>
-				</div>
-			</div>
-			<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
-				<div class="card-body" style="float: right; margin-right: 25px;">
-					<button type="button" #bName1 id="approved" class="btn btn-outline-secondary accepted" style="color: red;" (click)="updateNotificationApprovedStatus(data._id, bName1.id)">
-						<span class="icon-like a_icon"></span>Accepted</button>
-						<button type="button" #bName id="rejected" class="btn btn-outline-secondary rejected" (click)="updateNotificationApprovedStatus(data._id, bName.id)"><span class=" icon-dislike a_icon"></span>Rejected</button>
+				<div [id]="'un'+data._id" class="collapse" role="tabpanel" data-parent="#accordionEx">
+					<div class="card-body"  style="float: right; margin-right: 25px;">
+						<button type="button" #bName1 id="approved" class="btn btn-outline-secondary accepted" style="color: red;" (click)="updateNotificationApprovedStatus(data._id, bName1.id)">
+							<span class="icon-like a_icon"></span>Accepted</button>
+							<button type="button" #bName id="rejected" class="btn btn-outline-secondary rejected" (click)="updateNotificationApprovedStatus(data._id, bName.id)"><span class=" icon-dislike a_icon"></span>Rejected</button>
+						</div>
+					</div>
+					<div class="notification_date ml-auto">
+						<label style="float: right; margin-right: 25px;">{{data.createdAt | timeAgo}}</label>
 					</div>
 				</div>
 			</li>

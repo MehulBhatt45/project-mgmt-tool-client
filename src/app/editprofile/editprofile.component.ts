@@ -22,7 +22,7 @@ export class EditprofileComponent implements OnInit {
 	date: any;
 	loader: boolean = false;
 	submitted = false;
-
+	isDisable:boolean= false;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 
@@ -66,6 +66,7 @@ export class EditprofileComponent implements OnInit {
 		if (this.editEmployeeForm.invalid) {
 			return;
 		}
+		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 
 			console.log(this.files);
@@ -87,9 +88,11 @@ export class EditprofileComponent implements OnInit {
 			this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 				console.log("res",res);
 				Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+				this.isDisable= false;
 			},err=>{
 				console.log("error",err); 
-				Swal.fire('Oops...', 'Something went wrong!', 'error')   
+				Swal.fire('Oops...', 'Something went wrong!', 'error') 
+				this.isDisable= false;  
 			})
 		}
 		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
@@ -121,9 +124,11 @@ export class EditprofileComponent implements OnInit {
 					this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 						console.log("res",res);
 						Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+						this.isDisable= false;
 					},err=>{
 						console.log("error",err); 
-						Swal.fire('Oops...', 'Something went wrong!', 'error')   
+						Swal.fire('Oops...', 'Something went wrong!', 'error')  
+						this.isDisable= false; 
 					})
 				}
 
