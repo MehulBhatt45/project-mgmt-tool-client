@@ -152,7 +152,59 @@ import { Component, OnInit, ViewChild,
 			var localFunction = (date)=>{
 				this.dateSelected(date);
 			}
+
+			$('#dtMaterialDesignExample').DataTable();
+			$('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+				$(this).parent().append($(this).children());
+			});
+			$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+				$('input').attr("placeholder", "Search");
+				$('input').removeClass('form-control-sm');
+			});
+			$('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+			$('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+			$('#dtMaterialDesignExample_wrapper select').removeClass(
+				'custom-select custom-select-sm form-control form-control-sm');
+			$('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+			$('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+			$('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+
+
+
+			var dateFormat = "mm/dd/yy",
+			from = $( "#from" )
+			.datepicker({
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 3
+			})
+			.on( "change", function() {
+				to.datepicker( "option", "minDate", getDate( this ) );
+			}),
+			to = $( "#to" ).datepicker({
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 3
+			})
+			.on( "change", function() {
+				from.datepicker( "option", "maxDate", getDate( this ) );
+			});
+
+			function getDate( element ) {
+				var date;
+				try {
+					date = $.datepicker.parseDate( dateFormat, element.value );
+				} catch( error ) {
+					date = null;
+				}
+
+				return date;
+			}
 		}
+
+
+
+
 
 
 		getAllDevelopers(){
@@ -387,6 +439,21 @@ import { Component, OnInit, ViewChild,
 				this.finalResultPresentUser = res;
 				console.log("finalresult==============",this.finalResultPresentUser);
 				this.change.detectChanges();
+			},err=>{
+				console.log("userDate=======================",err);
+			})
+		}
+
+		getByMailDetails(event){
+
+			console.log("event==========",event);
+
+			var date = moment(event).format('YYYY-MM-DD');
+			console.log("event  of date ===>" , date);  
+
+			this._leaveService.getDetails(date).subscribe((res:any)=>{
+				console.log("userDate=======================",res);
+
 			},err=>{
 				console.log("userDate=======================",err);
 			})

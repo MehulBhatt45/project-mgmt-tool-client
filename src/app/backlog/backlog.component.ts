@@ -77,12 +77,12 @@ export class BacklogComponent implements OnInit {
 		
 		
 
-		var from_input = $('#addstartDate').pickadate({
+		var from_input = $('#addStartDate').pickadate({
 			min:new Date()
 		}),
 		from_picker = from_input.pickadate('picker')
 
-		var to_input = $('#addendDate').pickadate({
+		var to_input = $('#addEndDate').pickadate({
 			min:new Date()
 		}),
 		to_picker = to_input.pickadate('picker')
@@ -212,12 +212,12 @@ export class BacklogComponent implements OnInit {
 			console.log("Project Duration=====>>>",this.pduration);
 			localStorage.setItem('projectduration' , JSON.stringify(this.pduration));
 			localStorage.setItem('projectdeadline' , JSON.stringify(this.prdead));
-			var startpicker = $('#addstartDate').pickadate('picker');
+			var startpicker = $('#addStartDate').pickadate('picker');
 			startpicker.set('max', new Date(this.prdead));
-			// var endpicker = $('#addendDate').pickadate('picker');
-			// endpicker.set('max', new Date(this.prdead));
+			var endpicker = $('#addEndDate').pickadate('picker');
+			endpicker.set('max', new Date(this.prdead));
 		
-			// endpicker.set('min',new Date(startpicker))
+			endpicker.set('min',new Date(startpicker))
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
 		});
@@ -226,10 +226,10 @@ export class BacklogComponent implements OnInit {
 
 	addSprint(addForm){
 		console.log('addForm===============>',addForm);
-		addForm.startDate = $('#addstartDate').val();
+		addForm.startDate = $('#addStartDate').val();
 		// addForm.startDate = $('#startDate').val();
 		console.log('addForm.startDate================>',addForm.startDate);
-		addForm.endDate = $('#addendDate').val();
+		addForm.endDate = $('#addEndDate').val();
 		addForm.duration = this.durationOfDate(addForm.startDate,addForm.endDate);
 		addForm.projectId = this.projectId;
 		console.log("form value==>>",addForm);
@@ -252,7 +252,7 @@ export class BacklogComponent implements OnInit {
 			console.log("All sprint response--------->>>>>>>",res);
 			this.sprints = res;
 			_.forEach(this.sprints , (sprint)=>{
-				console.log("single sptint",typeof sprint.duration);
+				console.log("single sptint", sprint);
 				console.log('sprint durration==>',sprint.duration);
 				this.totalSDuration = this.totalSDuration + sprint.duration; 
 				console.log('this.totalSDuration=====>',this.totalSDuration);
@@ -261,7 +261,7 @@ export class BacklogComponent implements OnInit {
 					this.activeSprint = sprint;
 					var activeSprintEnd = moment(this.activeSprint.endDate).format("YYYY,M,DD");
 					console.log('activeSprintEnd================>',activeSprintEnd);
-					var startpicker = $('#addstartDate').pickadate('picker');
+					var startpicker = $('#addStartDate').pickadate('picker');
 					console.log('startpicker=======>',startpicker);
 					startpicker.set('min', new Date(activeSprintEnd));
 					// var editstartpicker = $('#editstartDate').pickadate('picker');
@@ -272,7 +272,7 @@ export class BacklogComponent implements OnInit {
 			console.log("Active Sprint------->>>>>>",this.activeSprint);
 			this.pDuration = JSON.parse(localStorage.getItem('projectduration'));
 			console.log("is Active available sprint",this.Active);
-			console.log("total sprint Duration",this.totalSDuration);
+			console.log("total sprint Duration Yash ",this.totalSDuration);
 			console.log("total project Duration",this.pDuration);
 			this.remainingLimit = this.pDuration - this.totalSDuration;
 			console.log("this.remainingLimit",this.remainingLimit);
@@ -299,6 +299,7 @@ export class BacklogComponent implements OnInit {
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
 		console.log('this.remainingLimit==========>',this.remainingLimit);
+		
 		if(sprint.duration > this.remainingLimit){
 			Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
 		}
@@ -370,7 +371,14 @@ export class BacklogComponent implements OnInit {
 
 		console.log("date of sorint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
 		if(sprint.startDate == this.currentdate){
+			console.log("sprint.duration" , sprint.duration);
+			console.log("this.remainingLimit" , this.remainingLimit);
 			if(sprint.duration > this.remainingLimit){
+			console.log("duration of sprint===========>",sprint.duration);
+			// console.log("total sprint Duration",this.totalSDuration);
+			// console.log("total project Duration",this.pDuration);
+			// this.remainingLimit =  this.totalSDuration - this.pDuration;
+			console.log("remaininglimit of sprint===========>",this.remainingLimit);
 				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
 			}
 			else{

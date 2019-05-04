@@ -505,7 +505,7 @@ export class ProjectDetailComponent implements OnInit {
 		// task.images = $("#images").val();
 		console.log("images====>",task.images);
 		console.log(task.dueDate);
-		task.dueDate = moment().add(task.dueDate, 'days').toString();
+		task.dueDate = moment().add(task.dueDate, 'days').format('YYYY-MM-DD');
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("task ALL details",task);
 		let data = new FormData();
