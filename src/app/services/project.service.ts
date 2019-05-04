@@ -28,6 +28,7 @@ export class ProjectService {
 	}
 	
 	getAllDevelopers(){
+		console.log("sbsbcjs--=")
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
@@ -62,14 +63,13 @@ export class ProjectService {
 
 
 	getProjectById(id){
+		console.log("project Id ====>",id);
 		const httpOptions = {
 			headers: new HttpHeaders({
 				'Content-Type':  'application/json',
 				'x-access-token':  JSON.parse(localStorage.getItem('token'))
 			})
 		};
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("user ID ====>" , userId);
 		return this.http.get(config.baseApiUrl+"project/get-project-by-id/"+id);
 	}
 

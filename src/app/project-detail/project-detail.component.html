@@ -11,8 +11,8 @@
 			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><span class="icon-clock mr-1"></span>{{activeSprint.remainingDays}} Days Remaining</h5>
 		</div>
 		<div class="col-4 md-form form-group">
-			<div class="sprint_button">
-					<span *ngIf="activeSprint">{{activeSprint.title}}</span>
+			<div class="sprint_button" *ngIf="activeSprint">
+					<span>{{activeSprint.title}}</span>
 					<select [(ngModel)]="activeSprint._id"   class="browser-default custom-select custom-select-sm" id="sprint" (change)="filterTracks($event.target.value)">
 						<option  *ngFor="let sprint of sprints" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
 					</select>

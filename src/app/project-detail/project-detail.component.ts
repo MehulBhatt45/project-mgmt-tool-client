@@ -56,6 +56,7 @@ export class ProjectDetailComponent implements OnInit {
 	projectTeam;
 	sprints;
 	newSprint = [];
+	 sprintStatus = [];
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
@@ -198,7 +199,7 @@ export class ProjectDetailComponent implements OnInit {
 				html: true,
 				trigger: 'hover',
 				placement: 'bottom',
-				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+				// content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
 			});
 		},2000);
 		$('.datepicker').pickadate();
@@ -219,6 +220,7 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	
+
 
 	filterTracks(sprintId){
 		console.log("tem ====>" , this.temp);
@@ -260,10 +262,6 @@ export class ProjectDetailComponent implements OnInit {
 	
 
 	getProject(id){
-		this._projectService.startSprint(this.sprint).subscribe((res:any)=>{
-			console.log("sprint=================>",res);
-	})
-
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
@@ -310,11 +308,11 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active' && this.currentUser.userRole == 'developer'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer'){
 								track.tasks.push(task);
 							}
 						}else{
-							if(task.status == track.id && task.sprint.status == 'Active'){
+							if(task.status == track.id ){
 								track.tasks.push(task);
 							}
 						}
@@ -341,10 +339,16 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		// if(task.sprint.status == 'Active'){
+
+		// }
+		
+		for(var i=0;i<event.previousContainer.data.length;i++){
+			this.sprintStatus.push(event.previousContainer.data[i].sprint.status)
+		if(this.sprintStatus[i] == 'Active'){
+			console.log("hello");
+			console.log(this.sprintStatus);
 		console.log(event);
-		console.log(event.previousContainer);
-		console.log("sprint data==============>",event.previousContainer.data[1].sprint.status);
-		// if()
 		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
 			Swal.fire('Oops...', 'Stop timer!', 'error')
 		}else{
@@ -360,6 +364,22 @@ export class ProjectDetailComponent implements OnInit {
 
 			}
 		}
+		}else{
+			Swal.fire({
+				type: 'error',
+				title: 'Sorry!',
+				text: "Project's Sprint is not activated",
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
+			console.log("hi");
+		}
+		}
+		console.log("status========>",this.sprintStatus);
+
+		
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
@@ -536,9 +556,9 @@ export class ProjectDetailComponent implements OnInit {
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		console.log("estimated time=====>",task.estimatedTime);
 		console.log("images====>",task.images);
-		console.log("due date===========>",task.dueDate);
-		task.dueDate = moment().add(task.dueDate, 'days').toString();
-		console.log("after===========>",task.dueDate);
+
+		console.log(task.dueDate);
+		task.dueDate = moment().add(task.dueDate, 'days').format('YYYY-MM-DD');
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
 		console.log("task ALL details",task);
 		let data = new FormData();
@@ -671,9 +691,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.files.splice(index,1);
 		console.log(this.files);	
 	}
-
-
-
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
 	}
@@ -683,7 +700,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
 			_.forEach(this.sprints, (sprint)=>{
-				if(sprint.status == 'Active'){
+				if(sprint.status == 'Active' || sprint.status == 'Complete'){
 					this.activeSprint = sprint;
 					this.sprintInfo = sprint;
 					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  

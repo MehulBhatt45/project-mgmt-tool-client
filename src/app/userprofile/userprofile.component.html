@@ -30,9 +30,9 @@
 						<a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md"
 						aria-selected="false"><span class="icon-list mr-1"></span> Projects</a>
 					</li>
-					<li class="nav-item col-md-12">
+					<li class="nav-item col-md-12" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 						<a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md"
-						aria-selected="false"><span class="icon-bell mr-1"></span> Notify</a>
+						aria-selected="false"><span class="icon-bell mr-1"></span> Notification To All Team Members</a>
 					</li>
 				</ul>
 			</div>
@@ -70,7 +70,7 @@
 			</div>
 			<div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md">
 				<div class="card">
-					<h2><span class="icon-bell mr-1"></span> Notify</h2>
+					<h2><span class="icon-bell mr-1"></span>Notification To All Team Members</h2>
 					<div class="notify">
 						<form [formGroup]="editTEmail">
 							<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
@@ -116,6 +116,7 @@
 								<option value="{{this.total}}" selected>All Team</option>
 								<option *ngFor="let team of teams" value="{{team._id}}">{{team.name}}</option>
 							</select>
+							<br>
 						<!-- </div>  -->
 						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
 					</form>

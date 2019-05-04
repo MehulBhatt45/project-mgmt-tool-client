@@ -36,9 +36,6 @@
 	max-width: 100%;
 	width: 100%;
 }
-h3{
-	text-align: center;
-}
 .selected{
 	display: none;
 }
@@ -80,9 +77,8 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 
 #exampleForm2 {
 	color: #000;
-    font-size: 18px;
-    padding: inherit;
-    color: #000;
+	font-size: 18px;
+	color: #000;
 }
 .md-form {
 	position: relative;
@@ -139,7 +135,7 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 	background-color: #e6e6e6;
 	padding: 10px;   
 	margin-right: 5px;
-    height: 80px;	
+	height: 80px;	
 }
 .leave_icon img{
 	height: 30px;
@@ -148,105 +144,124 @@ button.btn.btn-outline-white.btn-rounded.btn-sm.px-2 {
 }
 .card_custom{
 	width: 100%;
-    border-radius: 3px;
-    padding: 6px;
-    display: inline-block;
+	border-radius: 3px;
+	padding: 6px;
+	display: inline-block;
 }
 .total_leave{
 	display: inline-block;
 	width: 100%;
-	padding-top: 40px;
+	padding: 15px;
 }
-
 .avatar a {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
+	height: 60px;
+	width: 60px;
+	border-radius: 50%;
+	overflow: hidden;
+	position: relative;
 }
 .avatar a img{
-    -o-object-fit: cover;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    min-height: 100%;
-    min-width: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	min-height: 100%;
+	min-width: 100%;
 }
 a.image_attachment {
-    color: #3292ae;
+	color: #3292ae;
 }
 .view img{
 	display: inline-block;
 	margin-right: 15px;
 }
 input[type=text]{
-    width: 0px;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0;
-    float: left;
-    height: 31px !important;
-    box-sizing: border-box;
-    transition: all 0.5s;
+	width: 0px;
+	border: none !important;
+	box-shadow: none !important;
+	margin: 0;
+	float: left;
+	height: 31px !important;
+	box-sizing: border-box;
+	transition: all 0.5s;
 }
 input[type=text]::placeholder{
 	color: gray;
-    font-size: 18px;
+	font-size: 18px;
 }
 .search .btn{
 	box-shadow: none !important;
 	height: 33px;
-    width: 31px;
+	width: 31px;
 	float: right;
 	background-color: #3998c5;
 }
 .search {
-    border: 2px solid #fff;
-    height: 35px;
-    width: 35px;
-    border-radius: 50px;
-    outline: none;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    transition: all 0.5s;
-    overflow: hidden;
+	border: 2px solid #fff;
+	height: 35px;
+	width: 35px;
+	border-radius: 50px;
+	outline: none;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	transition: all 0.5s;
+	overflow: hidden;
 }
 .search.open{
 	width: 250px;
 }
 .search.open input[type=text]{
-    width: calc(100% - 43px);
-    padding: 0px 0px 0px 20px;
-    transition: all 0s;
+	width: calc(100% - 43px);
+	padding: 0px 0px 0px 20px;
+	transition: all 0s;
 }
 .btn-outline-primary {
-    border: 2px solid #3998c5;
-    color: #3998c5 !important;
-    background-color: transparent;
+	border: 2px solid #3998c5;
+	color: #3998c5 !important;
+	background-color: transparent;
 }
 .btn-outline-default {
-    border: 2px solid darkgray;
-    color: black !important;
-    background-color: transparent;
+	border: 2px solid #181123;
+	color: #181123 !important;
+	background-color: transparent;
 }
 .col-md-3{
 	padding: 0px!important;
 }
 .btn-floating{    
 	outline: none;
-    border: none;
-    padding: 2px 2px 11px 2px;
-    background-color: #6c5d84;
+	border: none;
+	padding: 2px 2px 11px 2px;
+	background-color: #6c5d84;
 }
-.btn.disabled, .btn:disabled {
-    opacity: 0.3 !important;
+.leaves_name h3{
+	padding: 15px;
+	max-width: calc(100% - 400px); 
+	float: left;
+	margin: 0; 
+	color: #3998c5;
 }
-/*.chart{
-	margin-left: auto;
-	margin-right: auto;
-	display: inline-block;
-}*/
+
+/*responsive*/
+@media (max-width: 991px){
+	.nav-link[_ngcontent-c4] {
+		font-size: 17px;
+	}
+}
+
+@media (max-width: 575px){
+	.nav-link{    
+		font-size: 16px;
+		line-height: 20px;
+	}
+	.leaves_name h3{
+		font-size: 16px;
+		max-width: calc(100% - 200px); 
+	}
+	.table th{
+		font-size: 15px;
+	}
+}

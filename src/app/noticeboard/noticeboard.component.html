@@ -2,7 +2,7 @@
 	<h2 class="card-header-title"> <span class="icon-book-open mr-1"></span> Notice Board</h2>
 	<div class="row grid">
 		<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
-			<div class="card mb-3">
+			<div class="card mb-1">
 				<div *ngFor="let image of notice.images; let i =index" class="image_box {{i == 0?'active':''}}">
 					<a [attr.data-lightbox]="notice._id" href="{{path}}{{image}}" >
 						<img class="img-fluid" src="{{path}}{{image}}" onerror="this.src='../assets/noticeboard.jpg'">
@@ -13,7 +13,7 @@
 				</div>
 				<div class="card-body">
 					<div class="btn-group dropleft float-right">
-						<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-default btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
+						<button *ngIf="currentUser.userRole=='projectManager'" type="button" style="border-radius: 50%;top: -39px;" class="btn btn-primary btn-floating btn_popover_menu " data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"><i class="fas fa-ellipsis-v"></i> 
 						</button>
 						<div class="dropdown-menu">
 							<input #noticeFile type="file" name="fileUpload" (change)="uploadFile($event,notice._id)" accept=".jpg, .png, .jpeg" hidden multiple>
