@@ -103,6 +103,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
+   
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
