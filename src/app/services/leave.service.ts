@@ -205,7 +205,7 @@ export class LeaveService {
 	}
 
 
-	updateNotificationApprovedStatus(leaveId,leaveStatus){
+	updateNotificationByStatus(leaveId,leaveStatus){
 		console.log("leaveId======>",leaveId);
 		console.log("leaveStatus=====================>",leaveStatus)
 		return this.http.get(config.baseApiUrl+"sendNotification/get-pm-notification/"+leaveId+"/"+leaveStatus);

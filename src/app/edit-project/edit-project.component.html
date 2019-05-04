@@ -24,13 +24,20 @@
 					<div class="md-form form-group" *ngIf="availData">
 						<input mdbInput type="text" id="projecttitle" class="form-control" formControlName="title" [(ngModel)]="availData.title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="projecttitle" class="active">Project Title</label>
+						<div class="col-md-2" *ngIf="submitted && f.title.errors" class="invalid-feedback">
+							<div *ngIf="f.title.errors.required">Project title is required</div>
+							<div *ngIf="f.title.errors.maxlength">Project title must be only 60 characters</div>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-md-4 col-sm-12">
 					<div class="md-form form-group active"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
+						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="date-picker-example">Deadline</label>
-						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" >
+						<div class="col-md-2" *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
+							<div *ngIf="f.title.errors.required">Project deadline is required</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -38,6 +45,10 @@
 				<div class="md-form form-group" *ngIf="availData">
 					<input mdbInput type="text" id="desc" class="form-control" formControlName="desc" [(ngModel)]="availData.desc" >
 					<label for="desc" class="active" >Project Discription</label>
+					<div class="col-md-2" *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+						<div *ngIf="f.desc.errors.required">Project discription is required</div>
+						<div *ngIf="f.desc.errors.maxlength">Project title must be only 60 characters</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -65,8 +76,9 @@
 											</div>
 										</div>
 										<div class="col-md-9 col-sm-9 col-9">
-											<span style="line-height: 2;">{{item.name}}</span>
-											<p style="font-size: 14px;">{{item.userRole}}</p>
+											<span style="line-height: 2; margin-left: 35px;
+											">{{item.name}}</span>
+											<p style="font-size: 14px; margin-left: 35px; margin-top: -15px;">{{item.userRole}}</p>
 										</div>
 									</div>
 								</ng-template>
@@ -99,7 +111,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Project manager -->
 
 		<div class="card mt-1 p-1">
@@ -118,8 +130,11 @@
 										<div class="col-md-3"  style="margin-top: 10px;">
 											<div class="img_section">
 												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'">
-
 											</div>
+										</div>
+										<div class="col-md-7 col-sm-7 col-7">
+											<span style="line-height: 2; margin-left: 35px;">{{item.name}}</span>
+											<p style="font-size: 14px; margin-left: 35px; margin-top: -15px;">{{item.userRole}}</p>
 										</div>
 									</div>
 								</ng-template>
@@ -150,8 +165,9 @@
 					</div>	
 				</div>
 			</div>
+
+			<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)" [disabled]= "isDisable" >Update Project</button>
 		</div>
-		<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)">Update Project</button>
 
 		<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">

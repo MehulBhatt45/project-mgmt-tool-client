@@ -41,7 +41,7 @@ export class UserprofileComponent implements OnInit {
 	baseMediaUrl = config.baseMediaUrl;
 	pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
 	submitted = false;
-
+	isDisable:boolean = false;
 	constructor(private route: ActivatedRoute,public _alertService: AlertService,
 		private router: Router, public _projectservice: ProjectService, public _loginService: LoginService) { 
 	}
@@ -68,7 +68,7 @@ export class UserprofileComponent implements OnInit {
 		this.getProjects();
 
 	}
-		get f() { return this.editTEmail.controls; }
+	get f() { return this.editTEmail.controls; }
 
 
 	getProjects(){
@@ -156,44 +156,46 @@ export class UserprofileComponent implements OnInit {
 		console.log("data of usersssssssss=========>",editTEmail);
 		// this.submitted = true;
 		// if (this.editTEmail.invalid) {
-		// 	return;
-		// }
-		// console.log("CurrentUserId========>",this.currentUser._id);
-		editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
-		console.log("editTEmail" , editTEmail.value);
+			// 	return;
+			// }
+			// console.log("CurrentUserId========>",this.currentUser._id);
+			this.isDisable = true;
+			editTEmail.value['pmanagerName'] = JSON.parse(localStorage.getItem('currentUser')).name;
+			console.log("editTEmail" , editTEmail.value);
 
-		this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
-			console.log(res);
-			Swal.fire({type: 'success',
-				title: 'You Notified '+ res.name + ' of ',
-				showConfirmButton:false,
-				timer: 2000,
-})
-			// this.notification = this.myObject;
-			// console.log(this.myObject);
-		})
+			this._projectservice.addNotification(editTEmail.value).subscribe((res:any)=>{
+				console.log(res);
+				Swal.fire({type: 'success',
+					title: 'You Notified '+ res.name + ' of ',
+					showConfirmButton:false,
+					timer: 2000,
+				})
+				this.isDisable = false;
+				// this.notification = this.myObject;
+				// console.log(this.myObject);
+			})
+		}
+		uploadFile(e){
+			console.log("file============>",e.target.files);
+			var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+			console.log("userId===============>",userId);
+			this.files = e.target.files;
+			console.log("files===============>",this.files);
+			this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
+				console.log("resss=======>",res);
+				Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
+
+				setTimeout(()=>{
+					this.currentUser = res;
+					localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+				},1000);
+			},error=>{
+				console.log("errrorrrrrr====>",error);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+			});  
+		}
+
 	}
-	uploadFile(e){
-		console.log("file============>",e.target.files);
-		var userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-		console.log("userId===============>",userId);
-		this.files = e.target.files;
-		console.log("files===============>",this.files);
-		this._loginService.changeProfilePicture(this.files, userId).subscribe((res:any)=>{
-			console.log("resss=======>",res);
-			Swal.fire({type: 'success',title: 'profile Picture Updated Successfully',showConfirmButton:false,timer: 2000})
-
-			setTimeout(()=>{
-				this.currentUser = res;
-				localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-			},1000);
-		},error=>{
-			console.log("errrorrrrrr====>",error);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-		});  
-	}
-
-}
 
 
 

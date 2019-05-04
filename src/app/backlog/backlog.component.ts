@@ -51,6 +51,7 @@ export class BacklogComponent implements OnInit {
 
 	newsprint;
 	addSprintres;
+	isDisable:boolean = false;
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,private change: ChangeDetectorRef) { 
 		this.route.params.subscribe(param=>{
 			this.projectId = param.id;
@@ -216,7 +217,7 @@ export class BacklogComponent implements OnInit {
 			startpicker.set('max', new Date(this.prdead));
 			var endpicker = $('#addEndDate').pickadate('picker');
 			endpicker.set('max', new Date(this.prdead));
-		
+
 			endpicker.set('min',new Date(startpicker))
 		},(err:any)=>{
 			console.log("err of team============>"  ,err);
@@ -225,6 +226,7 @@ export class BacklogComponent implements OnInit {
 	get f() { return this.addForm.controls; }
 
 	addSprint(addForm){
+		this.isDisable = true;
 		console.log('addForm===============>',addForm);
 		addForm.startDate = $('#addStartDate').val();
 		// addForm.startDate = $('#startDate').val();
@@ -240,16 +242,19 @@ export class BacklogComponent implements OnInit {
 			$('#addsprint').modal('hide');
 			Swal.fire({type: 'success',title: 'Sprint Created Successfully',showConfirmButton:false,timer: 2000})
 			this.getSprint(this.projectId);
+			this.isDisable = false;
 			this.addForm.reset();
 		},(err:any)=>{
 			console.log(err);
 			Swal.fire('Oops...','Something went wrong!', 'error')
+			this.isDisable = false;
 		});
 	}
 
 	getSprint(projectId){
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("All sprint response--------->>>>>>>",res);
+			console.log("status=====>",res[0].status);
 			this.sprints = res;
 			_.forEach(this.sprints , (sprint)=>{
 				console.log("single sptint", sprint);
@@ -291,7 +296,7 @@ export class BacklogComponent implements OnInit {
 	}
 
 	updateSprint(sprint){
-
+		this.isDisable = true;
 		console.log("update Notice =====>",sprint);
 		sprint.startDate = moment(sprint.startDate).format('YYYY-MM-DD'); 
 		console.log("start sprint =====>",sprint.startDate);
@@ -302,6 +307,7 @@ export class BacklogComponent implements OnInit {
 		
 		if(sprint.duration > this.remainingLimit){
 			Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
+			this.isDisable = false;
 		}
 		else{
 			this._projectService.updateSprint(sprint).subscribe((res:any)=>{
@@ -309,10 +315,12 @@ export class BacklogComponent implements OnInit {
 				Swal.fire({type: 'success',title: 'Sprint Updated Successfully',showConfirmButton:false,timer: 2000})
 				$('#editmodel').modal('hide');
 				this.getSprint(this.projectId);
+				this.isDisable = false;
 				// this.editSprintForm.reset();
 			},err=>{
 				console.log(err);
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				this.isDisable = false;
 			})
 		}
 	}
@@ -360,6 +368,7 @@ export class BacklogComponent implements OnInit {
 	}
 
 	startSprint(sprint){
+		this.isDisable = true;
 		console.log($('#startDate').val(), $('#endDate').val());
 		sprint.startDate = moment($('#startDate').val()).format('YYYY-MM-DD');
 		sprint.endDate = moment ($('#endDate').val()).format('YYYY-MM-DD'); 
@@ -368,32 +377,31 @@ export class BacklogComponent implements OnInit {
 		console.log("system date",this.currentdate);
 		sprint.duration = this.durationOfDate(sprint.startDate,sprint.endDate);
 		console.log("sprint ID=========>>>>",sprint);
-
-		console.log("date of sorint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
+		console.log("date of sprint============",sprint.startDate , this.currentdate, sprint.startDate == this.currentdate);
 		if(sprint.startDate == this.currentdate){
 			console.log("sprint.duration" , sprint.duration);
 			console.log("this.remainingLimit" , this.remainingLimit);
 			if(sprint.duration > this.remainingLimit){
-			console.log("duration of sprint===========>",sprint.duration);
-			// console.log("total sprint Duration",this.totalSDuration);
-			// console.log("total project Duration",this.pDuration);
-			// this.remainingLimit =  this.totalSDuration - this.pDuration;
-			console.log("remaininglimit of sprint===========>",this.remainingLimit);
+				console.log("duration of sprint===========>",sprint.duration);
+				// console.log("total sprint Duration",this.totalSDuration);
+				// console.log("total project Duration",this.pDuration);
+				// this.remainingLimit =  this.totalSDuration - this.pDuration;
+				console.log("remaininglimit of sprint===========>",this.remainingLimit);
 				Swal.fire('Oops...', 'Sprint Duration Over ProjectDueDate!', 'error')
+				this.isDisable = false;
 			}
 			else{
 				Swal.fire({
 					title: 'Are you sure?',
 					text: "You won't be able to revert this!",
 					type: 'warning',
-					showCancelButton: true,
+					showCancelButton: false,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
 					confirmButtonText: 'Yes,Start it!'
 				}).then((result) => {
 					console.log("result of sprint",result);
 					if (result.value) {
-
 						this._projectService.startSprint(sprint).subscribe((res:any)=>{
 							Swal.fire(
 								'Started!',
@@ -402,9 +410,11 @@ export class BacklogComponent implements OnInit {
 								)
 							$('#startmodel').modal('hide');
 							this.getSprint(this.projectId);
+							this.isDisable = false;
 						},err=>{
 							console.log(err);
 							Swal.fire('Oops...', 'Something went wrong!', 'error')
+							this.isDisable = false;
 						})
 
 					}
