@@ -28,6 +28,7 @@ export class LeaveComponent implements OnInit {
 	url = [];
 	currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	submitted = false;
+	isDisable:boolean = false;
 
 	constructor(public router:Router, public _leaveService:LeaveService) {
 		this.addForm = new FormGroup({
@@ -97,6 +98,7 @@ export class LeaveComponent implements OnInit {
 		// if (this.addForm.invalid) {
 		// 	return;
 		// }
+		this.isDisable = true;
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
 		form.endingDate = $('#endDate').val();
@@ -133,6 +135,7 @@ export class LeaveComponent implements OnInit {
 		}
 		this._leaveService.addLeave(this.addForm.value, this.files).subscribe((res:any)=>{
 			Swal.fire({type: 'success',title: 'Leave Apply Successfully',showConfirmButton:false,timer: 2000})
+			this.isDisable = false;
 			this.router.navigate(['./view-projects']);
 			console.log("ressssssssssssss",res);
 
@@ -140,6 +143,7 @@ export class LeaveComponent implements OnInit {
 		},err=>{
 			console.log(err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			this.isDisable = false;
 		})
 	}
 	showOneDay(){
