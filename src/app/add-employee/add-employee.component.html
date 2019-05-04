@@ -5,25 +5,24 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="md-form form-group">
-
 						<label for="name"> Name</label>
 						<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-						<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+						<div  class="col-md-2" *ngIf="submitted && f.name.errors" class="invalid-feedback">
 							<div *ngIf="f.name.errors.required">Name is required</div>
 							<div *ngIf="f.name.errors.minlength">Name must be at least 2 characters</div>
 							<div *ngIf="f.name.errors.maxlength">Name must be only 20 characters</div>
-							<div *ngIf="f.name.errors.pattern">Please enter valid name</div>
+							<div *ngIf="f.name.errors.pattern">Please enter Your valid name</div>
 						</div>
 					</div>
 				</div>
-				
+				<div class="col-md-1"></div>
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="email">Email</label>
 						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-						<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+						<div class="col-md-2" *ngIf="submitted && f.email.errors" class="invalid-feedback">
 							<div *ngIf="f.email.errors.required">Email is required</div>
-							<div *ngIf="f.email.errors.email">Please enter valid email</div>
+							<div *ngIf="f.email.errors.email">Please enter valid Email</div>
 
 						</div>
 					</div>
@@ -33,24 +32,26 @@
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="phone">Phone No.</label>
-						<input type="tel" autocomplete= 'false | random-string'  formControlName="phone" class="form-control" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
-						<div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-							<div *ngIf="f.phone.errors.required">Phone is required</div>
+						<input type="tel"  [(ngModel)]="phone" autocomplete= 'false | random-string'   formControlName="phone" class="form-control" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"><span id="message" style="color: red;"></span>
+						<div  class="col-md-4" *ngIf="submitted && f.phone.errors" class="invalid-feedback">
 							<div *ngIf="f.phone.errors.minlength">Phone must be only 10 digits</div>
+							<div *ngIf="f.phone.errors.pattern">You can enter only numbers</div>
 							<div *ngIf="f.phone.errors.maxlength">Phone must be only 10 digits</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-md-1"></div>
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="password">Password</label>
-						<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+						<input type="password" autocomplete="new-password"  formControlName="password" class="form-control" id="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [type]="show ? 'text' : 'password'" />
+
+						<span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password" (click)="password()" [title]="pwd ? 'hide password' : 'show password'"></span>
+
 						<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
 							<div *ngIf="f.password.errors.required">Password is required</div>
 							<div *ngIf="f.password.errors.minlength">Password must contain atleast 6 characters</div>
 							<div *ngIf="f.password.errors.maxlength">Password must be  only 20 characters</div>
-							<div *ngIf="f.password.errors.pattern">Pasword must contain at least one uppercase,
-							one lowercase,one number and special characters</div>
 						</div>
 					</div>
 				</div>
@@ -64,6 +65,7 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-1"></div>
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<select class="custom-select custom-select-lg" formControlName="userRole" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
@@ -73,7 +75,7 @@
 							<option value="developer">Developer</option>
 						</select>
 						<div *ngIf="submitted && f.userRole.errors" class="invalid-feedback">
-							<div *ngIf="f.userRole.errors.required">User Role is required</div>
+							<div *ngIf="f.userRole.errors.required">Please select userRole</div>
 						</div>
 					</div>
 

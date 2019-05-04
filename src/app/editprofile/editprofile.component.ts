@@ -26,9 +26,9 @@ export class EditprofileComponent implements OnInit {
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 
-			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
+			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z]+\\.?")]),
 			email: new FormControl('',[Validators.required, Validators.email]),
-			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern("[0-9]+\\.?")]),
 			userRole:new FormControl('', [Validators.required]),
 			experience:new FormControl('',[Validators.required]),
 			joiningDate:new FormControl('',[Validators.required]),

@@ -89,6 +89,7 @@ export class LoginComponent implements OnInit {
         console.log("datysdsatyds",data);
         // Swal.fire({type: 'success',title: 'Login Successfully', showConfirmButton:false, timer:2000});
         let name = data.data.name;
+
         var myDate = new Date();
         console.log("date mde che ke nai",myDate);
         var hrs = myDate.getHours();
@@ -110,6 +111,7 @@ export class LoginComponent implements OnInit {
           // messageClass:'name',
         })
          this.isDisable = false;
+
         this.router.navigate([this.returnUrl]);
       },
       error => {

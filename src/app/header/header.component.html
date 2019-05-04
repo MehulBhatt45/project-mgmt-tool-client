@@ -34,6 +34,7 @@
           <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-flag mr-1"></span> Add Notice</a></li>
 
 
+
           <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-book-open mr-1"></span>   Notice Board</a></li>
           <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-flag-checkered"></span> Add Employee</a></li>
           <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="far fa-user"></span> All Employee</a></li>
@@ -75,6 +76,7 @@
             <span class="custom_badge ">{{newNotification}}</span>
           </span>
         </span>
+
       </a>
       <li class="active"><button type="submit" class="btn btn-primary" (click)="checkOut(currentEmployeeId)" *ngIf="checkInStatus">CheckOut</button></li>
       <li class="active"> <button type="submit" class="btn btn-primary" (click)="checkIn(currentEmployeeId)" *ngIf="!checkInStatus">CheckIn</button></li>
@@ -85,7 +87,7 @@
 
 <div class="side_fixed_nav">
   <div class="top_icon" >
-    <div class="second_icondropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
+    <div class="second_icon dropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
       <a href="" class="star_link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-plus" style="font-size: 20px;color: #181123;" aria-hidden="true" ></span></a>
       <div class="dropdown-menu">
         <a class="dropdown-item" [routerLink]="['/create-project']"> <span class="icon-folder-alt mr-1"></span> Project</a>
@@ -95,9 +97,9 @@
       </div>
     </div> 
   </div>
+<div class="second_icon dropdown">
   <div class="bottom_icon">
     <div class="second_icon">
-
       <a routerLink="/notification" class="star_link" title="Notifications" data-toggle="tooltip" data-placement="right" style="color: #181123;"><span class="icon-bell" style="font-size: 20px;" aria-hidden="true" >
         <span class="notification_count animated bounce" *ngIf= "newNotification > 0">
           <span class="custom_badge " >{{newNotification}}</span>
@@ -106,8 +108,6 @@
     </a>
   </div>
 </div> 
-
-<div class="second_icon dropdown">
   <a href="" class="star_link" data-toggle="tooltip" title="Your profile and settings" data-placement="right"></a>
   <ul class="team-members">
     <li id="login_details">
@@ -161,75 +161,89 @@
             </div>
           </div>
           <div [hidden]="!task.projectId">
-            <div class="form-group col-12">
+            <div class="form-group col-11">
               <label for="title">Title</label>
-              <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control">
+              <input type="text" id="title" formControlName="title" [(ngModel)]="task.title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+              <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+                <div *ngIf="f.title.errors.maxLength">You can use maximum 50 characters</div>
+              </div>
             </div>
-            <div class="form-group col-12">
+            <div class="form-group col-11">
               <label for="desc">Discription</label>
-              <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea"></textarea>
-            </div>
-            <div class=" row form-group col-12">
-              <button class="btn btn-primary" (click)="fileUpload.click()">
-                <span class="icon-paper-clip mr-1"></span> Add Files
-                <input type="file" name="uploadedFiles" #fileUpload (change)="onSelectFile($event, 'item')" hidden multiple accept="image/png, image/jpg, image/jpeg">
-              </button>
-            </div>
-            <div *ngIf=" task.images && task.images.length>0">
-              <div class="text-center selected-avatar" *ngFor="let url of newTask.images; let k=index;">
-                <img class="avatar-image margin-auto" src="{{path}}{{url}}" style="height: 150px; width: 150px;">
-                <div class="delete-team-member">
-                  <a href="javascript:void(0);" (click)="removeAlreadyUplodedFile(k)"><span class="fas fa-trash fa-2x"></span></a>
-                </div>
+
+              <textarea id="desc" formControlName="desc" [(ngModel)]="task.desc" class="form-control md-textarea" [ngClass]="{ 'is-invalid': submitted && f.desc.errors }"></textarea>
+              <div *ngIf="submitted && f.desc.errors" class="invalid-feedback">
+                <div *ngIf="f.desc.errors.required">Project Discription is required</div>
               </div>
+
             </div>
-            <div *ngIf="url && url.length">
-              <div class="text-center selected-avatar" *ngFor="let u of url; let ui=index;">
-                <img class="avatar-image margin-auto" [src]="u" style="height: 150px; width: 150px;">
-                <div class="delete-team-member">
-                  <a href="javascript:void(0);" (click)="removeAvatar(u, ui)"><span class="fas fa-trash fa-2x"></span></a>
-                </div>
-              </div>
-            </div>
-            <div class="row no-margin no-padding border" >
+
+            <div class="row no-margin no-padding  border" >
               <div class="form-group col-12 col-lg-6 pt-1">
                 <label for="assignTo">Assign To</label>
-                <select class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id">
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="task.assignTo" [(ngModel)]="task.assignTo._id" [ngClass]="{ 'is-invalid': submitted && f.assignTo.errors }">
                   <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
                 </select>
-                <select class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo">
+                <div *ngIf="submitted && f.assignTo.errors" class="invalid-feedback">
+                  <div *ngIf="f.assignTo.errors.required">You have to assign task to some one</div>
+                </div>
+                
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="assignTo" formControlName="assignTo" *ngIf="!task.assignTo" [ngClass]="{ 'is-invalid': submitted && f.assignTo.errors }">
                   <option *ngFor="let team of developers" value="{{team._id}}">{{team.name}}</option>
                 </select>
+                <div *ngIf="submitted && f.assignTo.errors" class="invalid-feedback">
+                  <div *ngIf="f.assignTo.errors.required">You have to assign task to some one</div>
+                </div>
               </div>
               <div class="form-group col-12 col-lg-6 pt-1">
                 <label for="priority">Priority</label>
-                <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority">
+                <select class="browser-default custom-select custom-select-lg mb-1" name="priority" id="priority" formControlName="priority" [(ngModel)]="task.priority" [ngClass]="{ 'is-invalid': submitted && f.priority.errors }">
                   <option value="4">Low</option>
                   <option value="3">Medium</option>
                   <option value="2">High</option>
                   <option value="1">Highest</option>
                 </select>
+                <div *ngIf="submitted && f.priority.errors" class="invalid-feedback">
+                  <div *ngIf="f.priority.errors.required">Task priority is required</div>
+                </div>
+                
               </div>
               <div class="form-group col-12">
                 <label for="assignTo">Sprint</label>
-                <select class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="task.sprint" [(ngModel)]="task.sprint._id">
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint"  *ngIf="task.sprint" [(ngModel)]="task.sprint._id" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
                   <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
                 </select>
-                <select class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint">
+                <div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
+                  <div *ngIf="f.sprint.errors.required">Project sprint is required</div>
+                </div>
+                
+                <select  class="browser-default custom-select custom-select-lg mb-1" id="sprint" formControlName="sprint" *ngIf="!task.sprint" [ngClass]="{ 'is-invalid': submitted && f.sprint.errors }">
                   <option *ngFor="let sprint of newSprint" value="{{sprint._id}}">{{sprint.title}} {{sprint.status}}</option>
                 </select>
+                <div *ngIf="submitted && f.sprint.errors" class="invalid-feedback">
+                  <div *ngIf="f.sprint.errors.required">Project sprint is required</div>
+                </div>
               </div>
-              <div class="form-group col-6">
+              <div class="form-group col-5">
                 <label for="dueDate">Due Days</label>
-                <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control">
+                <input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="task.dueDate" class="form-control"  [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }" />
+                <div *ngIf="submitted && f.dueDate.errors" class="invalid-feedback">
+                  <div *ngIf="f.dueDate.errors.required">Due days is required</div>
+                </div>
               </div>
-
-              <div class="form-group col-6">
+              <div class="form-group col-1"></div>
+              <div class="form-group col-5">
                 <label for="estimatedTime">Estimated Time</label>
                 <div class="md-form form-group">
-
-                  <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off">
+                  <input placeholder="Estimated time in hrs.." type="text" name="estimatedTime" id="estTime" class="form-control" formControlName="estimatedTime" [(ngModel)]="task.estimatedTime" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.estimatedTime.errors }" />
+                  <div *ngIf="submitted && f.estimatedTime.errors" class="invalid-feedback">
+                    <div *ngIf="f.estimatedTime.errors.required">Estimated time is required</div>
+                  </div>
                 </div>
+              </div>
+              <div class="form-group col-12">
+                <app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
               </div>
             </div>
           </div>
@@ -237,6 +251,7 @@
         <div class="float-right">
           <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" (click)="close()">Close</button>
           <button type="button" class="btn btn-primary btn-lg" (click)="saveTheData(editTaskForm.value)" [disabled]="!editTaskForm.valid || loader || isDisable">Save changes</button>
+
         </div>
       </div>
     </div>

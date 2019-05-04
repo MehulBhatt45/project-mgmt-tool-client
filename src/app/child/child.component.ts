@@ -353,6 +353,7 @@ export class ChildComponent  implements OnInit{
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
+      this.isDisable = false;
     });
   }
 
@@ -463,10 +464,11 @@ export class ChildComponent  implements OnInit{
   get f() { return this.editTaskForm.controls; }
 
   updateTask(task){
-    // this.submitted = true;
-    // if (this.editTaskForm.invalid) {
-    //   return;
-    // }
+
+    this.submitted = true;
+    if (this.editTaskForm.invalid) {
+      return;
+    }
      this.isDisable = true;
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
