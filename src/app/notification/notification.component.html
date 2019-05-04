@@ -1,5 +1,7 @@
-
 <h3 class="card-header-title mb-1"><span class="icon-bell"></span> Notification</h3>
+<div *ngIf = "!userNotification.length">
+	<p style="text-align: center;">No Notification Found</p>
+</div>
 <div class="card p-3">
 	<ul *ngFor="let data of userNotification" id="accordionEx" role="tablist" aria-multiselectable="true">
 		<li class="task" *ngIf ="data.type == 'task' && data.priority == '1'">

@@ -1,5 +1,8 @@
 <div class="container-fluid">
 	<h2 class="card-header-title"> <span class="icon-book-open mr-1"></span> Notice Board</h2>
+	<div *ngIf = "!allNotice.length">
+		<p style="text-align: center;font-size: 25px;">You have Notice</p>
+	</div>
 	<div class="row grid">
 		<div class="col-lg-3 col-md-4 col-sm-6 grid-item" *ngFor="let notice of allNotice">
 			<div class="card mb-1">
