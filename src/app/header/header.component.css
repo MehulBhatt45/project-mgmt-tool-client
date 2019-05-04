@@ -254,11 +254,11 @@ ol.breadcrumb.hidden-lg-down li a {
   }
   a.only_for_mobile {
     margin-top: 22px;
-}
-.notification_count{
+  }
+  .notification_count{
     height: 23px;
     width: 23px;
-}
+  }
 }
 .selected-avatar{
   position: relative;
@@ -356,6 +356,11 @@ nav.navbar.fixed-top.navbar-toggleable-md.navbar-dark.double-nav {
   margin: 0!important;
   padding: 0!important;
 }
-.modal-backdrop{
-  z-index: 10 !important;
+
+li.item_list {
+    cursor: not-allowed !important;
+}
+.item_list a.disabled {
+ opacity: .4; 
+ pointer-events:none;
 }
