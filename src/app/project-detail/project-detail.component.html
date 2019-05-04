@@ -9,7 +9,7 @@
 
 		<div class="col-7">
 			<h3 *ngIf="pro.title" class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe06a;"></span> {{pro.title}}</h3>
-			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><span class="icon-clock mr-1"></span>{{activeSprint.remainingDays}} Days Remaining</h5>
+			<h5><span class="icon-clock mr-1"></span><span  *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content="" >{{activeSprint.remainingDays}} Days Remaining</span></h5>
 		</div>
 		<div class="col-5 md-form form-group">
 			<div class="sprint_button">

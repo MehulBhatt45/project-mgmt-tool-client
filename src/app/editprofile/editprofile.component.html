@@ -77,15 +77,15 @@
 						</div>
 
 					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="md-form form-group file-field" *ngIf="userDetails">
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
-							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
-						</div>
-						<div class="file-path-wrapper">
-							<span class="far fa-file-pdf">
-								<input class="file-path validate"  [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly> </span>
+
+					<div class="col-md-12">
+						<div class="md-form form-group file-field" *ngIf="userDetails">
+							<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
+								<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly>
+								<span class="far fa-file-pdf"></span>
 							</div>
 						</div>
 					</div>
@@ -95,8 +95,8 @@
 							<button type="submit" class="btn btn-primary" routerLink="/reset-password" *ngIf= "currentUser.userRole != 'admin' ">Reset Password</button>
 						</div>
 					</div>
-
-				</form>
-			</div>
+				</div>
+			</form>
 		</div>
 	</div>
+</div>

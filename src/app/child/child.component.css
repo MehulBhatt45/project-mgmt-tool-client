@@ -43,6 +43,17 @@
   border: none;
   outline: none;
 }
-.sprint{
-  
+@media(max-width: 1199px){  
+  .all_card {
+    overflow-x: auto;
+  }
+  .all_card .board.cdk-drop-list {
+    min-width: 1200px;
+    max-width: 1200px;
+  }
+}
+@media (max-width: 767px){
+  .all_card_box{
+    overflow: auto;
+  }
 }

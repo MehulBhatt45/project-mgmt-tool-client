@@ -195,6 +195,7 @@ table {
   margin-left: 5px;
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .due_date_sorting_btn, 
@@ -473,16 +474,13 @@ table {
 
   @media (max-width: 1199px){
     .card-list button {
-      width: 0px;
+      width: auto;
     }
-  }
-    @media (max-width: 1199px){
-    .card-list button {
-      width: 0px;
+    .all_card {
+      overflow-x: auto;
     }
-  }
-    @media (max-width: 1199px){
-    .card-list button {
-      width: 0px;
+    .all_card .board.cdk-drop-list {
+      min-width: 1200px;
+      max-width: 1200px;
     }
   }
