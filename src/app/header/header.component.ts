@@ -77,9 +77,17 @@ export class HeaderComponent implements OnInit {
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 		})
 	}
+	openNav() {
+		document.getElementById("slide-out").style.width = "350px";
 
+	}
 
+	closeNav() {
+		document.getElementById("slide-out").style.width = "0";
+	}
 	ngOnInit() {
+
+
 		// localStorage.setItem("checkIn",JSON.stringify(false));
 		this.editTaskForm.reset()
 		this.task = this.getEmptyTask();

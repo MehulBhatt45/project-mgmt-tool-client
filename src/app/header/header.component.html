@@ -15,7 +15,7 @@
       <li>
         <ul class="collapsible collapsible-accordion">
           <li class=" item_list">
-            <a class="collapsible-header waves-effect arrow-r"  [class.disabled] = "projects.length == 0">
+            <a class="collapsible-header waves-effect arrow-r"  [class.disabled] = "projects.length == 0" (click)="closeNav()">
               <span style="outline: none;" routerLink="/view-projects">
                 <span class="mr-1" data-icon="&#xe067;"></span> Projects
               </span>
@@ -23,40 +23,40 @@
             <div class="collapsible-body">
               <ul>
                 <li *ngFor="let project of projects">
-                  <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;" ><span class="icon-bar-chart mr-1"></span>{{project.title}}</a>
+                  <a routerLink="/project-details/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;" (click)="closeNav()"><span class="icon-bar-chart mr-1"></span>{{project.title}}</a>
                 </li>
               </ul>
             </div>
           </li>
-          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-note mr-1"></span> Create Project</a>
+          <li *ngIf="currentUser.userRole=='projectManager'"><a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="icon-note mr-1"></span> Create Project</a>
           </li>
-          <li class=" item_list"><a *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r" [class.disabled] = "projects.length == 0"><span class="mr-1" data-icon="&#xe06a;"></span> Item List</a></li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-flag mr-1"></span> Add Notice</a></li>
+          <li class=" item_list"><a *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" routerLink="/all-item-list" style="width: 100%;" class="collapsible-header waves-effect arrow-r" [class.disabled] = "projects.length == 0" (click)="closeNav()"><span class="mr-1" data-icon="&#xe06a;"></span> Item List</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin' "><a routerLink="/add-notice" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="icon-flag mr-1"></span> Add Notice</a></li>
 
 
 
-          <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-book-open mr-1"></span>   Notice Board</a></li>
-          <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-flag-checkered"></span> Add Employee</a></li>
-          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="far fa-user"></span> All Employee</a></li>
+          <li><a routerLink="/noticeboard" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="icon-book-open mr-1"></span>   Notice Board</a></li>
+          <li *ngIf="currentUser.userRole=='admin' "><a routerLink="/add-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="fas fa-flag-checkered"></span> Add Employee</a></li>
+          <li *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'"><a routerLink="/all-employee" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="far fa-user"></span> All Employee</a></li>
           <li *ngIf="currentUser.userRole=='projectManager'" class=" item_list">
             <a style="width: 100%;" class="collapsible-header waves-effect arrow-r" 
-            (click) ="getAllProjects()" [class.disabled] = "projects.length == 0"><span class="icon-users mr-1"></span> Visit Team-members
+            (click) ="getAllProjects()" [class.disabled] = "projects.length == 0" (click)="closeNav()"><span class="icon-users mr-1"></span> Visit Team-members
             <span class="fa fa-angle-down rotate-icon" *ngIf = "projects.length != 0"></span></a>
             <div class="collapsible-body">
               <ul>
                 <li *ngFor="let project of finalArr">
-                  <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;"><span class="icon-bar-chart"></span>{{project.title}}</a>
+                  <a routerLink="/project-team/{{project._id}}" class="collapsible-header waves-effect" style="width: 100%;" (click)="closeNav()"><span class="icon-bar-chart"></span>{{project.title}}</a>
                 </li>
               </ul>
             </div>
           </li>
-          <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-user-following mr-1"></span>   Attendence</a>
+          <li><a routerLink="/attendence" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="icon-user-following mr-1"></span>   Attendence</a>
           </li>
-          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="icon-docs mr-1"></span> All Leave Application</a></li>
-          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fas fa-user-tie"></span> MyLeave</a></li>
-          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r"><span class="fab fa-wpforms"></span> Leave Form</a></li>
-          <li class="only_for_mobile"><a  class="dropdown-item" routerLink="/userprofile"> <span class="icon-user mr-1"></span> My Profile</a></li>
-          <li class="only_for_mobile"><a class="dropdown-item" (click)="logout()"><span class="icon-logout mr-1"></span> Log Out</a></li>
+          <li *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'"><a routerLink="/all-leave-app" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="icon-docs mr-1"></span> All Leave Application</a></li>
+          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/myleave" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="fas fa-user-tie"></span> MyLeave</a></li>
+          <li  *ngIf="currentUser.userRole=='developer' || currentUser.userRole=='user' "><a routerLink="/leave" style="width: 100%;" class="collapsible-header waves-effect arrow-r" (click)="closeNav()"><span class="fab fa-wpforms"></span> Leave Form</a></li>
+          <li class="only_for_mobile"><a  class="dropdown-item" routerLink="/userprofile" (click)="closeNav()"> <span class="icon-user mr-1"></span> My Profile</a></li>
+          <li class="only_for_mobile"><a class="dropdown-item" (click)="logout()" (click)="closeNav()"><span class="icon-logout mr-1"></span> Log Out</a></li>
         </ul>
       </li>
     </ul>
@@ -65,7 +65,7 @@
   <nav class="navbar fixed-top navbar-toggleable-md navbar-dark double-nav">
     <div class="float-left">
       <ol class="breadcrumb hidden-lg-down">
-        <li><a data-activates="slide-out" class="button-collapse" ><span class="fa fa-bars"></span></a></li>
+        <li><a data-activates="slide-out" class="button-collapse" (click)="openNav()" ><span class="fa fa-bars"></span></a></li>
         <li class="breadcrumb-item active"><a>Dashboard</a></li>
       </ol>
     </div>
@@ -90,7 +90,7 @@
     <div class="second_icon dropdown" id="plus_details" *ngIf="currentUser.userRole=='projectManager' || currentUser.userRole=='admin'">
       <a href="" class="star_link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-plus" style="font-size: 20px;color: #181123;" aria-hidden="true" ></span></a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" [routerLink]="['/create-project']"> <span class="icon-folder-alt mr-1"></span> Project</a>
+        <a class="dropdown-item" [routerLink]="['/create-project']"> <span class="icon-folder-alt mr-1" ></span> Project</a>
         <a class="dropdown-item" (click)="addItem('Task')"><span data-icon="&#xe067;" class="mr-1"></span> Task</a>
         <a class="dropdown-item" (click)="addItem('Bug')"><span class="icon-energy mr-1"></span> Bug</a>
         <a class="dropdown-item" (click)="addItem('Issue')"> <span class="icon-question mr-1"></span> Issue</a>
