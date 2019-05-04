@@ -237,10 +237,7 @@ ol.breadcrumb.hidden-lg-down li a {
 :host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
   background-color: #6657a9
 }
-:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected{
-  color: #372e5f;
-}
-@media (max-width:1199px) { 
+@media (max-width:2000px) { 
   .only_for_mobile{
     display: none;
   }
