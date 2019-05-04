@@ -58,7 +58,6 @@
 								<div *ngIf="f.desc.errors.maxLength">Discription must be  contain 50 characters</div>
 							</div>
 						</div>
-
 						<div class="form-group">
 							<div class="switch">
 								<label>
@@ -85,18 +84,13 @@
 								</div>
 							</div>
 						</div>
-
 					</form>
-
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
 						<button type="submit" id="my_button" class="btn btn-default btn-lg" (click)="updateNotice(newNotice, newNotice._id)" [disabled] = "isDisable">Save changes</button>
 					</div>
-
 				</div>
 			</div>
-			
-
 		</div>
 	</div>
 
@@ -105,7 +99,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 style="color: purple;" class="modal-title" id="exampleModalLabel" *ngIf="singlenotice">{{singlenotice.title}}</h5>
+					<h4 class="card-header-title" id="exampleModalLabel" *ngIf="singlenotice"><span class="icon-book-open mr-1"></span> {{singlenotice.title}}</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
 						<span aria-hidden="true">&times;</span>
