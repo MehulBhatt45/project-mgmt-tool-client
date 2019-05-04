@@ -10,7 +10,7 @@
 			<div class=" md-form form-group w-100 ">
 				<i class="fas fa-search prefix"></i>
 				<input type="text" id="exampleForm2" class="form-control" [(ngModel)]="searchText"  (keyup)="onKey(searchText)" autocomplete="off" >
-				<label for="exampleForm2">search text goes here</label>
+				<label for="exampleForm2">Search Here</label>
 			</div>
 		</div>
 		<div class="col-md-8 all_prjct_drpdown" *ngIf="currentUser.userRole=='projectManager' ||  currentUser.userRole=='admin'" >
