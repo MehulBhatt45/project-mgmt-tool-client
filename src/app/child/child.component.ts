@@ -80,6 +80,7 @@ export class ChildComponent  implements OnInit{
   difference;
   file = [];
   submitted = false;
+  isDisable:boolean =false;
   
 
 
@@ -262,15 +263,15 @@ export class ChildComponent  implements OnInit{
       assignTo : new FormControl('', Validators.required),
       sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
-      startDate : new FormControl('', Validators.required),
-      dueDate : new FormControl('', Validators.required),
+      startDate : new FormControl(''),
+      dueDate : new FormControl(''),
       status : new FormControl({value: '', disabled: true}, Validators.required),
       files : new FormControl(),
       estimatedTime : new FormControl()
     })
   }
 
- 
+
   getTitle(name){
     if(name){
       var str = name.split(' ');
@@ -318,6 +319,7 @@ export class ChildComponent  implements OnInit{
     this.comment = data;
   }
   sendComment(taskId){
+    this.isDisable = true;
     // this.func('reload');
     console.log(this.comment);
     var data : any;
@@ -346,9 +348,11 @@ export class ChildComponent  implements OnInit{
       this.files = [];
       this.file = [];
       console.log('this.files=============>',this.files);
+      this.isDisable = false;
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
+      this.isDisable = false;
     });
   }
 
@@ -459,10 +463,7 @@ export class ChildComponent  implements OnInit{
   get f() { return this.editTaskForm.controls; }
 
   updateTask(task){
-    this.submitted = true;
-    if (this.editTaskForm.invalid) {
-      return;
-    }
+    this.isDisable = true;
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
@@ -491,6 +492,7 @@ export class ChildComponent  implements OnInit{
         timer: 2000,
         // position: 'top-end',
       })
+      this.isDisable = false;
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
