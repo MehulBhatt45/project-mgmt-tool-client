@@ -9,6 +9,7 @@ declare var $ : any;
 import * as _ from 'lodash';
 import { config } from '../config';
 import { MessagingService } from "../services/messaging.service";
+import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -49,7 +50,8 @@ export class ViewProjectComponent implements OnInit {
   pmanagerId = JSON.parse(localStorage.getItem('currentUser'));
   flag:boolean = false;
   greet;
-  constructor( public _leaveService:LeaveService,private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService) {
+  constructor( public _leaveService:LeaveService,private messagingService: MessagingService,private route: ActivatedRoute, public _projectService:ProjectService, public _alertService: AlertService, private toaster: ToastrService
+    ) {
 
     this.addForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -157,9 +159,28 @@ export class ViewProjectComponent implements OnInit {
       localStorage.setItem("checkIn",JSON.stringify(true));
       // localStorage.setItem("checkOut",JSON.stringify(true));
       this.checkInStatus = true;
+      $('#myModal').modal('hide');
+      let name = this.currentUser.name;
+      console.log("current user name>>>>>>><<<<<<<",name);
+      var myDate = new Date();
+      console.log("date mde che ke nai",myDate);
+      var hrs = myDate.getHours();
+      console.log("time mde che ke nai",hrs);
+      var greet ;
+      if(hrs<12)
+        greet= 'Good Morning';
+      else if (hrs>=12 && hrs<=17)
+        greet = 'Good Afternoon';
+      else if (hrs>=17 && hrs<=24)
+        greet = 'Good Evening';
 
-
-      window.location.reload();
+      console.log("sanj no time print thavo joye",greet);
+      this.toaster.success(" "," " + greet + " " + name + ' Have a nice day', {
+        timeOut: 2000,
+        positionClass: 'toast-top-center',
+        toastClass: 'custom',
+        // messageClass:'name',
+      })
 
 
     },(err:any)=>{
