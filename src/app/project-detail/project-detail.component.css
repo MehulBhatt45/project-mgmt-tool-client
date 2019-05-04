@@ -486,3 +486,7 @@ table {
       width: 0px;
     }
   }
+  .btn{
+    text-transform: none !important;
+     font-weight: bold !important;
+  }

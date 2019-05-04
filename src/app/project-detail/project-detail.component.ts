@@ -369,7 +369,7 @@ export class ProjectDetailComponent implements OnInit {
 				var n = res.timelog.length
 				Swal.fire({
 					type: 'info',
-					title: "Task is shifted to complete from testing" ,
+					title: "Task is shifted to Complete from Testing" ,
 					showConfirmButton:false,timer: 2000})
 			},err=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -548,7 +548,7 @@ export class ProjectDetailComponent implements OnInit {
 			let name = res.assignTo.name;
 			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
 			Swal.fire({type: 'success',
-				title: 'Task Added Successfully to',
+				title: 'Task Added Successfully To',
 				text: name,
 				showConfirmButton:false,
 				timer: 2000,
@@ -638,7 +638,7 @@ export class ProjectDetailComponent implements OnInit {
 			}else {
 				Swal.fire({
 					title: 'Error',
-					text: "You can upload images only",
+					text: "You can upload Images only",
 					type: 'warning',
 				})
 			}

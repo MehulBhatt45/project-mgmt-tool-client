@@ -76,7 +76,7 @@
             <thead>
               <tr>
                 <th>
-                  <span class="icon-user"></span> Avtar
+                  <span class="icon-user"></span> Avatar
                 </th>
                 <th>
                   <span><span class="icon-pencil"></span> Name
@@ -246,23 +246,23 @@ aria-hidden="true">
            <p *ngIf="singleleave">{{singleleave.email}}</p> 
          </div>
          <div class="col-md-4 col-sm-12">
-          <h5><span class="icon-calendar"></span> StartingDate:</h5>
+          <h5><span class="icon-calendar"></span> From Date:</h5>
           <p *ngIf="singleleave">{{singleleave.startingDate | date:'mediumDate'}}</p>
         </div>
         <div class="col-md-4 col-sm-12">
-          <h5> <span class="icon-calendar"></span> EndingDate:</h5>
+          <h5> <span class="icon-calendar"></span> To Date:</h5>
           <p *ngIf="singleleave">{{singleleave.endingDate | date:'mediumDate'}}</p>
         </div>
         <div class="col-md-4 col-sm-12">
-          <h5><span class="icon-clock"></span> LeaveDuration:</h5>
+          <h5><span class="icon-clock"></span> Duration:</h5>
           <p *ngIf="singleleave">{{singleleave.leaveDuration}}</p>  
         </div>
         <div class="col-md-4 col-sm-12">
-          <h5><span class="far fa-dot-circle"></span> LeaveType:</h5>
+          <h5><span class="far fa-dot-circle"></span> Type:</h5>
           <p *ngIf="singleleave">{{singleleave.typeOfLeave}}</p>  
         </div>
         <div class="col-md-12">
-          <h5><span class="icon-note"></span> LeaveReason:</h5>
+          <h5><span class="icon-note"></span> Reason:</h5>
           <p style="text-align: justify;" *ngIf="singleleave">{{singleleave.reasonForLeave}}</p>  
         </div>
       </div> 

@@ -79,8 +79,8 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
-  submitted = false;
-  
+  submitted = false;  
+  isTaskFound = false;
 
 
   
@@ -132,8 +132,14 @@ export class ChildComponent  implements OnInit{
     console.log("EVENT",localStorage.getItem('isTimerRunning'));
     var taskId = localStorage.getItem('isTimerRunning');
     console.log('taskId===========>',taskId);
+    let isAnyTrackHasTask = false;
     await _.forEach(this.tracks,async (track)=>{
       console.log('track =================>',track);
+      if(track.tasks.length){
+        isAnyTrackHasTask = true;
+        return false;
+      }
+      
       await _.forEach(track.tasks,(task)=>{
         if(task._id == taskId){
           console.log('taskkkkkkkkkkkkkkkk=================>',task);
@@ -145,6 +151,7 @@ export class ChildComponent  implements OnInit{
 
       })
     })
+    if (isAnyTrackHasTask) this.isTaskFound = true;
   }
 
   ngOnChanges() {
