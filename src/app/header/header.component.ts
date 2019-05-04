@@ -108,6 +108,7 @@ export class HeaderComponent implements OnInit {
 			console.log("res-==",this.projectId);
 		});
 		this.getProjects();
+		this.getAllProjects();
 		// this.getAllDevelopers();
 		// this.getNotificationByUserId();
 		this.getUnreadNotification();

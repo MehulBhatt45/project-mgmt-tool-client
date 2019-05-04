@@ -17,7 +17,7 @@
 							<div *ngIf="submitted && f.name.errors" class="invalid-feedback">
 								<div *ngIf="f.name.errors.required">Name is required</div>
 								<div *ngIf="f.name.errors.minlength">Name must be at least 2 characters</div>
-								<div *ngIf="f.name.errors.pattern">Please enter Your valid name</div>
+								<div *ngIf="f.name.errors.pattern">Please enter only alphabates</div>
 								<div *ngIf="f.name.errors.maxlength">Name must be only 20 characters</div>
 							</div>
 						</div>
@@ -41,7 +41,6 @@
 							<label class="active" for="mobile">Phone No.</label>
 							<input type="text" formControlName="phone" class="form-control" id="mobile" [(ngModel)]="userDetails.phone" [(ngModel)]="userDetails.phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
 							<div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
-								<div *ngIf="f.phone.errors.required">Phone is required</div>
 								<div *ngIf="f.phone.errors.minlength">Phone must be only 10 digits</div>
 								<div *ngIf="f.phone.errors.pattern">You can enter only numbers</div>
 								<div *ngIf="f.phone.errors.maxlength">Phone must be only 10 digits</div>
@@ -85,8 +84,8 @@
 							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 						</div>
 						<div class="file-path-wrapper">
-							<i class="far fa-file-pdf">
-								<input class="file-path validate"  [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly> </i>
+							<span class="far fa-file-pdf">
+								<input class="file-path validate"  [ngModelOptions]="{standalone: true}" type="text" placeholder="Upload Your CV" [(ngModel)]="userDetails.CV" readonly> </span>
 							</div>
 						</div>
 					</div>
