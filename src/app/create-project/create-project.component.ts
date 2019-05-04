@@ -26,6 +26,7 @@ export class CreateProjectComponent implements OnInit {
   objectsArray: any = [];
   setDate:any;
   submitted = false;
+  isDisable:boolean =false;
 
   constructor(public router:Router, public _projectservice:ProjectService,public _projectService: ProjectService,
     public _alertService: AlertService,) { 
@@ -66,6 +67,7 @@ export class CreateProjectComponent implements OnInit {
     if (this.addForm.invalid) {
       return;
     }
+    this.isDisable =true;
     console.log(addForm, this.files);
 
     var data = new FormData();
@@ -84,9 +86,11 @@ export class CreateProjectComponent implements OnInit {
       this.addForm.reset();
       this.url = '';
       this.router.navigate(['/view-projects']);
+      this.isDisable= false;
     },err=>{
       console.log(err); 
-      Swal.fire('Oops...', 'Something went wrong!', 'error')   
+      Swal.fire('Oops...', 'Something went wrong!', 'error') 
+        this.isDisable= false;  
     }) 
   }
 

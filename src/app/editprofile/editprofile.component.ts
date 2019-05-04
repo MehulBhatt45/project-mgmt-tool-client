@@ -22,13 +22,13 @@ export class EditprofileComponent implements OnInit {
 	date: any;
 	loader: boolean = false;
 	submitted = false;
-
+	isDisable:boolean= false;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 
-			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
+			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z]+\\.?")]),
 			email: new FormControl('',[Validators.required, Validators.email]),
-			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern("[0-9]+\\.?")]),
 			userRole:new FormControl('', [Validators.required]),
 			experience:new FormControl('',[Validators.required]),
 			joiningDate:new FormControl('',[Validators.required]),
@@ -62,10 +62,11 @@ export class EditprofileComponent implements OnInit {
 
 	updateProfile(editEmployeeForm){
 		console.log('jkfdg');
-		// this.submitted = true;
-		// if (this.editEmployeeForm.invalid) {
-		// 	return;
-		// }
+		this.submitted = true;
+		if (this.editEmployeeForm.invalid) {
+			return;
+		}
+		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 
 			console.log(this.files);
@@ -87,9 +88,11 @@ export class EditprofileComponent implements OnInit {
 			this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 				console.log("res",res);
 				Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+				this.isDisable= false;
 			},err=>{
 				console.log("error",err); 
-				Swal.fire('Oops...', 'Something went wrong!', 'error')   
+				Swal.fire('Oops...', 'Something went wrong!', 'error') 
+				this.isDisable= false;  
 			})
 		}
 		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
@@ -121,9 +124,11 @@ export class EditprofileComponent implements OnInit {
 					this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 						console.log("res",res);
 						Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
+						this.isDisable= false;
 					},err=>{
 						console.log("error",err); 
-						Swal.fire('Oops...', 'Something went wrong!', 'error')   
+						Swal.fire('Oops...', 'Something went wrong!', 'error')  
+						this.isDisable= false; 
 					})
 				}
 

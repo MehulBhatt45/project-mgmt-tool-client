@@ -39,6 +39,8 @@ export class EditProjectComponent implements OnInit {
 	devId;
 	submitted = false;
 	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
+	isDisable:boolean = false;
+
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
@@ -212,7 +214,7 @@ export class EditProjectComponent implements OnInit {
 		if (this.updateForm.invalid) {
 			return;
 		}
-
+		this.isDisable = true;
 		console.log("update details of project",this.files,updateForm);
 		console.log(updateForm.Teams);
 		var newTeams = [];
@@ -255,9 +257,11 @@ export class EditProjectComponent implements OnInit {
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			this.getProjectById(res._id);
 			this.url = '';
+			this.isDisable = false;
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			this.isDisable = false;
 		})
 	}
 	deleteProject(projectId){

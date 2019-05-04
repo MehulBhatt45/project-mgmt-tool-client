@@ -81,7 +81,7 @@ export class NotificationComponent implements OnInit {
 	displayLeaveEmit(leave){
 		console.log("leave ==>",leave);	
 	}
-	updateNotificationApprovedStatus(leaveId,leaveStatus){
+	updateNotificationByStatus(leaveId,leaveStatus){
 		Swal.fire({
 			title: 'Are you sure?',
 			type: 'warning',
@@ -90,7 +90,7 @@ export class NotificationComponent implements OnInit {
 			cancelButtonText: 'No',
 			reverseButtons: true
 		}).then((result) => {
-			this._leaveService.updateNotificationApprovedStatus(leaveId,leaveStatus).subscribe((res:any)=>{
+			this._leaveService.updateNotificationByStatus(leaveId,leaveStatus).subscribe((res:any)=>{
 				this.pmStatus = res.leaveStatus;
 				console.log("pmStatus=============>",this.pmStatus);
 			},err=>{

@@ -1,8 +1,9 @@
 <div draggable="true" ngClass="{{dragAreaClass}}">
-	<div class="text-center overlay_dragarea" *ngIf="files.length<=0 || errors.length>0" (click)="file.click()"  style="cursor: pointer;">
-		<div ><i class="fas fa-download"  style="font-size: 20px;"></i></div>
+	<div class="text-center overlay_dragarea" *ngIf="files.length<=0 || errors.length>0" (click)="file.click()"  style="cursor: pointer; border: 3px dotted lightgray; padding: 20px; margin-bottom: 10px;">
+		<div class="pdf_img">	
+			<img src="../assets/attach.png">
+		</div>
 		<span for="addFile">{{dragAreaContent}}</span>
-
 		<input type="file" #file id="addFile" file-name="filename" [multiple]="(maxFiles > 1)" accept=".jpg, .png, .jpeg, .pdf" (change) = "onFileChange($event)" 
 		style="display:none" />
 	</div>
@@ -21,9 +22,6 @@
 					<span title="Remove Image" style="position: absolute;top: 0px;right: 0;left: 0; bottom: 0; z-index: 1;cursor: pointer;color: #dc3545;height: 60px;width: 60px;text-align: center;background-color: rgba(255,255,255,0.6);border-radius: 50%;margin: auto;" (click)="deleteFile(i, x)"><i class="fa fa-trash" aria-hidden="true" style="font-size: 30px;top: 0;bottom: 0;left: 0;right: 0;margin: auto;position: absolute;height: 30px;width: 30px;line-height: 30px;"></i></span>
 				</div>
 			</div>
-
-			
-			
 			<div class="col-sm-3">
 				<div class="default_cover_images" style="position: relative;">
 					<input type="file" id="moreImage" [multiple]="(maxFiles > 1)" accept=".jpg, .png, .jpeg, .pdf" (change) = "onFileChange($event)" style="display:none" />
@@ -34,6 +32,5 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 

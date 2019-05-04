@@ -20,7 +20,7 @@ export class ForgotpwdComponent implements OnInit {
 	show1: boolean;
 	match: boolean = false;
 	submitted = false;
-
+	isDisable:boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -33,8 +33,8 @@ export class ForgotpwdComponent implements OnInit {
 
 	ngOnInit() {
 		this.resetPasswordForm = this.formBuilder.group({
-			password: new FormControl( '', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
-			confirmPassword: new FormControl( '', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
+			password: new FormControl( '', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+			confirmPassword: new FormControl( '', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
 		});
 
 		$(".toggle-password").click(function() {
@@ -48,6 +48,7 @@ export class ForgotpwdComponent implements OnInit {
 		if (this.resetPasswordForm.invalid) {
 			return;
 		}
+		this.isDisable = true;
 		if(this.resetPasswordForm.value.password == this.resetPasswordForm.value.confirmPassword){
 			delete this.resetPasswordForm.value["confirmPassword"];
 			var obj = {};
@@ -58,6 +59,7 @@ export class ForgotpwdComponent implements OnInit {
 			this._loginService.updatepwd(obj).subscribe(res=>{
 				console.log("res-=-=",res);
 				Swal.fire("","Password reset successfully","success");
+				this.isDisable = false;
 				this.router.navigate(["/login"]);
 			},err=>{
 				console.log("res-=-=",err);
@@ -67,6 +69,7 @@ export class ForgotpwdComponent implements OnInit {
 					text: 'Link Expired!',
 					footer: ''
 				})
+				this.isDisable = false;
 			})
 		}
 		else if(this.resetPasswordForm.value.password != this.resetPasswordForm.value.confirmPassword){
@@ -76,6 +79,7 @@ export class ForgotpwdComponent implements OnInit {
 				text: 'Please enter matching password!',
 				footer: ''
 			})
+			this.isDisable = false;
 		}
 	}
 

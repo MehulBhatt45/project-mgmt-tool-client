@@ -5,8 +5,8 @@
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
 			<div class="card-header">
-					<span class="track_title"> <span class="{{track.icon}}"></span> {{track.title}}</span>
-					<span class="card_count_lbl">{{track.tasks.length}}</span>
+				<span class="track_title"> <span class="{{track.icon}}"></span> {{track.title}}</span>
+				<span class="card_count_lbl">{{track.tasks.length}}</span>
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
 				<!-- <div *ngIf = "track.tasks.length == 0">
@@ -18,21 +18,21 @@
 							<div class="card-body" style="padding: 0px;">
 								<div class="container" *ngIf=" task.status == 'in progress'">
 									<div class="row sprint">
-											<div class="col-sm-5" style="padding-left: 0; background-color: #62aacc; height: 40px;">
-												<section class="timer-button-container start_button">
-													<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
-														<span class="icon-clock mr-1"></span>
-														{{ task.startText?task.startText:'Start' }}
-													</button>
-												</section>
-											</div>
-											<div class="col-sm-7" style="background-color: #dcdfe0; height: 40px;">
-												<section class="timer-counter-label" style="float: right;">
-													<div style="padding: 8px"> 
-														{{task.time?task.time:'00:00:00'}}
-													</div>
-												</section>
-											</div>
+										<div class="col-sm-5" style="padding-left: 0; background-color: #62aacc; height: 40px;">
+											<section class="timer-button-container start_button">
+												<button class="timer-button" (click)="startTimer(task)" [id]="task._id">
+													<span class="icon-clock mr-1"></span>
+													{{ task.startText?task.startText:'Start' }}
+												</button>
+											</section>
+										</div>
+										<div class="col-sm-7" style="background-color: #dcdfe0; height: 40px;">
+											<section class="timer-counter-label" style="float: right;">
+												<div style="padding: 8px"> 
+													{{task.time?task.time:'00:00:00'}}
+												</div>
+											</section>
+										</div>
 									</div>
 								</div>
 								<div (click)="openModel(task)">
@@ -238,7 +238,7 @@
 					<div>
 						<ckeditor class="ckeditor margin-left-15" style="width:100%;" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)" (change)="onChange($event)"></ckeditor>
 						<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="changeFile($event)"></app-file-upload-dnd>
-						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="!comment && files.length==0"> <span class="icon-plus"></span> Add Comment</button>
+						<button class="btn btn-default mt-1" (click)="sendComment(task._id)" [disabled]="(!comment && files.length==0) || isDisable"> <span class="icon-plus"></span> Add Comment</button>
 					</div>
 					
 				</div>
@@ -261,7 +261,7 @@
 				<div class="modal-body view view-cascade">
 					<div class="container">
 						<form style="width: 100%;" [formGroup]="editTaskForm">
-							<div class="form-group col-12"s>
+							<div class="form-group col-12">
 								<label for="title">Title</label>
 								<input type="text" id="title" formControlName="title" [(ngModel)]="newTask.title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 								<div *ngIf="submitted && f.title.errors" class="invalid-feedback">
@@ -324,15 +324,7 @@
 									</div>
 									
 								</div>
-								<div class="form-group col-6">
-									<label for="dueDate">Due Days</label>
-									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }">
-									<div *ngIf="submitted && f.dueDate.errors" class="invalid-feedback">
-										<div *ngIf="f.dueDate.errors.required">Due days is required</div>
-									</div>
-								</div>
-
-								<div class="form-group col-6">
+								<div class="form-group col-12 col-lg-5 pt-1">
 									<label for="estimatedTime">Estimated Time</label>
 									<div class="md-form form-group">
 
@@ -340,7 +332,14 @@
 										<div *ngIf="submitted && f.estimatedTime.errors" class="invalid-feedback">
 											<div *ngIf="f.estimatedTime.errors.required">Estimated time is required</div>
 										</div>
-
+									</div>
+								</div>
+								<div class="form-group col-12 col-lg-1 pt-1"></div>
+								<div class="form-group col-12 col-lg-5 pt-1">
+									<label for="dueDate">Due Days</label>
+									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }">
+									<div *ngIf="submitted && f.dueDate.errors" class="invalid-feedback">
+										<div *ngIf="f.dueDate.errors.required">Due days is required</div>
 									</div>
 								</div>
 								<div class="form-group col-12">
@@ -367,7 +366,7 @@
 					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 						<button class="btn btn-primary" type="button" (click)="deleteTask(taskId)">Delete Task</button>
 					</div>
-					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" >Save changes</button>
+					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)" [disabled] = "isDisable">Save changes</button>
 				</div>
 
 			</div>

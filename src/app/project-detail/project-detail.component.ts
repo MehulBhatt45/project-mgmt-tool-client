@@ -56,16 +56,18 @@ export class ProjectDetailComponent implements OnInit {
 	projectTeam;
 	sprints;
 	newSprint = [];
+	 sprintStatus = [];
 	Teams;
 	files:Array<File> = [];
 	path = config.baseMediaUrl;
 	priority: boolean = false;
-	
+	sprint;
 	sorting:any;
 	temp:any;
 	activeSprint:any;
 	sprintInfo:any;
 	submitted = false;
+	isDisable :boolean = false;
 
 	constructor(public _projectService: ProjectService, private route: ActivatedRoute,
 		public _alertService: AlertService, public searchTextFilter: SearchTaskPipe,
@@ -184,7 +186,7 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
+			dueDate : new FormControl(''),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 			// files : new FormControl()
@@ -198,7 +200,7 @@ export class ProjectDetailComponent implements OnInit {
 				html: true,
 				trigger: 'hover',
 				placement: 'bottom',
-				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+				// content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
 			});
 		},2000);
 		$('.datepicker').pickadate();
@@ -215,9 +217,11 @@ export class ProjectDetailComponent implements OnInit {
 		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
+
 	}
 
 	
+
 
 	filterTracks(sprintId){
 		console.log("tem ====>" , this.temp);
@@ -232,7 +236,7 @@ export class ProjectDetailComponent implements OnInit {
 			})
 		})
 	}
-
+	
 	getAllDevelopers(){	
 		this._projectService.getAllDevelopers().subscribe(res=>{
 			this.developers = res;
@@ -255,11 +259,7 @@ export class ProjectDetailComponent implements OnInit {
 
 	}
 
-
-	
-
 	getProject(id){
-
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
@@ -274,21 +274,10 @@ export class ProjectDetailComponent implements OnInit {
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
-
-					// this.projectTeam.sort(function(a, b){
-						// 	var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase()
-						// 	if (nameA < nameB) //sort string ascending
-						// 		return -1 
-						// 	if (nameA > nameB)
-						// 		return 1
-						// 	return 0 //default return value (no sorting)
-						// 	this.projectTeam.push
-						// 	console.log("sort============>"  ,this.projectTeam);
-						// })
-						this.loader = false;
-					},(err:any)=>{
-						console.log("err of team============>"  ,err);
-					});
+					this.loader = false;
+				},(err:any)=>{
+					console.log("err of team============>"  ,err);
+				});
 			},(err:any)=>{
 				console.log("err of project============>"  ,err);
 			});
@@ -297,20 +286,17 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
-				// this.project.sort(custom_sort);
-				// this.project.reverse();
-
 				console.log("PROJECT=================>", this.project);
 				_.forEach(this.project , (task)=>{
 					_.forEach(this.tracks , (track)=>{
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active' && this.currentUser.userRole == 'developer'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer'){
 								track.tasks.push(task);
 							}
 						}else{
-							if(task.status == track.id && task.sprint.status == 'Active'){
+							if(task.status == track.id ){
 								track.tasks.push(task);
 							}
 						}
@@ -319,9 +305,7 @@ export class ProjectDetailComponent implements OnInit {
 
 				console.log("This Tracks=========>>>>>",this.tracks);
 				this.temp =  this.tracks; 
-
 				this.loader = false;
-
 			},err=>{
 				console.log(err);
 				this.loader = false;
@@ -337,6 +321,15 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		// if(task.sprint.status == 'Active'){
+
+		// }
+		
+		for(var i=0;i<event.previousContainer.data.length;i++){
+			this.sprintStatus.push(event.previousContainer.data[i].sprint.status)
+		if(this.sprintStatus[i] == 'Active'){
+			console.log("hello");
+			console.log(this.sprintStatus);
 		console.log(event);
 		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
 			Swal.fire('Oops...', 'Stop timer!', 'error')
@@ -353,13 +346,28 @@ export class ProjectDetailComponent implements OnInit {
 
 			}
 		}
+		}else{
+			Swal.fire({
+				type: 'error',
+				title: 'Sorry!',
+				text: "Project's Sprint is not activated",
+				animation: false,
+				customClass: {
+					popup: 'animated tada'
+				}
+			})
+			console.log("hi");
+		}
+		}
+		console.log("status========>",this.sprintStatus);
+
+		
 	}
 
 	onTrackDrop(event: CdkDragDrop<any>) {
 		console.log('event in ontrackdrop================>',event);
 		moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 	}
-
 	updateStatus(newStatus, data){
 
 		if(newStatus=='complete'){
@@ -380,6 +388,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("UniqueId", data.uniqueId);
 			this._projectService.updateStatus(data).subscribe((res:any)=>{
 				console.log(res);
+				console.log(res.sprint);
 				// this.getProject(res.projectId);
 				var n = res.timelog.length;
 				let uniqueId = res.uniqueId;
@@ -423,19 +432,13 @@ export class ProjectDetailComponent implements OnInit {
 			});
 
 		}
-
 		function custom_sort(a, b) {
-			// var   Aarr = a.dueDate.split(" ");
-			// a.dueDate = Aarr[0];
-			// var   Barr = b.dueDate.split(" ");
-			// b.dueDate = Barr[0];
 			return new Date(new Date(a.dueDate)).getTime() - new Date(new Date(b.dueDate)).getTime();
 		}
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
 
-		// console.log("sorting======>",custom_sort);
 		$(".due_date_sorting_btn i.fas").toggleClass("hide");
 	}
 
@@ -518,18 +521,19 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		
-		this.submitted = true;
-		if (this.editTaskForm.invalid) {
-			return;
-		}
+		// this.submitted = true;
+		// if (this.editTaskForm.invalid) {
+		// 	return;
+		// }
+		this.isDisable = true;
 		this.loader = true;
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
 		task.priority = Number(task.priority); 
 		task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
 		console.log("estimated time=====>",task.estimatedTime);
-		// task.images = $("#images").val();
 		console.log("images====>",task.images);
+
 		console.log(task.dueDate);
 		task.dueDate = moment().add(task.dueDate, 'days').format('YYYY-MM-DD');
 		task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
@@ -563,6 +567,8 @@ export class ProjectDetailComponent implements OnInit {
 			this.files = this.url = [];
 			// this.assignTo.reset();
 			this.loader = false;
+			this.isDisable = false;
+			this.editTaskForm.reset();
 		},err=>{
 			Swal.fire({
 				type: 'error',
@@ -573,6 +579,7 @@ export class ProjectDetailComponent implements OnInit {
 					popup: 'animated tada'
 				}
 			})
+			this.isDisable = false;
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});
@@ -664,9 +671,6 @@ export class ProjectDetailComponent implements OnInit {
 			this.files.splice(index,1);
 		console.log(this.files);	
 	}
-
-
-
 	removeAlreadyUplodedFile(option){
 		this.newTask.images.splice(option,1);
 	}
@@ -676,7 +680,7 @@ export class ProjectDetailComponent implements OnInit {
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
 			_.forEach(this.sprints, (sprint)=>{
-				if(sprint.status == 'Active'){
+				if(sprint.status == 'Active' || sprint.status == 'Complete'){
 					this.activeSprint = sprint;
 					this.sprintInfo = sprint;
 					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  

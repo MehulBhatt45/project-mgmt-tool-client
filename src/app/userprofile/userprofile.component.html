@@ -14,9 +14,9 @@
 				<div class="col-md-8 p-0">
 					<div class="mx-0 my-auto">
 						<div class="name">
-							<span>{{currentUser.name}}</span>
+							<span style="text-transform: capitalize;">{{currentUser.name}}</span>
 						</div>
-						<p style="padding-left: 10px;">{{currentUser.userRole}}</p>
+						<p style="padding-left: 10px; text-transform: capitalize;">{{currentUser.userRole}}</p>
 					</div>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 					</li>
 					<li class="nav-item col-md-12" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
 						<a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md"
-						aria-selected="false"><span class="icon-bell mr-1"></span> Notify</a>
+						aria-selected="false"><span class="icon-bell mr-1"></span> Notification To All Team Members</a>
 					</li>
 				</ul>
 			</div>
@@ -44,11 +44,9 @@
 				<div class="card profile padding-15">
 					<h2><span class="icon-user mr-1"></span> About</h2>
 					<h3>{{currentUser.name}}</h3>
-					<p><span class="icon-envelope mr-1"></span> {{currentUser.email}}</p>
-					<p *ngIf = "currentUser.phone"><span class="icon-screen-smartphone mr-1"></span> {{currentUser.phone}}</p>
-					<p><span class="fab fa-skype mr-1"></span> tirthrajbarot</p>
-					<button type="button" class="btn btn-primary" style="width: 21%;" routerLink="/editprofile/{{currentUser._id}}"><i class="icon-note"></i> Edit profile</button>
-
+					<p><span class="icon-envelope mr-1"></span><a href="mailto: {{currentUser.email}}"> {{currentUser.email}}</a></p>
+					<p><span class="icon-screen-smartphone mr-1"></span><a href="tel:+91{{currentUser.phone}}"> {{currentUser.phone}}</a></p>
+					<button type="button" class="btn btn-primary" routerLink="/editprofile/{{currentUser._id}}"><span class="icon-note"></span> Edit profile</button>
 				</div>
 			</div>
 			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
@@ -70,7 +68,7 @@
 			</div>
 			<div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md">
 				<div class="card">
-					<h2><span class="icon-bell mr-1"></span> Notify</h2>
+					<h2><span class="icon-bell mr-1"></span>Notification To All Team Members</h2>
 					<div class="notify">
 						<form [formGroup]="editTEmail">
 							<ng-select placeholder="Select Project" [items]="projects" bindLabel="title" bindValue="_id" [closeOnSelect]="true" formControlName="projectId" (change)="projectSelected($event)">
@@ -118,7 +116,7 @@
 							</select>
 							<br>
 						<!-- </div>  -->
-						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)">Send</button>
+						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)" [disabled]= "isDisable">Send</button>
 					</form>
 				</div>
 			</div>

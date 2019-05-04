@@ -21,33 +21,30 @@
 		</div>
 	</div>
 </div>
-	
-	<div class="row">
-		<div class="col-md-4 col-sm-6" *ngFor="let developer of developers">
-			<div class="border mb-1">
-				<div class="row">
-					<div class="profile_image">
-						<div class=" img_section">
-							<a routerLink = "/visit-user-profile/{{developer._id}}">
-								<!-- <img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content"> -->
-								<img src="../assets/man.png">
-							</a>
-						</div>
+<div class="row">
+	<div class="col-lg-4 col-md-6 col-12" *ngFor="let developer of developers">
+		<div class="border mb-1">
+			<div class="row">
+				<div class="col-3">
+					<div class=" img_section">
+						<a routerLink = "/visit-user-profile/{{developer._id}}">
+							<img src="{{path}}{{developer.profilePhoto}}" onerror="this.src='../assets/man.png'" class="rounded-circle img-fluid img_content">
+						</a>
 					</div>
-					<div class="dev_name">
-						<div class="align-content-center d-flex flex-wrap">
+				</div>
+				<div class="col-7">
+					<div class="align-content-center d-flex flex-wrap">
 						<h4 style="font-size: 1.25rem;font-weight: 300; margin: 0; width: 100%; color: #3998c5;">{{developer.name}}</h4>
 						<p style="font-size: 14px; margin-bottom: 0px;">{{developer.userRole}}</p>
-						</div>
 					</div>
-					<div class="icons">
+				</div>
+				<div class="icons">
 					<div class="dev_edit">
 						<a routerLink="/editprofile/{{developer._id}}"><span class="icon-pencil" style="color: black;"></span></a>
 					</div>
 					<div class="dev_delete">
-						<a (click)="deleteEmployee(developer._id)"><span class="icon-trash"  style="color: black;"></span></a>
+						<a (click)="deleteEmployee(developer)"><span class="icon-trash"  style="color: black;"></span></a>
 					</div>
-				</div>
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,3 @@
-
-
-
 <div class="loader" *ngIf="loader">
 	<span></span>
 	<span></span>
@@ -51,8 +48,8 @@
  				<div class="card profile padding-15">
  					<h2><span class="icon-user mr-1"></span> About</h2>
  					<h3>{{currentUser.name}}</h3>
- 					<p><span class="icon-envelope mr-1"></span> {{currentUser.email}}</p>
- 					<p *ngIf = "currentUser.phone"><span class="icon-screen-smartphone mr-1"></span> {{currentUser.phone}}</p>
+ 					<p><span class="icon-envelope mr-1"></span><a href="mailto: {{currentUser.email}}">  {{currentUser.email}}</a></p>
+ 					<p><span class="icon-screen-smartphone mr-1"></span><a href="tel:+91{{currentUser.phone}}"> {{currentUser.phone}}</a></p>
  					<p><span class="fab fa-skype mr-1"></span> tirthrajbarot</p>
  				</div>
  			</div>
