@@ -38,7 +38,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
   modalTitle;3
   project;
   tasks;
@@ -298,7 +298,6 @@ export class ChildComponent  implements OnInit{
   }
   onTalkDrop(event){
     if(this.startText == 'Stop'){
-      console.log('yfudgjhfdjgvhfjhfj================');
     }
     this.talkDrop.emit(event);
   }
@@ -411,7 +410,7 @@ export class ChildComponent  implements OnInit{
     console.log("newTask",this.newTask);
     console.log("title===>",this.newTask.title);
     console.log("title2===>",this.newTask.assignTo);
-    console.log("title3===>",this.newTask.sprint);
+    // console.log("title3===>",this.newTask.sprint);
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
@@ -516,7 +515,7 @@ export class ChildComponent  implements OnInit{
     })
   }
   getEmptyTask(){
-    return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+    return { title:'', desc:'', assignTo: '',  status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
@@ -592,7 +591,6 @@ export class ChildComponent  implements OnInit{
       } else if (
         result.dismiss === Swal.DismissReason.cancel
         ) {
-
         swalWithBootstrapButtons.fire(
           'Cancled!',
           'Your task has been safe.',
@@ -650,12 +648,12 @@ export class ChildComponent  implements OnInit{
           _.forEach(this.tracks , (track)=>{
             //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id&& task.sprint.status == 'Active'){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
               }
             }else{
               console.log("sprint module",task.sprint);
-              if(task.status == track.id && task.sprint.status == 'Active'){
+              if(task.status == track.id){
                 track.tasks.push(task);
               }
             }
