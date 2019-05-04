@@ -4,8 +4,8 @@
 	<span></span>
 	<span></span>
 </div>
+
 <div [formGroup]="updateForm">
-	
 	<h3 class="card-header-title" style="line-height: 2;"><span class="icon-pencil"></span> Edit Project <button class="btn btn-default deletebtn float-right" (click)="deleteProject(availData)"><span class="icon-trash"></span></button></h3>
 	<div class="card">
 		<div class="card-body">
@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<ng-select placeholder="Select Developers" [items]="dteam" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addDeveloper($event)" (remove)="removeDeveloper($event.value)" (clear)="clearSelection($event)" >
 								<ng-template ng-label-tmp let-item="item" let-clear="clear" >
-									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/bug.png'" width="20px" height="20px"> {{item.name}}</span>
+									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/man.png'" width="20px" height="20px"> {{item.name}}</span>
 									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true"> × </span>
 								</ng-template>
 								<div class="row">
@@ -65,7 +65,7 @@
 										<div class="row border m-2">
 											<div class="col-md-3"  style="margin-top: 10px;">
 												<div class="img_section">
-													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'" >
+													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'" >
 												</div>
 											</div>
 											<div class="col-md-9">
@@ -85,7 +85,7 @@
 									<div class="row padding-5">
 										<div class="col-md-3">
 											<div class="img_section">
-												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
+												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'">
 											</div>
 										</div>
 										<div class="col-md-7">
@@ -113,7 +113,7 @@
 						<div class="form-group">
 							<ng-select placeholder="Select ProjectManager" [items]="availableProjectMngr" [multiple]="true" bindLabel="name" bindValue="_id" [closeOnSelect]="false" formControlName="Teams" (add)="addProjectManager($event)" (remove)="removeProjectManager($event.value)" (clear)="clearSelection($event)">
 								<ng-template ng-label-tmp let-item="item" let-clear="clear">
-									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/icons/bug.png'" width="20px" height="20px"> {{item.name}}</span>
+									<span class="ng-value-label"><img [src]="item.profilePhoto" onerror="this.src='assets/man.png'" width="20px" height="20px"> {{item.name}}</span>
 									<span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true"> × </span>
 								</ng-template>
 								<div>
@@ -121,7 +121,7 @@
 										<div class="row border m-2">
 											<div class="col-md-3"  style="margin-top: 10px;">
 												<div class="img_section">
-													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
+													<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'">
 												</div>
 											</div>
 											<div class="col-md-9">
@@ -141,7 +141,7 @@
 									<div class="row padding-5">
 										<div class="col-md-3">
 											<div class="img_section">
-												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/icons/bug.png'">
+												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'">
 											</div>
 										</div>
 										<div class="col-md-7">
