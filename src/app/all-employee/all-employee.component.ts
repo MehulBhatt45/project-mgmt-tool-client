@@ -98,30 +98,54 @@ export class AllEmployeeComponent implements OnInit {
 			});
 		},2000);
 	}
+	// deleteEmployee(developerid){
+	// 	console.log("msgggg--=--",developerid);
+	// 	Swal.fire({
+	// 		html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
+	// 		type: 'warning',
+	// 		showCancelButton: true,
+	// 		confirmButtonColor: '#3085d6',
+	// 		cancelButtonColor: '#d33',
+	// 		confirmButtonText: 'Yes,Delete it!',
+	// 		showCloseButton: true
+	// 	}).then((result) => {
+	// 		if (result.value) {
+	// 			var body;
+	// 			this._projectService.deleteEmployeeById(developerid._id).subscribe(res=>{
+	// 				console.log(res);
+	// 				Swal.fire({type: 'success',title: 'Employee remove Successfully',showConfirmButton:false,timer: 2000})
+	// 				this.getAllDevelopers();
+	// 			},err=>{
+	// 				console.log("errr=-=-=-= ",err);
+	// 				Swal.fire('Oops...', 'Something went wrong!', 'error')
+	// 			})
+	// 		}
+	// 	})
+	// }
 	deleteEmployee(developerid){
-		console.log("msgggg--=--",developerid);
-		Swal.fire({
-			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes,Delete it!',
-			showCloseButton: true
-		}).then((result) => {
-			if (result.value) {
-				var body;
-				this._projectService.deleteEmployeeById(developerid._id).subscribe(res=>{
-					console.log(res);
-					Swal.fire({type: 'success',title: 'Employee remove Successfully',showConfirmButton:false,timer: 2000})
-					this.getAllDevelopers();
-				},err=>{
-					console.log("errr=-=-=-= ",err);
-					Swal.fire('Oops...', 'Something went wrong!', 'error')
-				})
-			}
-		})
-	}
+console.log("msgggg--=--",developerid);
+Swal.fire({
+html: "<span style="+'font-size:25px'+"> Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
+type: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes,Delete it!',
+showCloseButton: true
+}).then((result) => {
+if (result.value) {
+var body;
+this._projectService.deleteEmployeeById(developerid._id).subscribe(res=>{
+console.log(res);
+Swal.fire({type: 'success',title: 'Employee remove Successfully',showConfirmButton:false,timer: 2000})
+this.getAllDevelopers();
+},err=>{
+console.log("errr=-=-=-= ",err);
+Swal.fire('Oops...', 'Something went wrong!', 'error')
+})
+}
+})
+}
 	getAllProjects(){
 		this._projectService.getProjects().subscribe(res=>{
 			this.projects = res;

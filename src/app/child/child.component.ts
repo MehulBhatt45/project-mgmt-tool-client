@@ -263,15 +263,14 @@ export class ChildComponent  implements OnInit{
       assignTo : new FormControl('', Validators.required),
       sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
-      startDate : new FormControl('', Validators.required),
-      dueDate : new FormControl('', Validators.required),
+      startDate : new FormControl(''),
+      dueDate : new FormControl(''),
       status : new FormControl({value: '', disabled: true}, Validators.required),
       files : new FormControl(),
       estimatedTime : new FormControl()
     })
   }
 
-  
   getTitle(name){
     if(name){
       var str = name.split(' ');
@@ -527,12 +526,7 @@ export class ChildComponent  implements OnInit{
 
 
   updateTask(task){
-
-    this.submitted = true;
-    if (this.editTaskForm.invalid) {
-      return;
-    }
-     this.isDisable = true;
+    this.isDisable = true;
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);

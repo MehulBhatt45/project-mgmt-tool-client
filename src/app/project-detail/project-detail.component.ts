@@ -186,7 +186,7 @@ export class ProjectDetailComponent implements OnInit {
 			assignTo : new FormControl('', Validators.required),
 			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
-			dueDate : new FormControl('',Validators.required),
+			dueDate : new FormControl(''),
 			estimatedTime: new FormControl('',[Validators.required]),
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 			// files : new FormControl()
@@ -200,7 +200,7 @@ export class ProjectDetailComponent implements OnInit {
 				html: true,
 				trigger: 'hover',
 				placement: 'bottom',
-				// content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
+				content:"<ul type=none ><li>"+'Start-date : '+"<strong>"+this.sprintInfo.startDate+"</strong></li>"+"<li>"+'End-date : '+"<strong>"+this.sprintInfo.endDate+"</strong></li>"+"<li>"+'Sprint-duration : '+"<strong>"+this.sprintInfo.duration +' days'+"</strong></li></ul>"
 			});
 		},2000);
 		$('.datepicker').pickadate();

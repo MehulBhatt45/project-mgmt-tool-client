@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			title : new FormControl('', [Validators.required,  Validators.maxLength(10)]),
 			desc : new FormControl('',[Validators.required]),
 			assignTo : new FormControl('',Validators.required),
 			sprint :new FormControl('',Validators.required),

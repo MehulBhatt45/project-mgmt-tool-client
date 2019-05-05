@@ -8,7 +8,7 @@
 	<div class="row" *ngIf="pro || activeSprint">
 		<div class="col-8">
 			<h3 *ngIf="pro.title" class="card-header-title mb-1"><span class="mr-1" data-icon="&#xe06a;"></span> {{pro.title}}<sub>({{pro.uniqueId}})</sub></h3>
-			<h5 *ngIf="activeSprint" title="Sprint Information" data-toggle="popover-hover" data-content=""><span class="icon-clock mr-1"></span>{{activeSprint.remainingDays}} Days Remaining</h5>
+			<h5 *ngIf="activeSprint" ><span class="icon-clock mr-1"></span><span title="Sprint Information" data-toggle="popover-hover" data-content="">{{activeSprint.remainingDays}} Days Remaining</span></h5>
 		</div>
 		<div class="col-4 md-form form-group">
 			<div class="sprint_button" *ngIf="activeSprint">
@@ -153,7 +153,7 @@
 					<div *ngIf="currentUser.userRole=='projectManager' && modalTitle == 'Edit Item'">
 						<button class="btn btn-deep-orange" type="button" (click)="deleteTask(task)"style="padding: 17px;">Delete Task</button>
 					</div>
-					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)"  [disabled]="isDisable">Save changes</button>
+					<button type="submit" id="save_changes" class="btn btn-primary" (click)="(modalTitle == 'Edit Item')?updateTask(newTask):saveTheData(editTaskForm.value)"  [disabled]="isDisable || editTaskForm.invalid ">Save changes</button>
 
 				</div>
 				
