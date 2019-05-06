@@ -40,7 +40,7 @@ export class EditProjectComponent implements OnInit {
 	submitted = false;
 	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
 	isDisable:boolean = false;
-
+	// resetValue:boolean = false;
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
@@ -249,20 +249,23 @@ export class EditProjectComponent implements OnInit {
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 
-			setTimeout(()=>{
-				window.location.reload();
-			},500);
-			console.log("response of update form  ====>" , res);
-			
-			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
-			this.getProjectById(res._id);
-			this.url = '';
-			this.isDisable = false;
-		},(err:any)=>{
-			console.log("error of update form  ====>" , err);
-			Swal.fire('Oops...', 'Something went wrong!', 'error')
-			this.isDisable = false;
-		})
+			// setTimeout(()=>{
+				// 	window.location.reload();
+				// },500);
+				setTimeout(()=>{
+					this.updateForm.get('Teams') .reset( );
+				},500);
+				console.log("response of update form  ====>" , res);
+
+				Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
+				this.getProjectById(res._id);
+				this.url = '';
+				this.isDisable = false;
+			},(err:any)=>{
+				console.log("error of update form  ====>" , err);
+				Swal.fire('Oops...', 'Something went wrong!', 'error')
+				this.isDisable = false;
+			})
 	}
 	deleteProject(projectId){
 		console.log(projectId);

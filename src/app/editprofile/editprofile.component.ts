@@ -23,6 +23,7 @@ export class EditprofileComponent implements OnInit {
 	loader: boolean = false;
 	submitted = false;
 	isDisable:boolean= false;
+	
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 
