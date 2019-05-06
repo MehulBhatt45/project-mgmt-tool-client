@@ -32,8 +32,8 @@
 				</div>
 
 				<div class="col-md-4 col-sm-12">
-					<div class="md-form form-group active"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
-						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+					<div class="md-form form-group active"  *ngIf="availData" >
+						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" (selectedChanged)="updateDate($event)" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="date-picker-example">Deadline</label>
 						<div class="col-md-2" *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
 							<div *ngIf="f.title.errors.required">Project deadline is required</div>
