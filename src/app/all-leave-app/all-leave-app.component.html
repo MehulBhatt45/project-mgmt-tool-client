@@ -17,25 +17,23 @@
 </div>
 <div class="row">
   <ul class="nav md-tabs black-text nav-justified gray" style="width: 100%;" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
-    <li class="nav-item col-md-4 col-12">
+    <li class="nav-item col-md-4 col-4">
       <a class="card card_custom" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">
         <div class="leave_icon">
           <img src="assets/icons/pending.png">
         </div>
-
         <span class="nav-link">Pending Leaves  {{pendingLeavesCount}}</span>
       </a>
     </li>
-    <li class="nav-item col-md-4 col-sm-4">
+    <li class="nav-item col-md-4 col-4">
       <a class="card card_custom"  (click)="leavesToDisplay=false;   selectedStatus='approved'; getFilteredLeaves()">
         <div class="leave_icon">
           <img src="assets/icons/approv.png">
         </div>
-
         <span class="nav-link">Approved Leaves  {{approvedLeavesCount}}</span>
       </a>
     </li>
-    <li class="nav-item col-md-4 col-sm-4">
+    <li class="nav-item col-md-4 col-4">
       <a class="card card_custom" (click)="leavesToDisplay=false; selectedStatus='rejected'; getFilteredLeaves()">
         <div class="leave_icon">
           <img src="assets/icons/rejected.png">
