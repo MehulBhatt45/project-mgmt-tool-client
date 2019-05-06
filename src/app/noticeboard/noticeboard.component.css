@@ -163,6 +163,16 @@
     object-fit: cover;
     object-position: top;
 }
+.no-data{
+	height: 150px;
+	width: 150px;
+}
+.noNoticeMessage{
+	/*display: none;*/
+	margin-top: 180px;
+	font-size: 20px;
+	text-align: center;	
+}
 
 /*responsive*/
 @media(max-width: 991px){

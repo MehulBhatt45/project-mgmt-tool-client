@@ -23,15 +23,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
           >
             Today
           </div>
-          <div
-            class="btn btn-primary"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="viewDateChange.next(viewDate)"
-          >
-            Next
-          </div>
         </div>
       </div>
       <div class="col-md-6">

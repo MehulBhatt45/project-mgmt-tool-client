@@ -5,6 +5,9 @@
   <span></span>
 </div>
 
+<div *ngIf = "!leavescount.length">
+  <p style="text-align: center;font-size: 25px;">You have no Leave Application</p>
+</div>
 <div class="row">
   <div class="col-md-2 col-sm-5 col-6 ml-auto mb-1">
     <a class="nav-link" (click)="leavesToDisplay=false">
@@ -15,7 +18,7 @@
     </a>
   </div>
 </div>
-<div class="row">
+<div class="row" >
   <ul class="nav md-tabs black-text nav-justified gray" style="width: 100%;" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
     <li class="nav-item col-md-4 col-4">
       <a class="card card_custom" (click)="leavesToDisplay=false; selectedStatus='pending'; getFilteredLeaves()">

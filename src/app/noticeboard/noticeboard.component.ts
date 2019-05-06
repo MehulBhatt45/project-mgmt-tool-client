@@ -83,7 +83,7 @@ export class NoticeboardComponent implements OnInit {
         this._projectservice.deleteNotice(id).subscribe((res:any)=>{
           Swal.fire(
             'Deleted!',
-            'Your file has been deleted.',
+            'Notice has been deleted.',
             'success'
             )
           this.getAllNotice();
