@@ -15,8 +15,8 @@
 		</div>
 	</div>
 
-	<div class="row">
-	<button type="submit" class="btn btn-primary" (click)="getByMailDetails(event)">Mail</button>
+	<div class="row" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager'">
+		<button type="submit" class="btn btn-primary" (click)="getByMailDetails(event)">Mail</button>
 	</div>
 	
 
@@ -33,6 +33,7 @@
 					[events]="events"
 					(columnHeaderClicked)="clickedColumn = $event"
 					(dayClicked)="dateSelected($event.day.date)"
+				
 					>
 				</mwl-calendar-month-view>
 				<mwl-calendar-week-view
@@ -40,12 +41,14 @@
 				[viewDate]="viewDate"
 				[events]="events"
 				(dayHeaderClicked)="dateSelected($event.day.date)"
+				
 				>
 			</mwl-calendar-week-view>
 			<mwl-calendar-day-view
 			*ngSwitchCase="'day'"
 			[viewDate]="viewDate"
 			[events]="events"
+
 			>
 		</mwl-calendar-day-view>
 	</div>
@@ -114,8 +117,8 @@
 
 
 
-
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && worktime" style="    margin-top: 50px;">
+<div *ngIf="worktime">
+<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" *ngIf="(currentUser.userRole=='admin' || currentUser.userRole=='projectManager') && worktime" style="    margin-top: 50px;">
 	<li class="nav-item">
 		<a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
 		aria-selected="true"><i class="fas fa-user"></i> Present Developer</a>
@@ -129,7 +132,9 @@
 		aria-selected="false"><i class="fas fa-calendar-day"></i> Today Attendence</a>
 	</li>
 </ul>
-<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="currentUser.userRole=='admin' || currentUser.userRole=='projectManager' && worktime" style="    margin-top: -27px;">
+
+<div class="tab-content card pt-5" id="myTabContentJust" *ngIf="(currentUser.userRole=='admin' || currentUser.userRole=='projectManager') && worktime && !isTable" style="    margin-top: -27px;">
+	<p>{{worktime}}</p>
 	<div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
 
 		<div class="row" *ngIf="presentuser.length>0">
@@ -275,6 +280,7 @@
 
 	</div>
 </div>
+</div>
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
@@ -318,9 +324,37 @@
 
 
 <div class="row" style="margin-top: 40px;">
-	<div class="col-md-6">
-		<input type="text" id="daterange1"/>
+	<div class="row">
+
+		
+		<div class="col-md-6 mb-4">
+
+			<div class="md-form">
+				
+				<input placeholder="Selected starting date" type="text" id="startingDate" class="form-control datepicker">
+				<label for="startingDate">start</label>
+			</div>
+
+		</div>
+		
+
+		
+		<div class="col-md-6 mb-4">
+
+			<div class="md-form">
+				<!--The "to" Date Picker -->
+				<input placeholder="Selected ending date" type="text" id="endingDate" class="form-control datepicker" disabled>
+				<label for="endingDate">end</label>
+			</div>
+
+		</div>
+
+
 	</div>
+	<!--Grid row-->
+	<!-- <div class="col-md-6">
+		<input type="text" id="daterange1" />
+	</div> -->
 
 </div>
 
