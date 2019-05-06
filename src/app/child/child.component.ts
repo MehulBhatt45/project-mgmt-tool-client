@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 declare var $ : any;
 
+
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
@@ -79,12 +80,13 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
+
   submitted = false;  
   isTaskFound = false;
   isDisable:boolean = false;
 
-  
 
+  
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe, private router: Router) { 
 
@@ -677,6 +679,7 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log('in child componant getproject==============================================>');
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
