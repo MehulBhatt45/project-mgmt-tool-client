@@ -11,10 +11,6 @@ h2{
 	text-align: center;
 	margin: 20px 0 20px 0;
 }
-
-.btn-deep-orange{
-	background: #372e5f;
-}
 .card.panels-card{
 	width: 500px;
 	margin: 0 auto;
@@ -26,9 +22,6 @@ h2{
 	height: 50px;
 	border: 1px solid #4b405a;
 	box-shadow: none!important;
-}
-.deep-purple-skin .top-nav-collapse {
-	background-color: #372e5f;
 }
 #pwdi{
 	float: right;

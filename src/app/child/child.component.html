@@ -75,12 +75,14 @@
 	<div class="modal-dialog modal-lg modal-full-height" role="document">
 		<div class="modal-content">
 			<h3 class="card-header-title" style="margin-left: 36px;margin-top: 13px;" id="myModalLabel"><span class="icon-note"></span> Task Details</h3>
-			<button *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" style="right: 53px; left: auto; position: absolute; top: 0;" class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task"><span class="icon-pencil mr-1"></span>Edit</button>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span class="fa fa-times" style="top: 16px;bottom: 0;right: 20px;position: absolute;"></span>
-			</button>
+			<button *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" style="right: 53px; left: auto; position: absolute; top: 0;" class="btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task">
 			<div class="modal-body" *ngIf="task">
 				<div class="container">
+					<button *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" style="right: 53px; left: auto; position: absolute; top: 0;" class="only_for_mobile 
+
+
+
+					btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task"><span class="icon-pencil mr-1"></span>Edit</button>
 					<table class="table-responsive" style="width: 100%;">
 						<tr>
 							<td style="width: 20px;">
