@@ -20,6 +20,7 @@
     <span></span>
 </div>
 <div class="noProjects" *ngIf = "currentUser.userRole == 'developer'"> 
+
   <!-- Card content -->
   <div *ngIf = "!projects.length">
     <!-- Title -->
@@ -30,6 +31,7 @@
     </div>
 </div>
 </div>
+
 
 <div class="noProjects" *ngIf = "currentUser.userRole == 'projectManager'"> 
   <!-- Card content -->
