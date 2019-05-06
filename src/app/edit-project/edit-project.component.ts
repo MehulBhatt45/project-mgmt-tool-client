@@ -71,7 +71,7 @@ export class EditProjectComponent implements OnInit {
 	ngOnDestroy(){
 		this._change.detach();
 	}
-
+	
 	ngOnInit() {
 
 		$('#datepicker').pickadate({
@@ -79,8 +79,13 @@ export class EditProjectComponent implements OnInit {
 			onSet: function(context) {
 				console.log('Just set stuff:.>>>>>>>>>><<<<<<<<<<<', context);
 				setDate(context);
+				change();
 			}
 		});
+		var change:any = ()=>{
+			this.updateForm.controls.deadline.setValue($('.datepicker').val());
+		}
+
 		var setDate = (context)=>{
 			this.timePicked();
 		}

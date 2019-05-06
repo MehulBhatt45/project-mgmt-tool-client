@@ -43,11 +43,13 @@ export class LeaveComponent implements OnInit {
 		})
 	}
 
+	
 	ngOnInit() {
 
 		
 		$('.datepicker').pickadate({ 
 			min: new Date(),
+			
 		})
 		var from_input = $('#startDate').pickadate(),
 		from_picker = from_input.pickadate('picker')
@@ -83,6 +85,7 @@ export class LeaveComponent implements OnInit {
 
 		this.showOneDays = false;
 		localStorage.setItem("showOneDays" , JSON.stringify(false));
+
 	}
 	
 	changeFile(event){
@@ -94,10 +97,10 @@ export class LeaveComponent implements OnInit {
 	
 	addLeave(form){
 		console.log("form data============>",form);
-		// this.submitted = true;
-		// if (this.addForm.invalid) {
-		// 	return;
-		// }
+		this.submitted = true;
+		if (this.addForm.invalid) {
+			return;
+		}
 		this.isDisable = true;
 		form.startingDate = $('#startDate').val();
 		form.singleDate = $('#startDateFor1').val();
