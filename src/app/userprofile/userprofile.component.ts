@@ -171,6 +171,7 @@ export class UserprofileComponent implements OnInit {
 					timer: 2000,
 				})
 				this.isDisable = false;
+				this.editTEmail.reset();
 				// this.notification = this.myObject;
 				// console.log(this.myObject);
 			})

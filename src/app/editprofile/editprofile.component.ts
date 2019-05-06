@@ -61,11 +61,11 @@ export class EditprofileComponent implements OnInit {
 
 
 	updateProfile(editEmployeeForm){
-		console.log('jkfdg');
-		this.submitted = true;
-		if (this.editEmployeeForm.invalid) {
-			return;
-		}
+		// console.log('jkfdg');
+		// this.submitted = true;
+		// if (this.editEmployeeForm.invalid) {
+		// 	return;
+		// }
 		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 

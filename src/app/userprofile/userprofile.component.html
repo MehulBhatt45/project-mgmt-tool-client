@@ -47,7 +47,6 @@
 	<p><span class="icon-envelope mr-1"></span><a style="color: black!important;" href="mailto: {{currentUser.email}}"> {{currentUser.email}}</a></p>
 					<p><span class="icon-screen-smartphone mr-1"></span><a style="color: black!important;" href="tel:+91{{currentUser.phone}}"> {{currentUser.phone}}</a></p>
 					<button type="button" class="btn btn-primary" routerLink="/editprofile/{{currentUser._id}}"><span class="icon-note"></span> Edit profile</button>	
-
 				</div>
 			</div>
 			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
@@ -92,7 +91,6 @@
 									</ng-template>
 								</div>
 							</ng-select>
-							
 							<div class="form-group">
 								<div class="form-group">
 									<div class="md-form">
@@ -109,7 +107,6 @@
 									</div>
 								</div>
 							</div>
-
 							<label for="inputMDEx">Send To</label>
 							<select class="browser-default custom-select custom-select-lg" id="sendTo" formControlName="sendTo" >
 								<option value="{{this.total}}" selected>All Team</option>
@@ -117,7 +114,7 @@
 							</select>
 							<br>
 						<!-- </div>  -->
-						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)" [disabled]= "isDisable">Send</button>
+						<button type="button" class="btn btn-default ml-0" (click)="addNotification(editTEmail)" [disabled]= "isDisable || editTEmail.invalid">Send</button>
 					</form>
 				</div>
 			</div>
