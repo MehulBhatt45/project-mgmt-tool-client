@@ -419,3 +419,8 @@ button.btn.btn-default.progress_summary {
 .z-depth-4 {
     box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21); 
 }
+.noProjects{
+    margin-top: 180px;
+    font-size: 20px;
+    text-align: center; 
+}

@@ -41,6 +41,7 @@ textarea{
   border-radius: 50%;
   overflow: hidden;
   display: inline-block;
+  float: left;
 }
 .img_section img{
   min-height: 100%;
@@ -48,6 +49,7 @@ textarea{
   max-height: 100%;
   max-width: 100%;
   object-fit: cover;
+
 }
 .card.testimonial-card .card-body h5 {
   padding: 0 5px;
@@ -272,4 +274,12 @@ ul.project-avatar li:hover {
   left: 0;
   right: 0;
   margin: auto;
+}
+
+@media (max-width: 575px) {
+  :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  -ms-flex: 100%;
+  flex: 100%;
+  max-width: 100%;
+}
 }

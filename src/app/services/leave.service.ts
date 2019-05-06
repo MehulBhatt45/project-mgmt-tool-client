@@ -194,10 +194,10 @@ export class LeaveService {
 
 	}
 
-	getUserByDate(fromDate,toDate){
-		console.log("fdate,todate=========",fromDate,toDate);
+	getUserByDate(datedata1,datedata2){
+		console.log("fdate,todate=========",datedata1,datedata2);
 
-		var obj = {fromDate:fromDate,toDate:toDate};
+		var obj = {fromDate:datedata1,toDate:datedata2};
 		console.log("date========----",obj);
 
 		return this.http.post(config.baseApiUrl+"attendence/getAttendenceInInterval",obj);

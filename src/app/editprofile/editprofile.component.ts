@@ -61,11 +61,11 @@ export class EditprofileComponent implements OnInit {
 
 
 	updateProfile(editEmployeeForm){
-		console.log('jkfdg');
-		this.submitted = true;
-		if (this.editEmployeeForm.invalid) {
-			return;
-		}
+		// console.log('jkfdg');
+		// this.submitted = true;
+		// if (this.editEmployeeForm.invalid) {
+		// 	return;
+		// }
 		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 
@@ -87,6 +87,7 @@ export class EditprofileComponent implements OnInit {
 
 			this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 				console.log("res",res);
+				localStorage.setItem('currentUser', JSON.stringify(res));
 				Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 				this.isDisable= false;
 			},err=>{
@@ -123,6 +124,7 @@ export class EditprofileComponent implements OnInit {
 
 					this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 						console.log("res",res);
+						localStorage.setItem('currentUser', JSON.stringify(res));
 						Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 						this.isDisable= false;
 					},err=>{

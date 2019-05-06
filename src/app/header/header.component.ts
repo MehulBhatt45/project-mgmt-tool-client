@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			title : new FormControl('', [Validators.required,  Validators.maxLength(10)]),
 			desc : new FormControl('',[Validators.required]),
 			assignTo : new FormControl('',Validators.required),
 			sprint :new FormControl('',Validators.required),
@@ -79,12 +79,12 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 	openNav() {
-		document.getElementById("slide-out").style.width = "350px";
-
+		// document.getElementById("slide-out").style.width = "250px";
 	}
-
 	closeNav() {
-		document.getElementById("slide-out").style.width = "0";
+		console.log("Have to close menu");
+		 $("#sidenav-overlay").css("display", "none");
+      $('#slide-out').attr('style','transform: translateX(-100%); transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94)');
 	}
 	ngOnInit() {
 

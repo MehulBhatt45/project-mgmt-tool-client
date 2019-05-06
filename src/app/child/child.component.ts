@@ -39,7 +39,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [],sprint: '' };
   modalTitle;3
   project;
   tasks;
@@ -80,9 +80,12 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
-  submitted = false;
-  isDisable:boolean =false;
-  
+
+  submitted = false;  
+  isTaskFound = false;
+  isDisable:boolean = false;
+
+
   
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe, private router: Router) { 
@@ -101,6 +104,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
+   
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -131,8 +135,14 @@ export class ChildComponent  implements OnInit{
     console.log("EVENT",localStorage.getItem('isTimerRunning'));
     var taskId = localStorage.getItem('isTimerRunning');
     console.log('taskId===========>',taskId);
+    let isAnyTrackHasTask = false;
     await _.forEach(this.tracks,async (track)=>{
       console.log('track =================>',track);
+      if(track.tasks.length){
+        isAnyTrackHasTask = true;
+        return false;
+      }
+      
       await _.forEach(track.tasks,(task)=>{
         if(task._id == taskId){
           console.log('taskkkkkkkkkkkkkkkk=================>',task);
@@ -144,6 +154,7 @@ export class ChildComponent  implements OnInit{
 
       })
     })
+    if (isAnyTrackHasTask) this.isTaskFound = true;
   }
 
   ngOnChanges() {
@@ -269,11 +280,14 @@ export class ChildComponent  implements OnInit{
     })
   }
 
-
   getTitle(name){
+    console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
-      return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      if(str.length > 1)
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      else
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1)
     }else{
       return '';
     }
@@ -458,7 +472,71 @@ export class ChildComponent  implements OnInit{
     }
   }
 
-  get f() { return this.editTaskForm.controls; }
+  get f() { return this.editTaskForm.value; }
+
+
+  saveTheData(task){
+    
+    this.submitted = true;
+    if (this.editTaskForm.invalid) {
+      return;
+    }
+    this.loader = true;
+    task['projectId']= this.projectId;
+    console.log("projectId=========>",this.projectId);
+    task.priority = Number(task.priority); 
+    task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+    console.log("estimated time=====>",task.estimatedTime);
+    // task.images = $("#images").val();
+    console.log("images====>",task.images);
+    console.log(task.dueDate);
+    task.dueDate = moment().add(task.dueDate, 'days').format('YYYY-MM-DD');
+    task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log("task ALL details",task);
+    let data = new FormData();
+    _.forOwn(task, function(value, key) {
+      data.append(key, value)
+    });
+    if(this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('fileUpload', this.files[i]);  
+      }
+    }
+    this._projectService.addTask(data).subscribe((res:any)=>{
+      console.log("response task***++",res);
+      let name = res.assignTo.name;
+      console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+      Swal.fire({type: 'success',
+        title: 'Task Added Successfully to',
+        text: name,
+        showConfirmButton:false,
+        timer: 2000,
+        // position: 'top-end'
+      })
+      this.getProject(res.projectId._id);
+      $('#save_changes').attr("disabled", false);
+      $('#refresh_icon').css('display','none');
+      $('#itemManipulationModel').modal('hide');
+      this.newTask = this.getEmptyTask();
+      this.editTaskForm.reset();
+      this.files = this.url = [];
+      // this.assignTo.reset();
+      this.loader = false;
+    },err=>{
+      Swal.fire({
+        type: 'error',
+        title: 'Ooops',
+        text: 'Something went wrong',
+        animation: false,
+        customClass: {
+          popup: 'animated tada'
+        }
+      })
+      //$('#alert').css('display','block');
+      console.log("error========>",err);
+    });
+  }
+
 
   updateTask(task){
     this.isDisable = true;
@@ -515,7 +593,7 @@ export class ChildComponent  implements OnInit{
     })
   }
   getEmptyTask(){
-    return { title:'', desc:'', assignTo: '',  status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+    return { title:'', desc:'', assignTo: '',  status: 'to do', sprint: '', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
