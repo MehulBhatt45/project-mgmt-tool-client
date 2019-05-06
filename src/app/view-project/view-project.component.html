@@ -20,22 +20,24 @@
     <span></span>
 </div>
 <div class="noProjects" *ngIf = "currentUser.userRole == 'developer'"> 
+
   <!-- Card content -->
-  <div>
+  <div *ngIf = "!projects.length">
     <!-- Title -->
     <h4><a>Opps!</a></h4>
     <!-- Text -->
-    <div *ngIf = "!projects.length">
+    <div>
         <p>There are no projects</p>
     </div>
 </div>
 </div>
 
+
 <div class="noProjects" *ngIf = "currentUser.userRole == 'projectManager'"> 
   <!-- Card content -->
   <div *ngIf = "!projects.length">
     <!-- Title -->
-    <h4><a>Sorry</a></h4>
+    <h4>Sorry</h4>
     <!-- Text -->
     <div>
         <p>There are no projects, <a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> add some</a> to get started!</p>
@@ -121,7 +123,7 @@
 </div>
 
 <!-- modal start -->
-<div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -305,4 +307,4 @@ aria-hidden="true">
             </div>
         </div>
     </div>
-</div>
+</div> -->

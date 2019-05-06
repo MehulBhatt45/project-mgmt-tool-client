@@ -10,12 +10,12 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="md-form form-group profile_image_box" *ngIf="availData">
-				<label for="profile" class="profile_and_cover_edit" title="Change Avatar" (click)="openmodal()"><i class="fas fa-edit"></i></label>
+				<label for="profile" class="profile_and_cover_edit" title="Change Avatar" (click)="openmodal()"><span class="icon-pencil"></span></label>
 				<img src="{{basMediaUrl}}{{availData.avatar}}" onerror="this.src='assets/4.jpeg'">
 				<div class="text-center card selected-avatar mb-2" *ngIf="url">
 					<img class="avatar-image margin-auto" [src]="url">
 					<div class="delete-team-member1">
-						<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+						<a href="javascript:void(0);" (click)="removeAvatar()"><span class="icon-trash fa-2x"></span></a>
 					</div>
 				</div>
 			</div>
@@ -32,9 +32,10 @@
 				</div>
 
 				<div class="col-md-4 col-sm-12">
-					<div class="md-form form-group active"  *ngIf="availData" >
-						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" (selectedChanged)="updateDate($event)" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-						<label for="date-picker-example">Deadline</label>
+
+					<div class="md-form form-group active"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
+						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+						<label for="date-picker-example" class="active">Deadline</label>
 						<div class="col-md-2" *ngIf="submitted && f.deadline.errors" class="invalid-feedback">
 							<div *ngIf="f.title.errors.required">Project deadline is required</div>
 						</div>
@@ -68,18 +69,18 @@
 							</ng-template>
 							<div class="row">
 								<ng-template ng-option-tmp let-item="item">
-									<div class="row border m-2">
-										<div class="col-md-3"  style="margin-top: 10px;">
-											<div class="img_section">
-												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'" >
+											<div class="row border m-0 p-2">
+												<div class="col-md-3 col-sm-3 col-3">
+													<div class="img_section">
+														<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'" >
+													</div>
+												</div>
+												<div class="col-md-9 col-sm-9 col-9">
+													<span style="line-height: normal!important;margin: 0px 0px 5px 25px;min-height: auto !important;display: block;
+													">{{item.name}}</span>
+													<p style="font-size: 14px;line-height: normal; margin:0px 0px 0px 25px;">{{item.userRole}}</p>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-9 col-sm-9 col-9">
-											<span style="line-height: 2; margin-left: 35px;
-											">{{item.name}}</span>
-											<p style="font-size: 14px; margin-left: 35px; margin-top: -15px;">{{item.userRole}}</p>
-										</div>
-									</div>
 								</ng-template>
 							</div>
 						</ng-select>
@@ -89,7 +90,7 @@
 					<div class="row">
 						<div class="col-md-4 col-sm-6 col-12" *ngFor="let item of projectTeam">
 							<div class="border mb-1">
-								<div class="row padding-5">
+								<div class="row p-2 m-0">
 									<div class="col-md-3 col-sm-3 col-3">
 										<div class="img_section">
 											<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'">
@@ -97,7 +98,7 @@
 									</div>
 									<div class="col-md-7 col-sm-7 col-7">
 										<span style="line-height: 2;">{{item.name}}</span>
-										<p style="font-size: 14px;">{{item.userRole}}</p>
+										<p style="font-size: 14px; margin: 0;">{{item.userRole}}</p>
 									</div>
 									<div class="col-md-2 col-sm-2 col-2">
 										<a href="javascript:void(0);" (click)="removeDeveloper(item)" class="icon_for_action" ><span class="icon-trash"></span></a>

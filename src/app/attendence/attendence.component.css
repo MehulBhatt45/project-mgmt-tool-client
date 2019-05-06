@@ -17,11 +17,6 @@ pre {
 	background-color: #372e5f !important;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-	color: #fff;
-	background-color: #372e5f;
-	border-color: #dee2e6 #dee2e6 #fff;
-}
 .my-custom-scrollbar {
 	position: relative;
 	height: 200px;
