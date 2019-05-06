@@ -70,7 +70,6 @@
   outline: none;
   background-color: transparent !important;
   cursor: pointer;
-  color:white;
 }
 .btn_style:hover{
   background-color: #d6778c ;
@@ -144,6 +143,7 @@ textarea{
 }
 .btn-outline-default{
   border: 1px solid #181123;
+  color: #181123!important;
 }
 .btn-group .btn {
   width: 100%;
