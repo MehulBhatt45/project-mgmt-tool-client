@@ -69,7 +69,7 @@ export class AllLeaveAppComponent implements OnInit {
   total2;
   round2;
   availableLeaves;
-  pedingFlag:boolean = false;
+  pendingFlag:boolean = false;
   approvedFlag:boolean = false;
   rejectedFlag:boolean = false;
   // apps;
@@ -628,21 +628,21 @@ getFilteredLeaves(){
   switch (this.selectedStatus) {
     case "pending":
     this.getLeaves('Pending');
-    this.pedingFlag = true;
+    this.pendingFlag = true;
     this.approvedFlag = false;
     this.rejectedFlag = false;
     break;
     case "approved":
     this.getApprovedLeaves('Approved');
     this.approvedFlag = true;
-    this.pedingFlag = false;
+    this.pendingFlag = false;
     this.rejectedFlag = false;
     break;
     case "rejected":
     this.getRejectedLeaves('Rejected');
     this.rejectedFlag = true;
     this.approvedFlag = false;
-    this.pedingFlag = false;
+    this.pendingFlag = false;
     break;       
     default:
     console.log("DEFAULT CASE");
