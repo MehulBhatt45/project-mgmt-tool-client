@@ -79,6 +79,7 @@ import { Component, OnInit, ViewChild,
 		checkin = [];
 		checkout = [];
 		att=[];
+		alldifference = [];
 		modeldiff = [];
 		missing:any;
 		totaldifff:any;
@@ -119,7 +120,7 @@ import { Component, OnInit, ViewChild,
 			this.route.queryParams
 			.subscribe(params=>{
 				this.items = params;
-				this.dateSelected(this.items.date);
+				// this.dateSelected(this.items.date);
 				this.currentDate = this.items.date;
 				this.currentDate = moment(this.currentDate).format("DD-MM-YYYY");
 				console.log("this is current date",this.currentDate);
@@ -133,8 +134,30 @@ import { Component, OnInit, ViewChild,
 
 		ngOnInit() {
 
-			this.getAllDevelopers();
 
+		$('.datepicker').pickadate({ 
+			max: new Date(),
+		})
+			var from_input = $('#startingDate').pickadate(),
+		from_picker = from_input.pickadate('picker')
+
+		
+		if ( from_picker.get('value') ) {
+			console.log(from_picker.get('select'));
+			to_picker.set('min', from_picker.get('select'))
+		}
+		
+		from_picker.on('set', function(event) {
+			if ( event.select ) {
+				console.log(from_picker.get('select'));
+				to_picker.set('min', from_picker.get('select'))
+			}
+			else if ( 'clear' in event ) {
+				to_picker.set('min', false)
+			}
+		})
+
+		
 			$('#startingDate').pickadate({
 				onSet: function (date1){
 					console.log(date1);
@@ -146,8 +169,22 @@ import { Component, OnInit, ViewChild,
 					$('#endingDate').removeAttr("disabled");
 				}
 			})
-			// var from_picker = $('#startingDate').pickadate('picker')
-			$('#endingDate').pickadate({
+
+			var to_input = $('#startingDate').pickadate(),
+		to_picker = to_input.pickadate('picker')
+
+			if ( to_picker.get('value') ) {
+			from_picker.set('max', to_picker.get('select'))
+		}
+		to_picker.on('set', function(event) {
+			if ( event.select ) {
+				from_picker.set('max', to_picker.get('select'))+1
+			}
+			else if ( 'clear' in event ) {
+				from_picker.set('max', false)
+			}
+		})
+		$('#endingDate').pickadate({
 				onSet: function (date2){
 					this.datedata2 = $('#endingDate').val();
 					console.log(this.datedata1, this.datedata2);
@@ -157,6 +194,9 @@ import { Component, OnInit, ViewChild,
 					localFunc(this.datedata1, this.datedata2);
 				}
 			})
+		
+			// var from_picker = $('#startingDate').pickadate('picker')
+			
 			// var to_picker = $('#endingDate').pickadate('picker')
 
 			var localFunc = (from, to)=>{
@@ -167,14 +207,15 @@ import { Component, OnInit, ViewChild,
 					}
 					// },3000);
 				}
+			$('.datepicker').pickadate({ 
+			
+			max : new Date(),
+		})
+		
+			this.getAllDevelopers();
 
-
+			
 			}
-
-
-
-
-
 
 			getAllDevelopers(){
 				this._projectService.getAllDevelopers().subscribe(res=>{
@@ -184,11 +225,7 @@ import { Component, OnInit, ViewChild,
 					this.userid = [];
 					_ .forEach(this.developers,(developer)=>{
 						// console.log("userid=======",developer._id);
-
-
 						this.userid.push(developer.name);
-
-
 
 					})
 					console.log("userid============",this.userid);
@@ -220,110 +257,91 @@ import { Component, OnInit, ViewChild,
 
 			dateSelected(event){
 				var date = moment(event).format('YYYY-MM-DD');
-				console.log("event  of date ===>" , date);   
+				console.log("event  of date ===>" , date); 
+				
+					this._leaveService.empAttendence(date).subscribe((res:any)=>{
+						console.log("res ==>" , res);
 
-				this._leaveService.empAttendence(date).subscribe((res:any)=>{
-					console.log("res ==>" , res);
-
-
-					if(res == null){
-						console.log("either Holiday or No attendence");
-						Swal.fire("You Are Absent On" + " " +date);
-					}
-
-
-
-					else{
-
-						this.worktime = res;
-
-
-						console.log("worktime============-------",this.worktime);
-
-						this.gate = [];
-
-						this.gate.push(this.worktime);
-
-
-						this.workdifference = [];
-
-						_ .forEach(this.gate,(gate)=>{
-
-							if(gate.difference != null){
-
-								gate.difference = gate.difference.split("T");
-								gate.difference = gate.difference[1];
-								gate.difference = gate.difference.split("Z");
-								gate.difference = gate.difference[0];
-
-
-							}
-
-							this.workdifference.push(gate.difference);
-
-
-						})
-						console.log("workdifference===============",this.workdifference);
-
-						var obj = {
-
-							'difference':this.workdifference[0]
-
-
+						if(res == null){
+							console.log("either Holiday or No attendence");
+							Swal.fire("You Are Absent On" + " " +date);
 						}
 
-						console.log("obj===========",obj.difference);
+						else{
 
-						this.diffff = obj.difference;
-						console.log("difffffffffff==============",this.diffff);
+							this.worktime = res;
 
-						console.log("either==============-",this.worktime);
+							console.log("worktime============-------",this.worktime);
 
+							this.gate = [];
 
-						this.logs = this.worktime.in_out;
+							this.gate.push(this.worktime);
 
-						_.map(this.logs, function(log){
+							this.workdifference = [];
 
+							_ .forEach(this.gate,(gate)=>{
 
+								if(gate.difference != null){
 
+									gate.difference = gate.difference.split("T");
+									gate.difference = gate.difference[1];
+									gate.difference = gate.difference.split("Z");
+									gate.difference = gate.difference[0];
+								}
+								this.workdifference.push(gate.difference);
+							})
+							console.log("workdifference===============",this.workdifference);
 
-							if(log.checkOut!=null){
-								var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
-								var hours = Math.floor(diff / 1000 / 60 / 60);
-								var min = Math.floor((diff/1000/60)%60);
-								var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
-								log['diff'] = hours + ':' + min + ':' + sec;
+							var obj = {
 
-								var time = moment().format('h:mm:ss');
-								console.log("time=================",time);
-
-								var out = log.diff;
-								console.log("log============---------",out);
-
-
-
-
+								'difference':this.workdifference[0]
 
 							}
 
-						})
+							console.log("obj===========",obj.difference);
 
-						this.attendenceByDate.push(res);
-						console.log("logs{}{}{}==========-",this.logs);
+							this.diffff = obj.difference;
+							console.log("difffffffffff==============",this.diffff);
 
-						localStorage.setItem("attendenceByDateError",JSON.stringify(false));
-						this.attedenceByDateError = false;
-					}
+							console.log("either==============-",this.worktime);
 
 
+							this.logs = this.worktime.in_out;
 
-				},err=>{
-					localStorage.setItem("attedenceByDateError",JSON.stringify(true));
-					this.attedenceByDateError = true;
-					this.errMessage = "Either Absent Or Holiday"
-					console.log("error",err);
-				})
+							_.map(this.logs, function(log){
 
+								if(log.checkOut!=null){
+									var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
+									var hours = Math.floor(diff / 1000 / 60 / 60);
+									var min = Math.floor((diff/1000/60)%60);
+									var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
+									log['diff'] = hours + ':' + min + ':' + sec;
+
+									var time = moment().format('h:mm:ss');
+									console.log("time=================",time);
+
+									var out = log.diff;
+									console.log("log============---------",out);
+								}
+
+							})
+
+							this.attendenceByDate.push(res);
+							console.log("logs{}{}{}==========-",this.logs);
+
+							localStorage.setItem("attendenceByDateError",JSON.stringify(false));
+							this.attedenceByDateError = false;
+						}
+
+
+
+					},err=>{
+						localStorage.setItem("attedenceByDateError",JSON.stringify(true));
+						this.attedenceByDateError = true;
+						this.errMessage = "Either Absent Or Holiday"
+						console.log("error",err);
+					})
+				
 
 				this._leaveService.getUserById(date).subscribe((res:any)=>{
 
@@ -354,76 +372,85 @@ import { Component, OnInit, ViewChild,
 
 						this.presentid.push(present.UserName);
 
-
-
 					})
 					console.log("present userid============",this.presentid);
 
 					this.missing = this.userid.filter(item => this.presentid.indexOf(item) < 0);
 					console.log("absent student========>>>>",this.missing);
-
-
 				})
+			
 
-			}
-
-
-
-			puser(log){
-
-				console.log("log============",log);
-				this.arry = log;
-				$('#myModal').modal('show');
-
-
-				_.map(this.arry, function(log){
+}
 
 
 
+puser(log){
 
-					if(log.checkOut!=null){
-						var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
-						var hours = Math.floor(diff / 1000 / 60 / 60);
-						var min = Math.floor((diff/1000/60)%60);
-						var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
-						log['diff'] = hours + ':' + min + ':' + sec;
-
-					}
-
-				})
-				console.log("arry--------=========",this.arry);
-
-			}
-
-			getAllDate(from,to){
+	console.log("log============",log);
+	this.arry = log;
+	$('#myModal').modal('show');
 
 
-				console.log(' get all date func caled: ', from, to);
-				this._leaveService.getUserByDate(from,to).subscribe((res:any)=>{
-					console.log("userDate=======================",res);
-					this.worktime = null;
-					this.finalResultPresentUser = res;
-					console.log("finalresult==============",this.finalResultPresentUser);
-					this.change.detectChanges();
-				},err=>{
-					console.log("userDate=======================",err);
-				})
-			}
+	_.map(this.arry, function(log){
 
-			getByMailDetails(event){
+		if(log.checkOut!=null){
+			var diff = Number(new Date(log.checkOut)) - Number(new Date(log.checkIn));
+			var hours = Math.floor(diff / 1000 / 60 / 60);
+			var min = Math.floor((diff/1000/60)%60);
+			var sec = (Math.floor((diff/1000) % 60)>9)?Math.floor((diff/1000) % 60):'0'+Math.floor((diff/1000) % 60);
+			log['diff'] = hours + ':' + min + ':' + sec;
 
-				console.log("event==========",event);
-
-				var date = moment(event).format('YYYY-MM-DD');
-				console.log("event  of date ===>" , date);  
-
-				this._leaveService.getDetails(date).subscribe((res:any)=>{
-					console.log("userDate=======================",res);
-
-				},err=>{
-					console.log("userDate=======================",err);
-				})
-			}
-
-		
 		}
+
+	})
+	console.log("arry--------=========",this.arry);
+
+}
+
+getAllDate(from,to){
+	this.loader = true;
+	setTimeout(()=>{
+		console.log(' get all date func caled: ', from, to);
+		this._leaveService.getUserByDate(from,to).subscribe((res:any)=>{
+			console.log("userDate=======================",res);
+			this.worktime = null;
+			this.finalResultPresentUser = res;
+			console.log("finalresult==============",this.finalResultPresentUser);
+			this.alldifference = [];
+
+			_ .forEach(this.finalResultPresentUser,(pre)=>{
+
+				if(pre.difference!= null){
+					pre.difference = pre.difference.split("T");
+					pre.difference = pre.difference[1];
+					pre.difference = pre.difference.split("Z");
+					pre.difference = pre.difference[0];
+				}
+				this.alldifference.push(pre.difference);
+			});
+			console.log("allllllllllll============>",this.alldifference);
+			this.change.detectChanges();
+			this.loader=false;
+		},err=>{
+			console.log("userDate=======================",err);
+		})
+	},1000);
+}
+
+getByMailDetails(event){
+
+	console.log("event==========",event);
+
+	var date = moment(event).format('YYYY-MM-DD');
+	console.log("event  of date ===>" , date);  
+
+	this._leaveService.getDetails(date).subscribe((res:any)=>{
+		console.log("userDate=======================",res);
+
+	},err=>{
+		console.log("userDate=======================",err);
+	})
+}
+
+
+}

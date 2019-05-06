@@ -123,8 +123,6 @@ export class ViewProjectComponent implements OnInit {
 
   checkIn(){
 
-
-
     this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
       console.log("respopnse of checkin=======<",res);
       console.log("diffrence====-=-=-=-=-=-=-",res.difference);
@@ -181,6 +179,7 @@ export class ViewProjectComponent implements OnInit {
         toastClass: 'custom',
         // messageClass:'name',
       })
+            window.location.reload();
 
 
     },(err:any)=>{

@@ -185,24 +185,13 @@ export class HeaderComponent implements OnInit {
 	}
 
 	checkIn(){
-
-
-
-		this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
+this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
 			console.log("respopnse of checkin=======<",res);
-
-			// res.difference = res.difference.split("T");
-			// res.difference = res.difference[1];
-			// res.difference = res.difference.split("Z");
-			// res.difference = res.difference[0];
 			console.log("diffrence====-=-=-=-=-=-=-",res.difference);
 			this.timediff = res.difference;
 			console.log("timediff--=-=-=-=",this.timediff);
-
-
 			this.attendence = res.in_out;
 			console.log("attendence=-=-=-=-=-=-=+++++++++++===",this.attendence);
-
 
 			_.forEach(this.attendence , (attendence)=>{
 				console.log("attendence.checkOut =========+++>" ,attendence.checkOut);
@@ -213,7 +202,6 @@ export class HeaderComponent implements OnInit {
 					attendence.checkOut = attendence.checkOut[0];
 				}
 			})
-
 			_.forEach(this.attendence , (attendence)=>{
 				console.log("attendence.checkIn =========+++>" ,attendence.checkIn);
 				if(attendence.checkIn != null){
@@ -223,25 +211,20 @@ export class HeaderComponent implements OnInit {
 					attendence.checkIn = attendence.checkIn[0];
 				}
 			})
-
 			// this.date = this.attendence.checkIn;
 			// console.log("date][][][][][][][][",time);
-
 			localStorage.setItem("checkIn",JSON.stringify(true));
 			localStorage.setItem("checkOut",JSON.stringify(false));
 			this.checkInStatus = false;
+			// console.log("checkIn==================================>",this.checkInStatus);
+			// setTimeout(()=>{
+			// 	window.location.reload();
+			// })
 			window.location.reload();
-			
-			
-
-
 		},(err:any)=>{
 			console.log("err of checkin=>",err);
 		})
-
 	}
-
-
 
 	checkOut(){
 

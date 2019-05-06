@@ -245,7 +245,6 @@ export class EditProjectComponent implements OnInit {
 		if(this.files && this.files.length>0){
 			data.append('avatar', this.files[0]);  
 		}
-		console.log('data====================================>',data);
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
@@ -256,10 +255,7 @@ export class EditProjectComponent implements OnInit {
 				// window.location.reload();
 				this.updateForm.get('Teams') .reset( );
 			},500);
-			this.getAllDevelopersNotInProject(this.ProjectId);
-
-			console.log("response of update form  ====>" , res);
-			
+			this.getAllDevelopersNotInProject(this.ProjectId);			
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			this.getProjectById(res._id);
 			this.url = '';
