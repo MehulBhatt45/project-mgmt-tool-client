@@ -19,7 +19,7 @@
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="email">Email</label>
-						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+						<input type="email"  autocomplete= 'false | random-string'  formControlName="email" class="form-control" id="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
 						<div class="col-md-2" *ngIf="submitted && f.email.errors" class="invalid-feedback">
 							<div *ngIf="f.email.errors.required">Email is required</div>
 							<div *ngIf="f.email.errors.email">Please enter valid Email</div>
@@ -33,6 +33,7 @@
 					<div class="md-form form-group">
 						<label for="phone">Phone No.</label>
 						<input type="tel"  [(ngModel)]="phone" autocomplete= 'false | random-string'   formControlName="phone" class="form-control" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"><span id="message" style="color: red;"></span>
+						<!--  <div style="color:red" ng-show="addEmployeeForm.phone.$error.pattern">Only numbers are allowed!</div> -->
 						<div  class="col-md-4" *ngIf="submitted && f.phone.errors" class="invalid-feedback">
 							<div *ngIf="f.phone.errors.minlength">Phone must be only 10 digits</div>
 							<div *ngIf="f.phone.errors.pattern">You can enter only numbers</div>
@@ -91,7 +92,7 @@
 				</div>
 				<div class="col-md-12">
 					<div class="file-field">
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Choose files
+						<div class="btn btn-primary btn-sm float-left waves-effect waves-light"  (click)="profile.click()">Browse files
 							<input type="file" #profile formControlName="profile" class="form-control" (change)="addFile($event)" accept="image/png, image/jpeg, image/jpg" hidden>
 						</div>
 						<div class="file-path-wrapper">
@@ -103,7 +104,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="file-field" >
-						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Choose files
+						<div class="btn btn-primary btn-sm float-left waves-effect waves-light" (click)="cv.click()">Browse files
 							<input type="file" #cv formControlName="cv" class="form-control" (change)="addFile($event)" accept=".pdf" hidden>
 						</div>
 						<div class="file-path-wrapper">
@@ -113,7 +114,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="md-form form-group">
-						<button type="submit" class="btn btn-default ml-0" (click)="addEmployee(addEmployeeForm)" [disabled] = "isDisable" >Add Employee</button>
+						<button type="submit" class="btn btn-default ml-0" (click)="addEmployee(addEmployeeForm)" [disabled] = "isDisable || addEmployeeForm.invalid" >Add Employee</button>
 					</div>
 				</div>
 			</div>

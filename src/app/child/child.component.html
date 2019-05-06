@@ -1,3 +1,6 @@
+<!-- <div *ngIf = "!tracks.tasks">
+	<p style="text-align: center;">No Task Found</p>
+</div> -->
 <div class="all_card" style="margin-top: 25px;margin-left: 15px;">
 	<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 		<div class="card-list mat-elevation-z1" *ngFor="let track of tracks" ng-repeat="-createdAt" [ngStyle]='{"width": "calc(100%/"+(tracks.length)+" - 12px)"}'>
@@ -6,6 +9,9 @@
 				<span class="card_count_lbl">{{track.tasks.length}}</span>
 			</div>
 			<div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks" [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+				<!-- <div *ngIf = "track.tasks.length == 0">
+					<p style="text-align: center;">No Task Found</p>	
+				</div> -->
 				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag>
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
@@ -48,8 +54,8 @@
 											</ul>
 										</li>
 									</ul>
-									<!-- <label class="float-right">{{task.uniqueId}}</label> -->
-									<label class="float-left"> <a style="color: black; cursor: pointer;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
+									<label class="float-right">{{task.uniqueId}}</label>
+									<label class="float-left"> <a style="color: black; cursor: pointer; text-transform: capitalize;" routerLink="/visit-user-profile/{{task.assignTo._id}}">{{(task.assignTo)?task.assignTo.name:'null'}}</a></label>
 								</div>
 							</div>
 						</div>
@@ -59,6 +65,10 @@
 		</div>
 	</div>
 </div>
+<div *ngIf = "!isTaskFound">
+	<p style="text-align: center;">No Task Found</p>
+</div>
+
 <!-- Task details Modal -->
 
 <div class="modal fade" id="fullHeightModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
