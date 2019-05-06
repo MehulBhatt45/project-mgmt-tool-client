@@ -69,6 +69,9 @@ export class AllLeaveAppComponent implements OnInit {
   total2;
   round2;
   availableLeaves;
+  pendingFlag:boolean = false;
+  approvedFlag:boolean = false;
+  rejectedFlag:boolean = false;
   // apps;
   constructor(public router:Router, public _leaveService:LeaveService,
     public _alertService: AlertService,private route: ActivatedRoute,public searchTextFilter:SearchTaskPipe) { 
@@ -158,6 +161,7 @@ export class AllLeaveAppComponent implements OnInit {
                   this._leaveService.approvedLeaves().subscribe(res=>{
                     console.log("approved leaves",res);
                     this.leaveApp = res;
+                    // console.log("res-=-=",this.leaveApp);
                     this.approvedLeavesCount = this.leaveApp.length;
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
@@ -248,6 +252,7 @@ export class AllLeaveAppComponent implements OnInit {
                     console.log("rejected leaves",res);
                     this.leaveApp = res;
                     this.rejectedLeavesCount = this.leaveApp.length;
+                    // console.log("res-=-=",this.rejectedLeavesCount);
                     $('#statusAction').hide();
                     _.map(this.leaveApp, leave=>{
                       _.forEach(this.developers, dev=>{
@@ -623,12 +628,21 @@ getFilteredLeaves(){
   switch (this.selectedStatus) {
     case "pending":
     this.getLeaves('Pending');
+    this.pendingFlag = true;
+    this.approvedFlag = false;
+    this.rejectedFlag = false;
     break;
     case "approved":
     this.getApprovedLeaves('Approved');
+    this.approvedFlag = true;
+    this.pendingFlag = false;
+    this.rejectedFlag = false;
     break;
     case "rejected":
     this.getRejectedLeaves('Rejected');
+    this.rejectedFlag = true;
+    this.approvedFlag = false;
+    this.pendingFlag = false;
     break;       
     default:
     console.log("DEFAULT CASE");

@@ -122,7 +122,7 @@ export class AddEmployeeComponent implements OnInit {
 			var message1 = document.getElementById('message1');
 			if(!form.name.match(nameInput)){
 				console.log("message==========",message1)
-				message1.innerHTML = "Please enter only alphabates"
+				message1.innerHTML = "Name can not start with digit"
 			}else{
 				message1.innerHTML = "";
 			}

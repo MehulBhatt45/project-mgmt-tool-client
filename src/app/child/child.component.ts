@@ -679,6 +679,7 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log("in child componant getproject===============================");
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
@@ -738,6 +739,7 @@ export class ChildComponent  implements OnInit{
         })
 
         this.loader = false;
+        console.log("==============================================================");
         this.func('load');
       },err=>{
         console.log(err);
