@@ -23,6 +23,7 @@ export class AddEmployeeComponent implements OnInit {
 	isDisable:boolean= false;
 	show: boolean;
 	pwd: boolean;
+	phone;
 
 	constructor( public router:Router, public route: ActivatedRoute,private formBuilder: FormBuilder, public _projectservice:ProjectService,public _loginservice:LoginService) {
 		this.addEmployeeForm = this.formBuilder.group({

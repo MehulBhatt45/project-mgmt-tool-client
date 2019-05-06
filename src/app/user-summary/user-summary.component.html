@@ -7,6 +7,10 @@
 				</div>
 			</div>
 		</div>
+		<div *ngIf = "project.length == 0">
+			<p style="text-align: center;margin-top: 50px;font-size: 20px;">First assign task to user then User-summary will be available.</p>
+		</div>
+		<div *ngIf = "project.length != 0">
 		<div class="row mt-1" *ngIf="sprints">
 			<div class="md-form form-group col-2">
 				<select class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
@@ -88,6 +92,7 @@
 			</div><hr/>
 
 		</div>
+	</div>
 	</div>
 </div>
 

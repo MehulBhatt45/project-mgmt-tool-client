@@ -12,12 +12,7 @@
 			<div class="md-form form-group profile_image_box" *ngIf="availData">
 				<label for="profile" class="profile_and_cover_edit" title="Change Avatar" (click)="openmodal()"><span class="icon-pencil"></span></label>
 				<img src="{{basMediaUrl}}{{availData.avatar}}" onerror="this.src='assets/4.jpeg'">
-				<div class="text-center card selected-avatar mb-2" *ngIf="url">
-					<img class="avatar-image margin-auto" [src]="url">
-					<div class="delete-team-member1">
-						<a href="javascript:void(0);" (click)="removeAvatar()"><span class="icon-trash fa-2x"></span></a>
-					</div>
-				</div>
+
 			</div>
 			<div class="row">
 				<div class="col-md-4 col-sm-12">
@@ -32,6 +27,7 @@
 				</div>
 
 				<div class="col-md-4 col-sm-12">
+
 					<div class="md-form form-group active"  *ngIf="availData" [hidden]="!availData && !availData.deadline">
 						<input type="text" id="date-picker" formControlName="deadline"  class="form-control datepicker" ngModel="{{availData.deadline | date:'mediumDate' }}" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 						<label for="date-picker-example" class="active">Deadline</label>
@@ -68,18 +64,18 @@
 							</ng-template>
 							<div class="row">
 								<ng-template ng-option-tmp let-item="item">
-											<div class="row border m-0 p-2">
-												<div class="col-md-3 col-sm-3 col-3">
-													<div class="img_section">
-														<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'" >
-													</div>
-												</div>
-												<div class="col-md-9 col-sm-9 col-9">
-													<span style="line-height: normal!important;margin: 0px 0px 5px 25px;min-height: auto !important;display: block;
-													">{{item.name}}</span>
-													<p style="font-size: 14px;line-height: normal; margin:0px 0px 0px 25px;">{{item.userRole}}</p>
-												</div>
+									<div class="row border m-0 p-2">
+										<div class="col-md-3 col-sm-3 col-3">
+											<div class="img_section">
+												<img src="{{basMediaUrl}}{{item.profilePhoto}}" onerror="this.src='assets/man.png'" >
 											</div>
+										</div>
+										<div class="col-md-9 col-sm-9 col-9">
+											<span style="line-height: normal!important;margin: 0px 0px 5px 25px;min-height: auto !important;display: block;
+											">{{item.name}}</span>
+											<p style="font-size: 14px;line-height: normal; margin:0px 0px 0px 25px;">{{item.userRole}}</p>
+										</div>
+									</div>
 								</ng-template>
 							</div>
 						</ng-select>
@@ -164,10 +160,8 @@
 					</div>	
 				</div>
 			</div>
-
-			<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)" [disabled]= "isDisable" >Update Project</button>
+			<button type="submit" class="btn btn-default mt-1 float-left" (click)="updateProject(updateForm.value)" [disabled] = "isDisable || updateForm.invalid"  >Update Project</button>
 		</div>
-
 		<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -181,14 +175,15 @@
 				<div class="modal-body">
 					<div class="md-form form-group">
 						<div class="file-field">
-							<div class="btn btn-default btn-sm float-left">
-								<span>Upload a new avatar</span>
-								<input type="file" name="fileUpload" accept=".jpg, .jpeg, .png" (change)="onSelectFile($event)">
-							</div>
-							<div class="file-path-wrapper">
-								<input  class="file-path validate" autocomplete= 'false | random-string' type="text" placeholder="Upload your file">
+							<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="1" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="onSelectFile1($event)" ></app-file-upload-dnd>
+							<div class="text-center card selected-avatar mb-2" *ngIf="url">
+								<img class="avatar-image margin-auto" [src]="url">
+								<div class="delete-team-member">
+									<a href="javascript:void(0);" (click)="removeAvatar()"><i class="fas fa-trash fa-2x"></i></a>
+								</div>
 							</div>
 						</div>
+
 						<ul class="project-avatar">
 							<li>
 								<button class="icon-button" (click)="addIcon('/avatar/school.png')">

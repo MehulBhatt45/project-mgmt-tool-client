@@ -64,18 +64,6 @@
     color:  #372e5f;
 
   }
-  .btn-group .btn {
-   margin: 30px 0px!important; 
-   border-radius: 5px;
-   background-color: #372e5f;
-   width: 20px;
- }
- .btn-group .btn:first-child {
-  margin-right: 15px!important;
-}
-.btn-group .btn:last-child {
-  margin-left: 15px!important;
-}
 .btn_style{
   border-radius: 5px;
   border:none;
@@ -92,16 +80,6 @@
 }
 b{
   font-size: 20px;
-}
-.btnbgcolor {
-  background-color: #372e5f !important;
-}
-.btn_style{
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  background-color: #372e5f;
-  color: white;
 }
 .file-field .btn{
   width: 90%;
@@ -130,10 +108,6 @@ textarea{
 }
 .selected-avatar:hover .delete-team-member{
   display: block;
-}
-.btn{
-  margin-left: 0!important;
-  margin-bottom: 0px!important;
 }
 .delete-team-member{
   position: absolute;
@@ -168,3 +142,16 @@ textarea{
 .img_high{
   height: 100px;
 }
+.btn-outline-default{
+  border: 1px solid #181123;
+}
+.btn-group .btn {
+  width: 100%;
+  }
+@media(max-width: 575px){
+.btn-group .btn {
+    margin: 5px 0!important;
+    width: 100%!important;
+}
+}
+
