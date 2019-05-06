@@ -104,7 +104,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-   
+    
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -281,7 +281,6 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
-    console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
       if(str.length > 1)

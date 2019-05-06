@@ -6,11 +6,11 @@
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="name">Name</label>
-						<input type="text" formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+						<input type="text" (input)="validateName(addEmployeeForm.value)"   formControlName="name" autocomplete= 'false | random-string'  class="form-control" id="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+						<span id="message1" style="color: red; font-size: 14px;"></span>
 						<div  class="col-md-2" *ngIf="submitted && f.name.errors" class="invalid-feedback">
 							<div *ngIf="f.name.errors.required">Name is required</div>
 							<div *ngIf="f.name.errors.minlength">Name must be at least 2 characters</div>
-							<div *ngIf="f.name.errors.maxlength">Name must be only 20 characters</div>
 							<div *ngIf="f.name.errors.pattern">Please enter only alphabates</div>
 						</div>
 					</div>
@@ -32,10 +32,9 @@
 				<div class="col-md-4">
 					<div class="md-form form-group">
 						<label for="phone">Phone No.</label>
-						<input type="tel"  [(ngModel)]="phone" autocomplete= 'false | random-string'   formControlName="phone" class="form-control" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"><span id="message" style="color: red;"></span>
+						<input type="tel" (input)="validatePhone(addEmployeeForm.value)"  [(ngModel)]="phone" autocomplete= 'false | random-string'   formControlName="phone" class="form-control" id="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"><span id="message" style="color: red; font-size: 14px;"></span>
 						<div  class="col-md-4" *ngIf="submitted && f.phone.errors" class="invalid-feedback">
 							<div *ngIf="f.phone.errors.minlength">Phone must be only 10 digits</div>
-							<div *ngIf="f.phone.errors.pattern">You can enter only numbers</div>
 							<div *ngIf="f.phone.errors.maxlength">Phone must be only 10 digits</div>
 						</div>
 					</div>
