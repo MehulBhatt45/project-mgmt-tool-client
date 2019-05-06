@@ -396,8 +396,14 @@ export class EditProjectComponent implements OnInit {
 		console.log(this.updateForm.value['avatar']);
 		this.url = this.basMediaUrl+this.updateForm.value['avatar'];
 		console.log(this.url);
-		$('#basicExampleModal').modal('hide');
+		// $('#basicExampleModal').modal('hide');
 	}
+
+	onSelectFile1(event) {
+		console.log(event);
+		this.files = event;
+	}
+
 	onSelectFile(event) {
 		console.log("response from changefile",event.target.files);
 		this.files = event.target.files;

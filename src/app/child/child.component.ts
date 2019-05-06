@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 declare var $ : any;
 
+
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
@@ -82,10 +83,7 @@ export class ChildComponent  implements OnInit{
   submitted = false;
   isDisable:boolean =false;
   
-
-
   
-
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe, private router: Router) { 
 
