@@ -22,7 +22,9 @@
 <div class="noProjects" *ngIf = "currentUser.userRole == 'developer'"> 
 
   <!-- Card content -->
-  <div *ngIf = "!projects.length">
+  <div *ngIf="projects">
+      
+  <div *ngIf = "projects.length == 0">
     <!-- Title -->
     <h4><a>Opps!</a></h4>
     <!-- Text -->
@@ -30,12 +32,15 @@
         <p>There are no projects</p>
     </div>
 </div>
+  </div>
 </div>
 
 
 <div class="noProjects" *ngIf = "currentUser.userRole == 'projectManager'"> 
   <!-- Card content -->
-  <div *ngIf = "!projects.length">
+  <div *ngIf="projects">
+      
+  <div *ngIf = "projects.length == 0">
     <!-- Title -->
     <h4>Sorry</h4>
     <!-- Text -->
@@ -43,6 +48,7 @@
         <p>There are no projects, <a routerLink="/create-project" style="width: 100%;" class="collapsible-header waves-effect arrow-r"> add some</a> to get started!</p>
     </div>
 </div>
+  </div>
 </div>
 
 <div class="row">
