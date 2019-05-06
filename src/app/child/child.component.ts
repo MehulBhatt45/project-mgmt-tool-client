@@ -279,7 +279,7 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
-    console.log("name=========================================>",name);
+    // console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
       if(str.length > 1)

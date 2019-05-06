@@ -13,7 +13,7 @@
   </div>
 </div>
 
-	<div class="noNoticeMessage" *ngIf = "currentUser.userRole == 'projectManager'"> 
+	<div class="noNoticeMessage" *ngIf = "currentUser.userRole == 'projectManager' && !allNotice.length"> 
   <!-- Card content -->
   <div>
     <!-- Title -->
