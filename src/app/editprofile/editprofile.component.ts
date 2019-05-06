@@ -62,11 +62,11 @@ export class EditprofileComponent implements OnInit {
 
 
 	updateProfile(editEmployeeForm){
-		// console.log('jkfdg');
-		// this.submitted = true;
-		// if (this.editEmployeeForm.invalid) {
-		// 	return;
-		// }
+		console.log('jkfdg');
+		this.submitted = true;
+		if (this.editEmployeeForm.invalid) {
+			return;
+		}
 		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 
@@ -88,6 +88,7 @@ export class EditprofileComponent implements OnInit {
 
 			this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 				console.log("res",res);
+				localStorage.setItem('currentUser', JSON.stringify(res));
 				Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 				this.isDisable= false;
 			},err=>{
@@ -124,6 +125,7 @@ export class EditprofileComponent implements OnInit {
 
 					this._loginService.editUserProfileWithFile(data,this.developerId).subscribe((res:any)=>{
 						console.log("res",res);
+						localStorage.setItem('currentUser', JSON.stringify(res));
 						Swal.fire({type: 'success',title: 'Profile Updated Successfully',showConfirmButton:false,timer: 2000})
 						this.isDisable= false;
 					},err=>{
@@ -171,6 +173,32 @@ export class EditprofileComponent implements OnInit {
 					console.log(err);
 					this.loader = false;
 				})
+			}
+
+			validatePhone(form)
+			{
+				console.log(form);
+				var phoneno = /[0-9]/ ;
+				var message = document.getElementById('message');
+				if(!form.phone.match(phoneno)){
+					console.log("message==========",message)
+					message.innerHTML = "Please enter only numbers"
+				}else{
+					message.innerHTML = "";
+				}
+			}
+
+			validateName(form)
+			{
+				console.log(form);
+				var nameInput = /[a-zA-Z ]/ ;
+				var message1 = document.getElementById('message1');
+				if(!form.name.match(nameInput)){
+					console.log("message==========",message1)
+					message1.innerHTML = "Name can not start with digit"
+				}else{
+					message1.innerHTML = "";
+				}
 			}
 
 

@@ -8,7 +8,10 @@
 	<div *ngIf="pro">
 		<h3 class="card-header-title"><span class="mr-1" data-icon="&#xe067;"></span>{{pro.title}}</h3>
 	</div>
-	<div class="row no-margin no-padding" *ngIf="sprints">
+	<div *ngIf = "project.length == 0">
+		<p style="text-align: center;margin-top: 50px;font-size: 20px;">First add Task in project then Summary will be displayed.</p>
+	</div>
+	<div class="row no-margin no-padding" *ngIf="sprints && project.length != 0">
 		<div class="md-form form-group col-2">
 			<span *ngIf="activeSprint"></span>
 			<select [(ngModel)]="activeSprint._id" class="browser-default custom-select custom-select-sm mb-1" id="sprint" (change)="filterTracks($event.target.value)">
@@ -16,7 +19,7 @@
 			</select>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" *ngIf="project.length != 0">
 		<div class="col-sm-6">
 			<div class="card" style="height: 100%;">
 				<div class="card-body">
@@ -44,63 +47,35 @@
 			</div>
 		</div>
 	</div>
-	<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span>Team Members</h3>
-				<div class="row">
-					<div class="col-md-3 col-sm-4 padding-10" *ngFor="let user of projectTeam">
-						<article>
-							<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
-								<aside class="four-right two-right three-bottom"></aside>
-								<header>
-									<div class="title">
-										<h5 class="font-weight-bold" style="margin:0; color: #372E5F;">{{user.name}}</h5>
-										<p style="margin: 0px; color: #372E5F;">Developer</p>
-									</div>
-									<div class="blurb">
-										<h5 class="font-weight-bold" style="margin:0;">{{user.name}}</h5>
-										<p style="margin: 0px;">Developer</p>
-									</div>
-								</header>
-								<div class="content">
-									<div class="image"  >
-										<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
-											<img src="{{path}}{{user.profilePhoto}}">
-										</div>
-									</div>
-								</div>
-							</a>
-						</article>
+	<h3 *ngIf="project.length != 0" class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span>Team Members</h3>
+	<div class="row">
+		<div class="col-md-3 col-sm-4 padding-10" >
+			<div class="developer_profile" *ngFor="let user of projectTeam">
+				<a class="leader" href="#leader-8" routerLink="/visit-user-profile/{{user._id}}">
+					<div class="profile" routerLink="/visit-user-profile/{{user._id}}"  style="cursor: pointer;">
+						<img src="{{path}}{{user.profilePhoto}}">
 					</div>
-				</div>
-		<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span>High and Highest Priority Tasks</h3>
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="card">
-					<article>
-					<div class="card-body">
-						<h3 style="text-align:center;">Highest Priority</h3>
-						<canvas id="lineChart"></canvas>
-					</div>
-				</article>
+				</a>
 			</div>
 		</div>
 	</div>
 </div>
-	<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span> High and Highest Priority Tasks</h3>
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="card">
-				<div class="card-body">
-					<h3 style="text-align:center;">Highest Priority</h3>
-					<canvas id="lineChart"></canvas>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6">
-			<div class="card">
-				<div class="card-body">
-					<h3 style="text-align:center;">High Priority</h3>
-					<canvas id="lineChart1"></canvas>
-				</div>
+<h3 class="mb-2 mt-2"><span class="mr-1" data-icon="&#xe067;"></span> High and Highest Priority Tasks</h3>
+<div class="row">
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h3 style="text-align:center;">Highest Priority</h3>
+				<canvas id="lineChart"></canvas>
 			</div>
 		</div>
 	</div>
+	<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
+				<h3 style="text-align:center;">High Priority</h3>
+				<canvas id="lineChart1"></canvas>
+			</div>
+		</div>
+	</div>
+</div>

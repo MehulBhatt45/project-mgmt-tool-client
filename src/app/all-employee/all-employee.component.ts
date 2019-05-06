@@ -99,52 +99,52 @@ export class AllEmployeeComponent implements OnInit {
 		},2000);
 	}
 	deleteEmployee(developerid){
-		console.log("msgggg--=--",developerid);
-		Swal.fire({
-			html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes,Delete it!',
-			showCloseButton: true
-		}).then((result) => {
-			if (result.value) {
-				var body;
-				this._projectService.deleteEmployeeById(developerid).subscribe(res=>{
-					console.log("response of remove developer", res);
-					Swal.fire({type: 'success',title: 'Employee remove Successfully',showConfirmButton:false,timer: 2000})
-					this.getAllDevelopers();
-				},err=>{
-					console.log("errr=-=-=-= ",err);
-					Swal.fire('Oops...', 'Something went wrong!', 'error')
-				})
-			}
-		})
-	}
 
-	
-	getAllProjects(){
-		this._projectService.getProjects().subscribe(res=>{
-			this.projects = res;
-		},err=>{
-			this._alertService.error(err);
-			console.log(err);
-		})
-	}
-	getDeveloper(projectId){
-		this.selectedProjectId = projectId;
-		console.log(" project id is===========>",projectId);
-		console.log(" developer of projerct===========>",this.developers);
-		if (projectId !='all') {
-			this.developers =[];
-			console.log(this.developers);
-			this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
-				this.Teams = res.Teams;
-				console.log("response of developer============>"  ,this.Teams);
-				_.forEach(this.Teams, (content)=>{
-					this.developers.push(content);
-					console.log(this.developers);
+			console.log("msgggg--=--",developerid);
+			Swal.fire({
+					html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes,Delete it!',
+					showCloseButton: true
+				}).then((result) => {
+						if (result.value) {
+								var body;
+								this._projectService.deleteEmployeeById(developerid._id).subscribe(res=>{
+										console.log("response of remove developer", res);
+										Swal.fire({type: 'success',title: 'Employee remove Successfully',showConfirmButton:false,timer: 2000})
+										this.getAllDevelopers();
+									},err=>{
+											console.log("errr=-=-=-= ",err);
+											Swal.fire('Oops...', 'Something went wrong!', 'error')
+										})
+									}
+								})
+							}
+							getAllProjects(){
+								this._projectService.getProjects().subscribe(res=>{
+									this.projects = res;
+								},err=>{
+									this._alertService.error(err);
+									console.log(err);
+								})
+							}
+							getDeveloper(projectId){
+								this.selectedProjectId = projectId;
+								console.log(" project id is===========>",projectId);
+								console.log(" developer of projerct===========>",this.developers);
+								if (projectId !='all') {
+									this.developers =[];
+									console.log(this.developers);
+									this._projectService.getTeamByProjectId(projectId).subscribe((res:any)=>{
+										this.Teams = res.Teams;
+										console.log("response of developer============>"  ,this.Teams);
+										_.forEach(this.Teams, (content)=>{
+											this.developers.push(content);
+											console.log(this.developers);
+
 
 				});
 				this.filteredTeams = this.developers;

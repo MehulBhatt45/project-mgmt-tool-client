@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 declare var $ : any;
 
+
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
@@ -38,7 +39,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [],sprint: '' };
   modalTitle;3
   project;
   tasks;
@@ -79,12 +80,13 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
+
   submitted = false;  
   isTaskFound = false;
   isDisable:boolean = false;
 
-  
 
+  
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe, private router: Router) { 
 
@@ -102,7 +104,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-   
+    
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -302,7 +304,7 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
-    // console.log("name=========================================>",name);
+
     if(name){
       var str = name.split(' ');
       if(str.length > 1)
@@ -614,7 +616,7 @@ export class ChildComponent  implements OnInit{
     })
   }
   getEmptyTask(){
-    return { title:'', desc:'', assignTo: '',  status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+    return { title:'', desc:'', assignTo: '',  status: 'to do', sprint: '', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
@@ -701,6 +703,7 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log("in child componant getproject===============================");
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
@@ -760,6 +763,7 @@ export class ChildComponent  implements OnInit{
         })
 
         this.loader = false;
+        console.log("==============================================================");
         this.func('load');
       },err=>{
         console.log(err);

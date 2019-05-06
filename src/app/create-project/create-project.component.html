@@ -42,14 +42,14 @@
 				</div>
 
 			</div>
-			<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="10" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="onSelectFile($event)"></app-file-upload-dnd>
+			<app-file-upload-dnd projectId="100" sectionId="107" maxFiles="1" maxSize="2" fileExt="JPG, JPEG, PNG" (uploadedFile)="onSelectFile($event)" ></app-file-upload-dnd>
+
 			<div class="text-center selected-avatar" *ngIf="url">
 				<img class="avatar-image margin-auto" [src]="url" style="height: 150px; width: 150px;">
 				<div class="delete-team-member">
 					<a href="javascript:void(0);" (click)="removeAvatar()"><span class="icon-trash"></span></a>
 				</div>
 			</div>
-
 			<div class="row float-left">
 				<button type="button" class="btn btn-primary mr-2 ml-2" data-toggle="modal" data-target="#basicExampleModal"> <span class="icon-user"></span> Select Project avatar</button>
 				<button type="submit" class="btn btn-default"  (click)="addProject(addForm.value)" [disabled]= "isDisable || addForm.invalid"><span class="icon-plus mr-1"></span>Create Project</button>
