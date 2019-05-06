@@ -202,7 +202,7 @@ export class ProjectService {
 		return this.http.post(config.baseApiUrl+"project/delete-file", data);	
 	}
 	
-	updateProject(projectId,data?){
+	updateProject(projectId,data){
 		console.log("updated Data in project servie" , data);
 		// console.log("updated File in project servie" , file);
 		// var projectId = data._id;
@@ -378,9 +378,9 @@ export class ProjectService {
 	}
 
 	deleteEmployeeById(userId){
-		var is = userId
+		var is;
 		console.log("devloperId{}{}{}-===",userId);
-		return this.http.put(config.baseApiUrl+"user/delete-user/:userId"+userId,is);
+		return this.http.put(config.baseApiUrl+"user/delete-user/"+userId, is);
 	}
 
 	// changeNoticePicture(files: any, data){

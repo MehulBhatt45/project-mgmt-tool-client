@@ -71,7 +71,7 @@ export class EditProjectComponent implements OnInit {
 	ngOnDestroy(){
 		this._change.detach();
 	}
-
+	
 	ngOnInit() {
 
 		$('#datepicker').pickadate({
@@ -79,8 +79,13 @@ export class EditProjectComponent implements OnInit {
 			onSet: function(context) {
 				console.log('Just set stuff:.>>>>>>>>>><<<<<<<<<<<', context);
 				setDate(context);
+				change();
 			}
 		});
+		var change:any = ()=>{
+			this.updateForm.controls.deadline.setValue($('.datepicker').val());
+		}
+
 		var setDate = (context)=>{
 			this.timePicked();
 		}
@@ -217,7 +222,7 @@ export class EditProjectComponent implements OnInit {
 		}
 		this.isDisable = true;
 		console.log("update details of project",this.files,updateForm);
-		console.log(updateForm.Teams);
+		console.log(updateForm.deadline);
 		var newTeams = [];
 		_.forEach(this.availData.Teams, t => { newTeams.push(t._id) });
 		console.log("Update Team============>",newTeams);
@@ -230,16 +235,14 @@ export class EditProjectComponent implements OnInit {
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
-		updateForm.deadline = this.availData.deadline;
-		 // updateForm.controls.deadline = this.updateForm.controls.deadline
-		// console.log("project manager iddddd",updateForm.controls.deadline);
-
+		updateForm.deadline = $("#date-picker").val();
+		
 		var data = new FormData();
 		data.append('title', updateForm.title);
 		data.append('desc', updateForm.desc);
 		data.append('uniqueId', updateForm.uniqueId);
 		data.append('deadline', updateForm.deadline);
-		console.log("bdfhbafhjbfhbd==============>",updateForm.deadline);
+		console.log(updateForm.deadline)
 		_.forEach(this.availData.pmanagerId, t => { data.append('pmanagerId', t._id) });
 		_.forEach(this.availData.Teams, t => { data.append('Teams', t._id) });
 		_.forEach(updateForm.delete, t => { data.append('delete', t) });
@@ -253,17 +256,21 @@ export class EditProjectComponent implements OnInit {
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 
-			// setTimeout(()=>{
-			// 	window.location.reload();
-			// },500);
+			
+			setTimeout(()=>{
+				// window.location.reload();
+				this.updateForm.get('Teams') .reset( );
+			},500);
+			this.getAllDevelopersNotInProject(this.ProjectId);
+
 			console.log("response of update form  ====>" , res);
 			
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			this.getProjectById(res._id);
 			this.url = '';
 			this.isDisable = false;
-			updateForm.Teams.reset();
-			updateForm.pmanagerId.reset();
+			// updateForm.Teams.reset();
+			// updateForm.pmanagerId.reset();
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -402,8 +409,14 @@ export class EditProjectComponent implements OnInit {
 		console.log(this.updateForm.value['avatar']);
 		this.url = this.basMediaUrl+this.updateForm.value['avatar'];
 		console.log(this.url);
-		$('#basicExampleModal').modal('hide');
+		// $('#basicExampleModal').modal('hide');
 	}
+
+	onSelectFile1(event) {
+		console.log(event);
+		this.files = event;
+	}
+
 	onSelectFile(event) {
 		console.log("response from changefile",event.target.files);
 		this.files = event.target.files;
