@@ -79,7 +79,7 @@ export class BacklogComponent implements OnInit {
 		
 
 		var from_input = $('#addStartDate').pickadate({
-			min:new Date()
+			min:new Date(),
 		}),
 		from_picker = from_input.pickadate('picker')
 
@@ -107,6 +107,8 @@ export class BacklogComponent implements OnInit {
 		from_picker.on('set', function(event) {
 			if ( event.select ) {
 				console.log(from_picker.get('select'));
+				local();
+				// setStart;
 				to_picker.set('min', from_picker.get('select'))
 			}
 			else if ( 'clear' in event ) {
@@ -116,14 +118,23 @@ export class BacklogComponent implements OnInit {
 		to_picker.on('set', function(event) {
 			if ( event.select ) {
 				from_picker.set('max', to_picker.get('select'))+1
+				local();
 			}
 			else if ( 'clear' in event ) {
 				from_picker.set('max', false)
 			}
 		})
-
-
+		var local = ()=>{
+			this.setStartFunc();
+		}
 		// Date Picker Valadation End Here
+	}
+	setStartFunc(){
+		console.log(this.addForm);
+		if($('#addStartDate').val())
+			this.addForm.controls.startDate.setValue($('#addStartDate').val());
+		if($('#addEndDate').val())
+			this.addForm.controls.endDate.setValue($('#addEndDate').val());
 	}
 	refresh(): void {
 		window.location.reload();
