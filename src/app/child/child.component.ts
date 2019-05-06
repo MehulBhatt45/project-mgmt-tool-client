@@ -38,7 +38,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
+  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [] };
   modalTitle;3
   project;
   tasks;
@@ -79,9 +79,9 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
-  submitted = false;
-  
-
+  submitted = false;  
+  isTaskFound = false;
+  isDisable:boolean = false;
 
   
 
@@ -102,6 +102,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
+   
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -132,8 +133,14 @@ export class ChildComponent  implements OnInit{
     console.log("EVENT",localStorage.getItem('isTimerRunning'));
     var taskId = localStorage.getItem('isTimerRunning');
     console.log('taskId===========>',taskId);
+    let isAnyTrackHasTask = false;
     await _.forEach(this.tracks,async (track)=>{
       console.log('track =================>',track);
+      if(track.tasks.length){
+        isAnyTrackHasTask = true;
+        return false;
+      }
+      
       await _.forEach(track.tasks,(task)=>{
         if(task._id == taskId){
           console.log('taskkkkkkkkkkkkkkkk=================>',task);
@@ -145,6 +152,7 @@ export class ChildComponent  implements OnInit{
 
       })
     })
+    if (isAnyTrackHasTask) this.isTaskFound = true;
   }
 
   ngOnChanges() {
@@ -262,19 +270,22 @@ export class ChildComponent  implements OnInit{
       assignTo : new FormControl('', Validators.required),
       sprint :new FormControl('',Validators.required),
       priority : new FormControl('', Validators.required),
-      startDate : new FormControl('', Validators.required),
-      dueDate : new FormControl('', Validators.required),
+      startDate : new FormControl(''),
+      dueDate : new FormControl(''),
       status : new FormControl({value: '', disabled: true}, Validators.required),
       files : new FormControl(),
       estimatedTime : new FormControl()
     })
   }
 
- 
   getTitle(name){
+    console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
-      return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      if(str.length > 1)
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      else
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1)
     }else{
       return '';
     }
@@ -298,7 +309,6 @@ export class ChildComponent  implements OnInit{
   }
   onTalkDrop(event){
     if(this.startText == 'Stop'){
-      console.log('yfudgjhfdjgvhfjhfj================');
     }
     this.talkDrop.emit(event);
   }
@@ -319,6 +329,7 @@ export class ChildComponent  implements OnInit{
     this.comment = data;
   }
   sendComment(taskId){
+    this.isDisable = true;
     // this.func('reload');
     console.log(this.comment);
     var data : any;
@@ -347,9 +358,11 @@ export class ChildComponent  implements OnInit{
       this.files = [];
       this.file = [];
       console.log('this.files=============>',this.files);
+      this.isDisable = false;
       this.getAllCommentOfTask(res.taskId);
     },err=>{
       console.error(err);
+      this.isDisable = false;
     });
   }
 
@@ -411,7 +424,7 @@ export class ChildComponent  implements OnInit{
     console.log("newTask",this.newTask);
     console.log("title===>",this.newTask.title);
     console.log("title2===>",this.newTask.assignTo);
-    console.log("title3===>",this.newTask.sprint);
+    // console.log("title3===>",this.newTask.sprint);
     this.modalTitle = 'Edit Item';
     $('#itemManipulationModel1').modal('show');
     this.getProject(task.projectId._id);
@@ -457,13 +470,74 @@ export class ChildComponent  implements OnInit{
     }
   }
 
-  get f() { return this.editTaskForm.controls; }
+  get f() { return this.editTaskForm.value; }
+
+
+  saveTheData(task){
+    
+    this.submitted = true;
+    if (this.editTaskForm.invalid) {
+      return;
+    }
+    this.loader = true;
+    task['projectId']= this.projectId;
+    console.log("projectId=========>",this.projectId);
+    task.priority = Number(task.priority); 
+    task['type']= _.includes(this.modalTitle, 'Task')?'TASK':_.includes(this.modalTitle, 'Bug')?'BUG':_.includes(this.modalTitle, 'Issue')?'ISSUE':''; 
+    console.log("estimated time=====>",task.estimatedTime);
+    // task.images = $("#images").val();
+    console.log("images====>",task.images);
+    console.log(task.dueDate);
+    task.dueDate = moment().add(task.dueDate, 'days').format('YYYY-MM-DD');
+    task['createdBy'] = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log("task ALL details",task);
+    let data = new FormData();
+    _.forOwn(task, function(value, key) {
+      data.append(key, value)
+    });
+    if(this.files.length>0){
+      for(var i=0;i<this.files.length;i++){
+        data.append('fileUpload', this.files[i]);  
+      }
+    }
+    this._projectService.addTask(data).subscribe((res:any)=>{
+      console.log("response task***++",res);
+      let name = res.assignTo.name;
+      console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
+      Swal.fire({type: 'success',
+        title: 'Task Added Successfully to',
+        text: name,
+        showConfirmButton:false,
+        timer: 2000,
+        // position: 'top-end'
+      })
+      this.getProject(res.projectId._id);
+      $('#save_changes').attr("disabled", false);
+      $('#refresh_icon').css('display','none');
+      $('#itemManipulationModel').modal('hide');
+      this.newTask = this.getEmptyTask();
+      this.editTaskForm.reset();
+      this.files = this.url = [];
+      // this.assignTo.reset();
+      this.loader = false;
+    },err=>{
+      Swal.fire({
+        type: 'error',
+        title: 'Ooops',
+        text: 'Something went wrong',
+        animation: false,
+        customClass: {
+          popup: 'animated tada'
+        }
+      })
+      //$('#alert').css('display','block');
+      console.log("error========>",err);
+    });
+  }
+
 
   updateTask(task){
-    // this.submitted = true;
-    // if (this.editTaskForm.invalid) {
-    //   return;
-    // }
+    this.isDisable = true;
     task.assignTo = this.editTaskForm.value.assignTo;
     task.sprint = this.editTaskForm.value.sprint;
     console.log("assignTo",task.assignTo);
@@ -492,6 +566,7 @@ export class ChildComponent  implements OnInit{
         timer: 2000,
         // position: 'top-end',
       })
+      this.isDisable = false;
       $('#save_changes').attr("disabled", false);
       $('#refresh_icon').css('display','none');
       $('#itemManipulationModel1').modal('hide');
@@ -516,7 +591,7 @@ export class ChildComponent  implements OnInit{
     })
   }
   getEmptyTask(){
-    return { title:'', desc:'', assignTo: '', sprint:'', status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
+    return { title:'', desc:'', assignTo: '',  status: 'to do', priority: 'low' , dueDate:'', estimatedTime:'', images: [] };
   }
   getHHMMTime(difference){
     // console.log("ave che kai ke nai",difference);
@@ -592,7 +667,6 @@ export class ChildComponent  implements OnInit{
       } else if (
         result.dismiss === Swal.DismissReason.cancel
         ) {
-
         swalWithBootstrapButtons.fire(
           'Cancled!',
           'Your task has been safe.',
@@ -650,12 +724,12 @@ export class ChildComponent  implements OnInit{
           _.forEach(this.tracks , (track)=>{
             //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id&& task.sprint.status == 'Active'){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
                 track.tasks.push(task);
               }
             }else{
               console.log("sprint module",task.sprint);
-              if(task.status == track.id && task.sprint.status == 'Active'){
+              if(task.status == track.id){
                 track.tasks.push(task);
               }
             }

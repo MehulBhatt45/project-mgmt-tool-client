@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
 	newNotification
 	newSprint = [];
 	submitted = false;
+	isDisable:boolean =false;
 	
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
 		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
@@ -66,7 +67,7 @@ export class HeaderComponent implements OnInit {
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			title : new FormControl('', [Validators.required,  Validators.maxLength(10)]),
 			desc : new FormControl('',[Validators.required]),
 			assignTo : new FormControl('',Validators.required),
 			sprint :new FormControl('',Validators.required),
@@ -77,9 +78,15 @@ export class HeaderComponent implements OnInit {
 			status : new FormControl({value: 'to do', disabled: true}, Validators.required),
 		})
 	}
-
-
+	openNav() {
+		document.getElementById("slide-out").style.width = "250px";
+	}
+	closeNav() {
+		document.getElementById("slide-out").style.width = "0";
+	}
 	ngOnInit() {
+
+
 		// localStorage.setItem("checkIn",JSON.stringify(false));
 		this.editTaskForm.reset()
 		this.task = this.getEmptyTask();
@@ -108,6 +115,7 @@ export class HeaderComponent implements OnInit {
 			console.log("res-==",this.projectId);
 		});
 		this.getProjects();
+		this.getAllProjects();
 		// this.getAllDevelopers();
 		// this.getNotificationByUserId();
 		this.getUnreadNotification();
@@ -393,6 +401,7 @@ export class HeaderComponent implements OnInit {
 		if (this.editTaskForm.invalid) {
 			return;
 		}
+		this.isDisable = true;
 		this.loader = true;
 		task['projectId']= this.projectId;
 		console.log("projectId=========>",this.projectId);
@@ -427,6 +436,7 @@ export class HeaderComponent implements OnInit {
 				timer: 2000,
 				// position: 'top-end'
 			})
+			this.isDisable = false;
 			this.getProject(res.projectId._id);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
@@ -448,6 +458,7 @@ export class HeaderComponent implements OnInit {
 					popup: 'animated tada'
 				}
 			})
+			this.isDisable = false;
 			//$('#alert').css('display','block');
 			console.log("error========>",err);
 		});

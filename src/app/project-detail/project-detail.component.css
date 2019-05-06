@@ -35,7 +35,7 @@
   color: #fff;
   background-color: transparent;
   padding: 5px;
-  width: 120px;
+  width: 95px;
   font-size: 14px;
 }
 .card-list-content {
@@ -195,6 +195,7 @@ table {
   margin-left: 5px;
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .due_date_sorting_btn, 
@@ -258,7 +259,7 @@ table {
       border-radius: 5px!important;
     }
     .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
-      background-color: #372e5f !important;
+      background-color: #b3b3b3 !important;
     }
     .dropdown-content.open{
       display: block !important;
@@ -362,6 +363,7 @@ table {
   .dropdown-menu a.dropdown-item {
     font-size: 15px;
     padding: 7px;
+    box-shadow: none;
   }
   .dropdown-item.active, .dropdown-item:active, .dropdown-item:hover {
     background-color: #b3b3b3!important;
@@ -438,8 +440,6 @@ table {
     width: 100px;
     padding:10px;
   }
-
-
   /*stop watch*/
 
   .timer-button-container{
@@ -470,8 +470,21 @@ table {
   }
   .sprint_button{
     float: right;
-    display: -webkit-inline-box;
   }
-  select.browser-default {
-    display: -webkit-inline-box!important;
+
+  @media (max-width: 1199px){
+    .card-list button {
+      width: auto;
+    }
+    .all_card {
+      overflow-x: auto;
+    }
+    .all_card .board.cdk-drop-list {
+      min-width: 1200px;
+      max-width: 1200px;
+    }
+  }
+  .btn{
+    text-transform: none !important;
+     font-weight: bold !important;
   }

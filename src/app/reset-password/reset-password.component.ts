@@ -5,6 +5,7 @@ import { AlertService } from '../services/alert.service';
 import { first } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import Swal from 'sweetalert2';
+declare var $ : any;
 
 @Component({
 	selector: 'app-reset-password',
@@ -13,8 +14,10 @@ import Swal from 'sweetalert2';
 })
 export class ResetPasswordComponent implements OnInit {
 	ngOnInit() {
-
 		console.log("Component Re-Initialized.");
+		$(".toggle-password").click(function() {
+			$(this).toggleClass("fa-eye fa-eye-slash");
+		});
 
 	}
 
@@ -24,7 +27,11 @@ export class ResetPasswordComponent implements OnInit {
 	returnUrl: string;
 	loader: boolean = false;
 	match: boolean = false;
-
+	isDisable:boolean = false;
+	show: boolean;
+	pwd: boolean;
+	show1: boolean;
+	pwd1: boolean;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -38,8 +45,8 @@ export class ResetPasswordComponent implements OnInit {
 		this.resetPasswordForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
 			currentPassword: new FormControl('', [Validators.required]),
-			newPassword: new FormControl('',[Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]),
-			confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')])
+			newPassword: new FormControl('',[Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+			confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
 		});
 	}
 	
@@ -51,17 +58,19 @@ export class ResetPasswordComponent implements OnInit {
 		if (this.resetPasswordForm.invalid) {
 			return;
 		}
-
+		this.isDisable = true;
 		delete this.resetPasswordForm.value['confirmPassword']
 		console.log(this.resetPasswordForm.value);
 		this._loginService.resetPassword(this.resetPasswordForm.value)
 		.pipe(first())
 		.subscribe(data => {
 			Swal.fire({type: 'success',title: 'Password Change Successfully',showConfirmButton:false,timer: 2000})
+			this.isDisable = false;
 			this.router.navigate(['/login']);
 		},
 		error => {
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
+			this.isDisable = false;
 		});
 	}
 
@@ -74,5 +83,13 @@ export class ResetPasswordComponent implements OnInit {
 			this.match = false;
 		} 
 
+	}
+	password() {
+		this.show = !this.show;
+		this.pwd = !this.pwd;
+	}
+	confirmPassword() {
+		this.show1 = !this.show1;
+		this.pwd1 = !this.pwd1;
 	}
 }

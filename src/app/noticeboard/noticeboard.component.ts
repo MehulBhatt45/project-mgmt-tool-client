@@ -33,9 +33,8 @@ export class NoticeboardComponent implements OnInit {
   files:Array<File> = [];
   i = 0;
   newNotice = { title:'', desc:'', published: '', expireon: '', images: [] };
-
   submitted =false;
-
+  isDisable:boolean= false;
 
   @Output() noticeUpdate = new EventEmitter();
 
@@ -84,7 +83,7 @@ export class NoticeboardComponent implements OnInit {
         this._projectservice.deleteNotice(id).subscribe((res:any)=>{
           Swal.fire(
             'Deleted!',
-            'Your file has been deleted.',
+            'Notice has been deleted.',
             'success'
             )
           this.getAllNotice();
@@ -109,11 +108,11 @@ export class NoticeboardComponent implements OnInit {
   get f() { return this.editNoticeForm.controls; }
 
   updateNotice(editNoticeForm, noticeId){
-
     this.submitted = true;
     if (this.editNoticeForm.invalid) {
       return;
     }
+    this.isDisable= true;
     console.log("noticeId", noticeId);
     console.log("file is==",this.files);
     console.log("update Notice =====>",editNoticeForm);
@@ -138,9 +137,11 @@ export class NoticeboardComponent implements OnInit {
       this.files = [];
       this.url = [];
       console.log("files: ",this.files);
+      this.isDisable= false;
     },err=>{
       console.log(err);
-      Swal.fire('Oops...', 'Something went wrong!', 'error')
+      Swal.fire('Oops...', 'Something went wrong!', 'error');
+        this.isDisable= false;
     })
   }
 

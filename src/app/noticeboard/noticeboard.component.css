@@ -67,6 +67,8 @@
 }
 .image_box img.img-fluid {
 	min-width: 100%;
+	object-fit: cover;
+	min-height: 100%;
 }
 .notice_img{
 	position: relative;
@@ -160,4 +162,28 @@
     max-height: 100%;
     object-fit: cover;
     object-position: top;
+}
+.no-data{
+	height: 150px;
+	width: 150px;
+}
+.noNoticeMessage{
+	/*display: none;*/
+	margin-top: 180px;
+	font-size: 20px;
+	text-align: center;	
+}
+
+/*responsive*/
+@media(max-width: 991px){
+	.dropdown-menu{
+     padding: 0px;
+     top: 1px!important;
+}
+}
+@media(max-width: 575px){
+	.dropdown-menu{
+     padding: 0px;
+     top: 1px!important;
+}
 }
