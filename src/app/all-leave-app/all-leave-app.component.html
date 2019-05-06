@@ -155,8 +155,31 @@
       </div>
     </div>
   </div>
+  <div class="row" *ngIf="pendingLeavesCount > 0 && pendingFlag"> 
+    <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
+      <h2 class="text-center">Types of Leaves</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="col-sm-5" *ngIf="leaveApp && !isFromSelect">
+     <h2 class="text-center">Duration</h2>
 
-  <div class="row"> 
+     <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
+   </div>
+
+ </div>
+ <div class="row" *ngIf="approvedLeavesCount > 0 && approvedFlag"> 
+    <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
+      <h2 class="text-center">Types of Leaves</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="col-sm-5" *ngIf="leaveApp && !isFromSelect">
+     <h2 class="text-center">Duration</h2>
+
+     <canvas id="pieChart1" style="margin-top: 30px;"></canvas>
+   </div>
+
+ </div>
+ <div class="row" *ngIf="rejectedLeavesCount > 0 && rejectedFlag"> 
     <div class="col-sm-7" id="myTabJust" *ngIf="leaveApp && !isFromSelect">
       <h2 class="text-center">Types of Leaves</h2>
       <canvas id="barChart"></canvas>
