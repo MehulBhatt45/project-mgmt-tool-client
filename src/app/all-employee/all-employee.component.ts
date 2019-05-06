@@ -99,6 +99,7 @@ export class AllEmployeeComponent implements OnInit {
 		},2000);
 	}
 	deleteEmployee(developerid){
+
 			console.log("msgggg--=--",developerid);
 			Swal.fire({
 					html: "<span style="+'font-size:25px'+">  Are you sure you want to remove <strong style="+'font-weight:bold'+">" + " " + developerid.name + " </strong> ",
@@ -144,44 +145,45 @@ export class AllEmployeeComponent implements OnInit {
 											this.developers.push(content);
 											console.log(this.developers);
 
-										});
-										this.filteredTeams = this.developers;
-										setTimeout(()=>{
-											console.log("rotate js--------------------")
-											$('a.rotate-btn').click(function () {
-												$(this).parents(".card-rotating").toggleClass('flipped');
-											});
-										},2000);
-									})
-									this.searchFlag = true;
-								} else{
-									this.getAllDevelopers();
-								}
-							}	
-							onKey(searchText){
-								console.log("searchText",searchText);
-								if(this.searchFlag == true){
-									var dataToBeFiltered = [this.filteredTeams];
-								}
-								else{
-									var dataToBeFiltered = [this.filteredDevelopers];
-								}
-								var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
-								console.log("developer =======>", developer);
-								this.developers = [];
-								if(this.selectedProjectId !='all'){
-									_.forEach(developer, (content)=>{
-										this.developers.push(content);
-									});
-								}
-								else {
-									_.forEach(developer, (content)=>{
-										this.developers.push(content);
-									});
-								}
 
-							}
-						}
+				});
+				this.filteredTeams = this.developers;
+				setTimeout(()=>{
+					console.log("rotate js--------------------")
+					$('a.rotate-btn').click(function () {
+						$(this).parents(".card-rotating").toggleClass('flipped');
+					});
+				},2000);
+			})
+			this.searchFlag = true;
+		} else{
+			this.getAllDevelopers();
+		}
+	}	
+	onKey(searchText){
+		console.log("searchText",searchText);
+		if(this.searchFlag == true){
+			var dataToBeFiltered = [this.filteredTeams];
+		}
+		else{
+			var dataToBeFiltered = [this.filteredDevelopers];
+		}
+		var developer = this.searchTextFilter.transform1(dataToBeFiltered, searchText);
+		console.log("developer =======>", developer);
+		this.developers = [];
+		if(this.selectedProjectId !='all'){
+			_.forEach(developer, (content)=>{
+				this.developers.push(content);
+			});
+		}
+		else {
+			_.forEach(developer, (content)=>{
+				this.developers.push(content);
+			});
+		}
+
+	}
+}
 
 
 

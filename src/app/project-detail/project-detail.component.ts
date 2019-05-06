@@ -205,7 +205,7 @@ export class ProjectDetailComponent implements OnInit {
 		},2000);
 		$('.datepicker').pickadate();
 		// $('#estimatedTime').pickatime({});
-		this.getAllDevelopers();
+		
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
@@ -217,8 +217,8 @@ export class ProjectDetailComponent implements OnInit {
 		//this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
-
-	}
+		this.getProject(this.projectId);																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								
+	}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					
 
 	
 

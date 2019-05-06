@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output, EventEmitter,} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../services/alert.service';
 import {ProjectService} from '../services/project.service';
+import {MessagingService} from '../services/messaging.service';
 import * as moment from 'moment';
 import{LeaveService} from '../services/leave.service';
 import { config } from '../config';
@@ -52,9 +53,16 @@ export class HeaderComponent implements OnInit {
 	newSprint = [];
 	submitted = false;
 	isDisable:boolean =false;
-	
 	constructor(public _leaveService:LeaveService,private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute,
-		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService) {
+		private _loginService: LoginService,  public _projectService: ProjectService, public _alertService: AlertService,
+		public _messegingService:MessagingService) {
+
+		this._messegingService.notificationCount.subscribe(data=>{
+			if(data == 'notificationCount'){
+				this.getUnreadNotification();
+			}
+		})
+
 		this.addUserProfile = this.formBuilder.group({
 			name:new FormControl( '', [Validators.required]),
 			password:new FormControl('',[Validators.required]),
@@ -121,6 +129,8 @@ export class HeaderComponent implements OnInit {
 		// this.getAllDevelopers();
 		// this.getNotificationByUserId();
 		this.getUnreadNotification();
+
+		
 		this.tracks = [
 		{
 			"title": "Todo",
@@ -515,11 +525,20 @@ this._leaveService.checkIn(this.currentEmployeeId).subscribe((res:any)=>{
 					this._projectService.getUnreadNotification(this.currentUser._id).subscribe((res:any)=>{
 						// console.log("length=============>",res);
 						this.unreadNotification = res;
+
 						this.newNotification = this.unreadNotification.length;
 						// this.unreadNotification.length = this.newNotification;
 						console.log("count======================>",this.newNotification);
 					})
 				}
+				// dataRefresher: any;
+				// refreshData(){
+				// 	this.dataRefresher =
+				// 	setInterval(() => {
+				// 		this.getUnreadNotification();
+				// 		//Passing the false flag would prevent page reset to 1 and hinder user interaction
+				// 	}, 10000);  
+				// }
 
 				removeAvatar(file, index){
 					console.log(file, index);

@@ -23,6 +23,7 @@ export class EditprofileComponent implements OnInit {
 	loader: boolean = false;
 	submitted = false;
 	isDisable:boolean= false;
+	
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
 		this.editEmployeeForm = this.formBuilder.group({
 
@@ -61,11 +62,11 @@ export class EditprofileComponent implements OnInit {
 
 
 	updateProfile(editEmployeeForm){
-		// console.log('jkfdg');
-		// this.submitted = true;
-		// if (this.editEmployeeForm.invalid) {
-		// 	return;
-		// }
+		console.log('jkfdg');
+		this.submitted = true;
+		if (this.editEmployeeForm.invalid) {
+			return;
+		}
 		this.isDisable= true;
 		if(this.currentUser.userRole == "admin"){
 
@@ -172,6 +173,32 @@ export class EditprofileComponent implements OnInit {
 					console.log(err);
 					this.loader = false;
 				})
+			}
+
+			validatePhone(form)
+			{
+				console.log(form);
+				var phoneno = /[0-9]/ ;
+				var message = document.getElementById('message');
+				if(!form.phone.match(phoneno)){
+					console.log("message==========",message)
+					message.innerHTML = "Please enter only numbers"
+				}else{
+					message.innerHTML = "";
+				}
+			}
+
+			validateName(form)
+			{
+				console.log(form);
+				var nameInput = /[a-zA-Z ]/ ;
+				var message1 = document.getElementById('message1');
+				if(!form.name.match(nameInput)){
+					console.log("message==========",message1)
+					message1.innerHTML = "Name can not start with digit"
+				}else{
+					message1.innerHTML = "";
+				}
 			}
 
 

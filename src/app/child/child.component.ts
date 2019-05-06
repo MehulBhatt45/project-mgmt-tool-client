@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 declare var $ : any;
 
+
 @Component({
   selector: 'app-child',
   templateUrl: './child.component.html',
@@ -79,12 +80,13 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
+
   submitted = false;  
   isTaskFound = false;
   isDisable:boolean = false;
 
-  
 
+  
   constructor( private route: ActivatedRoute,public _projectService: ProjectService,
     public _commentService: CommentService, public _change: ChangeDetectorRef, public searchTextFilter: SearchTaskPipe, private router: Router) { 
 
@@ -102,7 +104,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-   
+    
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -118,13 +120,14 @@ export class ChildComponent  implements OnInit{
 
         e.stopPropagation();
         // Chrome requires returnValue to be set
-        e.returnValue = false;
+        e.returnValue = '';
 
       }
     });
     var fromReload = (option) =>{
       this.func(option);
     }
+    
   }
 
   func = async (option)=>{
@@ -138,7 +141,7 @@ export class ChildComponent  implements OnInit{
       console.log('track =================>',track);
       if(track.tasks.length){
         isAnyTrackHasTask = true;
-        return false;
+        
       }
       
       await _.forEach(track.tasks,(task)=>{
@@ -154,6 +157,28 @@ export class ChildComponent  implements OnInit{
     })
     if (isAnyTrackHasTask) this.isTaskFound = true;
   }
+
+   // func = async (option)=>{
+   //    // debugger;
+   //    console.log("in func",option);
+   //    console.log("EVENT",localStorage.getItem('isTimerRunning'));
+   //    var taskId = localStorage.getItem('isTimerRunning');
+   //    console.log('taskId===========>',taskId);
+   //    await _.forEach(this.tracks,async (track)=>{
+   //      console.log('track =================>',track);
+   //      await _.forEach(track.tasks,(task)=>{
+   //        if(task._id == taskId){
+   //          console.log('taskkkkkkkkkkkkkkkk=================>',task);
+   //          if(option=='reload')
+   //            this.timerUpdate(task);
+   //          else if(option=='load')
+   //            this.startTimer(task);
+   //        }
+
+   //      })
+   //    })
+   //  }
+
 
   ngOnChanges() {
     this._change.detectChanges();
@@ -279,7 +304,7 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
-    console.log("name=========================================>",name);
+
     if(name){
       var str = name.split(' ');
       if(str.length > 1)
@@ -678,6 +703,7 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log("in child componant getproject===============================");
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
@@ -737,6 +763,7 @@ export class ChildComponent  implements OnInit{
         })
 
         this.loader = false;
+        console.log("==============================================================");
         this.func('load');
       },err=>{
         console.log(err);
