@@ -57,3 +57,8 @@
     overflow: auto;
   }
 }
+@media (max-width: 575px){
+  .only_for_mobile{
+    display: none!important;
+  }
+}

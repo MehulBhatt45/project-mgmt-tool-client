@@ -81,6 +81,7 @@
 			</button>
 			<div class="modal-body" *ngIf="task">
 				<div class="container">
+					<button *ngIf="currentUser.userRole == 'projectManager' || currentUser.userRole == 'admin'" style="right: 53px; left: auto; position: absolute; top: 0;" class="only_for_mobile btn btn-default" type="button" data-toggle="modal" data-target="#itemManipulationModel1" (click)="editTask(task); newTask = task"><span class="icon-pencil mr-1"></span>Edit</button>
 					<table class="table-responsive" style="width: 100%;">
 						<tr>
 							<td style="width: 20px;">

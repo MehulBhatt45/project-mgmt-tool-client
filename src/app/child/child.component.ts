@@ -279,7 +279,7 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
-    console.log("name=========================================>",name);
+    // console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
       if(str.length > 1)
@@ -678,6 +678,7 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
+    console.log("in child componant getproject===============================");
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
@@ -737,6 +738,7 @@ export class ChildComponent  implements OnInit{
         })
 
         this.loader = false;
+        console.log("==============================================================");
         this.func('load');
       },err=>{
         console.log(err);

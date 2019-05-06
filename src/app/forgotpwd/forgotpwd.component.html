@@ -29,8 +29,8 @@
 								<div *ngIf="f.confirmPassword.errors.maxlength">Password must be  only 20 characters</div>
 							</div>
 						</div>
-						<div class="d-flex justify-content-center">
-							<button class="btn btn-deep-orange" type="submit" (click)="resetPassword()" [disabled]="!match || isDisable">Submit</button>
+						<div class="d-flex">
+							<button class="btn btn-primary" type="submit" (click)="resetPassword()" [disabled]="!match || isDisable">Submit</button>
 						</div>
 					</form>
 				</div>
