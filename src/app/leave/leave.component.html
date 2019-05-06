@@ -1,21 +1,21 @@
 <div class="container-fluid ">
-	<div class="row justify-content-center">
-		<div class="col-md-6">
-			<div class="card card-cascade narrower">
-				<div class="view view-cascade" style="background-color: #372e5f">
-					<h2 class=" white-text text-center py-4" align="center" style="margin: 0;">Apply Leave</h2>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<h3 class="card-header-title"><span class="mr-1" data-icon="&#xe066;"></span> Apply Leave</h3>
 				</div>
-				<div class="card-body card-body-cascade text-center" style="padding-top: 35px;">
+				<div class="card-body card-body-cascade text-center">
 					<div class="container-fluid">
 						<form [formGroup]='addForm' autocomplete="off">
 
 							<div class="btn-group btn-group-toggle d-flex flex-column flex-md-row" data-toggle="buttons">
 
 								<label class="btn btn-default" (click)="showOneDay()">
-									<button  value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i>For One Day</button> 
+									<button  value="1-day" class="btn_style"><i class="fas fa-hand-point-up"></i> Single Day</button> 
 								</label>
 								<label class="btn btn-default" (click)="showMoreDays()">
-									<button  value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i>For More Days</button>
+									<button  value="more-day" class="btn_style"><i class="fas fa-hand-spock"></i> Multiple Days</button>
 								</label>
 							</div>
 							<span [hidden]="!showMoreDayss">

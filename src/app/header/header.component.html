@@ -15,7 +15,7 @@
       <li>
         <ul class="collapsible collapsible-accordion">
 
-          <li class=" item_list">
+          <li class=" item_list" *ngIf = "projects">
             <a class="collapsible-header waves-effect arrow-r"  [class.disabled] = "projects.length == 0" >
               <span style="outline: none;" routerLink="/view-projects">
                 <span class="mr-1" data-icon="&#xe067;"></span> Projects

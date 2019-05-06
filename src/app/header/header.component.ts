@@ -79,10 +79,8 @@ export class HeaderComponent implements OnInit {
 		})
 	}
 	openNav() {
-		document.getElementById("slide-out").style.width = "350px";
-
+		document.getElementById("slide-out").style.width = "250px";
 	}
-
 	closeNav() {
 		document.getElementById("slide-out").style.width = "0";
 	}

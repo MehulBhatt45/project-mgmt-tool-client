@@ -484,3 +484,7 @@ table {
       max-width: 1200px;
     }
   }
+  .btn{
+    text-transform: none !important;
+     font-weight: bold !important;
+  }

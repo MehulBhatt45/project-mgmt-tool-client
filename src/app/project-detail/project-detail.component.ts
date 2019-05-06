@@ -263,14 +263,14 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("projectId=====>",this.projectId);
 		this.loader = true;
 		setTimeout(()=>{
-			this._projectService.getProjectById(id).subscribe((res:any)=>{
+			this._projectService.getProjectById(this.projectId).subscribe((res:any)=>{
 				console.log("title=={}{}{}{}{}",res);
 				this.temp = res;
 				this.pro = res;
 				console.log("project detail===>>>>",this.pro);
 				this.projectId=this.pro._id;
 				console.log("iddddd====>",this.projectId);
-				this._projectService.getTeamByProjectId(id).subscribe((res:any)=>{
+				this._projectService.getTeamByProjectId(this.projectId).subscribe((res:any)=>{
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
@@ -282,7 +282,7 @@ export class ProjectDetailComponent implements OnInit {
 				console.log("err of project============>"  ,err);
 			});
 
-			this._projectService.getTaskById(id).subscribe((res:any)=>{
+			this._projectService.getTaskById(this.projectId).subscribe((res:any)=>{
 				console.log("all response ======>" , res);
 				this.getEmptyTracks();
 				this.project = res;
@@ -377,7 +377,7 @@ export class ProjectDetailComponent implements OnInit {
 				var n = res.timelog.length
 				Swal.fire({
 					type: 'info',
-					title: "Task is shifted to complete from testing" ,
+					title: "Task is shifted to Complete from Testing" ,
 					showConfirmButton:false,timer: 2000})
 			},err=>{
 				Swal.fire('Oops...', 'Something went wrong!', 'error')
@@ -552,7 +552,7 @@ export class ProjectDetailComponent implements OnInit {
 			let name = res.assignTo.name;
 			console.log("assign to name>>>>>>>>>>>><<<<<<<<",name);
 			Swal.fire({type: 'success',
-				title: 'Task Added Successfully to',
+				title: 'Task Added Successfully To',
 				text: name,
 				showConfirmButton:false,
 				timer: 2000,
@@ -645,7 +645,7 @@ export class ProjectDetailComponent implements OnInit {
 			}else {
 				Swal.fire({
 					title: 'Error',
-					text: "You can upload images only",
+					text: "You can upload Images only",
 					type: 'warning',
 				})
 			}

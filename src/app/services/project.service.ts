@@ -378,9 +378,9 @@ export class ProjectService {
 	}
 
 	deleteEmployeeById(userId){
-		var is;
+		var is = userId
 		console.log("devloperId{}{}{}-===",userId);
-		return this.http.put(config.baseApiUrl+"user/delete-user/"+userId, is);
+		return this.http.put(config.baseApiUrl+"user/delete-user/:userId"+userId,is);
 	}
 
 	// changeNoticePicture(files: any, data){

@@ -79,10 +79,9 @@ export class ChildComponent  implements OnInit{
   temp;
   difference;
   file = [];
-  submitted = false;
-  isDisable:boolean =false;
-  
-
+  submitted = false;  
+  isTaskFound = false;
+  isDisable:boolean = false;
 
   
 
@@ -103,6 +102,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
+   
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -133,8 +133,14 @@ export class ChildComponent  implements OnInit{
     console.log("EVENT",localStorage.getItem('isTimerRunning'));
     var taskId = localStorage.getItem('isTimerRunning');
     console.log('taskId===========>',taskId);
+    let isAnyTrackHasTask = false;
     await _.forEach(this.tracks,async (track)=>{
       console.log('track =================>',track);
+      if(track.tasks.length){
+        isAnyTrackHasTask = true;
+        return false;
+      }
+      
       await _.forEach(track.tasks,(task)=>{
         if(task._id == taskId){
           console.log('taskkkkkkkkkkkkkkkk=================>',task);
@@ -146,6 +152,7 @@ export class ChildComponent  implements OnInit{
 
       })
     })
+    if (isAnyTrackHasTask) this.isTaskFound = true;
   }
 
   ngOnChanges() {
@@ -272,9 +279,13 @@ export class ChildComponent  implements OnInit{
   }
 
   getTitle(name){
+    console.log("name=========================================>",name);
     if(name){
       var str = name.split(' ');
-      return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      if(str.length > 1)
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1) + ' ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+      else
+        return str[0].charAt(0).toUpperCase() + str[0].slice(1)
     }else{
       return '';
     }
