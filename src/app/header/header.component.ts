@@ -397,6 +397,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	get f() { return this.editTaskForm.controls; }
+
 	
 	saveTheData(task){
 		this.submitted = true;
@@ -466,7 +467,7 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 	getEmptyTask(){
-		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '3' , dueDate:'', estimatedTime:'', projectId:'',images: []};
+		return { title:'', desc:'', assignTo: '',sprint:'', status: 'to do', priority: '' , dueDate:'', estimatedTime:'', projectId:'',images: []};
 	}
 
 	reloadProjects(){

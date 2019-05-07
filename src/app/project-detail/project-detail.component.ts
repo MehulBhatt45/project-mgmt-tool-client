@@ -214,7 +214,7 @@ export class ProjectDetailComponent implements OnInit {
 			$('#refresh_icon').css('display','block');
 		});
 
-		//this.filterTracks(this.activeSprint._id);
+		// this.filterTracks(this.activeSprint._id);
 		this.getSprint(this.projectId);
 		this.getSprintWithoutComplete(this.projectId);
 
@@ -227,7 +227,7 @@ export class ProjectDetailComponent implements OnInit {
 		console.log("tem ====>" , this.temp);
 		this.getEmptyTracks();
 		this.currentsprintId = sprintId;
-		console.log("sprintId",this.currentsprintId);
+		console.log("sprintId==============>>>>>>><<<<<<<<<",this.currentsprintId);
 		_.forEach(this.project, (task)=>{
 			_.forEach(this.tracks , (track)=>{
 				if(task.sprint._id == sprintId && track.id == task.status){
@@ -292,11 +292,11 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer' && task.sprint.status == 'Active'){
 								track.tasks.push(task);
 							}
 						}else{
-							if(task.status == track.id ){
+							if(task.status == track.id && task.sprint.status == 'Active' ){
 								track.tasks.push(task);
 							}
 						}
@@ -321,45 +321,45 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	onTalkDrop(event: CdkDragDrop<any>) {
+		console.log(event.container.id, event.previousContainer.data , event);
 		// if(task.sprint.status == 'Active'){
 
 		// }
 		
-		for(var i=0;i<event.previousContainer.data.length;i++){
-			this.sprintStatus.push(event.previousContainer.data[i].sprint.status)
-		if(this.sprintStatus[i] == 'Active'){
-			console.log("hello");
-			console.log(this.sprintStatus);
-		console.log(event);
-		if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
-			Swal.fire('Oops...', 'Stop timer!', 'error')
-		}else{
-			// console.log(event.container.id, event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running);
-			if (event.previousContainer === event.container) {
-				moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-			} else {
-				transferArrayItem(event.previousContainer.data,
-					event.container.data,
-					event.previousIndex,
-					event.currentIndex);
-				this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
+		// for(var i=0;i<event.previousContainer.data.length;i++){
+		// 	this.sprintStatus.push(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].sprint.status)
+		// 	console.log("status========>",this.sprintStatus);
+			if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { '_id': event.item.element.nativeElement.id })].sprint.status == 'Active'){
+				console.log("hello");
+				console.log(this.sprintStatus);
+				console.log(event);
+				if(event.previousContainer.data[_.findIndex(event.previousContainer.data, { 'status': event.previousContainer.id })].running){
+					Swal.fire('Oops...', 'Stop timer!', 'error')
+				}else{
+					if (event.previousContainer === event.container) {
+						moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+					} else {
+						transferArrayItem(event.previousContainer.data,
+							event.container.data,
+							event.previousIndex,
+							event.currentIndex);
+						this.updateStatus(event.container.id, event.container.data[_.findIndex(event.container.data, { 'status': event.previousContainer.id })]);
 
-			}
-		}
-		}else{
-			Swal.fire({
-				type: 'error',
-				title: 'Sorry!',
-				text: "Project's Sprint is not activated",
-				animation: false,
-				customClass: {
-					popup: 'animated tada'
+					}
 				}
-			})
-			console.log("hi");
-		}
-		}
-		console.log("status========>",this.sprintStatus);
+			}else{
+				Swal.fire({
+					type: 'error',
+					title: 'Sorry!',
+					text: "Project's Sprint is not activated",
+					animation: false,
+					customClass: {
+						popup: 'animated tada'
+					}
+				})
+				console.log("hi");
+			}
+		// }
 
 		
 	}
@@ -460,8 +460,8 @@ export class ProjectDetailComponent implements OnInit {
 		function custom_sort1(a, b) {
 			return a.priority - b.priority;
 		}
-		this._change.detectChanges();
 		console.log("sorted output =====> ",this.tracks);
+		this._change.detectChanges();
 		// console.log("nthi avtu=======>",custom_sort1);
 		$(".priority_sorting_btn i.fas").toggleClass("hide");
 	}
@@ -521,10 +521,10 @@ export class ProjectDetailComponent implements OnInit {
 
 	saveTheData(task){
 		
-		// this.submitted = true;
-		// if (this.editTaskForm.invalid) {
-		// 	return;
-		// }
+		this.submitted = true;
+		if (this.editTaskForm.invalid) {
+			return;
+		}
 		this.isDisable = true;
 		this.loader = true;
 		task['projectId']= this.projectId;
@@ -559,6 +559,7 @@ export class ProjectDetailComponent implements OnInit {
 				// position: 'top-end'
 			})
 			this.getProject(res.projectId._id);
+			console.log("display task list of only active sprint",this.getProject);
 			$('#save_changes').attr("disabled", false);
 			$('#refresh_icon').css('display','none');
 			$('#itemManipulationModel').modal('hide');
@@ -568,7 +569,7 @@ export class ProjectDetailComponent implements OnInit {
 			// this.assignTo.reset();
 			this.loader = false;
 			this.isDisable = false;
-			this.editTaskForm.reset();
+			// this.editTaskForm.reset();
 		},err=>{
 			Swal.fire({
 				type: 'error',
@@ -676,17 +677,19 @@ export class ProjectDetailComponent implements OnInit {
 	}
 
 	getSprint(projectId){
+		console.log("project is of this sprint",projectId);
 		this._projectService.getSprint(projectId).subscribe((res:any)=>{
 			console.log("sprints in project detail=====>>>>",res);
 			this.sprints = res;
 			_.forEach(this.sprints, (sprint)=>{
 				if(sprint.status == 'Active' || sprint.status == 'Complete'){
 					this.activeSprint = sprint;
+					console.log("activated sprint of project=======>",this.activeSprint);
 					this.sprintInfo = sprint;
 					this.sprintInfo.startDate = moment(sprint.startDate).format('DD MMM YYYY');  
 					this.sprintInfo.endDate = moment(sprint.endDate).format('DD MMM YYYY'); 
+				console.log("final sprint which display=========>>>>",this.activeSprint);
 				}
-				console.log("Active Sprint=========>>>>",this.activeSprint);
 			})
 			console.log("ActiveSprint startdate",this.activeSprint.endDate);
 			var currendate = moment(); 

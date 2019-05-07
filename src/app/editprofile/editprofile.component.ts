@@ -24,15 +24,15 @@ export class EditprofileComponent implements OnInit {
 	submitted = false;
 	isDisable:boolean= false;
 	constructor(private _loginService: LoginService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, public _projectService: ProjectService) { 
-		this.editEmployeeForm = this.formBuilder.group({
+		this.editEmployeeForm = new FormGroup({
 
-			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20), Validators.pattern("[a-zA-Z]+\\.?")]),
+			name:new FormControl('',[Validators.required, Validators.minLength(2),  Validators.maxLength(20)]),
 			email: new FormControl('',[Validators.required, Validators.email]),
-			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern("[0-9]+\\.?")]),
+			phone:new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
 			userRole:new FormControl('', [Validators.required]),
-			experience:new FormControl('',[Validators.required]),
-			joiningDate:new FormControl('',[Validators.required]),
-			cv:new FormControl('',[Validators.required])
+			experience:new FormControl(''),
+			joiningDate:new FormControl(''),
+			cv:new FormControl('')
 		}); 
 	}
 
@@ -61,7 +61,7 @@ export class EditprofileComponent implements OnInit {
 
 
 	updateProfile(editEmployeeForm){
-		console.log('jkfdg');
+		console.log('jkfdg',this.editEmployeeForm);
 		this.submitted = true;
 		if (this.editEmployeeForm.invalid) {
 			return;
@@ -96,7 +96,7 @@ export class EditprofileComponent implements OnInit {
 				this.isDisable= false;  
 			})
 		}
-		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='Developer' || this.currentUser.userRole=='projectManager'){
+		else if(this.currentUser.userRole == "developer" || this.currentUser.userRole=='projectManager'){
 			// alert("Developer");
 			// this.files = this.userDetails.CV;
 			console.log(this.files);
@@ -172,6 +172,32 @@ export class EditprofileComponent implements OnInit {
 					console.log(err);
 					this.loader = false;
 				})
+			}
+
+			validatePhone(form)
+			{
+				console.log(form);
+				var phoneno = /[0-9]/ ;
+				var message = document.getElementById('message');
+				if(!form.phone.match(phoneno)){
+					console.log("message==========",message)
+					message.innerHTML = "Please enter only numbers"
+				}else{
+					message.innerHTML = "";
+				}
+			}
+
+			validateName(form)
+			{
+				console.log(form);
+				var nameInput = /[a-zA-Z ]/ ;
+				var message1 = document.getElementById('message1');
+				if(!form.name.match(nameInput)){
+					console.log("message==========",message1)
+					message1.innerHTML = "Name can not start with digit"
+				}else{
+					message1.innerHTML = "";
+				}
 			}
 
 

@@ -155,9 +155,9 @@ export class TimeLogComponent implements OnInit {
 					console.log("TASK OF USERS============================================================>",user.tasks);
 					this.totalTime = 0;
 					_.forEach(user.tasks,(task)=>{
-						console.log('task========================>',this.getHHMMTime(task.timelog1.difference));
+						console.log('task========================>',this.getHHMMTime(task.timelog1.count));
 						// this.totalTime = +this.totalTime + +this.getHHMMTime(task.timelog1.difference);
-						user['totalTime'] = this.addTimes(this.totalTime,this.getHHMMTime(task.timelog1.difference), user.name)
+						user['totalTime'] = this.addTimes(this.totalTime,this.getHHMMTime(task.timelog1.count), user.name)
 						// console.log(this.totalTime);	
 
 					})
@@ -206,19 +206,24 @@ export class TimeLogComponent implements OnInit {
 	
 	getHHMMTime(difference){
 		// console.log("ave che kai ke nai",difference);
-		if(difference != '00:00'){
-			difference = difference.split("T");
-			difference = difference[1];
-			difference = difference.split(".");
-			difference = difference[0];
-			difference = difference.split(":");
-			var diff1 = difference[0];
-			// console.log("ahi j zero mde che",diff1);
-			var diff2 = difference[1];
-			difference = diff1 +":"+diff2;
-			return difference;
-		}
-		return '00:00';
+		// if(difference != '00:00'){
+		// 	difference = difference.split("T");
+		// 	difference = difference[1];
+		// 	difference = difference.split(".");
+		// 	difference = difference[0];
+		// 	difference = difference.split(":");
+		// 	var diff1 = difference[0];
+		// 	// console.log("ahi j zero mde che",diff1);
+		// 	var diff2 = difference[1];
+		// 	difference = diff1 +":"+diff2;
+		// 	return difference;
+		// }
+		// return '00:00';
+		var milliseconds = ((difference % 1000) / 100),
+		seconds = Math.floor((difference / 1000) % 60),
+		minutes = Math.floor((difference / (1000 * 60)) % 60),
+		hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+		return hours + ":" + minutes + ":" + seconds ;
 	}
 	addTimes (startTime, endTime, userId?){
 		console.log(startTime,endTime);

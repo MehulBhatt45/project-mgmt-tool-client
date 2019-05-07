@@ -381,6 +381,7 @@ export class EditProjectComponent implements OnInit {
 				if(_.findIndex(this.availableProjectMngr, function(o) { return o._id == event._id; }) == -1 ){
 					console.log("in fi");
 					this.availableProjectMngr.push(event);
+					this.availData.delete.push(event);
 				}
 
 			}

@@ -138,8 +138,9 @@ export class LeaveComponent implements OnInit {
 		}
 		this._leaveService.addLeave(this.addForm.value, this.files).subscribe((res:any)=>{
 			Swal.fire({type: 'success',title: 'Leave Apply Successfully',showConfirmButton:false,timer: 2000})
+			this.addForm.reset();
 			this.isDisable = false;
-			this.router.navigate(['./view-projects']);
+			// this.router.navigate(['./view-projects']);
 			console.log("ressssssssssssss",res);
 
 

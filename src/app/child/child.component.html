@@ -12,7 +12,7 @@
 				<!-- <div *ngIf = "track.tasks.length == 0">
 					<p style="text-align: center;">No Task Found</p>	
 				</div> -->
-				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag>
+				<mat-card class="open_model" *ngFor="let task of track.tasks "cdkDrag [id]="task._id">
 					<mat-card-content>
 						<div class="card" [ngClass]="getPriorityClass(task.priority).class" data-toggle="tooltip" data-placement="bottom" [title]="getPriorityClass(task.priority).title">
 							<div class="card-body" style="padding: 0px;">
@@ -143,23 +143,23 @@
 								</p>
 							</div>
 							<div class="col-md-4">
-								<p  *ngIf="!timeLog">
+								<p  *ngIf="task.timelog1">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
-										{{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}}
-										<!-- {{getTime(task.timelog1.count)}} -->
+										<!-- {{getHHMMTime(task.timelog1.difference?task.timelog1.difference:'00:00')}} -->
+										{{getTime(task.timelog1.count)}}
 									</span>
 								</p>
 							</div>
-							<div class="col-md-4">
+						<!-- 	<div class="col-md-4">
 								<p  *ngIf="timeLog">
 									<label><strong>Time Taken: &nbsp;</strong></label>
 									<span>
 										{{getHHMMTime(timeLog.difference?timeLog.difference:'00:00')}}
-										<!-- {{getTime(task.timelog1.count)}} -->
+										
 									</span>
 								</p>
-							</div>
+							</div> -->
 							<div class="col-md-4">
 								<p>
 									<label><strong>Assign To: &nbsp;</strong></label>
@@ -337,7 +337,7 @@
 								<div class="form-group col-12 col-lg-1 pt-1"></div>
 								<div class="form-group col-12 col-lg-5 pt-1">
 									<label for="dueDate">Due Days</label>
-									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" [(ngModel)]="newTask.dueDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }">
+									<input placeholder="Selected days" id="dueDate" type="text" formControlName="dueDate" ngModel="{{newTask.dueDate | date:'short'}}" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dueDate.errors }">
 									<div *ngIf="submitted && f.dueDate.errors" class="invalid-feedback">
 										<div *ngIf="f.dueDate.errors.required">Due days is required</div>
 									</div>

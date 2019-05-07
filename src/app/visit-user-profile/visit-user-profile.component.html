@@ -49,12 +49,15 @@
  					<h2><span class="icon-user mr-1"></span> About</h2>
  					<h3>{{currentUser.name}}</h3>
  					<p><span class="icon-envelope mr-1"></span><a style="color: black!important;" href="mailto: {{currentUser.email}}">  {{currentUser.email}}</a></p>
- 					<p><span class="icon-screen-smartphone mr-1"></span><a style="color: black!important;" href="tel:+91{{currentUser.phone}}"> {{currentUser.phone}}</a></p>
+ 					<p *ngIf = "currentUser.phone"><span class="icon-screen-smartphone mr-1"></span><a style="color: black!important;" href="tel:+91{{currentUser.phone}}"> {{currentUser.phone}}</a></p>
  				</div>
  			</div>
  			<div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
  				<div class="card">
  					<h2><span class="icon-list"></span> Projects</h2>
+ 					<div *ngIf="!finalArr.length">
+ 						<p style="text-align: center;">No projects Found</p>
+ 					</div>
  					<div class="project">
  						<div class="row border-bottom" *ngFor="let project of finalArr">
  							<div class="col-md-1 mb-10" *ngIf="project" >

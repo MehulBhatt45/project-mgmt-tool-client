@@ -146,12 +146,6 @@ export class AllEmployeeComponent implements OnInit {
 
 										});
 										this.filteredTeams = this.developers;
-										setTimeout(()=>{
-											console.log("rotate js--------------------")
-											$('a.rotate-btn').click(function () {
-												$(this).parents(".card-rotating").toggleClass('flipped');
-											});
-										},2000);
 									})
 									this.searchFlag = true;
 								} else{

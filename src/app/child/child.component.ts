@@ -39,7 +39,7 @@ export class ChildComponent  implements OnInit{
   taskId;
   url = [];
   commentUrl = [];
-  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: 'low', dueDate:'', estimatedTime:'', images: [],sprint: '' };
+  newTask = { title:'', desc:'', assignTo: '', status: 'to do', priority: '', dueDate:'', estimatedTime:'', images: [],sprint: '' };
   modalTitle;3
   project;
   tasks;
@@ -140,7 +140,7 @@ export class ChildComponent  implements OnInit{
       console.log('track =================>',track);
       if(track.tasks.length){
         isAnyTrackHasTask = true;
-        return false;
+        // return false;
       }
       
       await _.forEach(track.tasks,(task)=>{
@@ -726,12 +726,12 @@ export class ChildComponent  implements OnInit{
           _.forEach(this.tracks , (track)=>{
             //console.log("tracks==-=-=-=-",this.tracks);
             if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id){
+              if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
             }else{
               console.log("sprint module",task.sprint);
-              if(task.status == track.id){
+              if(task.status == track.id && task.sprint.status == 'Active'){
                 track.tasks.push(task);
               }
             }
