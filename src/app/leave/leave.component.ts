@@ -99,7 +99,7 @@ export class LeaveComponent implements OnInit {
 		console.log("form data============>",form);
 		this.submitted = true;
 		if (this.addForm.invalid) {
-			return;
+			return false;
 		}
 		this.isDisable = true;
 		form.startingDate = $('#startDate').val();

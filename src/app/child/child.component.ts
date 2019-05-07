@@ -104,7 +104,7 @@ export class ChildComponent  implements OnInit{
     });    
   }
   ngOnInit(){
-   
+    
     // this.getProject(this.projectId);
     console.log(this.tracks, this.developers);
     // this.getSprint(this.projectId);
@@ -120,13 +120,14 @@ export class ChildComponent  implements OnInit{
 
         e.stopPropagation();
         // Chrome requires returnValue to be set
-        e.returnValue = false;
+        e.returnValue = '';
 
       }
     });
     var fromReload = (option) =>{
       this.func(option);
     }
+    
   }
 
   func = async (option)=>{
@@ -140,7 +141,7 @@ export class ChildComponent  implements OnInit{
       console.log('track =================>',track);
       if(track.tasks.length){
         isAnyTrackHasTask = true;
-        // return false;
+        return false;
       }
       
       await _.forEach(track.tasks,(task)=>{
@@ -156,6 +157,8 @@ export class ChildComponent  implements OnInit{
     })
     if (isAnyTrackHasTask) this.isTaskFound = true;
   }
+
+
 
   ngOnChanges() {
     this._change.detectChanges();
@@ -679,7 +682,6 @@ export class ChildComponent  implements OnInit{
 
 
   getProject(id){
-    console.log('in child componant getproject==============================================>');
     console.log('id==================>',id);
     console.log("projectId=====>",this.projectId);
     this.loader = true;
@@ -739,6 +741,7 @@ export class ChildComponent  implements OnInit{
         })
 
         this.loader = false;
+        console.log("==============================================================");
         this.func('load');
       },err=>{
         console.log(err);

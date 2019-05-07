@@ -40,7 +40,7 @@ export class EditProjectComponent implements OnInit {
 	submitted = false;
 	projectAvatar = JSON.parse(localStorage.getItem('currentUser'));
 	isDisable:boolean = false;
-
+	// resetValue:boolean = false;
 	// currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 	constructor(public router:Router, public _projectService: ProjectService, public route: ActivatedRoute, public _change: ChangeDetectorRef) {
@@ -235,8 +235,14 @@ export class EditProjectComponent implements OnInit {
 		updateForm.uniqueId = this.availData.uniqueId;
 		updateForm.avatar = this.availData.avatar;
 		updateForm._id = this.availData._id;
+		updateForm.deadline = this.availData.deadline;
+		// updateForm.controls.deadline = this.updateForm.controls.deadline
+		// console.log("project manager iddddd",updateForm.controls.deadline);
+
+
 		updateForm.deadline = $("#date-picker").val();
 		
+
 		var data = new FormData();
 		data.append('title', updateForm.title);
 		data.append('desc', updateForm.desc);
@@ -250,32 +256,33 @@ export class EditProjectComponent implements OnInit {
 		if(this.files && this.files.length>0){
 			data.append('avatar', this.files[0]);  
 		}
-		console.log('data====================================>',data);
 		console.log("updateForm={}{}{}{}{}",updateForm);
 		console.log("avail data in update form ====>" , this.availData);
 		this._projectService.updateProject(updateForm._id,data).subscribe((res:any)=>{
 			this.loader = false;
 
-			
+
 			setTimeout(()=>{
 				// window.location.reload();
 				this.updateForm.get('Teams') .reset( );
 			},500);
+
 			this.getAllDevelopersNotInProject(this.ProjectId);
 
+
 			console.log("response of update form  ====>" , res);
-			
+
 			Swal.fire({type: 'success',title: 'Project Updated Successfully',showConfirmButton:false, timer:3000})
 			this.getProjectById(res._id);
 			this.url = '';
 			this.isDisable = false;
-			// updateForm.Teams.reset();
-			// updateForm.pmanagerId.reset();
+
 		},(err:any)=>{
 			console.log("error of update form  ====>" , err);
 			Swal.fire('Oops...', 'Something went wrong!', 'error')
 			this.isDisable = false;
 		})
+
 	}
 	deleteProject(projectId){
 		console.log(projectId);

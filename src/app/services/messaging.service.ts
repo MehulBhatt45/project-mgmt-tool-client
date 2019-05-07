@@ -9,6 +9,7 @@ import { HttpClient} from '@angular/common/http';
 import { config } from '../config';
 import {AlertService} from './alert.service';
 import { ToastrService } from 'ngx-toastr';
+import { Output, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,14 @@ import { ToastrService } from 'ngx-toastr';
 export class MessagingService {
 
   currentMessage = new BehaviorSubject(null);
+  @Output() notificationCount = new EventEmitter();
 
   constructor(public alert:AlertService,public http:HttpClient,
     private angularFireDB: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth,
     private angularFireMessaging: AngularFireMessaging,
-    private toastr: ToastrService) {
+    private toastr: ToastrService
+    ) {
     this.angularFireMessaging.messaging.subscribe(
       (_messaging) => {
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -55,7 +58,7 @@ export class MessagingService {
               userId:userId,
               token:token
             }
-             
+            
             this.addEntry(udata);
             // this.addNotification(udata);
 
@@ -69,38 +72,39 @@ export class MessagingService {
       receiveMessage() {
         this.angularFireMessaging.messages.subscribe(
           (payload:any) => {
+            this.notificationCount.emit('notificationCount');
             console.log("new message received. ", payload);
             console.log("pylod======>",payload.notification.body);
             // console.log(payload.from);
             // this.currentMessage.next(payload);
             if (payload.notification.body == "comment") {
               
-            this.toastr.error(payload.notification.title, "", {
-              disableTimeOut: true,
-              closeButton: true,
-              enableHtml: true,
-             
-            });
-          }
-          else if (payload.notification.body == "other") {
-            this.toastr.success(payload.notification.title, "", {
-              disableTimeOut: true,
-              closeButton: true,
-              enableHtml: true
-            });
-          }else if (payload.notification.body == "task") {
-            this.toastr.info(payload.notification.title, "", {
-              disableTimeOut: true,
-              closeButton: true,
-              enableHtml: true
-            });
-          }else{
-            this.toastr.warning(payload.notification.title, "", {
-              disableTimeOut: true,
-              closeButton: true,
-              enableHtml: true
-            });
-          }
+              this.toastr.error(payload.notification.title, "", {
+                disableTimeOut: true,
+                closeButton: true,
+                enableHtml: true,
+                
+              });
+            }
+            else if (payload.notification.body == "other") {
+              this.toastr.success(payload.notification.title, "", {
+                disableTimeOut: true,
+                closeButton: true,
+                enableHtml: true
+              });
+            }else if (payload.notification.body == "task") {
+              this.toastr.info(payload.notification.title, "", {
+                disableTimeOut: true,
+                closeButton: true,
+                enableHtml: true
+              });
+            }else{
+              this.toastr.warning(payload.notification.title, "", {
+                disableTimeOut: true,
+                closeButton: true,
+                enableHtml: true
+              });
+            }
           })
       }
 
