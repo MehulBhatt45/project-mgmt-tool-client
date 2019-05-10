@@ -293,11 +293,11 @@ export class ProjectDetailComponent implements OnInit {
 						console.log("track in foreach",task.sprint.status);
 
 						if(this.currentUser.userRole!='projectManager' && this.currentUser.userRole!='admin'){
-							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer' && task.sprint.status == 'Active'){
+							if(task.status == track.id && task.assignTo && task.assignTo._id == this.currentUser._id && this.currentUser.userRole == 'developer' ){
 								track.tasks.push(task);
 							}
 						}else{
-							if(task.status == track.id && task.sprint.status == 'Active' ){
+							if(task.status == track.id  ){
 								track.tasks.push(task);
 							}
 						}
