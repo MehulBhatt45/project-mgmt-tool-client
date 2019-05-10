@@ -181,8 +181,8 @@ export class ProjectDetailComponent implements OnInit {
 
 	createEditTaskForm(){
 		this.editTaskForm = new FormGroup({
-			title : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
-			desc : new FormControl('', [Validators.required,  Validators.maxLength(50)]),
+			title : new FormControl('', [Validators.required]),
+			desc : new FormControl('', [Validators.required]),
 			assignTo : new FormControl('', Validators.required),
 			sprint :new FormControl('',Validators.required),
 			priority : new FormControl('', Validators.required),
@@ -274,6 +274,7 @@ export class ProjectDetailComponent implements OnInit {
 					// res.Teams.push(this.pro.pmanagerId); 
 					console.log("response of team============>"  ,res.Teams);
 					this.projectTeam = res.Teams;
+					console.log("team members od project=========",this.projectTeam);
 					this.loader = false;
 				},(err:any)=>{
 					console.log("err of team============>"  ,err);
@@ -520,6 +521,7 @@ export class ProjectDetailComponent implements OnInit {
 	get f() { return this.editTaskForm.controls; }
 
 	saveTheData(task){
+		console.log("data of foerm========>><<<<<<<<",this.editTaskForm);
 		
 		this.submitted = true;
 		if (this.editTaskForm.invalid) {
